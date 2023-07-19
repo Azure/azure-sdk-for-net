@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='snapshot'>
             /// Snapshot object supplied in the body of the Put disk operation.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='snapshot'>
             /// Snapshot object supplied in the body of the Put disk operation.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='snapshot'>
             /// Snapshot object supplied in the body of the Patch snapshot operation.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='snapshot'>
             /// Snapshot object supplied in the body of the Patch snapshot operation.
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             public static Snapshot Get(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
             {
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             public static void Delete(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
             {
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='grantAccessData'>
             /// Access data object supplied in the body of the get snapshot access
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='grantAccessData'>
             /// Access data object supplied in the body of the get snapshot access
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             public static void RevokeAccess(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
             {
@@ -351,7 +351,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='snapshot'>
             /// Snapshot object supplied in the body of the Put disk operation.
@@ -395,7 +395,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='snapshot'>
             /// Snapshot object supplied in the body of the Put disk operation.
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='snapshot'>
             /// Snapshot object supplied in the body of the Patch snapshot operation.
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='snapshot'>
             /// Snapshot object supplied in the body of the Patch snapshot operation.
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             public static void BeginDelete(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
             {
@@ -492,7 +492,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='grantAccessData'>
             /// Access data object supplied in the body of the get snapshot access
@@ -537,7 +537,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='grantAccessData'>
             /// Access data object supplied in the body of the get snapshot access
@@ -566,7 +566,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             public static void BeginRevokeAccess(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
             {
@@ -585,7 +585,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='snapshotName'>
             /// The name of the snapshot that is being created. The name can't be changed
             /// after the snapshot is created. Supported characters for the name are a-z,
-            /// A-Z, 0-9 and _. The max name length is 80 characters.
+            /// A-Z, 0-9, _ and -. The max name length is 80 characters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.CognitiveServices
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Cognitive Services Management Client
@@ -41,13 +45,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Azure Subscription ID.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. Current
-        /// version is 2017-04-18
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -76,6 +79,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
         IAccountsOperations Accounts { get; }
 
         /// <summary>
+        /// Gets the IDeletedAccountsOperations.
+        /// </summary>
+        IDeletedAccountsOperations DeletedAccounts { get; }
+
+        /// <summary>
         /// Gets the IResourceSkusOperations.
         /// </summary>
         IResourceSkusOperations ResourceSkus { get; }
@@ -86,9 +94,72 @@ namespace Microsoft.Azure.Management.CognitiveServices
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the ICheckSkuAvailabilityOperations.
+        /// Gets the ICommitmentTiersOperations.
         /// </summary>
-        ICheckSkuAvailabilityOperations CheckSkuAvailability { get; }
+        ICommitmentTiersOperations CommitmentTiers { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IDeploymentsOperations.
+        /// </summary>
+        IDeploymentsOperations Deployments { get; }
+
+        /// <summary>
+        /// Gets the ICommitmentPlansOperations.
+        /// </summary>
+        ICommitmentPlansOperations CommitmentPlans { get; }
+
+        /// <summary>
+        /// Check available SKUs.
+        /// </summary>
+        /// <param name='location'>
+        /// Resource location.
+        /// </param>
+        /// <param name='skus'>
+        /// The SKU of the resource.
+        /// </param>
+        /// <param name='kind'>
+        /// The Kind of the resource.
+        /// </param>
+        /// <param name='type'>
+        /// The Type of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<SkuAvailabilityListResult>> CheckSkuAvailabilityWithHttpMessagesAsync(string location, IList<string> skus, string kind, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Check whether a domain is available.
+        /// </summary>
+        /// <param name='subdomainName'>
+        /// The subdomain name to use.
+        /// </param>
+        /// <param name='type'>
+        /// The Type of the resource.
+        /// </param>
+        /// <param name='kind'>
+        /// The Kind of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<DomainAvailability>> CheckDomainAvailabilityWithHttpMessagesAsync(string subdomainName, string type, string kind = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

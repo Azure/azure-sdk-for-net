@@ -2,38 +2,53 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
-using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void ExtractEntityLinking()
+        public void RecognizeLinkedEntities()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #region Snippet:Sample6_RecognizeLinkedEntities
+            string document =
+                "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
+                + " Ballmer, eventually became CEO after Bill Gates as well. Steve Ballmer eventually stepped down as"
+                + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
+                + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond.";
 
-            #region Snippet:RecognizeLinkedEntities
-            string input = "Microsoft was founded by Bill Gates and Paul Allen.";
-
-            // Recognize entities associated with the Wikipedia knowledge base in the input text
-            RecognizeLinkedEntitiesResult result = client.RecognizeLinkedEntities(input);
-
-            Console.WriteLine($"Extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
-            foreach (LinkedEntity linkedEntity in result.LinkedEntities)
+            try
             {
-                Console.WriteLine($"Name: {linkedEntity.Name}, Id: {linkedEntity.Id}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
-                foreach (LinkedEntityMatch match in linkedEntity.Matches)
+                Response<LinkedEntityCollection> response = client.RecognizeLinkedEntities(document);
+                LinkedEntityCollection linkedEntities = response.Value;
+
+                Console.WriteLine($"Recognized {linkedEntities.Count} entities:");
+                foreach (LinkedEntity linkedEntity in linkedEntities)
                 {
-                    Console.WriteLine($"    Match Text: {match.Text}, Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");
+                    Console.WriteLine($"  Name: {linkedEntity.Name}");
+                    Console.WriteLine($"  Language: {linkedEntity.Language}");
+                    Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
+                    Console.WriteLine($"  URL: {linkedEntity.Url}");
+                    Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
+                    foreach (LinkedEntityMatch match in linkedEntity.Matches)
+                    {
+                        Console.WriteLine($"    Match Text: {match.Text}");
+                        Console.WriteLine($"    Offset: {match.Offset}");
+                        Console.WriteLine($"    Length: {match.Length}");
+                        Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
+                    }
+                    Console.WriteLine();
                 }
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion
         }

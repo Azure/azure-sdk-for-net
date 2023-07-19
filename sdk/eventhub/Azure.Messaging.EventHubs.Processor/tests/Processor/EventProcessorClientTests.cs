@@ -3,20 +3,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
-using Azure.Messaging.EventHubs.Processor.Tests;
+using Azure.Storage;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Moq;
 using NUnit.Framework;
 
@@ -31,21 +32,6 @@ namespace Azure.Messaging.EventHubs.Tests
     public class EventProcessorClientTests
     {
         /// <summary>
-        ///   Provides test cases for the constructor tests.
-        /// </summary>
-        ///
-        public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
-        {
-            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-
-            yield return new object[] { new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", connectionString), "connection string with default options" };
-            yield return new object[] { new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", connectionString, default(EventProcessorClientOptions)), "connection string with explicit null options" };
-            yield return new object[] { new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object), "namespace with default options" };
-            yield return new object[] { new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object, default(EventProcessorClientOptions)), "namespace with explicit null options" };
-        }
-
-        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient" />
         ///   constructor.
         /// </summary>
@@ -53,11 +39,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        public void ConstructorValidatesTheConsumerGroup(string consumerGroup)
+        public void ConstructorsValidateTheConsumerGroup(string consumerGroup)
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyConnection", new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the consumer group.");
-            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", credential.Object, new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the consumer group.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate the consumer group.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", new AzureNamedKeyCredential("key", "value"), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate the consumer group.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The SAS constructor should validate the consumer group.");
         }
 
         /// <summary>
@@ -66,13 +53,14 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorValidatesTheBlobContainerClient()
+        public void ConstructorsValidateTheBlobContainerClient()
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
 
             Assert.That(() => new EventProcessorClient(null, "consumerGroup", fakeConnection, new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The connection string constructor should validate the blob container client.");
-            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", credential.Object, new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The namespace constructor should validate the blob container client.");
+            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The token credential constructor should validate the blob container client.");
+            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", new AzureNamedKeyCredential("key", "value"), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The shared key credential constructor should validate the blob container client.");
+            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The SAS credential constructor should validate the blob container client.");
         }
 
         /// <summary>
@@ -82,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        public void ConstructorValidatesTheConnectionString(string connectionString)
+        public void ConstructorsValidateTheConnectionString(string connectionString)
         {
             Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString), Throws.InstanceOf<ArgumentException>(), "The constructor without options should ensure a connection string.");
             Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString, "dummy", new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should ensure a connection string.");
@@ -95,10 +83,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
+        [TestCase("http://namspace.servciebus.windows.com")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", credential.Object), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The SAS credential should validate.");
         }
 
         /// <summary>
@@ -110,8 +100,9 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHub(string constructorArgument)
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, credential.Object), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value)), Throws.InstanceOf<ArgumentException>(), "The SAS credential should validate.");
         }
 
         /// <summary>
@@ -121,1481 +112,1638 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheCredential()
         {
-            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException);
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException, "The token credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(AzureNamedKeyCredential)), Throws.ArgumentNullException, "The shared key credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(AzureSasCredential)), Throws.ArgumentNullException, "The SAS credential should validate.");
         }
 
         /// <summary>
-        ///   Verifies functionality of the constructor.
+        ///   Verifies functionality of the constructor(s).
         /// </summary>
         ///
         [Test]
-        public void ConnectionStringConstructorSetsTheRetryPolicy()
+        public void ConstructorsTranslateOptionsForTheBaseClass()
         {
-            var expected = Mock.Of<EventHubsRetryPolicy>();
-            var options = new EventProcessorClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
-            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
-            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString, options);
-
-            Assert.That(GetRetryPolicy(processor), Is.SameAs(expected));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void NamespaceConstructorSetsTheRetryPolicy()
-        {
-            var expected = Mock.Of<EventHubsRetryPolicy>();
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var options = new EventProcessorClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
-            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", credential.Object, options);
-
-            Assert.That(GetRetryPolicy(processor), Is.SameAs(expected));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        [TestCaseSource(nameof(ConstructorCreatesDefaultOptionsCases))]
-        public void ConstructorCreatesDefaultOptions(EventProcessorClient eventProcessor,
-                                                     string constructorDescription)
-        {
-            var defaultOptions = new EventProcessorClientOptions();
-            var consumerOptions = GetProcessingConsumerOptions(eventProcessor);
-            var readOptions = GetProcessingReadEventOptions(eventProcessor);
-            var connectionOptions = GetConnectionOptionsSample(eventProcessor);
-
-            Assert.That(consumerOptions, Is.Not.Null, $"The { constructorDescription } constructor should have set the processing consumer options.");
-            Assert.That(readOptions, Is.Not.Null, $"The { constructorDescription } constructor should have set the processing read event options.");
-
-            Assert.That(readOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(defaultOptions.TrackLastEnqueuedEventProperties), $"The { constructorDescription } constructor should default tracking of last event information.");
-            Assert.That(readOptions.MaximumWaitTime, Is.EqualTo(defaultOptions.MaximumWaitTime), $"The { constructorDescription } constructor should have set the correct maximum wait time.");
-            Assert.That(consumerOptions.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The { constructorDescription } constructor should have set the correct retry options.");
-            Assert.That(connectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The { constructorDescription } constructor should have a default set of connection options.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void ConnectionStringConstructorCreatesTheProcessingConsumerOptions()
-        {
-            var options = new EventProcessorClientOptions
+            void assertOptionsMatch(EventProcessorOptions expected,
+                                    EventProcessorOptions actual,
+                                    string constructorDescription)
             {
-                RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) }
+                Assert.That(actual, Is.Not.Null, $"The processor options should have been created for the { constructorDescription } constructor.");
+                Assert.That(actual.ConnectionOptions.TransportType, Is.EqualTo(expected.ConnectionOptions.TransportType), $"The connection options are incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.RetryOptions.MaximumRetries, Is.EqualTo(expected.RetryOptions.MaximumRetries), $"The retry options are incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.Identifier, Is.EqualTo(expected.Identifier), $"The identifier is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.MaximumWaitTime, Is.EqualTo(expected.MaximumWaitTime), $"The maximum wait time is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.TrackLastEnqueuedEventProperties, Is.EqualTo(expected.TrackLastEnqueuedEventProperties), $"The last event tracking flag is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.DefaultStartingPosition, Is.EqualTo(expected.DefaultStartingPosition), $"The default starting position is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.LoadBalancingUpdateInterval, Is.EqualTo(expected.LoadBalancingUpdateInterval), $"The load balancing interval is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.PartitionOwnershipExpirationInterval, Is.EqualTo(expected.PartitionOwnershipExpirationInterval), $"The ownership expiration interval incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.PrefetchCount, Is.EqualTo(expected.PrefetchCount), $"The prefetch count is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.PrefetchSizeInBytes, Is.EqualTo(expected.PrefetchSizeInBytes), $"The prefetch byte size is incorrect for the { constructorDescription } constructor.");
+            }
+
+            var clientOptions = new EventProcessorClientOptions
+            {
+                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
+                RetryOptions = new EventHubsRetryOptions { MaximumRetries = 99 },
+                Identifier = "OMG, HAI!",
+                MaximumWaitTime = TimeSpan.FromDays(54),
+                TrackLastEnqueuedEventProperties = true,
+                PrefetchCount = 5,
+                PrefetchSizeInBytes = 500,
+                LoadBalancingUpdateInterval = TimeSpan.FromDays(65),
+                PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(65)
             };
 
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", options);
-            var consumerOptions = GetProcessingConsumerOptions(eventProcessor);
+            var expectedOptions = InvokeCreateOptions(clientOptions);
 
-            Assert.That(consumerOptions, Is.Not.Null, "The constructor should have set the processing consumer options.");
-            Assert.That(consumerOptions.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the processing consumer options should be considered equal.");
-            Assert.That(consumerOptions.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The constructor should have cloned the retry options.");
+            string description;
+            EventProcessorClient processorClient;
+            EventProcessorOptions actualOptions;
+
+            // Connection String constructor
+
+            description = "{{ connection string constructor }}";
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", clientOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // Connection String and Event Hub Name constructor
+
+            description = "{{ connection string with Event Hub name constructor }}";
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123", "theHub", clientOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // Namespace constructor
+
+            description = "{{ namespace constructor }}";
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", Mock.Of<TokenCredential>(), clientOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // SAS constructor
+
+            description = "{{ SAS constructor }}";
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), clientOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // Named Key constructor
+
+            description = "{{ Named Key constructor }}";
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureNamedKeyCredential("fakeName", "fakeKey"), clientOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // Internal testing constructor (Token)
+
+            description = "{{ internal testing constructor (Token) }}";
+            expectedOptions = new EventProcessorOptions();
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, Mock.Of<TokenCredential>(), expectedOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // Internal testing constructor (Shared Key)
+
+            description = "{{ internal testing constructor (Shared Key) }}";
+            expectedOptions = new EventProcessorOptions();
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureNamedKeyCredential("key", "value"), expectedOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // Internal testing constructor (SAS)
+
+            description = "{{ internal testing constructor (SAS) }}";
+            expectedOptions = new EventProcessorOptions();
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), expectedOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+        }
+
+        [Test]
+        public void ConstructorsSetClientDiagnostics()
+        {
+            // Connection String constructor
+
+            EventProcessorClient processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Connection String and Event Hub Name constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123", "theHub", default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Namespace constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", Mock.Of<TokenCredential>(), default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // SAS constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Named Key constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureNamedKeyCredential("fakeName", "fakeKey"), default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Internal testing constructor (Token)
+
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, Mock.Of<TokenCredential>(), default(EventProcessorOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            // Internal testing constructor (Shared Key)
+
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureNamedKeyCredential("key", "value"), default(EventProcessorOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Internal testing constructor (SAS)
+
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), default(EventProcessorOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartProcessingAsync" />
+        ///   and <see cref="EventProcessorClient.StartProcessing" /> methods.
         /// </summary>
         ///
         [Test]
-        public void NamespaceConstructorCreatesTheProcessingConsumerOptions()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void StartProcessingValidatesProcessEventsAsync(bool async)
         {
-            var options = new EventProcessorClientOptions
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            if (async)
             {
-                RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(1), Delay = TimeSpan.FromMinutes(4) }
-            };
-
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object, options);
-            var consumerOptions = GetProcessingConsumerOptions(eventProcessor);
-
-            Assert.That(consumerOptions, Is.Not.Null, "The constructor should have set the processing consumer options.");
-            Assert.That(consumerOptions.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the processing consumer options should be considered equal.");
-            Assert.That(consumerOptions.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The constructor should have cloned the retry options.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void ConnectionStringConstructorCreatesTheProcessingReadEventOptions()
-        {
-            var options = new EventProcessorClientOptions
+                Assert.That(async () => await processorClient.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventAsync)));
+            }
+            else
             {
-                TrackLastEnqueuedEventProperties = false,
-                MaximumWaitTime = TimeSpan.FromMinutes(65)
-            };
-
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", options);
-            var readOptions = GetProcessingReadEventOptions(eventProcessor);
-
-            Assert.That(readOptions, Is.Not.Null, "The constructor should have set the processing read event options.");
-            Assert.That(readOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the processing read event options should match.");
-            Assert.That(readOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have set the correct maximum wait time.");
-            Assert.That(readOptions.OwnerLevel, Is.EqualTo(0), "The constructor should have set the owner level as 0.");
+                Assert.That(() => processorClient.StartProcessing(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventAsync)));
+            }
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartProcessingAsync" />
+        ///   and <see cref="EventProcessorClient.StartProcessing" /> methods.
         /// </summary>
         ///
         [Test]
-        public void NamespaceConstructorCreatesTheProcessingReadEventOptions()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void StartProcessingValidatesProcessExceptionAsync(bool async)
         {
-            var options = new EventProcessorClientOptions
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+
+            if (async)
             {
-                TrackLastEnqueuedEventProperties = false,
-                MaximumWaitTime = TimeSpan.FromMinutes(65)
-            };
-
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object, options);
-            var readOptions = GetProcessingReadEventOptions(eventProcessor);
-
-            Assert.That(readOptions, Is.Not.Null, "The constructor should have set the processing read event options.");
-            Assert.That(readOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the processing read event options should match.");
-            Assert.That(readOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have set the correct maximum wait time.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void ConnectionStringConstructorClonesTheConnectionOptions()
-        {
-            var expectedTransportType = EventHubsTransportType.AmqpWebSockets;
-            var otherTransportType = EventHubsTransportType.AmqpTcp;
-
-            var options = new EventProcessorClientOptions
+                Assert.That(async () => await processorClient.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessErrorAsync)));
+            }
+            else
             {
-                ConnectionOptions = new EventHubConnectionOptions { TransportType = expectedTransportType }
-            };
-
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", options);
-
-            // Simply retrieving the options from an inner connection won't be enough to prove the processor clones
-            // its connection options because the cloning step also happens in the EventHubConnection constructor.
-            // For this reason, we will change the transport type and verify that it won't affect the returned
-            // connection options.
-
-            options.ConnectionOptions.TransportType = otherTransportType;
-
-            var connectionOptions = GetConnectionOptionsSample(eventProcessor);
-
-            Assert.That(connectionOptions.TransportType, Is.EqualTo(expectedTransportType), $"The connection options should have been cloned.");
+                Assert.That(() => processorClient.StartProcessing(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessErrorAsync)));
+            }
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartProcessingAsync" />
+        ///   and <see cref="EventProcessorClient.StartProcessing" /> methods.
         /// </summary>
         ///
         [Test]
-        public void NamespaceConstructorClonesTheConnectionOptions()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartProcessingStartsWhenRequiredHandlerPropertiesAreSet(bool async)
         {
-            var expectedTransportType = EventHubsTransportType.AmqpWebSockets;
-            var otherTransportType = EventHubsTransportType.AmqpTcp;
-
-            var options = new EventProcessorClientOptions
-            {
-                ConnectionOptions = new EventHubConnectionOptions { TransportType = expectedTransportType }
-            };
-
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object, options);
-
-            // Simply retrieving the options from an inner connection won't be enough to prove the processor clones
-            // its connection options because the cloning step also happens in the EventHubConnection constructor.
-            // For this reason, we will change the transport type and verify that it won't affect the returned
-            // connection options.
-
-            options.ConnectionOptions.TransportType = otherTransportType;
-
-            var connectionOptions = GetConnectionOptionsSample(eventProcessor);
-
-            Assert.That(connectionOptions.TransportType, Is.EqualTo(expectedTransportType), $"The connection options should have been cloned.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void ConnectionStringConstructorSetsTheIdentifier()
-        {
-            var options = new EventProcessorClientOptions
-            {
-                Identifier = Guid.NewGuid().ToString()
-            };
-
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", options);
-
-            Assert.That(eventProcessor.Identifier, Is.Not.Null);
-            Assert.That(eventProcessor.Identifier, Is.EqualTo(options.Identifier));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void NamespaceConstructorSetsTheIdentifier()
-        {
-            var options = new EventProcessorClientOptions
-            {
-                Identifier = Guid.NewGuid().ToString()
-            };
-
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object, options);
-
-            Assert.That(eventProcessor.Identifier, Is.Not.Null);
-            Assert.That(eventProcessor.Identifier, Is.EqualTo(options.Identifier));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(null)]
-        [TestCase("")]
-        public void ConnectionStringConstructorCreatesTheIdentifierWhenNotSpecified(string identifier)
-        {
-            var options = new EventProcessorClientOptions
-            {
-                Identifier = identifier
-            };
-
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", options);
-
-            Assert.That(eventProcessor.Identifier, Is.Not.Null);
-            Assert.That(eventProcessor.Identifier, Is.Not.Empty);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(null)]
-        [TestCase("")]
-        public void NamespaceConstructorCreatesTheIdentifierWhenNotSpecified(string identifier)
-        {
-            var options = new EventProcessorClientOptions
-            {
-                Identifier = identifier
-            };
-
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object, options);
-
-            Assert.That(eventProcessor.Identifier, Is.Not.Null);
-            Assert.That(eventProcessor.Identifier, Is.Not.Empty);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void ConnectionStringConstructorCopiesTheIdentifier()
-        {
-            var clientOptions = new EventProcessorClientOptions { Identifier = Guid.NewGuid().ToString() };
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", clientOptions);
-
-            Assert.That(eventProcessor.Identifier, Is.EqualTo(clientOptions.Identifier));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void NamespaceConstructorCopiesTheIdentifier()
-        {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var clientOptions = new EventProcessorClientOptions { Identifier = Guid.NewGuid().ToString() };
-            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object, clientOptions);
-
-            Assert.That(eventProcessor.Identifier, Is.EqualTo(clientOptions.Identifier));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void StartAsyncValidatesProcessEventsAsync()
-        {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
-            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessEventAsync)));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void StartAsyncValidatesProcessExceptionAsync()
-        {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
-            processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
-
-            Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessErrorAsync)));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task StartAsyncStartsTheEventProcessorWhenProcessingHandlerPropertiesAreSet()
-        {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
-
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Array.Empty<string>()));
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token), Throws.Nothing);
-
-            await mockProcessor.Object.StopProcessingAsync();
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
-        /// </summary>
-        ///
-        [Test]
-        public void CannotAddNullHandler()
-        {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
-
-            Assert.That(() => processor.PartitionInitializingAsync += null, Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => processor.PartitionClosingAsync += null, Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => processor.ProcessEventAsync += null, Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => processor.ProcessErrorAsync += null, Throws.InstanceOf<ArgumentNullException>());
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
-        /// </summary>
-        ///
-        [Test]
-        public void CannotAddTwoHandlersToTheSameEvent()
-        {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
-
-            processor.PartitionInitializingAsync += eventArgs => Task.CompletedTask;
-            processor.PartitionClosingAsync += eventArgs => Task.CompletedTask;
-            processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            Assert.That(() => processor.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
-            Assert.That(() => processor.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
-            Assert.That(() => processor.ProcessEventAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
-            Assert.That(() => processor.ProcessErrorAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
-        /// </summary>
-        ///
-        [Test]
-        public void CannotRemoveHandlerThatHasNotBeenAdded()
-        {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
-
-            // First scenario: no handler has been set.
-
-            Assert.That(() => processor.PartitionInitializingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => processor.PartitionClosingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => processor.ProcessEventAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => processor.ProcessErrorAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
-
-            // Second scenario: there is a handler set, but it's not the one we are trying to remove.
-
-            processor.PartitionInitializingAsync += eventArgs => Task.CompletedTask;
-            processor.PartitionClosingAsync += eventArgs => Task.CompletedTask;
-            processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            Assert.That(() => processor.PartitionInitializingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => processor.PartitionClosingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => processor.ProcessEventAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => processor.ProcessErrorAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
-        /// </summary>
-        ///
-        [Test]
-        public void CanRemoveHandlerThatHasBeenAdded()
-        {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
-
-            Func<PartitionInitializingEventArgs, Task> initHandler = eventArgs => Task.CompletedTask;
-            Func<PartitionClosingEventArgs, Task> closeHandler = eventArgs => Task.CompletedTask;
-            Func<ProcessEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
-            Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
-
-            processor.PartitionInitializingAsync += initHandler;
-            processor.PartitionClosingAsync += closeHandler;
-            processor.ProcessEventAsync += eventHandler;
-            processor.ProcessErrorAsync += errorHandler;
-
-            Assert.That(() => processor.PartitionInitializingAsync -= initHandler, Throws.Nothing);
-            Assert.That(() => processor.PartitionClosingAsync -= closeHandler, Throws.Nothing);
-            Assert.That(() => processor.ProcessEventAsync -= eventHandler, Throws.Nothing);
-            Assert.That(() => processor.ProcessErrorAsync -= errorHandler, Throws.Nothing);
-
-            // Assert that handlers can be added again.
-
-            Assert.That(() => processor.PartitionInitializingAsync += initHandler, Throws.Nothing);
-            Assert.That(() => processor.PartitionClosingAsync += closeHandler, Throws.Nothing);
-            Assert.That(() => processor.ProcessEventAsync += eventHandler, Throws.Nothing);
-            Assert.That(() => processor.ProcessErrorAsync += errorHandler, Throws.Nothing);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CannotAddHandlerWhileProcessorIsRunning()
-        {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
-
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Array.Empty<string>()));
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            Assert.That(() => mockProcessor.Object.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => mockProcessor.Object.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
-
-            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
-
-            // Once stopped, the processor should allow handlers to be added again.
-
-            Assert.That(() => mockProcessor.Object.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
-            Assert.That(() => mockProcessor.Object.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CannotRemoveHandlerWhileProcessorIsRunning()
-        {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
-
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Array.Empty<string>()));
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-            Func<PartitionInitializingEventArgs, Task> initHandler = eventArgs => Task.CompletedTask;
-            Func<PartitionClosingEventArgs, Task> closeHandler = eventArgs => Task.CompletedTask;
-            Func<ProcessEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
-            Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
-
-            mockProcessor.Object.PartitionInitializingAsync += initHandler;
-            mockProcessor.Object.PartitionClosingAsync += closeHandler;
-            mockProcessor.Object.ProcessEventAsync += eventHandler;
-            mockProcessor.Object.ProcessErrorAsync += errorHandler;
-
-            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-
-            Assert.That(() => mockProcessor.Object.PartitionInitializingAsync -= initHandler, Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => mockProcessor.Object.PartitionClosingAsync -= closeHandler, Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => mockProcessor.Object.ProcessEventAsync -= eventHandler, Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => mockProcessor.Object.ProcessErrorAsync -= errorHandler, Throws.InstanceOf<InvalidOperationException>());
-
-            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
-
-            // Once stopped, the processor should allow handlers to be removed again.
-
-            Assert.That(() => mockProcessor.Object.PartitionInitializingAsync -= initHandler, Throws.Nothing);
-            Assert.That(() => mockProcessor.Object.PartitionClosingAsync -= closeHandler, Throws.Nothing);
-            Assert.That(() => mockProcessor.Object.ProcessEventAsync -= eventHandler, Throws.Nothing);
-            Assert.That(() => mockProcessor.Object.ProcessErrorAsync -= errorHandler, Throws.Nothing);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
-        /// </summary>
-        ///
-        [Test]
-        public async Task IsRunningReturnsTrueWhileStopProcessingAsyncIsNotCalled()
-        {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
-
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Array.Empty<string>()));
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-            Assert.That(mockProcessor.Object.IsRunning, Is.False);
-
-            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-
-            Assert.That(mockProcessor.Object.IsRunning, Is.True);
-
-            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
-
-            Assert.That(mockProcessor.Object.IsRunning, Is.False);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
-        /// </summary>
-        ///
-        [Test]
-        public async Task IsRunningReturnsFalseWhenLoadBalancingTaskFails()
-        {
-            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
-            var completionSource = new TaskCompletionSource<bool>();
-
-            // This should be called right before the first load balancing cycle.
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Callback(() => completionSource.SetResult(true))
-                .Throws(new Exception());
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            // To ensure that the test does not hang for the duration, set a timeout to force completion
-            // after a shorter period of time.
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
-
-            await mockProcessor.Object.StartProcessingAsync();
-            await Task.WhenAny(Task.Delay(-1, cancellationSource.Token), completionSource.Task);
-
-            // Capture the value of IsRunning before stopping the processor.  We are doing this to make sure
-            // we stop the processor properly even in case of failure.
-
-            var isRunning = mockProcessor.Object.IsRunning;
-
-            // Stop the processor and ensure that it does not block on the handler.
-
-            Assert.That(async () => await mockProcessor.Object.StopProcessingAsync(), Throws.Exception, "An exception should have been thrown when creating the consumer.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
-
-            Assert.That(isRunning, Is.False, "IsRunning should return false when the load balancing task fails.");
-        }
-
-        /// <summary>
-        ///   Verify logs for the <see cref="EventProcessorClient" />.
-        /// </summary>
-        ///
-        [Test]
-        public async Task VerifiesEventProcessorLogs()
-        {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-            string[] partitionIds = { "0" };
-
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(partitionIds));
-
-            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default);
-
-            var mockLog = new Mock<EventProcessorEventSource>();
-            mockProcessor.CallBase = true;
-            mockProcessor.Object.Logger = mockLog.Object;
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-
-            Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token), Throws.Nothing);
-            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
-
-            mockLog.Verify(m => m.EventProcessorStart(mockProcessor.Object.Identifier));
-            mockLog.Verify(m => m.RenewOwnershipStart(mockProcessor.Object.Identifier));
-            mockLog.Verify(m => m.RenewOwnershipComplete(mockProcessor.Object.Identifier));
-            mockLog.Verify(m => m.MinimumPartitionsPerEventProcessor(1));
-            mockLog.Verify(m => m.ClaimOwnershipStart(partitionIds[0]));
-            mockLog.Verify(m => m.EventProcessorStopStart(mockProcessor.Object.Identifier));
-            mockLog.Verify(m => m.EventProcessorStopComplete(mockProcessor.Object.Identifier));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessErrorAsync" />
-        ///   event.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProcessErrorAsyncDoesNotBlockStopping()
-        {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
-
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new InvalidCastException());
-
-            mockConsumer
-                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<EventPosition>(),
-                    It.IsAny<ReadEventOptions>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockPartitionEventEnumerable(20, token));
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-
-            // Create a handler that does not complete in a reasonable amount of time.  To ensure that the
-            // test does not hang for the duration, set a timeout to force completion after a shorter period
-            // of time.
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
-
-            var completionSource = new TaskCompletionSource<bool>();
-
-            mockProcessor.Object.ProcessErrorAsync += async eventArgs =>
+            if (async)
             {
-                completionSource.SetResult(true);
-                await Task.Delay(TimeSpan.FromMinutes(3), cancellationSource.Token);
-            };
+                Assert.That(async () => await processorClient.StartProcessingAsync(cancellationSource.Token), Throws.Nothing, "The processor should start without exceptions.");
+            }
+            else
+            {
+                Assert.That(() => processorClient.StartProcessing(cancellationSource.Token), Throws.Nothing, "The processor should start without exceptions.");
+            }
 
-            // Start the processor and wait for the event handler to be triggered.
+            Assert.That(processorClient.IsRunning, Is.True, "The processor should have started.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            await mockProcessor.Object.StartProcessingAsync();
-            await completionSource.Task;
+            await processorClient.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+            cancellationSource.Cancel();
+        }
 
-            // Stop the processor and ensure that it does not block on the handler.
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartProcessingAsync" />
+        ///   and <see cref="EventProcessorClient.StartProcessing" /> methods.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void StartProcessingRespectsTheCancellationToken(bool async)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
 
-            Assert.That(async () => await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token), Throws.Nothing, "The processor should stop without a problem.");
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            if (async)
+            {
+                Assert.That(async () => await processorClient.StartProcessingAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            }
+            else
+            {
+                Assert.That(() => processorClient.StartProcessing(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartProcessingAsync" />
+        ///   and <see cref="EventProcessorClient.StartProcessing" /> methods.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartProcessingIsSafeToCallMultipleTimes(bool async)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            void assertStartProcessing()
+            {
+                if (async)
+                {
+                    Assert.That(async () => await processorClient.StartProcessingAsync(cancellationSource.Token), Throws.Nothing, "The processor should start without exceptions.");
+                }
+                else
+                {
+                    Assert.That(() => processorClient.StartProcessing(cancellationSource.Token), Throws.Nothing, "The processor should start without exceptions.");
+                }
+
+                Assert.That(processorClient.IsRunning, Is.True, "The processor should have started.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            }
+
+            assertStartProcessing();
+            assertStartProcessing();
+
+            await processorClient.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartProcessingAsync" />
+        ///   and <see cref="EventProcessorClient.StartProcessing" /> methods.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ValidateStoragePermissionsAsyncValidatesBlobsCanBeWritten()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+
+            var capturedException = default(Exception);
+            var expectedException = new AccessViolationException("Stop violating my access!");
+            var mockContainerClient = new Mock<BlobContainerClient>();
+            var mockBlobClient = new MockBlobClient("dummy") { UploadException = expectedException };
+
+            mockContainerClient
+                .Setup(client => client.GetBlobClient(It.IsAny<string>()))
+                .Returns(mockBlobClient);
+
+            var processorClient = new TestEventProcessorClient(mockContainerClient.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            try
+            {
+                await processorClient.ValidateStoragePermissionsAsync(mockContainerClient.Object, cancellationSource.Token);
+            }
+            catch (Exception ex)
+            {
+                capturedException = ex;
+            }
+
+            Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown.");
+            Assert.That(capturedException, Is.InstanceOf<AggregateException>(), "A validation exception should be surfaced as an AggregateException.");
+            Assert.That(((AggregateException)capturedException).InnerExceptions.Count, Is.EqualTo(1), "There should have been a single validation exception.");
+
+            var innerException = ((AggregateException)capturedException).InnerExceptions.First();
+            Assert.That(innerException, Is.SameAs(expectedException), "The source of the validation exception should have been exposed.");
+            Assert.That(processorClient.IsRunning, Is.False, "The processor should not be running after a validation exception.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartProcessingAsync" />
+        ///   and <see cref="EventProcessorClient.StartProcessing" /> methods.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ValidateStoragePermissionsAsyncLogsWhenCleanupFails()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedException = new AccessViolationException("Stop violating my access!");
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            var mockContainerClient = new Mock<BlobContainerClient>();
+            var mockBlobClient = new MockBlobClient("dummy") { DeleteException = expectedException };
+
+            mockContainerClient
+                .Setup(client => client.GetBlobClient(It.IsAny<string>()))
+                .Returns(mockBlobClient);
+
+            var processorClient = new TestEventProcessorClient(mockContainerClient.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.Logger = mockLogger.Object;
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(async () => await processorClient.ValidateStoragePermissionsAsync(mockContainerClient.Object, cancellationSource.Token), Throws.Nothing);
+
+            mockLogger.Verify(log => log.ValidationCleanupError(
+                processorClient.Identifier,
+                processorClient.EventHubName,
+                processorClient.ConsumerGroup, expectedException.Message),
+            Times.Once);
+
+            await processorClient.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StopProcessingAsync" />
+        ///   and <see cref="EventProcessorClient.StopProcessing" /> methods.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StopProcessingRespectsTheCancellationToken(bool async)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            await processorClient.StartProcessingAsync(cancellationSource.Token);
+            Assert.That(processorClient.IsRunning, Is.True, "The processor should have started.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            cancellationSource.Cancel();
+
+            if (async)
+            {
+                Assert.That(async () => await processorClient.StopProcessingAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            }
+            else
+            {
+                Assert.That(() => processorClient.StopProcessing(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            }
+
+            Assert.That(processorClient.IsRunning, Is.True, "The processor should have started.");
+
+            using var stopCancellation = new CancellationTokenSource();
+            stopCancellation.CancelAfter(TimeSpan.FromSeconds(5));
+
+            await processorClient.StopProcessingAsync(stopCancellation.Token).IgnoreExceptions();
+            stopCancellation.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StopProcessingAsync" />
+        ///   and <see cref="EventProcessorClient.StopProcessing" /> methods.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StopProcessingIsSafeToCallMultipleTimes(bool async)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            await processorClient.StartProcessingAsync(cancellationSource.Token);
+            Assert.That(processorClient.IsRunning, Is.True, "The processor should have started.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            void assertStopProcessing()
+            {
+                if (async)
+                {
+                    Assert.That(async () => await processorClient.StopProcessingAsync(cancellationSource.Token), Throws.Nothing, "The processor should start without exceptions.");
+                }
+                else
+                {
+                    Assert.That(() => processorClient.StopProcessing(cancellationSource.Token), Throws.Nothing, "The processor should start without exceptions.");
+                }
+
+                Assert.That(processorClient.IsRunning, Is.False, "The processor should have stopped.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            }
+
+            assertStopProcessing();
+            assertStopProcessing();
 
             cancellationSource.Cancel();
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessErrorAsync" />
-        ///   event.
+        ///   Verifies functionality of starting and stopping the <see cref="EventProcessorClient" />.
         /// </summary>
         ///
         [Test]
-        public async Task ProcessErrorAsyncCanStopTheEventProcessorClient()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ProcessorCanStartAfterBeingStopped(bool async)
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
-
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ThrowsAsync(new InvalidCastException());
-
-            mockConsumer
-                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<EventPosition>(),
-                    It.IsAny<ReadEventOptions>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockPartitionEventEnumerable(20, token));
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            mockProcessor.Object.ProcessErrorAsync += async eventArgs =>
+            void assertStartProcessing()
             {
-                await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
-                completionSource.SetResult(true);
-            };
+                if (async)
+                {
+                    Assert.That(async () => await processorClient.StartProcessingAsync(cancellationSource.Token), Throws.Nothing, "The processor should start without exceptions.");
+                }
+                else
+                {
+                    Assert.That(() => processorClient.StartProcessing(cancellationSource.Token), Throws.Nothing, "The processor should start without exceptions.");
+                }
 
-            // Start the processor and wait for the event handler to be triggered.
+                Assert.That(processorClient.IsRunning, Is.True, "The processor should have started.");
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            }
 
-            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            await completionSource.Task;
+            // Verify the initial start.
 
-            // Ensure that the processor has been stopped.
+            assertStartProcessing();
 
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should have stopped.");
+            // Stop processing.
+
+            if (async)
+            {
+                Assert.That(async () => await processorClient.StopProcessingAsync(cancellationSource.Token), Throws.Nothing, "The processor should stop without exceptions.");
+            }
+            else
+            {
+                Assert.That(() => processorClient.StopProcessing(cancellationSource.Token), Throws.Nothing, "The processor should stop without exceptions.");
+            }
+
+            Assert.That(processorClient.IsRunning, Is.False, "The processor should have stopped.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            // Verify starting after having been stopped.
+
+            assertStartProcessing();
+
+            await processorClient.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+            cancellationSource.Cancel();
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessEventAsync" />
-        ///   event.
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
         /// </summary>
         ///
         [Test]
-        public async Task ProcessEventAsyncReceivesAnEmptyPartitionContextForNoData()
+        public void ProcessorDoesNotAllowNullEventHandlers()
         {
-            var partitionId = "expectedPartition";
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(new[] { partitionId }));
+            Assert.That(() => processorClient.PartitionInitializingAsync += null, Throws.InstanceOf<ArgumentNullException>(), "The initializing handler should not allow null.");
+            Assert.That(() => processorClient.PartitionClosingAsync += null, Throws.InstanceOf<ArgumentNullException>(), "The closing handler should not allow null.");
+            Assert.That(() => processorClient.ProcessEventAsync += null, Throws.InstanceOf<ArgumentNullException>(), "The processing handler should not allow null.");
+            Assert.That(() => processorClient.ProcessErrorAsync += null, Throws.InstanceOf<ArgumentNullException>(), "The error handler should not allow null.");
+        }
 
-            mockConsumer
-                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<EventPosition>(),
-                    It.IsAny<ReadEventOptions>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockEmptyPartitionEventEnumerable(5, token));
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public void ProcessorAllowsOnlyOneHandlerRegistrationPerEvent()
+        {
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
+            processorClient.PartitionInitializingAsync += eventArgs => Task.CompletedTask;
+            processorClient.PartitionClosingAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+            Assert.That(() => processorClient.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>(), "The initializing handler should not allow multiple registrations.");
+            Assert.That(() => processorClient.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>(), "The closing handler should not allow multiple registrations.");
+            Assert.That(() => processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>(), "The processing handler should not allow multiple registrations.");
+            Assert.That(() => processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>(), "The error handler should not allow multiple registrations.");
+        }
 
-            var completionSource = new TaskCompletionSource<bool>();
-            var emptyEventArgs = default(ProcessEventArgs);
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public void ProcessorDoesNotAllowRemovingEventHandlersWhenNoneWereSet()
+        {
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
-            mockProcessor.Object.ProcessEventAsync += eventArgs =>
+            Assert.That(() => processorClient.PartitionInitializingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The initializing handler should not allow removal.");
+            Assert.That(() => processorClient.PartitionClosingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The closing handler should not allow removal.");
+            Assert.That(() => processorClient.ProcessEventAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The processing handler should not allow removal.");
+            Assert.That(() => processorClient.ProcessErrorAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The error handler should not allow removal.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public void ProcessorDoesNotAllowRemovingUnregisteredEventHandlers()
+        {
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.PartitionInitializingAsync += eventArgs => Task.CompletedTask;
+            processorClient.PartitionClosingAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            // Though these handlers have the same signature, they are not the same instance as those that were registered
+            // and should trigger an exception.
+
+            Assert.That(() => processorClient.PartitionInitializingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The initializing handler should not allow unregistered removal.");
+            Assert.That(() => processorClient.PartitionClosingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The closing handler should not allow unregistered removal");
+            Assert.That(() => processorClient.ProcessEventAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The processing handler should not allow unregistered removal");
+            Assert.That(() => processorClient.ProcessErrorAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The error handler should not allow unregistered removal");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public void ProcessorAllowsRemovingEventHandlers()
+        {
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            Func<PartitionInitializingEventArgs, Task> initHandler = eventArgs => Task.CompletedTask;
+            Func<PartitionClosingEventArgs, Task> closeHandler = eventArgs => Task.CompletedTask;
+            Func<ProcessEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
+            Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
+
+            processorClient.PartitionInitializingAsync += initHandler;
+            processorClient.PartitionClosingAsync += closeHandler;
+            processorClient.ProcessEventAsync += eventHandler;
+            processorClient.ProcessErrorAsync += errorHandler;
+
+            Assert.That(() => processorClient.PartitionInitializingAsync -= initHandler, Throws.Nothing, "The initializing handler should allow removing registrations.");
+            Assert.That(() => processorClient.PartitionClosingAsync -= closeHandler, Throws.Nothing, "The closing handler should allow removing registrations.");
+            Assert.That(() => processorClient.ProcessEventAsync -= eventHandler, Throws.Nothing, "The processing handler should allow removing registrations.");
+            Assert.That(() => processorClient.ProcessErrorAsync -= errorHandler, Throws.Nothing, "The error handler should allow removing registrations.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorDoesNotAllowEventHandlerChangesWhenRunning()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            Func<ProcessEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
+            Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
+
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            processorClient.ProcessEventAsync += eventHandler;
+            ;
+            processorClient.ProcessErrorAsync += errorHandler;
+
+            // Handlers should not be allowed when the processor is running.
+
+            await processorClient.StartProcessingAsync(cancellationSource.Token);
+
+            Assert.That(processorClient.IsRunning, Is.True, "The processor should have started.");
+            Assert.That(() => processorClient.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>(), "The initializing handler should not allow registration.");
+            Assert.That(() => processorClient.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>(), "The closing handler should not allow registration.");
+            Assert.That(() => processorClient.ProcessEventAsync -= eventHandler, Throws.InstanceOf<InvalidOperationException>(), "The processing handler should not allow removing registrations.");
+            Assert.That(() => processorClient.ProcessErrorAsync -= errorHandler, Throws.InstanceOf<InvalidOperationException>(), "The error handler should not allow removing registrations.");
+
+            // Handlers should be allowed with the processor idle.
+
+            await processorClient.StopProcessingAsync(cancellationSource.Token);
+
+            Assert.That(processorClient.IsRunning, Is.False, "The processor should have stopped.");
+            Assert.That(() => processorClient.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.Nothing, "The initializing handler should allow registration.");
+            Assert.That(() => processorClient.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.Nothing, "The closing handler should allow registration.");
+            Assert.That(() => processorClient.ProcessEventAsync -= eventHandler, Throws.Nothing, "The processing handler should allow removing registrations.");
+            Assert.That(() => processorClient.ProcessErrorAsync -= errorHandler, Throws.Nothing, "The error handler should allow removing registrations.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorRaisesInitializeEventHandlerWhenPartitionIsInitialized()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var capturedEventArgs = default(PartitionInitializingEventArgs);
+            var partitionId = "0";
+            var startingPosition = EventPosition.FromOffset(433);
+            var options = new EventProcessorOptions { DefaultStartingPosition = startingPosition };
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
+
+            processorClient.PartitionInitializingAsync += eventArgs =>
             {
-                emptyEventArgs = eventArgs;
-                completionSource.SetResult(true);
+                capturedEventArgs = eventArgs;
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnInitializingPartitionAsync(new TestEventProcessorPartition(partitionId), cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(capturedEventArgs, Is.Not.Null, "The event handler should have been fired.");
+            Assert.That(capturedEventArgs.PartitionId, Is.EqualTo(partitionId), "The partition identifier should have been propagated.");
+            Assert.That(capturedEventArgs.DefaultStartingPosition, Is.EqualTo(startingPosition), "The starting position should have been propagated.");
+            Assert.That(capturedEventArgs.CancellationToken, Is.EqualTo(cancellationSource.Token), "The cancellation token should have been propagated.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorRaisesClosingEventHandlerWhenPartitionIsStopped()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var capturedEventArgs = default(PartitionClosingEventArgs);
+            var partitionId = "0";
+            var closeReason = ProcessingStoppedReason.Shutdown;
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.PartitionClosingAsync += eventArgs =>
+            {
+                capturedEventArgs = eventArgs;
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnPartitionProcessingStoppedAsync(new TestEventProcessorPartition(partitionId), closeReason, cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(capturedEventArgs, Is.Not.Null, "The event handler should have been fired.");
+            Assert.That(capturedEventArgs.PartitionId, Is.EqualTo(partitionId), "The partition identifier should have been propagated.");
+            Assert.That(capturedEventArgs.Reason, Is.EqualTo(closeReason), "The close reason should have been propagated.");
+            Assert.That(capturedEventArgs.CancellationToken, Is.EqualTo(cancellationSource.Token), "The cancellation token should have been propagated.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorRaisesErrorEventHandlerWhenErrorsAreReportedForPartition()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var capturedEventArgs = default(ProcessErrorEventArgs);
+            var partitionId = "0";
+            var exception = new DivideByZeroException("OMG, ZERO?!?!?!");
+            var description = "Doing Stuff";
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.ProcessErrorAsync += eventArgs =>
+            {
+                capturedEventArgs = eventArgs;
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnProcessingErrorAsync(exception, new TestEventProcessorPartition(partitionId), description, cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(capturedEventArgs, Is.Not.Null, "The event handler should have been fired.");
+            Assert.That(capturedEventArgs.PartitionId, Is.EqualTo(partitionId), "The partition identifier should have been propagated.");
+            Assert.That(capturedEventArgs.Exception, Is.InstanceOf<DivideByZeroException>().And.Message.EqualTo(exception.Message), "The exception should have been propagated.");
+            Assert.That(capturedEventArgs.Operation, Is.EqualTo(description), "The operation description should have been propagated.");
+            Assert.That(capturedEventArgs.CancellationToken, Is.EqualTo(cancellationSource.Token), "The cancellation token should have been propagated.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorRaisesErrorEventHandlerWhenErrorsAreReportedForNoPartition()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var capturedEventArgs = default(ProcessErrorEventArgs);
+            var exception = new DivideByZeroException("OMG, ZERO?!?!?!");
+            var description = "Doing Stuff";
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.ProcessErrorAsync += eventArgs =>
+            {
+                capturedEventArgs = eventArgs;
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnProcessingErrorAsync(exception, null, description, cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(capturedEventArgs, Is.Not.Null, "The event handler should have been fired.");
+            Assert.That(capturedEventArgs.PartitionId, Is.Null, "The partition identifier should have been null.");
+            Assert.That(capturedEventArgs.Exception, Is.InstanceOf<DivideByZeroException>().And.Message.EqualTo(exception.Message), "The exception should have been propagated.");
+            Assert.That(capturedEventArgs.Operation, Is.EqualTo(description), "The operation description should have been propagated.");
+            Assert.That(capturedEventArgs.CancellationToken, Is.EqualTo(cancellationSource.Token), "The cancellation token should have been propagated.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorRaisesProcessEventHandlerWhenEventsAreRead()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var eventBatch = new[]
+            {
+                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123),
+                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456)
+            };
+
+            var capturedEventArgs = new List<ProcessEventArgs>();
+            var partitionId = "0";
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            mockCheckpointStore
+                .Setup(storage => storage.UpdateCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            processorClient.ProcessEventAsync += eventArgs =>
+            {
+                capturedEventArgs.Add(eventArgs);
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition(partitionId), cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(capturedEventArgs.Count, Is.EqualTo(eventBatch.Length), "The event handler should have been fired for each event in the batch.");
+
+            for (var index = 0; index < eventBatch.Length; ++index)
+            {
+                Assert.That(capturedEventArgs[index].HasEvent, Is.True, $"The event arguments should contain an event at index { index }.");
+                Assert.That(capturedEventArgs[index].Partition.FullyQualifiedNamespace, Is.EqualTo(processorClient.FullyQualifiedNamespace), "The fully qualified namespace should have been propagated.");
+                Assert.That(capturedEventArgs[index].Partition.EventHubName, Is.EqualTo(processorClient.EventHubName), "The event hub name should have been propagated.");
+                Assert.That(capturedEventArgs[index].Partition.ConsumerGroup, Is.EqualTo(processorClient.ConsumerGroup), "The consumer group should have been propagated.");
+                Assert.That(capturedEventArgs[index].Partition.PartitionId, Is.EqualTo(partitionId), $"The partition identifier should have been propagated at index { index }.");
+                Assert.That(capturedEventArgs[index].Data.IsEquivalentTo(eventBatch[index]), Is.True, $"The event should have been propagated and order preserved at index { index }.");
+                Assert.That(capturedEventArgs[index].CancellationToken, Is.EqualTo(cancellationSource.Token), $"The cancellation token should have been propagated at index { index }.");
+                Assert.That(async () => await capturedEventArgs[index].UpdateCheckpointAsync(), Throws.Nothing, $"A checkpoint should be allowed for the event at index { index }.");
+
+                var expectedStart = EventPosition.FromOffset(capturedEventArgs[index].Data.Offset);
+
+                mockCheckpointStore
+                    .Verify(storage => storage.UpdateCheckpointAsync(
+                        processorClient.FullyQualifiedNamespace,
+                        processorClient.EventHubName,
+                        processorClient.ConsumerGroup,
+                        capturedEventArgs[index].Partition.PartitionId,
+                        capturedEventArgs[index].Data.Offset,
+                        capturedEventArgs[index].Data.SequenceNumber,
+                        It.IsAny<CancellationToken>()),
+                    Times.Once,
+                    $"Creating a checkpoint for index { index } should have invoked the storage manager correctly.");
+            }
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorRaisesProcessEventHandlerWithAnEmptyContextWhenThereAreNoEvents()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var capturedEventArgs = default(ProcessEventArgs);
+            var partitionId = "0";
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.ProcessEventAsync += eventArgs =>
+            {
+                capturedEventArgs = eventArgs;
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnProcessingEventBatchAsync(Enumerable.Empty<EventData>(), new TestEventProcessorPartition(partitionId), cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(capturedEventArgs, Is.Not.Null, "The event handler should have been fired.");
+            Assert.That(capturedEventArgs.HasEvent, Is.False, "The event arguments should not contain an event.");
+            Assert.That(capturedEventArgs.Partition.FullyQualifiedNamespace, Is.EqualTo(processorClient.FullyQualifiedNamespace), "The fully qualified namespace should have been propagated.");
+            Assert.That(capturedEventArgs.Partition.EventHubName, Is.EqualTo(processorClient.EventHubName), "The event hub name should have been propagated.");
+            Assert.That(capturedEventArgs.Partition.ConsumerGroup, Is.EqualTo(processorClient.ConsumerGroup), "The consumer group should have been propagated.");
+            Assert.That(capturedEventArgs.Partition.PartitionId, Is.EqualTo(partitionId), "The partition identifier should have been propagated.");
+            Assert.That(capturedEventArgs.Data, Is.Null, "No event data should have been propagated.");
+            Assert.That(capturedEventArgs.CancellationToken, Is.EqualTo(cancellationSource.Token), "The cancellation token should have been propagated.");
+            Assert.That(async () => await capturedEventArgs.UpdateCheckpointAsync(), Throws.InstanceOf<InvalidOperationException>(), "A checkpoint cannot be created for an empty event.");
+
+            mockCheckpointStore
+                .Verify(storage => storage.UpdateCheckpointAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<long>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<CancellationToken>()),
+                Times.Never);
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public void EventProcessingToleratesAndSurfacesAnException()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var eventBatch = new[]
+            {
+                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123),
+                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456)
+            };
+
+            var invokeCount = 0;
+            var halfBatchCount = (int)Math.Floor(eventBatch.Length / 2.0f);
+            var expectedException = new DivideByZeroException("Ruh Roh, Raggy!");
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.ProcessEventAsync += eventArgs =>
+            {
+                if (invokeCount++ == halfBatchCount)
+                {
+                    throw expectedException;
+                }
 
                 return Task.CompletedTask;
             };
 
-            // Start the processor and wait for the event handler to be triggered.
+            Assert.That(async () => await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition("0"), cancellationSource.Token), Throws.Exception.EqualTo(expectedException), "The processing should have surfaced the exception");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(invokeCount, Is.EqualTo(eventBatch.Length), "The event handler should have been fired for each event in the batch.");
 
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-
-            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            await completionSource.Task;
-            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
-
-            // Validate the empty event arguments.
-
-            Assert.That(emptyEventArgs, Is.Not.Null, "The event arguments should have been populated.");
-            Assert.That(emptyEventArgs.Data, Is.Null, "The event arguments should not have an event available.");
-            Assert.That(emptyEventArgs.Partition, Is.Not.Null, "The event arguments should have a partition context.");
-            Assert.That(emptyEventArgs.Partition.PartitionId, Is.EqualTo(partitionId), "The partition identifier should match.");
-            Assert.That(() => emptyEventArgs.Partition.ReadLastEnqueuedEventProperties(), Throws.InstanceOf<InvalidOperationException>(), "The last event properties should not be available.");
+            cancellationSource.Cancel();
         }
 
         /// <summary>
-        ///   Verifies that partitions owned by an <see cref="EventProcessorClient" /> are immediately available to be claimed by another processor
-        ///   after <see cref="StopProcessingAsync" /> is called.
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
         /// </summary>
         ///
         [Test]
-        public async Task StoppedClientRelinquishesPartitionOwnershipOtherClientsConsiderThemClaimableImmediately()
+        public async Task EventProcessingToleratesAndSurfacesMultipleExceptions()
         {
-            const int NumberOfPartitions = 3;
-            Func<EventHubConnection> connectionFactory = () => new MockConnection();
-            var connection = connectionFactory();
-            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
-            var processor1 = new MockEventProcessorClient(
-                partitionManager,
-                connectionFactory: connectionFactory,
-                numberOfPartitions: NumberOfPartitions,
-                clientOptions: default);
-            var processor2 = new MockEventProcessorClient(
-                partitionManager,
-                connectionFactory: connectionFactory,
-                numberOfPartitions: NumberOfPartitions,
-                clientOptions: default);
-
-            // Establish timed cancellation to ensure that the test doesn't hang.
-
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            // Ownership should start empty.
+            var invokeCount = 0;
+            var eventCount = 9;
+            var exceptionCount = 0;
+            var exceptionMultiple = 3;
+            var exceptionMessage = "This is a processing exception";
+            var capturedException = default(AggregateException);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
-            var completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup, cancellationSource.Token);
-            Assert.That(completeOwnership.Any(), Is.False);
+            var eventBatch = Enumerable
+                .Range(0, eventCount)
+                .Select(index => new MockEventData(Array.Empty<byte>(), offset: 1000 + index, sequenceNumber: 2000 + index))
+                .ToList();
 
-            // Start the processor so that the processor claims a random partition until none are left.
+            processorClient.ProcessEventAsync += eventArgs =>
+            {
+                if (invokeCount++ % exceptionMultiple == 0)
+                {
+                    ++exceptionCount;
+                    throw new ApplicationException(exceptionMessage);
+                }
 
-            await processor1.StartProcessingAsync(cancellationSource.Token);
-            await processor1.WaitStabilization();
+                return Task.CompletedTask;
+            };
 
-            completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup, cancellationSource.Token);
+            try
+            {
+                await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition("0"), cancellationSource.Token);
+            }
+            catch (Exception ex)
+            {
+                capturedException = (ex as AggregateException);
+            }
 
-            // All partitions are owned by Processor1.
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(capturedException, Is.Not.Null, "An aggregate exception should have been thrown to contain each observed exception.");
+            Assert.That(capturedException.Message, Does.StartWith(Resources.AggregateEventProcessingExceptionMessage), "The error message should reflect the aggregate.");
+            Assert.That(capturedException.InnerExceptions.Count, Is.EqualTo(exceptionCount), "The aggregate should contain all of the processing exceptions.");
+            Assert.That(capturedException.InnerExceptions.Any(ex => ex.Message != exceptionMessage), Is.False, "The aggregate should contain only the exceptions observed during processing.");
 
-            Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(processor1.Identifier)), Is.EqualTo(NumberOfPartitions));
-
-            // Stopping the processor should relinquish all partition ownership.
-
-            await processor1.StopProcessingAsync(cancellationSource.Token);
-
-            completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup, cancellationSource.Token);
-
-            // No partitions are owned by Processor1.
-
-            Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(processor1.Identifier)), Is.EqualTo(0));
-
-            // Start Processor2 so that the processor claims a random partition until none are left.
-            // All partitions should be immediately claimable even though they were just claimed by the Processor1.
-
-            await processor2.StartProcessingAsync(cancellationSource.Token);
-            await processor2.WaitStabilization();
-
-            completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup, cancellationSource.Token);
-
-            // All partitions are owned by Processor2.
-
-            Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(processor2.Identifier)), Is.EqualTo(NumberOfPartitions));
-
-            await processor2.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
         }
 
         /// <summary>
-        ///   Verifies that claimable partitions are claimed by an <see cref="EventProcessorClient" /> after <see cref="StartProcessingAsync" /> is called.
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
         /// </summary>
         ///
         [Test]
-        public async Task FindAndClaimOwnershipAsyncClaimsAllClaimablePartitions()
+        public async Task EventProcessingLogsExecution()
         {
-            const int NumberOfPartitions = 3;
-            Func<EventHubConnection> connectionFactory = () => new MockConnection();
-            var connection = connectionFactory();
-            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
-            var processor = new MockEventProcessorClient(
-                partitionManager,
-                connectionFactory: connectionFactory,
-                numberOfPartitions: NumberOfPartitions,
-                clientOptions: default);
-
-            // Establish timed cancellation to ensure that the test doesn't hang.
-
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            // ownership should start empty.
+            var eventBatch = new[]
+            {
+                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123),
+                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456)
+            };
 
-            var completeOwnership = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
-            Assert.That(completeOwnership.Count(), Is.EqualTo(0));
-
-            // Start the processor so that the processor claims a random partition until none are left.
-
-            await processor.StartProcessingAsync(cancellationSource.Token);
-            await processor.WaitStabilization();
-
-            completeOwnership = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup);
-
-            Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions));
-
-            await processor.StopProcessingAsync(cancellationSource.Token);
-        }
-
-        /// <summary>
-        ///   Verifies that partitions ownership load balancing will direct an <see cref="EventProcessorClient" /> to claim ownership of a claimable partition
-        ///   when it owns exactly the calculated MinimumOwnedPartitionsCount.
-        /// </summary>
-        ///
-        [Test]
-        public async Task FindAndClaimOwnershipAsyncClaimsPartitionsWhenOwnedEqualsMinimumOwnedPartitionsCount()
-        {
-            const int MinimumpartitionCount = 4;
-            const int NumberOfPartitions = 13;
-            Func<EventHubConnection> connectionFactory = () => new MockConnection();
-            MockConnection connection = connectionFactory() as MockConnection;
-            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
-            var processor = new MockEventProcessorClient(
-                partitionManager,
-                connectionFactory: connectionFactory,
-                numberOfPartitions: NumberOfPartitions,
-                clientOptions: default);
-
-            // Establish timed cancellation to ensure that the test doesn't hang.
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
-
-            // Create partitions owned by this Processor.
-
-            var processor1PartitionIds = Enumerable.Range(1, MinimumpartitionCount);
-            var completeOwnership = processor.CreatePartitionOwnership(processor1PartitionIds.Select(i => i.ToString()), processor.Identifier);
-
-            // Create partitions owned by a different Processor.
-
-            var Processor2Id = Guid.NewGuid().ToString();
-            var processor2PartitionIds = Enumerable.Range(processor1PartitionIds.Max() + 1, MinimumpartitionCount);
-            completeOwnership = completeOwnership
-                .Concat(processor.CreatePartitionOwnership(processor2PartitionIds.Select(i => i.ToString()), Processor2Id));
-
-            // Create partitions owned by a different Processor.
-
-            var Processor3Id = Guid.NewGuid().ToString();
-            var processor3PartitionIds = Enumerable.Range(processor2PartitionIds.Max() + 1, MinimumpartitionCount);
-            completeOwnership = completeOwnership
-                .Concat(processor.CreatePartitionOwnership(processor3PartitionIds.Select(i => i.ToString()), Processor3Id));
-
-            // Seed the partitionManager with all partitions.
-
-            await partitionManager.ClaimOwnershipAsync(completeOwnership, cancellationSource.Token);
-
-            var consumerClient = processor.CreateConsumer(processor.ConsumerGroup, connection, default);
-
-            var claimablePartitionIds = (await consumerClient.GetPartitionIdsAsync())
-                                            .Except(completeOwnership.Select(p => p.PartitionId));
-
-            // Get owned partitions.
-
-            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
-            var ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
-
-            // Verify owned partitionIds match the owned partitions.
-
-            Assert.That(ownedByProcessor1.Count(), Is.EqualTo(MinimumpartitionCount));
-            Assert.That(ownedByProcessor1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.False);
-
-            // Start the processor to claim ownership from of a Partition even though ownedPartitionCount == MinimumOwnedPartitionsCount.
-
-            await processor.StartProcessingAsync(cancellationSource.Token);
-            await processor.WaitStabilization();
-
-            // Get owned partitions.
-
-            totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
-            ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
-
-            // Verify that we took ownership of the additional partition.
-
-            Assert.That(ownedByProcessor1.Count(), Is.GreaterThan(MinimumpartitionCount));
-            Assert.That(ownedByProcessor1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.True);
-
-            await processor.StopProcessingAsync(cancellationSource.Token);
-        }
-
-        /// <summary>
-        ///   Verifies that partitions ownership load balancing will direct an <see cref="EventProcessorClient" /> steal ownership of a partition
-        ///   from another <see cref="EventProcessorClient" /> the other processor owns greater than the calculated MaximumOwnedPartitionsCount.
-        /// </summary>
-        ///
-        [Test]
-        public async Task FindAndClaimOwnershipAsyncStealsPartitionsWhenThisProcessorOwnsMinPartitionsAndOtherProcessorOwnsGreatherThanMaxPartitions()
-        {
-            const int MinimumpartitionCount = 4;
-            const int MaximumpartitionCount = 5;
-            const int NumberOfPartitions = 14;
-            Func<EventHubConnection> connectionFactory = () => new MockConnection();
-            MockConnection connection = connectionFactory() as MockConnection;
-            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
-            var processor = new MockEventProcessorClient(
-                partitionManager,
-                connectionFactory: connectionFactory,
-                numberOfPartitions: NumberOfPartitions,
-                clientOptions: default);
-
-            // Establish timed cancellation to ensure that the test doesn't hang.
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-            // Create partitions owned by this Processor.
-
-            var processor1PartitionIds = Enumerable.Range(1, MinimumpartitionCount);
-            var completeOwnership = processor.CreatePartitionOwnership(processor1PartitionIds.Select(i => i.ToString()), processor.Identifier);
-
-            // Create partitions owned by a different Processor.
-
-            var Processor2Id = Guid.NewGuid().ToString();
-            var processor2PartitionIds = Enumerable.Range(processor1PartitionIds.Max() + 1, MinimumpartitionCount);
-            completeOwnership = completeOwnership
-                .Concat(processor.CreatePartitionOwnership(processor2PartitionIds.Select(i => i.ToString()), Processor2Id));
-
-            // Create partitions owned by a different Processor above the MaximumPartitionCount.
-
-            var Processor3Id = Guid.NewGuid().ToString();
-            var stealablePartitionIds = Enumerable.Range(processor2PartitionIds.Max() + 1, MaximumpartitionCount + 1);
-            completeOwnership = completeOwnership
-                .Concat(processor.CreatePartitionOwnership(stealablePartitionIds.Select(i => i.ToString()), Processor3Id));
-
-            // Seed the partitionManager with the owned partitions.
-
-            await partitionManager.ClaimOwnershipAsync(completeOwnership, cancellationSource.Token);
-
-            // Get owned partitions.
-
-            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
-            var ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
-            var ownedByProcessor3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == Processor3Id);
-
-            // Verify owned partitionIds match the owned partitions.
-
-            Assert.That(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.False);
-
-            // Verify processor 3 has stealable partitions.
-
-            Assert.That(ownedByProcessor3.Count(), Is.GreaterThan(MaximumpartitionCount));
-
-            // Start the processor to steal ownership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a processor owns > MaximumPartitionCount.
-
-            await processor.StartProcessingAsync(cancellationSource.Token);
-            await processor.WaitStabilization();
-
-            // Get owned partitions.
-
-            totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup);
-            ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
-            ownedByProcessor3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == Processor3Id);
-
-            // Verify that we took ownership of the additional partition.
-
-            Assert.That(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.True);
-
-            // Verify processor 3 now does not own > MaximumPartitionCount.
-
-            Assert.That(ownedByProcessor3.Count(), Is.EqualTo(MaximumpartitionCount));
-
-            await processor.StopProcessingAsync(cancellationSource.Token);
-        }
-
-        /// <summary>
-        ///   Verifies that partitions ownership load balancing will direct an <see cref="EventProcessorClient" /> steal ownership of a partition
-        ///   from another <see cref="EventProcessorClient" /> the other processor owns exactly the calculated MaximumOwnedPartitionsCount.
-        /// </summary>
-        ///
-        [Test]
-        public async Task FindAndClaimOwnershipAsyncStealsPartitionsWhenThisProcessorOwnsLessThanMinPartitionsAndOtherProcessorOwnsMaxPartitions()
-        {
-            const int MinimumpartitionCount = 4;
-            const int MaximumpartitionCount = 5;
-            const int NumberOfPartitions = 12;
-            Func<EventHubConnection> connectionFactory = () => new MockConnection();
-            MockConnection connection = connectionFactory() as MockConnection;
-            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
-            var processor = new MockEventProcessorClient(
-                partitionManager,
-                connectionFactory: connectionFactory,
-                numberOfPartitions: NumberOfPartitions,
-                clientOptions: default);
-
-            // Establish timed cancellation to ensure that the test doesn't hang.
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-            // Create more partitions owned by this Processor.
-
-            var processor1PartitionIds = Enumerable.Range(1, MinimumpartitionCount - 1);
-            var completeOwnership = processor.CreatePartitionOwnership(processor1PartitionIds.Select(i => i.ToString()), processor.Identifier);
-
-            // Create more partitions owned by a different Processor.
-
-            var Processor2Id = Guid.NewGuid().ToString();
-            var processor2PartitionIds = Enumerable.Range(processor1PartitionIds.Max() + 1, MinimumpartitionCount);
-            completeOwnership = completeOwnership
-                .Concat(processor.CreatePartitionOwnership(processor2PartitionIds.Select(i => i.ToString()), Processor2Id));
-
-            // Create more partitions owned by a different Processor above the MaximumPartitionCount.
-
-            var Processor3Id = Guid.NewGuid().ToString();
-            var stealablePartitionIds = Enumerable.Range(processor2PartitionIds.Max() + 1, MaximumpartitionCount);
-            completeOwnership = completeOwnership
-                .Concat(processor.CreatePartitionOwnership(stealablePartitionIds.Select(i => i.ToString()), Processor3Id));
-
-            // Seed the partitionManager with the owned partitions.
-
-            await partitionManager.ClaimOwnershipAsync(completeOwnership);
-
-            // Get owned partitions.
-
-            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
-            var ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
-            var ownedByProcessor3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == Processor3Id);
-
-            // Verify owned partitionIds match the owned partitions.
-
-            Assert.That(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.False);
-
-            // Verify processor 3 has stealable partitions.
-
-            Assert.That(ownedByProcessor3.Count(), Is.EqualTo(MaximumpartitionCount));
-
-            // Start the processor to steal ownership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a processor owns > MaximumPartitionCount.
-
-            await processor.StartProcessingAsync(cancellationSource.Token);
-            await processor.WaitStabilization();
-
-            // Get owned partitions.
-
-            totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
-            ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
-            ownedByProcessor3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == Processor3Id);
-
-            // Verify that we took ownership of the additional partition.
-
-            Assert.That(ownedByProcessor1.Any(owned => stealablePartitionIds.Contains(int.Parse(owned.PartitionId))), Is.True);
-
-            // Verify processor 3 now does not own > MaximumPartitionCount.
-
-            Assert.That(ownedByProcessor3.Count(), Is.LessThan(MaximumpartitionCount));
-
-            await processor.StopProcessingAsync(cancellationSource.Token);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   when resuming from a previous checkpoint.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProcessingStartsWithTheNextEventAfterTheCheckpoint()
-        {
-            var fqNamespace = "namespace";
-            var eventHub = "hub";
-            var consumerGroup = "consumerGroup";
             var partitionId = "3";
-            var checkpointOffset = 5631;
-            var checkpoint = new Checkpoint(fqNamespace, eventHub, consumerGroup, partitionId, checkpointOffset, 0);
-            var mockStorage = new MockCheckPointStorage();
-            var mockConsumer = new Mock<EventHubConsumerClient>(consumerGroup, Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, consumerGroup, fqNamespace, eventHub, Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
-            var completionSource = new TaskCompletionSource<bool>();
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.Logger = mockLogger.Object;
+            processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
+
+            await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition(partitionId), cancellationSource.Token);
+
+            mockLogger
+                .Verify(log => log.EventBatchProcessingStart(
+                    partitionId,
+                    processorClient.Identifier,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup),
+                Times.Once);
+
+            mockLogger
+                .Verify(log => log.EventBatchProcessingComplete(
+                    partitionId,
+                    processorClient.Identifier,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup),
+                Times.Once);
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcessingLogsExceptions()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var eventBatch = new[]
+            {
+                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123),
+                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456)
+            };
+
+            var partitionId = "3";
+            var expectedException = new ApplicationException("Why is water wet?");
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.Logger = mockLogger.Object;
+            processorClient.ProcessEventAsync += eventArgs => throw expectedException;
+
+            await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition(partitionId), cancellationSource.Token).IgnoreExceptions();
+
+            mockLogger
+                .Verify(log => log.EventBatchProcessingError(
+                    partitionId,
+                    processorClient.Identifier,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup,
+                    expectedException.Message),
+                Times.Exactly(eventBatch.Length));
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcessingRespectsCancellation()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var eventBatch = new[]
+            {
+                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123),
+                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456),
+                new MockEventData(new byte[] { 0x33 }, offset: 789, sequenceNumber: 789),
+                new MockEventData(new byte[] { 0x44 }, offset: 000, sequenceNumber: 000)
+            };
+
+            var processedEventsCount = 0;
+            var partitionId = "0";
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.ProcessEventAsync += eventArgs =>
+            {
+                ++processedEventsCount;
+                cancellationSource.Cancel();
+
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition(partitionId), cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.True, "The cancellation token should have been signaled.");
+            Assert.That(processedEventsCount, Is.EqualTo(1), "The event handler should not have been triggered after cancellation.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.GetCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointAsyncDelegatesToTheStorageManager()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partitionId = "5";
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            mockCheckpointStore
+                .Setup(storage => storage.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(default(EventProcessorCheckpoint));
+
+            await processorClient.InvokeGetCheckpointAsync(partitionId, cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            mockCheckpointStore
+                .Verify(storage => storage.GetCheckpointAsync(
+                    processorClient.FullyQualifiedNamespace,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup,
+                    partitionId,
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.GetCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointIncludesInitializeEventHandlerStartingPositionWhenNoNaturalCheckpointExists()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partitionId = "0";
+            var startingPosition = EventPosition.FromOffset(433);
+            var options = new EventProcessorOptions { DefaultStartingPosition = EventPosition.Latest };
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
+
+            mockCheckpointStore
+                .Setup(storage => storage.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(default(EventProcessorCheckpoint));
+
+            processorClient.PartitionInitializingAsync += eventArgs =>
+            {
+                eventArgs.DefaultStartingPosition = startingPosition;
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnInitializingPartitionAsync(new TestEventProcessorPartition(partitionId), cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            var checkpoint = await processorClient.InvokeGetCheckpointAsync(partitionId, cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been injected for the partition.");
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(startingPosition), "The injected checkpoint should have respected the value that the initialization event handler set.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.GetCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointPrefersNaturalCheckpointOverInitializeEventHandlerStartingPosition()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partitionId = "0";
+            var startingPosition = EventPosition.FromOffset(433);
+            var checkpointStartingPosition = EventPosition.FromSequenceNumber(999);
+            var options = new EventProcessorOptions { DefaultStartingPosition = EventPosition.Latest };
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
+
+            mockCheckpointStore
+                .Setup(storage => storage.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), partitionId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new EventProcessorCheckpoint { PartitionId = partitionId, StartingPosition = checkpointStartingPosition });
+
+            processorClient.PartitionInitializingAsync += eventArgs =>
+            {
+                eventArgs.DefaultStartingPosition = startingPosition;
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnInitializingPartitionAsync(new TestEventProcessorPartition(partitionId), cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            var checkpoint = await processorClient.InvokeGetCheckpointAsync(partitionId, cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoints should have been found for the partition.");
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(checkpointStartingPosition), "The natural checkpoint should have respected the value that the initialization event handler set.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.GetCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointReturnsNaturalCheckpointsWhenNoInitializeEventHandlerIsRegistered()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partitionId = "0";
+            var options = new EventProcessorOptions { DefaultStartingPosition = EventPosition.Latest };
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
+
+            mockCheckpointStore
+                .Setup(storage => storage.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(default(EventProcessorCheckpoint));
+
+            await processorClient.InvokeOnInitializingPartitionAsync(new TestEventProcessorPartition(partitionId), cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            var checkpoint = await processorClient.InvokeGetCheckpointAsync(partitionId, cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(checkpoint, Is.Null,  "No handler was registered for the partition; no checkpoint should have been injected.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.ListOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ListOwnershipDelegatesToTheStorageManager()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            mockCheckpointStore
+                .Setup(storage => storage.ListOwnershipAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(default(IEnumerable<EventProcessorPartitionOwnership>));
+
+            await processorClient.InvokeListOwnershipAsync(cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            mockCheckpointStore
+                .Verify(storage => storage.ListOwnershipAsync(
+                    processorClient.FullyQualifiedNamespace,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup,
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.ClaimOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClaimOwnershipDelegatesToTheStorageManager()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var desiredOwnership = new[] { new EventProcessorPartitionOwnership(), new EventProcessorPartitionOwnership() };
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            mockCheckpointStore
+                .Setup(storage => storage.ClaimOwnershipAsync(It.IsAny<IEnumerable<EventProcessorPartitionOwnership>>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(default(IEnumerable<EventProcessorPartitionOwnership>));
+
+            await processorClient.InvokeClaimOwnershipAsync(desiredOwnership, cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            mockCheckpointStore
+                .Verify(storage => storage.ClaimOwnershipAsync(
+                    desiredOwnership,
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task UpdateCheckpointDelegatesToTheStorageManager()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partitionId = "3";
+            var offset = 456;
+            var sequenceNumber = 789;
+            var mockStorage = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            await processorClient.InvokeUpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationSource.Token);
 
             mockStorage
-                .Checkpoints.Add((fqNamespace, eventHub, consumerGroup, partitionId), checkpoint);
-
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { partitionId });
-
-            mockConsumer
-                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
+                .Verify(storage => storage.UpdateCheckpointAsync(
+                    processorClient.FullyQualifiedNamespace,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup,
                     partitionId,
-                    EventPosition.FromOffset(checkpointOffset, false),
-                    It.IsAny<ReadEventOptions>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockPartitionEventEnumerable(20, token))
-                .Callback(() => completionSource.SetResult(true))
-                .Verifiable("The consumer should have been asked to read using the expected offset.");
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            // Start processing and wait for the consumer to be invoked.  Set a cancellation for backup to ensure
-            // that the test completes deterministically.
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
-
-            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            await Task.WhenAny(Task.Delay(-1, cancellationSource.Token), completionSource.Task);
-            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
-
-            // Validate that the consumer was invoked and that cancellation did not take place.
-
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
-            mockConsumer.VerifyAll();
+                    offset,
+                    sequenceNumber,
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
 
             cancellationSource.Cancel();
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   when resuming from a previous checkpoint.
+        ///   Verifies functionality of the <see cref="EventProcessorClient.UpdateCheckpointAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
-        public async Task ProcessingStartsWithTheExactDefaultPositionWithNoCheckpoint()
+        public void UpdateCheckpointRespectsTheCancellationToken()
         {
-            var fqNamespace = "namespace";
-            var eventHub = "hub";
-            var consumerGroup = "consumerGroup";
-            var partitionId = "3";
-            var defaultPosition = EventPosition.FromSequenceNumber(88724);
-            var mockStorage = new MockCheckPointStorage();
-            var mockConsumer = new Mock<EventHubConsumerClient>(consumerGroup, Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, consumerGroup, fqNamespace, eventHub, Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
-            var completionSource = new TaskCompletionSource<bool>();
-
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new[] { partitionId });
-
-            mockConsumer
-                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
-                    partitionId,
-                    defaultPosition,
-                    It.IsAny<ReadEventOptions>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockPartitionEventEnumerable(20, token))
-                .Callback(() => completionSource.SetResult(true))
-                .Verifiable("The consumer should have been asked to read using the expected offset.");
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            mockProcessor.Object.PartitionInitializingAsync += eventArgs =>
-            {
-                eventArgs.DefaultStartingPosition = defaultPosition;
-                return Task.CompletedTask;
-            };
-
-            // Start processing and wait for the consumer to be invoked.  Set a cancellation for backup to ensure
-            // that the test completes deterministically.
-
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.Cancel();
 
-            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            await Task.WhenAny(Task.Delay(-1, cancellationSource.Token), completionSource.Task);
-            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync("0", 123, default, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
 
-            // Validate that the consumer was invoked and that cancellation did not take place.
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task UpdateCheckpointLogsExecution()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
-            mockConsumer.VerifyAll();
+            var partitionId = "3";
+            var offset = 456;
+            var sequenceNumber = 789;
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.Logger = mockLogger.Object;
+            await processorClient.InvokeUpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationSource.Token);
+
+            mockLogger
+                .Verify(log => log.UpdateCheckpointStart(
+                    partitionId,
+                    processorClient.Identifier,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup),
+                Times.Once);
+
+            mockLogger
+                .Verify(log => log.UpdateCheckpointComplete(
+                    partitionId,
+                    processorClient.Identifier,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup),
+                Times.Once);
 
             cancellationSource.Cancel();
         }
 
         /// <summary>
-        ///   Retrieves the RetryPolicy for the processor client using its private accessor.
+        ///   Verifies functionality of the <see cref="EventProcessorClient.UpdateCheckpointAsync" />
+        ///   method.
         /// </summary>
         ///
-        private static EventHubsRetryPolicy GetRetryPolicy(EventProcessorClient client) =>
-            (EventHubsRetryPolicy)
+        [Test]
+        public void UpdateCheckpointLogsExceptions()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedException = new NotImplementedException("This didn't work.");
+            var partitionId = "3";
+            var offset = 456;
+            var sequenceNumber = 789;
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            var mockStorage = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            mockStorage
+                .Setup(storage => storage.UpdateCheckpointAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<long>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<CancellationToken>()))
+                .Throws(expectedException);
+
+            processorClient.Logger = mockLogger.Object;
+            Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
+
+            mockLogger
+                .Verify(log => log.UpdateCheckpointError(
+                    partitionId,
+                    processorClient.Identifier,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup,
+                    expectedException.Message),
+                Times.Once);
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Validates that the <see cref="EventProcessorClientOptions" />
+        ///   can be translated into the equivalent set of <see cref="EventProcessorOptions" />.
+        /// </summary>
+        ///
+        [Test]
+        public void ClientOptionsCanBeTranslated()
+        {
+            var clientOptions = new EventProcessorClientOptions
+            {
+                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
+                RetryOptions = new EventHubsRetryOptions { MaximumRetries = 99 },
+                Identifier = "OMG, HAI!",
+                MaximumWaitTime = TimeSpan.FromDays(54),
+                TrackLastEnqueuedEventProperties = true,
+                LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
+                PrefetchCount = 9990,
+                PrefetchSizeInBytes = 400,
+                LoadBalancingUpdateInterval = TimeSpan.FromSeconds(45),
+                PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(44)
+            };
+
+            var defaultOptions = new EventProcessorOptions();
+            var processorOptions = InvokeCreateOptions(clientOptions);
+
+            Assert.That(processorOptions, Is.Not.Null, "The processor options should have been created.");
+            Assert.That(processorOptions.ConnectionOptions, Is.Not.SameAs(clientOptions.ConnectionOptions), "The connection options should have been copied.");
+            Assert.That(processorOptions.ConnectionOptions.TransportType, Is.EqualTo(clientOptions.ConnectionOptions.TransportType), "The connection options should have been set.");
+            Assert.That(processorOptions.RetryOptions, Is.Not.SameAs(clientOptions.RetryOptions), "The retry options should have been copied.");
+            Assert.That(processorOptions.RetryOptions.MaximumRetries, Is.EqualTo(clientOptions.RetryOptions.MaximumRetries), "The retry options should have been set.");
+            Assert.That(processorOptions.Identifier, Is.EqualTo(clientOptions.Identifier), "The identifier should have been set.");
+            Assert.That(processorOptions.MaximumWaitTime, Is.EqualTo(clientOptions.MaximumWaitTime), "The maximum wait time should have been set.");
+            Assert.That(processorOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(clientOptions.TrackLastEnqueuedEventProperties), "The flag for last event tracking should have been set.");
+            Assert.That(processorOptions.LoadBalancingStrategy, Is.EqualTo(clientOptions.LoadBalancingStrategy), "The load balancing strategy should have been set.");
+            Assert.That(processorOptions.PrefetchCount, Is.EqualTo(clientOptions.PrefetchCount), "The prefetch count should have been set.");
+            Assert.That(processorOptions.PrefetchSizeInBytes, Is.EqualTo(clientOptions.PrefetchSizeInBytes), "The prefetch byte size should have been set.");
+            Assert.That(processorOptions.LoadBalancingUpdateInterval, Is.EqualTo(clientOptions.LoadBalancingUpdateInterval), "The load balancing interval should have been set.");
+            Assert.That(processorOptions.PartitionOwnershipExpirationInterval, Is.EqualTo(clientOptions.PartitionOwnershipExpirationInterval), "The partition ownership interval should have been set.");
+
+            Assert.That(processorOptions.DefaultStartingPosition, Is.EqualTo(defaultOptions.DefaultStartingPosition), "The default starting position should not have been set.");
+        }
+
+        /// <summary>
+        ///   Retrieves the active set of options for the processor client's base
+        ///   class using the base class private accessor.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance to consider.</param>
+        ///
+        private static EventProcessorOptions GetBaseOptions(EventProcessorClient instance) =>
+            (EventProcessorOptions)
+                typeof(EventProcessor<EventProcessorPartition>)
+                    .GetProperty("Options", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(instance);
+
+        /// <summary>
+        ///   Invokes the private CreateOptions method on the processor client,
+        ///   responsible for translating the client options into the equivalent general
+        ///   event processing options.
+        /// </summary>
+        ///
+        /// <param name="clientOptions">The options to translate.</param>
+        ///
+        /// <returns>The translated options.</returns>
+        ///
+        private static EventProcessorOptions InvokeCreateOptions(EventProcessorClientOptions clientOptions) =>
+            (EventProcessorOptions)
                 typeof(EventProcessorClient)
-                    .GetProperty("RetryPolicy", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .GetValue(client);
+                    .GetMethod("CreateOptions", BindingFlags.Static | BindingFlags.NonPublic)
+                    .Invoke(null, new object[] { clientOptions });
 
         /// <summary>
-        ///   Retrieves the ProcessingConsumerOptions for the processor client using its private accessor.
+        ///   A mock <see cref="EventProcessorClient" /> used for testing purposes.
         /// </summary>
         ///
-        private static EventHubConsumerClientOptions GetProcessingConsumerOptions(EventProcessorClient client) =>
-            (EventHubConsumerClientOptions)
-            typeof(EventProcessorClient)
-                .GetProperty("ProcessingConsumerOptions", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(client);
-
-        /// <summary>
-        ///   Retrieves the ProcessingReadEventOptions for the processor client using its private accessor.
-        /// </summary>
-        ///
-        private static ReadEventOptions GetProcessingReadEventOptions(EventProcessorClient client) =>
-            (ReadEventOptions)
-            typeof(EventProcessorClient)
-                .GetProperty("ProcessingReadEventOptions", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(client);
-
-        /// <summary>
-        ///   Creates a connection using a processor client's ConnectionFactory and returns its ConnectionOptions.
-        /// </summary>
-        ///
-        private static EventHubConnectionOptions GetConnectionOptionsSample(EventProcessorClient client)
+        public class TestEventProcessorClient : EventProcessorClient
         {
-            var connectionFactory = (Func<EventHubConnection>)typeof(EventProcessorClient)
-                .GetProperty("ConnectionFactory", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(client);
+            private readonly EventHubConnection InjectedConnection;
 
-            var connection = connectionFactory();
-
-            return (EventHubConnectionOptions)typeof(EventHubConnection)
-                .GetProperty("Options", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(connection);
-        }
-
-        /// <summary>
-        ///   Creates a mock async enumerable to simulate reading events from a partition.
-        /// </summary>
-        ///
-        private static async IAsyncEnumerable<PartitionEvent> MockPartitionEventEnumerable(int eventCount,
-                                                                                           [EnumeratorCancellation]CancellationToken cancellationToken)
-        {
-            for (var index = 0; index < eventCount; ++index)
+            internal TestEventProcessorClient(CheckpointStore checkpointStore,
+                                              string consumerGroup,
+                                              string fullyQualifiedNamespace,
+                                              string eventHubName,
+                                              TokenCredential credential,
+                                              EventHubConnection connection,
+                                              EventProcessorOptions options) : base(checkpointStore, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
             {
-                if (cancellationToken.IsCancellationRequested)
-                { break; }
-                await Task.Delay(25).ConfigureAwait(false);
-                yield return new PartitionEvent(new MockPartitionContext("fake"), new EventData(Encoding.UTF8.GetBytes($"Event { index }")));
+                InjectedConnection = connection;
             }
 
-            yield break;
-        }
-
-        /// <summary>
-        ///   Creates a mock async enumerable to simulate reading events from a partition.
-        /// </summary>
-        ///
-        private static async IAsyncEnumerable<PartitionEvent> MockEmptyPartitionEventEnumerable(int eventCount,
-                                                                                                [EnumeratorCancellation]CancellationToken cancellationToken)
-        {
-            for (var index = 0; index < eventCount; ++index)
+            internal TestEventProcessorClient(BlobContainerClient containerClient,
+                                              string consumerGroup,
+                                              string fullyQualifiedNamespace,
+                                              string eventHubName,
+                                              TokenCredential credential,
+                                              EventHubConnection connection,
+                                              EventProcessorClientOptions options) : base(containerClient, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
             {
-                if (cancellationToken.IsCancellationRequested)
-                { break; }
-                await Task.Delay(25).ConfigureAwait(false);
-                yield return new PartitionEvent();
+                InjectedConnection = connection;
             }
 
-            yield break;
+            public Task InvokeOnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken) => base.OnProcessingEventBatchAsync(events, partition, cancellationToken);
+            public Task InvokeOnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => base.OnProcessingErrorAsync(exception, partition, operationDescription, cancellationToken);
+            public Task InvokeOnInitializingPartitionAsync(EventProcessorPartition partition, CancellationToken cancellationToken) => base.OnInitializingPartitionAsync(partition, cancellationToken);
+            public Task InvokeOnPartitionProcessingStoppedAsync(EventProcessorPartition partition, ProcessingStoppedReason reason, CancellationToken cancellationToken) => base.OnPartitionProcessingStoppedAsync(partition, reason, cancellationToken);
+            public Task<EventProcessorCheckpoint> InvokeGetCheckpointAsync(string partitionId, CancellationToken cancellationToken) => base.GetCheckpointAsync(partitionId, cancellationToken);
+            public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeListOwnershipAsync(CancellationToken cancellationToken) => base.ListOwnershipAsync(cancellationToken);
+            public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => base.ClaimOwnershipAsync(desiredOwnership, cancellationToken);
+            public Task InvokeUpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, CancellationToken cancellationToken) => base.UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken);
+            protected override EventHubConnection CreateConnection() => InjectedConnection;
+            protected override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
         }
 
         /// <summary>
-        ///   Serves as a non-functional connection for testing consumer functionality.
+        ///   A mock <see cref="EventProcessorPartition" /> used for testing purposes.
         /// </summary>
         ///
-        private class MockConnection : EventHubConnection
+        public class TestEventProcessorPartition : EventProcessorPartition
         {
-            public MockConnection(string namespaceName = "fakeNamespace",
-                                  string eventHubName = "fakeEventHub",
-                                  EventHubConnectionOptions options = null) : base(namespaceName, eventHubName, CreateCredentials(), options)
-            { }
+            public TestEventProcessorPartition(string partitionId) { PartitionId = partitionId; }
+        }
 
-            private static EventHubTokenCredential CreateCredentials()
+        /// <summary>
+        ///   A mock <see cref="BlobClient" /> used for testing purposes.
+        /// </summary>
+        ///
+        public class MockBlobClient : BlobClient
+        {
+            public override string Name { get; }
+            public Exception UploadException;
+            public Exception DeleteException;
+
+            public MockBlobClient(string blobName)
             {
-                return new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net").Object;
+                Name = blobName;
             }
-        }
 
-        /// <summary>
-        ///   Serves as a mock <see cref="EventHubProperties" />.
-        /// </summary>
-        ///
-        private class MockEventHubProperties : EventHubProperties
-        {
-            public MockEventHubProperties(string name,
-                                          DateTimeOffset createdOn,
-                                          string[] partitionIds) : base(name, createdOn, partitionIds)
-            { }
-        }
-
-        /// <summary>
-        ///   Serves as a mock <see cref="PartitionContext" />.
-        /// </summary>
-        ///
-        private class MockPartitionContext : PartitionContext
-        {
-            public MockPartitionContext(string partitionId) : base(partitionId)
+            public override Task<Response<BlobContentInfo>> UploadAsync(Stream content, BlobHttpHeaders httpHeaders = null, IDictionary<string, string> metadata = null, BlobRequestConditions conditions = null, IProgress<long> progressHandler = null, AccessTier? accessTier = null, StorageTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
             {
+                if (UploadException != null)
+                {
+                    throw UploadException;
+                }
+
+                return Task.FromResult(
+                    Response.FromValue(
+                        BlobsModelFactory.BlobContentInfo(new ETag("etag"), new DateTimeOffset(2015, 10, 27, 00, 00, 00, 00, TimeSpan.Zero), Array.Empty<byte>(), string.Empty, 0L),
+                        Mock.Of<Response>()));
             }
+
+            public override Response<BlobContentInfo> Upload(Stream content, BlobHttpHeaders httpHeaders = null, IDictionary<string, string> metadata = null, BlobRequestConditions conditions = null, IProgress<long> progressHandler = null, AccessTier? accessTier = null, StorageTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
+            {
+                if (UploadException != null)
+                {
+                    throw UploadException;
+                }
+
+                return Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(new ETag("etag"), new DateTimeOffset(2015, 10, 27, 00, 00, 00, 00, TimeSpan.Zero), Array.Empty<byte>(), string.Empty, 0L),
+                    Mock.Of<Response>());
+            }
+
+            public override Task<Response<bool>> DeleteIfExistsAsync(DeleteSnapshotsOption snapshotsOption = DeleteSnapshotsOption.None, BlobRequestConditions conditions = null, CancellationToken cancellationToken = default)
+            {
+                if (DeleteException != null)
+                {
+                    throw DeleteException;
+                }
+
+                return Task.FromResult(Response.FromValue(true, Mock.Of<Response>()));
+            }
+
+            public override Response<bool> DeleteIfExists(DeleteSnapshotsOption snapshotsOption = DeleteSnapshotsOption.None, BlobRequestConditions conditions = null, CancellationToken cancellationToken = default)
+            {
+                if (DeleteException != null)
+                {
+                    throw DeleteException;
+                }
+
+                return Response.FromValue(true, Mock.Of<Response>());
+            }
+
+            public override Task<Response<BlobProperties>> GetPropertiesAsync(BlobRequestConditions conditions = null, CancellationToken cancellationToken = default) =>
+                 Task.FromResult(Response.FromValue(Mock.Of<BlobProperties>(), Mock.Of<Response>()));
         }
     }
 }

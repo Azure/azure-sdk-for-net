@@ -1,0 +1,16 @@
+parameters:
+  WorkingDirectory: '$(System.DefaultWorkingDirectory)'
+  RemoteRepo: 'origin'
+  DefaultBranchVariableName: DefaultBranch
+steps:
+- pwsh: |
+    $setDefaultBranch = (git remote show ${{ parameters.RemoteRepo }} | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
+    if ($LASTEXITCODE -ne 0) {
+      Write-Host "Not able to fetch the default branch from git command. Set to main."
+      $setDefaultBranch = 'main'
+    }
+    Write-Host "Setting ${{ parameters.DefaultBranchVariableName }}=$setDefaultBranch"
+    Write-Host "##vso[task.setvariable variable=${{ parameters.DefaultBranchVariableName }}]$setDefaultBranch"
+  displayName: "Setup Default Branch"
+  workingDirectory: ${{ parameters.workingDirectory }}
+  ignoreLASTEXITCODE: true

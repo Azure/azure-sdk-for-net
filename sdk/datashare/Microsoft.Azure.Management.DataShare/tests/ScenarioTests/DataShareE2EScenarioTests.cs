@@ -6,6 +6,7 @@ namespace DataShare.Tests.ScenarioTests
     using Microsoft.Azure.Management.DataShare;
     using Microsoft.Azure.Management.DataShare.Models;
     using Xunit;
+    using System.Web;
 
     public class DataShareE2EScenarioTests : ScenarioTestBase<DataShareE2EScenarioTests>
     {
@@ -14,17 +15,24 @@ namespace DataShare.Tests.ScenarioTests
         private const string shareSubscriptionName = "sdktestingsharesub";
         private const string synchronizationSettingName = "sdktestingsynchronizationsetting";
         private const string dataSetName = "sdktestingdataset";
+        private const string containerName = "containername";
         private const string triggerName = "sdktestingtrigger";
         private const string dataSetMappingName = "sdktestingdatasetmapping";
-        private const string sourceShareLocationName = "sdktestingsourcesharelocation";
+        private const string sourceShareLocationName = "eastus";
+
+        private const string subscriptionId = "SUBSCRIPTION_ID";
+        public static string tenant = "AADTENANT";
+        public static string servicePrincipal = "ServicePrincipal";
+        public static string locationOfDatabase = "eastus2euap";
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Scenario)]
         public async Task DataShareE2E()
         {
-            Account expectedAccount = new Account(new Identity(), ScenarioTestBase<DataShareE2EScenarioTests>.AccountLocation);
+            Account expectedAccount = new Account(identity, "DataShareId", shareName,default(SystemData), "Microsoft.DataShare", ScenarioTestBase<DataShareE2EScenarioTests>.AccountLocation); 
+            string subscriptionIdVal = Environment.GetEnvironmentVariable(subscriptionId);
 
-            Func<DataShareManagementClient, Task> action = async (client) =>
+        Func<DataShareManagementClient, Task> action = async (client) =>
             {
                 await AccountScenarioTests.CreateAsync(
                     client,
@@ -53,7 +61,7 @@ namespace DataShare.Tests.ScenarioTests
                     this.AccountName,
                     DataShareE2EScenarioTests.shareName,
                     DataShareE2EScenarioTests.dataSetName,
-                    DataSetScenarioTests.GetDataSet());
+                    DataSetScenarioTests.GetDataSet(containerName , DataSetScenarioTests.filepath, this.ResourceGroupName, ScenarioTestBase<DataShareE2EScenarioTests>.storageActName, subscriptionIdVal));
 
                 Invitation invitation = await InvitationScenarioTests.CreateAsync(
                     client,
@@ -62,6 +70,11 @@ namespace DataShare.Tests.ScenarioTests
                     DataShareE2EScenarioTests.shareName,
                     DataShareE2EScenarioTests.invitationName,
                     InvitationScenarioTests.GetExpectedInvitation());
+
+                EmailRegistration emailRegistration =
+                    await EmailRegistrationScenarioTests.RegisterEmailAsync(client, locationOfDatabase);
+
+                await EmailRegistrationScenarioTests.ActivateEmailAsync(client, locationOfDatabase, emailRegistration);
 
                 await ShareSubscriptionScenarioTests.CreateAsync(
                     client,
@@ -86,7 +99,7 @@ namespace DataShare.Tests.ScenarioTests
                     this.AccountName,
                     DataShareE2EScenarioTests.shareSubscriptionName,
                     DataShareE2EScenarioTests.dataSetMappingName,
-                    DataSetMappingScenarioTests.GetDataSetMapping());
+                    DataSetMappingScenarioTests.GetDataSetMapping(containerName, DataSetScenarioTests.dataSetId, DataSetScenarioTests.filepath, this.ResourceGroupName,storageActName,subscriptionIdVal));
 
                 ShareSubscriptionScenarioTests.Synchronize(
                     client,

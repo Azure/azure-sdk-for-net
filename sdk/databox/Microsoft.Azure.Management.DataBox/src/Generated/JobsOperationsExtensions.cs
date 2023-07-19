@@ -60,6 +60,53 @@ namespace Microsoft.Azure.Management.DataBox
             }
 
             /// <summary>
+            /// Request to mark devices for a given job as shipped
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='jobName'>
+            /// The name of the job Resource within the specified resource group. job names
+            /// must be between 3 and 24 characters in length and use any alphanumeric and
+            /// underscore only
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='deliverToDcPackageDetails'>
+            /// Delivery package details
+            /// </param>
+            public static void MarkDevicesShipped(this IJobsOperations operations, string jobName, string resourceGroupName, PackageCarrierInfo deliverToDcPackageDetails)
+            {
+                operations.MarkDevicesShippedAsync(jobName, resourceGroupName, deliverToDcPackageDetails).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Request to mark devices for a given job as shipped
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='jobName'>
+            /// The name of the job Resource within the specified resource group. job names
+            /// must be between 3 and 24 characters in length and use any alphanumeric and
+            /// underscore only
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='deliverToDcPackageDetails'>
+            /// Delivery package details
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task MarkDevicesShippedAsync(this IJobsOperations operations, string jobName, string resourceGroupName, PackageCarrierInfo deliverToDcPackageDetails, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.MarkDevicesShippedWithHttpMessagesAsync(jobName, resourceGroupName, deliverToDcPackageDetails, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Lists all the jobs available under the given resource group.
             /// </summary>
             /// <param name='operations'>

@@ -1,32 +1,36 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Runtime.CompilerServices;
-using System.Security.Authentication;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.EventHub;
-using Microsoft.Azure.Management.EventHub.Models;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Rest;
-using Microsoft.Rest.Azure;
-using Polly;
-
-using StorageManagement = Microsoft.Azure.Management.Storage.Models;
-
 namespace Microsoft.Azure.EventHubs.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Sockets;
+    using System.Runtime.CompilerServices;
+    using System.Security.Authentication;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.EventHub;
+    using Microsoft.Azure.Management.EventHub.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.Storage;
+    using Microsoft.Azure.Storage;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
+    using Polly;
+
+    using StorageManagement = Microsoft.Azure.Management.Storage.Models;
+
     internal sealed class EventHubScope : IAsyncDisposable
     {
-        private const int RetryMaximumAttempts = 15;
+        private const int RetryMaximumAttempts = 20;
         private const double RetryExponentialBackoffSeconds = 3.0;
-        private const double RetryBaseJitterSeconds = 20.0;
+        private const double RetryBaseJitterSeconds = 60.0;
 
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
@@ -57,7 +61,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             var resourceGroup = TestUtility.EventHubsResourceGroup;
             var eventHubNamespace = TestUtility.EventHubsNamespace;
             var token = await AquireManagementTokenAsync();
-            var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription };
+            var client = new EventHubManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription };
 
             try
             {
@@ -99,7 +103,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription })
+            using (var client = new EventHubManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = TestUtility.EventHubsSubscription })
             {
                 var eventHub = new Eventhub(partitionCount: partitionCount);
                 eventHub = await CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub));
@@ -127,7 +131,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             string CreateName() => $"net-eventhubs-track-one-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
 
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new EventHubManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
@@ -135,7 +139,7 @@ namespace Microsoft.Azure.EventHubs.Tests
                 eventHubsNamespace = await CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
 
                 var accessKey = await CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, "RootManageSharedAccessKey"));
-                return new AzureResourceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString);
+                return new AzureResourceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString, true);
             }
         }
 
@@ -145,7 +149,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             var resourceGroup = TestUtility.EventHubsResourceGroup;
             var token = await AquireManagementTokenAsync();
 
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new EventHubManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 await CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));
                 ;
@@ -160,7 +164,7 @@ namespace Microsoft.Azure.EventHubs.Tests
 
             string CreateName() => $"neteventhubstrackone{ Guid.NewGuid().ToString("D").Substring(0, 4) }";
 
-            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new StorageManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
@@ -169,7 +173,7 @@ namespace Microsoft.Azure.EventHubs.Tests
                 var storageAccount = await CreateRetryPolicy<StorageManagement.StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
 
                 var storageKeys = await CreateRetryPolicy<StorageManagement.StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
-                return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net");
+                return new AzureResourceProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix={ TestUtility.StorageEndpointSuffix }", true);
             }
         }
 
@@ -179,7 +183,7 @@ namespace Microsoft.Azure.EventHubs.Tests
             var resourceGroup = TestUtility.EventHubsResourceGroup;
             var token = await AquireManagementTokenAsync();
 
-            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            using (var client = new StorageManagementClient(TestUtility.ResourceManager, new TokenCredentials(token)) { SubscriptionId = subscription })
             {
                 await CreateRetryPolicy().ExecuteAsync(() => client.StorageAccounts.DeleteAsync(resourceGroup, accountName));
             }
@@ -189,7 +193,7 @@ namespace Microsoft.Azure.EventHubs.Tests
                                                                           string resourceGroupName,
                                                                           string subscriptionId)
         {
-            using (var client = new ResourceManagementClient(new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
+            using (var client = new ResourceManagementClient(TestUtility.ResourceManager, new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId })
             {
                 var resourceGroup = await CreateRetryPolicy<Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName));
                 return resourceGroup.Location;
@@ -208,22 +212,57 @@ namespace Microsoft.Azure.EventHubs.Tests
 
         private static IAsyncPolicy<T> CreateRetryPolicy<T>(int maxRetryAttempts = RetryMaximumAttempts, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
            Policy<T>
-               .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-               .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+               .Handle<Exception>(ex => ShouldRetry(ex))
                .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static IAsyncPolicy CreateRetryPolicy(int maxRetryAttempts = RetryMaximumAttempts, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
             Policy
-                .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-                .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+                .Handle<Exception>(ex => ShouldRetry(ex))
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static bool IsRetriableStatus(HttpStatusCode statusCode) =>
             ((statusCode == HttpStatusCode.Unauthorized)
+                || (statusCode == ((HttpStatusCode)408))
+                || (statusCode == HttpStatusCode.Conflict)
+                || (statusCode == ((HttpStatusCode)429))
                 || (statusCode == HttpStatusCode.InternalServerError)
                 || (statusCode == HttpStatusCode.ServiceUnavailable)
-                || (statusCode == HttpStatusCode.Conflict)
                 || (statusCode == HttpStatusCode.GatewayTimeout));
+
+         private static bool ShouldRetry(Exception ex) =>
+            ((IsRetriableException(ex)) || (IsRetriableException(ex?.InnerException)));
+
+        private static bool IsRetriableException(Exception ex)
+        {
+            if (ex == null)
+            {
+                return false;
+            }
+
+            switch (ex)
+            {
+                case ErrorResponseException erEx:
+                    return IsRetriableStatus(erEx.Response.StatusCode);
+
+                case CloudException clEx:
+                    return IsRetriableStatus(clEx.Response.StatusCode);
+
+                case StorageException stEx:
+                    return IsRetriableStatus((HttpStatusCode)stEx.RequestInformation.HttpStatusCode);
+
+                case TimeoutException _:
+                case TaskCanceledException _:
+                case OperationCanceledException _:
+                case HttpRequestException _:
+                case WebException _:
+                case SocketException _:
+                case IOException _:
+                    return true;
+
+                default:
+                    return false;
+            };
+        }
 
         private static TimeSpan CalculateRetryDelay(int attempt, double exponentialBackoffSeconds, double baseJitterSeconds) =>
             TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (RandomNumberGenerator.Value.NextDouble() * baseJitterSeconds));
@@ -231,12 +270,13 @@ namespace Microsoft.Azure.EventHubs.Tests
         private static async Task<string> AquireManagementTokenAsync()
         {
             var token = s_managementToken;
+            var authority = new Uri(new Uri(TestUtility.AuthorityHost), TestUtility.EventHubsTenant).ToString();
 
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
                 var credential = new ClientCredential(TestUtility.EventHubsClient, TestUtility.EventHubsSecret);
-                var context = new AuthenticationContext($"https://login.windows.net/{ TestUtility.EventHubsTenant }");
-                var result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential);
+                var context = new AuthenticationContext(authority);
+                var result = await context.AcquireTokenAsync(TestUtility.ServiceManagementUrl, credential).ConfigureAwait(false);
 
                 if ((String.IsNullOrEmpty(result?.AccessToken)))
                 {
@@ -254,12 +294,15 @@ namespace Microsoft.Azure.EventHubs.Tests
         {
             public readonly string Name;
             public readonly string ConnectionString;
+            public readonly bool ShouldRemoveAtCompletion;
 
             internal AzureResourceProperties(string name,
-                                             string connectionString)
+                                             string connectionString,
+                                             bool shouldRemoveAtCompletion)
             {
                 Name = name;
                 ConnectionString = connectionString;
+                ShouldRemoveAtCompletion = shouldRemoveAtCompletion;
             }
         }
 

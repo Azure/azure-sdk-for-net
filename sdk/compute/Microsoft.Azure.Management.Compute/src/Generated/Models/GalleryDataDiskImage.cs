@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="hostCaching">The host caching of the disk. Valid
         /// values are 'None', 'ReadOnly', and 'ReadWrite'. Possible values
         /// include: 'None', 'ReadOnly', 'ReadWrite'</param>
-        public GalleryDataDiskImage(int lun, int? sizeInGB = default(int?), HostCaching? hostCaching = default(HostCaching?), GalleryArtifactVersionSource source = default(GalleryArtifactVersionSource))
+        public GalleryDataDiskImage(int lun, int? sizeInGB = default(int?), HostCaching? hostCaching = default(HostCaching?), GalleryDiskImageSource source = default(GalleryDiskImageSource))
             : base(sizeInGB, hostCaching, source)
         {
             Lun = lun;
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            //Nothing to validate
         }
     }
 }

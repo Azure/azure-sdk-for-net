@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
 using System;
 using Azure.Core;
 
@@ -15,9 +14,9 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// The latest service version supported by this client library.
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_0;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_4;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client
@@ -29,14 +28,34 @@ namespace Azure.Security.KeyVault.Keys
             /// <summary>
             /// The Key Vault API version 7.0.
             /// </summary>
-            V7_0 = 0
+            V7_0 = 0,
+
+            /// <summary>
+            /// The Key Vault API version 7.1.
+            /// </summary>
+            V7_1 = 1,
+
+            /// <summary>
+            /// The Key Vault API version 7.2.
+            /// </summary>
+            V7_2 = 2,
+
+            /// <summary>
+            /// The Key Vault API version 7.3.
+            /// </summary>
+            V7_3 = 3,
+
+            /// <summary>
+            /// The Key Vault API version 7.4.
+            /// </summary>
+            V7_4 = 4,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests. For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
+        /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
         public ServiceVersion Version { get; }
 
@@ -48,24 +67,29 @@ namespace Azure.Security.KeyVault.Keys
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public KeyClientOptions(ServiceVersion version = ServiceVersion.V7_0)
+        public KeyClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
 
             this.ConfigureLogging();
         }
 
+        /// <summary>
+        /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault or Managed HSM domain.
+        /// </summary>
+        public bool DisableChallengeResourceVerification { get; set; }
+
         internal string GetVersionString()
         {
-            string version = string.Empty;
-
-            version = Version switch
+            return Version switch
             {
                 ServiceVersion.V7_0 => "7.0",
-
+                ServiceVersion.V7_1 => "7.1",
+                ServiceVersion.V7_2 => "7.2",
+                ServiceVersion.V7_3 => "7.3",
+                ServiceVersion.V7_4 => "7.4",
                 _ => throw new ArgumentException(Version.ToString()),
             };
-            return version;
         }
     }
 }

@@ -50,6 +50,25 @@ namespace DataBoxEdge.Tests
 
         }
 
+        [Fact]
+        public void Test_K8Roles()
+        {
+            var k8RoleObj = TestUtilities.GetK8RoleObject("k8role1");
+
+            var role = Client.Roles.CreateOrUpdate(TestConstants.EdgeResourceName, k8RoleObj.Name, k8RoleObj, TestConstants.DefaultResourceGroupName);
+
+            // Get an iot role by name
+            Client.Roles.Get(TestConstants.EdgeResourceName, k8RoleObj.Name, TestConstants.DefaultResourceGroupName);
+
+            // List iot Roles in the device
+            string continuationToken = null;
+            TestUtilities.ListRoles(Client, TestConstants.EdgeResourceName, TestConstants.DefaultResourceGroupName, out continuationToken);
+
+            // Delete iot role
+            Client.Roles.Delete(TestConstants.EdgeResourceName, k8RoleObj.Name, TestConstants.DefaultResourceGroupName);
+
+        }
+
         #endregion Test Methods
 
     }

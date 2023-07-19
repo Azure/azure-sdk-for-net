@@ -17,7 +17,19 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void DiskEncryptionSet_CRUD()
         {
-            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD", location: supportedZoneLocation);
+            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD", DiskEncryptionSetType.EncryptionAtRestWithCustomerKey, location: supportedZoneLocation);
+        }
+
+        [Fact]
+        public void DiskEncryptionSet_CRUD_EncryptionWithPlatformAndCustomerKeys()
+        {
+            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD_EncryptionWithPlatformAndCustomerKeys", DiskEncryptionSetType.EncryptionAtRestWithPlatformAndCustomerKeys, location: supportedZoneLocation);
+        }
+
+        [Fact]
+        public void DiskEncryptionSet_CRUD_ConfidentialVmEncryptedWithCustomerKey()
+        {
+            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD_ConfidentialVmEncryptedWithCustomerKey", DiskEncryptionSetType.ConfidentialVmEncryptedWithCustomerKey, location: supportedZoneLocation);
         }
 
         [Fact]
@@ -26,16 +38,22 @@ namespace Compute.Tests.DiskRPTests
             DiskEncryptionSet_List_Execute("DiskEncryptionSet_List", location: supportedZoneLocation);
         }
 
-        [Fact]
+        [Fact(Skip = "Resources no longer exist")]
         public void DiskEncryptionSet_CreateDisk()
         {
-            DiskEncryptionSet_CreateDisk_Execute("DiskEncryptionSet_CreateDisk", location: supportedZoneLocation);
+            DiskEncryptionSet_CreateDisk_Execute("DiskEncryptionSet_CreateDisk", location: "centraluseuap");
+        }
+
+        [Fact (Skip = "Resources no longer exist")]
+        public void DiskEncryptionSet_AddDESToExistingDisk()
+        {
+            DiskEncryptionSet_UpdateDisk_Execute("DiskEncryptionSet_AddDESToExistingDisk", location: "centraluseuap");
         }
 
         [Fact]
-        public void DiskEncryptionSet_AddDESToExistingDisk()
+        public void DiskEncryptionSet_CRD_RotationToLatestKeyVersionEnabled()
         {
-            DiskEncryptionSet_UpdateDisk_Execute("DiskEncryptionSet_AddDESToExistingDisk", location: supportedZoneLocation);
+            DiskEncryptionSet_WithRotationToLatestKeyVersionEnabled_CRD_Execute("DiskEncryptionSet_CRD_RotationToLatestKeyVersionEnabled", DiskEncryptionSetType.EncryptionAtRestWithCustomerKey, location: supportedZoneLocation);
         }
     }
 }

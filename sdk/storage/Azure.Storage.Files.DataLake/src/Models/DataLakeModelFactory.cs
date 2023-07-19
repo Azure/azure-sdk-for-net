@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -14,7 +15,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         #region FileDownloadDetails
         /// <summary>
-        /// Creates a new <see cref="FileDownloadDetails"/> instance for mocking.
+        /// Creates a new FileDownloadDetails instance for mocking.
         /// </summary>
         public static FileDownloadDetails FileDownloadDetails(
             DateTimeOffset lastModified,
@@ -31,9 +32,117 @@ namespace Azure.Storage.Files.DataLake.Models
             string copyProgress,
             Uri copySource,
             CopyStatus copyStatus,
-            LeaseDurationType leaseDuration,
-            LeaseState leaseState,
-            LeaseStatus leaseStatus,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            byte[] contentHash,
+            DateTimeOffset createdOn,
+            string encryptionContext)
+            => new FileDownloadDetails()
+            {
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentRange = contentRange,
+                ETag = eTag,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CopyCompletedOn = copyCompletionTime,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                ContentHash = contentHash,
+                CreatedOn = createdOn,
+                EncryptionContext = encryptionContext
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Models.FileDownloadDetails"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileDownloadDetails FileDownloadDetails(
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            string contentRange,
+            ETag eTag,
+            string contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            string contentLanguage,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            byte[] contentHash,
+            DateTimeOffset createdOn)
+            => new FileDownloadDetails()
+            {
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentRange = contentRange,
+                ETag = eTag,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CopyCompletedOn = copyCompletionTime,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                ContentHash = contentHash,
+                CreatedOn = createdOn,
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Models.FileDownloadDetails"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileDownloadDetails FileDownloadDetails(
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            string contentRange,
+            ETag eTag,
+            string contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            string contentLanguage,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
             string acceptRanges,
             bool isServerEncrypted,
             string encryptionKeySha256,
@@ -98,8 +207,25 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region FileSystemItem
         /// <summary>
-        /// Creates a new <see cref="FileSystemItem"/> instance for mocking.
+        /// Creates a new FileSystemItem instance for mocking.
         /// </summary>
+        public static FileSystemItem FileSystemItem(
+            string name = default,
+            bool? isDeleted = default,
+            string versionId = default,
+            FileSystemProperties properties = default)
+            => new FileSystemItem()
+            {
+                Name = name,
+                IsDeleted = isDeleted,
+                VersionId = versionId,
+                Properties = properties
+            };
+
+        /// <summary>
+        /// Creates a new FileSystemItem" instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileSystemItem FileSystemItem(
             string name,
             FileSystemProperties properties)
@@ -112,13 +238,44 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region FileSystemProperties
         /// <summary>
-        /// Creates a new <see cref="FileSystemProperties"/> instance for mocking.
+        /// Creates a new FileSystemProperties instance for mocking.
         /// </summary>
         public static FileSystemProperties FileSystemProperties(
+            DateTimeOffset lastModified = default,
+            DataLakeLeaseStatus? leaseStatus = default,
+            DataLakeLeaseState? leaseState = default,
+            DataLakeLeaseDuration? leaseDuration = default,
+            PublicAccessType? publicAccess = default,
+            bool? hasImmutabilityPolicy = default,
+            bool? hasLegalHold = default,
+            ETag eTag = default,
+            IDictionary<string, string> metadata = default,
+            DateTimeOffset? deletedOn = default,
+            int? remainingRetentionDays = default)
+            => new FileSystemProperties()
+            {
+                LastModified = lastModified,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                PublicAccess = publicAccess,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                HasLegalHold = hasLegalHold,
+                ETag = eTag,
+                Metadata = metadata,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays
+            };
+
+        /// <summary>
+        /// Creates a new FileSystemProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileSystemProperties FileSystemProperties(
             DateTimeOffset lastModified,
-            LeaseStatus? leaseStatus,
-            LeaseState? leaseState,
-            LeaseDurationType? leaseDuration,
+            DataLakeLeaseStatus? leaseStatus,
+            DataLakeLeaseState? leaseState,
+            DataLakeLeaseDuration? leaseDuration,
             PublicAccessType? publicAccess,
             bool? hasImmutabilityPolicy,
             bool? hasLegalHold,
@@ -236,8 +393,68 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathItem
         /// <summary>
-        /// Creates a new <see cref="PathItem"/> instance for mocking.
+        /// Creates a new PathItem instance for mocking.
         /// </summary>
+        public static PathItem PathItem(
+            string name,
+            bool? isDirectory,
+            DateTimeOffset lastModified,
+            ETag eTag,
+            long? contentLength,
+            string owner,
+            string group,
+            string permissions,
+            DateTimeOffset? createdOn,
+            DateTimeOffset? expiresOn,
+            string encryptionContext)
+            => new PathItem()
+            {
+                Name = name,
+                IsDirectory = isDirectory,
+                LastModified = lastModified,
+                ETag = eTag,
+                ContentLength = contentLength,
+                Owner = owner,
+                Group = group,
+                Permissions = permissions,
+                CreatedOn = createdOn,
+                ExpiresOn = expiresOn,
+                EncryptionContext = encryptionContext
+            };
+
+        /// <summary>
+        /// Creates a new PathItem instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PathItem PathItem(
+            string name,
+            bool? isDirectory,
+            DateTimeOffset lastModified,
+            ETag eTag,
+            long? contentLength,
+            string owner,
+            string group,
+            string permissions,
+            DateTimeOffset? createdOn,
+            DateTimeOffset? expiresOn)
+            => new PathItem()
+            {
+                Name = name,
+                IsDirectory = isDirectory,
+                LastModified = lastModified,
+                ETag = eTag,
+                ContentLength = contentLength,
+                Owner = owner,
+                Group = group,
+                Permissions = permissions,
+                CreatedOn = createdOn,
+                ExpiresOn = expiresOn
+            };
+
+        /// <summary>
+        /// Creates a new PathItem instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PathItem PathItem(
             string name,
             bool? isDirectory,
@@ -262,7 +479,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathProperties
         /// <summary>
-        /// Creates a new <see cref="PathProperties"/> instance for mocking.
+        /// Creates a new PathProperties instance for mocking.
         /// </summary>
         public static PathProperties PathProperties(
             DateTimeOffset lastModified,
@@ -275,9 +492,214 @@ namespace Azure.Storage.Files.DataLake.Models
             Uri copySource,
             CopyStatus copyStatus,
             bool isIncrementalCopy,
-            LeaseDurationType leaseDuration,
-            LeaseState leaseState,
-            LeaseStatus leaseStatus,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string accessTier,
+            string archiveStatus,
+            DateTimeOffset accessTierChangeTime,
+            bool isDirectory,
+            string encryptionContext,
+            string owner,
+            string group,
+            string permissions)
+            => new PathProperties()
+            {
+                LastModified = lastModified,
+                CreatedOn = creationTime,
+                Metadata = metadata,
+                CopyCompletedOn = copyCompletionTime,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                AccessTier = accessTier,
+                ArchiveStatus = archiveStatus,
+                AccessTierChangedOn = accessTierChangeTime,
+                IsDirectory = isDirectory,
+                EncryptionContext = encryptionContext,
+                Owner = owner,
+                Group = group,
+                Permissions = permissions
+            };
+
+        /// <summary>
+        /// Creates a new PathProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PathProperties PathProperties(
+            DateTimeOffset lastModified,
+            DateTimeOffset creationTime,
+            IDictionary<string, string> metadata,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            bool isIncrementalCopy,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string accessTier,
+            string archiveStatus,
+            DateTimeOffset accessTierChangeTime,
+            bool isDirectory,
+            string encryptionContext)
+            => new PathProperties()
+            {
+                LastModified = lastModified,
+                CreatedOn = creationTime,
+                Metadata = metadata,
+                CopyCompletedOn = copyCompletionTime,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                AccessTier = accessTier,
+                ArchiveStatus = archiveStatus,
+                AccessTierChangedOn = accessTierChangeTime,
+                IsDirectory = isDirectory,
+                EncryptionContext = encryptionContext
+            };
+
+        /// <summary>
+        /// Creates a new PathProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PathProperties PathProperties(
+            DateTimeOffset lastModified,
+            DateTimeOffset creationTime,
+            IDictionary<string, string> metadata,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            bool isIncrementalCopy,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string accessTier,
+            string archiveStatus,
+            DateTimeOffset accessTierChangeTime,
+            bool isDirectory)
+            => new PathProperties()
+            {
+                LastModified = lastModified,
+                CreatedOn = creationTime,
+                Metadata = metadata,
+                CopyCompletedOn = copyCompletionTime,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                AccessTier = accessTier,
+                ArchiveStatus = archiveStatus,
+                AccessTierChangedOn = accessTierChangeTime,
+                IsDirectory = isDirectory
+            };
+
+        /// <summary>
+        /// Creates a new PathProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PathProperties PathProperties(
+            DateTimeOffset lastModified,
+            DateTimeOffset creationTime,
+            IDictionary<string, string> metadata,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            bool isIncrementalCopy,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
             long contentLength,
             string contentType,
             ETag eTag,
@@ -347,5 +769,23 @@ namespace Azure.Storage.Files.DataLake.Models
                 Value = value
             };
         #endregion UserDelegationKey
+
+        #region DataLakeQueryError
+        /// <summary>
+        /// Creates a new BlobQueryError instance for mocking.
+        /// </summary>
+        public static DataLakeQueryError DataLakeQueryError(
+            string name = default,
+            string description = default,
+            bool isFatal = default,
+            long position = default)
+            => new DataLakeQueryError
+            {
+                Name = name,
+                Description = description,
+                IsFatal = isFatal,
+                Position = position
+            };
+        #endregion DataLakeQueryError
     }
 }

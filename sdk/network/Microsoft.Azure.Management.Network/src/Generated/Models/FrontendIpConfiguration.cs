@@ -50,11 +50,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="privateIPAddressVersion">Whether the specific
         /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
         /// values include: 'IPv4', 'IPv6'</param>
-        /// <param name="subnet">The reference of the subnet resource.</param>
-        /// <param name="publicIPAddress">The reference of the Public IP
+        /// <param name="subnet">The reference to the subnet resource.</param>
+        /// <param name="publicIPAddress">The reference to the Public IP
         /// resource.</param>
-        /// <param name="publicIPPrefix">The reference of the Public IP Prefix
+        /// <param name="publicIPPrefix">The reference to the Public IP Prefix
         /// resource.</param>
+        /// <param name="gatewayLoadBalancer">The reference to gateway load
+        /// balancer frontend IP.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// frontend IP configuration resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -66,7 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Type of the resource.</param>
         /// <param name="zones">A list of availability zones denoting the IP
         /// allocated for the resource needs to come from.</param>
-        public FrontendIPConfiguration(string id = default(string), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), SubResource publicIPPrefix = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string), IList<string> zones = default(IList<string>))
+        public FrontendIPConfiguration(string id = default(string), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), PublicIPAddress publicIPAddress = default(PublicIPAddress), SubResource publicIPPrefix = default(SubResource), SubResource gatewayLoadBalancer = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string), IList<string> zones = default(IList<string>))
             : base(id)
         {
             InboundNatRules = inboundNatRules;
@@ -79,6 +81,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             PublicIPPrefix = publicIPPrefix;
+            GatewayLoadBalancer = gatewayLoadBalancer;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -141,22 +144,28 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAddressVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the subnet resource.
+        /// Gets or sets the reference to the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public Subnet Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the Public IP resource.
+        /// Gets or sets the reference to the Public IP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public PublicIPAddress PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the Public IP Prefix resource.
+        /// Gets or sets the reference to the Public IP Prefix resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPPrefix")]
         public SubResource PublicIPPrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference to gateway load balancer frontend IP.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gatewayLoadBalancer")]
+        public SubResource GatewayLoadBalancer { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the frontend IP configuration

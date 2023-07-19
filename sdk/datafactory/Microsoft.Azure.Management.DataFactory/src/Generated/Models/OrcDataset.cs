@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        /// <param name="orcCompressionCodec">Possible values include: 'none',
-        /// 'zlib', 'snappy'</param>
-        public OrcDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), string orcCompressionCodec = default(string))
+        /// <param name="orcCompressionCodec">The data orcCompressionCodec.
+        /// Type: string (or Expression with resultType string).</param>
+        public OrcDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object orcCompressionCodec = default(object))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             Location = location;
@@ -75,10 +75,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public DatasetLocation Location { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'none', 'zlib', 'snappy'
+        /// Gets or sets the data orcCompressionCodec. Type: string (or
+        /// Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.orcCompressionCodec")]
-        public string OrcCompressionCodec { get; set; }
+        public object OrcCompressionCodec { get; set; }
 
         /// <summary>
         /// Validate the object.

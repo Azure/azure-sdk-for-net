@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -12,16 +12,19 @@ namespace Azure.Data.AppConfiguration.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    [LiveOnly]
-    public partial class Snippets
+    public partial class Snippets: SamplesBase<AppConfigurationTestEnvironment>
     {
         [Test]
         public void CreateClient()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+#if !SNIPPET
+            var connectionString = TestEnvironment.ConnectionString;
+#endif
 
             #region Snippet:CreateConfigurationClient
-            //@@ string connectionString = "<connection_string>";
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#endif
             var client = new ConfigurationClient(connectionString);
             #endregion Snippet:CreateConfigurationClient
         }
@@ -29,10 +32,14 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void CreateClientTokenCredential()
         {
-            var endpoint = Environment.GetEnvironmentVariable("APPCONFIGURATION_ENDPOINT_STRING");
+#if !SNIPPET
+            var endpoint = TestEnvironment.Endpoint;
+#endif
 
             #region Snippet:CreateConfigurationClientTokenCredential
-            //@@ string endpoint = "<endpoint>";
+#if SNIPPET
+            string endpoint = "<endpoint>";
+#endif
             var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
@@ -40,10 +47,14 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void CreateSetting()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+#if !SNIPPET
+            var connectionString = TestEnvironment.ConnectionString;
+#endif
 
             #region Snippet:CreateConfigurationSetting
-            //@@ string connectionString = "<connection_string>";
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#endif
             var client = new ConfigurationClient(connectionString);
             var settingToCreate = new ConfigurationSetting("some_key", "some_value");
             ConfigurationSetting setting = client.SetConfigurationSetting(settingToCreate);
@@ -53,15 +64,18 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void GetSetting()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+#if !SNIPPET
+            var connectionString = TestEnvironment.ConnectionString;
 
             // Make sure a setting exists.
             var setupClient = new ConfigurationClient(connectionString);
             setupClient.SetConfigurationSetting("some_key", "some_value");
-
+#endif
 
             #region Snippet:GetConfigurationSetting
-            //@@ string connectionString = "<connection_string>";
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#endif
             var client = new ConfigurationClient(connectionString);
             ConfigurationSetting setting = client.GetConfigurationSetting("some_key");
             #endregion Snippet:GetConfigurationSetting
@@ -70,10 +84,14 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void UpdateSetting()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+#if !SNIPPET
+            var connectionString = TestEnvironment.ConnectionString;
+#endif
 
             #region Snippet:UpdateConfigurationSetting
-            //@@ string connectionString = "<connection_string>";
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#endif
             var client = new ConfigurationClient(connectionString);
             ConfigurationSetting setting = client.SetConfigurationSetting("some_key", "new_value");
             #endregion Snippet:UpdateConfigurationSetting
@@ -82,10 +100,14 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void DeleteSetting()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+#if !SNIPPET
+            var connectionString = TestEnvironment.ConnectionString;
+#endif
 
             #region Snippet:DeleteConfigurationSetting
-            //@@ string connectionString = "<connection_string>";
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#endif
             var client = new ConfigurationClient(connectionString);
             client.DeleteConfigurationSetting("some_key");
             #endregion Snippet:DeleteConfigurationSetting
@@ -94,25 +116,51 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void ThrowNotFoundError()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            #region Snippet:ThrowNotFoundError
+#if !SNIPPET
+            var connectionString = TestEnvironment.ConnectionString;
+#endif
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#endif
+            var client = new ConfigurationClient(connectionString);
 
             try
             {
-                #region Snippet:ThrowNotFoundError
-                //@@ string connectionString = "<connection_string>";
-                var client = new ConfigurationClient(connectionString);
                 ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
-                #endregion Snippet:ThrowNotFoundError
             }
-            catch (RequestFailedException)
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
+                Console.WriteLine("Key wasn't found.");
             }
+            #endregion Snippet:ThrowNotFoundError
+        }
+
+        [Test]
+        public void ThrowAuthenticationError()
+        {
+            #region Snippet:ThrowAuthenticationError
+#if SNIPPET
+            // Create a ConfigurationClient using the DefaultAzureCredential
+            string endpoint = "<endpoint>";
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+
+            try
+            {
+                client.GetConfigurationSetting("key");
+            }
+            catch (AuthenticationFailedException e)
+            {
+                Console.WriteLine($"Authentication Failed. {e.Message}");
+            }
+#endif
+            #endregion Snippet:ThrowAuthenticationError
         }
 
         [OneTimeTearDown]
         public async Task CleanUp()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
             ConfigurationClient client = new ConfigurationClient(connectionString);
             await client.DeleteConfigurationSettingAsync("some_key");
         }

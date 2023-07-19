@@ -25,31 +25,39 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all certificates for a subscription.
+            /// Description for Get all certificates for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Certificate> List(this ICertificatesOperations operations)
+            /// <param name='filter'>
+            /// Return only information specified in the filter (using OData syntax). For
+            /// example: $filter=KeyVaultId eq 'KeyVaultId'
+            /// </param>
+            public static IPage<Certificate> List(this ICertificatesOperations operations, string filter = default(string))
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListAsync(filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Get all certificates for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all certificates for a subscription.
+            /// Description for Get all certificates for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='filter'>
+            /// Return only information specified in the filter (using OData syntax). For
+            /// example: $filter=KeyVaultId eq 'KeyVaultId'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Certificate>> ListAsync(this ICertificatesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Certificate>> ListAsync(this ICertificatesOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -59,7 +67,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all certificates in a resource group.
+            /// Description for Get all certificates in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -76,7 +84,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all certificates in a resource group.
+            /// Description for Get all certificates in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -99,7 +107,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a certificate.
             /// </summary>
             /// <remarks>
-            /// Get a certificate.
+            /// Description for Get a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,7 +127,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a certificate.
             /// </summary>
             /// <remarks>
-            /// Get a certificate.
+            /// Description for Get a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -145,7 +153,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create or update a certificate.
             /// </summary>
             /// <remarks>
-            /// Create or update a certificate.
+            /// Description for Create or update a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,7 +176,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create or update a certificate.
             /// </summary>
             /// <remarks>
-            /// Create or update a certificate.
+            /// Description for Create or update a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -197,7 +205,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a certificate.
             /// </summary>
             /// <remarks>
-            /// Delete a certificate.
+            /// Description for Delete a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -217,7 +225,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a certificate.
             /// </summary>
             /// <remarks>
-            /// Delete a certificate.
+            /// Description for Delete a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -240,7 +248,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create or update a certificate.
             /// </summary>
             /// <remarks>
-            /// Create or update a certificate.
+            /// Description for Create or update a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -263,7 +271,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create or update a certificate.
             /// </summary>
             /// <remarks>
-            /// Create or update a certificate.
+            /// Description for Create or update a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -292,7 +300,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all certificates for a subscription.
+            /// Description for Get all certificates for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -309,7 +317,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all certificates for a subscription.
+            /// Description for Get all certificates for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -332,7 +340,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all certificates in a resource group.
+            /// Description for Get all certificates in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -349,7 +357,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all certificates in a resource group.
+            /// Description for Get all certificates in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

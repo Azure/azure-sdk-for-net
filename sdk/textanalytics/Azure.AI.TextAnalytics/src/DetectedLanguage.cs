@@ -1,36 +1,51 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Azure.AI.TextAnalytics.Models;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A prediction of the language in which an input document is written.
+    /// A prediction of the language in which a document is written in.
     /// </summary>
     public readonly struct DetectedLanguage
     {
-        internal DetectedLanguage(string name, string iso6391Name, double score)
+        internal DetectedLanguage(DetectedLanguageInternal language, IList<TextAnalyticsWarning> warnings)
+            : this(language.Name, language.Iso6391Name, language.ConfidenceScore, warnings)
+        {
+        }
+
+        internal DetectedLanguage(string name, string iso6391Name, double confidenceScore, IList<TextAnalyticsWarning> warnings)
         {
             Name = name;
             Iso6391Name = iso6391Name;
-            Score = score;
+            ConfidenceScore = confidenceScore;
+            Warnings = (warnings is not null)
+                ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
+                : new List<TextAnalyticsWarning>();
         }
 
         /// <summary>
-        /// Gets the spelled-out name of the detected language (for example,
-        /// "English" or "French").
+        /// The spelled-out name of the detected language (for example, "English" or "French").
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// Gets a two letter representation of the detected language
-        /// according to the ISO 639-1 standard (for example, "en" or "fr").
+        /// The two letter representation of the detected language according to the ISO 639-1 standard (for example,
+        /// "en" or "fr").
         /// </summary>
         public string Iso6391Name { get; }
 
         /// <summary>
-        /// Gets a confidence score between 0 and 1. Scores close to 1
-        /// indicate high certainty that the identified language is correct.
+        /// The score between 0.0 and 1.0 indicating the confidence that the language was accurately detected.
         /// </summary>
-        public double Score { get; }
+        public double ConfidenceScore { get; }
+
+        /// <summary>
+        /// The warnings that resulted from processing the document.
+        /// </summary>
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
     }
 }

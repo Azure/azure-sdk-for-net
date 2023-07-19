@@ -40,20 +40,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// or virtual machine image, but is not used in other creation
         /// operations.</param>
         /// <param name="osDisk">Specifies information about the operating
-        /// system disk used by the virtual machines in the scale set.
-        /// &lt;br&gt;&lt;br&gt; For more information about disks, see [About
-        /// disks and VHDs for Azure virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).</param>
+        /// system disk used by the virtual machines in the scale set. For more
+        /// information about disks, see [About disks and VHDs for Azure
+        /// virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).</param>
         /// <param name="dataDisks">Specifies the parameters that are used to
-        /// add data disks to the virtual machines in the scale set.
-        /// &lt;br&gt;&lt;br&gt; For more information about disks, see [About
-        /// disks and VHDs for Azure virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).</param>
-        public VirtualMachineScaleSetStorageProfile(ImageReference imageReference = default(ImageReference), VirtualMachineScaleSetOSDisk osDisk = default(VirtualMachineScaleSetOSDisk), IList<VirtualMachineScaleSetDataDisk> dataDisks = default(IList<VirtualMachineScaleSetDataDisk>))
+        /// add data disks to the virtual machines in the scale set. For more
+        /// information about disks, see [About disks and VHDs for Azure
+        /// virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).</param>
+        public VirtualMachineScaleSetStorageProfile(ImageReference imageReference = default(ImageReference), VirtualMachineScaleSetOSDisk osDisk = default(VirtualMachineScaleSetOSDisk), IList<VirtualMachineScaleSetDataDisk> dataDisks = default(IList<VirtualMachineScaleSetDataDisk>), string diskControllerType = default(string))
         {
             ImageReference = imageReference;
             OsDisk = osDisk;
             DataDisks = dataDisks;
+            DiskControllerType = diskControllerType;
             CustomInit();
         }
 
@@ -74,23 +75,27 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies information about the operating system disk
-        /// used by the virtual machines in the scale set.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more information about
-        /// disks, see [About disks and VHDs for Azure virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+        /// used by the virtual machines in the scale set. For more information
+        /// about disks, see [About disks and VHDs for Azure virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).
         /// </summary>
         [JsonProperty(PropertyName = "osDisk")]
         public VirtualMachineScaleSetOSDisk OsDisk { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the parameters that are used to add data
-        /// disks to the virtual machines in the scale set.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more information about
-        /// disks, see [About disks and VHDs for Azure virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+        /// disks to the virtual machines in the scale set. For more
+        /// information about disks, see [About disks and VHDs for Azure
+        /// virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).
         /// </summary>
         [JsonProperty(PropertyName = "dataDisks")]
         public IList<VirtualMachineScaleSetDataDisk> DataDisks { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "diskControllerType")]
+        public string DiskControllerType { get; set; }
 
         /// <summary>
         /// Validate the object.

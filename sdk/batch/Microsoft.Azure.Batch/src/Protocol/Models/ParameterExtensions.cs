@@ -22,6 +22,9 @@
     public partial class ComputeNodeListNextOptions : IOptions { }
     public partial class ComputeNodeRebootOptions : ITimeoutOptions { }
     public partial class ComputeNodeReimageOptions : ITimeoutOptions { }
+    public partial class ComputeNodeExtensionGetOptions : ITimeoutOptions, IODataSelect { }
+    public partial class ComputeNodeExtensionListOptions : ITimeoutOptions, IODataSelect { }
+    public partial class ComputeNodeExtensionListNextOptions : IOptions { }
     public partial class PoolRemoveNodesOptions : ITimeoutOptions { }
     public partial class ComputeNodeUpdateUserOptions : ITimeoutOptions { }
     public partial class ComputeNodeUploadBatchServiceLogsOptions : ITimeoutOptions { }
@@ -39,7 +42,6 @@
     public partial class JobDeleteOptions : ITimeoutOptions { }
     public partial class JobDisableOptions : ITimeoutOptions { }
     public partial class JobEnableOptions : ITimeoutOptions { }
-    public partial class JobGetAllLifetimeStatisticsOptions : ITimeoutOptions { }
     public partial class JobGetOptions : ITimeoutOptions, IODataSelect, IODataExpand { }
     public partial class JobGetTaskCountsOptions : ITimeoutOptions { }
     public partial class JobListFromJobScheduleOptions : ITimeoutOptions, IODataSelect, IODataFilter, IODataExpand { }
@@ -68,7 +70,6 @@
     public partial class PoolEnableAutoScaleOptions : ITimeoutOptions { }
     public partial class PoolEvaluateAutoScaleOptions : ITimeoutOptions { }
     public partial class PoolExistsOptions : ITimeoutOptions { }
-    public partial class PoolGetAllLifetimeStatisticsOptions : ITimeoutOptions { }
     public partial class PoolGetOptions : ITimeoutOptions, IODataSelect, IODataExpand { }
     public partial class PoolListOptions : ITimeoutOptions, IODataSelect, IODataFilter, IODataExpand { }
     public partial class PoolListNextOptions : IOptions { }

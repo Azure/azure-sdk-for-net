@@ -38,12 +38,18 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// The order of the actions does not affect the rank result but the
         /// order
         /// should match the sequence your application would have used to
-        /// display them.</param>
+        /// display them.
+        /// The first item in the array will be used as Baseline item in
+        /// Offline evaluations.</param>
         /// <param name="contextFeatures">Features of the context used for
         /// Personalizer as a
         /// dictionary of dictionaries. This depends on the application, and
         /// typically includes features about the current user, their
-        /// device, profile information, data about time and date, etc.</param>
+        /// device, profile information, aggregated data about time and date,
+        /// etc.
+        /// Features should not include personally identifiable information
+        /// (PII),
+        /// unique UserIDs, or precise timestamps.</param>
         /// <param name="excludedActions">The set of action ids to exclude from
         /// ranking.</param>
         /// <param name="eventId">Optionally pass an eventId that uniquely
@@ -53,14 +59,14 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// associating this request with its reward, as well as seeding the
         /// pseudo-random
         /// generator when making a Personalizer call.</param>
-        /// <param name="deferActivation">Send false if the user will see the
-        /// rank results, therefore
+        /// <param name="deferActivation">Send false if it is certain the
+        /// rewardActionId in rank results will be shown to the user, therefore
         /// Personalizer will expect a Reward call, otherwise it will assign
         /// the default
         /// Reward to the event. Send true if it is possible the user will not
         /// see the
-        /// rank results, because the page is rendering later, or the Rank
-        /// results may be
+        /// action specified in the rank results, because the page is rendering
+        /// later, or the Rank results may be
         /// overridden by code further downstream.</param>
         public RankRequest(IList<RankableAction> actions, IList<object> contextFeatures = default(IList<object>), IList<string> excludedActions = default(IList<string>), string eventId = default(string), bool? deferActivation = default(bool?))
         {
@@ -81,7 +87,11 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// Gets or sets features of the context used for Personalizer as a
         /// dictionary of dictionaries. This depends on the application, and
         /// typically includes features about the current user, their
-        /// device, profile information, data about time and date, etc.
+        /// device, profile information, aggregated data about time and date,
+        /// etc.
+        /// Features should not include personally identifiable information
+        /// (PII),
+        /// unique UserIDs, or precise timestamps.
         /// </summary>
         [JsonProperty(PropertyName = "contextFeatures")]
         public IList<object> ContextFeatures { get; set; }
@@ -94,6 +104,8 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// order
         /// should match the sequence your application would have used to
         /// display them.
+        /// The first item in the array will be used as Baseline item in
+        /// Offline evaluations.
         /// </summary>
         [JsonProperty(PropertyName = "actions")]
         public IList<RankableAction> Actions { get; set; }
@@ -117,14 +129,14 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         public string EventId { get; set; }
 
         /// <summary>
-        /// Gets or sets send false if the user will see the rank results,
-        /// therefore
+        /// Gets or sets send false if it is certain the rewardActionId in rank
+        /// results will be shown to the user, therefore
         /// Personalizer will expect a Reward call, otherwise it will assign
         /// the default
         /// Reward to the event. Send true if it is possible the user will not
         /// see the
-        /// rank results, because the page is rendering later, or the Rank
-        /// results may be
+        /// action specified in the rank results, because the page is rendering
+        /// later, or the Rank results may be
         /// overridden by code further downstream.
         /// </summary>
         [JsonProperty(PropertyName = "deferActivation")]

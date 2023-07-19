@@ -33,10 +33,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the NotificationContract class.
         /// </summary>
         /// <param name="title">Title of the Notification.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="description">Description of the Notification.</param>
         /// <param name="recipients">Recipient Parameter values.</param>
         public NotificationContract(string title, string id = default(string), string name = default(string), string type = default(string), string description = default(string), RecipientsContractProperties recipients = default(RecipientsContractProperties))

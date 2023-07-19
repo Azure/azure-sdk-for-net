@@ -36,6 +36,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="resourceUri">the resource identifier of the resource
         /// the rule monitors. **NOTE**: this property cannot be updated for an
         /// existing rule.</param>
+        /// <param name="legacyResourceId">the legacy resource identifier of
+        /// the resource the rule monitors. **NOTE**: this property cannot be
+        /// updated for an existing rule.</param>
+        /// <param name="resourceLocation">the location of the
+        /// resource.</param>
+        /// <param name="metricNamespace">the namespace of the metric.</param>
         /// <param name="eventName">the event name.</param>
         /// <param name="eventSource">the event source.</param>
         /// <param name="level">the level.</param>
@@ -50,8 +56,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// match.</param>
         /// <param name="subStatus">the substatus.</param>
         /// <param name="claims">the claims.</param>
-        public RuleManagementEventDataSource(string resourceUri = default(string), string eventName = default(string), string eventSource = default(string), string level = default(string), string operationName = default(string), string resourceGroupName = default(string), string resourceProviderName = default(string), string status = default(string), string subStatus = default(string), RuleManagementEventClaimsDataSource claims = default(RuleManagementEventClaimsDataSource))
-            : base(resourceUri)
+        public RuleManagementEventDataSource(string resourceUri = default(string), string legacyResourceId = default(string), string resourceLocation = default(string), string metricNamespace = default(string), string eventName = default(string), string eventSource = default(string), string level = default(string), string operationName = default(string), string resourceGroupName = default(string), string resourceProviderName = default(string), string status = default(string), string subStatus = default(string), RuleManagementEventClaimsDataSource claims = default(RuleManagementEventClaimsDataSource))
+            : base(resourceUri, legacyResourceId, resourceLocation, metricNamespace)
         {
             EventName = eventName;
             EventSource = eventSource;

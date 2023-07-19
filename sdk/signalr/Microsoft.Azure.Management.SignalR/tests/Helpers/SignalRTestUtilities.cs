@@ -72,7 +72,6 @@ namespace SignalR.Tests
                 {
                     Name = "Standard_S1",
                     Tier = "Standard",
-                    Size = "S1",
                     Capacity = capacity,
                 };
             }
@@ -82,19 +81,53 @@ namespace SignalR.Tests
                 {
                     Name = "Free_F1",
                     Tier = "Free",
-                    Size = "F1",
                 };
             }
 
             return client.SignalR.CreateOrUpdate(
-                resourceGroupName,
-                TestUtilities.GenerateName("signalr-test"),
-                new SignalRCreateParameters
+                new SignalRResource
                 {
                     Location = location,
                     Sku = sku,
                     Tags = DefaultTags,
-                });
+                    Features = new List<SignalRFeature>
+                    {
+                        new SignalRFeature {
+                            Flag = FeatureFlags.ServiceMode,
+                            Value = "Default",
+                        }
+                    },
+                    Kind = ServiceKind.SignalR,
+                    Upstream = new ServerlessUpstreamSettings
+                    {
+                        Templates = new List<UpstreamTemplate>
+                        {
+                            new UpstreamTemplate
+                            {
+                                UrlTemplate = "http://foo.com"
+                            }
+                        }
+                    },
+                    NetworkACLs = new SignalRNetworkACLs
+                    {
+                        DefaultAction = ACLAction.Deny,
+                        PublicNetwork = new NetworkACL
+                        {
+                            Allow = new List<string> { SignalRRequestType.ClientConnection },
+                        },
+                        PrivateEndpoints = new List<PrivateEndpointACL>
+                        {
+                            new PrivateEndpointACL
+                            {
+                                Name = "mySignalRService.1fa229cd-bf3f-47f0-8c49-afb36723997e",
+                                Allow = new List<string> { SignalRRequestType.ServerConnection },
+                            },
+                        },
+                    },
+                },
+                resourceGroupName,
+                TestUtilities.GenerateName("signalr-test"));
+                
         }
 
         public static void ValidateResourceDefaultTags(TrackedResource resource)

@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Monitor
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The Azure subscription Id.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
@@ -110,11 +110,6 @@ namespace Microsoft.Azure.Management.Monitor
         public virtual IActionGroupsOperations ActionGroups { get; private set; }
 
         /// <summary>
-        /// Gets the IActivityLogAlertsOperations.
-        /// </summary>
-        public virtual IActivityLogAlertsOperations ActivityLogAlerts { get; private set; }
-
-        /// <summary>
         /// Gets the IActivityLogsOperations.
         /// </summary>
         public virtual IActivityLogsOperations ActivityLogs { get; private set; }
@@ -138,11 +133,6 @@ namespace Microsoft.Azure.Management.Monitor
         /// Gets the IMetricsOperations.
         /// </summary>
         public virtual IMetricsOperations Metrics { get; private set; }
-
-        /// <summary>
-        /// Gets the IMetricBaselineOperations.
-        /// </summary>
-        public virtual IMetricBaselineOperations MetricBaseline { get; private set; }
 
         /// <summary>
         /// Gets the IBaselinesOperations.
@@ -173,6 +163,51 @@ namespace Microsoft.Azure.Management.Monitor
         /// Gets the IVMInsightsOperations.
         /// </summary>
         public virtual IVMInsightsOperations VMInsights { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkScopesOperations.
+        /// </summary>
+        public virtual IPrivateLinkScopesOperations PrivateLinkScopes { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkScopeOperationStatusOperations.
+        /// </summary>
+        public virtual IPrivateLinkScopeOperationStatusOperations PrivateLinkScopeOperationStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkScopedResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkScopedResourcesOperations PrivateLinkScopedResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IActivityLogAlertsOperations.
+        /// </summary>
+        public virtual IActivityLogAlertsOperations ActivityLogAlerts { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataCollectionEndpointsOperations.
+        /// </summary>
+        public virtual IDataCollectionEndpointsOperations DataCollectionEndpoints { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataCollectionRuleAssociationsOperations.
+        /// </summary>
+        public virtual IDataCollectionRuleAssociationsOperations DataCollectionRuleAssociations { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataCollectionRulesOperations.
+        /// </summary>
+        public virtual IDataCollectionRulesOperations DataCollectionRules { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the MonitorManagementClient class.
@@ -423,19 +458,26 @@ namespace Microsoft.Azure.Management.Monitor
             DiagnosticSettings = new DiagnosticSettingsOperations(this);
             DiagnosticSettingsCategory = new DiagnosticSettingsCategoryOperations(this);
             ActionGroups = new ActionGroupsOperations(this);
-            ActivityLogAlerts = new ActivityLogAlertsOperations(this);
             ActivityLogs = new ActivityLogsOperations(this);
             EventCategories = new EventCategoriesOperations(this);
             TenantActivityLogs = new TenantActivityLogsOperations(this);
             MetricDefinitions = new MetricDefinitionsOperations(this);
             Metrics = new MetricsOperations(this);
-            MetricBaseline = new MetricBaselineOperations(this);
             Baselines = new BaselinesOperations(this);
             MetricAlerts = new MetricAlertsOperations(this);
             MetricAlertsStatus = new MetricAlertsStatusOperations(this);
             ScheduledQueryRules = new ScheduledQueryRulesOperations(this);
             MetricNamespaces = new MetricNamespacesOperations(this);
             VMInsights = new VMInsightsOperations(this);
+            PrivateLinkScopes = new PrivateLinkScopesOperations(this);
+            PrivateLinkScopeOperationStatus = new PrivateLinkScopeOperationStatusOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkScopedResources = new PrivateLinkScopedResourcesOperations(this);
+            ActivityLogAlerts = new ActivityLogAlertsOperations(this);
+            DataCollectionEndpoints = new DataCollectionEndpointsOperations(this);
+            DataCollectionRuleAssociations = new DataCollectionRuleAssociationsOperations(this);
+            DataCollectionRules = new DataCollectionRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

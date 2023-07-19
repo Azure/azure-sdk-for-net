@@ -15,6 +15,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class CacheTests : TestBase
     {
         [Fact]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -40,7 +41,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var cacheContract = new CacheContract()
                     {
                         ConnectionString = TestUtilities.GenerateName(),
-                        Description = TestUtilities.GenerateName()
+                        Description = TestUtilities.GenerateName(),
+                        UseFromLocation = TestUtilities.GenerateName()
                     };
 
                     var createResponse = await testBase.client.Cache.CreateOrUpdateAsync(
@@ -91,12 +93,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     testBase.client.Cache.Delete(testBase.rgName, testBase.serviceName, cacheid, "*");
                     // clean up all properties
-                    var listOfProperties = testBase.client.Property.ListByService(
+                    var listOfProperties = testBase.client.NamedValue.ListByService(
                         testBase.rgName,
                         testBase.serviceName);
                     foreach (var property in listOfProperties)
                     {
-                        testBase.client.Property.Delete(
+                        testBase.client.NamedValue.Delete(
                             testBase.rgName,
                             testBase.serviceName,
                             property.Name,

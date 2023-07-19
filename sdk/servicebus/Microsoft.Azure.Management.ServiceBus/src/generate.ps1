@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "servicebus/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "servicebus/resource-manager" -AutoRestVersion "v2"

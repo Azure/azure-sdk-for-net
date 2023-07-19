@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="msiResourceId">User assigned identity that has
         /// permissions to read and create cluster-related artifacts in the
         /// user's AADDS.</param>
-        public SecurityProfile(DirectoryType? directoryType = default(DirectoryType?), string domain = default(string), string organizationalUnitDN = default(string), IList<string> ldapsUrls = default(IList<string>), string domainUsername = default(string), string domainUserPassword = default(string), IList<string> clusterUsersGroupDNs = default(IList<string>), string aaddsResourceId = default(string), string msiResourceId = default(string))
+        public SecurityProfile(string directoryType = default(string), string domain = default(string), string organizationalUnitDN = default(string), IList<string> ldapsUrls = default(IList<string>), string domainUsername = default(string), string domainUserPassword = default(string), IList<string> clusterUsersGroupDNs = default(IList<string>), string aaddsResourceId = default(string), string msiResourceId = default(string))
         {
             DirectoryType = directoryType;
             Domain = domain;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// 'ActiveDirectory'
         /// </summary>
         [JsonProperty(PropertyName = "directoryType")]
-        public DirectoryType? DirectoryType { get; set; }
+        public string DirectoryType { get; set; }
 
         /// <summary>
         /// Gets or sets the organization's active directory domain.

@@ -51,9 +51,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// network gateway resource.</param>
         /// <param name="localNetworkGateway2">The reference to local network
         /// gateway resource.</param>
+        /// <param name="ingressNatRules">List of ingress NatRules.</param>
+        /// <param name="egressNatRules">List of egress NatRules.</param>
         /// <param name="connectionProtocol">Connection protocol used for this
         /// connection. Possible values include: 'IKEv2', 'IKEv1'</param>
         /// <param name="routingWeight">The routing weight.</param>
+        /// <param name="dpdTimeoutSeconds">The dead peer detection timeout of
+        /// this connection in seconds.</param>
+        /// <param name="connectionMode">The connection mode for this
+        /// connection. Possible values include: 'Default', 'ResponderOnly',
+        /// 'InitiatorOnly'</param>
         /// <param name="sharedKey">The IPSec shared key.</param>
         /// <param name="connectionStatus">Virtual Network Gateway connection
         /// status. Possible values include: 'Unknown', 'Connecting',
@@ -66,6 +73,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// in this connection.</param>
         /// <param name="peer">The reference to peerings resource.</param>
         /// <param name="enableBgp">EnableBgp flag.</param>
+        /// <param
+        /// name="gatewayCustomBgpIpAddresses">GatewayCustomBgpIpAddresses to
+        /// be used for virtual network gateway Connection.</param>
+        /// <param name="useLocalAzureIpAddress">Use private local Azure IP for
+        /// the connection.</param>
         /// <param name="usePolicyBasedTrafficSelectors">Enable policy-based
         /// traffic selectors.</param>
         /// <param name="ipsecPolicies">The IPSec Policies to be considered by
@@ -79,18 +91,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="expressRouteGatewayBypass">Bypass ExpressRoute Gateway
         /// for data forwarding.</param>
+        /// <param name="enablePrivateLinkFastPath">Bypass the ExpressRoute
+        /// gateway when accessing private-links. ExpressRoute FastPath
+        /// (expressRouteGatewayBypass) must be enabled.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionProtocol = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
+        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), IList<SubResource> ingressNatRules = default(IList<SubResource>), IList<SubResource> egressNatRules = default(IList<SubResource>), string connectionProtocol = default(string), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), string connectionMode = default(string), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), IList<GatewayCustomBgpIpAddressIpConfiguration> gatewayCustomBgpIpAddresses = default(IList<GatewayCustomBgpIpAddressIpConfiguration>), bool? useLocalAzureIpAddress = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), bool? enablePrivateLinkFastPath = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AuthorizationKey = authorizationKey;
             VirtualNetworkGateway1 = virtualNetworkGateway1;
             VirtualNetworkGateway2 = virtualNetworkGateway2;
             LocalNetworkGateway2 = localNetworkGateway2;
+            IngressNatRules = ingressNatRules;
+            EgressNatRules = egressNatRules;
             ConnectionType = connectionType;
             ConnectionProtocol = connectionProtocol;
             RoutingWeight = routingWeight;
+            DpdTimeoutSeconds = dpdTimeoutSeconds;
+            ConnectionMode = connectionMode;
             SharedKey = sharedKey;
             ConnectionStatus = connectionStatus;
             TunnelConnectionStatus = tunnelConnectionStatus;
@@ -98,12 +117,15 @@ namespace Microsoft.Azure.Management.Network.Models
             IngressBytesTransferred = ingressBytesTransferred;
             Peer = peer;
             EnableBgp = enableBgp;
+            GatewayCustomBgpIpAddresses = gatewayCustomBgpIpAddresses;
+            UseLocalAzureIpAddress = useLocalAzureIpAddress;
             UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
             IpsecPolicies = ipsecPolicies;
             TrafficSelectorPolicies = trafficSelectorPolicies;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             ExpressRouteGatewayBypass = expressRouteGatewayBypass;
+            EnablePrivateLinkFastPath = enablePrivateLinkFastPath;
             Etag = etag;
             CustomInit();
         }
@@ -138,6 +160,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public LocalNetworkGateway LocalNetworkGateway2 { get; set; }
 
         /// <summary>
+        /// Gets or sets list of ingress NatRules.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ingressNatRules")]
+        public IList<SubResource> IngressNatRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of egress NatRules.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.egressNatRules")]
+        public IList<SubResource> EgressNatRules { get; set; }
+
+        /// <summary>
         /// Gets or sets gateway connection type. Possible values include:
         /// 'IPsec', 'Vnet2Vnet', 'ExpressRoute', 'VPNClient'
         /// </summary>
@@ -156,6 +190,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.routingWeight")]
         public int? RoutingWeight { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dead peer detection timeout of this connection in
+        /// seconds.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dpdTimeoutSeconds")]
+        public int? DpdTimeoutSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets the connection mode for this connection. Possible
+        /// values include: 'Default', 'ResponderOnly', 'InitiatorOnly'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.connectionMode")]
+        public string ConnectionMode { get; set; }
 
         /// <summary>
         /// Gets or sets the IPSec shared key.
@@ -201,6 +249,19 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableBgp { get; set; }
 
         /// <summary>
+        /// Gets or sets gatewayCustomBgpIpAddresses to be used for virtual
+        /// network gateway Connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gatewayCustomBgpIpAddresses")]
+        public IList<GatewayCustomBgpIpAddressIpConfiguration> GatewayCustomBgpIpAddresses { get; set; }
+
+        /// <summary>
+        /// Gets or sets use private local Azure IP for the connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.useLocalAzureIpAddress")]
+        public bool? UseLocalAzureIpAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets enable policy-based traffic selectors.
         /// </summary>
         [JsonProperty(PropertyName = "properties.usePolicyBasedTrafficSelectors")]
@@ -242,6 +303,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? ExpressRouteGatewayBypass { get; set; }
 
         /// <summary>
+        /// Gets or sets bypass the ExpressRoute gateway when accessing
+        /// private-links. ExpressRoute FastPath (expressRouteGatewayBypass)
+        /// must be enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enablePrivateLinkFastPath")]
+        public bool? EnablePrivateLinkFastPath { get; set; }
+
+        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
@@ -264,9 +333,21 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionType");
             }
-            if (IpsecPolicies != null)
+            if (VirtualNetworkGateway1 != null)
             {
-                foreach (var element in IpsecPolicies)
+                VirtualNetworkGateway1.Validate();
+            }
+            if (VirtualNetworkGateway2 != null)
+            {
+                VirtualNetworkGateway2.Validate();
+            }
+            if (LocalNetworkGateway2 != null)
+            {
+                LocalNetworkGateway2.Validate();
+            }
+            if (GatewayCustomBgpIpAddresses != null)
+            {
+                foreach (var element in GatewayCustomBgpIpAddresses)
                 {
                     if (element != null)
                     {
@@ -274,13 +355,23 @@ namespace Microsoft.Azure.Management.Network.Models
                     }
                 }
             }
-            if (TrafficSelectorPolicies != null)
+            if (IpsecPolicies != null)
             {
-                foreach (var element1 in TrafficSelectorPolicies)
+                foreach (var element1 in IpsecPolicies)
                 {
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (TrafficSelectorPolicies != null)
+            {
+                foreach (var element2 in TrafficSelectorPolicies)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }

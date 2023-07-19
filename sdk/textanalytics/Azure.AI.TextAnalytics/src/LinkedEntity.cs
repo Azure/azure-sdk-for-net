@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -12,16 +13,18 @@ namespace Azure.AI.TextAnalytics
     /// name of the entity used in the data source.  Note that the formal name
     /// may be different from the exact text match in the input document.
     /// </summary>
-    public readonly struct LinkedEntity
+    [CodeGenModel("LinkedEntity")]
+    public readonly partial struct LinkedEntity
     {
-        internal LinkedEntity(string name, string id, string language, string dataSource, Uri uri, IEnumerable<LinkedEntityMatch> matches)
+        internal LinkedEntity(string name, IEnumerable<LinkedEntityMatch> matches, string language, string dataSourceEntityId, Uri url, string dataSource, string bingEntitySearchApiId)
         {
             Name = name;
-            Id = id;
+            DataSourceEntityId = dataSourceEntityId;
             Language = language;
             DataSource = dataSource;
-            Uri = uri;
+            Url = url;
             Matches = matches;
+            BingEntitySearchApiId = bingEntitySearchApiId;
         }
 
         /// <summary>
@@ -32,7 +35,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the unique identifier of the entity in the data source.
         /// </summary>
-        public string Id { get; }
+        [CodeGenMember("Id")]
+        public string DataSourceEntityId { get; }
 
         /// <summary>
         /// Gets the language used in the data source.
@@ -45,14 +49,24 @@ namespace Azure.AI.TextAnalytics
         public string DataSource { get; }
 
         /// <summary>
-        /// Gets the URI that identifies the linked entity's entry in the data source.
+        /// Gets the URL that identifies the linked entity's entry in the data source.
         /// </summary>
-        public Uri Uri { get; }
+        [CodeGenMember("Url")]
+        public Uri Url { get; }
 
         /// <summary>
         /// Collection identifying the substrings of the document that correspond
         /// to this linked entity.
         /// </summary>
         public IEnumerable<LinkedEntityMatch> Matches { get; }
+
+        /// <summary> Bing Entity Search API unique identifier of the recognized entity.
+        /// Use in conjunction with the Bing Entity Search API to fetch additional relevant information.
+        /// </summary>
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
+        /// </remarks>
+        [CodeGenMember("BingId")]
+        public string BingEntitySearchApiId { get; }
     }
 }

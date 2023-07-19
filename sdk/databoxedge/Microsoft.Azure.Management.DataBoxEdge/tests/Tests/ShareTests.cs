@@ -80,6 +80,8 @@ namespace DataBoxEdge.Tests
             // Delete a share
             Client.Shares.Delete(TestConstants.EdgeResourceName, "smb1", TestConstants.DefaultResourceGroupName);
 
+            // Delete nfs share
+            Client.Shares.Delete(TestConstants.EdgeResourceName, "nfs1", TestConstants.DefaultResourceGroupName);
         }
 
         /// <summary>

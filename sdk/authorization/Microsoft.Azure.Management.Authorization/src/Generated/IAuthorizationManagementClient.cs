@@ -79,11 +79,6 @@ namespace Microsoft.Azure.Management.Authorization
         IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; }
 
         /// <summary>
-        /// Gets the IRoleAssignmentsOperations.
-        /// </summary>
-        IRoleAssignmentsOperations RoleAssignments { get; }
-
-        /// <summary>
         /// Gets the IPermissionsOperations.
         /// </summary>
         IPermissionsOperations Permissions { get; }
@@ -97,6 +92,16 @@ namespace Microsoft.Azure.Management.Authorization
         /// Gets the IDenyAssignmentsOperations.
         /// </summary>
         IDenyAssignmentsOperations DenyAssignments { get; }
+
+        /// <summary>
+        /// Gets the IRoleAssignmentMetricsOperations.
+        /// </summary>
+        IRoleAssignmentMetricsOperations RoleAssignmentMetrics { get; }
+
+        /// <summary>
+        /// Gets the IRoleAssignmentsOperations.
+        /// </summary>
+        IRoleAssignmentsOperations RoleAssignments { get; }
 
     }
 }

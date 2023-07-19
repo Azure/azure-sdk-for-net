@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Testing;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
@@ -12,10 +14,15 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     {
         public SecretClientTests(bool isAsync) : base(isAsync)
         {
-            Client = InstrumentClient(new SecretClient(new Uri("http://localhost"), new DefaultAzureCredential()));
+            SecretClientOptions options = new SecretClientOptions
+            {
+                Transport = new MockTransport(),
+            };
+
+            Client = InstrumentClient(new SecretClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
         }
 
-        public SecretClient Client { get; set; }
+        public SecretClient Client { get; }
 
         [Test]
         public void SetArgumentValidation()
@@ -81,6 +88,103 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             Assert.Throws<ArgumentNullException>(() => Client.GetPropertiesOfSecretVersionsAsync(null));
             Assert.Throws<ArgumentException>(() => Client.GetPropertiesOfSecretVersionsAsync(""));
+        }
+
+        [Test]
+        public void ChallengeBasedAuthenticationRequiresHttps()
+        {
+            // After passing parameter validation, ChallengeBasedAuthenticationPolicy should throw for "http" requests.
+            Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetSecretAsync("test"));
+        }
+
+        [Test]
+        public async Task PagesResults()
+        {
+            MockTransport transport = new(
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/secrets/1""},
+                        {""id"": ""https://test/secrets/2""}
+                    ],
+                    ""nextLink"": ""https://test/secrets?$skiptoken=1""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [],
+                    ""nextLink"": ""https://test/secrets?$skiptoken=2""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/secrets/3""}
+                    ]
+                }"));
+
+            SecretClient client = InstrumentClient(new SecretClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
+
+            var secrets = await client.GetPropertiesOfSecretsAsync().ToEnumerableAsync();
+            Assert.AreEqual(3, secrets.Count);
+        }
+
+        [Test]
+        public async Task PagesVersionsResults()
+        {
+            MockTransport transport = new(
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/secrets/1/1""},
+                        {""id"": ""https://test/secrets/1/2""}
+                    ],
+                    ""nextLink"": ""https://test/secrets/1/versions?$skiptoken=1""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [],
+                    ""nextLink"": ""https://test/secrets/1/versions?$skiptoken=2""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/secrets/1/3""}
+                    ]
+                }"));
+
+            SecretClient client = InstrumentClient(new SecretClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
+
+            var versions = await client.GetPropertiesOfSecretVersionsAsync("1").ToEnumerableAsync();
+            Assert.AreEqual(3, versions.Count);
+        }
+
+        [Test]
+        public async Task PagesDeletedResults()
+        {
+            MockTransport transport = new(
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/secrets/1""},
+                        {""id"": ""https://test/secrets/2""}
+                    ],
+                    ""nextLink"": ""https://test/deletedsecrets?$skiptoken=1""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [],
+                    ""nextLink"": ""https://test/deletedsecrets?$skiptoken=2""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/secrets/3""}
+                    ]
+                }"));
+
+            SecretClient client = InstrumentClient(new SecretClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
+
+            var secrets = await client.GetDeletedSecretsAsync().ToEnumerableAsync();
+            Assert.AreEqual(3, secrets.Count);
         }
     }
 }

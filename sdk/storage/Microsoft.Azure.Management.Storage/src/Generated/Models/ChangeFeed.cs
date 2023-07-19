@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -31,9 +32,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="enabled">Indicates whether change feed event logging
         /// is enabled for the Blob service.</param>
-        public ChangeFeed(bool? enabled = default(bool?))
+        /// <param name="retentionInDays">Indicates the duration of changeFeed
+        /// retention in days. Minimum value is 1 day and maximum value is
+        /// 146000 days (400 years). A null value indicates an infinite
+        /// retention of the change feed.</param>
+        public ChangeFeed(bool? enabled = default(bool?), int? retentionInDays = default(int?))
         {
             Enabled = enabled;
+            RetentionInDays = retentionInDays;
             CustomInit();
         }
 
@@ -49,5 +55,34 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
+        /// <summary>
+        /// Gets or sets indicates the duration of changeFeed retention in
+        /// days. Minimum value is 1 day and maximum value is 146000 days (400
+        /// years). A null value indicates an infinite retention of the change
+        /// feed.
+        /// </summary>
+        [JsonProperty(PropertyName = "retentionInDays")]
+        public int? RetentionInDays { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RetentionInDays != null)
+            {
+                if (RetentionInDays > 146000)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "RetentionInDays", 146000);
+                }
+                if (RetentionInDays < 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "RetentionInDays", 1);
+                }
+            }
+        }
     }
 }

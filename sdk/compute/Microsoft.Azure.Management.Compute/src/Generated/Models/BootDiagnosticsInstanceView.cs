@@ -32,12 +32,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="consoleScreenshotBlobUri">The console screenshot blob
-        /// URI.</param>
-        /// <param name="serialConsoleLogBlobUri">The Linux serial console log
-        /// blob Uri.</param>
+        /// URI. **Note:** This will **not** be set if boot diagnostics is
+        /// currently enabled with managed storage.</param>
+        /// <param name="serialConsoleLogBlobUri">The serial console log blob
+        /// Uri. **Note:** This will **not** be set if boot diagnostics is
+        /// currently enabled with managed storage.</param>
         /// <param name="status">The boot diagnostics status information for
-        /// the VM. &lt;br&gt;&lt;br&gt; NOTE: It will be set only if there are
-        /// errors encountered in enabling boot diagnostics.</param>
+        /// the VM. **Note:** It will be set only if there are errors
+        /// encountered in enabling boot diagnostics.</param>
         public BootDiagnosticsInstanceView(string consoleScreenshotBlobUri = default(string), string serialConsoleLogBlobUri = default(string), InstanceViewStatus status = default(InstanceViewStatus))
         {
             ConsoleScreenshotBlobUri = consoleScreenshotBlobUri;
@@ -52,21 +54,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the console screenshot blob URI.
+        /// Gets the console screenshot blob URI. **Note:** This will **not**
+        /// be set if boot diagnostics is currently enabled with managed
+        /// storage.
         /// </summary>
         [JsonProperty(PropertyName = "consoleScreenshotBlobUri")]
         public string ConsoleScreenshotBlobUri { get; private set; }
 
         /// <summary>
-        /// Gets the Linux serial console log blob Uri.
+        /// Gets the serial console log blob Uri. **Note:** This will **not**
+        /// be set if boot diagnostics is currently enabled with managed
+        /// storage.
         /// </summary>
         [JsonProperty(PropertyName = "serialConsoleLogBlobUri")]
         public string SerialConsoleLogBlobUri { get; private set; }
 
         /// <summary>
-        /// Gets the boot diagnostics status information for the VM.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; NOTE: It will be set only if
-        /// there are errors encountered in enabling boot diagnostics.
+        /// Gets the boot diagnostics status information for the VM. **Note:**
+        /// It will be set only if there are errors encountered in enabling
+        /// boot diagnostics.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public InstanceViewStatus Status { get; private set; }

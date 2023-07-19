@@ -1,5 +1,8 @@
 ## Microsoft.Azure.Services.AppAuthentication Library
 
+> ### ⚠️Deprecation Notice⚠️
+> This library is now deprecated and has been replaced with the [Azure Identity client library](https://www.nuget.org/packages/Azure.Identity) available for .NET, Java, TypeScript and Python and should be used for all new development. Information about how to migrate to Azure.Identity can be found here: [AppAuthentication to Azure.Identity Migration Guidance](https://docs.microsoft.com/dotnet/api/overview/azure/app-auth-migration).
+
 ### Purpose
 Make it easy to authenticate to Azure Services (that support Azure AD Authentication), and help avoid credentials in source code and configuration files. 
 
@@ -22,7 +25,7 @@ The library is organized in these layers:
 2. AzureServiceTokenProvider will check if the token is available in a global in-memory cache. If so, will return it. 
 3. If not in cache, AzureServiceTokenProvider will call the next layer, which are a set of Token Providers. These are in the TokenProviders folder. 
 4. Each of the token providers then use a client to get the token. The client layer consists of 
-    1. A Process Manager for calling Azure CLI. **az account get-access-token --resource https://vault.azure.net/**
+    1. A Process Manager for calling Azure CLI. **az account get-access-token --resource `https://vault.azure.net/` **
     2. ADAL for getting tokens using Client Secret, Certificate, or Integrated Windows Authentication.
     3. HttpClient to get token using MSI.
 
@@ -34,7 +37,7 @@ The library is organized in these layers:
 
 On Windows, open a command prompt, navigate to the unit test folder, and run **dotnet test**. This will run tests for both .NET 4.5.2 and .NET Standard 1.4. 
 
-On Linux, open a command prompt, navigate to the unit test folder, and run **dotnet test -f netcoreapp1.1**. This will run tests for .NET Standard 1.4. 
+On Linux, open a command prompt, navigate to the unit test folder, and run **dotnet test -f netcoreapp3.1**. This will run tests for .NET Standard 1.4. 
 
 **Integration Test Cases**
 
@@ -43,13 +46,13 @@ Integration test cases test the actual flow for Client Secret, Client Certificat
 Before running these test cases, ensure that you
 1. Have Azure CLI 2.0 installed. 
 2. Have logged into Azure CLI using **az login**
-3. Set an environment variable named **AppAuthenticationTestCertUrl** to a certificate in Azure Key Vault e.g. https://myvault.vault.azure.net/secrets/cert1
-4. Set an environment variable named **AppAuthenticationTestSqlServerEndpoint** to an Azure SQL database endpoint e.g. mydatabase.database.windows.net
+3. Set an environment variable named **AppAuthenticationTestCertUrl** to a certificate in Azure Key Vault e.g. `https://myvault.vault.azure.net/secrets/cert1`
+4. Set an environment variable named **AppAuthenticationTestSqlServerEndpoint** to an Azure SQL database endpoint e.g. `mydatabase.database.windows.net`
    
    Integration test cases use AzureServiceTokenProvider itself to get a token for Graph API (using Azure CLI), to create Azure AD applications and service principals, and then test those flows. Additionally, the integration test cases also use SqlAzureAppAuthProvider to get a token for SQL Azure and connect to the test database.
    
 On Windows, open a command prompt, navigate to the integration test folder, and run **dotnet test**. This will run tests for both .NET 4.5.2 and .NET Standard 1.4. 
 
-On Linux, open a command prompt, navigate to the integration test folder, and run **dotnet test -f netcoreapp1.1**. This will run tests for .NET Standard 1.4. 
+On Linux, open a command prompt, navigate to the integration test folder, and run **dotnet test -f netcoreapp3.1**. This will run tests for .NET Standard 1.4. 
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmgmtcommon%2FAppAuthentication%2FREADME.png)

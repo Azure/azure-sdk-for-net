@@ -7,64 +7,54 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1076733c-003a-4889-a983-fdea82f81d87"
+          "e04ec0b2-92ca-457d-8b81-ffbbb292a11a"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.9.0.0"
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.12.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Mon, 22 Oct 2018 21:30:12 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "Set-Cookie": [
-          "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
-        ],
-        "x-ms-request-charge": [
-          "1"
-        ],
         "x-ms-request-id": [
-          "b465f84e-b623-476d-aa2f-fe96a847e8da"
+          "9a9077b9-f692-4850-89c6-2dbb670369bf"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
+        "x-ms-correlation-request-id": [
+          "9a9077b9-f692-4850-89c6-2dbb670369bf"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210612T003832Z:9a9077b9-f692-4850-89c6-2dbb670369bf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+        "X-Content-Type-Options": [
+          "nosniff"
         ],
-        "x-ms-correlation-request-id": [
-          "b5af174c-646c-43b6-9a21-ad5224bfa8bd"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20181022T213013Z:b5af174c-646c-43b6-9a21-ad5224bfa8bd"
-        ],
-        "Content-Length": [
-          "427"
+        "Date": [
+          "Sat, 12 Jun 2021 00:38:32 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "1324"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"denyAssignmentName\": \"AzureAuthzSDK_43AF7D0C-0BF8-407F-96C0-96A29D076431\",\r\n        \"description\": \"Test deny assignment for AzureAuthzSDK\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/AzureAuthzSDK/providers/Microsoft.Authorization/denyAssignments/43af7d0c-0bf8-407f-96c0-96a29d076431\",\r\n      \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n      \"name\": \"43af7d0c-0bf8-407f-96c0-96a29d076431\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"denyAssignmentName\": \"AzureAuthzSDK_C807D002-6D77-452F-A837-4692929D12FD\",\r\n        \"description\": \"Test deny assignment for AzureAuthzSDK\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/AzureAuthzSDK/providers/Microsoft.Authorization/denyAssignments/c807d002-6d77-452f-a837-4692929d12fd\",\r\n      \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n      \"name\": \"c807d002-6d77-452f-a837-4692929d12fd\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"denyAssignmentName\": \"AzureAuthzSDK_43AF7D0C-0BF8-407F-96C0-96A29D076431\",\r\n        \"description\": \"Test deny assignment for AzureAuthzSDK\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/AzureAuthzSDK/providers/Microsoft.Authorization/denyAssignments/43af7d0c-0bf8-407f-96c0-96a29d076431\",\r\n      \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n      \"name\": \"43af7d0c-0bf8-407f-96c0-96a29d076431\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"denyAssignmentName\": \"AzureAuthzSDK_94E3D9DA-3700-4113-AAB4-15F6C173D794\",\r\n        \"description\": \"Test deny assignment for AzureAuthzSDK\"\r\n      },\r\n      \"id\": \"/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourceGroups/AzureAuthzSDK/providers/Microsoft.Storage/storageAccounts/authzsdktestresource/providers/Microsoft.Authorization/denyAssignments/94e3d9da-3700-4113-aab4-15f6c173d794\",\r\n      \"type\": \"Microsoft.Authorization/denyAssignments\",\r\n      \"name\": \"94e3d9da-3700-4113-aab4-15f6c173d794\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

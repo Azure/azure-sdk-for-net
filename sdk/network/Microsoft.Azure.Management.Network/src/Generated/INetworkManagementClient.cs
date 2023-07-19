@@ -81,6 +81,26 @@ namespace Microsoft.Azure.Management.Network
         IApplicationGatewaysOperations ApplicationGateways { get; }
 
         /// <summary>
+        /// Gets the IApplicationGatewayPrivateLinkResourcesOperations.
+        /// </summary>
+        IApplicationGatewayPrivateLinkResourcesOperations ApplicationGatewayPrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IApplicationGatewayPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IApplicationGatewayPrivateEndpointConnectionsOperations ApplicationGatewayPrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IApplicationGatewayWafDynamicManifestsDefaultOperations.
+        /// </summary>
+        IApplicationGatewayWafDynamicManifestsDefaultOperations ApplicationGatewayWafDynamicManifestsDefault { get; }
+
+        /// <summary>
+        /// Gets the IApplicationGatewayWafDynamicManifestsOperations.
+        /// </summary>
+        IApplicationGatewayWafDynamicManifestsOperations ApplicationGatewayWafDynamicManifests { get; }
+
+        /// <summary>
         /// Gets the IApplicationSecurityGroupsOperations.
         /// </summary>
         IApplicationSecurityGroupsOperations ApplicationSecurityGroups { get; }
@@ -111,9 +131,34 @@ namespace Microsoft.Azure.Management.Network
         IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; }
 
         /// <summary>
+        /// Gets the IWebCategoriesOperations.
+        /// </summary>
+        IWebCategoriesOperations WebCategories { get; }
+
+        /// <summary>
         /// Gets the IBastionHostsOperations.
         /// </summary>
         IBastionHostsOperations BastionHosts { get; }
+
+        /// <summary>
+        /// Gets the INetworkInterfacesOperations.
+        /// </summary>
+        INetworkInterfacesOperations NetworkInterfaces { get; }
+
+        /// <summary>
+        /// Gets the IPublicIPAddressesOperations.
+        /// </summary>
+        IPublicIPAddressesOperations PublicIPAddresses { get; }
+
+        /// <summary>
+        /// Gets the IVipSwapOperations.
+        /// </summary>
+        IVipSwapOperations VipSwap { get; }
+
+        /// <summary>
+        /// Gets the ICustomIPPrefixesOperations.
+        /// </summary>
+        ICustomIPPrefixesOperations CustomIPPrefixes { get; }
 
         /// <summary>
         /// Gets the IDdosCustomPoliciesOperations.
@@ -124,6 +169,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IDdosProtectionPlansOperations.
         /// </summary>
         IDdosProtectionPlansOperations DdosProtectionPlans { get; }
+
+        /// <summary>
+        /// Gets the IDscpConfigurationOperations.
+        /// </summary>
+        IDscpConfigurationOperations DscpConfiguration { get; }
 
         /// <summary>
         /// Gets the IAvailableEndpointServicesOperations.
@@ -171,16 +221,6 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteCrossConnectionPeeringsOperations ExpressRouteCrossConnectionPeerings { get; }
 
         /// <summary>
-        /// Gets the IExpressRouteGatewaysOperations.
-        /// </summary>
-        IExpressRouteGatewaysOperations ExpressRouteGateways { get; }
-
-        /// <summary>
-        /// Gets the IExpressRouteConnectionsOperations.
-        /// </summary>
-        IExpressRouteConnectionsOperations ExpressRouteConnections { get; }
-
-        /// <summary>
         /// Gets the IExpressRoutePortsLocationsOperations.
         /// </summary>
         IExpressRoutePortsLocationsOperations ExpressRoutePortsLocations { get; }
@@ -196,14 +236,44 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteLinksOperations ExpressRouteLinks { get; }
 
         /// <summary>
+        /// Gets the IExpressRoutePortAuthorizationsOperations.
+        /// </summary>
+        IExpressRoutePortAuthorizationsOperations ExpressRoutePortAuthorizations { get; }
+
+        /// <summary>
+        /// Gets the IExpressRouteProviderPortsLocationOperations.
+        /// </summary>
+        IExpressRouteProviderPortsLocationOperations ExpressRouteProviderPortsLocation { get; }
+
+        /// <summary>
         /// Gets the IFirewallPoliciesOperations.
         /// </summary>
         IFirewallPoliciesOperations FirewallPolicies { get; }
 
         /// <summary>
-        /// Gets the IFirewallPolicyRuleGroupsOperations.
+        /// Gets the IFirewallPolicyRuleCollectionGroupsOperations.
         /// </summary>
-        IFirewallPolicyRuleGroupsOperations FirewallPolicyRuleGroups { get; }
+        IFirewallPolicyRuleCollectionGroupsOperations FirewallPolicyRuleCollectionGroups { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesOperations FirewallPolicyIdpsSignatures { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesOverridesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesOverridesOperations FirewallPolicyIdpsSignaturesOverrides { get; }
+
+        /// <summary>
+        /// Gets the IFirewallPolicyIdpsSignaturesFilterValuesOperations.
+        /// </summary>
+        IFirewallPolicyIdpsSignaturesFilterValuesOperations FirewallPolicyIdpsSignaturesFilterValues { get; }
+
+        /// <summary>
+        /// Gets the IIpAllocationsOperations.
+        /// </summary>
+        IIpAllocationsOperations IpAllocations { get; }
 
         /// <summary>
         /// Gets the IIpGroupsOperations.
@@ -256,11 +326,6 @@ namespace Microsoft.Azure.Management.Network
         INatGatewaysOperations NatGateways { get; }
 
         /// <summary>
-        /// Gets the INetworkInterfacesOperations.
-        /// </summary>
-        INetworkInterfacesOperations NetworkInterfaces { get; }
-
-        /// <summary>
         /// Gets the INetworkInterfaceIPConfigurationsOperations.
         /// </summary>
         INetworkInterfaceIPConfigurationsOperations NetworkInterfaceIPConfigurations { get; }
@@ -274,6 +339,66 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the INetworkInterfaceTapConfigurationsOperations.
         /// </summary>
         INetworkInterfaceTapConfigurationsOperations NetworkInterfaceTapConfigurations { get; }
+
+        /// <summary>
+        /// Gets the INetworkManagersOperations.
+        /// </summary>
+        INetworkManagersOperations NetworkManagers { get; }
+
+        /// <summary>
+        /// Gets the INetworkManagerCommitsOperations.
+        /// </summary>
+        INetworkManagerCommitsOperations NetworkManagerCommits { get; }
+
+        /// <summary>
+        /// Gets the INetworkManagerDeploymentStatusOperations.
+        /// </summary>
+        INetworkManagerDeploymentStatusOperations NetworkManagerDeploymentStatus { get; }
+
+        /// <summary>
+        /// Gets the ISubscriptionNetworkManagerConnectionsOperations.
+        /// </summary>
+        ISubscriptionNetworkManagerConnectionsOperations SubscriptionNetworkManagerConnections { get; }
+
+        /// <summary>
+        /// Gets the IManagementGroupNetworkManagerConnectionsOperations.
+        /// </summary>
+        IManagementGroupNetworkManagerConnectionsOperations ManagementGroupNetworkManagerConnections { get; }
+
+        /// <summary>
+        /// Gets the IConnectivityConfigurationsOperations.
+        /// </summary>
+        IConnectivityConfigurationsOperations ConnectivityConfigurations { get; }
+
+        /// <summary>
+        /// Gets the INetworkGroupsOperations.
+        /// </summary>
+        INetworkGroupsOperations NetworkGroups { get; }
+
+        /// <summary>
+        /// Gets the IStaticMembersOperations.
+        /// </summary>
+        IStaticMembersOperations StaticMembers { get; }
+
+        /// <summary>
+        /// Gets the IScopeConnectionsOperations.
+        /// </summary>
+        IScopeConnectionsOperations ScopeConnections { get; }
+
+        /// <summary>
+        /// Gets the ISecurityAdminConfigurationsOperations.
+        /// </summary>
+        ISecurityAdminConfigurationsOperations SecurityAdminConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IAdminRuleCollectionsOperations.
+        /// </summary>
+        IAdminRuleCollectionsOperations AdminRuleCollections { get; }
+
+        /// <summary>
+        /// Gets the IAdminRulesOperations.
+        /// </summary>
+        IAdminRulesOperations AdminRules { get; }
 
         /// <summary>
         /// Gets the INetworkProfilesOperations.
@@ -296,6 +421,26 @@ namespace Microsoft.Azure.Management.Network
         IDefaultSecurityRulesOperations DefaultSecurityRules { get; }
 
         /// <summary>
+        /// Gets the INetworkVirtualAppliancesOperations.
+        /// </summary>
+        INetworkVirtualAppliancesOperations NetworkVirtualAppliances { get; }
+
+        /// <summary>
+        /// Gets the IVirtualApplianceSitesOperations.
+        /// </summary>
+        IVirtualApplianceSitesOperations VirtualApplianceSites { get; }
+
+        /// <summary>
+        /// Gets the IVirtualApplianceSkusOperations.
+        /// </summary>
+        IVirtualApplianceSkusOperations VirtualApplianceSkus { get; }
+
+        /// <summary>
+        /// Gets the IInboundSecurityRuleOperations.
+        /// </summary>
+        IInboundSecurityRuleOperations InboundSecurityRule { get; }
+
+        /// <summary>
         /// Gets the INetworkWatchersOperations.
         /// </summary>
         INetworkWatchersOperations NetworkWatchers { get; }
@@ -309,6 +454,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IConnectionMonitorsOperations.
         /// </summary>
         IConnectionMonitorsOperations ConnectionMonitors { get; }
+
+        /// <summary>
+        /// Gets the IFlowLogsOperations.
+        /// </summary>
+        IFlowLogsOperations FlowLogs { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -326,14 +476,14 @@ namespace Microsoft.Azure.Management.Network
         IAvailablePrivateEndpointTypesOperations AvailablePrivateEndpointTypes { get; }
 
         /// <summary>
+        /// Gets the IPrivateDnsZoneGroupsOperations.
+        /// </summary>
+        IPrivateDnsZoneGroupsOperations PrivateDnsZoneGroups { get; }
+
+        /// <summary>
         /// Gets the IPrivateLinkServicesOperations.
         /// </summary>
         IPrivateLinkServicesOperations PrivateLinkServices { get; }
-
-        /// <summary>
-        /// Gets the IPublicIPAddressesOperations.
-        /// </summary>
-        IPublicIPAddressesOperations PublicIPAddresses { get; }
 
         /// <summary>
         /// Gets the IPublicIPPrefixesOperations.
@@ -361,6 +511,11 @@ namespace Microsoft.Azure.Management.Network
         IRoutesOperations Routes { get; }
 
         /// <summary>
+        /// Gets the ISecurityPartnerProvidersOperations.
+        /// </summary>
+        ISecurityPartnerProvidersOperations SecurityPartnerProviders { get; }
+
+        /// <summary>
         /// Gets the IBgpServiceCommunitiesOperations.
         /// </summary>
         IBgpServiceCommunitiesOperations BgpServiceCommunities { get; }
@@ -379,6 +534,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IServiceTagsOperations.
         /// </summary>
         IServiceTagsOperations ServiceTags { get; }
+
+        /// <summary>
+        /// Gets the IServiceTagInformationOperations.
+        /// </summary>
+        IServiceTagInformationOperations ServiceTagInformation { get; }
 
         /// <summary>
         /// Gets the IUsagesOperations.
@@ -426,6 +586,11 @@ namespace Microsoft.Azure.Management.Network
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
 
         /// <summary>
+        /// Gets the IVirtualNetworkGatewayNatRulesOperations.
+        /// </summary>
+        IVirtualNetworkGatewayNatRulesOperations VirtualNetworkGatewayNatRules { get; }
+
+        /// <summary>
         /// Gets the IVirtualNetworkTapsOperations.
         /// </summary>
         IVirtualNetworkTapsOperations VirtualNetworkTaps { get; }
@@ -466,9 +631,19 @@ namespace Microsoft.Azure.Management.Network
         IVpnServerConfigurationsOperations VpnServerConfigurations { get; }
 
         /// <summary>
+        /// Gets the IConfigurationPolicyGroupsOperations.
+        /// </summary>
+        IConfigurationPolicyGroupsOperations ConfigurationPolicyGroups { get; }
+
+        /// <summary>
         /// Gets the IVirtualHubsOperations.
         /// </summary>
         IVirtualHubsOperations VirtualHubs { get; }
+
+        /// <summary>
+        /// Gets the IRouteMapsOperations.
+        /// </summary>
+        IRouteMapsOperations RouteMaps { get; }
 
         /// <summary>
         /// Gets the IHubVirtualNetworkConnectionsOperations.
@@ -481,6 +656,11 @@ namespace Microsoft.Azure.Management.Network
         IVpnGatewaysOperations VpnGateways { get; }
 
         /// <summary>
+        /// Gets the IVpnLinkConnectionsOperations.
+        /// </summary>
+        IVpnLinkConnectionsOperations VpnLinkConnections { get; }
+
+        /// <summary>
         /// Gets the IVpnConnectionsOperations.
         /// </summary>
         IVpnConnectionsOperations VpnConnections { get; }
@@ -491,9 +671,9 @@ namespace Microsoft.Azure.Management.Network
         IVpnSiteLinkConnectionsOperations VpnSiteLinkConnections { get; }
 
         /// <summary>
-        /// Gets the IVpnLinkConnectionsOperations.
+        /// Gets the INatRulesOperations.
         /// </summary>
-        IVpnLinkConnectionsOperations VpnLinkConnections { get; }
+        INatRulesOperations NatRules { get; }
 
         /// <summary>
         /// Gets the IP2sVpnGatewaysOperations.
@@ -511,9 +691,144 @@ namespace Microsoft.Azure.Management.Network
         IVirtualHubRouteTableV2sOperations VirtualHubRouteTableV2s { get; }
 
         /// <summary>
+        /// Gets the IExpressRouteGatewaysOperations.
+        /// </summary>
+        IExpressRouteGatewaysOperations ExpressRouteGateways { get; }
+
+        /// <summary>
+        /// Gets the IExpressRouteConnectionsOperations.
+        /// </summary>
+        IExpressRouteConnectionsOperations ExpressRouteConnections { get; }
+
+        /// <summary>
+        /// Gets the IVirtualHubBgpConnectionOperations.
+        /// </summary>
+        IVirtualHubBgpConnectionOperations VirtualHubBgpConnection { get; }
+
+        /// <summary>
+        /// Gets the IVirtualHubBgpConnectionsOperations.
+        /// </summary>
+        IVirtualHubBgpConnectionsOperations VirtualHubBgpConnections { get; }
+
+        /// <summary>
+        /// Gets the IVirtualHubIpConfigurationOperations.
+        /// </summary>
+        IVirtualHubIpConfigurationOperations VirtualHubIpConfiguration { get; }
+
+        /// <summary>
+        /// Gets the IHubRouteTablesOperations.
+        /// </summary>
+        IHubRouteTablesOperations HubRouteTables { get; }
+
+        /// <summary>
+        /// Gets the IRoutingIntentOperations.
+        /// </summary>
+        IRoutingIntentOperations RoutingIntent { get; }
+
+        /// <summary>
         /// Gets the IWebApplicationFirewallPoliciesOperations.
         /// </summary>
         IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; }
+
+        /// <summary>
+        /// Creates a Bastion Shareable Links for all the VMs specified in the
+        /// request.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
+        /// </param>
+        /// <param name='bslRequest'>
+        /// Post request for all the Bastion Shareable Link endpoints.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionShareableLink>>> PutBastionShareableLinkWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Deletes the Bastion Shareable Links for all the VMs specified in
+        /// the request.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
+        /// </param>
+        /// <param name='bslRequest'>
+        /// Post request for all the Bastion Shareable Link endpoints.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> DeleteBastionShareableLinkWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Return the Bastion Shareable Links for all the VMs specified in the
+        /// request.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
+        /// </param>
+        /// <param name='bslRequest'>
+        /// Post request for all the Bastion Shareable Link endpoints.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionShareableLink>>> GetBastionShareableLinkWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns the list of currently active sessions on the Bastion.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionActiveSession>>> GetActiveSessionsWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns the list of currently active sessions on the Bastion.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
+        /// </param>
+        /// <param name='sessionIds'>
+        /// The list of sessionids to disconnect.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionSessionState>>> DisconnectActiveSessionsWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, SessionIds sessionIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is
@@ -533,6 +848,118 @@ namespace Microsoft.Azure.Management.Network
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Retrieves detail of a provider port.
+        /// </summary>
+        /// <param name='providerport'>
+        /// The name of the provider port.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ExpressRouteProviderPort>> ExpressRouteProviderPortMethodWithHttpMessagesAsync(string providerport, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Lists active connectivity configurations in a network manager.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Active Configuration Parameter.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='networkManagerName'>
+        /// The name of the network manager.
+        /// </param>
+        /// <param name='top'>
+        /// An optional query parameter which specifies the maximum number of
+        /// records to be returned by the server.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ActiveConnectivityConfigurationsListResult>> ListActiveConnectivityConfigurationsWithHttpMessagesAsync(ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Lists active security admin rules in a network manager.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Active Configuration Parameter.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='networkManagerName'>
+        /// The name of the network manager.
+        /// </param>
+        /// <param name='top'>
+        /// An optional query parameter which specifies the maximum number of
+        /// records to be returned by the server.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ActiveSecurityAdminRulesListResult>> ListActiveSecurityAdminRulesWithHttpMessagesAsync(ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List all effective connectivity configurations applied on a virtual
+        /// network.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to list correct page.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <param name='top'>
+        /// An optional query parameter which specifies the maximum number of
+        /// records to be returned by the server.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<NetworkManagerEffectiveConnectivityConfigurationListResult>> ListNetworkManagerEffectiveConnectivityConfigurationsWithHttpMessagesAsync(QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List all effective security admin rules applied on a virtual
+        /// network.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to list correct page.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <param name='top'>
+        /// An optional query parameter which specifies the maximum number of
+        /// records to be returned by the server.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<NetworkManagerEffectiveSecurityAdminRulesListResult>> ListNetworkManagerEffectiveSecurityAdminRulesWithHttpMessagesAsync(QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gives the supported security providers for the virtual wan.
@@ -577,6 +1004,65 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileWithHttpMessagesAsync(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Creates a Bastion Shareable Links for all the VMs specified in the
+        /// request.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
+        /// </param>
+        /// <param name='bslRequest'>
+        /// Post request for all the Bastion Shareable Link endpoints.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionShareableLink>>> BeginPutBastionShareableLinkWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Deletes the Bastion Shareable Links for all the VMs specified in
+        /// the request.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
+        /// </param>
+        /// <param name='bslRequest'>
+        /// Post request for all the Bastion Shareable Link endpoints.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteBastionShareableLinkWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, BastionShareableLinkListRequest bslRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns the list of currently active sessions on the Bastion.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionActiveSession>>> BeginGetActiveSessionsWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Generates a unique VPN profile for P2S clients for VirtualWan and
         /// associated VpnServerConfiguration combination in the specified
         /// resource group.
@@ -599,6 +1085,93 @@ namespace Microsoft.Azure.Management.Network
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<VpnProfileResponse>> BeginGeneratevirtualwanvpnserverconfigurationvpnprofileWithHttpMessagesAsync(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Creates a Bastion Shareable Links for all the VMs specified in the
+        /// request.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionShareableLink>>> PutBastionShareableLinkNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Return the Bastion Shareable Links for all the VMs specified in the
+        /// request.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionShareableLink>>> GetBastionShareableLinkNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns the list of currently active sessions on the Bastion.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionActiveSession>>> GetActiveSessionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns the list of currently active sessions on the Bastion.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionSessionState>>> DisconnectActiveSessionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Creates a Bastion Shareable Links for all the VMs specified in the
+        /// request.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionShareableLink>>> BeginPutBastionShareableLinkNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Returns the list of currently active sessions on the Bastion.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<BastionActiveSession>>> BeginGetActiveSessionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

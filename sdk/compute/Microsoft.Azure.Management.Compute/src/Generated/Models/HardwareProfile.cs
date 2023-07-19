@@ -29,19 +29,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the HardwareProfile class.
         /// </summary>
-        /// <param name="vmSize">Specifies the size of the virtual machine. For
-        /// more information about virtual machine sizes, see [Sizes for
-        /// virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-sizes?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-        /// &lt;br&gt;&lt;br&gt; The available VM sizes depend on region and
-        /// availability set. For a list of available sizes use these APIs:
-        /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes in
-        /// an availability
-        /// set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes)
-        /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes in a
-        /// region](https://docs.microsoft.com/rest/api/compute/virtualmachinesizes/list)
-        /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes for
+        /// <param name="vmSize">Specifies the size of the virtual machine. The
+        /// enum data type is currently deprecated and will be removed by
+        /// December 23rd 2023. The recommended way to get the list of
+        /// available sizes is using these APIs: [List all available virtual
+        /// machine sizes in an availability
+        /// set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes),
+        /// [List all available virtual machine sizes in a region](
+        /// https://docs.microsoft.com/rest/api/compute/resourceskus/list),
+        /// [List all available virtual machine sizes for
         /// resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes).
+        /// For more information about virtual machine sizes, see [Sizes for
+        /// virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/sizes).
+        /// The available VM sizes depend on region and availability set.
         /// Possible values include: 'Basic_A0', 'Basic_A1', 'Basic_A2',
         /// 'Basic_A3', 'Basic_A4', 'Standard_A0', 'Standard_A1',
         /// 'Standard_A2', 'Standard_A3', 'Standard_A4', 'Standard_A5',
@@ -92,9 +93,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Standard_NC24s_v3', 'Standard_NC24rs_v3', 'Standard_ND6s',
         /// 'Standard_ND12s', 'Standard_ND24s', 'Standard_ND24rs',
         /// 'Standard_NV6', 'Standard_NV12', 'Standard_NV24'</param>
-        public HardwareProfile(string vmSize = default(string))
+        /// <param name="vmSizeProperties">Specifies the properties for
+        /// customizing the size of the virtual machine. Minimum api-version:
+        /// 2021-07-01. This feature is still in preview mode and is not
+        /// supported for VirtualMachineScaleSet. Please follow the
+        /// instructions in [VM Customization](https://aka.ms/vmcustomization)
+        /// for more details.</param>
+        public HardwareProfile(string vmSize = default(string), VMSizeProperties vmSizeProperties = default(VMSizeProperties))
         {
             VmSize = vmSize;
+            VmSizeProperties = vmSizeProperties;
             CustomInit();
         }
 
@@ -104,20 +112,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the size of the virtual machine. For more
-        /// information about virtual machine sizes, see [Sizes for virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-sizes?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; The available VM sizes depend
-        /// on region and availability set. For a list of available sizes use
-        /// these APIs:  &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all
-        /// available virtual machine sizes in an availability
-        /// set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all available virtual
-        /// machine sizes in a
-        /// region](https://docs.microsoft.com/rest/api/compute/virtualmachinesizes/list)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all available virtual
-        /// machine sizes for
+        /// Gets or sets specifies the size of the virtual machine. The enum
+        /// data type is currently deprecated and will be removed by December
+        /// 23rd 2023. The recommended way to get the list of available sizes
+        /// is using these APIs: [List all available virtual machine sizes in
+        /// an availability
+        /// set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes),
+        /// [List all available virtual machine sizes in a region](
+        /// https://docs.microsoft.com/rest/api/compute/resourceskus/list),
+        /// [List all available virtual machine sizes for
         /// resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes).
+        /// For more information about virtual machine sizes, see [Sizes for
+        /// virtual
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/sizes).
+        /// The available VM sizes depend on region and availability set.
         /// Possible values include: 'Basic_A0', 'Basic_A1', 'Basic_A2',
         /// 'Basic_A3', 'Basic_A4', 'Standard_A0', 'Standard_A1',
         /// 'Standard_A2', 'Standard_A3', 'Standard_A4', 'Standard_A5',
@@ -171,6 +179,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the properties for customizing the size of
+        /// the virtual machine. Minimum api-version: 2021-07-01. This feature
+        /// is still in preview mode and is not supported for
+        /// VirtualMachineScaleSet. Please follow the instructions in [VM
+        /// Customization](https://aka.ms/vmcustomization) for more details.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmSizeProperties")]
+        public VMSizeProperties VmSizeProperties { get; set; }
 
     }
 }

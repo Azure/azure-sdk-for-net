@@ -13,7 +13,8 @@
 // limitations under the License.
 
 ﻿using Microsoft.Azure.Batch.Conventions.Files.Utilities;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,9 +31,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files
     // represent the two kinds of path.
     internal abstract class StoragePath
     {
-        private readonly CloudBlobContainer _jobOutputContainer;
+        private readonly BlobContainerClient _jobOutputContainer;
 
-        protected StoragePath(CloudBlobContainer jobOutputContainer)
+        protected StoragePath(BlobContainerClient jobOutputContainer)
         {
             if (jobOutputContainer == null)
             {
@@ -87,8 +88,8 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             Validate.IsNotNullOrEmpty(destinationRelativePath, nameof(destinationRelativePath));
 
             var blobName = BlobName(kind, destinationRelativePath);
-            var blob = _jobOutputContainer.GetBlockBlobReference(blobName);
-            await blob.UploadFromFileAsync(sourcePath, null, null, null, cancellationToken).ConfigureAwait(false);
+            var blob = _jobOutputContainer.GetBlobClient(blobName);
+            await blob.UploadAsync(sourcePath, true, cancellationToken).ConfigureAwait(false);
         }
 
         // Uploads text to blob storage.
@@ -111,8 +112,8 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             Validate.IsNotNullOrEmpty(destinationRelativePath, nameof(destinationRelativePath));
 
             var blobName = BlobName(kind, destinationRelativePath);
-            var blob = _jobOutputContainer.GetBlockBlobReference(blobName);
-            await blob.UploadTextAsync(text, null, null, null, null, cancellationToken).ConfigureAwait(false);
+            var blob = _jobOutputContainer.GetBlobClient(blobName);
+            await blob.UploadAsync(BinaryData.FromString(text), true, cancellationToken).ConfigureAwait(false);
         }
 
         // Uploads a file and tracks appends to that file. The implementation creates an append blob to
@@ -150,7 +151,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             Validate.IsNotNullOrEmpty(destinationRelativePath, nameof(destinationRelativePath));
 
             var blobName = BlobName(kind, destinationRelativePath);
-            var blob = _jobOutputContainer.GetAppendBlobReference(blobName);
+            var blob = _jobOutputContainer.GetAppendBlobClient(blobName);
             await blob.EnsureExistsAsync().ConfigureAwait(false);
             return new TrackedFile(sourcePath, blob, flushInterval);
         }
@@ -162,12 +163,12 @@ namespace Microsoft.Azure.Batch.Conventions.Files
                 throw new ArgumentNullException(nameof(kind));
             }
 
-            return _jobOutputContainer.ListBlobs(BlobNamePrefix(kind), useFlatBlobListing: true)
-                                      .OfType<ICloudBlob>()
-                                      .Select(b => new OutputFileReference(b));
+            return _jobOutputContainer.ListBlobs(BlobNamePrefix(kind))
+                                      .Select(blob => new OutputFileReference(_jobOutputContainer.GetBlobBaseClient(blob.Name)));
+
         }
 
-        public async Task<OutputFileReference> GetOutputAsync(IOutputKind kind, string filePath, CancellationToken cancellationToken = default(CancellationToken))
+        public OutputFileReference GetOutput(IOutputKind kind, string filePath)
         {
             if (kind == null)
             {
@@ -176,7 +177,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             Validate.IsNotNullOrEmpty(filePath, nameof(filePath));
 
-            var blob = await _jobOutputContainer.GetBlobReferenceFromServerAsync(BlobName(kind, filePath), null, null, null, cancellationToken).ConfigureAwait(false);
+            var blob = _jobOutputContainer.GetBlobBaseClient(BlobName(kind, filePath));
 
             return new OutputFileReference(blob);
         }
@@ -216,7 +217,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
         internal sealed class JobStoragePath : StoragePath
         {
-            internal JobStoragePath(CloudBlobContainer jobOutputContainer)
+            internal JobStoragePath(BlobContainerClient jobOutputContainer)
                 : base(jobOutputContainer)
             {
             }
@@ -230,7 +231,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
             private readonly string _taskId;
 
-            internal TaskStoragePath(CloudBlobContainer jobOutputContainer, string taskId)
+            internal TaskStoragePath(BlobContainerClient jobOutputContainer, string taskId)
                 : base(jobOutputContainer)
             {
                 Debug.Assert(taskId != null);

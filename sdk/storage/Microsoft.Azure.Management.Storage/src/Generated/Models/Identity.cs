@@ -10,7 +10,10 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,21 +32,24 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the Identity class.
         /// </summary>
+        /// <param name="type">The identity type. Possible values include:
+        /// 'None', 'SystemAssigned', 'UserAssigned',
+        /// 'SystemAssigned,UserAssigned'</param>
         /// <param name="principalId">The principal ID of resource
         /// identity.</param>
         /// <param name="tenantId">The tenant ID of resource.</param>
-        public Identity(string principalId = default(string), string tenantId = default(string))
+        /// <param name="userAssignedIdentities">Gets or sets a list of key
+        /// value pairs that describe the set of User Assigned identities that
+        /// will be used with this storage account. The key is the ARM resource
+        /// identifier of the identity. Only 1 User Assigned identity is
+        /// permitted here.</param>
+        public Identity(string type, string principalId = default(string), string tenantId = default(string), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
+            Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for Identity class.
-        /// </summary>
-        static Identity()
-        {
-            Type = "SystemAssigned";
         }
 
         /// <summary>
@@ -64,10 +70,33 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string TenantId { get; private set; }
 
         /// <summary>
-        /// The identity type.
+        /// Gets or sets the identity type. Possible values include: 'None',
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned,UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
+        public string Type { get; set; }
 
+        /// <summary>
+        /// Gets or sets a list of key value pairs that describe the set of
+        /// User Assigned identities that will be used with this storage
+        /// account. The key is the ARM resource identifier of the identity.
+        /// Only 1 User Assigned identity is permitted here.
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+        }
     }
 }

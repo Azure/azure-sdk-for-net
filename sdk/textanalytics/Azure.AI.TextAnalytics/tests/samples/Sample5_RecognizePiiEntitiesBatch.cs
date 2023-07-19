@@ -1,77 +1,104 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
-    public partial class TextAnalyticsSamples
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public void RecognizePiiEntitiesBatch()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #region Snippet:Sample5_RecognizePiiEntitiesBatch
+            string documentA =
+                "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
+                + " use their phone number 800-102-1100. They are originally from Brazil and have document ID number"
+                + " 998.214.865-68.";
 
-            var inputs = new List<TextDocumentInput>
+            string documentB =
+                "Hoy recibí una llamada al medio día del usuario Juanito Perez, quien preguntaba cómo acceder a su"
+                + " nuevo correo electrónico. Este trabaja en Microsoft y su correo es juanito.perez@contoso.com. El"
+                + " usuario accedió a compartir su número para futuras comunicaciones. El número es 800-102-1101.";
+
+            string documentC =
+                "Yesterday, Dan Doe was asking where they could find the ABA number. I explained that it is the first"
+                + " 9 digits in the lower left hand corner of their personal check. After looking at their account"
+                + " they confirmed the number was 111000025.";
+
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<TextDocumentInput> batchedDocuments = new()
             {
-                new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
+                new TextDocumentInput("1", documentA)
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("2","Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+                new TextDocumentInput("2", documentB)
+                {
+                     Language = "es",
+                },
+                new TextDocumentInput("3", documentC)
                 {
                      Language = "en",
                 }
             };
 
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizePiiEntitiesOptions options = new() { IncludeStatistics = true };
+            Response<RecognizePiiEntitiesResultCollection> response = client.RecognizePiiEntitiesBatch(batchedDocuments, options);
+            RecognizePiiEntitiesResultCollection entititesPerDocuments = response.Value;
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
-            Debug.WriteLine("");
+            Console.WriteLine($"Recognize PII Entities, model version: \"{entititesPerDocuments.ModelVersion}\"");
+            Console.WriteLine();
 
-            foreach (var result in results)
+            foreach (RecognizePiiEntitiesResult documentResult in entititesPerDocuments)
             {
-                var document = inputs[i++];
+                TextDocumentInput document = batchedDocuments[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                Console.WriteLine($"Result for document with Id = \"{document.Id}\" and Language = \"{document.Language}\":");
 
-                if (result.ErrorMessage != default)
+                if (documentResult.HasError)
                 {
-                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                    Console.WriteLine($"  Error!");
+                    Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                    Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                    Console.WriteLine();
+                    continue;
                 }
-                else
+
+                Console.WriteLine($"  Redacted Text: {documentResult.Entities.RedactedText}");
+                Console.WriteLine();
+                Console.WriteLine($"  Recognized {documentResult.Entities.Count} PII entities:");
+                foreach (PiiEntity piiEntity in documentResult.Entities)
                 {
-                    Debug.WriteLine($"    Recognized the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies" : "y ")}:");
-
-                    foreach (var entity in result.NamedEntities)
-                    {
-                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
-                    }
-
-                    Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                    Debug.WriteLine("");
+                    Console.WriteLine($"    Text: {piiEntity.Text}");
+                    Console.WriteLine($"    Category: {piiEntity.Category}");
+                    if (!string.IsNullOrEmpty(piiEntity.SubCategory))
+                        Console.WriteLine($"    SubCategory: {piiEntity.SubCategory}");
+                    Console.WriteLine($"    Confidence score: {piiEntity.ConfidenceScore}");
+                    Console.WriteLine();
                 }
+
+                Console.WriteLine($"  Document statistics:");
+                Console.WriteLine($"    Character count: {documentResult.Statistics.CharacterCount}");
+                Console.WriteLine($"    Transaction count: {documentResult.Statistics.TransactionCount}");
+                Console.WriteLine();
             }
 
-            Debug.WriteLine($"Batch operation statistics:");
-            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
-            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
-            Debug.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
-            Debug.WriteLine("");
+            Console.WriteLine($"Batch operation statistics:");
+            Console.WriteLine($"  Document count: {entititesPerDocuments.Statistics.DocumentCount}");
+            Console.WriteLine($"  Valid document count: {entititesPerDocuments.Statistics.ValidDocumentCount}");
+            Console.WriteLine($"  Invalid document count: {entititesPerDocuments.Statistics.InvalidDocumentCount}");
+            Console.WriteLine($"  Transaction count: {entititesPerDocuments.Statistics.TransactionCount}");
+            Console.WriteLine();
+            #endregion
         }
     }
 }

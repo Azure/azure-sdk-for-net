@@ -21,5 +21,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.AreEqual(expected, properties.Managed);
         }
+
+        [TestCase(@"{""kid"":""https://vault/keys/key-name""}", null)]
+        [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""recoverableDays"":0}}", 0)]
+        [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""recoverableDays"":90}}", 90)]
+        public void DeserializesRecoverableDays(string content, int? expected)
+        {
+            KeyProperties properties = new KeyProperties();
+            using (JsonStream json = new JsonStream(content))
+            {
+                properties.Deserialize(json.AsStream());
+            }
+
+            Assert.AreEqual(expected, properties.RecoverableDays);
+        }
     }
 }

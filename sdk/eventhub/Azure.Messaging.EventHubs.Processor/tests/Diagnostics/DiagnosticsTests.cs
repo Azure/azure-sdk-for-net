@@ -2,20 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Storage.Blobs;
+using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Processor.Tests
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of tests for validating the diagnostics instrumentation
@@ -31,11 +32,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
     /// </remarks>
     ///
     [NonParallelizable]
+    [TestFixture]
     public class DiagnosticsTests
     {
-        /// <summary>The name of the diagnostics source being tested.</summary>
-        private const string DiagnosticSourceName = "Azure.Messaging.EventHubs";
-
         /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.UpdateCheckpointAsync" />
         ///   method.
@@ -44,149 +43,57 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task UpdateCheckpointAsyncCreatesScope()
         {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-            var eventHubName = "SomeName";
-            var endpoint = new Uri("amqp://some.endpoint.com/path");
-            Func<EventHubConnection> fakeFactory = () => new MockConnection(endpoint, eventHubName);
-            var context = new MockPartitionContext("partition");
-            var data = new MockEventData(new byte[0], sequenceNumber: 0, offset: 0);
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockContext = new Mock<PartitionContext>("65");
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<CheckpointStore>(), "cg", "host", "hub", 50, Mock.Of<TokenCredential>(), null) { CallBase = true };
 
-            var storageManager = new Mock<PartitionManager>();
-            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
+            mockProcessor
+                .Protected()
+                .Setup<EventHubConnection>("CreateConnection")
+                .Returns(Mock.Of<EventHubConnection>());
 
-            // UpdateCheckpointAsync does not invoke the handlers, but we are setting them here in case
-            // this fact changes in the future.
+            mockLogger
+                .Setup(log => log.UpdateCheckpointComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Callback(() => completionSource.TrySetResult(true));
 
-            eventProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            eventProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.Logger = mockLogger.Object;
 
-            await eventProcessor.Object.UpdateCheckpointAsync(data, context, default);
+            using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 65, 998, default);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
             Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorCheckpointActivityName));
+
+            cancellationSource.Cancel();
         }
 
         /// <summary>
-        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.RunPartitionProcessingAsync" />
-        ///   method.
+        ///   Invokes the protected UpdateCheckpointAsync method on the processor client.
         /// </summary>
         ///
-        [Test]
-        [Ignore("Diagnostic scope is not completing properly. Maybe the listener is being disposed of first.")]
-        public async Task RunPartitionProcessingAsyncCreatesScopeForEventProcessing()
-        {
-            var mockStorage = new MockCheckPointStorage();
-            var mockConsumer = new Mock<EventHubConsumerClient>("cg", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", "ns", "eh", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
-
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
-            var completionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var processEventCalls = 0;
-
-            mockConsumer
-                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<EventPosition>(),
-                    It.IsAny<ReadEventOptions>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partitionId, position, options, token) =>
-                {
-                    async IAsyncEnumerable<PartitionEvent> mockPartitionEventEnumerable()
-                    {
-                        var context = new MockPartitionContext(partitionId);
-
-                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id" } } });
-                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id2" } } });
-
-                        while (!completionSource.Task.IsCompleted && !token.IsCancellationRequested)
-                        {
-                            await Task.Delay(TimeSpan.FromSeconds(1));
-                            yield return new PartitionEvent();
-                        }
-
-                        yield break;
-                    };
-
-                    return mockPartitionEventEnumerable();
-                });
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs =>
-            {
-                if (++processEventCalls == 2)
-                {
-                    completionSource.SetResult(null);
-                }
-
-                return Task.CompletedTask;
-            };
-
-            // RunPartitionProcessingAsync does not invoke the error handler, but we are setting it here in case
-            // this fact changes in the future.
-
-            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            // Start processing and wait for the consumer to be invoked.  Set a cancellation for backup to ensure
-            // that the test completes deterministically.
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
-
-            using var partitionProcessingTask = Task.Run(() => mockProcessor.Object.RunPartitionProcessingAsync("pid", default, cancellationSource.Token));
-            await Task.WhenAny(Task.Delay(-1, cancellationSource.Token), completionSource.Task);
-            await Task.WhenAny(Task.Delay(-1, cancellationSource.Token), partitionProcessingTask);
-
-            // Validate that cancellation did not take place.
-
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
-
-            // Validate diagnostics functionality.
-
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
-            Assert.That(scope.Links, Has.One.EqualTo("id"));
-            Assert.That(scope.Links, Has.One.EqualTo("id2"));
-            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
-        }
-
-        private class MockConnection : EventHubConnection
-        {
-            private const string MockConnectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];";
-            public Uri ServiceEndpoint;
-
-            public MockConnection(Uri serviceEndpoint,
-                                  string eventHubName) : base(MockConnectionString, eventHubName)
-            {
-                ServiceEndpoint = serviceEndpoint;
-            }
-        }
-
-        private class MockEventData : EventData
-        {
-            public MockEventData(ReadOnlyMemory<byte> eventBody,
-                                 IDictionary<string, object> properties = null,
-                                 IReadOnlyDictionary<string, object> systemProperties = null,
-                                 long sequenceNumber = long.MinValue,
-                                 long offset = long.MinValue,
-                                 DateTimeOffset enqueuedTime = default,
-                                 string partitionKey = null) : base(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey)
-            {
-            }
-        }
-
-        private class MockPartitionContext : PartitionContext
-        {
-            public MockPartitionContext(string partitionId) : base(partitionId)
-            {
-            }
-        }
+        /// <param name="target">The client whose method to invoke.</param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
+        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        /// <returns>The translated options.</returns>
+        ///
+        private static Task InvokeUpdateCheckpointAsync(EventProcessorClient target,
+                                                        string partitionId,
+                                                        long offset,
+                                                        long? sequenceNumber,
+                                                        CancellationToken cancellationToken) =>
+            (Task)
+                typeof(EventProcessorClient)
+                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(target, new object[] { partitionId, offset, sequenceNumber, cancellationToken });
     }
 }

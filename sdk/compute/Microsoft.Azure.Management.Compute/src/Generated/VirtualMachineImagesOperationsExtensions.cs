@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Compute
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -101,12 +100,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='skus'>
             /// A valid image SKU.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation.
             /// </param>
-            public static IList<VirtualMachineImageResource> List(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResource> odataQuery = default(ODataQuery<VirtualMachineImageResource>))
+            /// <param name='top'>
+            /// </param>
+            /// <param name='orderby'>
+            /// </param>
+            public static IList<VirtualMachineImageResource> List(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, string expand = default(string), int? top = default(int?), string orderby = default(string))
             {
-                return operations.ListAsync(location, publisherName, offer, skus, odataQuery).GetAwaiter().GetResult();
+                return operations.ListAsync(location, publisherName, offer, skus, expand, top, orderby).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,15 +131,19 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='skus'>
             /// A valid image SKU.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='orderby'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VirtualMachineImageResource>> ListAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResource> odataQuery = default(ODataQuery<VirtualMachineImageResource>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<VirtualMachineImageResource>> ListAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, string expand = default(string), int? top = default(int?), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(location, publisherName, offer, skus, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, publisherName, offer, skus, expand, top, orderby, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -263,6 +270,48 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<IList<VirtualMachineImageResource>> ListSkusAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSkusWithHttpMessagesAsync(location, publisherName, offer, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of all virtual machine image versions for the specified edge
+            /// zone
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The name of a supported Azure region.
+            /// </param>
+            /// <param name='edgeZone'>
+            /// The name of the edge zone.
+            /// </param>
+            public static VmImagesInEdgeZoneListResult ListByEdgeZone(this IVirtualMachineImagesOperations operations, string location, string edgeZone)
+            {
+                return operations.ListByEdgeZoneAsync(location, edgeZone).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of all virtual machine image versions for the specified edge
+            /// zone
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The name of a supported Azure region.
+            /// </param>
+            /// <param name='edgeZone'>
+            /// The name of the edge zone.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VmImagesInEdgeZoneListResult> ListByEdgeZoneAsync(this IVirtualMachineImagesOperations operations, string location, string edgeZone, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByEdgeZoneWithHttpMessagesAsync(location, edgeZone, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

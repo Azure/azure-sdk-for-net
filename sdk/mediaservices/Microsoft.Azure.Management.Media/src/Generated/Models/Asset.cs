@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the Asset class.
         /// </summary>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="assetId">The Asset ID.</param>
         /// <param name="created">The creation date of the Asset.</param>
         /// <param name="lastModified">The last modified date of the
@@ -49,7 +51,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="storageEncryptionFormat">The Asset encryption format.
         /// One of None or MediaStorageEncryption. Possible values include:
         /// 'None', 'MediaStorageClientEncryption'</param>
-        public Asset(string id = default(string), string name = default(string), string type = default(string), System.Guid assetId = default(System.Guid), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string alternateId = default(string), string description = default(string), string container = default(string), string storageAccountName = default(string), AssetStorageEncryptionFormat storageEncryptionFormat = default(AssetStorageEncryptionFormat))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public Asset(string id = default(string), string name = default(string), string type = default(string), System.Guid assetId = default(System.Guid), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string alternateId = default(string), string description = default(string), string container = default(string), string storageAccountName = default(string), AssetStorageEncryptionFormat storageEncryptionFormat = default(AssetStorageEncryptionFormat), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             AssetId = assetId;
@@ -60,6 +64,7 @@ namespace Microsoft.Azure.Management.Media.Models
             Container = container;
             StorageAccountName = storageAccountName;
             StorageEncryptionFormat = storageEncryptionFormat;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -117,6 +122,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageEncryptionFormat")]
         public AssetStorageEncryptionFormat StorageEncryptionFormat { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

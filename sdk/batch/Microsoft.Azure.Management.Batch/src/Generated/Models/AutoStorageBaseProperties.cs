@@ -32,9 +32,18 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         /// <param name="storageAccountId">The resource ID of the storage
         /// account to be used for auto-storage account.</param>
-        public AutoStorageBaseProperties(string storageAccountId)
+        /// <param name="authenticationMode">The authentication mode which the
+        /// Batch service will use to manage the auto-storage account. Possible
+        /// values include: 'StorageKeys',
+        /// 'BatchAccountManagedIdentity'</param>
+        /// <param name="nodeIdentityReference">The reference to the user
+        /// assigned identity which compute nodes will use to access
+        /// auto-storage.</param>
+        public AutoStorageBaseProperties(string storageAccountId, AutoStorageAuthenticationMode? authenticationMode = default(AutoStorageAuthenticationMode?), ComputeNodeIdentityReference nodeIdentityReference = default(ComputeNodeIdentityReference))
         {
             StorageAccountId = storageAccountId;
+            AuthenticationMode = authenticationMode;
+            NodeIdentityReference = nodeIdentityReference;
             CustomInit();
         }
 
@@ -49,6 +58,25 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountId")]
         public string StorageAccountId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the authentication mode which the Batch service will
+        /// use to manage the auto-storage account. Possible values include:
+        /// 'StorageKeys', 'BatchAccountManagedIdentity'
+        /// </summary>
+        [JsonProperty(PropertyName = "authenticationMode")]
+        public AutoStorageAuthenticationMode? AuthenticationMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference to the user assigned identity which
+        /// compute nodes will use to access auto-storage.
+        /// </summary>
+        /// <remarks>
+        /// The identity referenced here must be assigned to pools which have
+        /// compute nodes that need access to auto-storage.
+        /// </remarks>
+        [JsonProperty(PropertyName = "nodeIdentityReference")]
+        public ComputeNodeIdentityReference NodeIdentityReference { get; set; }
 
         /// <summary>
         /// Validate the object.

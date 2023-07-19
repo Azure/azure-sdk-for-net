@@ -1,0 +1,248 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/route/range/json?api-version=1.0\u0026query=46%2C123.75\u0026timeBudgetInSec=1200",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e4a82525bc8d3627757802288628e0c1-9c3a4d53cdc15505-00",
+        "User-Agent": "azsdk-net-Maps.Route/1.0.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "f6d78c4fb697054b5d81f04c26b66b22",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-transform, no-cache",
+        "Content-Length": "2299",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 26 Aug 2022 09:22:49 GMT",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 41B8906C1D914710A094A8F3F5A2C220 Ref B: TYBEDGE0511 Ref C: 2022-08-26T09:22:50Z"
+      },
+      "ResponseBody": {
+        "formatVersion": "0.0.1",
+        "reachableRange": {
+          "center": {
+            "latitude": 45.99369,
+            "longitude": 123.73008
+          },
+          "boundary": [
+            {
+              "latitude": 46.08007,
+              "longitude": 123.72976
+            },
+            {
+              "latitude": 46.08994,
+              "longitude": 123.70752
+            },
+            {
+              "latitude": 46.07319,
+              "longitude": 123.70478
+            },
+            {
+              "latitude": 46.07301,
+              "longitude": 123.6906
+            },
+            {
+              "latitude": 46.07288,
+              "longitude": 123.68026
+            },
+            {
+              "latitude": 46.07237,
+              "longitude": 123.67567
+            },
+            {
+              "latitude": 46.04298,
+              "longitude": 123.69064
+            },
+            {
+              "latitude": 46.03517,
+              "longitude": 123.68641
+            },
+            {
+              "latitude": 46.02768,
+              "longitude": 123.68476
+            },
+            {
+              "latitude": 46.01913,
+              "longitude": 123.69093
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.92528,
+              "longitude": 123.66205
+            },
+            {
+              "latitude": 45.92771,
+              "longitude": 123.66773
+            },
+            {
+              "latitude": 45.92877,
+              "longitude": 123.6824
+            },
+            {
+              "latitude": 45.92674,
+              "longitude": 123.6923
+            },
+            {
+              "latitude": 45.92471,
+              "longitude": 123.7022
+            },
+            {
+              "latitude": 45.92389,
+              "longitude": 123.71233
+            },
+            {
+              "latitude": 45.926,
+              "longitude": 123.7216
+            },
+            {
+              "latitude": 45.93115,
+              "longitude": 123.73054
+            },
+            {
+              "latitude": 45.93114,
+              "longitude": 123.74545
+            },
+            {
+              "latitude": 45.87975,
+              "longitude": 123.77209
+            },
+            {
+              "latitude": 45.88467,
+              "longitude": 123.77143
+            },
+            {
+              "latitude": 45.94229,
+              "longitude": 123.76219
+            },
+            {
+              "latitude": 45.9448,
+              "longitude": 123.76906
+            },
+            {
+              "latitude": 45.94864,
+              "longitude": 123.77611
+            },
+            {
+              "latitude": 45.95304,
+              "longitude": 123.78258
+            },
+            {
+              "latitude": 45.95618,
+              "longitude": 123.7872
+            },
+            {
+              "latitude": 45.96309,
+              "longitude": 123.79737
+            },
+            {
+              "latitude": 45.96749,
+              "longitude": 123.80384
+            },
+            {
+              "latitude": 45.97317,
+              "longitude": 123.81016
+            },
+            {
+              "latitude": 45.97474,
+              "longitude": 123.81183
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 45.99369,
+              "longitude": 123.73008
+            },
+            {
+              "latitude": 46.081,
+              "longitude": 123.73196
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "78862871"
+  }
+}

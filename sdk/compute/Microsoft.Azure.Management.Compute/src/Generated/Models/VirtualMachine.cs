@@ -57,78 +57,114 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// cannot be changed once VM is provisioned.</param>
         /// <param name="networkProfile">Specifies the network interfaces of
         /// the virtual machine.</param>
+        /// <param name="securityProfile">Specifies the Security related
+        /// profile settings for the virtual machine.</param>
         /// <param name="diagnosticsProfile">Specifies the boot diagnostic
-        /// settings state. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2015-06-15.</param>
+        /// settings state. Minimum api-version: 2015-06-15.</param>
         /// <param name="availabilitySet">Specifies information about the
         /// availability set that the virtual machine should be assigned to.
         /// Virtual machines specified in the same availability set are
         /// allocated to different nodes to maximize availability. For more
-        /// information about availability sets, see [Manage the availability
-        /// of virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-        /// &lt;br&gt;&lt;br&gt; For more information on Azure planned
-        /// maintenance, see [Planned maintenance for virtual machines in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-        /// &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to
-        /// availability set at creation time. An existing VM cannot be added
-        /// to an availability set. &lt;br&gt;&lt;br&gt;This property cannot
-        /// exist along with a non-null properties.virtualMachineScaleSet
-        /// reference.</param>
+        /// information about availability sets, see [Availability sets
+        /// overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview).
+        /// For more information on Azure planned maintenance, see [Maintenance
+        /// and updates for Virtual Machines in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates).
+        /// Currently, a VM can only be added to availability set at creation
+        /// time. The availability set to which the VM is being added should be
+        /// under the same resource group as the availability set resource. An
+        /// existing VM cannot be added to an availability set. This property
+        /// cannot exist along with a non-null
+        /// properties.virtualMachineScaleSet reference.</param>
         /// <param name="virtualMachineScaleSet">Specifies information about
         /// the virtual machine scale set that the virtual machine should be
         /// assigned to. Virtual machines specified in the same virtual machine
         /// scale set are allocated to different nodes to maximize
         /// availability. Currently, a VM can only be added to virtual machine
         /// scale set at creation time. An existing VM cannot be added to a
-        /// virtual machine scale set. &lt;br&gt;&lt;br&gt;This property cannot
-        /// exist along with a non-null properties.availabilitySet reference.
-        /// &lt;br&gt;&lt;br&gt;Minimum api‐version: 2019‐03‐01</param>
+        /// virtual machine scale set. This property cannot exist along with a
+        /// non-null properties.availabilitySet reference. Minimum api‐version:
+        /// 2019‐03‐01.</param>
         /// <param name="proximityPlacementGroup">Specifies information about
         /// the proximity placement group that the virtual machine should be
-        /// assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2018-04-01.</param>
+        /// assigned to. Minimum api-version: 2018-04-01.</param>
         /// <param name="priority">Specifies the priority for the virtual
-        /// machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01.
-        /// Possible values include: 'Regular', 'Low', 'Spot'</param>
+        /// machine. Minimum api-version: 2019-03-01. Possible values include:
+        /// 'Regular', 'Low', 'Spot'</param>
         /// <param name="evictionPolicy">Specifies the eviction policy for the
-        /// Azure Spot virtual machine and Azure Spot scale set.
-        /// &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, the only
-        /// supported value is 'Deallocate' and the minimum api-version is
-        /// 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both
-        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
-        /// is 2017-10-30-preview. Possible values include: 'Deallocate',
-        /// 'Delete'</param>
+        /// Azure Spot virtual machine and Azure Spot scale set. For Azure Spot
+        /// virtual machines, both 'Deallocate' and 'Delete' are supported and
+        /// the minimum api-version is 2019-03-01. For Azure Spot scale sets,
+        /// both 'Deallocate' and 'Delete' are supported and the minimum
+        /// api-version is 2017-10-30-preview. Possible values include:
+        /// 'Deallocate', 'Delete'</param>
         /// <param name="billingProfile">Specifies the billing related details
-        /// of a Azure Spot virtual machine. &lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2019-03-01.</param>
+        /// of a Azure Spot virtual machine. Minimum api-version:
+        /// 2019-03-01.</param>
         /// <param name="host">Specifies information about the dedicated host
-        /// that the virtual machine resides in. &lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2018-10-01.</param>
+        /// that the virtual machine resides in. Minimum api-version:
+        /// 2018-10-01.</param>
+        /// <param name="hostGroup">Specifies information about the dedicated
+        /// host group that the virtual machine resides in. **Note:** User
+        /// cannot specify both host and hostGroup properties. Minimum
+        /// api-version: 2020-06-01.</param>
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="instanceView">The virtual machine instance
         /// view.</param>
         /// <param name="licenseType">Specifies that the image or disk that is
-        /// being used was licensed on-premises. This element is only used for
-        /// images that contain the Windows Server operating system.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server
-        /// &lt;br&gt;&lt;br&gt; If this element is included in a request for
-        /// an update, the value must match the initial value. This value
-        /// cannot be updated. &lt;br&gt;&lt;br&gt; For more information, see
-        /// [Azure Hybrid Use Benefit for Windows
-        /// Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible
+        /// values for Windows Server operating system are:
+        /// &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt;
+        /// Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux
+        /// Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for
+        /// RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE)
+        /// &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use
+        /// Benefit for Windows
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
+        /// &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
         /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15</param>
         /// <param name="vmId">Specifies the VM unique ID which is a 128-bits
         /// identifier that is encoded and stored in all Azure IaaS VMs SMBIOS
         /// and can be read using platform BIOS commands.</param>
+        /// <param name="extensionsTimeBudget">Specifies the time alloted for
+        /// all extensions to start. The time duration should be between 15
+        /// minutes and 120 minutes (inclusive) and should be specified in ISO
+        /// 8601 format. The default value is 90 minutes (PT1H30M). Minimum
+        /// api-version: 2020-06-01.</param>
+        /// <param name="platformFaultDomain">Specifies the scale set logical
+        /// fault domain into which the Virtual Machine will be created. By
+        /// default, the Virtual Machine will by automatically assigned to a
+        /// fault domain that best maintains balance across available fault
+        /// domains. This is applicable only if the 'virtualMachineScaleSet'
+        /// property of this Virtual Machine is set. The Virtual Machine Scale
+        /// Set that is referenced, must have 'platformFaultDomainCount'
+        /// greater than 1. This property cannot be updated once the Virtual
+        /// Machine is created. Fault domain assignment can be viewed in the
+        /// Virtual Machine Instance View. Minimum api‐version:
+        /// 2020‐12‐01.</param>
+        /// <param name="scheduledEventsProfile">Specifies Scheduled Event
+        /// related configurations.</param>
+        /// <param name="userData">UserData for the VM, which must be base-64
+        /// encoded. Customer should not pass any secrets in here. Minimum
+        /// api-version: 2021-03-01.</param>
+        /// <param name="capacityReservation">Specifies information about the
+        /// capacity reservation that is used to allocate virtual machine.
+        /// Minimum api-version: 2021-04-01.</param>
+        /// <param name="applicationProfile">Specifies the gallery applications
+        /// that should be made available to the VM/VMSS.</param>
+        /// <param name="timeCreated">Specifies the time at which the Virtual
+        /// Machine resource was created. Minimum api-version:
+        /// 2021-11-01.</param>
         /// <param name="resources">The virtual machine child extension
         /// resources.</param>
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        /// <param name="extendedLocation">The extended location of the Virtual
+        /// Machine.</param>
+        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), SubResource hostGroup = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), string extensionsTimeBudget = default(string), int? platformFaultDomain = default(int?), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), CapacityReservationProfile capacityReservation = default(CapacityReservationProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), System.DateTime? timeCreated = default(System.DateTime?), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(location, id, name, type, tags)
         {
             Plan = plan;
@@ -137,6 +173,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             AdditionalCapabilities = additionalCapabilities;
             OsProfile = osProfile;
             NetworkProfile = networkProfile;
+            SecurityProfile = securityProfile;
             DiagnosticsProfile = diagnosticsProfile;
             AvailabilitySet = availabilitySet;
             VirtualMachineScaleSet = virtualMachineScaleSet;
@@ -145,13 +182,22 @@ namespace Microsoft.Azure.Management.Compute.Models
             EvictionPolicy = evictionPolicy;
             BillingProfile = billingProfile;
             Host = host;
+            HostGroup = hostGroup;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
             LicenseType = licenseType;
             VmId = vmId;
+            ExtensionsTimeBudget = extensionsTimeBudget;
+            PlatformFaultDomain = platformFaultDomain;
+            ScheduledEventsProfile = scheduledEventsProfile;
+            UserData = userData;
+            CapacityReservation = capacityReservation;
+            ApplicationProfile = applicationProfile;
+            TimeCreated = timeCreated;
             Resources = resources;
             Identity = identity;
             Zones = zones;
+            ExtendedLocation = extendedLocation;
             CustomInit();
         }
 
@@ -209,9 +255,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         public NetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the boot diagnostic settings state.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2015-06-15.
+        /// Gets or sets specifies the Security related profile settings for
+        /// the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityProfile")]
+        public SecurityProfile SecurityProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the boot diagnostic settings state. Minimum
+        /// api-version: 2015-06-15.
         /// </summary>
         [JsonProperty(PropertyName = "properties.diagnosticsProfile")]
         public DiagnosticsProfile DiagnosticsProfile { get; set; }
@@ -221,17 +273,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the virtual machine should be assigned to. Virtual machines
         /// specified in the same availability set are allocated to different
         /// nodes to maximize availability. For more information about
-        /// availability sets, see [Manage the availability of virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more information on Azure
-        /// planned maintenance, see [Planned maintenance for virtual machines
-        /// in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Currently, a VM can only be
-        /// added to availability set at creation time. An existing VM cannot
-        /// be added to an availability set.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This property cannot exist
-        /// along with a non-null properties.virtualMachineScaleSet reference.
+        /// availability sets, see [Availability sets
+        /// overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview).
+        /// For more information on Azure planned maintenance, see [Maintenance
+        /// and updates for Virtual Machines in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates).
+        /// Currently, a VM can only be added to availability set at creation
+        /// time. The availability set to which the VM is being added should be
+        /// under the same resource group as the availability set resource. An
+        /// existing VM cannot be added to an availability set. This property
+        /// cannot exist along with a non-null
+        /// properties.virtualMachineScaleSet reference.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySet")]
         public SubResource AvailabilitySet { get; set; }
@@ -242,60 +294,64 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// machines specified in the same virtual machine scale set are
         /// allocated to different nodes to maximize availability. Currently, a
         /// VM can only be added to virtual machine scale set at creation time.
-        /// An existing VM cannot be added to a virtual machine scale set.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This property cannot exist
-        /// along with a non-null properties.availabilitySet reference.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api‐version: 2019‐03‐01
+        /// An existing VM cannot be added to a virtual machine scale set. This
+        /// property cannot exist along with a non-null
+        /// properties.availabilitySet reference. Minimum api‐version:
+        /// 2019‐03‐01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachineScaleSet")]
         public SubResource VirtualMachineScaleSet { get; set; }
 
         /// <summary>
         /// Gets or sets specifies information about the proximity placement
-        /// group that the virtual machine should be assigned to.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2018-04-01.
+        /// group that the virtual machine should be assigned to. Minimum
+        /// api-version: 2018-04-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
         public SubResource ProximityPlacementGroup { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the priority for the virtual machine.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01. Possible values include: 'Regular', 'Low', 'Spot'
+        /// Minimum api-version: 2019-03-01. Possible values include:
+        /// 'Regular', 'Low', 'Spot'
         /// </summary>
         [JsonProperty(PropertyName = "properties.priority")]
         public string Priority { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the eviction policy for the Azure Spot
-        /// virtual machine and Azure Spot scale set.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot virtual
-        /// machines, the only supported value is 'Deallocate' and the minimum
-        /// api-version is 2019-03-01. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For
-        /// Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported
-        /// and the minimum api-version is 2017-10-30-preview. Possible values
-        /// include: 'Deallocate', 'Delete'
+        /// virtual machine and Azure Spot scale set. For Azure Spot virtual
+        /// machines, both 'Deallocate' and 'Delete' are supported and the
+        /// minimum api-version is 2019-03-01. For Azure Spot scale sets, both
+        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
+        /// is 2017-10-30-preview. Possible values include: 'Deallocate',
+        /// 'Delete'
         /// </summary>
         [JsonProperty(PropertyName = "properties.evictionPolicy")]
         public string EvictionPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the billing related details of a Azure Spot
-        /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
-        /// api-version: 2019-03-01.
+        /// virtual machine. Minimum api-version: 2019-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfile")]
         public BillingProfile BillingProfile { get; set; }
 
         /// <summary>
         /// Gets or sets specifies information about the dedicated host that
-        /// the virtual machine resides in.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2018-10-01.
+        /// the virtual machine resides in. Minimum api-version: 2018-10-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.host")]
         public SubResource Host { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the dedicated host group
+        /// that the virtual machine resides in. **Note:** User cannot specify
+        /// both host and hostGroup properties. Minimum api-version:
+        /// 2020-06-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hostGroup")]
+        public SubResource HostGroup { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.
@@ -311,16 +367,19 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies that the image or disk that is being used
-        /// was licensed on-premises. This element is only used for images that
-        /// contain the Windows Server operating system.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
+        /// was licensed on-premises. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// Possible values for Windows Server operating system are:
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Windows_Client
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Windows_Server
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; If this element is included in
-        /// a request for an update, the value must match the initial value.
-        /// This value cannot be updated. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-        /// For more information, see [Azure Hybrid Use Benefit for Windows
-        /// Server](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-hybrid-use-benefit-licensing?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values for Linux
+        /// Server operating system are: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// RHEL_BYOS (for RHEL) &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; SLES_BYOS
+        /// (for SUSE) &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more
+        /// information, see [Azure Hybrid Use Benefit for Windows
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [Azure Hybrid Use Benefit for
+        /// Linux
+        /// Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Minimum api-version:
         /// 2015-06-15
         /// </summary>
@@ -334,6 +393,67 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmId")]
         public string VmId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies the time alloted for all extensions to
+        /// start. The time duration should be between 15 minutes and 120
+        /// minutes (inclusive) and should be specified in ISO 8601 format. The
+        /// default value is 90 minutes (PT1H30M). Minimum api-version:
+        /// 2020-06-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.extensionsTimeBudget")]
+        public string ExtensionsTimeBudget { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the scale set logical fault domain into
+        /// which the Virtual Machine will be created. By default, the Virtual
+        /// Machine will by automatically assigned to a fault domain that best
+        /// maintains balance across available fault domains. This is
+        /// applicable only if the 'virtualMachineScaleSet' property of this
+        /// Virtual Machine is set. The Virtual Machine Scale Set that is
+        /// referenced, must have 'platformFaultDomainCount' greater than 1.
+        /// This property cannot be updated once the Virtual Machine is
+        /// created. Fault domain assignment can be viewed in the Virtual
+        /// Machine Instance View. Minimum api‐version: 2020‐12‐01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.platformFaultDomain")]
+        public int? PlatformFaultDomain { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies Scheduled Event related configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scheduledEventsProfile")]
+        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets userData for the VM, which must be base-64 encoded.
+        /// Customer should not pass any secrets in here. Minimum api-version:
+        /// 2021-03-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userData")]
+        public string UserData { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the capacity reservation
+        /// that is used to allocate virtual machine. Minimum api-version:
+        /// 2021-04-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.capacityReservation")]
+        public CapacityReservationProfile CapacityReservation { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the gallery applications that should be made
+        /// available to the VM/VMSS.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicationProfile")]
+        public ApplicationProfile ApplicationProfile { get; set; }
+
+        /// <summary>
+        /// Gets specifies the time at which the Virtual Machine resource was
+        /// created. Minimum api-version: 2021-11-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.timeCreated")]
+        public System.DateTime? TimeCreated { get; private set; }
 
         /// <summary>
         /// Gets the virtual machine child extension resources.
@@ -352,6 +472,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "zones")]
         public IList<string> Zones { get; set; }
+
+        /// <summary>
+        /// Gets or sets the extended location of the Virtual Machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Validate the object.

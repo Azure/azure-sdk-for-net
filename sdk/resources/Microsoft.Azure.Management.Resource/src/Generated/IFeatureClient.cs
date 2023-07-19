@@ -14,14 +14,12 @@ namespace Microsoft.Azure.Management.ResourceManager
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
-    /// Azure Feature Exposure Control (AFEC) provides a mechanism for the
-    /// resource providers to control feature exposure to users. Resource
-    /// providers typically use this mechanism to provide public/private
-    /// preview for new features prior to making them generally available.
-    /// Users need to explicitly register for AFEC features to get access to
-    /// such functionality.
     /// </summary>
     public partial interface IFeatureClient : System.IDisposable
     {
@@ -46,7 +44,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The ID of the target subscription.
+        /// The Azure subscription ID.
         /// </summary>
         string SubscriptionId { get; set; }
 
@@ -78,6 +76,36 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets the IFeaturesOperations.
         /// </summary>
         IFeaturesOperations Features { get; }
+
+        /// <summary>
+        /// Gets the ISubscriptionFeatureRegistrationsOperations.
+        /// </summary>
+        ISubscriptionFeatureRegistrationsOperations SubscriptionFeatureRegistrations { get; }
+
+        /// <summary>
+        /// Lists all of the available Microsoft.Features REST API operations.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<Operation>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Lists all of the available Microsoft.Features REST API operations.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<Operation>>> ListOperationsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

@@ -1,0 +1,195 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/IOT-ResourceGroup-CUS/providers/Microsoft.Devices/IotHubs/SDK-IotHub-CUS/providers/Microsoft.Security/iotSensors/iotSensorToDelete?api-version=2020-08-06-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ4N2JiNDg1LWI1YjAtNDcxZS05YzBkLTEwNzE3NjEyZjg2OS9yZXNvdXJjZUdyb3Vwcy9JT1QtUmVzb3VyY2VHcm91cC1DVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvU0RLLUlvdEh1Yi1DVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9pb3RTZW5zb3JzL2lvdFNlbnNvclRvRGVsZXRlP2FwaS12ZXJzaW9uPTIwMjAtMDgtMDYtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a898cabc-4c6e-4cce-96d8-f826b5a2f70c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/IOT-ResourceGroup-CUS/providers/Microsoft.Devices/iotHubs/SDK-IotHub-CUS/providers/Microsoft.Security/iotSensors/iotSensorToDelete"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:fe5cd4dd-bd6b-4202-a1f7-a9d691c1bc09"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "249"
+        ],
+        "x-ms-request-id": [
+          "50162995-ac06-40a3-948e-8a24b23831be"
+        ],
+        "x-ms-correlation-request-id": [
+          "50162995-ac06-40a3-948e-8a24b23831be"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201111T100918Z:50162995-ac06-40a3-948e-8a24b23831be"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 11 Nov 2020 10:09:17 GMT"
+        ],
+        "Content-Length": [
+          "288"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/IOT-ResourceGroup-CUS/providers/Microsoft.Devices/iotHubs/SDK-IotHub-CUS/providers/Microsoft.Security/iotSensors/iotSensorToDelete\",\r\n  \"type\": \"Microsoft.Security/iotSensors\",\r\n  \"name\": \"iotSensorToDelete\",\r\n  \"properties\": {}\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "//subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/IOT-ResourceGroup-CUS/providers/Microsoft.Devices/IotHubs/SDK-IotHub-CUS/providers/Microsoft.Security/iotSensors/iotSensorToDelete?api-version=2020-08-06-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ4N2JiNDg1LWI1YjAtNDcxZS05YzBkLTEwNzE3NjEyZjg2OS9yZXNvdXJjZUdyb3Vwcy9JT1QtUmVzb3VyY2VHcm91cC1DVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvU0RLLUlvdEh1Yi1DVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9pb3RTZW5zb3JzL2lvdFNlbnNvclRvRGVsZXRlP2FwaS12ZXJzaW9uPTIwMjAtMDgtMDYtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "56e476ac-025b-4e78-b418-cfcb439d25be"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:fe5cd4dd-bd6b-4202-a1f7-a9d691c1bc09"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "249"
+        ],
+        "x-ms-request-id": [
+          "4275683c-bc49-478b-a17b-0b4aacc92b8d"
+        ],
+        "x-ms-correlation-request-id": [
+          "4275683c-bc49-478b-a17b-0b4aacc92b8d"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201111T100918Z:4275683c-bc49-478b-a17b-0b4aacc92b8d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 11 Nov 2020 10:09:17 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/IOT-ResourceGroup-CUS/providers/Microsoft.Devices/IotHubs/SDK-IotHub-CUS/providers/Microsoft.Security/iotSensors/iotSensorToDelete?api-version=2020-08-06-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ4N2JiNDg1LWI1YjAtNDcxZS05YzBkLTEwNzE3NjEyZjg2OS9yZXNvdXJjZUdyb3Vwcy9JT1QtUmVzb3VyY2VHcm91cC1DVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL0lvdEh1YnMvU0RLLUlvdEh1Yi1DVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9pb3RTZW5zb3JzL2lvdFNlbnNvclRvRGVsZXRlP2FwaS12ZXJzaW9uPTIwMjAtMDgtMDYtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c0377432-6dbe-4c72-9ab3-fe9339adb0ce"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:fe5cd4dd-bd6b-4202-a1f7-a9d691c1bc09"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "7ffa38f4-f252-4d7b-85b6-99ab03ede4b8"
+        ],
+        "x-ms-correlation-request-id": [
+          "7ffa38f4-f252-4d7b-85b6-99ab03ede4b8"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201111T100919Z:7ffa38f4-f252-4d7b-85b6-99ab03ede4b8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 11 Nov 2020 10:09:18 GMT"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"NotFound\",\r\n    \"message\": \"Resource not found\",\r\n    \"target\": null,\r\n    \"details\": null,\r\n    \"additionalInfo\": null\r\n  }\r\n}",
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

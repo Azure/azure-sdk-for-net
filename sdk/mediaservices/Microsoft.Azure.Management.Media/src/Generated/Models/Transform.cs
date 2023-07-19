@@ -39,23 +39,28 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="outputs">An array of one or more TransformOutputs that
         /// the Transform should generate.</param>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="created">The UTC date and time when the Transform was
         /// created, in 'YYYY-MM-DDThh:mm:ssZ' format.</param>
         /// <param name="description">An optional verbose description of the
         /// Transform.</param>
         /// <param name="lastModified">The UTC date and time when the Transform
         /// was last updated, in 'YYYY-MM-DDThh:mm:ssZ' format.</param>
-        public Transform(IList<TransformOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), string description = default(string), System.DateTime lastModified = default(System.DateTime))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public Transform(IList<TransformOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), string description = default(string), System.DateTime lastModified = default(System.DateTime), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Created = created;
             Description = description;
             LastModified = lastModified;
             Outputs = outputs;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -90,6 +95,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.outputs")]
         public IList<TransformOutput> Outputs { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

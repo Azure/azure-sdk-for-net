@@ -3,143 +3,95 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Sas;
+using Azure.Storage.Tests.Shared;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
+using Azure.Core.TestFramework.Models;
+
+#pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Storage.Test.Shared
 {
-    public abstract class StorageTestBase : RecordedTestBase
+    public abstract partial class StorageTestBase<TEnvironment> : RecordedTestBase<TEnvironment> where TEnvironment : StorageTestEnvironment, new()
     {
         static StorageTestBase()
         {
-            // https://github.com/Azure/azure-sdk-for-net/issues/9087
-            // .NET framework defaults to 2, which causes issues for the parallel upload/download tests.
+            // .NET framework defaults to 2, which causes issues for the parallel upload/download tests. Go out of bound like .NET Core does.
 #if !NETCOREAPP
-            ServicePointManager.DefaultConnectionLimit = 100;
+            ServicePointManager.DefaultConnectionLimit = int.MaxValue;
 #endif
+            // To avoid threadpool starvation when we run live tests in parallel.
+            ThreadPool.SetMinThreads(100, 100);
         }
 
-        /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
-        /// to Console.Out for easy debugging.
-        /// </summary>
-        private static TestEventListener s_listener;
+        private const string SignatureQueryName = "sig";
+        private const string CopySourceName = "x-ms-copy-source";
+        private const string RenameSource = "x-ms-rename-source";
+        private const string CopySourceAuthorization = "x-ms-copy-source-authorization";
+        private const string PreviousSnapshotUrl = "x-ms-previous-snapshot-url";
+        private const string FileRenameSource = "x-ms-file-rename-source";
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(async, mode)
         {
-            Sanitizer = new StorageRecordedTestSanitizer();
-            Matcher = new StorageRecordMatcher(Sanitizer);
-        }
+            SanitizedQueryParameters.Add(SignatureQueryName);
 
-        /// <summary>
-        /// Start logging events to the console if debugging or in Live mode.
-        /// This will run once before any tests.
-        /// </summary>
-        [OneTimeSetUp]
-        public void StartLoggingEvents()
-        {
-            if (Debugger.IsAttached || Mode == RecordedTestMode.Live)
+#if NETFRAMEWORK
+            // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET
+            // Core, we need to normalize to the .NET Core escaping when matching and storing the recordings when running tests on NetFramework.
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\(", "%28"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\)", "%29"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\!", "%21"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\'", "%27"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\*", "%2A"));
+            // Encode any colons in the Uri except for the one in the scheme
+            UriRegexSanitizers.Add(new UriRegexSanitizer("(?<group>:)[^//]", "%3A") {GroupForReplace = "group"});
+#endif
+
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-encryption-key", SanitizeValue));
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceAuthorization, SanitizeValue));
+
+            SanitizedQueryParametersInHeaders.Add((CopySourceName, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((RenameSource, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((PreviousSnapshotUrl, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((FileRenameSource, SignatureQueryName));
+
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"client_secret=(?<group>.*?)(?=&|$)", SanitizeValue)
             {
-                s_listener = new TestEventListener();
-            }
+                GroupForReplace = "group"
+            });
+
+            Tenants = new TenantConfigurationBuilder(this);
         }
 
-        /// <summary>
-        /// Stop logging events and do necessary cleanup.
-        /// This will run once after all tests have finished.
-        /// </summary>
-        [OneTimeTearDown]
-        public void StopLoggingEvents()
+        public string SanitizeUri(string uri)
         {
-            s_listener?.Dispose();
-            s_listener = null;
+            var builder = new UriBuilder(uri);
+            var query = new UriQueryParamsCollection(builder.Query);
+            if (query.ContainsKey(SignatureQueryName))
+            {
+                query[SignatureQueryName] = SanitizeValue;
+                builder.Query = query.ToString();
+            }
+            return builder.Uri.AbsoluteUri;
         }
 
         /// <summary>
-        /// Sets up the Event listener buffer for the test about to run.
-        /// This will run prior to the start of each test.
+        /// Source of test tenants.
         /// </summary>
-        [SetUp]
-        public void SetupEventsForTest() =>
-            s_listener?.SetupEventsForTest();
+        protected readonly TenantConfigurationBuilder Tenants;
 
-        /// <summary>
-        /// Output the Events to the console in the case of test failure.
-        /// This will include the HTTP requests and responses.
-        /// This will run after each test finishes.
-        /// </summary>
-        [TearDown]
-        public void OutputEventsForTest() =>
-            s_listener?.OutputEventsForTest();
-
-        /// <summary>
-        /// Gets the tenant to use by default for our tests.
-        /// </summary>
-        public TenantConfiguration TestConfigDefault => GetTestConfig(
-                "Storage_TestConfigDefault",
-                () => TestConfigurations.DefaultTargetTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require Read Access
-        /// Geo-Redundant Storage to be setup.
-        /// </summary>
-        public TenantConfiguration TestConfigSecondary => GetTestConfig(
-                "Storage_TestConfigSecondary",
-                () => TestConfigurations.DefaultSecondaryTargetTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require Premium SSDs.
-        /// </summary>
-        public TenantConfiguration TestConfigPremiumBlob => GetTestConfig(
-                "Storage_TestConfigPremiumBlob",
-                () => TestConfigurations.DefaultTargetPremiumBlobTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require preview features.
-        /// </summary>
-        public TenantConfiguration TestConfigPreviewBlob => GetTestConfig(
-                "Storage_TestConfigPreviewBlob",
-                () => TestConfigurations.DefaultTargetPreviewBlobTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require authentication
-        /// with Azure AD.
-        /// </summary>
-        public TenantConfiguration TestConfigOAuth => GetTestConfig(
-                "Storage_TestConfigOAuth",
-                () => TestConfigurations.DefaultTargetOAuthTenant);
-
-        /// <summary>
-        /// Gets the tenant to use for any tests that require authentication
-        /// with Azure AD.
-        /// </summary>
-        public TenantConfiguration TestConfigHierarchicalNamespace => GetTestConfig(
-                "Storage_TestConfigHierarchicalNamespace",
-                () => TestConfigurations.DefaultTargetHierarchicalNamespaceTenant);
-
-        /// <summary>
-        /// Gets a cache used for storing serialized tenant configurations.  Do
-        /// not get values from this directly; use GetTestConfig.
-        /// </summary>
-        private readonly Dictionary<string, string> _recordingConfigCache =
-            new Dictionary<string, string>();
-
-        /// <summary>
-        /// Gets a cache used for storing deserialized tenant configurations.
-        /// Do not get values from this directly; use GetTestConfig.
-        private readonly Dictionary<string, TenantConfiguration> _playbackConfigCache =
-            new Dictionary<string, TenantConfiguration>();
+        protected TenantConfiguration TestConfigDefault => Tenants.TestConfigDefault;
 
         /// <summary>
         /// We need to clear the playback cache before every test because
@@ -148,89 +100,18 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         [SetUp]
         public virtual void ClearCaches() =>
-            _playbackConfigCache.Clear();
-
-        /// <summary>
-        /// Get or create a test configuration tenant to use with our tests.
-        ///
-        /// If we're recording, we'll save a sanitized version of the test
-        /// configuarion.  If we're playing recorded tests, we'll use the
-        /// serialized test configuration.  If we're running the tests live,
-        /// we'll just return the value.
-        ///
-        /// While we cache things internally, DO NOT cache them elsewhere
-        /// because we need each test to have its configuration recorded.
-        /// </summary>
-        /// <param name="name">The name of the session record variable.</param>
-        /// <param name="getTenant">
-        /// A function to get the tenant.  This is wrapped in a Func becuase
-        /// we'll throw Assert.Inconclusive if you try to access a tenant with
-        /// an invalid config file.
-        /// </param>
-        /// <returns>A test tenant to use with our tests.</returns>
-        private TenantConfiguration GetTestConfig(string name, Func<TenantConfiguration> getTenant)
-        {
-            TenantConfiguration config;
-            string text;
-            switch (Mode)
-            {
-                case RecordedTestMode.Playback:
-                    if (!_playbackConfigCache.TryGetValue(name, out config))
-                    {
-                        text = Recording.GetVariable(name, null);
-                        config = TenantConfiguration.Parse(text);
-                        _playbackConfigCache[name] = config;
-                    }
-                    break;
-                case RecordedTestMode.Record:
-                    config = getTenant();
-                    if (!_recordingConfigCache.TryGetValue(name, out text))
-                    {
-                        text = TenantConfiguration.Serialize(config, true);
-                        _recordingConfigCache[name] = text;
-                    }
-                    Recording.GetVariable(name, text);
-                    break;
-                case RecordedTestMode.Live:
-                default:
-                    config = getTenant();
-                    break;
-            }
-            return config;
-        }
+            Tenants.ClearPlaybackCache();
 
         public DateTimeOffset GetUtcNow() => Recording.UtcNow;
-
-        protected HttpPipelineTransport GetTransport() =>
-            new HttpClientTransport(
-                new HttpClient()
-                {
-                    Timeout = TestConstants.HttpTimeoutDuration
-                });
 
         public byte[] GetRandomBuffer(long size)
             => TestHelper.GetRandomBuffer(size, Recording.Random);
 
-        public string GetNewString(int length = 20)
-        {
-            var buffer = new char[length];
-            for (var i = 0; i < length; i++)
-            {
-                buffer[i] = (char)('a' + Recording.Random.Next(0, 25));
-            }
-            return new string(buffer);
-        }
+        public string GetNewString(int length = 20) => DataProvider.GetNewString(length, Recording.Random);
 
         public string GetNewMetadataName() => $"test_metadata_{Recording.Random.NewGuid().ToString().Replace("-", "_")}";
 
-        public IDictionary<string, string> BuildMetadata()
-            => new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-                {
-                    { "foo", "bar" },
-                    { "meta", "data" },
-                    { "Capital", "letter" },
-                    { "UPPER", "case" }
-                };
+        public IDictionary<string, string> BuildMetadata() => DataProvider.BuildMetadata();
 
         public IPAddress GetIPAddress()
         {
@@ -241,24 +122,6 @@ namespace Azure.Storage.Test.Shared
             var ipString = $"{a}.{b}.{c}.{d}";
             return IPAddress.Parse(ipString);
         }
-
-        public TokenCredential GetOAuthCredential() =>
-            GetOAuthCredential(TestConfigOAuth);
-
-        public TokenCredential GetOAuthCredential(TenantConfiguration config) =>
-            GetOAuthCredential(
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret,
-                new Uri(config.ActiveDirectoryAuthEndpoint));
-
-        public TokenCredential GetOAuthCredential(string tenantId, string appId, string secret, Uri authorityHost) =>
-            new ClientSecretCredential(
-                tenantId,
-                appId,
-                secret,
-                Recording.InstrumentClientOptions(
-                    new TokenCredentialOptions() { AuthorityHost = authorityHost }));
 
         internal SharedAccessSignatureCredentials GetAccountSasCredentials(
             AccountSasServices services = AccountSasServices.All,
@@ -273,11 +136,11 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.Https,
             };
             sasBuilder.SetPermissions(permissions);
-            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            var cred = new StorageSharedKeyCredential(Tenants.TestConfigDefault.AccountName, Tenants.TestConfigDefault.AccountKey);
             return new SharedAccessSignatureCredentials(sasBuilder.ToSasQueryParameters(cred).ToString());
         }
 
-        public virtual void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
+        public virtual void AssertDictionaryEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
             Assert.IsNotNull(expected, "Expected metadata is null");
             Assert.IsNotNull(actual, "Actual metadata is null");
@@ -313,47 +176,6 @@ namespace Azure.Storage.Test.Shared
         }
 
         /// <summary>
-        /// A number of our tests have built in delays while we wait an expected
-        /// amount of time for a service operation to complete and this method
-        /// allows us to wait (unless we're playing back recordings, which can
-        /// complete immediately).
-        /// </summary>
-        /// <param name="milliseconds">The number of milliseconds to wait.</param>
-        /// <param name="playbackDelayMilliseconds">
-        /// An optional number of milliseconds to wait if we're playing back a
-        /// recorded test.  This is useful for allowing client side events to
-        /// get processed.
-        /// </param>
-        /// <returns>A task that will (optionally) delay.</returns>
-        public async Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
-            await Delay(Mode, milliseconds, playbackDelayMilliseconds);
-
-        /// <summary>
-        /// A number of our tests have built in delays while we wait an expected
-        /// amount of time for a service operation to complete and this method
-        /// allows us to wait (unless we're playing back recordings, which can
-        /// complete immediately).
-        /// </summary>
-        /// <param name="milliseconds">The number of milliseconds to wait.</param>
-        /// <param name="playbackDelayMilliseconds">
-        /// An optional number of milliseconds to wait if we're playing back a
-        /// recorded test.  This is useful for allowing client side events to
-        /// get processed.
-        /// </param>
-        /// <returns>A task that will (optionally) delay.</returns>
-        public static async Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
-        {
-            if (mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(milliseconds);
-            }
-            else if (playbackDelayMilliseconds != null)
-            {
-                await Task.Delay(playbackDelayMilliseconds.Value);
-            }
-        }
-
-        /// <summary>
         /// Wait for the progress notifications to complete.
         /// </summary>
         /// <param name="progressList">
@@ -361,11 +183,12 @@ namespace Azure.Storage.Test.Shared
         /// </param>
         /// <param name="totalSize">The total size we should eventually see.</param>
         /// <returns>A task that will (optionally) delay.</returns>
-        protected async Task WaitForProgressAsync(List<long> progressList, long totalSize)
+        protected async Task WaitForProgressAsync(System.Collections.Concurrent.ConcurrentBag<long> progressBag, long totalSize)
         {
             for (var attempts = 0; attempts < 10; attempts++)
             {
-                if (progressList.LastOrDefault() >= totalSize)
+                // ConcurrentBag.GetEnumerator() returns a snapshot in time; we can safely use linq queries
+                if (progressBag.Count > 0 && progressBag.Max() >= totalSize)
                 {
                     return;
                 }
@@ -464,6 +287,133 @@ namespace Azure.Storage.Test.Shared
                 {
                     await Delay(mode, retryDelay);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Create a stream of a given size that will not use more than maxMemory memory.
+        /// If the size is greater than maxMemory, a TemporaryFileStream will be used that
+        /// will delete the file in its Dispose method.
+        /// </summary>
+        protected async Task<Stream> CreateLimitedMemoryStream(long size, long maxMemory = Constants.MB * 100)
+        {
+            Stream stream;
+            if (size < maxMemory)
+            {
+                var data = GetRandomBuffer(size);
+                stream = new MemoryStream(data);
+            }
+            else
+            {
+                var path = Path.GetTempFileName();
+                stream = new TemporaryFileStream(path, FileMode.Create);
+                var bufferSize = 4 * Constants.KB;
+
+                while (stream.Position + bufferSize < size)
+                {
+                    await stream.WriteAsync(GetRandomBuffer(bufferSize), 0, bufferSize);
+                }
+                if (stream.Position < size)
+                {
+                    await stream.WriteAsync(GetRandomBuffer(size - stream.Position), 0, (int)(size - stream.Position));
+                }
+                // reset the stream
+                stream.Seek(0, SeekOrigin.Begin);
+            }
+            return stream;
+        }
+
+        public string AccountSasPermissionsToPermissionsString(AccountSasPermissions permissions)
+        {
+            var sb = new StringBuilder();
+            if ((permissions & AccountSasPermissions.Read) == AccountSasPermissions.Read)
+            {
+                sb.Append(Constants.Sas.Permissions.Read);
+            }
+            if ((permissions & AccountSasPermissions.Write) == AccountSasPermissions.Write)
+            {
+                sb.Append(Constants.Sas.Permissions.Write);
+            }
+            if ((permissions & AccountSasPermissions.Delete) == AccountSasPermissions.Delete)
+            {
+                sb.Append(Constants.Sas.Permissions.Delete);
+            }
+            if ((permissions & AccountSasPermissions.DeleteVersion) == AccountSasPermissions.DeleteVersion)
+            {
+                sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
+            }
+            if ((permissions & AccountSasPermissions.List) == AccountSasPermissions.List)
+            {
+                sb.Append(Constants.Sas.Permissions.List);
+            }
+            if ((permissions & AccountSasPermissions.Add) == AccountSasPermissions.Add)
+            {
+                sb.Append(Constants.Sas.Permissions.Add);
+            }
+            if ((permissions & AccountSasPermissions.Create) == AccountSasPermissions.Create)
+            {
+                sb.Append(Constants.Sas.Permissions.Create);
+            }
+            if ((permissions & AccountSasPermissions.Update) == AccountSasPermissions.Update)
+            {
+                sb.Append(Constants.Sas.Permissions.Update);
+            }
+            if ((permissions & AccountSasPermissions.Process) == AccountSasPermissions.Process)
+            {
+                sb.Append(Constants.Sas.Permissions.Process);
+            }
+            if ((permissions & AccountSasPermissions.Tag) == AccountSasPermissions.Tag)
+            {
+                sb.Append(Constants.Sas.Permissions.Tag);
+            }
+            if ((permissions & AccountSasPermissions.Filter) == AccountSasPermissions.Filter)
+            {
+                sb.Append(Constants.Sas.Permissions.FilterByTags);
+            }
+            return sb.ToString();
+        }
+
+        public async Task<string> GetAuthToken(string[] scopes = default, TenantConfiguration tenantConfiguration = default)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return "auth token";
+            }
+
+            tenantConfiguration ??= Tenants.TestConfigOAuth;
+
+            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(tenantConfiguration.ActiveDirectoryApplicationId)
+                .WithAuthority(AzureCloudInstance.AzurePublic, tenantConfiguration.ActiveDirectoryTenantId)
+                .WithClientSecret(tenantConfiguration.ActiveDirectoryApplicationSecret)
+                .Build();
+
+            scopes ??= new string[] { "https://storage.azure.com/.default" };
+
+            AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
+            AuthenticationResult authenticationResult = await result.ExecuteAsync();
+            return authenticationResult.AccessToken;
+        }
+
+        public string CreateRandomDirectory(string parentPath, string directoryName = default)
+        {
+            return Directory.CreateDirectory(Path.Combine(parentPath, string.IsNullOrEmpty(directoryName) ? Recording.Random.NewGuid().ToString() : directoryName)).FullName;
+        }
+
+        public async Task<string> CreateRandomFileAsync(string parentPath, string fileName = default, long size = 0)
+        {
+            using (FileStream fs = File.OpenWrite(Path.Combine(parentPath, string.IsNullOrEmpty(fileName) ? Recording.Random.NewGuid().ToString() : fileName)))
+            {
+                int bufferSize = Constants.MB;
+                byte[] data = new byte[bufferSize];
+                while (fs.Position + bufferSize < size)
+                {
+                    await fs.WriteAsync(GetRandomBuffer(bufferSize), 0, bufferSize);
+                }
+                if (fs.Position < size)
+                {
+                    await fs.WriteAsync(GetRandomBuffer(size - fs.Position), 0, (int)(size - fs.Position));
+                }
+                return fs.Name;
             }
         }
     }

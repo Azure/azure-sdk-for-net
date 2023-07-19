@@ -22,52 +22,6 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class DisasterRecoveryConfigsOperationsExtensions
     {
             /// <summary>
-            /// Check the give namespace name availability.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters to check availability of the given namespace name
-            /// </param>
-            public static CheckNameAvailabilityResult CheckNameAvailabilityMethod(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, CheckNameAvailability parameters)
-            {
-                return operations.CheckNameAvailabilityMethodAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Check the give namespace name availability.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters to check availability of the given namespace name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityMethodAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, CheckNameAvailability parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CheckNameAvailabilityMethodWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all Alias(Disaster Recovery configurations)
             /// </summary>
             /// <param name='operations'>
@@ -311,9 +265,12 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='alias'>
             /// The Disaster Recovery configuration name
             /// </param>
-            public static void FailOver(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias)
+            /// <param name='parameters'>
+            /// Parameters required to create an Alias(Disaster Recovery configuration)
+            /// </param>
+            public static void FailOver(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, FailoverProperties parameters = default(FailoverProperties))
             {
-                operations.FailOverAsync(resourceGroupName, namespaceName, alias).GetAwaiter().GetResult();
+                operations.FailOverAsync(resourceGroupName, namespaceName, alias, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -332,12 +289,15 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='alias'>
             /// The Disaster Recovery configuration name
             /// </param>
+            /// <param name='parameters'>
+            /// Parameters required to create an Alias(Disaster Recovery configuration)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task FailOverAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task FailOverAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, FailoverProperties parameters = default(FailoverProperties), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.FailOverWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.FailOverWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -491,6 +451,52 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task<AccessKeys> ListKeysAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Check the give namespace name availability.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to check availability of the given namespace name
+            /// </param>
+            public static CheckNameAvailabilityResult CheckNameAvailabilityMethod(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, CheckNameAvailability parameters)
+            {
+                return operations.CheckNameAvailabilityMethodAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the give namespace name availability.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to check availability of the given namespace name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityMethodAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, CheckNameAvailability parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityMethodWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

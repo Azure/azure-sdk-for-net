@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Blobs.Models;
-
-#pragma warning disable SA1402  // File may only contain a single type
+using System.Collections.Generic;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// A block blob's <see cref="BlockList"/> returned from
-    /// <see cref="Azure.Storage.Blobs.Specialized.BlockBlobClient.GetBlockListAsync"/>.
+    /// <see cref="BlockBlobClient.GetBlockListAsync"/>.
     /// </summary>
     public partial class BlockList
     {
@@ -40,35 +39,15 @@ namespace Azure.Storage.Blobs.Models
         /// The size of the blob, in bytes.
         /// </summary>
         public long BlobContentLength { get; internal set; }
-    }
-}
 
-namespace Azure.Storage.Blobs
-{
-    /// <summary>
-    /// BlobRestClient response extensions
-    /// </summary>
-    internal static partial class BlobExtensions
-    {
         /// <summary>
-        /// Convert the internal GetBlockListOperation response into a BlockList.
+        /// CommittedBlocks.
         /// </summary>
-        /// <param name="response">The original response.</param>
-        /// <returns>The BlockList response.</returns>
-        internal static Response<BlockList> ToBlockList(this Response<GetBlockListOperation> response)
-        {
-            // Return an exploding Response on 304
-            if (response.IsUnavailable())
-            {
-                return response.GetRawResponse().AsNoBodyResponse<BlockList>();
-            }
+        public IEnumerable<BlobBlock> CommittedBlocks { get; internal set; }
 
-            BlockList blocks = response.Value.Body;
-            blocks.LastModified = response.Value.LastModified;
-            blocks.ETag = response.Value.ETag;
-            blocks.ContentType = response.Value.ContentType;
-            blocks.BlobContentLength = response.Value.BlobContentLength;
-            return Response.FromValue(blocks, response.GetRawResponse());
-        }
+        /// <summary>
+        /// UncommittedBlocks.
+        /// </summary>
+        public IEnumerable<BlobBlock> UncommittedBlocks { get; internal set; }
     }
 }

@@ -39,15 +39,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &lt;br&gt;&lt;br&gt; {&lt;br&gt;
         /// "data":"&lt;Base64-encoded-certificate&gt;",&lt;br&gt;
         /// "dataType":"pfx",&lt;br&gt;
-        /// "password":"&lt;pfx-file-password&gt;"&lt;br&gt;}</param>
+        /// "password":"&lt;pfx-file-password&gt;"&lt;br&gt;} &lt;br&gt; To
+        /// install certificates on a virtual machine it is recommended to use
+        /// the [Azure Key Vault virtual machine extension for
+        /// Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux)
+        /// or the [Azure Key Vault virtual machine extension for
+        /// Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).</param>
         /// <param name="certificateStore">For Windows VMs, specifies the
         /// certificate store on the Virtual Machine to which the certificate
         /// should be added. The specified certificate store is implicitly in
-        /// the LocalMachine account. &lt;br&gt;&lt;br&gt;For Linux VMs, the
-        /// certificate file is placed under the /var/lib/waagent directory,
-        /// with the file name &amp;lt;UppercaseThumbprint&amp;gt;.crt for the
-        /// X509 certificate file and &amp;lt;UppercaseThumbprint&amp;gt;.prv
-        /// for private key. Both of these files are .pem formatted.</param>
+        /// the LocalMachine account. For Linux VMs, the certificate file is
+        /// placed under the /var/lib/waagent directory, with the file name
+        /// &amp;lt;UppercaseThumbprint&amp;gt;.crt for the X509 certificate
+        /// file and &amp;lt;UppercaseThumbprint&amp;gt;.prv for private key.
+        /// Both of these files are .pem formatted.</param>
         public VaultCertificate(string certificateUrl = default(string), string certificateStore = default(string))
         {
             CertificateUrl = certificateUrl;
@@ -71,6 +76,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// "data":"&amp;lt;Base64-encoded-certificate&amp;gt;",&amp;lt;br&amp;gt;
         /// "dataType":"pfx",&amp;lt;br&amp;gt;
         /// "password":"&amp;lt;pfx-file-password&amp;gt;"&amp;lt;br&amp;gt;}
+        /// &amp;lt;br&amp;gt; To install certificates on a virtual machine it
+        /// is recommended to use the [Azure Key Vault virtual machine
+        /// extension for
+        /// Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux)
+        /// or the [Azure Key Vault virtual machine extension for
+        /// Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).
         /// </summary>
         [JsonProperty(PropertyName = "certificateUrl")]
         public string CertificateUrl { get; set; }
@@ -79,10 +90,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets for Windows VMs, specifies the certificate store on
         /// the Virtual Machine to which the certificate should be added. The
         /// specified certificate store is implicitly in the LocalMachine
-        /// account. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Linux VMs, the
-        /// certificate file is placed under the /var/lib/waagent directory,
-        /// with the file name &amp;amp;lt;UppercaseThumbprint&amp;amp;gt;.crt
-        /// for the X509 certificate file and
+        /// account. For Linux VMs, the certificate file is placed under the
+        /// /var/lib/waagent directory, with the file name
+        /// &amp;amp;lt;UppercaseThumbprint&amp;amp;gt;.crt for the X509
+        /// certificate file and
         /// &amp;amp;lt;UppercaseThumbprint&amp;amp;gt;.prv for private key.
         /// Both of these files are .pem formatted.
         /// </summary>

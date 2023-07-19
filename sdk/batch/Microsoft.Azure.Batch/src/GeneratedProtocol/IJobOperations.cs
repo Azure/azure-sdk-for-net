@@ -24,36 +24,6 @@ namespace Microsoft.Azure.Batch.Protocol
     public partial interface IJobOperations
     {
         /// <summary>
-        /// Gets lifetime summary statistics for all of the Jobs in the
-        /// specified Account.
-        /// </summary>
-        /// <remarks>
-        /// Statistics are aggregated across all Jobs that have ever existed in
-        /// the Account, from Account creation to the last update time of the
-        /// statistics. The statistics may not be immediately available. The
-        /// Batch service performs periodic roll-up of statistics. The typical
-        /// delay is about 30 minutes.
-        /// </remarks>
-        /// <param name='jobGetAllLifetimeStatisticsOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="BatchErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<JobStatistics,JobGetAllLifetimeStatisticsHeaders>> GetAllLifetimeStatisticsWithHttpMessagesAsync(JobGetAllLifetimeStatisticsOptions jobGetAllLifetimeStatisticsOptions = default(JobGetAllLifetimeStatisticsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Deletes a Job.
         /// </summary>
         /// <remarks>
@@ -402,7 +372,9 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <remarks>
         /// Task counts provide a count of the Tasks by active, running or
         /// completed Task state, and a count of Tasks which succeeded or
-        /// failed. Tasks in the preparing state are counted as running.
+        /// failed. Tasks in the preparing state are counted as running. Note
+        /// that the numbers returned may not always be up to date. If you need
+        /// exact task counts, use a list query.
         /// </remarks>
         /// <param name='jobId'>
         /// The ID of the Job.
@@ -425,7 +397,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TaskCounts,JobGetTaskCountsHeaders>> GetTaskCountsWithHttpMessagesAsync(string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TaskCountsResult,JobGetTaskCountsHeaders>> GetTaskCountsWithHttpMessagesAsync(string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the Jobs in the specified Account.
         /// </summary>

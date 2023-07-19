@@ -35,11 +35,14 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="etag">HTTP strong entity tag value. This is ignored if
         /// submitted.</param>
         /// <param name="properties">Custom task properties</param>
-        public ProjectTask(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), ProjectTaskProperties properties = default(ProjectTaskProperties))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
+        public ProjectTask(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), ProjectTaskProperties properties = default(ProjectTaskProperties), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Etag = etag;
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -60,6 +63,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public ProjectTaskProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

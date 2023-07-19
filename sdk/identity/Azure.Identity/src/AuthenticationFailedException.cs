@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// An exception class raised for errors in authenticating client requests.
     /// </summary>
+    [Serializable]
     public class AuthenticationFailedException : Exception
     {
         /// <summary>
@@ -32,25 +34,14 @@ namespace Azure.Identity
         {
         }
 
-        internal static AuthenticationFailedException CreateAggregateException(string message, ReadOnlyMemory<object> credentials, IList<Exception> innerExceptions)
+        /// <summary>
+        /// A constructor used for serialization.
+        /// </summary>
+        /// <param name="info">The <see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The <see cref="StreamingContext"/>.</param>
+        /// <returns></returns>
+        protected AuthenticationFailedException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            StringBuilder exStr = new StringBuilder(message).AppendLine();
-
-            for (int i = 0; i < credentials.Length; i++)
-            {
-                if (innerExceptions[i] is CredentialUnavailableException)
-                {
-                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} is unavailable {innerExceptions[i].Message}.");
-                }
-                else
-                {
-                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions[i].Message}.");
-                }
-            }
-
-            exStr.Append("See inner exception for more detail.");
-
-            return new AuthenticationFailedException(exStr.ToString(), new AggregateException(message, innerExceptions.ToArray()));
         }
     }
 }

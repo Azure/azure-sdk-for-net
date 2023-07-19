@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Security
     public static partial class SettingsOperationsExtensions
     {
             /// <summary>
-            /// Settings about different configurations in security center
+            /// Settings about different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings about different configurations in security center
+            /// Settings about different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,13 +50,14 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings of different configurations in security center
+            /// Settings of different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+            /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'WDATP_UNIFIED_SOLUTION', 'Sentinel'
             /// </param>
             public static Setting Get(this ISettingsOperations operations, string settingName)
             {
@@ -64,13 +65,14 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings of different configurations in security center
+            /// Settings of different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+            /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'WDATP_UNIFIED_SOLUTION', 'Sentinel'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -84,49 +86,51 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// updating settings about different configurations in security center
+            /// updating settings about different configurations in Microsoft Defender for
+            /// Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+            /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'WDATP_UNIFIED_SOLUTION', 'Sentinel'
             /// </param>
-            /// <param name='kind'>
-            /// the kind of the settings string (DataExportSetting). Possible values
-            /// include: 'DataExportSetting', 'AlertSuppressionSetting'
+            /// <param name='setting'>
+            /// Setting object
             /// </param>
-            public static Setting Update(this ISettingsOperations operations, string settingName, string kind)
+            public static Setting Update(this ISettingsOperations operations, string settingName, Setting setting)
             {
-                return operations.UpdateAsync(settingName, kind).GetAwaiter().GetResult();
+                return operations.UpdateAsync(settingName, setting).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// updating settings about different configurations in security center
+            /// updating settings about different configurations in Microsoft Defender for
+            /// Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+            /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+            /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'WDATP_UNIFIED_SOLUTION', 'Sentinel'
             /// </param>
-            /// <param name='kind'>
-            /// the kind of the settings string (DataExportSetting). Possible values
-            /// include: 'DataExportSetting', 'AlertSuppressionSetting'
+            /// <param name='setting'>
+            /// Setting object
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Setting> UpdateAsync(this ISettingsOperations operations, string settingName, string kind, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Setting> UpdateAsync(this ISettingsOperations operations, string settingName, Setting setting, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(settingName, kind, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(settingName, setting, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Settings about different configurations in security center
+            /// Settings about different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -140,7 +144,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings about different configurations in security center
+            /// Settings about different configurations in Microsoft Defender for Cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

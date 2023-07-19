@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IOperations
     {
         /// <summary>
-        /// Lists all of the available billing REST API operations.
+        /// Lists the available billing REST API operations.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -43,7 +44,8 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the available billing REST API operations.
+        /// Lists the available billing REST API operations.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

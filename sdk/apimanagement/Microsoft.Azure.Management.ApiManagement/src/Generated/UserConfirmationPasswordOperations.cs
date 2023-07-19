@@ -63,6 +63,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// User identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
+        /// <param name='appType'>
+        /// Determines the type of application which send the create user request.
+        /// Default is legacy publisher portal. Possible values include: 'portal',
+        /// 'developerPortal'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -81,7 +86,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SendWithHttpMessagesAsync(string resourceGroupName, string serviceName, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> SendWithHttpMessagesAsync(string resourceGroupName, string serviceName, string userId, string appType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -139,6 +144,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("userId", userId);
+                tracingParameters.Add("appType", appType);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Send", tracingParameters);
             }
@@ -153,6 +159,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (appType != null)
+            {
+                _queryParameters.Add(string.Format("appType={0}", System.Uri.EscapeDataString(appType)));
             }
             if (_queryParameters.Count > 0)
             {

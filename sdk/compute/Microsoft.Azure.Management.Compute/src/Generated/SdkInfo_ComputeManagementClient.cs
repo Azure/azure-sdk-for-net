@@ -19,48 +19,57 @@ namespace Microsoft.Azure.Management.Compute
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Compute", "AvailabilitySets", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "DedicatedHostGroups", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "DedicatedHosts", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "DiskEncryptionSets", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "Disks", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "Galleries", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "GalleryApplicationVersions", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "GalleryApplications", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "GalleryImageVersions", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "GalleryImages", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "Images", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "LogAnalytics", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "Operations", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "ProximityPlacementGroups", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "ResourceSkus", "2019-04-01"),
-                new Tuple<string, string, string>("Compute", "Snapshots", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "Usage", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineExtensionImages", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineExtensions", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineImages", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineRunCommands", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetExtensions", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetRollingUpgrades", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMExtensions", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMs", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSets", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineSizes", "2019-07-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachines", "2019-07-01"),
-                new Tuple<string, string, string>("ContainerService", "ContainerServices", "2017-01-31"),
+                new Tuple<string, string, string>("Compute", "AvailabilitySets", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "CapacityReservationGroups", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "CapacityReservations", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "CloudServiceOperatingSystems", "2022-09-04"),
+                new Tuple<string, string, string>("Compute", "CloudServiceRoleInstances", "2022-09-04"),
+                new Tuple<string, string, string>("Compute", "CloudServiceRoles", "2022-09-04"),
+                new Tuple<string, string, string>("Compute", "CloudServices", "2022-09-04"),
+                new Tuple<string, string, string>("Compute", "CloudServicesUpdateDomain", "2022-09-04"),
+                new Tuple<string, string, string>("Compute", "CommunityGalleries", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "CommunityGalleryImageVersions", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "CommunityGalleryImages", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "DedicatedHostGroups", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "DedicatedHosts", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "DiskAccesses", "2023-01-02"),
+                new Tuple<string, string, string>("Compute", "DiskEncryptionSets", "2023-01-02"),
+                new Tuple<string, string, string>("Compute", "DiskRestorePoint", "2023-01-02"),
+                new Tuple<string, string, string>("Compute", "Disks", "2023-01-02"),
+                new Tuple<string, string, string>("Compute", "Galleries", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "GalleryApplicationVersions", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "GalleryApplications", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "GalleryImageVersions", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "GalleryImages", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "GallerySharingProfile", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "Images", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "LogAnalytics", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "Operations", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "ProximityPlacementGroups", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "ResourceSkus", "2021-07-01"),
+                new Tuple<string, string, string>("Compute", "RestorePointCollections", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "RestorePoints", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "SharedGalleries", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "SharedGalleryImageVersions", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "SharedGalleryImages", "2022-03-03"),
+                new Tuple<string, string, string>("Compute", "Snapshots", "2023-01-02"),
+                new Tuple<string, string, string>("Compute", "SshPublicKeys", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "Usage", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineExtensionImages", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineExtensions", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineImages", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineImagesEdgeZone", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineRunCommands", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetExtensions", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetRollingUpgrades", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMExtensions", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMRunCommands", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMs", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSets", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineSizes", "2023-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachines", "2023-03-01"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/compute/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\repos\\azure-sdk-for-net\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "17cd6b2edff44b87012e888876ce58de10129850";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-

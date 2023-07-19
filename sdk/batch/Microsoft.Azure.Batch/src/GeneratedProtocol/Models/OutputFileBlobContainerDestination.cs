@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,10 +38,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Blob Storage to which to upload the file(s).</param>
         /// <param name="path">The destination blob or virtual directory within
         /// the Azure Storage container.</param>
-        public OutputFileBlobContainerDestination(string containerUrl, string path = default(string))
+        /// <param name="identityReference">The reference to the user assigned
+        /// identity to use to access Azure Blob Storage specified by
+        /// containerUrl</param>
+        /// <param name="uploadHeaders">A list of name-value pairs for headers
+        /// to be used in uploading output files</param>
+        public OutputFileBlobContainerDestination(string containerUrl, string path = default(string), ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference), IList<HttpHeader> uploadHeaders = default(IList<HttpHeader>))
         {
             Path = path;
             ContainerUrl = containerUrl;
+            IdentityReference = identityReference;
+            UploadHeaders = uploadHeaders;
             CustomInit();
         }
 
@@ -70,11 +79,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// which to upload the file(s).
         /// </summary>
         /// <remarks>
-        /// The URL must include a Shared Access Signature (SAS) granting write
-        /// permissions to the container.
+        /// If not using a managed identity, the URL must include a Shared
+        /// Access Signature (SAS) granting write permissions to the container.
         /// </remarks>
         [JsonProperty(PropertyName = "containerUrl")]
         public string ContainerUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference to the user assigned identity to use to
+        /// access Azure Blob Storage specified by containerUrl
+        /// </summary>
+        /// <remarks>
+        /// The identity must have write access to the Azure Blob Storage
+        /// container
+        /// </remarks>
+        [JsonProperty(PropertyName = "identityReference")]
+        public ComputeNodeIdentityReference IdentityReference { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of name-value pairs for headers to be used in
+        /// uploading output files
+        /// </summary>
+        /// <remarks>
+        /// These headers will be specified when uploading files to Azure
+        /// Storage. Official document on allowed headers when uploading blobs:
+        /// https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob#request-headers-all-blob-types
+        /// </remarks>
+        [JsonProperty(PropertyName = "uploadHeaders")]
+        public IList<HttpHeader> UploadHeaders { get; set; }
 
     }
 }

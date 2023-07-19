@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Network Properties
+    /// Network Properties.
     /// </summary>
     public partial class NetworkProperties
     {

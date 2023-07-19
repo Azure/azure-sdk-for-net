@@ -83,15 +83,16 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 var getNetworkRuleSet = ServiceBusManagementClient.Namespaces.GetNetworkRuleSet(resourceGroup, namespaceName);
 
-                var netWorkRuleSet1 = ServiceBusManagementClient.Namespaces.CreateOrUpdateNetworkRuleSet(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = "Allow" });
+                var netWorkRuleSet1 = ServiceBusManagementClient.Namespaces.CreateOrUpdateNetworkRuleSet(resourceGroup, namespaceName, new NetworkRuleSet() { DefaultAction = "Allow", TrustedServiceAccessEnabled = true });
 
                 var getNetworkRuleSet1 = ServiceBusManagementClient.Namespaces.GetNetworkRuleSet(resourceGroup, namespaceName);
+                Assert.True(getNetworkRuleSet1.TrustedServiceAccessEnabled);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 //Delete namespace
-                ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
-                
+                ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName,null, default(CancellationToken)).ConfigureAwait(false);
+
             }
         }
     }

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     /// recognition model name for largePersonGroup/personGroup, and
     /// largeFaceList/faceList.
     /// </summary>
-    public partial class MetaDataContract : NameAndUserDataContract
+    public partial class MetaDataContract : NonNullableNameAndNullableUserDataContract
     {
         /// <summary>
         /// Initializes a new instance of the MetaDataContract class.
@@ -36,8 +36,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
         /// <param name="recognitionModel">Possible values include:
-        /// 'recognition_01', 'recognition_02'</param>
-        public MetaDataContract(string name = default(string), string userData = default(string), string recognitionModel = default(string))
+        /// 'recognition_01', 'recognition_02', 'recognition_03',
+        /// 'recognition_04'</param>
+        public MetaDataContract(string name, string userData = default(string), string recognitionModel = default(string))
             : base(name, userData)
         {
             RecognitionModel = recognitionModel;
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'recognition_01',
-        /// 'recognition_02'
+        /// 'recognition_02', 'recognition_03', 'recognition_04'
         /// </summary>
         [JsonProperty(PropertyName = "recognitionModel")]
         public string RecognitionModel { get; set; }

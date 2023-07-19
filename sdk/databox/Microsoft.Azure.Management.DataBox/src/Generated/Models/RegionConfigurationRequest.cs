@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// availability for scheduling orders.</param>
         /// <param name="transportAvailabilityRequest">Request body to get the
         /// transport availability for given sku.</param>
-        public RegionConfigurationRequest(ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest))
+        /// <param name="datacenterAddressRequest">Request body to get the
+        /// datacenter address for given sku.</param>
+        public RegionConfigurationRequest(ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest), DatacenterAddressRequest datacenterAddressRequest = default(DatacenterAddressRequest))
         {
             ScheduleAvailabilityRequest = scheduleAvailabilityRequest;
             TransportAvailabilityRequest = transportAvailabilityRequest;
+            DatacenterAddressRequest = datacenterAddressRequest;
             CustomInit();
         }
 
@@ -60,6 +63,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public TransportAvailabilityRequest TransportAvailabilityRequest { get; set; }
 
         /// <summary>
+        /// Gets or sets request body to get the datacenter address for given
+        /// sku.
+        /// </summary>
+        [JsonProperty(PropertyName = "datacenterAddressRequest")]
+        public DatacenterAddressRequest DatacenterAddressRequest { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -70,6 +80,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
             if (ScheduleAvailabilityRequest != null)
             {
                 ScheduleAvailabilityRequest.Validate();
+            }
+            if (DatacenterAddressRequest != null)
+            {
+                DatacenterAddressRequest.Validate();
             }
         }
     }

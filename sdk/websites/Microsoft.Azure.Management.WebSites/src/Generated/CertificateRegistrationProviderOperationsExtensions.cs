@@ -26,8 +26,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// under the resource provider
             /// </summary>
             /// <remarks>
-            /// Implements Csm operations Api to exposes the list of available Csm Apis
-            /// under the resource provider
+            /// Description for Implements Csm operations Api to exposes the list of
+            /// available Csm Apis under the resource provider
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// under the resource provider
             /// </summary>
             /// <remarks>
-            /// Implements Csm operations Api to exposes the list of available Csm Apis
-            /// under the resource provider
+            /// Description for Implements Csm operations Api to exposes the list of
+            /// available Csm Apis under the resource provider
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// under the resource provider
             /// </summary>
             /// <remarks>
-            /// Implements Csm operations Api to exposes the list of available Csm Apis
-            /// under the resource provider
+            /// Description for Implements Csm operations Api to exposes the list of
+            /// available Csm Apis under the resource provider
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -83,8 +83,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// under the resource provider
             /// </summary>
             /// <remarks>
-            /// Implements Csm operations Api to exposes the list of available Csm Apis
-            /// under the resource provider
+            /// Description for Implements Csm operations Api to exposes the list of
+            /// available Csm Apis under the resource provider
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

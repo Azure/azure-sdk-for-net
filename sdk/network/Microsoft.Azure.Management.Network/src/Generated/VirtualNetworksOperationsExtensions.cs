@@ -345,6 +345,60 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets the Ddos Protection Status of all IP Addresses under the Virtual
+            /// Network
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='top'>
+            /// The max number of ip addresses to return.
+            /// </param>
+            /// <param name='skipToken'>
+            /// The skipToken that is given with nextLink.
+            /// </param>
+            public static IPage<PublicIpDdosProtectionStatusResult> ListDdosProtectionStatus(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, int? top = default(int?), string skipToken = default(string))
+            {
+                return operations.ListDdosProtectionStatusAsync(resourceGroupName, virtualNetworkName, top, skipToken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of all IP Addresses under the Virtual
+            /// Network
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='top'>
+            /// The max number of ip addresses to return.
+            /// </param>
+            /// <param name='skipToken'>
+            /// The skipToken that is given with nextLink.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PublicIpDdosProtectionStatusResult>> ListDdosProtectionStatusAsync(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, int? top = default(int?), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListDdosProtectionStatusWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, top, skipToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified virtual network.
             /// </summary>
             /// <param name='operations'>
@@ -422,6 +476,60 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<VirtualNetwork> BeginCreateOrUpdateAsync(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of all IP Addresses under the Virtual
+            /// Network
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='top'>
+            /// The max number of ip addresses to return.
+            /// </param>
+            /// <param name='skipToken'>
+            /// The skipToken that is given with nextLink.
+            /// </param>
+            public static IPage<PublicIpDdosProtectionStatusResult> BeginListDdosProtectionStatus(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, int? top = default(int?), string skipToken = default(string))
+            {
+                return operations.BeginListDdosProtectionStatusAsync(resourceGroupName, virtualNetworkName, top, skipToken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of all IP Addresses under the Virtual
+            /// Network
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='top'>
+            /// The max number of ip addresses to return.
+            /// </param>
+            /// <param name='skipToken'>
+            /// The skipToken that is given with nextLink.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PublicIpDdosProtectionStatusResult>> BeginListDdosProtectionStatusAsync(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, int? top = default(int?), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginListDdosProtectionStatusWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, top, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -524,6 +632,78 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<IPage<VirtualNetworkUsage>> ListUsageNextAsync(this IVirtualNetworksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListUsageNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of all IP Addresses under the Virtual
+            /// Network
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PublicIpDdosProtectionStatusResult> ListDdosProtectionStatusNext(this IVirtualNetworksOperations operations, string nextPageLink)
+            {
+                return operations.ListDdosProtectionStatusNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of all IP Addresses under the Virtual
+            /// Network
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PublicIpDdosProtectionStatusResult>> ListDdosProtectionStatusNextAsync(this IVirtualNetworksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListDdosProtectionStatusNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of all IP Addresses under the Virtual
+            /// Network
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PublicIpDdosProtectionStatusResult> BeginListDdosProtectionStatusNext(this IVirtualNetworksOperations operations, string nextPageLink)
+            {
+                return operations.BeginListDdosProtectionStatusNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of all IP Addresses under the Virtual
+            /// Network
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PublicIpDdosProtectionStatusResult>> BeginListDdosProtectionStatusNextAsync(this IVirtualNetworksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginListDdosProtectionStatusNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

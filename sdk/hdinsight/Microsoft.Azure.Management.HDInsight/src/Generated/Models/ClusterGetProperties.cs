@@ -34,10 +34,13 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         /// <param name="clusterDefinition">The cluster definition.</param>
         /// <param name="clusterVersion">The version of the cluster.</param>
+        /// <param name="clusterHdpVersion">The hdp version of the
+        /// cluster.</param>
         /// <param name="osType">The type of operating system. Possible values
         /// include: 'Windows', 'Linux'</param>
         /// <param name="tier">The cluster tier. Possible values include:
         /// 'Standard', 'Premium'</param>
+        /// <param name="clusterId">The cluster id.</param>
         /// <param name="kafkaRestProperties">The cluster kafka rest proxy
         /// configuration.</param>
         /// <param name="securityProfile">The security profile.</param>
@@ -54,11 +57,27 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// endpoints.</param>
         /// <param name="diskEncryptionProperties">The disk encryption
         /// properties.</param>
-        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties))
+        /// <param name="encryptionInTransitProperties">The
+        /// encryption-in-transit properties.</param>
+        /// <param name="storageProfile">The storage profile.</param>
+        /// <param name="minSupportedTlsVersion">The minimal supported tls
+        /// version.</param>
+        /// <param name="excludedServicesConfig">The excluded services
+        /// config.</param>
+        /// <param name="networkProperties">The network properties.</param>
+        /// <param name="computeIsolationProperties">The compute isolation
+        /// properties.</param>
+        /// <param name="privateLinkConfigurations">The private link
+        /// configurations.</param>
+        /// <param name="privateEndpointConnections">The list of private
+        /// endpoint connections.</param>
+        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), string clusterHdpVersion = default(string), string osType = default(string), string tier = default(string), string clusterId = default(string), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), string provisioningState = default(string), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), StorageProfile storageProfile = default(StorageProfile), string minSupportedTlsVersion = default(string), ExcludedServicesConfig excludedServicesConfig = default(ExcludedServicesConfig), NetworkProperties networkProperties = default(NetworkProperties), ComputeIsolationProperties computeIsolationProperties = default(ComputeIsolationProperties), IList<PrivateLinkConfiguration> privateLinkConfigurations = default(IList<PrivateLinkConfiguration>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>))
         {
             ClusterVersion = clusterVersion;
+            ClusterHdpVersion = clusterHdpVersion;
             OsType = osType;
             Tier = tier;
+            ClusterId = clusterId;
             ClusterDefinition = clusterDefinition;
             KafkaRestProperties = kafkaRestProperties;
             SecurityProfile = securityProfile;
@@ -70,6 +89,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             Errors = errors;
             ConnectivityEndpoints = connectivityEndpoints;
             DiskEncryptionProperties = diskEncryptionProperties;
+            EncryptionInTransitProperties = encryptionInTransitProperties;
+            StorageProfile = storageProfile;
+            MinSupportedTlsVersion = minSupportedTlsVersion;
+            ExcludedServicesConfig = excludedServicesConfig;
+            NetworkProperties = networkProperties;
+            ComputeIsolationProperties = computeIsolationProperties;
+            PrivateLinkConfigurations = privateLinkConfigurations;
+            PrivateEndpointConnections = privateEndpointConnections;
             CustomInit();
         }
 
@@ -85,18 +112,30 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string ClusterVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets the hdp version of the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "clusterHdpVersion")]
+        public string ClusterHdpVersion { get; set; }
+
+        /// <summary>
         /// Gets or sets the type of operating system. Possible values include:
         /// 'Windows', 'Linux'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
-        public OSType? OsType { get; set; }
+        public string OsType { get; set; }
 
         /// <summary>
         /// Gets or sets the cluster tier. Possible values include: 'Standard',
         /// 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public Tier? Tier { get; set; }
+        public string Tier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cluster id.
+        /// </summary>
+        [JsonProperty(PropertyName = "clusterId")]
+        public string ClusterId { get; set; }
 
         /// <summary>
         /// Gets or sets the cluster definition.
@@ -128,7 +167,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// 'Succeeded', 'Canceled', 'Deleting'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public HDInsightClusterProvisioningState? ProvisioningState { get; set; }
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets the date on which the cluster was created.
@@ -167,6 +206,54 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public DiskEncryptionProperties DiskEncryptionProperties { get; set; }
 
         /// <summary>
+        /// Gets or sets the encryption-in-transit properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionInTransitProperties")]
+        public EncryptionInTransitProperties EncryptionInTransitProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the storage profile.
+        /// </summary>
+        [JsonProperty(PropertyName = "storageProfile")]
+        public StorageProfile StorageProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the minimal supported tls version.
+        /// </summary>
+        [JsonProperty(PropertyName = "minSupportedTlsVersion")]
+        public string MinSupportedTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the excluded services config.
+        /// </summary>
+        [JsonProperty(PropertyName = "excludedServicesConfig")]
+        public ExcludedServicesConfig ExcludedServicesConfig { get; set; }
+
+        /// <summary>
+        /// Gets or sets the network properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "networkProperties")]
+        public NetworkProperties NetworkProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the compute isolation properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "computeIsolationProperties")]
+        public ComputeIsolationProperties ComputeIsolationProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the private link configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateLinkConfigurations")]
+        public IList<PrivateLinkConfiguration> PrivateLinkConfigurations { get; set; }
+
+        /// <summary>
+        /// Gets the list of private endpoint connections.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -177,6 +264,26 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             if (ClusterDefinition == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ClusterDefinition");
+            }
+            if (PrivateLinkConfigurations != null)
+            {
+                foreach (var element in PrivateLinkConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element1 in PrivateEndpointConnections)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

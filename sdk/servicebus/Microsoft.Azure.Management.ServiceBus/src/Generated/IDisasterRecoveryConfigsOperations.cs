@@ -24,34 +24,6 @@ namespace Microsoft.Azure.Management.ServiceBus
     public partial interface IDisasterRecoveryConfigsOperations
     {
         /// <summary>
-        /// Check the give namespace name availability.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The namespace name
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters to check availability of the given namespace name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityMethodWithHttpMessagesAsync(string resourceGroupName, string namespaceName, CheckNameAvailability parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets all Alias(Disaster Recovery configurations)
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -201,6 +173,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='alias'>
         /// The Disaster Recovery configuration name
         /// </param>
+        /// <param name='parameters'>
+        /// Parameters required to create an Alias(Disaster Recovery
+        /// configuration)
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -213,7 +189,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> FailOverWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> FailOverWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, FailoverProperties parameters = default(FailoverProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the authorization rules for a namespace.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
@@ -308,6 +284,34 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<AccessKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Check the give namespace name availability.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters to check availability of the given namespace name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityMethodWithHttpMessagesAsync(string resourceGroupName, string namespaceName, CheckNameAvailability parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all Alias(Disaster Recovery configurations)
         /// </summary>

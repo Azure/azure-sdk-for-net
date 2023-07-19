@@ -35,9 +35,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="boundingBox">Bounding box of a recognized
         /// word.</param>
         /// <param name="text">The text content of the word.</param>
-        /// <param name="confidence">Qualitative confidence measure. Possible
-        /// values include: 'High', 'Low'</param>
-        public Word(IList<double> boundingBox, string text, TextRecognitionResultConfidenceClass? confidence = default(TextRecognitionResultConfidenceClass?))
+        /// <param name="confidence">Qualitative confidence measure.</param>
+        public Word(IList<double?> boundingBox, string text, double confidence)
         {
             BoundingBox = boundingBox;
             Text = text;
@@ -54,7 +53,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets bounding box of a recognized word.
         /// </summary>
         [JsonProperty(PropertyName = "boundingBox")]
-        public IList<double> BoundingBox { get; set; }
+        public IList<double?> BoundingBox { get; set; }
 
         /// <summary>
         /// Gets or sets the text content of the word.
@@ -63,11 +62,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets qualitative confidence measure. Possible values
-        /// include: 'High', 'Low'
+        /// Gets or sets qualitative confidence measure.
         /// </summary>
         [JsonProperty(PropertyName = "confidence")]
-        public TextRecognitionResultConfidenceClass? Confidence { get; set; }
+        public double Confidence { get; set; }
 
         /// <summary>
         /// Validate the object.

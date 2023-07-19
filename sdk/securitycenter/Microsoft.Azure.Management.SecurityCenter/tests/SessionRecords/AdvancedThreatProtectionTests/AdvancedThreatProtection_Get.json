@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/%2Fsubscriptions%2F487bb485-b5b0-471e-9c0d-10717612f869%2FresourceGroups%2FDefaultResourceGroup-CUS%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fsamplestorageaccount2/providers/Microsoft.Security/advancedThreatProtectionSettings/current?api-version=2017-08-01-preview",
-      "EncodedRequestUri": "LyUyRnN1YnNjcmlwdGlvbnMlMkY0ODdiYjQ4NS1iNWIwLTQ3MWUtOWMwZC0xMDcxNzYxMmY4NjklMkZyZXNvdXJjZUdyb3VwcyUyRkRlZmF1bHRSZXNvdXJjZUdyb3VwLUNVUyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5TdG9yYWdlJTJGc3RvcmFnZUFjY291bnRzJTJGc2FtcGxlc3RvcmFnZWFjY291bnQyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvYWR2YW5jZWRUaHJlYXRQcm90ZWN0aW9uU2V0dGluZ3MvY3VycmVudD9hcGktdmVyc2lvbj0yMDE3LTA4LTAxLXByZXZpZXc=",
+      "RequestUri": "//subscriptions/7e5c35c3-c2d0-43c7-ab12-2528b6b8dada/resourceGroups/NetSdkTests/providers/Microsoft.Storage/storageAccounts/netsdkstorage/providers/Microsoft.Security/advancedThreatProtectionSettings/current?api-version=2019-01-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzdlNWMzNWMzLWMyZDAtNDNjNy1hYjEyLTI1MjhiNmI4ZGFkYS9yZXNvdXJjZUdyb3Vwcy9OZXRTZGtUZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2Uvc3RvcmFnZUFjY291bnRzL25ldHNka3N0b3JhZ2UvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9hZHZhbmNlZFRocmVhdFByb3RlY3Rpb25TZXR0aW5ncy9jdXJyZW50P2FwaS12ZXJzaW9uPTIwMTktMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b4a80d43-b623-4072-8be0-cbf5eab7afc4"
+          "53ed4476-f9e2-42cc-bb03-8c2f497ec5fe"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26814.03",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/0.10.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,16 +30,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "749"
+          "4999"
         ],
         "x-ms-request-id": [
-          "4b23a346-aeed-4040-b226-4d2270111508"
+          "cbfff199-3ab7-4552-be2b-a6343d8b077a"
         ],
         "x-ms-correlation-request-id": [
-          "4b23a346-aeed-4040-b226-4d2270111508"
+          "cbfff199-3ab7-4552-be2b-a6343d8b077a"
         ],
         "x-ms-routing-request-id": [
-          "WESTEUROPE:20181121T124656Z:4b23a346-aeed-4040-b226-4d2270111508"
+          "UKSOUTH:20201104T182204Z:cbfff199-3ab7-4552-be2b-a6343d8b077a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,10 +48,10 @@
           "nosniff"
         ],
         "Date": [
-          "Wed, 21 Nov 2018 12:46:56 GMT"
+          "Wed, 04 Nov 2020 18:22:03 GMT"
         ],
         "Content-Length": [
-          "346"
+          "325"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -60,7 +60,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"isEnabled\": true\r\n  },\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/DefaultResourceGroup-CUS/providers/Microsoft.Storage/storageAccounts/samplestorageaccount2/providers/Microsoft.Security/advancedThreatProtectionSettings/current\",\r\n  \"name\": \"current\",\r\n  \"type\": \"Microsoft.Security/advancedThreatProtectionSettings\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"isEnabled\": true\r\n  },\r\n  \"id\": \"/subscriptions/7e5c35c3-c2d0-43c7-ab12-2528b6b8dada/resourceGroups/NetSdkTests/providers/Microsoft.Storage/storageAccounts/netsdkstorage/providers/Microsoft.Security/advancedThreatProtectionSettings/current\",\r\n  \"name\": \"current\",\r\n  \"type\": \"Microsoft.Security/advancedThreatProtectionSettings\"\r\n}",
       "StatusCode": 200
     }
   ],

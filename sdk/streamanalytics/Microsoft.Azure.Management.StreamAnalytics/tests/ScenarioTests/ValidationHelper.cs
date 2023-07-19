@@ -1082,10 +1082,10 @@ namespace StreamAnalytics.Tests
                         string.Equals(expectedAzureMachineLearningWebServiceInputColumn.DataType, actualAzureMachineLearningWebServiceInputColumn.DataType) &&
                         expectedAzureMachineLearningWebServiceInputColumn.MapTo == actualAzureMachineLearningWebServiceInputColumn.MapTo);
                     var numFromActualList = actual.Count(
-                        azureMachineLearningWebServiceInputColumn =>
-                        string.Equals(azureMachineLearningWebServiceInputColumn.Name, actualAzureMachineLearningWebServiceInputColumn.Name) &&
-                        string.Equals(azureMachineLearningWebServiceInputColumn.DataType, actualAzureMachineLearningWebServiceInputColumn.DataType) &&
-                        azureMachineLearningWebServiceInputColumn.MapTo == actualAzureMachineLearningWebServiceInputColumn.MapTo);
+                        AzureMachineLearningWebServiceInputColumn =>
+                        string.Equals(AzureMachineLearningWebServiceInputColumn.Name, actualAzureMachineLearningWebServiceInputColumn.Name) &&
+                        string.Equals(AzureMachineLearningWebServiceInputColumn.DataType, actualAzureMachineLearningWebServiceInputColumn.DataType) &&
+                        AzureMachineLearningWebServiceInputColumn.MapTo == actualAzureMachineLearningWebServiceInputColumn.MapTo);
                     Assert.True(numFromExpectedList > 0);
                     Assert.Equal(numFromExpectedList, numFromActualList);
                 }
@@ -1113,9 +1113,9 @@ namespace StreamAnalytics.Tests
                         string.Equals(expectedAzureMachineLearningWebServiceOutputColumn.Name, actualAzureMachineLearningWebServiceOutputColumn.Name) &&
                         string.Equals(expectedAzureMachineLearningWebServiceOutputColumn.DataType, actualAzureMachineLearningWebServiceOutputColumn.DataType));
                     var numFromActualList = actual.Count(
-                        azureMachineLearningWebServiceOutputColumn =>
-                        string.Equals(azureMachineLearningWebServiceOutputColumn.Name, actualAzureMachineLearningWebServiceOutputColumn.Name) &&
-                        string.Equals(azureMachineLearningWebServiceOutputColumn.DataType, actualAzureMachineLearningWebServiceOutputColumn.DataType));
+                        AzureMachineLearningWebServiceOutputColumn =>
+                        string.Equals(AzureMachineLearningWebServiceOutputColumn.Name, actualAzureMachineLearningWebServiceOutputColumn.Name) &&
+                        string.Equals(AzureMachineLearningWebServiceOutputColumn.DataType, actualAzureMachineLearningWebServiceOutputColumn.DataType));
                     Assert.True(numFromExpectedList > 0);
                     Assert.Equal(numFromExpectedList, numFromActualList);
                 }

@@ -43,10 +43,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Predefined_DownloadAndClearStreaming', 'Predefined_ClearKey',
         /// 'Predefined_MultiDrmCencStreaming' and
         /// 'Predefined_MultiDrmStreaming'</param>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="created">The creation time of the Streaming
         /// Locator.</param>
         /// <param name="startTime">The start time of the Streaming
@@ -63,7 +65,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Streaming Locator</param>
         /// <param name="filters">A list of asset or account filters which
         /// apply to this streaming locator</param>
-        public StreamingLocator(string assetName, string streamingPolicyName, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.Guid? streamingLocatorId = default(System.Guid?), string defaultContentKeyPolicyName = default(string), IList<StreamingLocatorContentKey> contentKeys = default(IList<StreamingLocatorContentKey>), string alternativeMediaId = default(string), IList<string> filters = default(IList<string>))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public StreamingLocator(string assetName, string streamingPolicyName, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.Guid? streamingLocatorId = default(System.Guid?), string defaultContentKeyPolicyName = default(string), IList<StreamingLocatorContentKey> contentKeys = default(IList<StreamingLocatorContentKey>), string alternativeMediaId = default(string), IList<string> filters = default(IList<string>), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             AssetName = assetName;
@@ -76,6 +80,7 @@ namespace Microsoft.Azure.Management.Media.Models
             ContentKeys = contentKeys;
             AlternativeMediaId = alternativeMediaId;
             Filters = filters;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -152,6 +157,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.filters")]
         public IList<string> Filters { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

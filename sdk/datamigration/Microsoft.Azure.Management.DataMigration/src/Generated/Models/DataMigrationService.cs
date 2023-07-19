@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="etag">HTTP strong entity tag value. Ignored if
         /// submitted</param>
         /// <param name="kind">The resource kind. Only 'vm' (the default) is
@@ -52,15 +54,19 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Succeeded', 'Failed'</param>
         /// <param name="publicKey">The public key of the service, used to
         /// encrypt secrets sent to the service</param>
+        /// <param name="virtualNicId">The ID of the
+        /// Microsoft.Network/networkInterfaces resource which the service
+        /// have</param>
         /// <param name="sku">Service SKU</param>
-        public DataMigrationService(string location, string virtualSubnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string kind = default(string), string provisioningState = default(string), string publicKey = default(string), ServiceSku sku = default(ServiceSku))
-            : base(location, id, name, type, tags)
+        public DataMigrationService(string location, string virtualSubnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string etag = default(string), string kind = default(string), string provisioningState = default(string), string publicKey = default(string), string virtualNicId = default(string), ServiceSku sku = default(ServiceSku))
+            : base(location, id, name, type, tags, systemData)
         {
             Etag = etag;
             Kind = kind;
             ProvisioningState = provisioningState;
             PublicKey = publicKey;
             VirtualSubnetId = virtualSubnetId;
+            VirtualNicId = virtualNicId;
             Sku = sku;
             CustomInit();
         }
@@ -105,6 +111,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualSubnetId")]
         public string VirtualSubnetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the Microsoft.Network/networkInterfaces
+        /// resource which the service have
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNicId")]
+        public string VirtualNicId { get; set; }
 
         /// <summary>
         /// Gets or sets service SKU

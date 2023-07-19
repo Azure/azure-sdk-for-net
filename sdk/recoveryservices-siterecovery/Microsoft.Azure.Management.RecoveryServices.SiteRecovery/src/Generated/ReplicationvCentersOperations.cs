@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -254,13 +254,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Gets the details of a vCenter.
         /// </summary>
         /// <remarks>
-        /// Gets the details of a registered vCenter server(Add vCenter server.)
+        /// Gets the details of a registered vCenter server(Add vCenter server).
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name.
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VCenter>> GetWithHttpMessagesAsync(string fabricName, string vCenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VCenter>> GetWithHttpMessagesAsync(string fabricName, string vcenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -305,9 +305,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "fabricName");
             }
-            if (vCenterName == null)
+            if (vcenterName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vCenterName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vcenterName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -317,18 +317,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fabricName", fabricName);
-                tracingParameters.Add("vCenterName", vCenterName);
+                tracingParameters.Add("vcenterName", vcenterName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vCenterName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
-            _url = _url.Replace("{vCenterName}", System.Uri.EscapeDataString(vCenterName));
+            _url = _url.Replace("{vcenterName}", System.Uri.EscapeDataString(vcenterName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -468,8 +468,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name.
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='addVCenterRequest'>
         /// The input to the add vCenter operation.
@@ -480,15 +480,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VCenter>> CreateWithHttpMessagesAsync(string fabricName, string vCenterName, AddVCenterRequest addVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VCenter>> CreateWithHttpMessagesAsync(string fabricName, string vcenterName, AddVCenterRequest addVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<VCenter> _response = await BeginCreateWithHttpMessagesAsync(fabricName, vCenterName, addVCenterRequest, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<VCenter> _response = await BeginCreateWithHttpMessagesAsync(fabricName, vcenterName, addVCenterRequest, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Remove vCenter operation.
+        /// Remove vcenter operation.
         /// </summary>
         /// <remarks>
         /// The operation to remove(unregister) a registered vCenter server from the
@@ -497,8 +497,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name.
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -506,10 +506,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string fabricName, string vCenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string fabricName, string vcenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(fabricName, vCenterName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(fabricName, vcenterName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -522,8 +522,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='updateVCenterRequest'>
         /// The input to the update vCenter operation.
@@ -534,10 +534,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VCenter>> UpdateWithHttpMessagesAsync(string fabricName, string vCenterName, UpdateVCenterRequest updateVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VCenter>> UpdateWithHttpMessagesAsync(string fabricName, string vcenterName, UpdateVCenterRequest updateVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<VCenter> _response = await BeginUpdateWithHttpMessagesAsync(fabricName, vCenterName, updateVCenterRequest, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<VCenter> _response = await BeginUpdateWithHttpMessagesAsync(fabricName, vcenterName, updateVCenterRequest, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -598,7 +598,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationvCenters").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationvCenters").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -741,8 +741,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name.
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='addVCenterRequest'>
         /// The input to the add vCenter operation.
@@ -768,7 +768,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VCenter>> BeginCreateWithHttpMessagesAsync(string fabricName, string vCenterName, AddVCenterRequest addVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VCenter>> BeginCreateWithHttpMessagesAsync(string fabricName, string vcenterName, AddVCenterRequest addVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -790,9 +790,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "fabricName");
             }
-            if (vCenterName == null)
+            if (vcenterName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vCenterName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vcenterName");
             }
             if (addVCenterRequest == null)
             {
@@ -806,19 +806,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fabricName", fabricName);
-                tracingParameters.Add("vCenterName", vCenterName);
+                tracingParameters.Add("vcenterName", vcenterName);
                 tracingParameters.Add("addVCenterRequest", addVCenterRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vCenterName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
-            _url = _url.Replace("{vCenterName}", System.Uri.EscapeDataString(vCenterName));
+            _url = _url.Replace("{vcenterName}", System.Uri.EscapeDataString(vcenterName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -956,7 +956,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         }
 
         /// <summary>
-        /// Remove vCenter operation.
+        /// Remove vcenter operation.
         /// </summary>
         /// <remarks>
         /// The operation to remove(unregister) a registered vCenter server from the
@@ -965,8 +965,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name.
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -986,7 +986,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string fabricName, string vCenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string fabricName, string vcenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1008,9 +1008,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "fabricName");
             }
-            if (vCenterName == null)
+            if (vcenterName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vCenterName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vcenterName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1020,18 +1020,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fabricName", fabricName);
-                tracingParameters.Add("vCenterName", vCenterName);
+                tracingParameters.Add("vcenterName", vcenterName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vCenterName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
-            _url = _url.Replace("{vCenterName}", System.Uri.EscapeDataString(vCenterName));
+            _url = _url.Replace("{vcenterName}", System.Uri.EscapeDataString(vcenterName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1153,8 +1153,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='fabricName'>
         /// Fabric name.
         /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name
+        /// <param name='vcenterName'>
+        /// vcenter name.
         /// </param>
         /// <param name='updateVCenterRequest'>
         /// The input to the update vCenter operation.
@@ -1180,7 +1180,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VCenter>> BeginUpdateWithHttpMessagesAsync(string fabricName, string vCenterName, UpdateVCenterRequest updateVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VCenter>> BeginUpdateWithHttpMessagesAsync(string fabricName, string vcenterName, UpdateVCenterRequest updateVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1202,9 +1202,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "fabricName");
             }
-            if (vCenterName == null)
+            if (vcenterName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vCenterName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vcenterName");
             }
             if (updateVCenterRequest == null)
             {
@@ -1218,19 +1218,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fabricName", fabricName);
-                tracingParameters.Add("vCenterName", vCenterName);
+                tracingParameters.Add("vcenterName", vcenterName);
                 tracingParameters.Add("updateVCenterRequest", updateVCenterRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vCenterName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}").ToString();
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(Client.ResourceName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
-            _url = _url.Replace("{vCenterName}", System.Uri.EscapeDataString(vCenterName));
+            _url = _url.Replace("{vcenterName}", System.Uri.EscapeDataString(vcenterName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

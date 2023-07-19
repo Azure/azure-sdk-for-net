@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Batch
     using Newtonsoft.Json;
 
     /// <summary>
+    /// Batch Client
     /// </summary>
     public partial interface IBatchManagementClient : System.IDisposable
     {
@@ -98,6 +99,16 @@ namespace Microsoft.Azure.Management.Batch
         /// Gets the ICertificateOperations.
         /// </summary>
         ICertificateOperations Certificate { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourceOperations.
+        /// </summary>
+        IPrivateLinkResourceOperations PrivateLinkResource { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionOperations.
+        /// </summary>
+        IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; }
 
         /// <summary>
         /// Gets the IPoolOperations.

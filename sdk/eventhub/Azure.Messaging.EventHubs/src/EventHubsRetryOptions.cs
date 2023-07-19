@@ -29,12 +29,18 @@ namespace Azure.Messaging.EventHubs
         ///   The approach to use for calculating retry delays.
         /// </summary>
         ///
+        /// <value>The default retry mode is <see cref="EventHubsRetryMode.Exponential"/>.</value>
+        ///
         public EventHubsRetryMode Mode { get; set; } = EventHubsRetryMode.Exponential;
 
         /// <summary>
         ///   The maximum number of retry attempts before considering the associated operation
         ///   to have failed.
         /// </summary>
+        ///
+        /// <value>The default retry limit is 3.</value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested number of retries is not between 0 and 100 (inclusive).</exception>
         ///
         public int MaximumRetries
         {
@@ -52,6 +58,10 @@ namespace Azure.Messaging.EventHubs
         ///   on which to base calculations for a backoff-based approach.
         /// </summary>
         ///
+        /// <value>The default delay is 0.8 seconds.</value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested delay is not between 1 millisecond and 5 minutes (inclusive).</exception>
+        ///
         public TimeSpan Delay
         {
             get => _delay;
@@ -66,6 +76,10 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   The maximum permissible delay between retry attempts.
         /// </summary>
+        ///
+        /// <value>The default maximum delay is 60 seconds.</value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested delay is negative.</exception>
         ///
         public TimeSpan MaximumDelay
         {
@@ -82,6 +96,11 @@ namespace Azure.Messaging.EventHubs
         ///   The maximum duration to wait for completion of a single attempt, whether the initial
         ///   attempt or a retry.
         /// </summary>
+        ///
+        /// <value>The default timeout is 60 seconds.</value>
+        ///
+        /// <exception cref="ArgumentException">Occurs when the requested timeout is negative.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested timeout is not between <see cref="TimeSpan.Zero" /> and 1 hour (inclusive).</exception>
         ///
         public TimeSpan TryTimeout
         {

@@ -73,6 +73,14 @@ namespace Microsoft.Azure.Batch
             this.NumberOfInstances = numberOfInstances;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="MultiInstanceSettings"/> class.
+        /// </summary>
+        protected MultiInstanceSettings()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal MultiInstanceSettings(Models.MultiInstanceSettings protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

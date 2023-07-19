@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -10,24 +9,24 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
     /// <summary>
     /// This sample demonstrates how to sign data with both a RSA key and an EC key using the synchronous methods of the <see cref="CryptographyClient">.
     /// </summary>
-    [LiveOnly]
     public partial class Sample5_SignVerify
     {
         [Test]
         public void SignVerifySync()
         {
-#if NET461
-            Assert.Ignore("Using CryptographyClient with EC keys is not supported on .NET Framework 4.6.1.");
+#if NET462
+            Assert.Ignore("Using CryptographyClient with EC keys is not supported on .NET Framework 4.6.2.");
 #endif
 
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
 #region Snippet:KeysSample5KeyClient
             var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
@@ -35,28 +34,28 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
 #region Snippet:KeysSample5CreateKey
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
-            var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
+            var rsaKeyOptions = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
             {
                 KeySize = 2048,
             };
 
             string ecKeyName = $"CloudEcKey-{Guid.NewGuid()}";
-            var ecKey = new CreateEcKeyOptions(ecKeyName, hardwareProtected: false)
+            var ecKeyOptions = new CreateEcKeyOptions(ecKeyName, hardwareProtected: false)
             {
                 CurveName = KeyCurveName.P256K,
             };
 
-            KeyVaultKey cloudRsaKey = keyClient.CreateRsaKey(rsaKey);
-            Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
+            KeyVaultKey rsaKey = keyClient.CreateRsaKey(rsaKeyOptions);
+            Debug.WriteLine($"Key is returned with name {rsaKey.Name} and type {rsaKey.KeyType}");
 
-            KeyVaultKey cloudEcKey = keyClient.CreateEcKey(ecKey);
-            Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyType}");
+            KeyVaultKey ecKey = keyClient.CreateEcKey(ecKeyOptions);
+            Debug.WriteLine($"Key is returned with name {ecKey.Name} and type {ecKey.KeyType}");
 #endregion
 
 #region Snippet:KeysSample5CryptographyClient
-            var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
+            var rsaCryptoClient = new CryptographyClient(rsaKey.Id, new DefaultAzureCredential());
 
-            var ecCryptoClient = new CryptographyClient(cloudEcKey.Id, new DefaultAzureCredential());
+            var ecCryptoClient = new CryptographyClient(ecKey.Id, new DefaultAzureCredential());
 #endregion
 
 #region Snippet:KeysSample5SignKey
@@ -99,7 +98,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyDataResult.Algorithm}, with key {ecVerifyDataResult.KeyId}. Signature is valid: {ecVerifyDataResult.IsValid}");
 #endregion
 
-#region Snippet:KeysSample5DeleteKeys
             DeleteKeyOperation rsaKeyOperation = keyClient.StartDeleteKey(rsaKeyName);
             DeleteKeyOperation ecKeyOperation = keyClient.StartDeleteKey(ecKeyName);
 
@@ -111,7 +109,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 rsaKeyOperation.UpdateStatus();
                 ecKeyOperation.UpdateStatus();
             }
-#endregion
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
             keyClient.PurgeDeletedKey(rsaKeyName);

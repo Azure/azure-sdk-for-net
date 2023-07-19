@@ -62,6 +62,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="radiusServerSecret">The radius secret property of the
         /// VpnServerConfiguration resource for point to site client
         /// connection.</param>
+        /// <param name="radiusServers">Multiple Radius Server configuration
+        /// for VpnServerConfiguration.</param>
         /// <param name="aadAuthenticationParameters">The set of aad vpn
         /// authentication parameters.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -69,12 +71,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', and 'Failed'.</param>
         /// <param name="p2SVpnGateways">List of references to
         /// P2SVpnGateways.</param>
+        /// <param name="configurationPolicyGroups">List of all
+        /// VpnServerConfigurationPolicyGroups.</param>
         /// <param name="vpnServerConfigurationPropertiesEtag">A unique
         /// read-only string that changes whenever the resource is
         /// updated.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VpnServerConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vpnServerConfigurationName = default(string), IList<string> vpnProtocols = default(IList<string>), IList<string> vpnAuthenticationTypes = default(IList<string>), IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnServerConfigVpnClientRootCertificate>), IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnServerConfigVpnClientRevokedCertificate>), IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates = default(IList<VpnServerConfigRadiusServerRootCertificate>), IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates = default(IList<VpnServerConfigRadiusClientRootCertificate>), IList<IpsecPolicy> vpnClientIpsecPolicies = default(IList<IpsecPolicy>), string radiusServerAddress = default(string), string radiusServerSecret = default(string), AadAuthenticationParameters aadAuthenticationParameters = default(AadAuthenticationParameters), string provisioningState = default(string), IList<P2SVpnGateway> p2SVpnGateways = default(IList<P2SVpnGateway>), string vpnServerConfigurationPropertiesEtag = default(string), string etag = default(string))
+        public VpnServerConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vpnServerConfigurationName = default(string), IList<string> vpnProtocols = default(IList<string>), IList<string> vpnAuthenticationTypes = default(IList<string>), IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnServerConfigVpnClientRootCertificate>), IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnServerConfigVpnClientRevokedCertificate>), IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates = default(IList<VpnServerConfigRadiusServerRootCertificate>), IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates = default(IList<VpnServerConfigRadiusClientRootCertificate>), IList<IpsecPolicy> vpnClientIpsecPolicies = default(IList<IpsecPolicy>), string radiusServerAddress = default(string), string radiusServerSecret = default(string), IList<RadiusServer> radiusServers = default(IList<RadiusServer>), AadAuthenticationParameters aadAuthenticationParameters = default(AadAuthenticationParameters), string provisioningState = default(string), IList<P2SVpnGateway> p2SVpnGateways = default(IList<P2SVpnGateway>), IList<VpnServerConfigurationPolicyGroup> configurationPolicyGroups = default(IList<VpnServerConfigurationPolicyGroup>), string vpnServerConfigurationPropertiesEtag = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VpnServerConfigurationName = vpnServerConfigurationName;
@@ -87,9 +91,11 @@ namespace Microsoft.Azure.Management.Network.Models
             VpnClientIpsecPolicies = vpnClientIpsecPolicies;
             RadiusServerAddress = radiusServerAddress;
             RadiusServerSecret = radiusServerSecret;
+            RadiusServers = radiusServers;
             AadAuthenticationParameters = aadAuthenticationParameters;
             ProvisioningState = provisioningState;
             P2SVpnGateways = p2SVpnGateways;
+            ConfigurationPolicyGroups = configurationPolicyGroups;
             VpnServerConfigurationPropertiesEtag = vpnServerConfigurationPropertiesEtag;
             Etag = etag;
             CustomInit();
@@ -170,6 +176,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string RadiusServerSecret { get; set; }
 
         /// <summary>
+        /// Gets or sets multiple Radius Server configuration for
+        /// VpnServerConfiguration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.radiusServers")]
+        public IList<RadiusServer> RadiusServers { get; set; }
+
+        /// <summary>
         /// Gets or sets the set of aad vpn authentication parameters.
         /// </summary>
         [JsonProperty(PropertyName = "properties.aadAuthenticationParameters")]
@@ -187,6 +200,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.p2SVpnGateways")]
         public IList<P2SVpnGateway> P2SVpnGateways { get; private set; }
+
+        /// <summary>
+        /// Gets or sets list of all VpnServerConfigurationPolicyGroups.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.configurationPolicyGroups")]
+        public IList<VpnServerConfigurationPolicyGroup> ConfigurationPolicyGroups { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

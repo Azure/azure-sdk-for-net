@@ -22,6 +22,34 @@ namespace Microsoft.Azure.Management.AlertsManagement
     public static partial class AlertsOperationsExtensions
     {
             /// <summary>
+            /// List alerts meta data information based on value of identifier parameter.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static AlertsMetaData MetaData(this IAlertsOperations operations)
+            {
+                return operations.MetaDataAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List alerts meta data information based on value of identifier parameter.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AlertsMetaData> MetaDataAsync(this IAlertsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MetaDataWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List all existing alerts, where the results can be filtered on the basis of
             /// multiple parameters (e.g. time range). The results can then be sorted on
             /// the basis specific fields, with the default being lastModifiedDateTime.
@@ -106,7 +134,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// Permissible values is within 30 days from  query time. Either timeRange or
             /// customTimeRange could be used but not both. Default is none.
             /// </param>
-            public static IPage<Alert> GetAll(this IAlertsOperations operations, string targetResource = default(string), string targetResourceType = default(string), string targetResourceGroup = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string alertState = default(string), string alertRule = default(string), string smartGroupId = default(string), bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), int? pageCount = default(int?), string sortBy = default(string), string sortOrder = default(string), string select = default(string), string timeRange = default(string), string customTimeRange = default(string))
+            public static IPage<Alert> GetAll(this IAlertsOperations operations, string targetResource = default(string), string targetResourceType = default(string), string targetResourceGroup = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string alertState = default(string), string alertRule = default(string), string smartGroupId = default(string), bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), long? pageCount = default(long?), string sortBy = default(string), string sortOrder = default(string), string select = default(string), string timeRange = default(string), string customTimeRange = default(string))
             {
                 return operations.GetAllAsync(targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange).GetAwaiter().GetResult();
             }
@@ -199,7 +227,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> GetAllAsync(this IAlertsOperations operations, string targetResource = default(string), string targetResourceType = default(string), string targetResourceGroup = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string alertState = default(string), string alertRule = default(string), string smartGroupId = default(string), bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), int? pageCount = default(int?), string sortBy = default(string), string sortOrder = default(string), string select = default(string), string timeRange = default(string), string customTimeRange = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> GetAllAsync(this IAlertsOperations operations, string targetResource = default(string), string targetResourceType = default(string), string targetResourceGroup = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string alertState = default(string), string alertRule = default(string), string smartGroupId = default(string), bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), long? pageCount = default(long?), string sortBy = default(string), string sortOrder = default(string), string select = default(string), string timeRange = default(string), string customTimeRange = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAllWithHttpMessagesAsync(targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -260,9 +288,12 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// New state of the alert. Possible values include: 'New', 'Acknowledged',
             /// 'Closed'
             /// </param>
-            public static Alert ChangeState(this IAlertsOperations operations, string alertId, string newState)
+            /// <param name='comment'>
+            /// reason of change alert state
+            /// </param>
+            public static Alert ChangeState(this IAlertsOperations operations, string alertId, string newState, Comments comment = default(Comments))
             {
-                return operations.ChangeStateAsync(alertId, newState).GetAwaiter().GetResult();
+                return operations.ChangeStateAsync(alertId, newState, comment).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -278,12 +309,15 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// New state of the alert. Possible values include: 'New', 'Acknowledged',
             /// 'Closed'
             /// </param>
+            /// <param name='comment'>
+            /// reason of change alert state
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Alert> ChangeStateAsync(this IAlertsOperations operations, string alertId, string newState, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Alert> ChangeStateAsync(this IAlertsOperations operations, string alertId, string newState, Comments comment = default(Comments), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ChangeStateWithHttpMessagesAsync(alertId, newState, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ChangeStateWithHttpMessagesAsync(alertId, newState, comment, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

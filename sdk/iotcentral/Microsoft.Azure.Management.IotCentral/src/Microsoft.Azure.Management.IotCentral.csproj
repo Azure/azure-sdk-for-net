@@ -8,13 +8,14 @@
     <Description>Provides management capabilities for Microsoft Azure IotCentral.</Description>
     <AssemblyTitle>Microsoft Azure IotCentral Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.IotCentral</AssemblyName>
-    <Version>2.0.0</Version>
+    <Version>4.0.0</Version>
     <PackageTags>Microsoft Azure IotCentral;IotCentral management;IotCentral;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This release adds a new API for checking the uniqueness of the application subdomain. 
-        Fixes the expected error object returned from Microsoft.IotCentral Rp service, for friendly messages.
-        Allows checking the uniqueness of different Microsoft.IotCentral resource types.
+        This release removes legacy S1 SKU, 
+        adds support for regions while removing geographies (for location), 
+        releases new RP version 2021-06-01,
+        and adds support system-assigned Managed Identities in IoT Central.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

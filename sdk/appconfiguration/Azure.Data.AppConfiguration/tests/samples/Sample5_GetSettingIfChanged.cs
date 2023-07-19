@@ -3,18 +3,17 @@
 
 using System;
 using System.Diagnostics;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [LiveOnly]
     public partial class ConfigurationSamples
     {
         [Test]
         public void GetSettingIfChanged()
         {
-            string connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            string connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:AzConfigSample5_CreateConfigurationClient
             ConfigurationClient client = new ConfigurationClient(connectionString);

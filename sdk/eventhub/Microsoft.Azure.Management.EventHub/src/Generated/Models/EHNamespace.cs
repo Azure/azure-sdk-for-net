@@ -34,39 +34,76 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Initializes a new instance of the EHNamespace class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="location">Resource location.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="sku">Properties of sku resource</param>
+        /// <param name="identity">Properties of BYOK Identity
+        /// description</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        /// <param name="minimumTlsVersion">The minimum TLS version for the
+        /// cluster to support, e.g. '1.2'. Possible values include: '1.0',
+        /// '1.1', '1.2'</param>
         /// <param name="provisioningState">Provisioning state of the
         /// Namespace.</param>
+        /// <param name="status">Status of the Namespace.</param>
         /// <param name="createdAt">The time the Namespace was created.</param>
         /// <param name="updatedAt">The time the Namespace was updated.</param>
         /// <param name="serviceBusEndpoint">Endpoint you can use to perform
         /// Service Bus operations.</param>
+        /// <param name="clusterArmId">Cluster ARM ID of the Namespace.</param>
         /// <param name="metricId">Identifier for Azure Insights
         /// metrics.</param>
         /// <param name="isAutoInflateEnabled">Value that indicates whether
         /// AutoInflate is enabled for eventhub namespace.</param>
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled. Possible
+        /// values include: 'Enabled', 'Disabled', 'SecuredByPerimeter'</param>
         /// <param name="maximumThroughputUnits">Upper limit of throughput
         /// units when AutoInflate is enabled, value should be within 0 to 20
         /// throughput units. ( '0' if AutoInflateEnabled = true)</param>
         /// <param name="kafkaEnabled">Value that indicates whether Kafka is
         /// enabled for eventhub namespace.</param>
-        public EHNamespace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?))
+        /// <param name="zoneRedundant">Enabling this property creates a
+        /// Standard Event Hubs Namespace in regions supported availability
+        /// zones.</param>
+        /// <param name="encryption">Properties of BYOK Encryption
+        /// description</param>
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections.</param>
+        /// <param name="disableLocalAuth">This property disables SAS
+        /// authentication for the Event Hubs namespace.</param>
+        /// <param name="alternateName">Alternate name specified when alias and
+        /// namespace names are same.</param>
+        public EHNamespace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Identity identity = default(Identity), SystemData systemData = default(SystemData), string minimumTlsVersion = default(string), string provisioningState = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string clusterArmId = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), string publicNetworkAccess = default(string), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?), Encryption encryption = default(Encryption), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? disableLocalAuth = default(bool?), string alternateName = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
+            Identity = identity;
+            SystemData = systemData;
+            MinimumTlsVersion = minimumTlsVersion;
             ProvisioningState = provisioningState;
+            Status = status;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
+            ClusterArmId = clusterArmId;
             MetricId = metricId;
             IsAutoInflateEnabled = isAutoInflateEnabled;
+            PublicNetworkAccess = publicNetworkAccess;
             MaximumThroughputUnits = maximumThroughputUnits;
             KafkaEnabled = kafkaEnabled;
+            ZoneRedundant = zoneRedundant;
+            Encryption = encryption;
+            PrivateEndpointConnections = privateEndpointConnections;
+            DisableLocalAuth = disableLocalAuth;
+            AlternateName = alternateName;
             CustomInit();
         }
 
@@ -82,10 +119,35 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public Sku Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets properties of BYOK Identity description
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the minimum TLS version for the cluster to support,
+        /// e.g. '1.2'. Possible values include: '1.0', '1.1', '1.2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
+        public string MinimumTlsVersion { get; set; }
+
+        /// <summary>
         /// Gets provisioning state of the Namespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets status of the Namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public string Status { get; private set; }
 
         /// <summary>
         /// Gets the time the Namespace was created.
@@ -106,6 +168,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public string ServiceBusEndpoint { get; private set; }
 
         /// <summary>
+        /// Gets or sets cluster ARM ID of the Namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clusterArmId")]
+        public string ClusterArmId { get; set; }
+
+        /// <summary>
         /// Gets identifier for Azure Insights metrics.
         /// </summary>
         [JsonProperty(PropertyName = "properties.metricId")]
@@ -117,6 +185,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isAutoInflateEnabled")]
         public bool? IsAutoInflateEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled. Possible values include:
+        /// 'Enabled', 'Disabled', 'SecuredByPerimeter'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets upper limit of throughput units when AutoInflate is
@@ -134,6 +210,39 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public bool? KafkaEnabled { get; set; }
 
         /// <summary>
+        /// Gets or sets enabling this property creates a Standard Event Hubs
+        /// Namespace in regions supported availability zones.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneRedundant")]
+        public bool? ZoneRedundant { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of BYOK Encryption description
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public Encryption Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of private endpoint connections.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets this property disables SAS authentication for the
+        /// Event Hubs namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets alternate name specified when alias and namespace
+        /// names are same.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.alternateName")]
+        public string AlternateName { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -144,14 +253,6 @@ namespace Microsoft.Azure.Management.EventHub.Models
             if (Sku != null)
             {
                 Sku.Validate();
-            }
-            if (MaximumThroughputUnits > 20)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaximumThroughputUnits", 20);
-            }
-            if (MaximumThroughputUnits < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaximumThroughputUnits", 0);
             }
         }
     }

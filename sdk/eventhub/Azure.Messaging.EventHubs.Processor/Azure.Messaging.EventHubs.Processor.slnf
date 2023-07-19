@@ -1,0 +1,9 @@
+{
+  "solution": {
+    "path": "..\\Azure.Messaging.EventHubs.sln",
+    "projects": [
+      "Azure.Messaging.EventHubs.Processor\\src\\Azure.Messaging.EventHubs.Processor.csproj",
+      "Azure.Messaging.EventHubs.Processor\\tests\\Azure.Messaging.EventHubs.Processor.Tests.csproj"
+    ]
+  }
+}

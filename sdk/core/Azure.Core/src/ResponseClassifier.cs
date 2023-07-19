@@ -7,16 +7,30 @@ using System.IO;
 namespace Azure.Core
 {
     /// <summary>
-    /// A type that analyzes HTTP responses and exceptions and determines if they should be retried.
+    /// A type that analyzes HTTP responses and exceptions and determines if they should be retried,
+    /// and/or analyzes responses and determines if they should be treated as error responses.
     /// </summary>
     public class ResponseClassifier
     {
+        internal static ResponseClassifier Shared { get; } = new();
+
         /// <summary>
         /// Specifies if the request contained in the <paramref name="message"/> should be retried.
         /// </summary>
         public virtual bool IsRetriableResponse(HttpMessage message)
         {
-            return message.Response.Status == 429 || message.Response.Status == 503;
+            switch (message.Response.Status)
+            {
+                case 408: // Request Timeout
+                case 429: // Too Many Requests
+                case 500: // Internal Server Error
+                case 502: // Bad Gateway
+                case 503: // Service Unavailable
+                case 504: // Gateway Timeout
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /// <summary>
@@ -26,6 +40,16 @@ namespace Azure.Core
         {
             return (exception is IOException) ||
                    (exception is RequestFailedException requestFailed && requestFailed.Status == 0);
+        }
+
+        /// <summary>
+        /// Specifies if the operation that caused the exception should be retried taking the <see cref="HttpMessage"/> into consideration.
+        /// </summary>
+        public virtual bool IsRetriable(HttpMessage message, Exception exception)
+        {
+            return IsRetriableException(exception) ||
+                   // Retry non-user initiated cancellations
+                   (exception is OperationCanceledException && !message.CancellationToken.IsCancellationRequested);
         }
 
         /// <summary>

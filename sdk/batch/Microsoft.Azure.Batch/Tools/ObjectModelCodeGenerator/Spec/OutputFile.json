@@ -2,7 +2,7 @@
   "Name": "OutputFile",
   "ProtocolName": "Models.OutputFile",
   "SummaryComment": "A specification for uploading files from an Azure Batch node to another location after the Batch service has finished executing the task process.",
-  "IsConstructorPublic": true,
+  "ConstructorAccess": "public",
   "IsUsedInCollections": true,
   "Properties": [
     {

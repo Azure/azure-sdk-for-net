@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.EventHub
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Azure Event Hubs client
     /// </summary>
     public partial interface IEventHubManagementClient : System.IDisposable
     {
@@ -41,16 +40,16 @@ namespace Microsoft.Azure.Management.EventHub
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// Client API Version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// Subscription credentials that uniquely identify a Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every
         /// service call.
         /// </summary>
         string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Client API Version.
-        /// </summary>
-        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -72,14 +71,39 @@ namespace Microsoft.Azure.Management.EventHub
 
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IClustersOperations.
         /// </summary>
-        IOperations Operations { get; }
+        IClustersOperations Clusters { get; }
 
         /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         INamespacesOperations Namespaces { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the INetworkSecurityPerimeterConfigurationOperations.
+        /// </summary>
+        INetworkSecurityPerimeterConfigurationOperations NetworkSecurityPerimeterConfiguration { get; }
+
+        /// <summary>
+        /// Gets the INetworkSecurityPerimeterConfigurationsOperations.
+        /// </summary>
+        INetworkSecurityPerimeterConfigurationsOperations NetworkSecurityPerimeterConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationOperations.
+        /// </summary>
+        IConfigurationOperations Configuration { get; }
 
         /// <summary>
         /// Gets the IDisasterRecoveryConfigsOperations.
@@ -97,9 +121,19 @@ namespace Microsoft.Azure.Management.EventHub
         IConsumerGroupsOperations ConsumerGroups { get; }
 
         /// <summary>
-        /// Gets the IRegionsOperations.
+        /// Gets the IOperations.
         /// </summary>
-        IRegionsOperations Regions { get; }
+        IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the ISchemaRegistryOperations.
+        /// </summary>
+        ISchemaRegistryOperations SchemaRegistry { get; }
+
+        /// <summary>
+        /// Gets the IApplicationGroupOperations.
+        /// </summary>
+        IApplicationGroupOperations ApplicationGroup { get; }
 
     }
 }

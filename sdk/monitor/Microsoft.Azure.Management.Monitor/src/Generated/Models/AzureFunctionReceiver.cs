@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// request sent to.</param>
         /// <param name="useCommonAlertSchema">Indicates whether to use common
         /// alert schema.</param>
-        public AzureFunctionReceiver(string name, string functionAppResourceId, string functionName, string httpTriggerUrl, bool useCommonAlertSchema)
+        public AzureFunctionReceiver(string name, string functionAppResourceId, string functionName, string httpTriggerUrl, bool? useCommonAlertSchema = default(bool?))
         {
             Name = name;
             FunctionAppResourceId = functionAppResourceId;
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Gets or sets indicates whether to use common alert schema.
         /// </summary>
         [JsonProperty(PropertyName = "useCommonAlertSchema")]
-        public bool UseCommonAlertSchema { get; set; }
+        public bool? UseCommonAlertSchema { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -88,8 +88,7 @@ namespace Authorization.Tests
                 var newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString(),
-                    CanDelegate = true
+                    PrincipalId = principalId.ToString()
                 };
 
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
@@ -111,14 +110,13 @@ namespace Authorization.Tests
                 Assert.NotNull(getResult);
                 Assert.Equal(createResult.Id, getResult.Id);
                 Assert.Equal(createResult.Name, getResult.Name);
-                Assert.Equal(createResult.CanDelegate, getResult.CanDelegate);
 
 
                 //Delete
                 var deleteResult = client.RoleAssignments.DeleteById(assignmentId);
                 Assert.NotNull(deleteResult);
 
-                var allRoleAssignments = client.RoleAssignments.List(null);
+                var allRoleAssignments = client.RoleAssignments.ListForSubscription(null);
                 var createdAssignment = allRoleAssignments.FirstOrDefault(
                                             a => a.Name == assignmentName.ToString());
 
@@ -128,8 +126,7 @@ namespace Authorization.Tests
                 newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString(),
-                    CanDelegate = false
+                    PrincipalId = principalId.ToString()
                 };
 
                 assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestByIdNew");
@@ -151,14 +148,13 @@ namespace Authorization.Tests
                 Assert.NotNull(getResult);
                 Assert.Equal(createResult.Id, getResult.Id);
                 Assert.Equal(createResult.Name, getResult.Name);
-                Assert.Equal(createResult.CanDelegate, getResult.CanDelegate);
 
 
                 //Delete
                 deleteResult = client.RoleAssignments.DeleteById(assignmentId);
                 Assert.NotNull(deleteResult);
 
-                allRoleAssignments = client.RoleAssignments.List(null);
+                allRoleAssignments = client.RoleAssignments.ListForSubscription(null);
                 createdAssignment = allRoleAssignments.FirstOrDefault(
                                             a => a.Name == assignmentName.ToString());
 
@@ -185,8 +181,7 @@ namespace Authorization.Tests
                 {
                     RoleDefinitionId = roleDefinition.Id,
                     PrincipalId = principalId.ToString(),
-                    PrincipalType = "ServicePrincipal",
-                    CanDelegate = false
+                    PrincipalType = "ServicePrincipal"
                 };
 
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestByIdNew");
@@ -198,7 +193,7 @@ namespace Authorization.Tests
                 Assert.NotNull(deleteResult);
                 Assert.Equal(deleteResult.Id, createResult.Id);
 
-                var allRoleAssignments = client.RoleAssignments.List(null);
+                var allRoleAssignments = client.RoleAssignments.ListForSubscription(null);
                 var createdAssignment = allRoleAssignments.FirstOrDefault(
                                             a => a.Name == assignmentName.ToString());
 
@@ -236,7 +231,7 @@ namespace Authorization.Tests
                 var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
                 Assert.NotNull(createResult);
 
-                var allRoleAssignments = client.RoleAssignments.List(new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
+                var allRoleAssignments = client.RoleAssignments.ListForSubscription(new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
 
                 Assert.NotNull(allRoleAssignments);
 
@@ -294,7 +289,7 @@ namespace Authorization.Tests
                 Assert.NotNull(deletedRoleAssignment);
                 Assert.Equal(deletedRoleAssignment.Id, createResult.Id);
 
-                var allRoleAssignments = client.RoleAssignments.List(null);
+                var allRoleAssignments = client.RoleAssignments.ListForSubscription(null);
                 var createdAssignment = allRoleAssignments.FirstOrDefault(
                                             a => a.Name == assignmentName.ToString());
 
@@ -315,7 +310,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
+                    .ListForSubscription(new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
 
                 Assert.NotNull(allRoleAssignments);
 
@@ -354,13 +349,12 @@ namespace Authorization.Tests
                 var newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString(),
-                    CanDelegate = false
+                    PrincipalId = principalId.ToString()
                 };
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_FalseCanDelegate");
                 var createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
                 var allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.PrincipalId == principalId));
+                    .ListForSubscription(new ODataQuery<RoleAssignmentFilter>(f => f.PrincipalId == principalId));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() == 1);
@@ -373,7 +367,6 @@ namespace Authorization.Tests
                 Assert.NotNull(assignment.RoleDefinitionId);
                 Assert.NotNull(assignment.Scope);
                 Assert.Equal(principalId.ToString(), assignment.PrincipalId);
-                Assert.False(assignment.CanDelegate);
 
                 //delete the RA
                 client.RoleAssignments.Delete(scope, assignmentName.ToString());
@@ -381,14 +374,13 @@ namespace Authorization.Tests
                 newRoleAssignment = new RoleAssignmentCreateParameters()
                 {
                     RoleDefinitionId = roleDefinition.Id,
-                    PrincipalId = principalId.ToString(),
-                    CanDelegate = true
+                    PrincipalId = principalId.ToString()
                 };
                 assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_TrueCanDelegate");
                 createResult = client.RoleAssignments.Create(scope, assignmentName.ToString(), newRoleAssignment);
 
                 allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.PrincipalId == principalId));
+                    .ListForSubscription(new ODataQuery<RoleAssignmentFilter>(f => f.PrincipalId == principalId));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() == 1);
@@ -401,7 +393,6 @@ namespace Authorization.Tests
                 Assert.NotNull(assignment.RoleDefinitionId);
                 Assert.NotNull(assignment.Scope);
                 Assert.Equal(principalId.ToString(), assignment.PrincipalId);
-                Assert.True(assignment.CanDelegate);
 
             }
         }
@@ -469,12 +460,12 @@ namespace Authorization.Tests
                     // Validate
 
                     // Get the first page of assignments
-                    var firstPage = client.RoleAssignments.List(null);
+                    var firstPage = client.RoleAssignments.ListForSubscription(null);
                     Assert.NotNull(firstPage);
                     Assert.NotNull(firstPage.NextPageLink);
 
                     // Get the next page of assignments
-                    var nextPage = client.RoleAssignments.ListNext(firstPage.NextPageLink);
+                    var nextPage = client.RoleAssignments.ListForSubscriptionNext(firstPage.NextPageLink);
 
                     Assert.NotNull(nextPage);
                     Assert.NotEmpty(nextPage);
@@ -576,8 +567,7 @@ namespace Authorization.Tests
                     newRoleAssignmentToUserParams);
 
                 // List role assignments with AssignedTo filter = user id
-                var allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(userId)));
+                var allRoleAssignments = client.RoleAssignments.ListForSubscription(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(userId)));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() >= 1);
@@ -593,8 +583,7 @@ namespace Authorization.Tests
                     Assert.NotNull(assignment.Scope);
                 }
 
-                allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(groupId)));
+                allRoleAssignments = client.RoleAssignments.ListForSubscription(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(groupId)));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() >= 1);
@@ -613,6 +602,292 @@ namespace Authorization.Tests
                 Assert.True(allRoleAssignments.Count(a => a.PrincipalId.ToString() == groupId) >= 1);
             }
         }
+
+        #region roleAssignments Tests
+        [Fact]
+        public void CRUDRoleAssignmentWithV1_0()
+        {
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = new Guid(testContext.Users.ElementAt(4).ObjectId);
+
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
+                //RA with Condition version 1.0
+                var newRoleAssignment = new RoleAssignmentCreateParameters()
+                {
+                    RoleDefinitionId = roleDefinition.Id,
+                    PrincipalId = principalId.ToString(),
+                    Description = "This test should not fail",
+                    Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'",
+                    ConditionVersion = "1.0"
+                };
+
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
+
+                var assignmentId = string.Format(
+                    "{0}/providers/Microsoft.Authorization/roleAssignments/{1}",
+                    scope,
+                    assignmentName);
+
+                // Create
+                var createResult = client.RoleAssignments.CreateById(assignmentId, newRoleAssignment);
+                Assert.NotNull(createResult);
+                Assert.NotNull(createResult.Id);
+                Assert.NotNull(createResult.Name);
+                Assert.Equal(createResult.Name, assignmentName.ToString());
+
+                // Get
+                var getResult = client.RoleAssignments.GetById(assignmentId);
+                Assert.NotNull(getResult);
+                Assert.Equal(createResult.Id, getResult.Id);
+                Assert.Equal(createResult.Name, getResult.Name);
+
+
+                //Delete
+                var deleteResult = client.RoleAssignments.DeleteById(assignmentId);
+                Assert.NotNull(deleteResult);
+
+                var allRoleAssignments = client.RoleAssignments.ListForSubscription(null);
+                var createdAssignment = allRoleAssignments.FirstOrDefault(
+                                            a => a.Name == assignmentName.ToString());
+
+                Assert.Null(createdAssignment);
+            }
+        }
+
+        [Fact]
+        public void CRUDRoleAssignmentWithV2_0()
+        {
+
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = new Guid(testContext.Users.ElementAt(4).ObjectId);
+
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
+                //RA with Condition version 2.0
+                var newRoleAssignment = new RoleAssignmentCreateParameters()
+                {
+                    RoleDefinitionId = roleDefinition.Id,
+                    PrincipalId = principalId.ToString(),
+                    Description = "This test should not fail",
+                    Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:Name] StringEqualsIgnoreCase 'foo_storage_container'",
+                    ConditionVersion = "2.0"
+                };
+
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
+
+                var assignmentId = string.Format(
+                    "{0}/providers/Microsoft.Authorization/roleAssignments/{1}",
+                    scope,
+                    assignmentName);
+
+                // Create
+                var createResult = client.RoleAssignments.CreateById(assignmentId, newRoleAssignment);
+                Assert.NotNull(createResult);
+                Assert.NotNull(createResult.Id);
+                Assert.NotNull(createResult.Name);
+                Assert.Equal(createResult.Name, assignmentName.ToString());
+
+                // Get
+                var getResult = client.RoleAssignments.GetById(assignmentId);
+                Assert.NotNull(getResult);
+                Assert.Equal(createResult.Id, getResult.Id);
+                Assert.Equal(createResult.Name, getResult.Name);
+
+
+                //Delete
+                var deleteResult = client.RoleAssignments.DeleteById(assignmentId);
+                Assert.NotNull(deleteResult);
+
+                var allRoleAssignments = client.RoleAssignments.ListForSubscription(null);
+                var createdAssignment = allRoleAssignments.FirstOrDefault(
+                                            a => a.Name == assignmentName.ToString());
+
+                Assert.Null(createdAssignment);
+            }
+        }
+
+        [Fact]
+        public void RoleAssignmentNegativeTestCondition()
+        {
+            bool threwException = false;
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = new Guid(testContext.Users.ElementAt(4).ObjectId);
+
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
+                var newRoleAssignment = new RoleAssignmentCreateParameters()
+                {
+                    RoleDefinitionId = roleDefinition.Id,
+                    PrincipalId = principalId.ToString(),
+                    Description = "This test should not fail",
+                    Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:Name] StringEqualsIgnoreCase 'foo_storage_container'"
+                };
+
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
+
+                var assignmentId = string.Format(
+                    "{0}/providers/Microsoft.Authorization/roleAssignments/{1}",
+                    scope,
+                    assignmentName);
+
+                try
+                {
+                    // Create
+                    var createResult = client.RoleAssignments.CreateById(assignmentId, newRoleAssignment);
+                }
+                catch (ErrorResponseException e)
+                {
+                    Assert.Contains("The specified role assignment ConditionVersion", e.Response.Content);
+                    Assert.Contains("is not supported", e.Response.Content);
+                    threwException = true;
+                }
+                Assert.True(threwException,"Test failed to throw exception when expected");
+            }
+        }
+
+        [Fact]
+        public void RoleAssignmentNegativeTestConditionVersion()
+        {
+            bool threwException = false;
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var principalId = new Guid(testContext.Users.ElementAt(4).ObjectId);
+
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
+                var newRoleAssignment = new RoleAssignmentCreateParameters()
+                {
+                    RoleDefinitionId = roleDefinition.Id,
+                    PrincipalId = principalId.ToString(),
+                    Description = "This test should not fail",
+                    ConditionVersion = "2.0"
+                };
+
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
+
+                var assignmentId = string.Format(
+                    "{0}/providers/Microsoft.Authorization/roleAssignments/{1}",
+                    scope,
+                    assignmentName);
+
+                try
+                {
+                    // Create
+                    var createResult = client.RoleAssignments.CreateById(assignmentId, newRoleAssignment);
+                }
+                catch (ErrorResponseException e)
+                {
+                    Assert.Contains("When 'Condition' property is not set 'ConditionVersion' property also must not be set.", e.Response.Content);
+                    threwException = true;
+                }
+                Assert.True(threwException, "Test failed to throw exception when expected");
+            }
+        }
+
+        [Fact]
+        public void RoleAssignmentMaxVersion1_0Test()
+        {
+
+            List<string> allowedVersions = new List<string>() { "1.0", null };
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                //var allRoleAssignments = client.RoleAssignments.ListForScope(
+                //  "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup,
+                //new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
+                var allRoleAssignments = client.RoleAssignments.ListForSubscription(new ODataQuery<RoleAssignmentFilter>("maxSupportedConditionVersion eq '1.0'"));
+
+
+                Assert.NotNull(allRoleAssignments);
+                Assert.All(allRoleAssignments, ra => allowedVersions.Contains(ra.ConditionVersion));
+
+                foreach (var assignment in allRoleAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.PrincipalId);
+                    Assert.NotNull(assignment.RoleDefinitionId);
+                    Assert.NotNull(assignment.Scope);
+                }
+            }
+        }
+
+        [Fact]
+        public void RoleAssignmentMaxVersion2_0Test()
+        {
+            List<string> allowedVersions = new List<string>() { "1.0","2.0",null};
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                //var allRoleAssignments = client.RoleAssignments.ListForScope(
+                //  "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup,
+                //new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
+                var allRoleAssignments = client.RoleAssignments.ListForSubscription(new ODataQuery<RoleAssignmentFilter>("maxSupportedConditionVersion eq '2.0'"));
+
+
+                Assert.NotNull(allRoleAssignments);
+                Assert.All(allRoleAssignments, ra => allowedVersions.Contains(ra.ConditionVersion));
+
+                foreach (var assignment in allRoleAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.PrincipalId);
+                    Assert.NotNull(assignment.RoleDefinitionId);
+                    Assert.NotNull(assignment.Scope);
+                }
+            }
+        }
+
+        #endregion
 
         [Fact]
         public void RoleDefinitionsListGetTests()
@@ -703,7 +978,6 @@ namespace Authorization.Tests
         //    }
         //}
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleDefinitionsByIdTests()
         {
@@ -788,7 +1062,6 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
         [Fact]
         public void RoleDefinitionUpdateTests()
         {
@@ -855,9 +1128,9 @@ namespace Authorization.Tests
                         roleDefinitionId.ToString(),
                         createOrUpdateParams);
                     }
-                    catch (CloudException ce)
+                    catch (ErrorResponseException e)
                     {
-                        Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                        Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
                     }
                 }
                 finally
@@ -987,9 +1260,9 @@ namespace Authorization.Tests
                     client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
                         builtInRole.Name, createOrUpdateParams);
                 }
-                catch (CloudException ce)
+                catch (ErrorResponseException e)
                 {
-                    Assert.Equal(HttpStatusCode.Conflict, ce.Response.StatusCode);
+                    Assert.Equal(HttpStatusCode.Conflict, e.Response.StatusCode);
                 }
 
                 // Negative test - create a roledefinition with type=BuiltInRole
@@ -1001,9 +1274,9 @@ namespace Authorization.Tests
                         roleDefinitionId.ToString(),
                         createOrUpdateParams);
                 }
-                catch (CloudException ce)
+                catch (ErrorResponseException e)
                 {
-                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                    Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
                 }
 
                 // Negative Test - create a custom role with empty role name
@@ -1017,9 +1290,9 @@ namespace Authorization.Tests
                         roleDefinitionId.ToString(),
                         createOrUpdateParams);
                 }
-                catch (CloudException ce)
+                catch (ErrorResponseException e)
                 {
-                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                    Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
                 }
 
                 // Negative Test - create a custom role with empty assignable scopes
@@ -1033,9 +1306,9 @@ namespace Authorization.Tests
                         roleDefinitionId.ToString(),
                         createOrUpdateParams);
                 }
-                catch (CloudException ce)
+                catch (ErrorResponseException e)
                 {
-                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                    Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
                 }
 
                 // Negative Test - create a custom role with invalid value for assignable scopes
@@ -1206,9 +1479,9 @@ namespace Authorization.Tests
                 {
                     var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("InvalidProvider");
                 }
-                catch (CloudException ex)
+                catch (ErrorResponseException e)
                 {
-                    Assert.Equal("Provider 'InvalidProvider' not found.", ex.Message);
+                    Assert.Equal("Operation returned an invalid status code 'NotFound'", e.Message);
                 }
             }
         }
@@ -1240,7 +1513,7 @@ namespace Authorization.Tests
 
                 var scope = "/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
 
-                // Currently, only system deny assignments created by whitelisted apps are supported.
+                // Currently, only system deny assignments created by allowlisted apps are supported.
                 // So, we have pre-populated the PAS data store with some test deny assignments that we can use here.
                 var assignmentName = "43af7d0c-0bf8-407f-96c0-96a29d076431";
 
@@ -1270,7 +1543,7 @@ namespace Authorization.Tests
 
                 var scope = "/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
 
-                // Currently, only system deny assignments created by whitelisted apps are supported.
+                // Currently, only system deny assignments created by allowlisted apps are supported.
                 // So, we have pre-populated the PAS data store with some test deny assignments that we can use here.
                 var assignmentName = "43af7d0c-0bf8-407f-96c0-96a29d076431";
 
@@ -1493,7 +1766,7 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Enable after principalId filter change gets deployed to PROD")]
+        [Fact]
         public void DenyAssignmentsListUsingPrincipalIdFilterTest()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();

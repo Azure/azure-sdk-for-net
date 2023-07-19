@@ -34,14 +34,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the ManagementPolicyFilter class.
         /// </summary>
-        /// <param name="blobTypes">An array of predefined enum values. Only
-        /// blockBlob is supported.</param>
+        /// <param name="blobTypes">An array of predefined enum values.
+        /// Currently blockBlob supports all tiering and delete actions. Only
+        /// delete actions are supported for appendBlob.</param>
         /// <param name="prefixMatch">An array of strings for prefixes to be
         /// match.</param>
-        public ManagementPolicyFilter(IList<string> blobTypes, IList<string> prefixMatch = default(IList<string>))
+        /// <param name="blobIndexMatch">An array of blob index tag based
+        /// filters, there can be at most 10 tag filters</param>
+        public ManagementPolicyFilter(IList<string> blobTypes, IList<string> prefixMatch = default(IList<string>), IList<TagFilter> blobIndexMatch = default(IList<TagFilter>))
         {
             PrefixMatch = prefixMatch;
             BlobTypes = blobTypes;
+            BlobIndexMatch = blobIndexMatch;
             CustomInit();
         }
 
@@ -57,11 +61,19 @@ namespace Microsoft.Azure.Management.Storage.Models
         public IList<string> PrefixMatch { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of predefined enum values. Only blockBlob is
-        /// supported.
+        /// Gets or sets an array of predefined enum values. Currently
+        /// blockBlob supports all tiering and delete actions. Only delete
+        /// actions are supported for appendBlob.
         /// </summary>
         [JsonProperty(PropertyName = "blobTypes")]
         public IList<string> BlobTypes { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of blob index tag based filters, there can be
+        /// at most 10 tag filters
+        /// </summary>
+        [JsonProperty(PropertyName = "blobIndexMatch")]
+        public IList<TagFilter> BlobIndexMatch { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -74,6 +86,16 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (BlobTypes == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "BlobTypes");
+            }
+            if (BlobIndexMatch != null)
+            {
+                foreach (var element in BlobIndexMatch)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

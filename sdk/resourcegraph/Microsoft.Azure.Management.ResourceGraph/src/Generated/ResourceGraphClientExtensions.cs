@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.ResourceGraph
     public static partial class ResourceGraphClientExtensions
     {
             /// <summary>
-            /// Queries the resources managed by Azure Resource Manager for all
-            /// subscriptions specified in the request.
+            /// Queries the resources managed by Azure Resource Manager for scopes
+            /// specified in the request.
             /// <see href="https://aka.ms/resource-graph/learntoquery" />
             /// </summary>
             /// <param name='operations'>
@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.ResourceGraph
             }
 
             /// <summary>
-            /// Queries the resources managed by Azure Resource Manager for all
-            /// subscriptions specified in the request.
+            /// Queries the resources managed by Azure Resource Manager for scopes
+            /// specified in the request.
             /// <see href="https://aka.ms/resource-graph/learntoquery" />
             /// </summary>
             /// <param name='operations'>

@@ -19,14 +19,23 @@ namespace ApiManagement.Tests.ResourceProviderTests
     public partial class ApiManagementServiceTests
     {
         [Fact]
-        public void CreateMultiHostNameService()
+        [Trait("owner", "sasolank")]
+        public void CreateMultiHostNameZoneAwareService()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
 
+                var domainOwnershipIdentifierResult = testBase.client.ApiManagementService.GetDomainOwnershipIdentifier();
+                Assert.NotNull(domainOwnershipIdentifierResult);
+                Assert.NotEmpty(domainOwnershipIdentifierResult.DomainOwnershipIdentifier);
+
+                testBase.serviceProperties.Zones = new[] { "1", "2" };
                 testBase.serviceProperties.Sku.Name = SkuType.Premium;
+                testBase.serviceProperties.Sku.Capacity = 2; // unit count in multiple of zones
+                testBase.location = "eastus2euap";
+                testBase.serviceProperties.Location = testBase.location;
                 var hostnameConfig1 = new HostnameConfiguration()
                 {
                     Type = HostnameType.Proxy,
@@ -53,11 +62,20 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     CertificatePassword = testBase.testCertificatePassword
                 };
 
+                var hostnameConfig4 = new HostnameConfiguration()
+                {
+                    Type = HostnameType.DeveloperPortal,
+                    HostName = "devportal1.msitesting.net",
+                    EncodedCertificate = testBase.base64EncodedTestCertificateData,
+                    CertificatePassword = testBase.testCertificatePassword
+                };
+
                 testBase.serviceProperties.HostnameConfigurations = new List<HostnameConfiguration>
                 {
                     hostnameConfig1,
                     hostnameConfig2,
-                    hostnameConfig3
+                    hostnameConfig3,
+                    hostnameConfig4
                 };
 
                 var base64ArrayCertificate = Convert.FromBase64String(testBase.base64EncodedTestCertificateData);
@@ -76,10 +94,15 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
 
+                Assert.Equal(2, createdService.Sku.Capacity);
+                Assert.Equal(2, createdService.Zones.Count);
+                Assert.True(createdService.Zones.Contains("1"));
+                Assert.True(createdService.Zones.Contains("2"));
                 Assert.NotNull(createdService.HostnameConfigurations);
-                Assert.Equal(4, createdService.HostnameConfigurations.Count()); // customhostname config + 1 default proxy
+                Assert.Equal(5, createdService.HostnameConfigurations.Count()); // customhostname config + 1 default proxy
                 var defaultHostname = new Uri(createdService.GatewayUrl).Host;
                 var hostnameConfigurationToValidate = createdService.HostnameConfigurations
                     .Where(h => !h.HostName.Equals(defaultHostname, StringComparison.InvariantCultureIgnoreCase));
@@ -92,6 +115,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     Assert.Equal(hostnameConfig.Type, hostnameConfiguration.Type);
                     Assert.NotNull(hostnameConfiguration.Certificate);
                     Assert.NotNull(hostnameConfiguration.Certificate.Subject);
+                    Assert.Null(hostnameConfig.IdentityClientId);
+                    Assert.Null(hostnameConfig.KeyVaultId);
                     Assert.Equal(cert.Thumbprint, hostnameConfiguration.Certificate.Thumbprint);
 
                     if (HostnameType.Proxy == hostnameConfiguration.Type)
@@ -115,14 +140,25 @@ namespace ApiManagement.Tests.ResourceProviderTests
 
                 // update the service
                 int intialTagsCount = createdService.Tags.Count;
-                createdService.Tags.Add("client", "test");
-                var updatedService = testBase.client.ApiManagementService.CreateOrUpdate(testBase.rgName,
+
+                var updateParameters = new ApiManagementServiceUpdateParameters()
+                {
+                    Zones = new[] { "2", "3" },
+                    Tags = new Dictionary<string, string>()
+                    {
+                        { "client", "test" }
+                    }
+                };
+                var updatedService = testBase.client.ApiManagementService.Update(testBase.rgName,
                      testBase.serviceName,
-                     createdService);
+                     updateParameters);
                 Assert.NotNull(updatedService);
                 Assert.NotEmpty(updatedService.Tags);
-                Assert.Equal(intialTagsCount + 1, updatedService.Tags.Count);
-                Assert.Equal(4, updatedService.HostnameConfigurations.Count());
+                Assert.Equal(1, updatedService.Tags.Count);
+                Assert.Equal(5, updatedService.HostnameConfigurations.Count());
+                Assert.Equal(2, updatedService.Zones.Count);
+                Assert.True(updatedService.Zones.Contains("2"));
+                Assert.True(updatedService.Zones.Contains("3"));
 
                 hostnameConfigurationToValidate = updatedService.HostnameConfigurations
                     .Where(h => !h.HostName.Equals(defaultHostname, StringComparison.InvariantCultureIgnoreCase));
@@ -160,7 +196,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     resourceGroupName: testBase.rgName,
                     serviceName: testBase.serviceName);
 
-                Assert.Throws<CloudException>(() =>
+                Assert.Throws<ErrorResponseException>(() =>
                 {
                     testBase.client.ApiManagementService.Get(
                         resourceGroupName: testBase.rgName,

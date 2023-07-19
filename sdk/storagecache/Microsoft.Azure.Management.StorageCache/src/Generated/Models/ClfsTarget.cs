@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Storage container for use as a CLFS Storage Target.
+    /// Properties pertaining to the ClfsTarget
     /// </summary>
     public partial class ClfsTarget
     {

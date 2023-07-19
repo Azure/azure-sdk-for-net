@@ -130,8 +130,8 @@ namespace Management.HDInsight.Tests
         /// </summary>
         public CommonTestFixture()
         {
-            Location = "East US 2";
-            AdlsGen2RequiredRoleName = "Storage Blob Data Contributor";
+            Location = "South Central US";
+            AdlsGen2RequiredRoleName = "Storage Blob Data Owner";
             ClusterUserName = TestUtilities.GenerateName("admin");
             ClusterPassword = TestUtilities.GenerateName("Password1!");
             SshUsername = TestUtilities.GenerateName("sshuser");

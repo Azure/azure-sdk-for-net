@@ -19,7 +19,7 @@ using System.Text.RegularExpressions;
 namespace Reservations.Tests.ScenarioTests
 {
     public class NonReservationObjectTests : ReservationsTestBase
-    {   
+    {
         [Fact]
         public void TestGetCatalog()
         {
@@ -98,6 +98,15 @@ namespace Reservations.Tests.ScenarioTests
                     x.Locations == null &&
                     x.Terms != null
                 ));
+
+                catalog = reservationsClient.GetCatalog(SubscriptionId, ReservedResourceType.VirtualMachineSoftware, publisherId: "test_test_pmc2pc1", offerId: "mnk_vmri_test_001", planId: "testplan001");
+                Assert.True(catalog.All(x =>
+                    x.ResourceType != null &&
+                    x.Name != null &&
+                    x.SkuProperties != null &&
+                    x.Locations == null &&
+                    x.Terms != null
+                ));
             }
         }
 
@@ -113,14 +122,13 @@ namespace Reservations.Tests.ScenarioTests
                 Assert.NotNull(appliedReservations.Name);
                 Assert.NotNull(appliedReservations.Type);
                 string reservationOrderIdPattern = @"^\/providers\/Microsoft\.Capacity\/reservationorders\/[\w-]+$";
-                Assert.True(appliedReservations.ReservationOrderIds.Value.All(x => 
+                Assert.True(appliedReservations.ReservationOrderIds.Value.All(x =>
                     x is string &&
                     Regex.Match(x, reservationOrderIdPattern).Success
                 ));
             }
         }
 
-            
         [Fact]
         public void TestListOperations()
         {
@@ -131,6 +139,8 @@ namespace Reservations.Tests.ScenarioTests
                 var operations = reservationsClient.Operation.List();
                 Assert.NotNull(operations);
                 Assert.True(operations.Any());
+                bool serviceLimitsOperationFound = false;
+
                 var enumerator = operations.GetEnumerator();
                 while (enumerator.MoveNext())
                 {
@@ -140,7 +150,14 @@ namespace Reservations.Tests.ScenarioTests
                     Assert.NotNull(operation.Display.Resource);
                     Assert.NotNull(operation.Display.Operation);
                     Assert.NotNull(operation.Display.Description);
+
+                    if (operation.Name.Contains("serviceLimits"))
+                    {
+                        serviceLimitsOperationFound = true;
+                    }
                 }
+
+                Assert.True(serviceLimitsOperationFound, "ServiceLimits Operations should be listed");
             }
         }
     }

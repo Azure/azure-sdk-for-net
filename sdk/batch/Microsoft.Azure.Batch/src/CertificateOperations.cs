@@ -6,6 +6,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.IO;
     using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
@@ -70,6 +71,7 @@
 #region CertificateOperations
 
         /// <summary>
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// Gets the specified <see cref="Certificate"/>.
         /// </summary>
         /// <param name="thumbprintAlgorithm">The algorithm used to derive the <paramref name="thumbprint"/> parameter. This must be sha1.</param>
@@ -79,6 +81,7 @@
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="Certificate"/> containing information about the specified certificate in the Azure Batch account.</returns>
         /// <remarks>The get certificate operation runs asynchronously.</remarks>
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public async Task<Certificate> GetCertificateAsync(
             string thumbprintAlgorithm, 
             string thumbprint, 
@@ -105,6 +108,7 @@
         }
 
         /// <summary>
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// Gets the specified <see cref="Certificate"/>.
         /// </summary>
         /// <param name="thumbprintAlgorithm">The algorithm used to derive the <paramref name="thumbprint"/> parameter. This must be sha1.</param>
@@ -113,6 +117,7 @@
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/> and <paramref name="detailLevel"/>.</param>
         /// <returns>A <see cref="Certificate"/> containing information about the specified certificate in the Azure Batch account.</returns>
         /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetCertificateAsync"/>.</remarks>
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Certificate GetCertificate(string thumbprintAlgorithm, string thumbprint, DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             Task<Certificate> asyncTask = GetCertificateAsync(thumbprintAlgorithm, thumbprint, detailLevel, additionalBehaviors);
@@ -122,18 +127,20 @@
         }
 
         /// <summary>
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// Creates a new <see cref="Certificate"/> from a .cer file.
         /// </summary>
-        /// <param name="cerFileName">The path to the .cer file.</param>
+        /// <param name="path">The path to the .cer file.</param>
         /// <returns>A <see cref="Certificate"/> representing a new certificate that has not been added to the Batch service.</returns>
-        public Certificate CreateCertificate(string cerFileName)
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
+        public Certificate CreateCertificateFromCer(string path)
         {
-            if (string.IsNullOrWhiteSpace(cerFileName))
+            if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentOutOfRangeException("cerFileName");
+                throw new ArgumentOutOfRangeException(nameof(path));
             }
 
-            Models.CertificateAddParameter protoCert = GetCertificateInfo(cerFileName);
+            Models.CertificateAddParameter protoCert = GetCertificateInfo(path);
             Certificate omCert = new Certificate(
                 this.ParentBatchClient,
                 protoCert,
@@ -143,46 +150,52 @@
         }
 
         /// <summary>
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// Creates a new <see cref="Certificate"/> from .cer format data in memory.
         /// </summary>
-        /// <param name="cerRawData">The certificate data in .cer format.</param>
+        /// <param name="data">The certificate data in .cer format.</param>
         /// <returns>A <see cref="Certificate"/> representing a new certificate that has not been added to the Batch service.</returns>
-        public Certificate CreateCertificate(byte[] cerRawData)
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
+        public Certificate CreateCertificateFromCer(byte[] data)
         {
-            Models.CertificateAddParameter protoCert = GetCertificateInfo(cerRawData);
+            Models.CertificateAddParameter protoCert = GetCertificateInfo(data);
             Certificate omCert = new Certificate(this.ParentBatchClient, protoCert, this.CustomBehaviors);
 
             return omCert;
         }
 
         /// <summary>
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// Creates a new <see cref="Certificate"/> from a .pfx file.
         /// </summary>
-        /// <param name="pfxFileName">The path to the .pfx file.</param>
-        /// <param name="password">The password to access the certificate private key.</param>
+        /// <param name="path">The path to the .pfx file.</param>
+        /// <param name="password">The password to access the certificate private key. This can be null if the PFX is not protected by a password.</param>
         /// <returns>A <see cref="Certificate"/> representing a new certificate that has not been added to the Batch service.</returns>
-        public Certificate CreateCertificate(string pfxFileName, string password)
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
+        public Certificate CreateCertificateFromPfx(string path, string password = null)
         {
-            if (string.IsNullOrWhiteSpace(pfxFileName))
+            if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentOutOfRangeException("pfxFileName");
+                throw new ArgumentOutOfRangeException(nameof(path));
             }
 
-            Models.CertificateAddParameter protoCert = GetCertificateInfo(pfxFileName, password);
+            Models.CertificateAddParameter protoCert = GetCertificateInfo(path, password);
             Certificate omCert = new Certificate(this.ParentBatchClient, protoCert, this.CustomBehaviors);
 
             return omCert;
         }
 
         /// <summary>
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// Creates a new <see cref="Certificate"/> from .pfx format data in memory.
         /// </summary>
-        /// <param name="pfxRawData">The certificate data in .pfx format.</param>
-        /// <param name="password">The password to access the certificate private key.</param>
+        /// <param name="data">The certificate data in .pfx format.</param>
+        /// <param name="password">The password to access the certificate private key. This can be null if the PFX is not protected by a password.</param>
         /// <returns>A <see cref="Certificate"/> representing a new certificate that has not been added to the Batch service.</returns>
-        public Certificate CreateCertificate(byte[] pfxRawData, string password)
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
+        public Certificate CreateCertificateFromPfx(byte[] data, string password = null)
         {
-            Models.CertificateAddParameter protoCert = GetCertificateInfo(pfxRawData, password);
+            Models.CertificateAddParameter protoCert = GetCertificateInfo(data, password);
             Certificate omCert = new Certificate(this.ParentBatchClient, protoCert, this.CustomBehaviors);
 
             return omCert;
@@ -190,9 +203,9 @@
 
         #region Private
 
-        private Models.CertificateAddParameter GetCertificateInfo(string pfxFileName, string password)
+        private Models.CertificateAddParameter GetCertificateInfo(string pfxPath, string password)
         {
-            byte[] rawData = System.IO.File.ReadAllBytes(pfxFileName);
+            byte[] rawData = System.IO.File.ReadAllBytes(pfxPath);
 
             return GetCertificateInfo(rawData, password);
         }
@@ -209,10 +222,9 @@
             return cert;
         }
 
-        private Models.CertificateAddParameter GetCertificateInfo(string cerFileName)
+        private Models.CertificateAddParameter GetCertificateInfo(string certFilePath)
         {
-            byte[] rawData = System.IO.File.ReadAllBytes(cerFileName);
-
+            byte[] rawData = System.IO.File.ReadAllBytes(certFilePath);
             return GetCertificateInfo(rawData);
         }
 
@@ -241,6 +253,7 @@
         #endregion
 
         /// <summary>
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// Enumerates the <see cref="Certificate">certificates</see> in the Batch account.
         /// </summary>
         /// <param name="detailLevel">A <see cref="DetailLevel"/> used for filtering the list and for controlling which properties are retrieved from the service.</param>
@@ -248,6 +261,7 @@
         /// <returns>An <see cref="IPagedEnumerable{Certificate}"/> that can be used to enumerate certificates asynchronously or synchronously.</returns>
         /// <remarks>This method returns immediately; the certificates are retrieved from the Batch service only when the collection is enumerated.
         /// Retrieval is non-atomic; certificates are retrieved in pages during enumeration of the collection.</remarks>
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public IPagedEnumerable<Certificate> ListCertificates(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // set up behavior manager

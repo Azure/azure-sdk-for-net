@@ -2,7 +2,7 @@
       "Name": "RecentJob",
       "ProtocolName": "Models.RecentJob",
       "SummaryComment": "Information about the most recent job under a job schedule.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

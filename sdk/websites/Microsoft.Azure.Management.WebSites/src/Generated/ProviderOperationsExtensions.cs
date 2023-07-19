@@ -25,16 +25,16 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get available application frameworks and their versions
             /// </summary>
             /// <remarks>
-            /// Get available application frameworks and their versions
+            /// Description for Get available application frameworks and their versions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='osTypeSelected'>
             /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
-            /// 'LinuxFunctions'
+            /// 'LinuxFunctions', 'All'
             /// </param>
-            public static IPage<ApplicationStack> GetAvailableStacks(this IProviderOperations operations, string osTypeSelected = default(string))
+            public static IPage<ApplicationStackResource> GetAvailableStacks(this IProviderOperations operations, string osTypeSelected = default(string))
             {
                 return operations.GetAvailableStacksAsync(osTypeSelected).GetAwaiter().GetResult();
             }
@@ -43,21 +43,157 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get available application frameworks and their versions
             /// </summary>
             /// <remarks>
-            /// Get available application frameworks and their versions
+            /// Description for Get available application frameworks and their versions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='osTypeSelected'>
             /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
-            /// 'LinuxFunctions'
+            /// 'LinuxFunctions', 'All'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApplicationStack>> GetAvailableStacksAsync(this IProviderOperations operations, string osTypeSelected = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApplicationStackResource>> GetAvailableStacksAsync(this IProviderOperations operations, string osTypeSelected = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAvailableStacksWithHttpMessagesAsync(osTypeSelected, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get available Function app frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Function app frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='stackOsType'>
+            /// Stack OS Type. Possible values include: 'Windows', 'Linux', 'All'
+            /// </param>
+            public static IPage<FunctionAppStack> GetFunctionAppStacks(this IProviderOperations operations, string stackOsType = default(string))
+            {
+                return operations.GetFunctionAppStacksAsync(stackOsType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get available Function app frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Function app frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='stackOsType'>
+            /// Stack OS Type. Possible values include: 'Windows', 'Linux', 'All'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FunctionAppStack>> GetFunctionAppStacksAsync(this IProviderOperations operations, string stackOsType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFunctionAppStacksWithHttpMessagesAsync(stackOsType, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get available Function app frameworks and their versions for location
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Function app frameworks and their versions
+            /// for location
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Function App stack location.
+            /// </param>
+            /// <param name='stackOsType'>
+            /// Stack OS Type. Possible values include: 'Windows', 'Linux', 'All'
+            /// </param>
+            public static IPage<FunctionAppStack> GetFunctionAppStacksForLocation(this IProviderOperations operations, string location, string stackOsType = default(string))
+            {
+                return operations.GetFunctionAppStacksForLocationAsync(location, stackOsType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get available Function app frameworks and their versions for location
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Function app frameworks and their versions
+            /// for location
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Function App stack location.
+            /// </param>
+            /// <param name='stackOsType'>
+            /// Stack OS Type. Possible values include: 'Windows', 'Linux', 'All'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FunctionAppStack>> GetFunctionAppStacksForLocationAsync(this IProviderOperations operations, string location, string stackOsType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFunctionAppStacksForLocationWithHttpMessagesAsync(location, stackOsType, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get available Web app frameworks and their versions for location
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Web app frameworks and their versions for
+            /// location
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Web App stack location.
+            /// </param>
+            /// <param name='stackOsType'>
+            /// Stack OS Type. Possible values include: 'Windows', 'Linux', 'All'
+            /// </param>
+            public static IPage<WebAppStack> GetWebAppStacksForLocation(this IProviderOperations operations, string location, string stackOsType = default(string))
+            {
+                return operations.GetWebAppStacksForLocationAsync(location, stackOsType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get available Web app frameworks and their versions for location
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Web app frameworks and their versions for
+            /// location
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Web App stack location.
+            /// </param>
+            /// <param name='stackOsType'>
+            /// Stack OS Type. Possible values include: 'Windows', 'Linux', 'All'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<WebAppStack>> GetWebAppStacksForLocationAsync(this IProviderOperations operations, string location, string stackOsType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWebAppStacksForLocationWithHttpMessagesAsync(location, stackOsType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -68,8 +204,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// exposes resource metric definitions
             /// </summary>
             /// <remarks>
-            /// Gets all available operations for the Microsoft.Web resource provider. Also
-            /// exposes resource metric definitions
+            /// Description for Gets all available operations for the Microsoft.Web
+            /// resource provider. Also exposes resource metric definitions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -84,8 +220,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// exposes resource metric definitions
             /// </summary>
             /// <remarks>
-            /// Gets all available operations for the Microsoft.Web resource provider. Also
-            /// exposes resource metric definitions
+            /// Description for Gets all available operations for the Microsoft.Web
+            /// resource provider. Also exposes resource metric definitions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -102,19 +238,59 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get available Web app frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Web app frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='stackOsType'>
+            /// Stack OS Type. Possible values include: 'Windows', 'Linux', 'All'
+            /// </param>
+            public static IPage<WebAppStack> GetWebAppStacks(this IProviderOperations operations, string stackOsType = default(string))
+            {
+                return operations.GetWebAppStacksAsync(stackOsType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get available Web app frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Web app frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='stackOsType'>
+            /// Stack OS Type. Possible values include: 'Windows', 'Linux', 'All'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<WebAppStack>> GetWebAppStacksAsync(this IProviderOperations operations, string stackOsType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWebAppStacksWithHttpMessagesAsync(stackOsType, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get available application frameworks and their versions
             /// </summary>
             /// <remarks>
-            /// Get available application frameworks and their versions
+            /// Description for Get available application frameworks and their versions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='osTypeSelected'>
             /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
-            /// 'LinuxFunctions'
+            /// 'LinuxFunctions', 'All'
             /// </param>
-            public static IPage<ApplicationStack> GetAvailableStacksOnPrem(this IProviderOperations operations, string osTypeSelected = default(string))
+            public static IPage<ApplicationStackResource> GetAvailableStacksOnPrem(this IProviderOperations operations, string osTypeSelected = default(string))
             {
                 return operations.GetAvailableStacksOnPremAsync(osTypeSelected).GetAwaiter().GetResult();
             }
@@ -123,19 +299,19 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get available application frameworks and their versions
             /// </summary>
             /// <remarks>
-            /// Get available application frameworks and their versions
+            /// Description for Get available application frameworks and their versions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='osTypeSelected'>
             /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
-            /// 'LinuxFunctions'
+            /// 'LinuxFunctions', 'All'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApplicationStack>> GetAvailableStacksOnPremAsync(this IProviderOperations operations, string osTypeSelected = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApplicationStackResource>> GetAvailableStacksOnPremAsync(this IProviderOperations operations, string osTypeSelected = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAvailableStacksOnPremWithHttpMessagesAsync(osTypeSelected, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -147,7 +323,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get available application frameworks and their versions
             /// </summary>
             /// <remarks>
-            /// Get available application frameworks and their versions
+            /// Description for Get available application frameworks and their versions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -155,7 +331,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ApplicationStack> GetAvailableStacksNext(this IProviderOperations operations, string nextPageLink)
+            public static IPage<ApplicationStackResource> GetAvailableStacksNext(this IProviderOperations operations, string nextPageLink)
             {
                 return operations.GetAvailableStacksNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -164,7 +340,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get available application frameworks and their versions
             /// </summary>
             /// <remarks>
-            /// Get available application frameworks and their versions
+            /// Description for Get available application frameworks and their versions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -175,9 +351,133 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApplicationStack>> GetAvailableStacksNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApplicationStackResource>> GetAvailableStacksNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAvailableStacksNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get available Function app frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Function app frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<FunctionAppStack> GetFunctionAppStacksNext(this IProviderOperations operations, string nextPageLink)
+            {
+                return operations.GetFunctionAppStacksNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get available Function app frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Function app frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FunctionAppStack>> GetFunctionAppStacksNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFunctionAppStacksNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get available Function app frameworks and their versions for location
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Function app frameworks and their versions
+            /// for location
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<FunctionAppStack> GetFunctionAppStacksForLocationNext(this IProviderOperations operations, string nextPageLink)
+            {
+                return operations.GetFunctionAppStacksForLocationNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get available Function app frameworks and their versions for location
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Function app frameworks and their versions
+            /// for location
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FunctionAppStack>> GetFunctionAppStacksForLocationNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFunctionAppStacksForLocationNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get available Web app frameworks and their versions for location
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Web app frameworks and their versions for
+            /// location
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<WebAppStack> GetWebAppStacksForLocationNext(this IProviderOperations operations, string nextPageLink)
+            {
+                return operations.GetWebAppStacksForLocationNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get available Web app frameworks and their versions for location
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available Web app frameworks and their versions for
+            /// location
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<WebAppStack>> GetWebAppStacksForLocationNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWebAppStacksForLocationNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -188,8 +488,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// exposes resource metric definitions
             /// </summary>
             /// <remarks>
-            /// Gets all available operations for the Microsoft.Web resource provider. Also
-            /// exposes resource metric definitions
+            /// Description for Gets all available operations for the Microsoft.Web
+            /// resource provider. Also exposes resource metric definitions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -207,8 +507,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// exposes resource metric definitions
             /// </summary>
             /// <remarks>
-            /// Gets all available operations for the Microsoft.Web resource provider. Also
-            /// exposes resource metric definitions
+            /// Description for Gets all available operations for the Microsoft.Web
+            /// resource provider. Also exposes resource metric definitions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -228,10 +528,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get available application frameworks and their versions
+            /// Get available Web app frameworks and their versions
             /// </summary>
             /// <remarks>
-            /// Get available application frameworks and their versions
+            /// Description for Get available Web app frameworks and their versions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -239,16 +539,16 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ApplicationStack> GetAvailableStacksOnPremNext(this IProviderOperations operations, string nextPageLink)
+            public static IPage<WebAppStack> GetWebAppStacksNext(this IProviderOperations operations, string nextPageLink)
             {
-                return operations.GetAvailableStacksOnPremNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.GetWebAppStacksNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get available application frameworks and their versions
+            /// Get available Web app frameworks and their versions
             /// </summary>
             /// <remarks>
-            /// Get available application frameworks and their versions
+            /// Description for Get available Web app frameworks and their versions
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -259,7 +559,47 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApplicationStack>> GetAvailableStacksOnPremNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WebAppStack>> GetWebAppStacksNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWebAppStacksNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get available application frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available application frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApplicationStackResource> GetAvailableStacksOnPremNext(this IProviderOperations operations, string nextPageLink)
+            {
+                return operations.GetAvailableStacksOnPremNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get available application frameworks and their versions
+            /// </summary>
+            /// <remarks>
+            /// Description for Get available application frameworks and their versions
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApplicationStackResource>> GetAvailableStacksOnPremNextAsync(this IProviderOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAvailableStacksOnPremNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

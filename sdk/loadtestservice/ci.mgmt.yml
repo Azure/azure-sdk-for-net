@@ -1,0 +1,24 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/loadtestservice/ci.mgmt.yml
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTesting/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: mgmtclient
+    ServiceDirectory: loadtestservice
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.LoadTesting
+      safeName: AzureResourceManagerLoadTesting

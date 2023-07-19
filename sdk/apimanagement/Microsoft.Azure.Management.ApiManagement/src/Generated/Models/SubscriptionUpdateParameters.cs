@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// date and was deactivated. Possible values include: 'suspended',
         /// 'active', 'expired', 'submitted', 'rejected', 'cancelled'</param>
         /// <param name="stateComment">Comments describing subscription state
-        /// change by the administrator.</param>
+        /// change by the administrator when the state is changed to the
+        /// 'rejected'.</param>
         /// <param name="allowTracing">Determines whether tracing can be
         /// enabled</param>
         public SubscriptionUpdateParameters(string ownerId = default(string), string scope = default(string), System.DateTime? expirationDate = default(System.DateTime?), string displayName = default(string), string primaryKey = default(string), string secondaryKey = default(string), SubscriptionState? state = default(SubscriptionState?), string stateComment = default(string), bool? allowTracing = default(bool?))
@@ -137,7 +138,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets comments describing subscription state change by the
-        /// administrator.
+        /// administrator when the state is changed to the 'rejected'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.stateComment")]
         public string StateComment { get; set; }

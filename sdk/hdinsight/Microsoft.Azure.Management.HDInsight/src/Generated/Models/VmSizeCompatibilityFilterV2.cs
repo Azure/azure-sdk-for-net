@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         /// <param name="filterMode">The filtering mode. Effectively this can
         /// enabling or disabling the VM sizes in a particular set. Possible
-        /// values include: 'Exclude', 'Include'</param>
+        /// values include: 'Exclude', 'Include', 'Recommend',
+        /// 'Default'</param>
         /// <param name="regions">The list of regions under the effect of the
         /// filter.</param>
         /// <param name="clusterFlavors">The list of cluster flavors under the
@@ -53,7 +54,13 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="osType">The OSType affected, Windows or Linux.</param>
         /// <param name="vmSizes">The list of virtual machine sizes to include
         /// or exclude.</param>
-        public VmSizeCompatibilityFilterV2(string filterMode = default(string), IList<string> regions = default(IList<string>), IList<string> clusterFlavors = default(IList<string>), IList<string> nodeTypes = default(IList<string>), IList<string> clusterVersions = default(IList<string>), IList<OSType?> osType = default(IList<OSType?>), IList<string> vmSizes = default(IList<string>))
+        /// <param name="espApplied">Whether apply for ESP cluster. 'true'
+        /// means only for ESP, 'false' means only for non-ESP, null or empty
+        /// string or others mean for both.</param>
+        /// <param name="computeIsolationSupported">Whether support compute
+        /// isolation. 'true' means only for ComputeIsolationEnabled, 'false'
+        /// means only for regular cluster.</param>
+        public VmSizeCompatibilityFilterV2(string filterMode = default(string), IList<string> regions = default(IList<string>), IList<string> clusterFlavors = default(IList<string>), IList<string> nodeTypes = default(IList<string>), IList<string> clusterVersions = default(IList<string>), IList<string> osType = default(IList<string>), IList<string> vmSizes = default(IList<string>), string espApplied = default(string), string computeIsolationSupported = default(string))
         {
             FilterMode = filterMode;
             Regions = regions;
@@ -62,6 +69,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             ClusterVersions = clusterVersions;
             OsType = osType;
             VmSizes = vmSizes;
+            EspApplied = espApplied;
+            ComputeIsolationSupported = computeIsolationSupported;
             CustomInit();
         }
 
@@ -73,7 +82,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Gets or sets the filtering mode. Effectively this can enabling or
         /// disabling the VM sizes in a particular set. Possible values
-        /// include: 'Exclude', 'Include'
+        /// include: 'Exclude', 'Include', 'Recommend', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "filterMode")]
         public string FilterMode { get; set; }
@@ -108,7 +117,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Gets or sets the OSType affected, Windows or Linux.
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
-        public IList<OSType?> OsType { get; set; }
+        public IList<string> OsType { get; set; }
 
         /// <summary>
         /// Gets or sets the list of virtual machine sizes to include or
@@ -116,6 +125,22 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmSizes")]
         public IList<string> VmSizes { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether apply for ESP cluster. 'true' means only for
+        /// ESP, 'false' means only for non-ESP, null or empty string or others
+        /// mean for both.
+        /// </summary>
+        [JsonProperty(PropertyName = "espApplied")]
+        public string EspApplied { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether support compute isolation. 'true' means only
+        /// for ComputeIsolationEnabled, 'false' means only for regular
+        /// cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "computeIsolationSupported")]
+        public string ComputeIsolationSupported { get; set; }
 
     }
 }

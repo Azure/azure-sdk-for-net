@@ -46,8 +46,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="emotion">Properties describing facial emotion in form
         /// of confidence ranging from 0 to 1.</param>
         /// <param name="hair">Properties describing hair attributes.</param>
-        /// <param name="makeup">Properties describing present makeups on a
-        /// given face.</param>
+        /// <param name="makeup">Properties describing the presence of makeup
+        /// on a given face.</param>
         /// <param name="occlusion">Properties describing occlusions on a given
         /// face.</param>
         /// <param name="accessories">Properties describing any accessories on
@@ -58,7 +58,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// image.</param>
         /// <param name="noise">Properties describing noise level of the
         /// image.</param>
-        public FaceAttributes(double? age = default(double?), Gender? gender = default(Gender?), double? smile = default(double?), FacialHair facialHair = default(FacialHair), GlassesType? glasses = default(GlassesType?), HeadPose headPose = default(HeadPose), Emotion emotion = default(Emotion), Hair hair = default(Hair), Makeup makeup = default(Makeup), Occlusion occlusion = default(Occlusion), IList<Accessory> accessories = default(IList<Accessory>), Blur blur = default(Blur), Exposure exposure = default(Exposure), Noise noise = default(Noise))
+        /// <param name="mask">Properties describing the presence of a mask on
+        /// a given face.</param>
+        /// <param name="qualityForRecognition">Properties describing the
+        /// overall image quality regarding whether the image being used in the
+        /// detection is of sufficient quality to attempt face recognition on.
+        /// Possible values include: 'Low', 'Medium', 'High'</param>
+        public FaceAttributes(double? age = default(double?), Gender? gender = default(Gender?), double? smile = default(double?), FacialHair facialHair = default(FacialHair), GlassesType? glasses = default(GlassesType?), HeadPose headPose = default(HeadPose), Emotion emotion = default(Emotion), Hair hair = default(Hair), Makeup makeup = default(Makeup), Occlusion occlusion = default(Occlusion), IList<Accessory> accessories = default(IList<Accessory>), Blur blur = default(Blur), Exposure exposure = default(Exposure), Noise noise = default(Noise), Mask mask = default(Mask), QualityForRecognition? qualityForRecognition = default(QualityForRecognition?))
         {
             Age = age;
             Gender = gender;
@@ -74,6 +80,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
             Blur = blur;
             Exposure = exposure;
             Noise = noise;
+            Mask = mask;
+            QualityForRecognition = qualityForRecognition;
             CustomInit();
         }
 
@@ -135,7 +143,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         public Hair Hair { get; set; }
 
         /// <summary>
-        /// Gets or sets properties describing present makeups on a given face.
+        /// Gets or sets properties describing the presence of makeup on a
+        /// given face.
         /// </summary>
         [JsonProperty(PropertyName = "makeup")]
         public Makeup Makeup { get; set; }
@@ -170,6 +179,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </summary>
         [JsonProperty(PropertyName = "noise")]
         public Noise Noise { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties describing the presence of a mask on a
+        /// given face.
+        /// </summary>
+        [JsonProperty(PropertyName = "mask")]
+        public Mask Mask { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties describing the overall image quality
+        /// regarding whether the image being used in the detection is of
+        /// sufficient quality to attempt face recognition on. Possible values
+        /// include: 'Low', 'Medium', 'High'
+        /// </summary>
+        [JsonProperty(PropertyName = "qualityForRecognition")]
+        public QualityForRecognition? QualityForRecognition { get; set; }
 
     }
 }

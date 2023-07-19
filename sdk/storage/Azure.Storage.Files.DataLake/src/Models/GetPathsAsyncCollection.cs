@@ -11,38 +11,39 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         private readonly DataLakeFileSystemClient _client;
         private readonly string _path;
-        private readonly bool _recursive;
-        private readonly bool _upn;
+        private readonly bool? _recursive;
+        private readonly bool? _upn;
+        private readonly string _operationName;
 
         public GetPathsAsyncCollection(
             DataLakeFileSystemClient client,
             string path,
-            bool recursive,
-            bool upn)
+            bool? recursive,
+            bool? upn,
+            string operationName)
         {
             _client = client;
             _path = path;
             _recursive = recursive;
             _upn = upn;
+            _operationName = operationName;
         }
 
         public override async ValueTask<Page<PathItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
-            bool isAsync,
+            bool async,
             CancellationToken cancellationToken)
         {
-            Task<Response<PathSegment>> task = _client.GetPathsInternal(
+            Response<PathSegment> response = await _client.GetPathsInternal(
                 _path,
-                _recursive,
-                _upn,
+                _recursive.GetValueOrDefault(),
+                _upn.GetValueOrDefault(),
                 continuationToken,
                 pageSizeHint,
-                isAsync,
-                cancellationToken);
-            Response<PathSegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
+                _operationName,
+                async,
+                cancellationToken).ConfigureAwait(false);
 
             return Page<PathItem>.FromValues(
                 response.Value.Paths.ToArray(),

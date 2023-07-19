@@ -31,12 +31,13 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         /// <param name="name">The operation name:
         /// {provider}/{resource}/{operation}</param>
-        /// <param name="display">The object that represents the
-        /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="display">The display of operation.</param>
+        /// <param name="properties">The operation properties.</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), OperationProperties properties = default(OperationProperties))
         {
             Name = name;
             Display = display;
+            Properties = properties;
             CustomInit();
         }
 
@@ -52,10 +53,16 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the object that represents the operation.
+        /// Gets or sets the display of operation.
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets or sets the operation properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public OperationProperties Properties { get; set; }
 
     }
 }

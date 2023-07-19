@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Cryptography;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -57,23 +56,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _apiVersion = options.GetVersionString();
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential));
+                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
-        /// Retrieves a <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied <paramref name="keyId"/>.
+        /// Retrieves a <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specified <paramref name="keyId"/>.
         /// </summary>
-        /// <param name="keyId">The key idenitifier of the key used by the created <see cref="CryptographyClient"/>.</param>
+        /// <param name="keyId">The key identifier of the key used by the created <see cref="CryptographyClient"/>. You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied <paramref name="keyId"/>.</returns>
+        /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specified <paramref name="keyId"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> is null.</exception>
         public virtual CryptographyClient Resolve(Uri keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.KeyResolver.Resolve");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KeyResolver)}.{nameof(Resolve)}");
             scope.AddAttribute("key", keyId);
             scope.Start();
 
@@ -85,7 +84,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
 
-                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline);
+                // Since we already attempted to download the key, do not let the CryptographyClient needlessly try again.
+                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline, forceRemote: true);
             }
             catch (Exception e)
             {
@@ -95,17 +95,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Retrieves a <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied <paramref name="keyId"/>.
+        /// Retrieves a <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specified <paramref name="keyId"/>.
         /// </summary>
-        /// <param name="keyId">The key idenitifier of the key used by the created <see cref="CryptographyClient"/>.</param>
+        /// <param name="keyId">The key identifier of the key used by the created <see cref="CryptographyClient"/>. You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied <paramref name="keyId"/>.</returns>
+        /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specified <paramref name="keyId"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> is null.</exception>
         public virtual async Task<CryptographyClient> ResolveAsync(Uri keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.KeyResolver.Resolve");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KeyResolver)}.{nameof(Resolve)}");
             scope.AddAttribute("key", keyId);
             scope.Start();
 
@@ -117,8 +117,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
 
-                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline);
-
+                // Since we already attempted to download the key, do not let the CryptographyClient needlessly try again.
+                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline, forceRemote: true);
             }
             catch (Exception e)
             {
@@ -168,8 +168,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 case 204:
                     result.Deserialize(response.ContentStream);
                     return Response.FromValue(result, response);
+                case 403 when !(result is SecretKey):
+                    // The "get" permission may not be granted on a key, while other key permissions may be granted.
+                    // To use a key contained within a secret, the "get" permission is required to retrieve the key material.
+                    return Response.FromValue<T>(default, response);
                 default:
-                    throw response.CreateRequestFailedException();
+                    throw new RequestFailedException(response);
             }
         }
 
@@ -186,6 +190,5 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             return request;
         }
-
     }
 }

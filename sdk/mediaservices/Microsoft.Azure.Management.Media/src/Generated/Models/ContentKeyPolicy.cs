@@ -35,16 +35,20 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the ContentKeyPolicy class.
         /// </summary>
         /// <param name="options">The Key Policy options.</param>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="policyId">The legacy Policy ID.</param>
         /// <param name="created">The creation date of the Policy</param>
         /// <param name="lastModified">The last modified date of the
         /// Policy</param>
         /// <param name="description">A description for the Policy.</param>
-        public ContentKeyPolicy(IList<ContentKeyPolicyOption> options, string id = default(string), string name = default(string), string type = default(string), System.Guid policyId = default(System.Guid), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string description = default(string))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public ContentKeyPolicy(IList<ContentKeyPolicyOption> options, string id = default(string), string name = default(string), string type = default(string), System.Guid policyId = default(System.Guid), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string description = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             PolicyId = policyId;
@@ -52,6 +56,7 @@ namespace Microsoft.Azure.Management.Media.Models
             LastModified = lastModified;
             Description = description;
             Options = options;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -89,6 +94,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.options")]
         public IList<ContentKeyPolicyOption> Options { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

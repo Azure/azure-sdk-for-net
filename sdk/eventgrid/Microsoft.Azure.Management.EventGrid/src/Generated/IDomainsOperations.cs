@@ -120,8 +120,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='domainName'>
         /// Name of the domain.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the domains resource.
+        /// <param name='domainUpdateParameters'>
+        /// Domain update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Domain>> UpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Domain>> UpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, DomainUpdateParameters domainUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List domains under an Azure subscription.
         /// </summary>
@@ -346,8 +346,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='domainName'>
         /// Name of the domain.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the domains resource.
+        /// <param name='domainUpdateParameters'>
+        /// Domain update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -364,7 +364,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Domain>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Domain>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, DomainUpdateParameters domainUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List domains under an Azure subscription.
         /// </summary>

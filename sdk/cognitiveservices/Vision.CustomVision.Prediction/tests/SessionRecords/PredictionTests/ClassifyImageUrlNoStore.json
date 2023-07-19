@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v3.0/prediction/eac7b96a-c848-4b83-a920-c834407c4f80/classify/iterations/Training%20UnitTest%20Iteration/url/nostore",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3ByZWRpY3Rpb24vZWFjN2I5NmEtYzg0OC00YjgzLWE5MjAtYzgzNDQwN2M0ZjgwL2NsYXNzaWZ5L2l0ZXJhdGlvbnMvVHJhaW5pbmclMjBVbml0VGVzdCUyMEl0ZXJhdGlvbi91cmwvbm9zdG9yZQ==",
+      "RequestUri": "/customvision/v3.1/prediction/e3c7fd20-0c05-4c8c-886d-be4ea92e01c8/classify/iterations/Training%20UnitTest%20Iteration/url/nostore",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4xL3ByZWRpY3Rpb24vZTNjN2ZkMjAtMGMwNS00YzhjLTg4NmQtYmU0ZWE5MmUwMWM4L2NsYXNzaWZ5L2l0ZXJhdGlvbnMvVHJhaW5pbmclMjBVbml0VGVzdCUyMEl0ZXJhdGlvbi91cmwvbm9zdG9yZQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg\"\r\n}",
       "RequestHeaders": {
@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28801.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.CustomVisionPredictionClient/0.15.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.CustomVisionPredictionClient/2.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -23,26 +23,29 @@
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Fri, 15 Mar 2019 06:14:49 GMT"
+        "Request-Id": [
+          "f356d7ff-e52a-4248-95e1-0ad4b9eb1397"
         ],
         "apim-request-id": [
-          "6ba18dd6-a7b2-44c2-83b8-eb2f3dc26645"
+          "f356d7ff-e52a-4248-95e1-0ad4b9eb1397"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Sat, 06 Jun 2020 22:00:23 GMT"
+        ],
         "Content-Length": [
-          "387"
+          "423"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"6ba18dd6-a7b2-44c2-83b8-eb2f3dc26645\",\r\n  \"project\": \"eac7b96a-c848-4b83-a920-c834407c4f80\",\r\n  \"iteration\": \"1738ffb6-efb7-47ff-878e-9872da13e278\",\r\n  \"created\": \"2019-03-15T06:14:49.7782526Z\",\r\n  \"predictions\": [\r\n    {\r\n      \"probability\": 0.9999984,\r\n      \"tagId\": \"3bd41e58-cd97-41c8-8535-370f4440403e\",\r\n      \"tagName\": \"Tag1\"\r\n    },\r\n    {\r\n      \"probability\": 3.54070262E-13,\r\n      \"tagId\": \"a01af166-5903-4a6b-86e0-86bb1bf86e20\",\r\n      \"tagName\": \"Tag2\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"f356d7ff-e52a-4248-95e1-0ad4b9eb1397\",\r\n  \"project\": \"e3c7fd20-0c05-4c8c-886d-be4ea92e01c8\",\r\n  \"iteration\": \"c1a8cf6c-048b-412e-9bcb-4be826b81342\",\r\n  \"created\": \"2020-06-06T22:00:23.931Z\",\r\n  \"predictions\": [\r\n    {\r\n      \"probability\": 0.9999961,\r\n      \"tagId\": \"c8de21e2-e5b5-4f6b-8f39-3e67f210376e\",\r\n      \"tagName\": \"Tag1\",\r\n      \"tagType\": \"Regular\"\r\n    },\r\n    {\r\n      \"probability\": 8.79471951E-13,\r\n      \"tagId\": \"2278ea86-0671-4617-a6cd-06cf056b841f\",\r\n      \"tagName\": \"Tag2\",\r\n      \"tagType\": \"Regular\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

@@ -39,11 +39,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// the revision number.
             /// </param>
             /// <param name='filter'>
-            /// |   Field     |     Usage     |     Supported operators     |     Supported
-            /// functions
+            /// |     Field     |     Usage     |     Supported operators     |
+            /// Supported functions
             /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
             /// contentType | filter | ge, le, eq, ne, gt, lt | substringof, contains,
-            /// startswith, endswith | &lt;/br&gt;
+            /// startswith, endswith |&lt;/br&gt;
             /// </param>
             /// <param name='top'>
             /// Number of records to return.
@@ -74,11 +74,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// the revision number.
             /// </param>
             /// <param name='filter'>
-            /// |   Field     |     Usage     |     Supported operators     |     Supported
-            /// functions
+            /// |     Field     |     Usage     |     Supported operators     |
+            /// Supported functions
             /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
             /// contentType | filter | ge, le, eq, ne, gt, lt | substringof, contains,
-            /// startswith, endswith | &lt;/br&gt;
+            /// startswith, endswith |&lt;/br&gt;
             /// </param>
             /// <param name='top'>
             /// Number of records to return.
@@ -116,8 +116,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// the revision number.
             /// </param>
             /// <param name='schemaId'>
-            /// Schema identifier within an API. Must be unique in the current API
-            /// Management service instance.
+            /// Schema id identifier. Must be unique in the current API Management service
+            /// instance.
             /// </param>
             public static ApiSchemaGetEntityTagHeaders GetEntityTag(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId)
             {
@@ -143,8 +143,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// the revision number.
             /// </param>
             /// <param name='schemaId'>
-            /// Schema identifier within an API. Must be unique in the current API
-            /// Management service instance.
+            /// Schema id identifier. Must be unique in the current API Management service
+            /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -175,8 +175,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// the revision number.
             /// </param>
             /// <param name='schemaId'>
-            /// Schema identifier within an API. Must be unique in the current API
-            /// Management service instance.
+            /// Schema id identifier. Must be unique in the current API Management service
+            /// instance.
             /// </param>
             public static SchemaContract Get(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId)
             {
@@ -201,8 +201,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// the revision number.
             /// </param>
             /// <param name='schemaId'>
-            /// Schema identifier within an API. Must be unique in the current API
-            /// Management service instance.
+            /// Schema id identifier. Must be unique in the current API Management service
+            /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -233,8 +233,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// the revision number.
             /// </param>
             /// <param name='schemaId'>
-            /// Schema identifier within an API. Must be unique in the current API
-            /// Management service instance.
+            /// Schema id identifier. Must be unique in the current API Management service
+            /// instance.
             /// </param>
             /// <param name='parameters'>
             /// The schema contents to apply.
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static SchemaContract CreateOrUpdate(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaCreateOrUpdateContract parameters, string ifMatch = default(string))
+            public static SchemaContract CreateOrUpdate(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string))
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, apiId, schemaId, parameters, ifMatch).GetAwaiter().GetResult();
             }
@@ -266,8 +266,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// the revision number.
             /// </param>
             /// <param name='schemaId'>
-            /// Schema identifier within an API. Must be unique in the current API
-            /// Management service instance.
+            /// Schema id identifier. Must be unique in the current API Management service
+            /// instance.
             /// </param>
             /// <param name='parameters'>
             /// The schema contents to apply.
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SchemaContract> CreateOrUpdateAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaCreateOrUpdateContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SchemaContract> CreateOrUpdateAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, schemaId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -305,8 +305,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// the revision number.
             /// </param>
             /// <param name='schemaId'>
-            /// Schema identifier within an API. Must be unique in the current API
-            /// Management service instance.
+            /// Schema id identifier. Must be unique in the current API Management service
+            /// instance.
             /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. ETag should match the current entity state from the
@@ -339,8 +339,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// the revision number.
             /// </param>
             /// <param name='schemaId'>
-            /// Schema identifier within an API. Must be unique in the current API
-            /// Management service instance.
+            /// Schema id identifier. Must be unique in the current API Management service
+            /// instance.
             /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. ETag should match the current entity state from the
@@ -356,6 +356,78 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task DeleteAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, string ifMatch, bool? force = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, schemaId, ifMatch, force, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates or updates schema configuration for the API.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='schemaId'>
+            /// Schema id identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='parameters'>
+            /// The schema contents to apply.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            public static SchemaContract BeginCreateOrUpdate(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string))
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serviceName, apiId, schemaId, parameters, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates schema configuration for the API.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='schemaId'>
+            /// Schema id identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='parameters'>
+            /// The schema contents to apply.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SchemaContract> BeginCreateOrUpdateAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, schemaId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

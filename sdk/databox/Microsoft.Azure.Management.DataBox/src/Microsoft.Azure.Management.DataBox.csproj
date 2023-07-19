@@ -7,21 +7,21 @@
 		<PackageId>Microsoft.Azure.Management.DataBox</PackageId>
 		<Description>Microsoft Azure Management DataBox library</Description>
 		<AssemblyName>Microsoft.Azure.Management.DataBox</AssemblyName>
-		<Version>1.1.0</Version>
+		<Version>2.0.1</Version>
 		<PackageTags>AzureDataBox;DataBox;</PackageTags>
     <PackageReleaseNotes>
 
       <![CDATA[
                 Changes:
                 
-                1) Creation, Updation, Deletion of Scheduled order along with getting order status 
+                1) Added DataBox Customer Disk SKU and the related models and operations for it.
                 
-                2) Validating Job creation inputs and its supportability by Azure Data Box service
-                
-                3) Fetching region configuration details supported by Azure Data Box service
-                
-                4) Deprecating validate address API
+                2) Added DataCenterAddressRequest in RegionConfigurationRequest API.
+				
+				        3) Added API to mark Devices Shipped for customer disk.
 
+                4) Modified JobStage and CopyStatus to be modelled as string 				
+            
             ]]>
 
     </PackageReleaseNotes>

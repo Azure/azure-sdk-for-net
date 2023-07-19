@@ -1,47 +1,78 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
-    public partial class TextAnalyticsSamples
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public void RecognizePiiEntitiesBatchConvenience()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #region Snippet:Sample5_RecognizePiiEntitiesBatchConvenience
+            string documentA =
+                "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
+                + " use their phone number 800-102-1100. They are originally from Brazil and have document ID number"
+                + " 998.214.865-68.";
 
-            var inputs = new List<string>
+            string documentB =
+                "Yesterday, Dan Doe was asking where they could find the ABA number. I explained that it is the first"
+                + " 9 digits in the lower left hand corner of their personal check. After looking at their account"
+                + " they confirmed the number was 111000025.";
+
+            string documentC = string.Empty;
+
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
-                "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.",
-                "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
+                documentA,
+                documentB,
+                documentC
             };
 
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs);
+            Response<RecognizePiiEntitiesResultCollection> response = client.RecognizePiiEntitiesBatch(batchedDocuments);
+            RecognizePiiEntitiesResultCollection entititesPerDocuments = response.Value;
 
-            Debug.WriteLine($"The following Personally Identifiable Information entities were recognized:");
             int i = 0;
-            foreach (var result in results)
-            {
-                Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies were" : "y was")} found:");
+            Console.WriteLine($"Recognize PII Entities, model version: \"{entititesPerDocuments.ModelVersion}\"");
+            Console.WriteLine();
 
-                foreach (var entity in result.NamedEntities)
+            foreach (RecognizePiiEntitiesResult documentResult in entititesPerDocuments)
+            {
+                Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
+
+                if (documentResult.HasError)
                 {
-                    Debug.WriteLine($"    Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    Console.WriteLine($"  Error!");
+                    Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                    Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                    Console.WriteLine();
+                    continue;
                 }
+
+                Console.WriteLine($"  Redacted Text: {documentResult.Entities.RedactedText}");
+                Console.WriteLine();
+                Console.WriteLine($"  Recognized {documentResult.Entities.Count} PII entities:");
+                foreach (PiiEntity piiEntity in documentResult.Entities)
+                {
+                    Console.WriteLine($"    Text: {piiEntity.Text}");
+                    Console.WriteLine($"    Category: {piiEntity.Category}");
+                    if (!string.IsNullOrEmpty(piiEntity.SubCategory))
+                        Console.WriteLine($"    SubCategory: {piiEntity.SubCategory}");
+                    Console.WriteLine($"    Confidence score: {piiEntity.ConfidenceScore}");
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
             }
+            #endregion
         }
     }
 }

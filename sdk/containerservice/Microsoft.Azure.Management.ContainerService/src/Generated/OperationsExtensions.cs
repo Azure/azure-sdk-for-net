@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.ContainerService
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Gets a list of compute operations.
+            /// Gets a list of operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Gets a list of compute operations.
+            /// Gets a list of operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

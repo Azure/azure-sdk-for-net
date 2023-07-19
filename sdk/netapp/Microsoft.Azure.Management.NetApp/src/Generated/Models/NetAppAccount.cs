@@ -38,19 +38,27 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="activeDirectories">Active Directories</param>
-        public NetAppAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>))
+        /// <param name="encryption">Encryption settings</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public NetAppAccount(string location, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>), AccountEncryption encryption = default(AccountEncryption), SystemData systemData = default(SystemData))
         {
             Location = location;
             Id = id;
             Name = name;
+            Etag = etag;
             Type = type;
             Tags = tags;
             ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;
+            Encryption = encryption;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -78,6 +86,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Name { get; private set; }
 
         /// <summary>
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
+
+        /// <summary>
         /// Gets resource type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
@@ -102,6 +117,18 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public IList<ActiveDirectory> ActiveDirectories { get; set; }
 
         /// <summary>
+        /// Gets or sets encryption settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public AccountEncryption Encryption { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -112,6 +139,16 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (ActiveDirectories != null)
+            {
+                foreach (var element in ActiveDirectories)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

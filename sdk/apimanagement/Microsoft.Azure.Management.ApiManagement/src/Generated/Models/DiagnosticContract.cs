@@ -33,10 +33,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the DiagnosticContract class.
         /// </summary>
         /// <param name="loggerId">Resource Id of a target logger.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="alwaysLog">Specifies for what type of messages
         /// sampling settings should not apply. Possible values include:
         /// 'allErrors'</param>
@@ -45,11 +47,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// HTTP messages to the Gateway.</param>
         /// <param name="backend">Diagnostic settings for incoming/outgoing
         /// HTTP messages to the Backend</param>
-        /// <param name="enableHttpCorrelationHeaders">Whether to process
-        /// Correlation Headers coming to Api Management Service. Only
-        /// applicable to Application Insights diagnostics. Default is
-        /// true.</param>
-        public DiagnosticContract(string loggerId, string id = default(string), string name = default(string), string type = default(string), string alwaysLog = default(string), SamplingSettings sampling = default(SamplingSettings), PipelineDiagnosticSettings frontend = default(PipelineDiagnosticSettings), PipelineDiagnosticSettings backend = default(PipelineDiagnosticSettings), bool? enableHttpCorrelationHeaders = default(bool?))
+        /// <param name="logClientIp">Log the ClientIP. Default is
+        /// false.</param>
+        /// <param name="httpCorrelationProtocol">Sets correlation protocol to
+        /// use for Application Insights diagnostics. Possible values include:
+        /// 'None', 'Legacy', 'W3C'</param>
+        /// <param name="verbosity">The verbosity level applied to traces
+        /// emitted by trace policies. Possible values include: 'verbose',
+        /// 'information', 'error'</param>
+        /// <param name="operationNameFormat">The format of the Operation Name
+        /// for Application Insights telemetries. Default is Name. Possible
+        /// values include: 'Name', 'Url'</param>
+        public DiagnosticContract(string loggerId, string id = default(string), string name = default(string), string type = default(string), string alwaysLog = default(string), SamplingSettings sampling = default(SamplingSettings), PipelineDiagnosticSettings frontend = default(PipelineDiagnosticSettings), PipelineDiagnosticSettings backend = default(PipelineDiagnosticSettings), bool? logClientIp = default(bool?), string httpCorrelationProtocol = default(string), string verbosity = default(string), string operationNameFormat = default(string))
             : base(id, name, type)
         {
             AlwaysLog = alwaysLog;
@@ -57,7 +66,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             Sampling = sampling;
             Frontend = frontend;
             Backend = backend;
-            EnableHttpCorrelationHeaders = enableHttpCorrelationHeaders;
+            LogClientIp = logClientIp;
+            HttpCorrelationProtocol = httpCorrelationProtocol;
+            Verbosity = verbosity;
+            OperationNameFormat = operationNameFormat;
             CustomInit();
         }
 
@@ -100,12 +112,34 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public PipelineDiagnosticSettings Backend { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to process Correlation Headers coming to Api
-        /// Management Service. Only applicable to Application Insights
-        /// diagnostics. Default is true.
+        /// Gets or sets log the ClientIP. Default is false.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enableHttpCorrelationHeaders")]
-        public bool? EnableHttpCorrelationHeaders { get; set; }
+        [JsonProperty(PropertyName = "properties.logClientIp")]
+        public bool? LogClientIp { get; set; }
+
+        /// <summary>
+        /// Gets or sets sets correlation protocol to use for Application
+        /// Insights diagnostics. Possible values include: 'None', 'Legacy',
+        /// 'W3C'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.httpCorrelationProtocol")]
+        public string HttpCorrelationProtocol { get; set; }
+
+        /// <summary>
+        /// Gets or sets the verbosity level applied to traces emitted by trace
+        /// policies. Possible values include: 'verbose', 'information',
+        /// 'error'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.verbosity")]
+        public string Verbosity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the format of the Operation Name for Application
+        /// Insights telemetries. Default is Name. Possible values include:
+        /// 'Name', 'Url'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.operationNameFormat")]
+        public string OperationNameFormat { get; set; }
 
         /// <summary>
         /// Validate the object.

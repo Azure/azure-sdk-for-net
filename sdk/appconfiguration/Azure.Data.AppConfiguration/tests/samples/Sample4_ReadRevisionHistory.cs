@@ -4,18 +4,17 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [LiveOnly]
     public partial class ConfigurationSamples
     {
         [Test]
         public async Task ReadRevisionHistory()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:AzConfigSample4_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);

@@ -22,30 +22,220 @@ namespace Microsoft.Azure.Management.Subscription
     public static partial class SubscriptionOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available pending Microsoft.Subscription API operations.
+            /// The operation to cancel a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static SubscriptionOperationListResult List(this ISubscriptionOperations operations)
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            public static CanceledSubscriptionId Cancel(this ISubscriptionOperations operations, string subscriptionId)
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.CancelAsync(subscriptionId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available pending Microsoft.Subscription API operations.
+            /// The operation to cancel a subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionOperationListResult> ListAsync(this ISubscriptionOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CanceledSubscriptionId> CancelAsync(this ISubscriptionOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CancelWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The operation to rename a subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            /// <param name='body'>
+            /// Subscription Name
+            /// </param>
+            public static RenamedSubscriptionId Rename(this ISubscriptionOperations operations, string subscriptionId, SubscriptionName body)
+            {
+                return operations.RenameAsync(subscriptionId, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to rename a subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            /// <param name='body'>
+            /// Subscription Name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RenamedSubscriptionId> RenameAsync(this ISubscriptionOperations operations, string subscriptionId, SubscriptionName body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RenameWithHttpMessagesAsync(subscriptionId, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The operation to enable a subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            public static EnabledSubscriptionId Enable(this ISubscriptionOperations operations, string subscriptionId)
+            {
+                return operations.EnableAsync(subscriptionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to enable a subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EnabledSubscriptionId> EnableAsync(this ISubscriptionOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.EnableWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Accept subscription ownership.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static SubscriptionAcceptOwnershipHeaders AcceptOwnership(this ISubscriptionOperations operations, string subscriptionId, AcceptOwnershipRequest body)
+            {
+                return operations.AcceptOwnershipAsync(subscriptionId, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Accept subscription ownership.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SubscriptionAcceptOwnershipHeaders> AcceptOwnershipAsync(this ISubscriptionOperations operations, string subscriptionId, AcceptOwnershipRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AcceptOwnershipWithHttpMessagesAsync(subscriptionId, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Accept subscription ownership status.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            public static AcceptOwnershipStatusResponse AcceptOwnershipStatus(this ISubscriptionOperations operations, string subscriptionId)
+            {
+                return operations.AcceptOwnershipStatusAsync(subscriptionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Accept subscription ownership status.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AcceptOwnershipStatusResponse> AcceptOwnershipStatusAsync(this ISubscriptionOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AcceptOwnershipStatusWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Accept subscription ownership.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            public static SubscriptionAcceptOwnershipHeaders BeginAcceptOwnership(this ISubscriptionOperations operations, string subscriptionId, AcceptOwnershipRequest body)
+            {
+                return operations.BeginAcceptOwnershipAsync(subscriptionId, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Accept subscription ownership.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Subscription Id.
+            /// </param>
+            /// <param name='body'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SubscriptionAcceptOwnershipHeaders> BeginAcceptOwnershipAsync(this ISubscriptionOperations operations, string subscriptionId, AcceptOwnershipRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginAcceptOwnershipWithHttpMessagesAsync(subscriptionId, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
                 }
             }
 

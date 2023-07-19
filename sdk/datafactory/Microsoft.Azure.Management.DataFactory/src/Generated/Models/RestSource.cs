@@ -41,6 +41,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="requestMethod">The HTTP method used to call the
         /// RESTful API. The default is GET. Type: string (or Expression with
         /// resultType string).</param>
@@ -60,8 +63,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="requestInterval">The time to await before sending next
         /// page request. </param>
-        public RestSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object paginationRules = default(object), object httpRequestTimeout = default(object), object requestInterval = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects(AdditionalColumns)
+        /// (or Expression with resultType array of objects).</param>
+        public RestSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object paginationRules = default(object), object httpRequestTimeout = default(object), object requestInterval = default(object), object additionalColumns = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             RequestMethod = requestMethod;
             RequestBody = requestBody;
@@ -69,6 +75,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             PaginationRules = paginationRules;
             HttpRequestTimeout = httpRequestTimeout;
             RequestInterval = requestInterval;
+            AdditionalColumns = additionalColumns;
             CustomInit();
         }
 
@@ -122,6 +129,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "requestInterval")]
         public object RequestInterval { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the additional columns to be added to source
+        /// data. Type: array of objects(AdditionalColumns) (or Expression with
+        /// resultType array of objects).
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalColumns")]
+        public object AdditionalColumns { get; set; }
 
     }
 }

@@ -18,6 +18,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class AuthorizationServerTests : TestBase
     {
         [Fact]
+        [Trait("owner", "sasolank")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -92,9 +93,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(authorizationServerContract.TokenEndpoint, getResponse.Body.TokenEndpoint);
                     Assert.Equal(authorizationServerContract.ClientId, getResponse.Body.ClientId);
                     Assert.Equal(authorizationServerContract.ClientRegistrationEndpoint, getResponse.Body.ClientRegistrationEndpoint);
-                    Assert.Equal(authorizationServerContract.ClientSecret, getResponse.Body.ClientSecret);
-                    Assert.Equal(authorizationServerContract.ResourceOwnerPassword, getResponse.Body.ResourceOwnerPassword);
-                    Assert.Equal(authorizationServerContract.ResourceOwnerUsername, getResponse.Body.ResourceOwnerUsername);
+                    Assert.Null(getResponse.Body.ClientSecret);
+                    Assert.Null(getResponse.Body.ResourceOwnerPassword);
+                    Assert.Null(getResponse.Body.ResourceOwnerUsername);
                     Assert.Equal(authorizationServerContract.GrantTypes.Count, getResponse.Body.GrantTypes.Count);
                     Assert.True(getResponse.Body.GrantTypes.All(gt => authorizationServerContract.GrantTypes.Contains(gt)));
                     Assert.Equal(authorizationServerContract.AuthorizationMethods.Count, getResponse.Body.AuthorizationMethods.Count);
@@ -105,6 +106,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(authorizationServerContract.TokenBodyParameters.Count, getResponse.Body.TokenBodyParameters.Count);
                     Assert.True(getResponse.Body.TokenBodyParameters.All(p => authorizationServerContract.TokenBodyParameters.Any(p1 => p1.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase) && p1.Value.Equals(p.Value, StringComparison.OrdinalIgnoreCase))));
 
+                    var secretsResponse = await testBase.client.AuthorizationServer.ListSecretsAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        authsid);
+                    Assert.Equal(authorizationServerContract.ClientSecret, secretsResponse.ClientSecret);
+                    Assert.Equal(authorizationServerContract.ResourceOwnerUsername, secretsResponse.ResourceOwnerUsername);
+                    Assert.Equal(authorizationServerContract.ResourceOwnerPassword, secretsResponse.ResourceOwnerPassword);
+
                     // list again
                     listResponse = testBase.client.AuthorizationServer.ListByService(
                         testBase.rgName,
@@ -113,6 +122,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(listResponse);
                     Assert.Single(listResponse);
+                    Assert.Null(listResponse.First().ClientSecret);
 
                     // update                    
                     var updateParameters = new AuthorizationServerUpdateContract
@@ -145,9 +155,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(authorizationServerContract.TokenEndpoint, getResponse.Body.TokenEndpoint);
                     Assert.Equal(authorizationServerContract.ClientId, getResponse.Body.ClientId);
                     Assert.Equal(authorizationServerContract.ClientRegistrationEndpoint, getResponse.Body.ClientRegistrationEndpoint);
-                    Assert.Equal(authorizationServerContract.ClientSecret, getResponse.Body.ClientSecret);
-                    Assert.Equal(authorizationServerContract.ResourceOwnerPassword, getResponse.Body.ResourceOwnerPassword);
-                    Assert.Equal(authorizationServerContract.ResourceOwnerUsername, getResponse.Body.ResourceOwnerUsername);
+                    Assert.Null(getResponse.Body.ClientSecret);
+                    Assert.Null(getResponse.Body.ResourceOwnerPassword);
+                    Assert.Null(getResponse.Body.ResourceOwnerUsername);
                     Assert.Equal(updateParameters.GrantTypes.Count, getResponse.Body.GrantTypes.Count);
                     Assert.True(getResponse.Body.GrantTypes.All(gt => updateParameters.GrantTypes.Contains(gt)));
                     Assert.Equal(authorizationServerContract.AuthorizationMethods.Count, getResponse.Body.AuthorizationMethods.Count);

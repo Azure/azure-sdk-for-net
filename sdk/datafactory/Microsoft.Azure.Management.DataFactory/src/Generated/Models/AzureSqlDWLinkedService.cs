@@ -55,11 +55,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="tenant">The name or ID of the tenant to which the
         /// service principal belongs. Type: string (or Expression with
         /// resultType string).</param>
+        /// <param name="azureCloudType">Indicates the azure cloud type of the
+        /// service principle auth. Allowed values are AzurePublic, AzureChina,
+        /// AzureUsGovernment, AzureGermany. Default value is the data factory
+        /// regions’ cloud type. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureSqlDWLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), AzureKeyVaultSecretReference password = default(AzureKeyVaultSecretReference), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object encryptedCredential = default(object))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public AzureSqlDWLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), AzureKeyVaultSecretReference password = default(AzureKeyVaultSecretReference), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), object encryptedCredential = default(object), CredentialReference credential = default(CredentialReference))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
@@ -67,7 +74,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
+            AzureCloudType = azureCloudType;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             CustomInit();
         }
 
@@ -115,12 +124,29 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object Tenant { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates the azure cloud type of the service
+        /// principle auth. Allowed values are AzurePublic, AzureChina,
+        /// AzureUsGovernment, AzureGermany. Default value is the data factory
+        /// regions’ cloud type. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.azureCloudType")]
+        public object AzureCloudType { get; set; }
+
+        /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
         /// Credentials are encrypted using the integration runtime credential
         /// manager. Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.encryptedCredential")]
         public object EncryptedCredential { get; set; }
+
+        /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.credential")]
+        public CredentialReference Credential { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -138,6 +164,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Password != null)
             {
                 Password.Validate();
+            }
+            if (Credential != null)
+            {
+                Credential.Validate();
             }
         }
     }

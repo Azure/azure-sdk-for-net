@@ -1,0 +1,20 @@
+parameters:
+- name: Variables
+  type: object
+  default: []
+- name: ContinueOnError
+  type: boolean
+  default: false
+
+steps:
+  - pwsh: |
+      $rawVariables = @"
+        ${{ convertToJson(parameters.Variables) }}
+      "@
+      $variables = ConvertFrom-Json $rawVariables -AsHashtable
+      foreach ($key in $variables.Keys) {
+        Write-Host "Clearing: $key"
+        Write-Host "##vso[task.setvariable variable=$key]"
+      }
+    continueOnError: ${{ parameters.ContinueOnError }}
+    displayName: Clear DevOps Variables

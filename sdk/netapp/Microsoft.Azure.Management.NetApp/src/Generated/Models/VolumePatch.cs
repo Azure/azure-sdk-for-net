@@ -43,7 +43,27 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="serviceLevel">serviceLevel</param>
         /// <param name="usageThreshold">usageThreshold</param>
         /// <param name="exportPolicy">exportPolicy</param>
-        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy))
+        /// <param name="throughputMibps">Maximum throughput in Mibps that can
+        /// be achieved by this volume and this will be accepted as input only
+        /// for manual qosType volume</param>
+        /// <param name="dataProtection">DataProtection</param>
+        /// <param name="isDefaultQuotaEnabled">Specifies if default quota is
+        /// enabled for the volume.</param>
+        /// <param name="defaultUserQuotaInKiBs">Default user quota for volume
+        /// in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4
+        /// KiBs applies .</param>
+        /// <param name="defaultGroupQuotaInKiBs">Default group quota for
+        /// volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value
+        /// of 4 KiBs applies.</param>
+        /// <param name="unixPermissions">UNIX permissions for NFS volume
+        /// accepted in octal 4 digit format. First digit selects the set user
+        /// ID(4), set group ID (2) and sticky (1) attributes. Second digit
+        /// selects permission for the owner of the file: read (4), write (2)
+        /// and execute (1). Third selects permissions for other users in the
+        /// same group. the fourth for other users not in the group. 0755 -
+        /// gives read/write/execute permissions to owner and read/execute to
+        /// group and other users.</param>
+        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy), double? throughputMibps = default(double?), VolumePatchPropertiesDataProtection dataProtection = default(VolumePatchPropertiesDataProtection), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), string unixPermissions = default(string))
         {
             Location = location;
             Id = id;
@@ -53,6 +73,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ServiceLevel = serviceLevel;
             UsageThreshold = usageThreshold;
             ExportPolicy = exportPolicy;
+            ThroughputMibps = throughputMibps;
+            DataProtection = dataProtection;
+            IsDefaultQuotaEnabled = isDefaultQuotaEnabled;
+            DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
+            DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
+            UnixPermissions = unixPermissions;
             CustomInit();
         }
 
@@ -95,8 +121,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets serviceLevel
         /// </summary>
         /// <remarks>
-        /// The service level of the file system. Possible values include:
-        /// 'Standard', 'Premium', 'Ultra'
+        /// Possible values include: 'Standard', 'Premium', 'Ultra',
+        /// 'StandardZRS'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.serviceLevel")]
         public string ServiceLevel { get; set; }
@@ -122,6 +148,56 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public VolumePatchPropertiesExportPolicy ExportPolicy { get; set; }
 
         /// <summary>
+        /// Gets or sets maximum throughput in Mibps that can be achieved by
+        /// this volume and this will be accepted as input only for manual
+        /// qosType volume
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.throughputMibps")]
+        public double? ThroughputMibps { get; set; }
+
+        /// <summary>
+        /// Gets or sets dataProtection
+        /// </summary>
+        /// <remarks>
+        /// DataProtection type volumes include an object containing details of
+        /// the replication
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.dataProtection")]
+        public VolumePatchPropertiesDataProtection DataProtection { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies if default quota is enabled for the volume.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isDefaultQuotaEnabled")]
+        public bool? IsDefaultQuotaEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets default user quota for volume in KiBs. If
+        /// isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultUserQuotaInKiBs")]
+        public long? DefaultUserQuotaInKiBs { get; set; }
+
+        /// <summary>
+        /// Gets or sets default group quota for volume in KiBs. If
+        /// isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultGroupQuotaInKiBs")]
+        public long? DefaultGroupQuotaInKiBs { get; set; }
+
+        /// <summary>
+        /// Gets or sets UNIX permissions for NFS volume accepted in octal 4
+        /// digit format. First digit selects the set user ID(4), set group ID
+        /// (2) and sticky (1) attributes. Second digit selects permission for
+        /// the owner of the file: read (4), write (2) and execute (1). Third
+        /// selects permissions for other users in the same group. the fourth
+        /// for other users not in the group. 0755 - gives read/write/execute
+        /// permissions to owner and read/execute to group and other users.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.unixPermissions")]
+        public string UnixPermissions { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -129,13 +205,27 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (UsageThreshold > 109951162777600)
+            if (UsageThreshold != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 109951162777600);
+                if (UsageThreshold > 109951162777600)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 109951162777600);
+                }
+                if (UsageThreshold < 107374182400)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
+                }
             }
-            if (UsageThreshold < 107374182400)
+            if (UnixPermissions != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
+                if (UnixPermissions.Length > 4)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UnixPermissions", 4);
+                }
+                if (UnixPermissions.Length < 4)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "UnixPermissions", 4);
+                }
             }
         }
     }

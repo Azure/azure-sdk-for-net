@@ -37,17 +37,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="clientId">Client Id of the Application in the external
         /// Identity Provider. It is App ID for Facebook login, Client ID for
         /// Google login, App ID for Microsoft.</param>
-        /// <param name="clientSecret">Client secret of the Application in
-        /// external Identity Provider, used to authenticate login request. For
-        /// example, it is App Secret for Facebook login, API Key for Google
-        /// login, Public Key for Microsoft.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="identityProviderContractType">Identity Provider Type
         /// identifier. Possible values include: 'facebook', 'google',
         /// 'microsoft', 'twitter', 'aad', 'aadB2C'</param>
+        /// <param name="signinTenant">The TenantId to use instead of Common
+        /// when logging into Active Directory</param>
         /// <param name="allowedTenants">List of Allowed Tenants when
         /// configuring Azure Active Directory login.</param>
         /// <param name="authority">OpenID Connect discovery endpoint hostname
@@ -60,10 +60,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Only applies to AAD B2C Identity Provider.</param>
         /// <param name="passwordResetPolicyName">Password Reset Policy Name.
         /// Only applies to AAD B2C Identity Provider.</param>
-        public IdentityProviderContract(string clientId, string clientSecret, string id = default(string), string name = default(string), string type = default(string), string identityProviderContractType = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string))
+        /// <param name="clientSecret">Client secret of the Application in
+        /// external Identity Provider, used to authenticate login request. For
+        /// example, it is App Secret for Facebook login, API Key for Google
+        /// login, Public Key for Microsoft. This property will not be filled
+        /// on 'GET' operations! Use '/listSecrets' POST request to get the
+        /// value.</param>
+        public IdentityProviderContract(string clientId, string id = default(string), string name = default(string), string type = default(string), string identityProviderContractType = default(string), string signinTenant = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string), string clientSecret = default(string))
             : base(id, name, type)
         {
             IdentityProviderContractType = identityProviderContractType;
+            SigninTenant = signinTenant;
             AllowedTenants = allowedTenants;
             Authority = authority;
             SignupPolicyName = signupPolicyName;
@@ -87,6 +94,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.type")]
         public string IdentityProviderContractType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the TenantId to use instead of Common when logging
+        /// into Active Directory
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.signinTenant")]
+        public string SigninTenant { get; set; }
 
         /// <summary>
         /// Gets or sets list of Allowed Tenants when configuring Azure Active
@@ -142,7 +156,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets client secret of the Application in external Identity
         /// Provider, used to authenticate login request. For example, it is
         /// App Secret for Facebook login, API Key for Google login, Public Key
-        /// for Microsoft.
+        /// for Microsoft. This property will not be filled on 'GET'
+        /// operations! Use '/listSecrets' POST request to get the value.
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientSecret")]
         public string ClientSecret { get; set; }
@@ -158,10 +173,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (ClientId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ClientId");
-            }
-            if (ClientSecret == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ClientSecret");
             }
             if (AllowedTenants != null)
             {

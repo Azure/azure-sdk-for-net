@@ -6,13 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ContainerRegistry</PackageId>
 		<Description>Provides management capabilities for Azure Container Registry.</Description>
-		<Version>4.0.0</Version>
+		<Version>7.0.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.ContainerRegistry</AssemblyName>
 		<PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        1) Breaking change: ARM PUT now follows "replace" semantics. This means resource properties will be overridden with new values when doing another PUT on an existing resource.
-        2) Breaking change: Policy APIs "registries/listPolicies" and "registries/updatePolicies" are now deprecated. Instead, policy is now integrated directly into registry properties.
+			1) Add support of preview features such as ExportPipelines, ImportPipelines, PipelineRuns, ConnectedRegistries, ScopeMaps and Tokens
+			5) Add virtualNetworkRules property in NetworkRuleSet model
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

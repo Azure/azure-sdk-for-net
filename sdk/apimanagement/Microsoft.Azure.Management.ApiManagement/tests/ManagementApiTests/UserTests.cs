@@ -17,6 +17,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class UserTests : TestBase
     {
         [Fact]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -143,6 +144,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "jikang")]
         public void UserIdentities()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -180,6 +182,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "jikang")]
         public void GroupsListAddRemove()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -305,6 +308,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "jikang")]
         public void SubscriptionsList()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -326,6 +330,15 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(listResponse);
                 Assert.True(listResponse.Count() >= 2);
                 Assert.Null(listResponse.NextPageLink);
+
+                var userSubscription = testBase.client.UserSubscription.Get(
+                    testBase.rgName,
+                    testBase.serviceName,
+                    user.Name,
+                    listResponse.First().Name);
+
+                Assert.NotNull(userSubscription);
+                Assert.NotNull(userSubscription.Name);
 
                 // list paged
                 listResponse = testBase.client.UserSubscription.List(

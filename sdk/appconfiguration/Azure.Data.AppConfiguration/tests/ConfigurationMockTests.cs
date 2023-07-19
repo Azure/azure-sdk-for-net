@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -27,7 +27,7 @@ namespace Azure.Data.AppConfiguration.Tests
         private static readonly string s_credential = "b1d9b31";
         private static readonly string s_secret = "aabbccdd";
         private static readonly string s_connectionString = $"Endpoint={s_endpoint};Id={s_credential};Secret={s_secret}";
-        private static readonly string s_version = new ConfigurationClientOptions().GetVersionString();
+        private static readonly string s_version = new ConfigurationClientOptions().Version;
 
         private static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
         {
@@ -441,20 +441,21 @@ namespace Azure.Data.AppConfiguration.Tests
         public async Task GetBatch()
         {
             var response1 = new MockResponse(200);
-            response1.SetContent(SerializationHelpers.Serialize(new[]
+            var response1Settings = new[]
             {
                 CreateSetting(0),
-                CreateSetting(1),
-            }, SerializeBatch));
-            response1.AddHeader(new HttpHeader("Link", $"</kv?after=5>;rel=\"next\""));
+                CreateSetting(1)
+            };
+            response1.SetContent(SerializationHelpers.Serialize((Settings: response1Settings, NextLink: $"/kv?after=5&api-version={s_version}"), SerializeBatch));
 
             var response2 = new MockResponse(200);
-            response2.SetContent(SerializationHelpers.Serialize(new[]
+            var response2Settings = new[]
             {
                 CreateSetting(2),
                 CreateSetting(3),
                 CreateSetting(4),
-            }, SerializeBatch));
+            };
+            response2.SetContent(SerializationHelpers.Serialize((Settings: response2Settings, NextLink: (string)null), SerializeBatch));
 
             var mockTransport = new MockTransport(response1, response2);
             ConfigurationClient service = CreateTestService(mockTransport);
@@ -472,12 +473,12 @@ namespace Azure.Data.AppConfiguration.Tests
 
             MockRequest request1 = mockTransport.Requests[0];
             Assert.AreEqual(RequestMethod.Get, request1.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/?api-version={s_version}", request1.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv?api-version={s_version}", request1.Uri.ToString());
             AssertRequestCommon(request1);
 
             MockRequest request2 = mockTransport.Requests[1];
             Assert.AreEqual(RequestMethod.Get, request2.Method);
-            Assert.AreEqual($"https://contoso.appconfig.io/kv/?after=5&api-version={s_version}", request2.Uri.ToString());
+            Assert.AreEqual($"https://contoso.appconfig.io/kv?after=5&api-version={s_version}", request2.Uri.ToString());
             AssertRequestCommon(request1);
         }
 
@@ -814,6 +815,60 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(1, correlationContexts.Count());
         }
 
+        [Test]
+        public async Task ExternalSyncTokenIsSentWithRequest()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            service.UpdateSyncToken("syncToken1=val1;sn=1");
+            await service.GetConfigurationSettingAsync(s_testSetting.Key, s_testSetting.Label);
+
+            var request = mockTransport.Requests[0];
+
+            AssertRequestCommon(request);
+            Assert.True(request.Headers.TryGetValue("Sync-Token", out var syncToken));
+            Assert.AreEqual("syncToken1=val1", syncToken);
+        }
+
+        [Test]
+        public async Task ExternalSyncTokensFollowRulesWhenAdded()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            service.UpdateSyncToken("syncToken1=val1;sn=1");
+            service.UpdateSyncToken("syncToken1=val2;sn=2,syncToken2=val3;sn=2");
+            service.UpdateSyncToken("syncToken2=val1;sn=1");
+            await service.GetConfigurationSettingAsync(s_testSetting.Key, s_testSetting.Label);
+
+            var request = mockTransport.Requests[0];
+
+            AssertRequestCommon(request);
+            Assert.True(request.Headers.TryGetValues("Sync-Token", out var syncTokens));
+            CollectionAssert.Contains(syncTokens, "syncToken2=val3");
+            CollectionAssert.Contains(syncTokens, "syncToken1=val2");
+        }
+
+        [Test]
+        public async Task VerifyNullClientFilter()
+        {
+            var response = new MockResponse(200);
+            response.SetContent("{\"key\":\".appconfig.featureflag/flagtest\",\"content_type\":\"application/vnd.microsoft.appconfig.ff+json;charset=utf-8\",\"value\":\"{\\\"id\\\":\\\"feature 1829697669\\\",\\\"enabled\\\":true,\\\"conditions\\\":{\\\"client_filters\\\":null}}\"}");
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var setting = await service.GetConfigurationSettingAsync(".appconfig.featureflag/flagtest");
+            var feature = (FeatureFlagConfigurationSetting)setting.Value;
+            Assert.IsEmpty(feature.ClientFilters);
+        }
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
@@ -834,7 +889,8 @@ namespace Azure.Data.AppConfiguration.Tests
         private void AssertRequestCommon(MockRequest request)
         {
             Assert.True(request.Headers.TryGetValue("User-Agent", out var value));
-            StringAssert.Contains("azsdk-net-Data.AppConfiguration/1.0.0", value);
+            Version version = typeof(ConfigurationClient).Assembly.GetName().Version;
+            StringAssert.Contains($"azsdk-net-Data.AppConfiguration/{version.Major}.{version.Minor}.{version.Build}", value);
         }
 
         private static ConfigurationSetting CreateSetting(int i)
@@ -890,11 +946,15 @@ namespace Azure.Data.AppConfiguration.Tests
             json.WriteEndObject();
         }
 
-        private void SerializeBatch(ref Utf8JsonWriter json, ConfigurationSetting[] settings)
+        private void SerializeBatch(ref Utf8JsonWriter json, (ConfigurationSetting[] Settings, string NextLink) content)
         {
             json.WriteStartObject();
+            if (content.NextLink != null)
+            {
+                json.WriteString("@nextLink", content.NextLink);
+            }
             json.WriteStartArray("items");
-            foreach (ConfigurationSetting item in settings)
+            foreach (ConfigurationSetting item in content.Settings)
             {
                 SerializeSetting(ref json, item);
             }

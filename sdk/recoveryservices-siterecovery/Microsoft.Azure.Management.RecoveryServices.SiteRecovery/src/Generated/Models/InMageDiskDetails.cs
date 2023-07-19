@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// VMware/Physical specific Disk Details
+    /// VMware/Physical specific Disk Details.
     /// </summary>
     public partial class InMageDiskDetails
     {

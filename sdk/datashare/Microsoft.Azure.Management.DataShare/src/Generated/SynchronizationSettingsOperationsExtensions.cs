@@ -80,11 +80,10 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Adds a new synchronization setting to an existing share or updates it if
-            /// existing.
+            /// Adds a new synchronization setting to an existing share.
             /// </summary>
             /// <remarks>
-            /// Create or update a synchronizationSetting
+            /// Create a synchronizationSetting
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -110,11 +109,10 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Adds a new synchronization setting to an existing share or updates it if
-            /// existing.
+            /// Adds a new synchronization setting to an existing share.
             /// </summary>
             /// <remarks>
-            /// Create or update a synchronizationSetting
+            /// Create a synchronizationSetting
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -121,7 +121,25 @@ namespace Microsoft.Azure.EventHubs.Amqp
                 return new QuotaExceededException(message);
             }
 
+            if (string.Equals(condition, AmqpClientConstants.PublisherRevokedError.Value))
+            {
+                return new PublisherRevokedException(message);
+            }
+
             return new EventHubsException(true, message);
+        }
+
+        public static bool TryTranslateToRetriableException(Exception exception, out EventHubsException retriableException)
+        {
+            retriableException = null;
+
+            // InvalidOperationException with 'connection is closing' message from AMQP layer is retriable.
+            if (exception is InvalidOperationException && exception.Message.IndexOf("connection is closing", StringComparison.OrdinalIgnoreCase) != - 1)
+            {
+                retriableException = new EventHubsException(true, exception);
+            }
+
+            return retriableException != null;
         }
     }
 }

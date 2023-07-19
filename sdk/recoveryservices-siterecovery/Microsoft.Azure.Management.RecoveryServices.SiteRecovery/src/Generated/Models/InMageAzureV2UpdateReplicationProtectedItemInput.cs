@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,11 +40,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// resource group Id for resource manager deployment.</param>
         /// <param name="useManagedDisks">A value indicating whether managed
         /// disks should be used during failover.</param>
-        public InMageAzureV2UpdateReplicationProtectedItemInput(string recoveryAzureV1ResourceGroupId = default(string), string recoveryAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string))
+        /// <param name="targetProximityPlacementGroupId">The target proximity
+        /// placement group Id.</param>
+        /// <param name="targetAvailabilityZone">The target availability
+        /// zone.</param>
+        /// <param name="targetVmTags">The target VM tags.</param>
+        /// <param name="targetManagedDiskTags">The tags for the target managed
+        /// disks.</param>
+        /// <param name="targetNicTags">The tags for the target NICs.</param>
+        /// <param name="sqlServerLicenseType">The SQL Server license type.
+        /// Possible values include: 'NotSpecified', 'NoLicenseType', 'PAYG',
+        /// 'AHUB'</param>
+        /// <param name="vmDisks">The list of disk update properties.</param>
+        public InMageAzureV2UpdateReplicationProtectedItemInput(string recoveryAzureV1ResourceGroupId = default(string), string recoveryAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string), string targetProximityPlacementGroupId = default(string), string targetAvailabilityZone = default(string), IDictionary<string, string> targetVmTags = default(IDictionary<string, string>), IDictionary<string, string> targetManagedDiskTags = default(IDictionary<string, string>), IDictionary<string, string> targetNicTags = default(IDictionary<string, string>), string sqlServerLicenseType = default(string), IList<UpdateDiskInput> vmDisks = default(IList<UpdateDiskInput>))
         {
             RecoveryAzureV1ResourceGroupId = recoveryAzureV1ResourceGroupId;
             RecoveryAzureV2ResourceGroupId = recoveryAzureV2ResourceGroupId;
             UseManagedDisks = useManagedDisks;
+            TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
+            TargetAvailabilityZone = targetAvailabilityZone;
+            TargetVmTags = targetVmTags;
+            TargetManagedDiskTags = targetManagedDiskTags;
+            TargetNicTags = targetNicTags;
+            SqlServerLicenseType = sqlServerLicenseType;
+            VmDisks = vmDisks;
             CustomInit();
         }
 
@@ -71,6 +92,49 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "useManagedDisks")]
         public string UseManagedDisks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target proximity placement group Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetProximityPlacementGroupId")]
+        public string TargetProximityPlacementGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target availability zone.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetAvailabilityZone")]
+        public string TargetAvailabilityZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target VM tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetVmTags")]
+        public IDictionary<string, string> TargetVmTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the target managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetManagedDiskTags")]
+        public IDictionary<string, string> TargetManagedDiskTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the target NICs.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetNicTags")]
+        public IDictionary<string, string> TargetNicTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SQL Server license type. Possible values include:
+        /// 'NotSpecified', 'NoLicenseType', 'PAYG', 'AHUB'
+        /// </summary>
+        [JsonProperty(PropertyName = "sqlServerLicenseType")]
+        public string SqlServerLicenseType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of disk update properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmDisks")]
+        public IList<UpdateDiskInput> VmDisks { get; set; }
 
     }
 }

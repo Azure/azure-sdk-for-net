@@ -7,135 +7,119 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
-    public class FileTestBase : StorageTestBase
+    [ShareClientTestFixture]
+    public class FileTestBase : StorageTestBase<StorageTestEnvironment>
     {
+        /// <summary>
+        /// Source of clients.
+        /// </summary>
+        protected ClientBuilder<ShareServiceClient, ShareClientOptions> SharesClientBuilder { get; }
+
+        protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
+
         public static Uri s_invalidUri = new Uri("https://error.file.core.windows.net");
 
-        public FileTestBase(bool async) : this(async, null) { }
-
-        public FileTestBase(bool async, RecordedTestMode? mode = null)
+        public FileTestBase(bool async, ShareClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
+            SharesClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, _serviceVersion);
         }
 
-        public string GetNewShareName() => $"test-share-{Recording.Random.NewGuid()}";
-        public string GetNewDirectoryName() => $"test-directory-{Recording.Random.NewGuid()}";
-        public string GetNewFileName() => $"test-file-{Recording.Random.NewGuid()}";
+        public string GetNewShareName() => SharesClientBuilder.GetNewShareName();
+        public string GetNewDirectoryName() => SharesClientBuilder.GetNewDirectoryName();
+        public string GetNewNonAsciiDirectoryName() => SharesClientBuilder.GetNewNonAsciiDirectoryName();
+        public string GetNewFileName() => SharesClientBuilder.GetNewFileName();
+        public string GetNewNonAsciiFileName() => SharesClientBuilder.GetNewNonAsciiFileName();
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(SharesClientBuilder.Tenants.TestConfigDefault.FileServiceEndpoint);
+
+        public async Task<DisposingShare> GetTestShareAsync(
+            ShareServiceClient service = default,
+            string shareName = default,
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default)
+            => await SharesClientBuilder.GetTestShareAsync(service, shareName, metadata, options);
 
         public ShareClientOptions GetOptions()
         {
-            var options = new ShareClientOptions
+            var options = new ShareClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 },
-                Transport = GetTransport()
-        };
+            };
             if (Mode != RecordedTestMode.Live)
             {
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
-        }
-
-        public async Task<DisposingShare> GetTestShareAsync(ShareServiceClient service = default, string shareName = default, IDictionary<string, string> metadata = default)
-        {
-            service ??= GetServiceClient_SharedKey();
-            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            shareName ??= GetNewShareName();
-            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            return await DisposingShare.CreateAsync(share, metadata);
-        }
-
-        public async Task<DisposingDirectory> GetTestDirectoryAsync(ShareServiceClient service = default, string shareName = default, string directoryName = default)
-        {
-            DisposingShare test = await GetTestShareAsync(service, shareName);
-            directoryName ??= GetNewDirectoryName();
-
-            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
-            return await DisposingDirectory.CreateAsync(test, directory);
-        }
-
-        public async Task<DisposingFile> GetTestFileAsync(ShareServiceClient service = default, string shareName = default, string directoryName = default, string fileName = default)
-        {
-            DisposingDirectory test = await GetTestDirectoryAsync(service, shareName, directoryName);
-            fileName ??= GetNewFileName();
-            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(fileName));
-            return await DisposingFile.CreateAsync(test, file);
+            return InstrumentClientOptions(options);
         }
 
         public ShareClientOptions GetFaultyFileConnectionOptions(
             int raiseAt = default,
-            Exception raise = default)
+            Exception raise = default,
+            Action onFault = default)
         {
             raise = raise ?? new IOException("Simulated connection fault");
             ShareClientOptions options = GetOptions();
-            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise, onFault), HttpPipelinePosition.PerCall);
             return options;
         }
-
-        public ShareServiceClient GetServiceClient_SharedKey()
-            => InstrumentClient(
-                new ShareServiceClient(
-                    new Uri(TestConfigDefault.FileServiceEndpoint),
-                    new StorageSharedKeyCredential(
-                        TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
-                    GetOptions()));
 
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new ShareServiceClient(
-                    new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_FileServiceSasShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new ShareServiceClient(
-                    new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewFileServiceSasCredentialsShare(shareName, sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewFileServiceSasCredentialsShare(shareName, sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_FileServiceSasFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new ShareServiceClient(
-                    new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
                     GetOptions()));
 
-        public StorageSharedKeyCredential GetNewSharedKeyCredentials()
-            => new StorageSharedKeyCredential(
-                TestConfigDefault.AccountName,
-                TestConfigDefault.AccountKey);
-
-        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
+        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default,
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.Container,
+            AccountSasPermissions permissions = AccountSasPermissions.Create | AccountSasPermissions.Delete)
         {
             var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Files,
-                ResourceTypes = AccountSasResourceTypes.Container,
+                ResourceTypes = resourceTypes,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
-            builder.SetPermissions(AccountSasPermissions.Create | AccountSasPermissions.Delete);
-            return builder.ToSasQueryParameters(sharedKeyCredentials);
+            builder.SetPermissions(permissions);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 
-        public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default)
+        public SasQueryParameters GetNewFileServiceSasCredentialsShare(
+            string shareName,
+            StorageSharedKeyCredential sharedKeyCredentials = default,
+            ShareSasPermissions permissions = ShareSasPermissions.All)
         {
             var builder = new ShareSasBuilder
             {
@@ -145,8 +129,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
-            builder.SetPermissions(ShareSasPermissions.All);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+            builder.SetPermissions(permissions);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 
         public SasQueryParameters GetNewFileServiceSasCredentialsFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -161,7 +145,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
             builder.SetPermissions(ShareFileSasPermissions.All);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials());
         }
 
         public ShareSignedIdentifier[] BuildSignedIdentifiers() =>
@@ -173,8 +157,8 @@ namespace Azure.Storage.Files.Shares.Tests
                     AccessPolicy =
                         new ShareAccessPolicy
                         {
-                            StartsOn =  Recording.UtcNow.AddHours(-1),
-                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            PolicyStartsOn =  Recording.UtcNow.AddHours(-1),
+                            PolicyExpiresOn =  Recording.UtcNow.AddHours(1),
                             Permissions = "rw"
                         }
                 }
@@ -187,16 +171,15 @@ namespace Azure.Storage.Files.Shares.Tests
             credentials ??= GetAccountSasCredentials();
             if (!includeEndpoint)
             {
-                return TestExtensions.CreateStorageConnectionString(
+                return new StorageConnectionString(
                     credentials,
-                    TestConfigDefault.AccountName);
+                    (new Uri(TestConfigDefault.BlobServiceEndpoint), new Uri(TestConfigDefault.BlobServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.QueueServiceEndpoint), new Uri(TestConfigDefault.QueueServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.TableServiceEndpoint), new Uri(TestConfigDefault.TableServiceSecondaryEndpoint)),
+                    (new Uri(TestConfigDefault.FileServiceEndpoint), new Uri(TestConfigDefault.FileServiceSecondaryEndpoint)));
             }
 
-            (Uri, Uri) fileUri = StorageConnectionString.ConstructFileEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
+            (Uri, Uri) fileUri = (new Uri(TestConfigDefault.FileServiceEndpoint), new Uri(TestConfigDefault.FileServiceSecondaryEndpoint));
 
             return new StorageConnectionString(
                     credentials,
@@ -240,89 +223,6 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(left.FileLastWrittenOn, right.FileLastWrittenOn);
             Assert.AreEqual(left.FilePermissionKey, right.FilePermissionKey);
             Assert.AreEqual(left.ParentId, right.ParentId);
-        }
-
-        public class DisposingShare : IAsyncDisposable
-        {
-            public ShareClient Share { get; private set; }
-
-            public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
-            {
-                await share.CreateAsync(metadata: metadata, quotaInGB: 1);
-                return new DisposingShare(share);
-            }
-
-            public DisposingShare(ShareClient share)
-            {
-                Share = share;
-            }
-
-            public async ValueTask DisposeAsync()
-            {
-                if (Share != null)
-                {
-                    try
-                    {
-                        await Share.DeleteAsync(true);
-                        Share = null;
-                    }
-                    catch
-                    {
-                        // swallow the exception to avoid hiding another test failure
-                    }
-                }
-            }
-        }
-
-        public class DisposingDirectory : IAsyncDisposable
-        {
-            private DisposingShare _test;
-
-            public ShareClient Share => _test.Share;
-            public ShareDirectoryClient Directory { get; }
-
-            public static async Task<DisposingDirectory> CreateAsync(DisposingShare test, ShareDirectoryClient directory)
-            {
-                await directory.CreateAsync();
-                return new DisposingDirectory(test, directory);
-            }
-
-            private DisposingDirectory(DisposingShare test, ShareDirectoryClient directory)
-            {
-                _test = test;
-                Directory = directory;
-            }
-
-            public async ValueTask DisposeAsync()
-            {
-                await _test.DisposeAsync();
-            }
-        }
-
-        public class DisposingFile : IAsyncDisposable
-        {
-            private DisposingDirectory _test;
-
-            public ShareClient Share => _test.Share;
-            public ShareDirectoryClient Directory => _test.Directory;
-            public ShareFileClient File { get; }
-
-            public static async Task<DisposingFile> CreateAsync(DisposingDirectory test, ShareFileClient file)
-            {
-                await file.CreateAsync(maxSize: Constants.MB);
-                return new DisposingFile(test, file);
-            }
-
-            private DisposingFile(DisposingDirectory test, ShareFileClient file)
-            {
-                _test = test;
-                File = file;
-            }
-
-            public async ValueTask DisposeAsync()
-            {
-                await _test.DisposeAsync();
-            }
         }
     }
 }

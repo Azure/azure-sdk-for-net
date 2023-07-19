@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AppPlatform
     using Newtonsoft.Json;
 
     /// <summary>
-    /// REST API for Azure Spring Cloud
+    /// REST API for Azure Spring Apps
     /// </summary>
     public partial interface IAppPlatformManagementClient : System.IDisposable
     {
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -77,6 +77,46 @@ namespace Microsoft.Azure.Management.AppPlatform
         IServicesOperations Services { get; }
 
         /// <summary>
+        /// Gets the IConfigServersOperations.
+        /// </summary>
+        IConfigServersOperations ConfigServers { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationServicesOperations.
+        /// </summary>
+        IConfigurationServicesOperations ConfigurationServices { get; }
+
+        /// <summary>
+        /// Gets the IServiceRegistriesOperations.
+        /// </summary>
+        IServiceRegistriesOperations ServiceRegistries { get; }
+
+        /// <summary>
+        /// Gets the IBuildServiceOperations.
+        /// </summary>
+        IBuildServiceOperations BuildService { get; }
+
+        /// <summary>
+        /// Gets the IBuildpackBindingOperations.
+        /// </summary>
+        IBuildpackBindingOperations BuildpackBinding { get; }
+
+        /// <summary>
+        /// Gets the IBuildServiceBuilderOperations.
+        /// </summary>
+        IBuildServiceBuilderOperations BuildServiceBuilder { get; }
+
+        /// <summary>
+        /// Gets the IBuildServiceAgentPoolOperations.
+        /// </summary>
+        IBuildServiceAgentPoolOperations BuildServiceAgentPool { get; }
+
+        /// <summary>
+        /// Gets the IMonitoringSettingsOperations.
+        /// </summary>
+        IMonitoringSettingsOperations MonitoringSettings { get; }
+
+        /// <summary>
         /// Gets the IAppsOperations.
         /// </summary>
         IAppsOperations Apps { get; }
@@ -87,6 +127,21 @@ namespace Microsoft.Azure.Management.AppPlatform
         IBindingsOperations Bindings { get; }
 
         /// <summary>
+        /// Gets the IStoragesOperations.
+        /// </summary>
+        IStoragesOperations Storages { get; }
+
+        /// <summary>
+        /// Gets the ICertificatesOperations.
+        /// </summary>
+        ICertificatesOperations Certificates { get; }
+
+        /// <summary>
+        /// Gets the ICustomDomainsOperations.
+        /// </summary>
+        ICustomDomainsOperations CustomDomains { get; }
+
+        /// <summary>
         /// Gets the IDeploymentsOperations.
         /// </summary>
         IDeploymentsOperations Deployments { get; }
@@ -95,6 +150,41 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IRuntimeVersionsOperations.
+        /// </summary>
+        IRuntimeVersionsOperations RuntimeVersions { get; }
+
+        /// <summary>
+        /// Gets the ISkusOperations.
+        /// </summary>
+        ISkusOperations Skus { get; }
+
+        /// <summary>
+        /// Gets the IGatewaysOperations.
+        /// </summary>
+        IGatewaysOperations Gateways { get; }
+
+        /// <summary>
+        /// Gets the IGatewayRouteConfigsOperations.
+        /// </summary>
+        IGatewayRouteConfigsOperations GatewayRouteConfigs { get; }
+
+        /// <summary>
+        /// Gets the IGatewayCustomDomainsOperations.
+        /// </summary>
+        IGatewayCustomDomainsOperations GatewayCustomDomains { get; }
+
+        /// <summary>
+        /// Gets the IApiPortalsOperations.
+        /// </summary>
+        IApiPortalsOperations ApiPortals { get; }
+
+        /// <summary>
+        /// Gets the IApiPortalCustomDomainsOperations.
+        /// </summary>
+        IApiPortalCustomDomainsOperations ApiPortalCustomDomains { get; }
 
     }
 }

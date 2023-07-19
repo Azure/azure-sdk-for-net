@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.HybridData.Models
         /// </summary>
         /// <param name="status">Status of the job. Possible values include:
         /// 'None', 'InProgress', 'Succeeded', 'WaitingForAction', 'Failed',
-        /// 'Cancelled', 'Cancelling'</param>
+        /// 'Cancelled', 'Cancelling', 'PartiallySucceeded'</param>
         /// <param name="startTime">Time at which the job was started in UTC
         /// ISO 8601 format.</param>
         /// <param name="isCancellable">Describes whether the job is
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.HybridData.Models
         /// <summary>
         /// Gets or sets status of the job. Possible values include: 'None',
         /// 'InProgress', 'Succeeded', 'WaitingForAction', 'Failed',
-        /// 'Cancelled', 'Cancelling'
+        /// 'Cancelled', 'Cancelling', 'PartiallySucceeded'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public JobStatus Status { get; set; }

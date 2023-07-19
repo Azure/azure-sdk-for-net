@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Maintenance
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -33,14 +35,14 @@ namespace Microsoft.Azure.Management.Maintenance
             /// <param name='resourceGroupName'>
             /// Resource group name
             /// </param>
+            /// <param name='providerName'>
+            /// Resource provider name
+            /// </param>
             /// <param name='resourceParentType'>
             /// Resource parent type
             /// </param>
             /// <param name='resourceParentName'>
             /// Resource parent identifier
-            /// </param>
-            /// <param name='providerName'>
-            /// Resource provider name
             /// </param>
             /// <param name='resourceType'>
             /// Resource type
@@ -51,9 +53,9 @@ namespace Microsoft.Azure.Management.Maintenance
             /// <param name='applyUpdateName'>
             /// applyUpdate Id
             /// </param>
-            public static ApplyUpdate GetParent(this IApplyUpdatesOperations operations, string resourceGroupName, string resourceParentType, string resourceParentName, string providerName, string resourceType, string resourceName, string applyUpdateName)
+            public static ApplyUpdate GetParent(this IApplyUpdatesOperations operations, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName)
             {
-                return operations.GetParentAsync(resourceGroupName, resourceParentType, resourceParentName, providerName, resourceType, resourceName, applyUpdateName).GetAwaiter().GetResult();
+                return operations.GetParentAsync(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -68,14 +70,14 @@ namespace Microsoft.Azure.Management.Maintenance
             /// <param name='resourceGroupName'>
             /// Resource group name
             /// </param>
+            /// <param name='providerName'>
+            /// Resource provider name
+            /// </param>
             /// <param name='resourceParentType'>
             /// Resource parent type
             /// </param>
             /// <param name='resourceParentName'>
             /// Resource parent identifier
-            /// </param>
-            /// <param name='providerName'>
-            /// Resource provider name
             /// </param>
             /// <param name='resourceType'>
             /// Resource type
@@ -89,9 +91,9 @@ namespace Microsoft.Azure.Management.Maintenance
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplyUpdate> GetParentAsync(this IApplyUpdatesOperations operations, string resourceGroupName, string resourceParentType, string resourceParentName, string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApplyUpdate> GetParentAsync(this IApplyUpdatesOperations operations, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetParentWithHttpMessagesAsync(resourceGroupName, resourceParentType, resourceParentName, providerName, resourceType, resourceName, applyUpdateName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetParentWithHttpMessagesAsync(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -284,6 +286,34 @@ namespace Microsoft.Azure.Management.Maintenance
             public static async Task<ApplyUpdate> CreateOrUpdateAsync(this IApplyUpdatesOperations operations, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, providerName, resourceType, resourceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get Configuration records within a subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IEnumerable<ApplyUpdate> List(this IApplyUpdatesOperations operations)
+            {
+                return operations.ListAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get Configuration records within a subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<ApplyUpdate>> ListAsync(this IApplyUpdatesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -1,54 +1,85 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void ExtractEntityLinkingBatchConvenience()
+        public void RecognizeLinkedEntitiesBatchConvenience()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #region Snippet:Sample6_RecognizeLinkedEntitiesBatchConvenience
+            string documentA =
+                "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
+                + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"
+                + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
+                + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond";
 
-            var inputs = new List<string>
+            string documentB =
+                "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and sell BASIC"
+                + " interpreters for the Altair 8800. During his career at Microsoft, Gates held the positions of"
+                + " chairman chief executive officer, president and chief software architect while also being the"
+                + " largest individual shareholder until May 2014.";
+
+            string documentC = string.Empty;
+
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
-                "Microsoft was founded by Bill Gates and Paul Allen.",
-                "Text Analytics is one of the Azure Cognitive Services.",
-                "Pike place market is my favorite Seattle attraction.",
+                documentA,
+                documentB,
+                documentC
             };
 
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs);
+            Response<RecognizeLinkedEntitiesResultCollection> response = client.RecognizeLinkedEntitiesBatch(batchedDocuments);
+            RecognizeLinkedEntitiesResultCollection entitiesInDocuments = response.Value;
 
-            Debug.WriteLine($"Linked entities for each input are:\n");
             int i = 0;
-            foreach (var result in results)
-            {
-                Debug.Write($"For input: \"{inputs[i++]}\", ");
-                Debug.WriteLine($"extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
+            Console.WriteLine($"Recognize Linked Entities, model version: \"{entitiesInDocuments.ModelVersion}\"");
+            Console.WriteLine();
 
-                foreach (LinkedEntity linkedEntity in result.LinkedEntities)
+            foreach (RecognizeLinkedEntitiesResult documentResult in entitiesInDocuments)
+            {
+                Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
+
+                if (documentResult.HasError)
                 {
-                    Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
-                    foreach (LinkedEntityMatch match in linkedEntity.Matches)
-                    {
-                        Debug.WriteLine($"        Match Text: \"{match.Text}\", Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");
-                    }
+                    Console.WriteLine($"  Error!");
+                    Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                    Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                    Console.WriteLine();
+                    continue;
                 }
 
-                Debug.WriteLine("");
+                Console.WriteLine($"Recognized {documentResult.Entities.Count} entities:");
+                foreach (LinkedEntity linkedEntity in documentResult.Entities)
+                {
+                    Console.WriteLine($"  Name: {linkedEntity.Name}");
+                    Console.WriteLine($"  Language: {linkedEntity.Language}");
+                    Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
+                    Console.WriteLine($"  URL: {linkedEntity.Url}");
+                    Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
+                    foreach (LinkedEntityMatch match in linkedEntity.Matches)
+                    {
+                        Console.WriteLine($"    Match Text: {match.Text}");
+                        Console.WriteLine($"    Offset: {match.Offset}");
+                        Console.WriteLine($"    Length: {match.Length}");
+                        Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
             }
+            #endregion
         }
     }
 }

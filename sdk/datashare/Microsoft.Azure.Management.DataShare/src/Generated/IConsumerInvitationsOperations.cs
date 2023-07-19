@@ -24,16 +24,13 @@ namespace Microsoft.Azure.Management.DataShare
     public partial interface IConsumerInvitationsOperations
     {
         /// <summary>
-        /// Rejects the invitation identified by invitationId
+        /// List the invitations
         /// </summary>
         /// <remarks>
-        /// Reject an invitation
+        /// Lists invitations
         /// </remarks>
-        /// <param name='location'>
-        /// Location of the invitation
-        /// </param>
-        /// <param name='invitation'>
-        /// An invitation payload
+        /// <param name='skipToken'>
+        /// The continuation token
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,7 +47,7 @@ namespace Microsoft.Azure.Management.DataShare
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ConsumerInvitation>> RejectInvitationWithHttpMessagesAsync(string location, ConsumerInvitation invitation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ConsumerInvitation>>> ListInvitationsWithHttpMessagesAsync(string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the invitation identified by invitationId
         /// </summary>
@@ -80,13 +77,16 @@ namespace Microsoft.Azure.Management.DataShare
         /// </exception>
         Task<AzureOperationResponse<ConsumerInvitation>> GetWithHttpMessagesAsync(string location, string invitationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List the invitations
+        /// Rejects the invitation identified by invitationId
         /// </summary>
         /// <remarks>
-        /// Lists invitations
+        /// Reject an invitation
         /// </remarks>
-        /// <param name='skipToken'>
-        /// The continuation token
+        /// <param name='location'>
+        /// Location of the invitation
+        /// </param>
+        /// <param name='invitation'>
+        /// An invitation payload
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.DataShare
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ConsumerInvitation>>> ListInvitationsWithHttpMessagesAsync(string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ConsumerInvitation>> RejectInvitationWithHttpMessagesAsync(string location, ConsumerInvitation invitation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List the invitations
         /// </summary>

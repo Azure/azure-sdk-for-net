@@ -3,19 +3,13 @@
 
 using System;
 using Azure.Storage.Sas;
-using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
     //TODO consider added SASQueryParametersTest for File and Queue
-    public class SasQueryParametersTests : BlobTestBase
+    public class SasQueryParametersTests
     {
-        public SasQueryParametersTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
-        {
-        }
-
         [Test]
         public void SasQueryParameters_RoundTrip()
         {

@@ -46,13 +46,29 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// creating pools in the Batch account.</param>
         /// <param name="keyVaultReference">A reference to the Azure key vault
         /// associated with the Batch account.</param>
-        public BatchAccountCreateParameters(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), AutoStorageBaseProperties autoStorage = default(AutoStorageBaseProperties), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference))
+        /// <param name="publicNetworkAccess">The network access type for
+        /// accessing Azure Batch account.</param>
+        /// <param name="networkProfile">Network profile for Batch account,
+        /// which contains network rule settings for each endpoint.</param>
+        /// <param name="encryption">The encryption configuration for the Batch
+        /// account.</param>
+        /// <param name="allowedAuthenticationModes">List of allowed
+        /// authentication modes for the Batch account that can be used to
+        /// authenticate with the data plane. This does not affect
+        /// authentication with the control plane.</param>
+        /// <param name="identity">The identity of the Batch account.</param>
+        public BatchAccountCreateParameters(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), AutoStorageBaseProperties autoStorage = default(AutoStorageBaseProperties), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), PublicNetworkAccessType? publicNetworkAccess = default(PublicNetworkAccessType?), NetworkProfile networkProfile = default(NetworkProfile), EncryptionProperties encryption = default(EncryptionProperties), IList<AuthenticationMode?> allowedAuthenticationModes = default(IList<AuthenticationMode?>), BatchAccountIdentity identity = default(BatchAccountIdentity))
         {
             Location = location;
             Tags = tags;
             AutoStorage = autoStorage;
             PoolAllocationMode = poolAllocationMode;
             KeyVaultReference = keyVaultReference;
+            PublicNetworkAccess = publicNetworkAccess;
+            NetworkProfile = networkProfile;
+            Encryption = encryption;
+            AllowedAuthenticationModes = allowedAuthenticationModes;
+            Identity = identity;
             CustomInit();
         }
 
@@ -102,6 +118,53 @@ namespace Microsoft.Azure.Management.Batch.Models
         public KeyVaultReference KeyVaultReference { get; set; }
 
         /// <summary>
+        /// Gets or sets the network access type for accessing Azure Batch
+        /// account.
+        /// </summary>
+        /// <remarks>
+        /// If not specified, the default value is 'enabled'. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets network profile for Batch account, which contains
+        /// network rule settings for each endpoint.
+        /// </summary>
+        /// <remarks>
+        /// The network profile only takes effect when publicNetworkAccess is
+        /// enabled.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.networkProfile")]
+        public NetworkProfile NetworkProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encryption configuration for the Batch account.
+        /// </summary>
+        /// <remarks>
+        /// Configures how customer data is encrypted inside the Batch account.
+        /// By default, accounts are encrypted using a Microsoft managed key.
+        /// For additional control, a customer-managed key can be used instead.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public EncryptionProperties Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of allowed authentication modes for the Batch
+        /// account that can be used to authenticate with the data plane. This
+        /// does not affect authentication with the control plane.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowedAuthenticationModes")]
+        public IList<AuthenticationMode?> AllowedAuthenticationModes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public BatchAccountIdentity Identity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -120,6 +183,14 @@ namespace Microsoft.Azure.Management.Batch.Models
             if (KeyVaultReference != null)
             {
                 KeyVaultReference.Validate();
+            }
+            if (NetworkProfile != null)
+            {
+                NetworkProfile.Validate();
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

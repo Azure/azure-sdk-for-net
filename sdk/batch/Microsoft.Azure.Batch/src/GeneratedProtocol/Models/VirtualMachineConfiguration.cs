@@ -47,7 +47,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// used when deploying the operating system.</param>
         /// <param name="containerConfiguration">The container configuration
         /// for the Pool.</param>
-        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration))
+        /// <param name="diskEncryptionConfiguration">The disk encryption
+        /// configuration for the pool.</param>
+        /// <param name="nodePlacementConfiguration">The node placement
+        /// configuration for the pool.</param>
+        /// <param name="extensions">The virtual machine extension for the
+        /// pool.</param>
+        /// <param name="osDisk">Settings for the operating system disk of the
+        /// Virtual Machine.</param>
+        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration), DiskEncryptionConfiguration diskEncryptionConfiguration = default(DiskEncryptionConfiguration), NodePlacementConfiguration nodePlacementConfiguration = default(NodePlacementConfiguration), IList<VMExtension> extensions = default(IList<VMExtension>), OSDisk osDisk = default(OSDisk))
         {
             ImageReference = imageReference;
             NodeAgentSKUId = nodeAgentSKUId;
@@ -55,6 +63,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             DataDisks = dataDisks;
             LicenseType = licenseType;
             ContainerConfiguration = containerConfiguration;
+            DiskEncryptionConfiguration = diskEncryptionConfiguration;
+            NodePlacementConfiguration = nodePlacementConfiguration;
+            Extensions = extensions;
+            OsDisk = osDisk;
             CustomInit();
         }
 
@@ -147,6 +159,43 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "containerConfiguration")]
         public ContainerConfiguration ContainerConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disk encryption configuration for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If specified, encryption is performed on each node in the pool
+        /// during node provisioning.
+        /// </remarks>
+        [JsonProperty(PropertyName = "diskEncryptionConfiguration")]
+        public DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the node placement configuration for the pool.
+        /// </summary>
+        /// <remarks>
+        /// This configuration will specify rules on how nodes in the pool will
+        /// be physically allocated.
+        /// </remarks>
+        [JsonProperty(PropertyName = "nodePlacementConfiguration")]
+        public NodePlacementConfiguration NodePlacementConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the virtual machine extension for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If specified, the extensions mentioned in this configuration will
+        /// be installed on each node.
+        /// </remarks>
+        [JsonProperty(PropertyName = "extensions")]
+        public IList<VMExtension> Extensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets settings for the operating system disk of the Virtual
+        /// Machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "osDisk")]
+        public OSDisk OsDisk { get; set; }
 
     }
 }

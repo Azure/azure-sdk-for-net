@@ -1,0 +1,50 @@
+<Project>
+
+  <PropertyGroup>
+    <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6236/autorest-3.0.6236.tgz</_AutoRestVersion>
+    <_AutoRestCoreVersion>3.0.6306</_AutoRestCoreVersion>
+    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200811.1/autorest-csharp-v3-3.0.0-dev.20200811.1.tgz</_AutoRestCSharpVersion>
+    <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
+    <_DefaultInputName Condition="Exists('$(MSBuildProjectDirectory)/autorest.md')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
+    <AutoRestInput Condition="'$(AutoRestInput)' == ''">$(_DefaultInputName)</AutoRestInput>
+    <!--
+      Allows passing additional AutoRest command line arguments, for example to run in interactive mode
+      use the following command line (remove the space between minus minus): dotnet build /t:GenerateCode /p:AutoRestAdditionalParameters="- -interactive"
+    -->
+    <AutoRestAdditionalParameters></AutoRestAdditionalParameters>
+
+    <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND '$(AutoRestInput)' != ''">true</_GenerateCode>
+  </PropertyGroup>
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+  <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >
+    <ReadLinesFromFile File="$(AutoRestInput)">
+       <Output TaskParameter="Lines" ItemName="AutoRestInputLines"/>
+    </ReadLinesFromFile>
+
+   <ItemGroup>
+      <GithubUrls Include="$([System.Text.RegularExpressions.Regex]::Match('%(AutoRestInputLines.Identity)', 'https?://(raw.)?github.+'))" />
+      <GithubUrlsWithoutIssues Include="%(GithubUrls.Identity)" Condition="! ($([System.Text.RegularExpressions.Regex]::IsMatch('%(GithubUrls.Identity)', '/issues/\d+')))" />
+      <GithubUrlsWithoutHash Include="%(GithubUrlsWithoutIssues.Identity)" Condition="! ($([System.Text.RegularExpressions.Regex]::IsMatch('%(GithubUrlsWithoutIssues.Identity)', '[\w\d]{40}')))" />
+    </ItemGroup>
+
+    <Error Text="Following GitHub URLs do not contain commit hash: @(GithubUrlsWithoutHash) please use permalinks for code generation inputs (see https://help.github.com/en/github/managing-files-in-a-repository/getting-permanent-links-to-files) " Condition="'@(GithubUrlsWithoutHash)' != ''" />
+
+    <RemoveDir Directories="$(MSBuildProjectDirectory)/Generated"/>
+    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutoRestInput) $(AutoRestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(AutoRestSharedCodeDirectory).." />
+  </Target>
+
+</Project>
+
+
+
+
+
+
+
+
+
+
+

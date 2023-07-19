@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <OutputType>Exe</OutputType>
+    <IsTestSupportProject>true</IsTestSupportProject>
+    <IsStressProject>false</IsStressProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="Microsoft.ApplicationInsights" />
+    <PackageReference Include="CommandLineParser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.Messaging.EventHubs.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Messaging.EventHubs.Processor\src\Azure.Messaging.EventHubs.Processor.csproj" />
+  </ItemGroup>
+
+  <!-- Import Azure.Core shared source -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedSource\Azure.Core" />
+  </ItemGroup>
+
+  <!-- Import Event Hubs shared source -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Stress.projitems" Label="Stress" />
+</Project>

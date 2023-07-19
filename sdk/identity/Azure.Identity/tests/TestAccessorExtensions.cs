@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Security;
-using System.Text;
+using Azure.Core;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
@@ -14,10 +14,6 @@ namespace Azure.Identity.Tests
         public static ClientSecretCredential _client(this ClientSecretCredential credential)
         {
             return typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as ClientSecretCredential;
-        }
-        public static void _client(this ClientSecretCredential credential, AadIdentityClient client)
-        {
-            typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }
 
         public static SecureString ToSecureString(this string plainString)
@@ -38,9 +34,17 @@ namespace Azure.Identity.Tests
             typeof(InteractiveBrowserCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }
 
-        public static IExtendedTokenCredential[] _sources(this DefaultAzureCredential credential)
+        public static TokenCredential[] _sources(this DefaultAzureCredential credential)
         {
-            return typeof(DefaultAzureCredential).GetField("_sources", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as IExtendedTokenCredential[];
+            return typeof(DefaultAzureCredential).GetField("_sources", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as TokenCredential[];
+        }
+
+        public static void ConditionalAdd<T>(this List<T> list, bool condition, T item)
+        {
+            if (condition)
+            {
+                list.Add(item);
+            }
         }
     }
 }

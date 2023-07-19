@@ -4,7 +4,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Batch;
+using Azure.Storage.Blobs.Batch.Models;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -13,7 +17,8 @@ namespace Azure.Storage.Blobs.Specialized
     /// operations in a single request via <see cref="BlobBatchClient.SubmitBatch"/>.
     ///
     /// For more information, see
-    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch" />.
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/blob-batch">
+    /// Blob Batch</see>.
     /// </summary>
     public class BlobBatch : IDisposable
     {
@@ -21,6 +26,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// The number of pending requests in the batch.
         /// </summary>
         public int RequestCount => _messages.Count;
+
+        /// <summary>
+        /// If this BlobBatch is container scoped.
+        /// </summary>
+        private readonly bool _isContainerScoped;
+
+        /// <summary>
+        /// If this BlobBatch is container scoped.
+        /// </summary>
+        internal bool IsContainerScoped => _isContainerScoped;
 
         /// <summary>
         /// The <see cref="BlobBatchClient"/> associated with this batch.  It
@@ -32,7 +47,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Storage requires each batch request to contain the same type of
         /// operation.
         /// </summary>
-        private BlobBatchOperationType? _operationType = null;
+        private BlobBatchOperationType? _operationType;
 
         /// <summary>
         /// The list of messages that will be sent as part of this batch.
@@ -42,7 +57,34 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// A value indicating whether the batch has already been submitted.
         /// </summary>
-        internal bool Submitted { get; private set; } = false;
+        internal bool Submitted { get; private set; }
+
+        /// <summary>
+        /// <see cref="BlobRestClient"/>.
+        /// </summary>
+        private readonly BlobRestClient _blobRestClient;
+
+        /// <summary>
+        /// <see cref="BlobRestClient"/>.
+        /// </summary>
+        internal virtual BlobRestClient BlobRestClient => _blobRestClient;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>;
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// True when batch is disposed, false otherwise
+        /// </summary>
+        private bool _disposed;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobBatch"/> for mocking.
@@ -57,8 +99,24 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">
         /// The <see cref="BlobBatchClient"/> associated with this batch.
         /// </param>
-        public BlobBatch(BlobBatchClient client) =>
+        public BlobBatch(BlobBatchClient client)
+        {
             _client = client ?? throw new ArgumentNullException(nameof(client));
+            _isContainerScoped = client.IsContainerScoped;
+            _clientDiagnostics = client.ClientDiagnostics;
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri)
+            {
+                BlobContainerName = null,
+                BlobName = null
+            };
+
+            _blobRestClient = new BlobRestClient(
+                clientDiagnostics: _client.ClientDiagnostics,
+                pipeline: _client.Pipeline,
+                url: uriBuilder.ToUri().AbsoluteUri,
+                version: _client.Version.ToVersionString());
+        }
 
         /// <summary>
         /// Gets the list of messages to submit as part of this batch.
@@ -106,14 +164,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DeleteBlob(string, string, DeleteSnapshotsOption, BlobRequestConditions)"/>
         /// operation marks the specified blob or snapshot for  deletion. The
-        /// blob is later deleted during garbage collection.
+        /// blob is later deleted during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">Delete Blob</see>.
         /// </summary>
         /// <param name="blobContainerName">
         /// The name of the container containing the blob to delete.
@@ -129,7 +187,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// deleting this blob.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.  The response
+        /// A <see cref="Response"/> on successfully marking for deletion.  The response
         /// cannot be used until the batch has been submitted with
         /// <see cref="BlobBatchClient.SubmitBatchAsync"/>.
         /// </returns>
@@ -139,28 +197,49 @@ namespace Azure.Storage.Blobs.Specialized
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default)
         {
-            var blobUri = new BlobUriBuilder(_client.Uri)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return DeleteBlob(
-                blobUri.ToUri(),
-                snapshotsOption,
-                conditions);
+            SetBatchOperationType(BlobBatchOperationType.Delete);
+
+            HttpMessage message = BlobRestClient.CreateDeleteRequest(
+                containerName: blobContainerName,
+                blob: blobName.EscapePath(),
+                timeout: null,
+                leaseId: conditions?.LeaseId,
+                deleteSnapshots: snapshotsOption.ToDeleteSnapshotsOptionType(),
+                ifModifiedSince: conditions?.IfModifiedSince,
+                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                ifMatch: conditions?.IfMatch?.ToString(),
+                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                ifTags: conditions?.TagConditions,
+                blobDeleteType: null);
+
+            _messages.Add(message);
+
+            return new DelayedResponse(
+                message,
+                response =>
+                {
+                    switch (response.Status)
+                    {
+                        case 202:
+                            BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(response);
+                            return ResponseWithHeaders.FromValue(blobDeleteHeaders, response);
+                        default:
+                            throw new RequestFailedException(response);
+                    }
+                });
         }
 
         /// <summary>
         /// The <see cref="DeleteBlob(Uri, DeleteSnapshotsOption, BlobRequestConditions)"/>
         /// operation marks the specified blob or snapshot for deletion. The
-        /// blob is later deleted during garbage collection.
+        /// blob is later deleted during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
         /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
         ///
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">Delete Blob</see>.
         /// </summary>
         /// <param name="blobUri">
         /// The blob to delete's primary <see cref="Uri"/> endpoint.
@@ -173,7 +252,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// deleting this blob.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.  The response
+        /// A <see cref="Response"/> on successfully marking for deletion.  The response
         /// cannot be used until the batch has been submitted with
         /// <see cref="BlobBatchClient.SubmitBatchAsync"/>.
         /// </returns>
@@ -182,19 +261,13 @@ namespace Azure.Storage.Blobs.Specialized
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default)
         {
-            SetBatchOperationType(BlobBatchOperationType.Delete);
-            HttpMessage message = BatchRestClient.Blob.DeleteAsync_CreateMessage(
-                _client.BatchOperationPipeline,
-                blobUri,
-                version: _client.Version.ToVersionString(),
-                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
-                leaseId: conditions?.LeaseId,
-                ifModifiedSince: conditions?.IfModifiedSince,
-                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                ifMatch: conditions?.IfMatch,
-                ifNoneMatch: conditions?.IfNoneMatch);
-            _messages.Add(message);
-            return new DelayedResponse(message, BatchRestClient.Blob.DeleteAsync_CreateResponse);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(blobUri);
+
+            return DeleteBlob(
+                blobContainerName: uriBuilder.BlobContainerName,
+                blobName: uriBuilder.BlobName,
+                snapshotsOption: snapshotsOption,
+                conditions: conditions);
         }
         #endregion DeleteBlob
 
@@ -206,8 +279,9 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// A block blob's tier determines Hot/Cool/Archive storage type.  This
         /// operation does not update the blob's ETag.  For detailed
-        /// information about block blob level tiering
-        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
+        /// information about block blob level tiering see
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
         /// </summary>
         /// <param name="blobContainerName">
         /// The name of the container containing the blob to set the tier of.
@@ -238,16 +312,33 @@ namespace Azure.Storage.Blobs.Specialized
             RehydratePriority? rehydratePriority = default,
             BlobRequestConditions leaseAccessConditions = default)
         {
-            var blobUri = new BlobUriBuilder(_client.Uri)
-            {
-                BlobContainerName = blobContainerName,
-                BlobName = blobName
-            };
-            return SetBlobAccessTier(
-                blobUri.ToUri(),
-                accessTier,
-                rehydratePriority,
-                leaseAccessConditions);
+            SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
+
+            HttpMessage message = BlobRestClient.CreateSetAccessTierRequest(
+                containerName: blobContainerName,
+                blob: blobName.EscapePath(),
+                accessTier.ToBatchAccessTier(),
+                timeout: null,
+                rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),
+                leaseId: leaseAccessConditions?.LeaseId,
+                ifTags: leaseAccessConditions?.TagConditions);
+
+            _messages.Add(message);
+
+            return new DelayedResponse(
+                message,
+                response =>
+                {
+                    switch (response.Status)
+                    {
+                        case 200:
+                        case 202:
+                            BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(response);
+                            return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, response);
+                        default:
+                            throw new RequestFailedException(response);
+                    }
+                });
         }
 
         /// <summary>
@@ -258,7 +349,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// A block blob's tier determines Hot/Cool/Archive storage type.  This
         /// operation does not update the blob's ETag.  For detailed
         /// information about block blob level tiering
-        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
+        /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">
+        /// Blob Storage Tiers</see>.
+        ///
         /// </summary>
         /// <param name="blobUri">
         /// The blob's primary <see cref="Uri"/> endpoint.
@@ -285,16 +378,14 @@ namespace Azure.Storage.Blobs.Specialized
             RehydratePriority? rehydratePriority = default,
             BlobRequestConditions leaseAccessConditions = default)
         {
-            SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
-            HttpMessage message = BatchRestClient.Blob.SetAccessTierAsync_CreateMessage(
-                _client.BatchOperationPipeline,
-                blobUri,
-                tier: accessTier,
-                version: _client.Version.ToVersionString(),
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(blobUri);
+
+            return SetBlobAccessTier(
+                blobContainerName: uriBuilder.BlobContainerName,
+                blobName: uriBuilder.BlobName,
+                accessTier: accessTier,
                 rehydratePriority: rehydratePriority,
-                leaseId: leaseAccessConditions?.LeaseId);
-            _messages.Add(message);
-            return new DelayedResponse(message, BatchRestClient.Blob.SetAccessTierAsync_CreateResponse);
+                leaseAccessConditions: leaseAccessConditions);
         }
 
         /// <summary>
@@ -303,8 +394,13 @@ namespace Azure.Storage.Blobs.Specialized
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-            foreach (HttpMessage message in _messages) {
-                message.Dispose();
+            if (!_disposed)
+            {
+                _disposed = true;
+                foreach (HttpMessage message in _messages)
+                {
+                    message.Dispose();
+                }
             }
         }
         #endregion SetBlobAccessTier

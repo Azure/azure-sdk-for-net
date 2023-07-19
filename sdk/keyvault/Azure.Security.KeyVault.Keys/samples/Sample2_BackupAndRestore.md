@@ -1,11 +1,11 @@
 # Back up and restore a key
 
 This sample demonstrates how to back up and restore a Key from Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) for links and instructions.
 
 ## Creating a KeyClient
 
-To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to a Key Vault and credentials.
+To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to an Azure Key Vault and credentials.
 You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
@@ -17,7 +17,7 @@ var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 ## Creating a key
 
 Let's create a RSA key valid for 1 year.
-If the key already exists in the Key Vault, then a new version of the key is created.
+If the key already exists in the Azure Key Vault, then a new version of the key is created.
 
 ```C# Snippet:KeysSample2CreateKey
 string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
@@ -42,17 +42,10 @@ byte[] backupKey = client.BackupKey(rsaKeyName);
 
 ## Restoring a key
 
-If the key is deleted for any reason, we can use the backup value to restore it in the Key Vault.
+If the key is deleted for any reason, we can use the backup value to restore it in the Azure Key Vault.
 
 ```C# Snippet:KeysSample2RestoreKey
 KeyVaultKey restoredKey = client.RestoreKeyBackup(memoryStream.ToArray());
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample2_BackupAndRestore.cs](../tests/samples/Sample2_BackupAndRestore.cs)
-* [Asynchronous Sample2_BackupAndRestore.cs](../tests/samples/Sample2_BackupAndRestoreAsync.cs)
-
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

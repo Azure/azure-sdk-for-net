@@ -40,11 +40,20 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="type">Resource type.</param>
         /// <param name="metadata">metadata for the detector</param>
         /// <param name="dataset">Data Set</param>
-        public DetectorResponse(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), DetectorInfo metadata = default(DetectorInfo), IList<DiagnosticData> dataset = default(IList<DiagnosticData>))
+        /// <param name="status">Indicates status of the most severe
+        /// insight.</param>
+        /// <param name="dataProvidersMetadata">Additional configuration for
+        /// different data providers to be used by the UI</param>
+        /// <param name="suggestedUtterances">Suggested utterances where the
+        /// detector can be applicable.</param>
+        public DetectorResponse(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), DetectorInfo metadata = default(DetectorInfo), IList<DiagnosticData> dataset = default(IList<DiagnosticData>), Status status = default(Status), IList<DataProviderMetadata> dataProvidersMetadata = default(IList<DataProviderMetadata>), QueryUtterancesResults suggestedUtterances = default(QueryUtterancesResults))
             : base(id, name, kind, type)
         {
             Metadata = metadata;
             Dataset = dataset;
+            Status = status;
+            DataProvidersMetadata = dataProvidersMetadata;
+            SuggestedUtterances = suggestedUtterances;
             CustomInit();
         }
 
@@ -64,6 +73,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataset")]
         public IList<DiagnosticData> Dataset { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates status of the most severe insight.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public Status Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional configuration for different data providers
+        /// to be used by the UI
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataProvidersMetadata")]
+        public IList<DataProviderMetadata> DataProvidersMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets suggested utterances where the detector can be
+        /// applicable.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.suggestedUtterances")]
+        public QueryUtterancesResults SuggestedUtterances { get; set; }
 
     }
 }

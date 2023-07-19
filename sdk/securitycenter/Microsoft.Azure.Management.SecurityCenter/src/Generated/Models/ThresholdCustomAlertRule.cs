@@ -31,15 +31,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the ThresholdCustomAlertRule class.
         /// </summary>
         /// <param name="isEnabled">Status of the custom alert.</param>
-        /// <param name="ruleType">The type of the custom alert rule.</param>
         /// <param name="minThreshold">The minimum threshold.</param>
         /// <param name="maxThreshold">The maximum threshold.</param>
         /// <param name="displayName">The display name of the custom
         /// alert.</param>
         /// <param name="description">The description of the custom
         /// alert.</param>
-        public ThresholdCustomAlertRule(bool isEnabled, string ruleType, int minThreshold, int maxThreshold, string displayName = default(string), string description = default(string))
-            : base(isEnabled, ruleType, displayName, description)
+        public ThresholdCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold, string displayName = default(string), string description = default(string))
+            : base(isEnabled, displayName, description)
         {
             MinThreshold = minThreshold;
             MaxThreshold = maxThreshold;

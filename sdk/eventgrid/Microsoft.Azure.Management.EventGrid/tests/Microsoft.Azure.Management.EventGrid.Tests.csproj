@@ -7,8 +7,8 @@
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>Microsoft.Azure.Management.EventGrid.Tests</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <ExcludeFromBuild>True</ExcludeFromBuild>
-    <ExcludeFromTest>True</ExcludeFromTest>
+    <ExcludeFromBuild>False</ExcludeFromBuild>
+    <ExcludeFromTest>False</ExcludeFromTest>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.EventGrid.csproj" />

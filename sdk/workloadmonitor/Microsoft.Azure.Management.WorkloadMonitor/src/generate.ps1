@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "workloadmonitor/resource-manager" -AutoRestVersion "v2" -ConfigFileTag package-2020-01-13-preview

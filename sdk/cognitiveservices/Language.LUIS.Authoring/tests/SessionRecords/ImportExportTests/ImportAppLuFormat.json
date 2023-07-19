@@ -1,0 +1,180 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/import?appName=Test%20Import%20LUIS%20App%20Lu%20format",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2ltcG9ydD9hcHBOYW1lPVRlc3QlMjBJbXBvcnQlMjBMVUlTJTIwQXBwJTIwTHUlMjBmb3JtYXQ=",
+      "RequestMethod": "POST",
+      "RequestBody": "\"\\r\\n> LUIS application information\\r\\n> !# @app.name = Json 600 App\\r\\n> !# @app.desc = Json 600 App\\r\\n> !# @app.versionId = 0.1\\r\\n> !# @app.culture = en-us\\r\\n> !# @app.luis_schema_version = 6.0.0\\r\\n\\r\\n\\r\\n> # Intent definitions\\r\\n\\r\\n> !# @intent.inherits = name : Calendar.AcceptEventEntry; domain_name : Calendar; model_name : AcceptEventEntry\\r\\n\\r\\n## Calendar.AcceptEventEntry\\r\\n- save the date may 17 {@Calendar.Subject=pictures party}\\r\\n- schedule {@Calendar.Subject=appointment} for tomorrow please\\r\\n- {@Calendar.Subject=Meeting My Manager}\\r\\n- The meeting will last for one hour\\r\\n- Add an event to visit 209 Nashville Gym\\r\\n- Add {@Calendar.Subject=imax theater} to my upcoming events\\r\\n- dunmore pa sonic sounds Friday morning please\\r\\n- Add a new task {@Calendar.Subject=finish assignment}\\r\\n- Add a new event on 27 - Apr\\r\\n- calendar i ' ll be at the garage from 8 till 3 this saturday\\r\\n- Add an event to {@Calendar.Subject=read about adam lambert news}\\r\\n\\r\\n\\r\\n> !# @intent.inherits = name : Communication.AddContact; domain_name : Communication; model_name : AddContact\\r\\n\\r\\n## Communication.AddContact\\r\\n\\r\\n\\r\\n@ intent Communication.AddContact usesFeatures simpleentity1,phraselist1\\r\\n\\r\\n> !# @intent.inherits = name : Communication.AddMore; domain_name : Communication; model_name : AddMore\\r\\n\\r\\n## Communication.AddMore\\r\\n\\r\\n\\r\\n> !# @intent.inherits = name : Communication.Confirm; domain_name : Communication; model_name : Confirm\\r\\n\\r\\n## Communication.Confirm\\r\\n\\r\\n\\r\\n## intent1\\r\\n\\r\\n\\r\\n## None\\r\\n- a\\r\\n- hi {@simpleentity1=guys}\\r\\n- Please just delete {@Calendar.Subject=my meeting}\\r\\n- Extend {@Calendar.Subject=lunch meeting} 30 minutes extra\\r\\n- {@Calendar.Subject=Marketing meetings} on Tuesdays will now be every Wednesday please change on my calendar\\r\\n- {@Calendar.Subject=Appointment with Johnson} needs to be next week\\r\\n- Search for {@Calendar.Subject=meetings with Chris}\\r\\n- I want to reschedule the {@Calendar.Subject=meeting at the air force club}\\r\\n- Move the {@Calendar.Subject=BBQ party} to Friday\\r\\n- Am i free to {@Calendar.Subject=be with friends} saturday ?\\r\\n- Delete {@Calendar.Subject=Helen Fred ' s birthday}\\r\\n- {@Calendar.Subject=Call dad Mike}\\r\\n- {@Calendar.Subject=The workshop} will last for 10 hours\\r\\n- {@Calendar.Subject=email cloney John}\\r\\n- Change {@Calendar.Subject=the meeting with Chris} to 9 : 00 am\\r\\n\\r\\n\\r\\n> # Entity definitions\\r\\n\\r\\n> !# @entity.inherits = name : Calendar.Subject; domain_name : Calendar; model_name : Subject\\r\\n\\r\\n@ ml Calendar.Subject usesFeatures simpleentity1\\r\\n\\r\\n@ ml simpleentity1\\r\\n\\r\\n@ ml a1 hasRole role_a1\\r\\n    - @ datetimeV2 b1\\r\\n    - @ ml c1\\r\\n        - @ ml d1 usesFeatures phraselist1\\r\\n            - @ datetimeV2 e1 usesFeatures phraselist1\\r\\n\\r\\n\\r\\n\\r\\n> # PREBUILT Entity definitions\\r\\n\\r\\n@ prebuilt age\\r\\n\\r\\n@ prebuilt datetimeV2\\r\\n\\r\\n\\r\\n> # Phrase list definitions\\r\\n\\r\\n@ phraselist phraselist1(interchangeable) = \\r\\n\\t- why,where,when,what,how,who\\r\\n\\r\\n\\r\\n> # List entities\\r\\n\\r\\n@ list closedlist = \\r\\n\\t- a :\\r\\n\\t\\t- b\\r\\n\\t\\t- c\\r\\n\\t\\t- d\\r\\n\\r\\n\\r\\n> # RegEx entities\\r\\n\\r\\n\\r\\n> # Composite entities\\r\\n\\r\\n@ composite compositeentity1 usesFeatures simpleentity1,Calendar.Subject = [simpleentity1, datetimeV2]\\r\\n\"",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3fc290e189af4d33a677dfa763782b26"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4121.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "text/plain"
+        ],
+        "Content-Length": [
+          "3318"
+        ]
+      },
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "84cc1fc9-2442-4d7d-8e46-218a86f64478"
+        ],
+        "Request-Id": [
+          "84cc1fc9-2442-4d7d-8e46-218a86f64478"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/41f0a808-4c1d-49fd-9afd-b7508e57e673"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Sun, 05 Apr 2020 16:09:10 GMT"
+        ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/41f0a808-4c1d-49fd-9afd-b7508e57e673"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "\"41f0a808-4c1d-49fd-9afd-b7508e57e673\"",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/41f0a808-4c1d-49fd-9afd-b7508e57e673",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQxZjBhODA4LTRjMWQtNDlmZC05YWZkLWI3NTA4ZTU3ZTY3Mw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3fc290e189af4d33a677dfa763782b26"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4121.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "0f75c143-f9ad-4d40-a4f4-f7832699ea51"
+        ],
+        "Request-Id": [
+          "0f75c143-f9ad-4d40-a4f4-f7832699ea51"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Sun, 05 Apr 2020 16:09:10 GMT"
+        ],
+        "Content-Length": [
+          "372"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"41f0a808-4c1d-49fd-9afd-b7508e57e673\",\r\n  \"name\": \"Test Import LUIS App Lu format\",\r\n  \"description\": \"Json 600 App\",\r\n  \"culture\": \"en-us\",\r\n  \"usageScenario\": \"\",\r\n  \"domain\": \"\",\r\n  \"versionsCount\": 1,\r\n  \"createdDateTime\": \"2020-04-05T16:09:10Z\",\r\n  \"endpoints\": {},\r\n  \"endpointHitsCount\": 0,\r\n  \"activeVersion\": \"0.1\",\r\n  \"ownerEmail\": null,\r\n  \"lastModifiedDateTime\": \"2020-04-05T16:09:10Z\",\r\n  \"tokenizerVersion\": \"1.0.0\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/41f0a808-4c1d-49fd-9afd-b7508e57e673?force=false",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQxZjBhODA4LTRjMWQtNDlmZC05YWZkLWI3NTA4ZTU3ZTY3Mz9mb3JjZT1mYWxzZQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3fc290e189af4d33a677dfa763782b26"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4121.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "fda11b35-b8f8-4967-b51d-7dba7d028ff2"
+        ],
+        "Request-Id": [
+          "fda11b35-b8f8-4967-b51d-7dba7d028ff2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Sun, 05 Apr 2020 16:09:11 GMT"
+        ],
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -18,11 +18,11 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies information about the gallery Image Version that you want to
+    /// Specifies information about the gallery image version that you want to
     /// update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class GalleryImageVersionUpdate : UpdateResource
+    public partial class GalleryImageVersionUpdate : UpdateResourceDefinition
     {
         /// <summary>
         /// Initializes a new instance of the GalleryImageVersionUpdate class.
@@ -35,18 +35,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the GalleryImageVersionUpdate class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="provisioningState">The current state of the gallery
-        /// Image Version.</param>
-        public GalleryImageVersionUpdate(GalleryImageVersionStorageProfile storageProfile, IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
-            : base(tags, id, name, type)
+        /// <param name="tags">Resource tags</param>
+        /// <param name="provisioningState">Possible values include:
+        /// 'Creating', 'Updating', 'Failed', 'Succeeded', 'Deleting',
+        /// 'Migrating'</param>
+        public GalleryImageVersionUpdate(GalleryImageVersionStorageProfile storageProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), GalleryImageVersionSafetyProfile safetyProfile = default(GalleryImageVersionSafetyProfile), ReplicationStatus replicationStatus = default(ReplicationStatus))
+            : base(id, name, type, tags)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
             StorageProfile = storageProfile;
+            SafetyProfile = safetyProfile;
             ReplicationStatus = replicationStatus;
             CustomInit();
         }
@@ -62,13 +64,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public GalleryImageVersionPublishingProfile PublishingProfile { get; set; }
 
         /// <summary>
-        /// Gets the current state of the gallery Image Version.
-        /// </summary>
-        /// <remarks>
-        /// The provisioning state, which only appears in the response.
-        /// Possible values include: 'Creating', 'Updating', 'Failed',
+        /// Gets possible values include: 'Creating', 'Updating', 'Failed',
         /// 'Succeeded', 'Deleting', 'Migrating'
-        /// </remarks>
+        /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
@@ -76,6 +74,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageProfile")]
         public GalleryImageVersionStorageProfile StorageProfile { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.safetyProfile")]
+        public GalleryImageVersionSafetyProfile SafetyProfile { get; set; }
 
         /// <summary>
         /// </summary>
@@ -93,10 +96,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (StorageProfile == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StorageProfile");
-            }
-            if (StorageProfile != null)
-            {
-                StorageProfile.Validate();
             }
         }
     }

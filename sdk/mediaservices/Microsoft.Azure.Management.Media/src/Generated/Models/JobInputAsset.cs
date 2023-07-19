@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="assetName">The name of the input Asset.</param>
         /// <param name="files">List of files. Required for JobInputHttp.
-        /// Maximum of 4000 characters each.</param>
+        /// Maximum of 4000 characters each. Query strings will not be returned
+        /// in service responses to prevent sensitive data exposure.</param>
         /// <param name="start">Defines a point on the timeline of the input
         /// media at which processing will start. Defaults to the beginning of
         /// the input media.</param>
@@ -49,8 +50,11 @@ namespace Microsoft.Azure.Management.Media.Models
         /// video before it is encoded. When submitting a Job, exactly one of
         /// the JobInputs should be the image file, and it should have the
         /// label 'xyz'.</param>
-        public JobInputAsset(string assetName, IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string))
-            : base(files, start, end, label)
+        /// <param name="inputDefinitions">Defines a list of InputDefinitions.
+        /// For each InputDefinition, it defines a list of track selections and
+        /// related metadata.</param>
+        public JobInputAsset(string assetName, IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string), IList<InputDefinition> inputDefinitions = default(IList<InputDefinition>))
+            : base(files, start, end, label, inputDefinitions)
         {
             AssetName = assetName;
             CustomInit();

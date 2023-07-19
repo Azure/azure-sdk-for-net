@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//customvision/v3.0/training/projects/25c97b85-569b-49ef-804a-a1bdfc61128b/quicktest/url?iterationId=3eb85de6-fb4e-47d4-9905-175873af13ce",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yNWM5N2I4NS01NjliLTQ5ZWYtODA0YS1hMWJkZmM2MTEyOGIvcXVpY2t0ZXN0L3VybD9pdGVyYXRpb25JZD0zZWI4NWRlNi1mYjRlLTQ3ZDQtOTkwNS0xNzU4NzNhZjEzY2U=",
+      "RequestUri": "//customvision/v3.4-preview/training/projects/e7d08afb-4919-4999-af29-5758c34f3895/quicktest/url?iterationId=559f458f-ea59-4cba-8af2-b383226edb38&store=true",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuNC1wcmV2aWV3L3RyYWluaW5nL3Byb2plY3RzL2U3ZDA4YWZiLTQ5MTktNDk5OS1hZjI5LTU3NThjMzRmMzg5NS9xdWlja3Rlc3QvdXJsP2l0ZXJhdGlvbklkPTU1OWY0NThmLWVhNTktNGNiYS04YWYyLWIzODMyMjZlZGIzOCZzdG9yZT10cnVl",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg\"\r\n}",
       "RequestHeaders": {
@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -23,42 +23,45 @@
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 21 Mar 2019 01:34:35 GMT"
+        "Request-Id": [
+          "245d5cc5-6919-447e-9128-8da04f61c28b"
         ],
         "apim-request-id": [
-          "ce86ee00-3357-44f5-b0d4-3cdcdb655a1c"
+          "245d5cc5-6919-447e-9128-8da04f61c28b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Fri, 06 Nov 2020 17:46:17 GMT"
+        ],
         "Content-Length": [
-          "383"
+          "422"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"ce86ee00-3357-44f5-b0d4-3cdcdb655a1c\",\r\n  \"project\": \"25c97b85-569b-49ef-804a-a1bdfc61128b\",\r\n  \"iteration\": \"3eb85de6-fb4e-47d4-9905-175873af13ce\",\r\n  \"created\": \"2019-03-21T01:34:35.699Z\",\r\n  \"predictions\": [\r\n    {\r\n      \"probability\": 0.9999984,\r\n      \"tagId\": \"794b4f60-aabf-4829-bc3a-7f0cd817ad44\",\r\n      \"tagName\": \"Tag1\"\r\n    },\r\n    {\r\n      \"probability\": 3.54070966E-13,\r\n      \"tagId\": \"be1613e7-b05c-458a-81da-5eed68c38789\",\r\n      \"tagName\": \"Tag2\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"245d5cc5-6919-447e-9128-8da04f61c28b\",\r\n  \"project\": \"e7d08afb-4919-4999-af29-5758c34f3895\",\r\n  \"iteration\": \"559f458f-ea59-4cba-8af2-b383226edb38\",\r\n  \"created\": \"2020-11-06T17:46:17.747Z\",\r\n  \"predictions\": [\r\n    {\r\n      \"probability\": 0.9999999,\r\n      \"tagId\": \"efd2a7e8-c7dd-485c-9bc0-7be735de130d\",\r\n      \"tagName\": \"Tag1\",\r\n      \"tagType\": \"Regular\"\r\n    },\r\n    {\r\n      \"probability\": 1.1920929E-07,\r\n      \"tagId\": \"ba2d174d-b686-41c6-9f40-857381127dae\",\r\n      \"tagName\": \"Tag2\",\r\n      \"tagType\": \"Regular\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.0/training/projects/25c97b85-569b-49ef-804a-a1bdfc61128b/images/predictions",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yNWM5N2I4NS01NjliLTQ5ZWYtODA0YS1hMWJkZmM2MTEyOGIvaW1hZ2VzL3ByZWRpY3Rpb25z",
+      "RequestUri": "//customvision/v3.4-preview/training/projects/e7d08afb-4919-4999-af29-5758c34f3895/images/predictions",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuNC1wcmV2aWV3L3RyYWluaW5nL3Byb2plY3RzL2U3ZDA4YWZiLTQ5MTktNDk5OS1hZjI5LTU3NThjMzRmMzg5NS9pbWFnZXMvcHJlZGljdGlvbnM=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"images\": [\r\n    {\r\n      \"id\": \"ce86ee00-3357-44f5-b0d4-3cdcdb655a1c\"\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"images\": [\r\n    {\r\n      \"id\": \"245d5cc5-6919-447e-9128-8da04f61c28b\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "Training-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -68,26 +71,29 @@
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 21 Mar 2019 01:34:35 GMT"
+        "Request-Id": [
+          "2ce7a29b-f083-4b82-809d-bb9a6dc8e7a8"
         ],
         "apim-request-id": [
-          "6f03ecb2-9c98-4f8e-ba24-4f4666e3cb46"
+          "2ce7a29b-f083-4b82-809d-bb9a6dc8e7a8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Fri, 06 Nov 2020 17:46:17 GMT"
+        ],
         "Content-Length": [
-          "948"
+          "955"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"isBatchSuccessful\": true,\r\n  \"images\": [\r\n    {\r\n      \"sourceUrl\": \"ce86ee00-3357-44f5-b0d4-3cdcdb655a1c\",\r\n      \"status\": \"OK\",\r\n      \"image\": {\r\n        \"id\": \"8db5ed30-7acf-4f90-a79e-18d905b30fcf\",\r\n        \"created\": \"2019-03-21T01:34:35.9589911\",\r\n        \"width\": 1260,\r\n        \"height\": 900,\r\n        \"resizedImageUri\": \"https://irisusscppestore.blob.core.windows.net/i-25c97b85569b49ef804aa1bdfc61128b/i-8db5ed307acf4f90a79e18d905b30fcf?sv=2017-04-17&sr=b&sig=7UIzADfOep5gKaiiWQQcY6koi2au9UFvciQCz3%2ByTvM%3D&se=2019-03-22T01%3A34%3A35Z&sp=r\",\r\n        \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-25c97b85569b49ef804aa1bdfc61128b/t-8db5ed307acf4f90a79e18d905b30fcf?sv=2017-04-17&sr=b&sig=ixFSaLNkN3u7D0MdBnryaFzucQmub%2BQzsfa6Fn6XRNo%3D&se=2019-03-22T01%3A34%3A35Z&sp=r\",\r\n        \"originalImageUri\": \"https://irisusscppestore.blob.core.windows.net/i-25c97b85569b49ef804aa1bdfc61128b/i-8db5ed307acf4f90a79e18d905b30fcf?sv=2017-04-17&sr=b&sig=7UIzADfOep5gKaiiWQQcY6koi2au9UFvciQCz3%2ByTvM%3D&se=2019-03-22T01%3A34%3A35Z&sp=r\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"isBatchSuccessful\": true,\r\n  \"images\": [\r\n    {\r\n      \"sourceUrl\": \"245d5cc5-6919-447e-9128-8da04f61c28b\",\r\n      \"status\": \"OK\",\r\n      \"image\": {\r\n        \"id\": \"3850504e-5bc8-4754-a82a-0d1113293985\",\r\n        \"created\": \"2020-11-06T17:46:18.0288105\",\r\n        \"width\": 1260,\r\n        \"height\": 900,\r\n        \"resizedImageUri\": \"https://irisprodeu2training.blob.core.windows.net/i-e7d08afb49194999af295758c34f3895/i-3850504e5bc84754a82a0d1113293985?sv=2017-04-17&sr=b&sig=8ciLBCoDHn7tuiQ7OfBh8j3OB3LFrPjpQBiYDMMybvs%3D&se=2020-11-07T17%3A46%3A18Z&sp=r\",\r\n        \"thumbnailUri\": \"https://irisprodeu2training.blob.core.windows.net/i-e7d08afb49194999af295758c34f3895/t-3850504e5bc84754a82a0d1113293985?sv=2017-04-17&sr=b&sig=fnXukCJnqZQ7Ab3jYz1hJViqY9C49HS6i%2BL%2BES1NYZk%3D&se=2020-11-07T17%3A46%3A18Z&sp=r\",\r\n        \"originalImageUri\": \"https://irisprodeu2training.blob.core.windows.net/i-e7d08afb49194999af295758c34f3895/i-3850504e5bc84754a82a0d1113293985?sv=2017-04-17&sr=b&sig=8ciLBCoDHn7tuiQ7OfBh8j3OB3LFrPjpQBiYDMMybvs%3D&se=2020-11-07T17%3A46%3A18Z&sp=r\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

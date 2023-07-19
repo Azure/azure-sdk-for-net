@@ -72,6 +72,21 @@ namespace Microsoft.Azure.Management.Security
 
 
         /// <summary>
+        /// Gets the IMdeOnboardingsOperations.
+        /// </summary>
+        IMdeOnboardingsOperations MdeOnboardings { get; }
+
+        /// <summary>
+        /// Gets the ICustomAssessmentAutomationsOperations.
+        /// </summary>
+        ICustomAssessmentAutomationsOperations CustomAssessmentAutomations { get; }
+
+        /// <summary>
+        /// Gets the ICustomEntityStoreAssignmentsOperations.
+        /// </summary>
+        ICustomEntityStoreAssignmentsOperations CustomEntityStoreAssignments { get; }
+
+        /// <summary>
         /// Gets the IComplianceResultsOperations.
         /// </summary>
         IComplianceResultsOperations ComplianceResults { get; }
@@ -82,14 +97,9 @@ namespace Microsoft.Azure.Management.Security
         IPricingsOperations Pricings { get; }
 
         /// <summary>
-        /// Gets the IAlertsOperations.
+        /// Gets the IAdvancedThreatProtectionOperations.
         /// </summary>
-        IAlertsOperations Alerts { get; }
-
-        /// <summary>
-        /// Gets the ISettingsOperations.
-        /// </summary>
-        ISettingsOperations Settings { get; }
+        IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
 
         /// <summary>
         /// Gets the IDeviceSecurityGroupsOperations.
@@ -117,31 +127,6 @@ namespace Microsoft.Azure.Management.Security
         IIotSecuritySolutionsAnalyticsRecommendationOperations IotSecuritySolutionsAnalyticsRecommendation { get; }
 
         /// <summary>
-        /// Gets the IAllowedConnectionsOperations.
-        /// </summary>
-        IAllowedConnectionsOperations AllowedConnections { get; }
-
-        /// <summary>
-        /// Gets the IDiscoveredSecuritySolutionsOperations.
-        /// </summary>
-        IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; }
-
-        /// <summary>
-        /// Gets the IExternalSecuritySolutionsOperations.
-        /// </summary>
-        IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; }
-
-        /// <summary>
-        /// Gets the IJitNetworkAccessPoliciesOperations.
-        /// </summary>
-        IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
-
-        /// <summary>
-        /// Gets the IAdaptiveApplicationControlsOperations.
-        /// </summary>
-        IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; }
-
-        /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         ILocationsOperations Locations { get; }
@@ -155,16 +140,6 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the ITasksOperations.
         /// </summary>
         ITasksOperations Tasks { get; }
-
-        /// <summary>
-        /// Gets the ITopologyOperations.
-        /// </summary>
-        ITopologyOperations Topology { get; }
-
-        /// <summary>
-        /// Gets the IAdvancedThreatProtectionOperations.
-        /// </summary>
-        IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
 
         /// <summary>
         /// Gets the IAutoProvisioningSettingsOperations.
@@ -207,14 +182,194 @@ namespace Microsoft.Azure.Management.Security
         IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; }
 
         /// <summary>
+        /// Gets the ISubAssessmentsOperations.
+        /// </summary>
+        ISubAssessmentsOperations SubAssessments { get; }
+
+        /// <summary>
+        /// Gets the IAutomationsOperations.
+        /// </summary>
+        IAutomationsOperations Automations { get; }
+
+        /// <summary>
+        /// Gets the IAlertsSuppressionRulesOperations.
+        /// </summary>
+        IAlertsSuppressionRulesOperations AlertsSuppressionRules { get; }
+
+        /// <summary>
         /// Gets the IServerVulnerabilityAssessmentOperations.
         /// </summary>
         IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; }
 
         /// <summary>
-        /// Gets the ISubAssessmentsOperations.
+        /// Gets the IAssessmentsMetadataOperations.
         /// </summary>
-        ISubAssessmentsOperations SubAssessments { get; }
+        IAssessmentsMetadataOperations AssessmentsMetadata { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsOperations.
+        /// </summary>
+        IAssessmentsOperations Assessments { get; }
+
+        /// <summary>
+        /// Gets the IAdaptiveApplicationControlsOperations.
+        /// </summary>
+        IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; }
+
+        /// <summary>
+        /// Gets the IAdaptiveNetworkHardeningsOperations.
+        /// </summary>
+        IAdaptiveNetworkHardeningsOperations AdaptiveNetworkHardenings { get; }
+
+        /// <summary>
+        /// Gets the IAllowedConnectionsOperations.
+        /// </summary>
+        IAllowedConnectionsOperations AllowedConnections { get; }
+
+        /// <summary>
+        /// Gets the ITopologyOperations.
+        /// </summary>
+        ITopologyOperations Topology { get; }
+
+        /// <summary>
+        /// Gets the IJitNetworkAccessPoliciesOperations.
+        /// </summary>
+        IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDiscoveredSecuritySolutionsOperations.
+        /// </summary>
+        IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; }
+
+        /// <summary>
+        /// Gets the ISecuritySolutionsReferenceDataOperations.
+        /// </summary>
+        ISecuritySolutionsReferenceDataOperations SecuritySolutionsReferenceData { get; }
+
+        /// <summary>
+        /// Gets the IExternalSecuritySolutionsOperations.
+        /// </summary>
+        IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; }
+
+        /// <summary>
+        /// Gets the ISecureScoresOperations.
+        /// </summary>
+        ISecureScoresOperations SecureScores { get; }
+
+        /// <summary>
+        /// Gets the ISecureScoreControlsOperations.
+        /// </summary>
+        ISecureScoreControlsOperations SecureScoreControls { get; }
+
+        /// <summary>
+        /// Gets the ISecureScoreControlDefinitionsOperations.
+        /// </summary>
+        ISecureScoreControlDefinitionsOperations SecureScoreControlDefinitions { get; }
+
+        /// <summary>
+        /// Gets the ISecuritySolutionsOperations.
+        /// </summary>
+        ISecuritySolutionsOperations SecuritySolutions { get; }
+
+        /// <summary>
+        /// Gets the IConnectorsOperations.
+        /// </summary>
+        IConnectorsOperations Connectors { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentScansOperations SqlVulnerabilityAssessmentScans { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScanResultsOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentScanResultsOperations SqlVulnerabilityAssessmentScanResults { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentBaselineRulesOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentBaselineRulesOperations SqlVulnerabilityAssessmentBaselineRules { get; }
+
+        /// <summary>
+        /// Gets the IAlertsOperations.
+        /// </summary>
+        IAlertsOperations Alerts { get; }
+
+        /// <summary>
+        /// Gets the ISettingsOperations.
+        /// </summary>
+        ISettingsOperations Settings { get; }
+
+        /// <summary>
+        /// Gets the IIngestionSettingsOperations.
+        /// </summary>
+        IIngestionSettingsOperations IngestionSettings { get; }
+
+        /// <summary>
+        /// Gets the ISoftwareInventoriesOperations.
+        /// </summary>
+        ISoftwareInventoriesOperations SoftwareInventories { get; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorsOperations.
+        /// </summary>
+        ISecurityConnectorsOperations SecurityConnectors { get; }
+
+        /// <summary>
+        /// Gets the IGovernanceRuleOperations.
+        /// </summary>
+        IGovernanceRuleOperations GovernanceRule { get; }
+
+        /// <summary>
+        /// Gets the IGovernanceRulesOperations.
+        /// </summary>
+        IGovernanceRulesOperations GovernanceRules { get; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorGovernanceRuleOperations.
+        /// </summary>
+        ISecurityConnectorGovernanceRuleOperations SecurityConnectorGovernanceRule { get; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorGovernanceRulesOperations.
+        /// </summary>
+        ISecurityConnectorGovernanceRulesOperations SecurityConnectorGovernanceRules { get; }
+
+        /// <summary>
+        /// Gets the ISubscriptionGovernanceRulesExecuteStatusOperations.
+        /// </summary>
+        ISubscriptionGovernanceRulesExecuteStatusOperations SubscriptionGovernanceRulesExecuteStatus { get; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorGovernanceRulesExecuteStatusOperations.
+        /// </summary>
+        ISecurityConnectorGovernanceRulesExecuteStatusOperations SecurityConnectorGovernanceRulesExecuteStatus { get; }
+
+        /// <summary>
+        /// Gets the IGovernanceAssignmentsOperations.
+        /// </summary>
+        IGovernanceAssignmentsOperations GovernanceAssignments { get; }
+
+        /// <summary>
+        /// Gets the IApplicationsOperations.
+        /// </summary>
+        IApplicationsOperations Applications { get; }
+
+        /// <summary>
+        /// Gets the IApplicationOperations.
+        /// </summary>
+        IApplicationOperations Application { get; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorApplicationsOperations.
+        /// </summary>
+        ISecurityConnectorApplicationsOperations SecurityConnectorApplications { get; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorApplicationOperations.
+        /// </summary>
+        ISecurityConnectorApplicationOperations SecurityConnectorApplication { get; }
 
     }
 }

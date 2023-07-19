@@ -2,35 +2,46 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the recognize PII entities operation on a single
-    /// document, containing a collection of the <see cref="NamedEntity"/>
-    /// objects containing personally identifiable information that were
+    /// The result of the recognize PII entities operation on a
+    /// document, containing a collection of the <see cref="PiiEntity"/>
+    /// objects containing Personally Identifiable Information that were
     /// found in that document.
     /// </summary>
     public class RecognizePiiEntitiesResult : TextAnalyticsResult
     {
-        internal RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, IList<NamedEntity> entities)
+        private readonly PiiEntityCollection _entities;
+
+        internal RecognizePiiEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            PiiEntityCollection entities)
             : base(id, statistics)
         {
-            NamedEntities = new ReadOnlyCollection<NamedEntity>(entities);
+            _entities = entities;
         }
 
-        internal RecognizePiiEntitiesResult(string id, string errorMessage)
-            : base(id, errorMessage)
-        {
-            NamedEntities = Array.Empty<NamedEntity>();
-        }
+        internal RecognizePiiEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
-        /// Gets the collection of named entities containing personally
-        /// identifiable information in the input document.
+        /// Gets the collection of PII entities containing Personally
+        /// Identifiable Information in the document.
         /// </summary>
-        public IReadOnlyCollection<NamedEntity> NamedEntities { get; }
+        public PiiEntityCollection Entities
+        {
+            get
+            {
+                if (HasError)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.ErrorCode}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _entities;
+            }
+        }
     }
 }

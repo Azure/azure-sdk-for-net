@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.Cdn.csproj" />
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+</Project>

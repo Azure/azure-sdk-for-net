@@ -33,7 +33,9 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// <param name="column">The column of the table over which the given
         /// query should run</param>
         /// <param name="operatorProperty">A query operator to evaluate over
-        /// the provided column and value(s).</param>
+        /// the provided column and value(s). Supported operators are ==, =~,
+        /// in, in~, &gt;, &gt;=, &lt;, &lt;=, between, and have the same
+        /// behavior as they would in a KQL query.</param>
         /// <param name="value">the value for the operator to function over.
         /// This can be a number (e.g., &gt; 100), a string (timestamp &gt;=
         /// '2017-09-01') or array of values.</param>
@@ -62,7 +64,9 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
 
         /// <summary>
         /// Gets or sets a query operator to evaluate over the provided column
-        /// and value(s).
+        /// and value(s). Supported operators are ==, =~, in, in~, &amp;gt;,
+        /// &amp;gt;=, &amp;lt;, &amp;lt;=, between, and have the same behavior
+        /// as they would in a KQL query.
         /// </summary>
         [JsonProperty(PropertyName = "operator")]
         public string OperatorProperty { get; set; }

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.GuestConfiguration.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,16 +33,20 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// Initializes a new instance of the
         /// GuestConfigurationAssignmentProperties class.
         /// </summary>
+        /// <param name="targetResourceId">VM resource Id.</param>
         /// <param name="guestConfiguration">The guest configuration to
         /// assign.</param>
         /// <param name="complianceStatus">A value indicating compliance status
-        /// of the virtual machine for the assigned guest configuration.
-        /// Possible values include: 'Compliant', 'NonCompliant',
-        /// 'Pending'</param>
+        /// of the machine for the assigned guest configuration. Possible
+        /// values include: 'Compliant', 'NonCompliant', 'Pending'</param>
         /// <param name="lastComplianceStatusChecked">Date and time when last
         /// compliance status was checked.</param>
         /// <param name="latestReportId">Id of the latest report for the guest
         /// configuration assignment. </param>
+        /// <param name="parameterHash">parameter hash for the guest
+        /// configuration assignment. </param>
+        /// <param name="latestAssignmentReport">Last reported guest
+        /// configuration assignment report.</param>
         /// <param name="context">The source which initiated the guest
         /// configuration assignment. Ex: Azure Policy</param>
         /// <param name="assignmentHash">Combined hash of the configuration
@@ -48,15 +54,23 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response. Possible values include: 'Succeeded',
         /// 'Failed', 'Canceled', 'Created'</param>
-        public GuestConfigurationAssignmentProperties(GuestConfigurationNavigation guestConfiguration = default(GuestConfigurationNavigation), string complianceStatus = default(string), System.DateTime? lastComplianceStatusChecked = default(System.DateTime?), string latestReportId = default(string), string context = default(string), string assignmentHash = default(string), string provisioningState = default(string))
+        /// <param name="resourceType">Type of the resource - VMSS / VM</param>
+        /// <param name="vmssVMList">The list of VM Compliance data for
+        /// VMSS</param>
+        public GuestConfigurationAssignmentProperties(string targetResourceId = default(string), GuestConfigurationNavigation guestConfiguration = default(GuestConfigurationNavigation), string complianceStatus = default(string), System.DateTime? lastComplianceStatusChecked = default(System.DateTime?), string latestReportId = default(string), string parameterHash = default(string), AssignmentReport latestAssignmentReport = default(AssignmentReport), string context = default(string), string assignmentHash = default(string), string provisioningState = default(string), string resourceType = default(string), IList<VMSSVMInfo> vmssVMList = default(IList<VMSSVMInfo>))
         {
+            TargetResourceId = targetResourceId;
             GuestConfiguration = guestConfiguration;
             ComplianceStatus = complianceStatus;
             LastComplianceStatusChecked = lastComplianceStatusChecked;
             LatestReportId = latestReportId;
+            ParameterHash = parameterHash;
+            LatestAssignmentReport = latestAssignmentReport;
             Context = context;
             AssignmentHash = assignmentHash;
             ProvisioningState = provisioningState;
+            ResourceType = resourceType;
+            VmssVMList = vmssVMList;
             CustomInit();
         }
 
@@ -66,15 +80,21 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets VM resource Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetResourceId")]
+        public string TargetResourceId { get; private set; }
+
+        /// <summary>
         /// Gets or sets the guest configuration to assign.
         /// </summary>
         [JsonProperty(PropertyName = "guestConfiguration")]
         public GuestConfigurationNavigation GuestConfiguration { get; set; }
 
         /// <summary>
-        /// Gets a value indicating compliance status of the virtual machine
-        /// for the assigned guest configuration. Possible values include:
-        /// 'Compliant', 'NonCompliant', 'Pending'
+        /// Gets a value indicating compliance status of the machine for the
+        /// assigned guest configuration. Possible values include: 'Compliant',
+        /// 'NonCompliant', 'Pending'
         /// </summary>
         [JsonProperty(PropertyName = "complianceStatus")]
         public string ComplianceStatus { get; private set; }
@@ -91,6 +111,18 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// </summary>
         [JsonProperty(PropertyName = "latestReportId")]
         public string LatestReportId { get; private set; }
+
+        /// <summary>
+        /// Gets parameter hash for the guest configuration assignment.
+        /// </summary>
+        [JsonProperty(PropertyName = "parameterHash")]
+        public string ParameterHash { get; private set; }
+
+        /// <summary>
+        /// Gets or sets last reported guest configuration assignment report.
+        /// </summary>
+        [JsonProperty(PropertyName = "latestAssignmentReport")]
+        public AssignmentReport LatestAssignmentReport { get; set; }
 
         /// <summary>
         /// Gets or sets the source which initiated the guest configuration
@@ -112,6 +144,18 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets type of the resource - VMSS / VM
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceType")]
+        public string ResourceType { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the list of VM Compliance data for VMSS
+        /// </summary>
+        [JsonProperty(PropertyName = "vmssVMList")]
+        public IList<VMSSVMInfo> VmssVMList { get; set; }
 
     }
 }

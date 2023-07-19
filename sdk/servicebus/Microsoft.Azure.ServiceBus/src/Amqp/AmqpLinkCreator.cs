@@ -8,6 +8,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Framing;
     using Microsoft.Azure.ServiceBus.Primitives;
+    using Newtonsoft.Json.Schema;
 
     internal abstract class AmqpLinkCreator
     {
@@ -59,6 +60,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 // Create Session
                 var amqpSessionSettings = new AmqpSessionSettings { Properties = new Fields() };
+                if (this.amqpLinkSettings.IsReceiver())
+                {
+                    // This is the maximum number of unsettled transfers across all receive links on this session.
+                    // This will allow the session to accept unlimited number of transfers, even if the recevier(s)
+                    // are not settling any of the deliveries.
+                    amqpSessionSettings.IncomingWindow = uint.MaxValue;
+                }
+
                 session = amqpConnection.CreateSession(amqpSessionSettings);
                 await session.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
             }
@@ -66,7 +75,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 MessagingEventSource.Log.AmqpSessionCreationException(this.entityPath, amqpConnection, exception);
                 session?.Abort();
-                throw AmqpExceptionHelper.GetClientException(exception, null, session.GetInnerException(), amqpConnection.IsClosing());
+                throw AmqpExceptionHelper.GetClientException(exception, false, null, session.GetInnerException(), amqpConnection.IsClosing());
             }
 
             AmqpObject link = null;
@@ -86,7 +95,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     exception);
 
                 session.SafeClose(exception);
-                throw AmqpExceptionHelper.GetClientException(exception, null, link?.GetInnerException(), amqpConnection.IsClosing());
+                throw AmqpExceptionHelper.GetClientException(exception, false, null, link?.GetInnerException(), amqpConnection.IsClosing());
             }
         }
 

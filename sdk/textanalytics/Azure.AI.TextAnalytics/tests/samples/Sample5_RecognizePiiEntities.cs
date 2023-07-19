@@ -2,36 +2,47 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
-    public partial class TextAnalyticsSamples
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public void RecognizePiiEntities()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #region Snippet:Sample5_RecognizePiiEntities
+            string document =
+                "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
+                + " use their phone number 800-102-1100. They are originally from Brazil and have document ID number"
+                + " 998.214.865-68.";
 
-            #region Snippet:RecognizePiiEntities
-            string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
-
-            // Recognize entities containing personally identifiable information in the input text
-            RecognizePiiEntitiesResult result = client.RecognizePiiEntities(input);
-            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
-
-            Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
-            foreach (NamedEntity entity in entities)
+            try
             {
-                Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+                Response<PiiEntityCollection> response = client.RecognizePiiEntities(document);
+                PiiEntityCollection entities = response.Value;
+
+                Console.WriteLine($"Redacted Text: {entities.RedactedText}");
+                Console.WriteLine();
+                Console.WriteLine($"Recognized {entities.Count} PII entities:");
+                foreach (PiiEntity entity in entities)
+                {
+                    Console.WriteLine($"  Text: {entity.Text}");
+                    Console.WriteLine($"  Category: {entity.Category}");
+                    if (!string.IsNullOrEmpty(entity.SubCategory))
+                        Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                    Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine();
+                }
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion
         }

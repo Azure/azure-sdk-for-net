@@ -179,12 +179,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicName'>
             /// Name of the topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the resource
+            /// <param name='topicUpdateParameters'>
+            /// Topic update information.
             /// </param>
-            public static Topic Update(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Topic Update(this ITopicsOperations operations, string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters)
             {
-                return operations.UpdateAsync(resourceGroupName, topicName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, topicName, topicUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -202,15 +202,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicName'>
             /// Name of the topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the resource
+            /// <param name='topicUpdateParameters'>
+            /// Topic update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Topic> UpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Topic> UpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, topicName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, topicName, topicUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -612,12 +612,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicName'>
             /// Name of the topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the resource
+            /// <param name='topicUpdateParameters'>
+            /// Topic update information.
             /// </param>
-            public static Topic BeginUpdate(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Topic BeginUpdate(this ITopicsOperations operations, string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, topicName, tags).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, topicName, topicUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -635,15 +635,67 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicName'>
             /// Name of the topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the resource
+            /// <param name='topicUpdateParameters'>
+            /// Topic update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Topic> BeginUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Topic> BeginUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, topicName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, topicName, topicUpdateParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Regenerate key for a topic.
+            /// </summary>
+            /// <remarks>
+            /// Regenerate a shared access key for a topic.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='topicName'>
+            /// Name of the topic.
+            /// </param>
+            /// <param name='keyName'>
+            /// Key name to regenerate key1 or key2
+            /// </param>
+            public static TopicSharedAccessKeys BeginRegenerateKey(this ITopicsOperations operations, string resourceGroupName, string topicName, string keyName)
+            {
+                return operations.BeginRegenerateKeyAsync(resourceGroupName, topicName, keyName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Regenerate key for a topic.
+            /// </summary>
+            /// <remarks>
+            /// Regenerate a shared access key for a topic.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='topicName'>
+            /// Name of the topic.
+            /// </param>
+            /// <param name='keyName'>
+            /// Key name to regenerate key1 or key2
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TopicSharedAccessKeys> BeginRegenerateKeyAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, string keyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRegenerateKeyWithHttpMessagesAsync(resourceGroupName, topicName, keyName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

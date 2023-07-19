@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Messaging;
+using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Azure;
@@ -17,12 +20,18 @@ namespace LineCounter.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly BlobContainerClient _blobContainerClient;
         private readonly EventHubProducerClient _uploadsProducer;
+        private readonly EventGridPublisherClient _publisherClient;
 
-        public HomeController(ILogger<HomeController> logger, BlobServiceClient blobServiceClient, IAzureClientFactory<EventHubProducerClient> clientFactory)
+        public HomeController(
+            ILogger<HomeController> logger,
+            BlobServiceClient blobServiceClient,
+            IAzureClientFactory<EventHubProducerClient> clientFactory,
+            EventGridPublisherClient publisherClient)
         {
             _logger = logger;
             _blobContainerClient = blobServiceClient.GetBlobContainerClient("uploads");
             _uploadsProducer = clientFactory.CreateClient("Uploads");
+            _publisherClient = publisherClient;
         }
 
         public IActionResult Index()
@@ -59,7 +68,7 @@ namespace LineCounter.Controllers
         {
             var properties = await _blobContainerClient.GetBlobClient(name).GetPropertiesAsync();
             properties.Value.Metadata.TryGetValue("whitespacecount", out var count);
-
+            await _publisherClient.SendEventsAsync(new CloudEvent[] { new CloudEvent("https://www.contoso.com/LineCounter", "LineCounter.Status.Viewed", name) });
             return count ?? "-1";
         }
     }

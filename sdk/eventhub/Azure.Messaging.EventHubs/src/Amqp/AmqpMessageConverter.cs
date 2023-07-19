@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Azure.Core;
+using Azure.Core.Amqp;
+using Azure.Core.Amqp.Shared;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -24,6 +26,23 @@ namespace Azure.Messaging.EventHubs.Amqp
     {
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
+
+        /// <summary>The set of key names for annotations known to be DateTime-based system properties.</summary>
+        private static readonly HashSet<string> SystemPropertyDateTimeKeys = new()
+        {
+            AmqpProperty.EnqueuedTime.ToString(),
+            AmqpProperty.PartitionLastEnqueuedTimeUtc.ToString(),
+            AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc.ToString()
+        };
+
+        /// <summary>The set of key names for annotations known to be long-based system properties.</summary>
+        private static readonly HashSet<string> SystemPropertyLongKeys = new()
+        {
+            AmqpProperty.SequenceNumber.ToString(),
+            AmqpProperty.Offset.ToString(),
+            AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString(),
+            AmqpProperty.PartitionLastEnqueuedOffset.ToString()
+        };
 
         /// <summary>
         ///   Converts a given <see cref="EventData" /> source into its corresponding
@@ -61,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   ensuring proper disposal.
         /// </remarks>
         ///
-        public virtual AmqpMessage CreateBatchFromEvents(IEnumerable<EventData> source,
+        public virtual AmqpMessage CreateBatchFromEvents(IReadOnlyCollection<EventData> source,
                                                          string partitionKey = null)
         {
             Argument.AssertNotNull(source, nameof(source));
@@ -82,7 +101,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   ensuring proper disposal.
         /// </remarks>
         ///
-        public virtual AmqpMessage CreateBatchFromMessages(IEnumerable<AmqpMessage> source,
+        public virtual AmqpMessage CreateBatchFromMessages(IReadOnlyCollection<AmqpMessage> source,
                                                            string partitionKey = null)
         {
             Argument.AssertNotNull(source, nameof(source));
@@ -157,7 +176,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(response, nameof(response));
 
-
             if (!(response.ValueBody?.Value is AmqpMap responseData))
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
@@ -221,7 +239,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(response, nameof(response));
 
-
             if (!(response.ValueBody?.Value is AmqpMap responseData))
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
@@ -233,8 +250,36 @@ namespace Azure.Messaging.EventHubs.Amqp
                 (bool)responseData[AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionBeginSequenceNumber],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber],
-                long.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset]),
+                long.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset], NumberStyles.Integer, CultureInfo.InvariantCulture),
                 new DateTimeOffset((DateTime)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc], TimeSpan.Zero));
+        }
+
+        /// <summary>
+        ///   Conditionally applies the set of properties associated with message
+        ///   publishing, if values were provided.
+        /// </summary>
+        ///
+        /// <param name="message">The message to conditionally set properties on; this message will be mutated.</param>
+        /// <param name="sequenceNumber">The sequence number to consider and apply.</param>
+        /// <param name="groupId">The group identifier to consider and apply.</param>
+        /// <param name="ownerLevel">The owner level to consider and apply.</param>
+        ///
+        public virtual void ApplyPublisherPropertiesToAmqpMessage(AmqpMessage message,
+                                                                  int? sequenceNumber,
+                                                                  long? groupId,
+                                                                  short? ownerLevel) => SetPublisherProperties(message, sequenceNumber, groupId, ownerLevel);
+
+        /// <summary>
+        ///   Removes the set of properties associated with message publishing.
+        /// </summary>
+        ///
+        /// <param name="message">The message to conditionally set properties on; this message will be mutated.</param>
+        ///
+        public virtual void RemovePublishingPropertiesFromAmqpMessage(AmqpMessage message)
+        {
+            message.MessageAnnotations.Map.TryRemoveValue<int?>(AmqpProperty.ProducerSequenceNumber, out var _);
+            message.MessageAnnotations.Map.TryRemoveValue<long?>(AmqpProperty.ProducerGroupId, out var _);
+            message.MessageAnnotations.Map.TryRemoveValue<short?>(AmqpProperty.ProducerOwnerLevel, out var _);
         }
 
         /// <summary>
@@ -247,11 +292,18 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source events.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromEvents(IEnumerable<EventData> source,
-                                                            string partitionKey) =>
-            BuildAmqpBatchFromMessages(
-                source.Select(eventData => BuildAmqpMessageFromEvent(eventData, partitionKey)),
-                partitionKey);
+        private static AmqpMessage BuildAmqpBatchFromEvents(IReadOnlyCollection<EventData> source,
+                                                            string partitionKey)
+        {
+            var messages = new List<AmqpMessage>(source.Count);
+
+            foreach (var eventData in source)
+            {
+                messages.Add(BuildAmqpMessageFromEvent(eventData, partitionKey));
+            }
+
+            return BuildAmqpBatchFromMessages(messages, partitionKey);
+        }
 
         /// <summary>
         ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="AmqpMessage" />.
@@ -262,26 +314,57 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessages(IEnumerable<AmqpMessage> source,
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the message once it has been created, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
+        private static AmqpMessage BuildAmqpBatchFromMessages(IReadOnlyCollection<AmqpMessage> source,
                                                               string partitionKey)
         {
             AmqpMessage batchEnvelope;
 
-            var batchMessages = source.ToList();
+            // If there is a single message, then it will be used as the
+            // envelope.  To avoid mutating the instance and polluting it with
+            // delivery state which prevents it from being sent during retries,
+            // clone it.
 
-            if (batchMessages.Count == 1)
+            if (source.Count == 1)
             {
-                batchEnvelope = batchMessages[0];
+                switch (source)
+                {
+                    case List<AmqpMessage> messageList:
+                        batchEnvelope = messageList[0].Clone();
+                        break;
+
+                    case AmqpMessage[] messageArray:
+                        batchEnvelope = messageArray[0].Clone();
+                        break;
+
+                    default:
+                        var enumerator = source.GetEnumerator();
+                        enumerator.MoveNext();
+
+                        batchEnvelope = enumerator.Current;
+                        break;
+                }
             }
             else
             {
-                batchEnvelope = AmqpMessage.Create(batchMessages.Select(message =>
+                var messageData = new Data[source.Count];
+                var count = 0;
+
+                foreach (var message in source)
                 {
                     message.Batchable = true;
-                    using var messageStream = message.ToStream();
-                    return new Data { Value = ReadStreamToArraySegment(messageStream) };
-                }));
 
+                    using var messageStream = message.ToStream();
+                    messageData[count] = new Data { Value = ReadStreamToArraySegment(messageStream) };
+
+                    ++count;
+                }
+
+                batchEnvelope = AmqpMessage.Create(messageData);
                 batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
             }
 
@@ -303,30 +386,25 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The <see cref="AmqpMessage" /> constructed from the source event.</returns>
         ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the message once it has been created, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
         private static AmqpMessage BuildAmqpMessageFromEvent(EventData source,
                                                              string partitionKey)
         {
-            var body = new ArraySegment<byte>((source.Body.IsEmpty) ? Array.Empty<byte>() : source.Body.ToArray());
-            var message = AmqpMessage.Create(new Data { Value = body });
+            var sourceMessage = source.GetRawAmqpMessage();
+            var message = AmqpAnnotatedMessageConverter.ToAmqpMessage(sourceMessage);
 
-            if (source.Properties?.Count > 0)
-            {
-                message.ApplicationProperties ??= new ApplicationProperties();
-
-                foreach (KeyValuePair<string, object> pair in source.Properties)
-                {
-                    if (TryCreateAmqpPropertyValueForEventProperty(pair.Value, out var amqpValue))
-                    {
-                        message.ApplicationProperties.Map[pair.Key] = amqpValue;
-                    }
-                }
-            }
+            // Special cases
 
             if (!string.IsNullOrEmpty(partitionKey))
             {
                 message.MessageAnnotations.Map[AmqpProperty.PartitionKey] = partitionKey;
             }
 
+            SetPublisherProperties(message, source.PendingPublishSequenceNumber, source.PendingProducerGroupId, source.PendingProducerOwnerLevel);
             return message;
         }
 
@@ -340,188 +418,219 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static EventData BuildEventFromAmqpMessage(AmqpMessage source)
         {
-            ReadOnlyMemory<byte> body = (source.BodyType.HasFlag(SectionFlag.Data))
-                ? ReadStreamToMemory(source.BodyStream)
-                : ReadOnlyMemory<byte>.Empty;
+            var message = AmqpAnnotatedMessageConverter.FromAmqpMessage(source);
 
-            ParsedAnnotations systemAnnotations = ParseSystemAnnotations(source);
+            // Message Annotations - special handling for Event Hub service annotations
 
-            // If there were application properties associated with the message, translate them
-            // to the event.
-
-            var properties = new Dictionary<string, object>();
-
-            if (source.Sections.HasFlag(SectionFlag.ApplicationProperties))
+            if ((source.Sections & SectionFlag.MessageAnnotations) > 0)
             {
-                foreach (KeyValuePair<MapKey, object> pair in source.ApplicationProperties.Map)
-                {
-                    if (TryCreateEventPropertyForAmqpProperty(pair.Value, out object propertyValue))
-                    {
-                        properties[pair.Key.ToString()] = propertyValue;
-                    }
-                }
+                NormalizeBrokerProperties(message.MessageAnnotations, source.MessageAnnotations.Map);
             }
 
-            return new EventData(
-                eventBody: body,
-                properties: properties,
-                systemProperties: systemAnnotations.ServiceAnnotations,
-                sequenceNumber: systemAnnotations.SequenceNumber ?? long.MinValue,
-                offset: systemAnnotations.Offset ?? long.MinValue,
-                enqueuedTime: systemAnnotations.EnqueuedTime ?? default,
-                partitionKey: systemAnnotations.PartitionKey,
-                lastPartitionSequenceNumber: systemAnnotations.LastSequenceNumber,
-                lastPartitionOffset: systemAnnotations.LastOffset,
-                lastPartitionEnqueuedTime: systemAnnotations.LastEnqueuedTime,
-                lastPartitionPropertiesRetrievalTime: systemAnnotations.LastReceivedTime);
+            // Delivery Annotations - special handling for Event Hub service annotations
+
+            if ((source.Sections & SectionFlag.DeliveryAnnotations) > 0)
+            {
+                NormalizeBrokerProperties(message.DeliveryAnnotations, source.DeliveryAnnotations.Map);
+            }
+
+            return new EventData(message);
+        }
+
+        private static void NormalizeBrokerProperties(IDictionary<string, object> properties, Annotations sourceProperties)
+        {
+            foreach (var pair in sourceProperties)
+            {
+                string keyString = pair.Key.ToString();
+                if (SystemPropertyDateTimeKeys.Contains(keyString))
+                {
+                    properties[keyString] =
+                        pair.Value switch
+                        {
+                            DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
+                            long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
+                            _ => pair.Value
+                        };
+                }
+                else if (SystemPropertyLongKeys.Contains(keyString))
+                {
+                    properties[keyString] =
+                        pair.Value switch
+                        {
+                            string stringValue when long.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture,
+                                    out var longValue) =>
+                                longValue,
+                            _ => pair.Value
+                        };
+                }
+            }
         }
 
         /// <summary>
-        ///   Parses the annotations set by the Event Hubs service on the <see cref="AmqpMessage"/>
-        ///   associated with an event, extracting them into a consumable form.
+        ///   Conditionally applies the set of properties associated with message
+        ///   publishing, if values were provided.
         /// </summary>
         ///
-        /// <param name="source">The message to use as the source of the event.</param>
+        /// <param name="message">The message to conditionally set properties on; this message will be mutated.</param>
+        /// <param name="sequenceNumber">The sequence number to consider and apply.</param>
+        /// <param name="groupId">The group identifier to consider and apply.</param>
+        /// <param name="ownerLevel">The owner level to consider and apply.</param>
         ///
-        /// <returns>The <see cref="ParsedAnnotations" /> parsed from the source message.</returns>
-        ///
-        private static ParsedAnnotations ParseSystemAnnotations(AmqpMessage source)
+        private static void SetPublisherProperties(AmqpMessage message,
+                                                   int? sequenceNumber,
+                                                   long? groupId,
+                                                   short? ownerLevel)
         {
-            var systemProperties = new ParsedAnnotations
+            if (sequenceNumber.HasValue)
             {
-                ServiceAnnotations = new Dictionary<string, object>()
-            };
-
-            object amqpValue;
-            object propertyValue;
-
-            // Process the message annotations.
-
-            if (source.Sections.HasFlag(SectionFlag.MessageAnnotations))
-            {
-                Annotations annotations = source.MessageAnnotations.Map;
-                var processed = new HashSet<string>();
-
-                if ((annotations.TryGetValue(AmqpProperty.EnqueuedTime, out amqpValue))
-                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
-                {
-                    systemProperties.EnqueuedTime = propertyValue switch
-                    {
-                        DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
-                        long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
-                        _ => (DateTimeOffset)propertyValue
-                    };
-
-                    processed.Add(AmqpProperty.EnqueuedTime.ToString());
-                }
-
-                if ((annotations.TryGetValue(AmqpProperty.SequenceNumber, out amqpValue))
-                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
-                {
-                    systemProperties.SequenceNumber = (long)propertyValue;
-                    processed.Add(AmqpProperty.SequenceNumber.ToString());
-                }
-
-                if ((annotations.TryGetValue(AmqpProperty.Offset, out amqpValue))
-                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue))
-                    && (long.TryParse((string)propertyValue, out var offset)))
-                {
-                    systemProperties.Offset = offset;
-                    processed.Add(AmqpProperty.Offset.ToString());
-                }
-
-                if ((annotations.TryGetValue(AmqpProperty.PartitionKey, out amqpValue))
-                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
-                {
-                    systemProperties.PartitionKey = (string)propertyValue;
-                    processed.Add(AmqpProperty.PartitionKey.ToString());
-                }
-
-                string key;
-
-                foreach (KeyValuePair<MapKey, object> pair in annotations)
-                {
-                    key = pair.Key.ToString();
-
-                    if ((!processed.Contains(key))
-                        && (TryCreateEventPropertyForAmqpProperty(pair.Value, out propertyValue)))
-                    {
-                        systemProperties.ServiceAnnotations.Add(key, propertyValue);
-                        processed.Add(key);
-                    }
-                }
+                message.MessageAnnotations.Map[AmqpProperty.ProducerSequenceNumber] = sequenceNumber;
             }
 
-            // Process the delivery annotations.
-
-            if (source.Sections.HasFlag(SectionFlag.DeliveryAnnotations))
+            if (groupId.HasValue)
             {
-                if ((source.DeliveryAnnotations.Map.TryGetValue(AmqpProperty.PartitionLastEnqueuedTimeUtc, out amqpValue))
-                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
-                {
-                    systemProperties.LastEnqueuedTime = propertyValue switch
-                    {
-                        DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
-                        long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
-                        _ => (DateTimeOffset)propertyValue
-                    };
-                }
-
-                if ((source.DeliveryAnnotations.Map.TryGetValue(AmqpProperty.PartitionLastEnqueuedSequenceNumber, out amqpValue))
-                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
-                {
-                    systemProperties.LastSequenceNumber = (long)propertyValue;
-                }
-
-                if ((source.DeliveryAnnotations.Map.TryGetValue(AmqpProperty.PartitionLastEnqueuedOffset, out amqpValue))
-                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue))
-                    && (long.TryParse((string)propertyValue, out var offset)))
-                {
-                    systemProperties.LastOffset = offset;
-                }
-
-                if ((source.DeliveryAnnotations.Map.TryGetValue(AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc, out amqpValue))
-                    && (TryCreateEventPropertyForAmqpProperty(amqpValue, out propertyValue)))
-                {
-                    systemProperties.LastReceivedTime = propertyValue switch
-                    {
-                        DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
-                        long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
-                        _ => (DateTimeOffset)propertyValue
-                    };
-                }
+                message.MessageAnnotations.Map[AmqpProperty.ProducerGroupId] = groupId;
             }
 
-            // Process the properties annotations
-
-            if (source.Sections.HasFlag(SectionFlag.Properties))
+            if (ownerLevel.HasValue)
             {
-                Properties properties = source.Properties;
+                message.MessageAnnotations.Map[AmqpProperty.ProducerOwnerLevel] = ownerLevel;
+            }
+        }
 
-                void conditionalAdd(string name, object value, bool condition)
+        /// <summary>
+        ///   Translates the data body segments into the corresponding set of
+        ///   <see cref="Data" /> instances.
+        /// </summary>
+        ///
+        /// <param name="dataBody">The data body to translate.</param>
+        ///
+        /// <returns>The set of <see cref="Data" /> instances that represents the <paramref name="dataBody" />.</returns>
+        ///
+        private static IEnumerable<Data> TranslateDataBody(IEnumerable<ReadOnlyMemory<byte>> dataBody)
+        {
+            foreach (var bodySegment in dataBody)
+            {
+                if (!MemoryMarshal.TryGetArray(bodySegment, out ArraySegment<byte> dataSegment))
                 {
-                    if (condition)
-                    {
-                        systemProperties.ServiceAnnotations.Add(name, value);
-                    }
+                    dataSegment = new ArraySegment<byte>(bodySegment.ToArray());
                 }
 
-                conditionalAdd(Properties.MessageIdName, properties.MessageId, properties.MessageId != null);
-                conditionalAdd(Properties.UserIdName, properties.UserId, properties.UserId.Array != null);
-                conditionalAdd(Properties.ToName, properties.To, properties.To != null);
-                conditionalAdd(Properties.SubjectName, properties.Subject, properties.Subject != null);
-                conditionalAdd(Properties.ReplyToName, properties.ReplyTo, properties.ReplyTo != null);
-                conditionalAdd(Properties.CorrelationIdName, properties.CorrelationId, properties.CorrelationId != null);
-                conditionalAdd(Properties.ContentTypeName, properties.ContentType, properties.ContentType.Value != null);
-                conditionalAdd(Properties.ContentEncodingName, properties.ContentEncoding, properties.ContentEncoding.Value != null);
-                conditionalAdd(Properties.AbsoluteExpiryTimeName, properties.AbsoluteExpiryTime, properties.AbsoluteExpiryTime != null);
-                conditionalAdd(Properties.CreationTimeName, properties.CreationTime, properties.CreationTime != null);
-                conditionalAdd(Properties.GroupIdName, properties.GroupId, properties.GroupId != null);
-                conditionalAdd(Properties.GroupSequenceName, properties.GroupSequence, properties.GroupSequence != null);
-                conditionalAdd(Properties.ReplyToGroupIdName, properties.ReplyToGroupId, properties.ReplyToGroupId != null);
+                yield return new Data
+                {
+                    Value = dataSegment
+                };
+            }
+        }
+
+        /// <summary>
+        ///   Translates the data body elements into the corresponding set of
+        ///   <see cref="AmqpSequence" /> instances.
+        /// </summary>
+        ///
+        /// <param name="sequenceBody">The sequence body to translate.</param>
+        ///
+        /// <returns>The set of <see cref="AmqpSequence" /> instances that represents the <paramref name="sequenceBody" /> in AMQP format.</returns>
+        ///
+        private static IEnumerable<AmqpSequence> TranslateSequenceBody(IEnumerable<IList<object>> sequenceBody)
+        {
+            foreach (var item in sequenceBody)
+            {
+                yield return new AmqpSequence((System.Collections.IList)item);
+            }
+        }
+
+        /// <summary>
+        ///   Translates the data body into the corresponding set of
+        ///   <see cref="AmqpValue" /> instance.
+        /// </summary>
+        ///
+        /// <param name="valueBody">The sequence body to translate.</param>
+        ///
+        /// <returns>The <see cref="AmqpValue" /> instance that represents the <paramref name="valueBody" /> in AMQP format.</returns>
+        ///
+        private static AmqpValue TranslateValueBody(object valueBody)
+        {
+            if (TryCreateAmqpPropertyValueForEventProperty(valueBody, out var amqpValue, allowBodyTypes: true))
+            {
+                return new AmqpValue { Value = amqpValue };
             }
 
-            return systemProperties;
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidAmqpMessageValueBodyMask, valueBody.GetType().Name));
+        }
+
+        /// <summary>
+        ///   Attempts to read the data body of an <see cref="AmqpMessage" />.
+        /// </summary>
+        ///
+        /// <param name="source">The <see cref="AmqpMessage" /> to read from.</param>
+        /// <param name="dataBody">The value of the data body, if read.</param>
+        ///
+        /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool TryGetDataBody(AmqpMessage source, out AmqpMessageBody dataBody)
+        {
+            if (((source.BodyType & SectionFlag.Data) == 0) || (source.DataBody == null))
+            {
+                dataBody = null;
+                return false;
+            }
+
+            dataBody = AmqpMessageBody.FromData(MessageBody.FromDataSegments(source.DataBody));
+            return true;
+        }
+
+        /// <summary>
+        ///   Attempts to read the sequence body of an <see cref="AmqpMessage" />.
+        /// </summary>
+        ///
+        /// <param name="source">The <see cref="AmqpMessage" /> to read from.</param>
+        /// <param name="sequenceBody">The value of the sequence body, if read.</param>
+        ///
+        /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool TryGetSequenceBody(AmqpMessage source, out AmqpMessageBody sequenceBody)
+        {
+            if ((source.BodyType & SectionFlag.AmqpSequence) == 0)
+            {
+                sequenceBody = null;
+                return false;
+            }
+
+            var bodyContent = new List<IList<object>>();
+
+            foreach (var item in source.SequenceBody)
+            {
+                bodyContent.Add((IList<object>)item.List);
+            }
+
+            sequenceBody = AmqpMessageBody.FromSequence(bodyContent);
+            return true;
+        }
+
+        /// <summary>
+        ///   Attempts to read the sequence body of an <see cref="AmqpMessage" />.
+        /// </summary>
+        ///
+        /// <param name="source">The <see cref="AmqpMessage" /> to read from.</param>
+        /// <param name="valueBody">The value body, if read.</param>
+        ///
+        /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool TryGetValueBody(AmqpMessage source, out AmqpMessageBody valueBody)
+        {
+            if (((source.BodyType & SectionFlag.AmqpValue) == 0) || (source.ValueBody?.Value == null))
+            {
+                valueBody = null;
+                return false;
+            }
+
+            if (TryCreateEventPropertyForAmqpProperty(source.ValueBody.Value, out var translatedValue, allowBodyTypes: true))
+            {
+                valueBody = AmqpMessageBody.FromValue(translatedValue);
+                return true;
+            }
+
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidAmqpMessageValueBodyMask, source.ValueBody.Value.GetType().Name));
         }
 
         /// <summary>
@@ -530,11 +639,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="eventPropertyValue">The value of the event property to create an AMQP property value for.</param>
         /// <param name="amqpPropertyValue">The AMQP property value that was created.</param>
+        /// <param name="allowBodyTypes"><c>true</c> to allow an AMQP map to be translated to additional types supported only by a message body; otherwise, <c>false</c>.</param>
         ///
         /// <returns><c>true</c> if an AMQP property value was able to be created; otherwise, <c>false</c>.</returns>
         ///
         private static bool TryCreateAmqpPropertyValueForEventProperty(object eventPropertyValue,
-                                                                       out object amqpPropertyValue)
+                                                                       out object amqpPropertyValue,
+                                                                       bool allowBodyTypes = false)
         {
             amqpPropertyValue = null;
 
@@ -581,6 +692,18 @@ namespace Azure.Messaging.EventHubs.Amqp
                     amqpPropertyValue = new DescribedType(AmqpProperty.Descriptor.TimeSpan, ((TimeSpan)eventPropertyValue).Ticks);
                     break;
 
+                case AmqpProperty.Type.Unknown when allowBodyTypes && eventPropertyValue is byte[] byteArray:
+                    amqpPropertyValue = new ArraySegment<byte>(byteArray);
+                    break;
+
+                case AmqpProperty.Type.Unknown when allowBodyTypes && eventPropertyValue is System.Collections.IDictionary dict:
+                    amqpPropertyValue = new AmqpMap(dict);
+                    break;
+
+                case AmqpProperty.Type.Unknown when allowBodyTypes && eventPropertyValue is System.Collections.IList:
+                    amqpPropertyValue = eventPropertyValue;
+                    break;
+
                 case AmqpProperty.Type.Unknown:
                     var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, eventPropertyValue.GetType().FullName));
                     EventHubsEventSource.Log.UnexpectedException(exception.Message);
@@ -596,11 +719,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="amqpPropertyValue">The value of the AMQP property to create an event property value for.</param>
         /// <param name="eventPropertyValue">The event property value that was created.</param>
+        /// <param name="allowBodyTypes"><c>true</c> to allow an AMQP map to be translated to additional types supported only by a message body; otherwise, <c>false</c>.</param>
         ///
         /// <returns><c>true</c> if an event property value was able to be created; otherwise, <c>false</c>.</returns>
         ///
         private static bool TryCreateEventPropertyForAmqpProperty(object amqpPropertyValue,
-                                                                  out object eventPropertyValue)
+                                                                  out object eventPropertyValue,
+                                                                  bool allowBodyTypes = false)
         {
             eventPropertyValue = null;
 
@@ -667,6 +792,19 @@ namespace Azure.Messaging.EventHubs.Amqp
                     eventPropertyValue = TranslateSymbol((AmqpSymbol)described.Descriptor, described.Value);
                     break;
 
+                case AmqpMap map when allowBodyTypes:
+                {
+                    var dict = new Dictionary<string, object>(map.Count);
+
+                    foreach (var pair in map)
+                    {
+                        dict.Add(pair.Key.ToString(), pair.Value);
+                    }
+
+                    eventPropertyValue = dict;
+                    break;
+                }
+
                 default:
                     var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, amqpPropertyValue.GetType().FullName));
                     EventHubsEventSource.Log.UnexpectedException(exception.Message);
@@ -731,71 +869,36 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
         {
-            if (stream == null)
+            switch (stream)
             {
-                return new ArraySegment<byte>();
+                case { Length: < 1 }:
+                    return default;
+
+                case BufferListStream bufferListStream:
+                    return bufferListStream.ReadBytes((int)stream.Length);
+
+                case MemoryStream memStreamSource:
+                {
+                    using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
+                    memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
+                }
+
+                default:
+                {
+                    using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
+                    stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
+                }
             }
-
-            using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-            stream.CopyTo(memStream, StreamBufferSizeInBytes);
-
-            return new ArraySegment<byte>(memStream.ToArray());
-        }
-
-        /// <summary>
-        ///   Converts a stream to a set of memory bytes.
-        /// </summary>
-        ///
-        /// <param name="stream">The stream to read and capture in memory.</param>
-        ///
-        /// <returns>The set of memory bytes containing the stream data.</returns>
-        ///
-        private static ReadOnlyMemory<byte> ReadStreamToMemory(Stream stream)
-        {
-            if (stream == null)
-            {
-                return ReadOnlyMemory<byte>.Empty;
-            }
-
-            using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-            stream.CopyTo(memStream, StreamBufferSizeInBytes);
-
-            return new ReadOnlyMemory<byte>(memStream.ToArray());
-        }
-
-        /// <summary>
-        ///   The set of system annotations set on a message received from the
-        ///   Event Hubs service.
-        /// </summary>
-        ///
-        private struct ParsedAnnotations
-        {
-            /// <summary>The set of weakly typed annotations associated with the message.</summary>
-            public Dictionary<string, object> ServiceAnnotations;
-
-            /// <summary>The sequence number of the event associated with the message.</summary>
-            public long? SequenceNumber;
-
-            /// <summary>The offset of the event associated with the message.</summary>
-            public long? Offset;
-
-            /// <summary>The date and time, in UTC, that the event associated with the message was enqueued.</summary>
-            public DateTimeOffset? EnqueuedTime;
-
-            /// <summary>The partition key that the event associated with the message was published with.</summary>
-            public string PartitionKey;
-
-            /// <summary>The sequence number of the event that was last enqueued in the partition.</summary>
-            public long? LastSequenceNumber;
-
-            /// <summary>The offset of the event that was last enqueued in the partition.</summary>
-            public long? LastOffset;
-
-            /// <summary>The date and time, in UTC, that an event was last enqueued in the partition.</summary>
-            public DateTimeOffset? LastEnqueuedTime;
-
-            /// <summary>The date and time, in UTC, that the last enqueued event information was retrieved from the service.</summary>
-            public DateTimeOffset? LastReceivedTime;
         }
     }
 }

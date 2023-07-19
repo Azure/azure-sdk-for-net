@@ -77,17 +77,17 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// When a path is leased, specifies whether the lease is of infinite or fixed duration.
         /// </summary>
-        public LeaseDurationType LeaseDuration { get; internal set; }
+        public DataLakeLeaseDuration LeaseDuration { get; internal set; }
 
         /// <summary>
         /// Lease state of the path.
         /// </summary>
-        public LeaseState LeaseState { get; internal set; }
+        public DataLakeLeaseState LeaseState { get; internal set; }
 
         /// <summary>
         /// The current lease status of the path.
         /// </summary>
-        public LeaseStatus LeaseStatus { get; internal set; }
+        public DataLakeLeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
         /// The number of bytes present in the response body.
@@ -170,6 +170,65 @@ namespace Azure.Storage.Files.DataLake.Models
         /// The time the tier was changed on the object. This is only returned if the tier on the block blob was ever set.
         /// </summary>
         public DateTimeOffset AccessTierChangedOn { get; internal set; }
+
+        /// <summary>
+        /// The time the path will be deleted.
+        /// </summary>
+        public DateTimeOffset ExpiresOn { get; internal set; }
+
+        /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the path contents and application metadata.
+        /// Note that the absence of this header implies use of the default account encryption scope, or default
+        /// file system encryption scope, if it has been set.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// Encryption context of the file.  Encryption context is metadata that is not encrypted when stored on the file.
+        /// The primary application of this field is to store non-encrypted data that can be used to derive the customer-provided key
+        /// for a file.
+        /// Not applicable for directories.
+        /// </summary>
+        public string EncryptionContext { get; internal set; }
+
+        /// <summary>
+        /// Owner.
+        /// </summary>
+        public string Owner { get; internal set; }
+
+        /// <summary>
+        /// Group.
+        /// </summary>
+        public string Group { get; internal set; }
+
+        /// <summary>
+        /// Permissions.
+        /// </summary>
+        public string Permissions { get; internal set; }
+
+        /// <summary>
+        /// If this path represents a directory.
+        /// </summary>
+        public bool IsDirectory
+        {
+            get => Metadata.TryGetValue(Constants.DataLake.IsDirectoryKey, out string isDirectoryValue)
+                && bool.TryParse(isDirectoryValue, out bool isDirectory)
+                && isDirectory;
+
+            internal set
+            {
+                // True
+                if (value)
+                {
+                    Metadata[Constants.DataLake.IsDirectoryKey] = bool.TrueString.ToLowerInvariant();
+                }
+                // False
+                else
+                {
+                    Metadata.Remove(Constants.DataLake.IsDirectoryKey);
+                }
+            }
+        }
 
         /// <summary>
         /// Prevent direct instantiation of PathProperties instances.

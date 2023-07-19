@@ -99,6 +99,12 @@ namespace Microsoft.Azure.ServiceBus
 
             set
             {
+                if (this.sessionId != null && this.sessionId != value)
+                {
+                    // SessionId is set. Then partition key must be same as session id.
+                    throw new InvalidOperationException($"PartitionKey:{value} is not same as SessionId:{this.sessionId}");
+                }
+
                 Message.ValidatePartitionKey(nameof(this.PartitionKey), value);
                 this.partitionKey = value;
             }
@@ -140,6 +146,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 Message.ValidateSessionId(nameof(this.SessionId), value);
                 this.sessionId = value;
+                this.PartitionKey = value;
             }
         }
 
@@ -351,6 +358,7 @@ namespace Microsoft.Azure.ServiceBus
             DateTime enqueuedTimeUtc;
             Guid lockTokenGuid;
             string deadLetterSource;
+            MessageState state;
 
             /// <summary>
             /// Specifies whether or not there is a lock token set on the current message.
@@ -456,11 +464,15 @@ namespace Microsoft.Azure.ServiceBus
                 set => this.partitionId = value;
             }
 
-            /// <summary>Gets or sets the original sequence number of the message.</summary>
+            /// <summary>Gets the original sequence number of the message.</summary>
             /// <value>The enqueued sequence number of the message.</value>
             /// <remarks>
-            /// For messages that have been auto-forwarded, this property reflects the sequence number
-            /// that had first been assigned to the message at its original point of submission. This property is read-only.
+            ///    This property is read-only.
+            ///    For messages that have been auto-forwarded from a queue to another queue, this property reflects 0.
+            ///    For messages that have been auto-forwarded from a topic subscription to another topic, this property will be updated with an appropriate
+            ///    sequence number at the destination topic.
+            ///    For messages that have been auto-forwarded from a topic subscription to a queue, this property reflects the sequence number
+            ///    that had first been assigned to the message at its original point of submission.
             /// </remarks>
             public long EnqueuedSequenceNumber
             {
@@ -473,7 +485,7 @@ namespace Microsoft.Azure.ServiceBus
                 internal set => this.enqueuedSequenceNumber = value;
             }
 
-            /// <summary>Gets or sets the date and time of the sent time in UTC.</summary>
+            /// <summary>Gets the date and time of the sent time in UTC.</summary>
             /// <value>The enqueue time in UTC. </value>
             /// <remarks>
             ///    The UTC instant at which the message has been accepted and stored in the entity.
@@ -489,6 +501,24 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 internal set => this.enqueuedTimeUtc = value;
+            }
+
+            /// <summary>Gets or sets the state of the message.</summary>
+            /// <value>The state of the message. </value>
+            /// <remarks>
+            ///    State of the message can be Active or Deferred or Scheduled. Deferred messages have Deferred state,
+            ///    scheduled messages have Scheduled state, all other messages have Active state.
+            ///    This property is read-only.
+            /// </remarks>
+            public MessageState State
+            {
+                get
+                {
+                    this.ThrowIfNotReceived();
+                    return this.state;
+                }
+
+                internal set => this.state = value;
             }
 
             internal Guid LockTokenGuid

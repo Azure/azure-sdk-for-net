@@ -20,7 +20,7 @@ namespace Azure.Core.Samples
             SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 
             // Start the operation
-            DeleteSecretOperation operation = client.StartDeleteSecret("SecretName");
+            DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
 
             Response<DeletedSecret> response = await operation.WaitForCompletionAsync();
             DeletedSecret value = response.Value;
@@ -39,7 +39,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:OperationUpdateStatus
             // Start the operation
-            DeleteSecretOperation operation = client.StartDeleteSecret("SecretName");
+            DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
 
             await operation.UpdateStatusAsync();
 
@@ -48,6 +48,50 @@ namespace Azure.Core.Samples
             // HasValue indicated is operation Value is available, for some operations it can return true even when operation
             // hasn't completed yet.
             Console.WriteLine(operation.HasValue);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task GetValuesAsyncSample()
+        {
+            #region Snippet:PageableOperationGetValuesAsync
+            // create a client
+            var client = new MyStoreClient();
+
+            // Start the operation
+            GetProductsOperation operation = client.StartGetProducts();
+
+            await operation.WaitForCompletionAsync();
+
+            await foreach (Product product in operation.GetValuesAsync())
+            {
+                Console.WriteLine($"Name: {product.Name}");
+                Console.WriteLine($"Quantity: {product.Quantity}");
+                Console.WriteLine($"Price: {product.Price}");
+            }
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task GetValuesSample()
+        {
+            #region Snippet:PageableOperationGetValues
+            // create a client
+            var client = new MyStoreClient();
+
+            // Start the operation
+            GetProductsOperation operation = client.StartGetProducts();
+
+            await operation.WaitForCompletionAsync();
+
+            foreach (Product product in operation.GetValues())
+            {
+                Console.WriteLine($"Name: {product.Name}");
+                Console.WriteLine($"Quantity: {product.Quantity}");
+                Console.WriteLine($"Price: {product.Price}");
+            }
             #endregion
         }
     }

@@ -19,6 +19,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
     public partial class ApiManagementServiceTests
     {
         [Fact]
+        [Trait("owner", "sasolank")]
         public void InstallIntermediateCertificatesTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -52,7 +53,8 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,
-                    testBase.tags);
+                    testBase.tags,
+                    PlatformVersion.Stv2);
 
                 Assert.NotNull(createdService.Certificates);
                 Assert.Single(createdService.Certificates);
@@ -64,7 +66,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     resourceGroupName: testBase.rgName,
                     serviceName: testBase.serviceName);
 
-                Assert.Throws<CloudException>(() =>
+                Assert.Throws<ErrorResponseException>(() =>
                 {
                     testBase.client.ApiManagementService.Get(
                         resourceGroupName: testBase.rgName,

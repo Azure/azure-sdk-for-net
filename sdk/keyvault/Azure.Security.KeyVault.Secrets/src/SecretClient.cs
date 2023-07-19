@@ -26,25 +26,31 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         protected SecretClient()
         {
-
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">
+        /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
+        /// If you have a secret <see cref="Uri"/>, use <see cref="KeyVaultSecretIdentifier"/> to parse the <see cref="KeyVaultSecretIdentifier.VaultUri"/> and other information.
+        /// You should validate that this URI references a valid Key Vault resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.
+        /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public SecretClient(Uri vaultUri, TokenCredential credential)
             : this(vaultUri, credential, null)
         {
-
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">
+        /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
+        /// If you have a secret <see cref="Uri"/>, use <see cref="KeyVaultSecretIdentifier"/> to parse the <see cref="KeyVaultSecretIdentifier.VaultUri"/> and other information.
+        /// You should validate that this URI references a valid Key Vault resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.
+        /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="SecretClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
@@ -57,7 +63,7 @@ namespace Azure.Security.KeyVault.Secrets
             string apiVersion = options.GetVersionString();
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential));
+                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, new ClientDiagnostics(options));
         }
@@ -84,8 +90,9 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.GetSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
             scope.AddAttribute("secret", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -116,8 +123,9 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.GetSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
             scope.AddAttribute("secret", name);
+            scope.AddAttribute("version", version);
             scope.Start();
 
             try
@@ -132,12 +140,17 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Lists the properties of all versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecretAsync"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecretAsync"/>.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// The full secret identifier and attributes are provided in the response. No
         /// values are returned for the secrets. This operations requires the
         /// secrets/list permission.
+        /// </para>
+        /// <para>
+        /// Managed secrets may also be listed. They contain the certificate and private key for certificates stored in Key Vault.
+        /// </para>
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -148,18 +161,23 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Uri firstPageUri = new Uri(VaultUri, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri($"{SecretsPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecretVersions", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new SecretProperties(), "SecretClient.GetPropertiesOfSecretVersions", cancellationToken));
         }
 
         /// <summary>
-        /// Lists the properties of all versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecret"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecret"/>.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// The full secret identifier and attributes are provided in the response. No
         /// values are returned for the secrets. This operations requires the
         /// secrets/list permission.
+        /// </para>
+        /// <para>
+        /// Managed secrets may also be listed. They contain the certificate and private key for certificates stored in Key Vault.
+        /// </para>
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -170,13 +188,13 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Uri firstPageUri = new Uri(VaultUri, $"{SecretsPath}{name}/versions?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri($"{SecretsPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecretVersions", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new SecretProperties(), "SecretClient.GetPropertiesOfSecretVersions", cancellationToken));
         }
 
         /// <summary>
-        /// Lists the properties of all secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecretAsync"/>.
+        /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecretAsync"/>.
         /// </summary>
         /// <remarks>
         /// The Get Secrets operation is applicable to the entire vault. However, only
@@ -188,13 +206,13 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<SecretProperties> GetPropertiesOfSecretsAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultUri, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(SecretsPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecrets", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new SecretProperties(), "SecretClient.GetPropertiesOfSecrets", cancellationToken));
         }
 
         /// <summary>
-        /// Lists the properties of all secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecret"/>.
+        /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecret"/>.
         /// </summary>
         /// <remarks>
         /// The Get Secrets operation is applicable to the entire vault. However, only
@@ -206,9 +224,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<SecretProperties> GetPropertiesOfSecrets(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultUri, SecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(SecretsPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new SecretProperties(), "Azure.Security.KeyVault.Secrets.SecretClient.GetPropertiesOfSecrets", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new SecretProperties(), "SecretClient.GetPropertiesOfSecrets", cancellationToken));
         }
 
         /// <summary>
@@ -229,8 +247,9 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(properties.Version, nameof(properties.Version));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.UpdateSecretProperties");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
             scope.AddAttribute("secret", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
@@ -262,8 +281,9 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(properties.Version, nameof(properties.Version));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.UpdateSecretProperties");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
             scope.AddAttribute("secret", properties.Name);
+            scope.AddAttribute("version", properties.Version);
             scope.Start();
 
             try
@@ -293,7 +313,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNull(secret, nameof(secret));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.SetSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(SetSecret)}");
             scope.AddAttribute("secret", secret.Name);
             scope.Start();
 
@@ -324,7 +344,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNull(secret, nameof(secret));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.SetSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(SetSecret)}");
             scope.AddAttribute("secret", secret.Name);
             scope.Start();
 
@@ -399,7 +419,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.StartDeleteSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartDeleteSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -437,7 +457,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.StartDeleteSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartDeleteSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -469,7 +489,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.GetDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -500,7 +520,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.GetDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -527,9 +547,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<DeletedSecret> GetDeletedSecretsAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultUri, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedSecretsPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedSecret(), "Azure.Security.KeyVault.Secrets.SecretClient.GetDeletedSecrets", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedSecret(), "SecretClient.GetDeletedSecrets", cancellationToken));
         }
 
         /// <summary>
@@ -544,9 +564,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<DeletedSecret> GetDeletedSecrets(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(VaultUri, DeletedSecretsPath + $"?api-version={_pipeline.ApiVersion}");
+            Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedSecretsPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedSecret(), "Azure.Security.KeyVault.Secrets.SecretClient.GetDeletedSecrets", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedSecret(), "SecretClient.GetDeletedSecrets", cancellationToken));
         }
 
         /// <summary>
@@ -567,7 +587,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.StartRecoverDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartRecoverDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -601,7 +621,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.StartRecoverDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartRecoverDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -635,7 +655,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.PurgeDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(PurgeDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -668,19 +688,19 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.PurgeDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(PurgeDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
             try
             {
+                return _pipeline.SendRequest(RequestMethod.Delete, cancellationToken, DeletedSecretsPath, name);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-            return _pipeline.SendRequest(RequestMethod.Delete, cancellationToken, DeletedSecretsPath, name);
         }
 
         /// <summary>
@@ -700,7 +720,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.BackupSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(BackupSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -734,7 +754,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.BackupSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(BackupSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -766,7 +786,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.RestoreSecretBackup");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(RestoreSecretBackup)}");
             scope.Start();
 
             try
@@ -795,7 +815,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Secrets.SecretClient.RestoreSecretBackup");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(RestoreSecretBackup)}");
             scope.Start();
 
             try

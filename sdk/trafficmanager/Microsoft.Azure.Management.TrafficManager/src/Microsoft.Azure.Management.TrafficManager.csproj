@@ -7,9 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.TrafficManager</PackageId>
 		<Description>Microsoft Azure Management TrafficManager Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.TrafficManager</AssemblyName>
-		<Version>2.5.3</Version>
+		<Version>2.5.4</Version>
 		<PackageTags>Microsoft Azure TrafficManager management;TrafficManager;TrafficManager management;</PackageTags>
-        <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+        <PackageReleaseNotes>New API version 2018-08-01 including support for MinChildEndpoints with IP type.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

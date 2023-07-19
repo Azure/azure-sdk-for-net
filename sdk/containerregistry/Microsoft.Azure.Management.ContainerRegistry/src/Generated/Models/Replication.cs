@@ -40,17 +40,29 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// replication at the time the operation was called. Possible values
         /// include: 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Canceled'</param>
         /// <param name="status">The status of the replication at the time the
         /// operation was called.</param>
-        public Replication(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), Status status = default(Status))
-            : base(location, id, name, type, tags)
+        /// <param name="regionEndpointEnabled">Specifies whether the
+        /// replication's regional endpoint is enabled. Requests will not be
+        /// routed to a replication whose regional endpoint is disabled,
+        /// however its data will continue to be synced with other
+        /// replications.</param>
+        /// <param name="zoneRedundancy">Whether or not zone redundancy is
+        /// enabled for this container registry replication. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        public Replication(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string provisioningState = default(string), Status status = default(Status), bool? regionEndpointEnabled = default(bool?), string zoneRedundancy = default(string))
+            : base(location, id, name, type, tags, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
+            RegionEndpointEnabled = regionEndpointEnabled;
+            ZoneRedundancy = zoneRedundancy;
             CustomInit();
         }
 
@@ -73,6 +85,23 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public Status Status { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the replication's regional endpoint
+        /// is enabled. Requests will not be routed to a replication whose
+        /// regional endpoint is disabled, however its data will continue to be
+        /// synced with other replications.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.regionEndpointEnabled")]
+        public bool? RegionEndpointEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not zone redundancy is enabled for this
+        /// container registry replication. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneRedundancy")]
+        public string ZoneRedundancy { get; set; }
 
         /// <summary>
         /// Validate the object.

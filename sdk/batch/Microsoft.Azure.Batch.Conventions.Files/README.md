@@ -48,7 +48,7 @@ constructors that take a job output container URL, and call the SaveAsync method
     await taskOutputStorage.SaveAsync(TaskOutputKind.TaskPreview, "frame_low_res.jpg");
     
 Note that all output files from a job, including task outputs, are stored in the same container. This means that
-[storage throttling limits](https://azure.microsoft.com/en-us/documentation/articles/storage-performance-checklist/#blobs)
+[storage throttling limits](https://azure.microsoft.com/documentation/articles/storage-performance-checklist/#blobs)
 may be enforced if a large number of tasks try to persist files at the same time. 
 
 ### Listing and Retrieving Files in Client Code

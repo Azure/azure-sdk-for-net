@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -17,15 +18,18 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         private readonly BlobServiceClient _client;
         private readonly FileSystemTraits _traits;
+        private readonly FileSystemStates _states;
         private readonly string _prefix;
 
         public GetFileSystemsAsyncCollection(
             BlobServiceClient client,
             FileSystemTraits traits,
+            FileSystemStates states,
             string prefix = default)
         {
             _client = client;
             _traits = traits;
+            _states = states;
             _prefix = prefix;
         }
 
@@ -46,6 +50,7 @@ namespace Azure.Storage.Files.DataLake.Models
         {
             return collection._client.GetBlobContainersAsync(
                        (BlobContainerTraits)collection._traits,
+                       (BlobContainerStates)collection._states,
                        collection._prefix,
                        cancellationToken);
         }
@@ -94,6 +99,7 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return _collection._client.GetBlobContainers(
                     (BlobContainerTraits)_collection._traits,
+                    (BlobContainerStates)_collection._states,
                     _collection._prefix,
                     CancellationToken)
                     .AsPages(continuationToken, pageHintSize)
@@ -109,6 +115,7 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return _collection._client.GetBlobContainers(
                     (BlobContainerTraits)_collection._traits,
+                    (BlobContainerStates)_collection._states,
                     _collection._prefix,
                     CancellationToken)
                     .Select(ConvertItem)
@@ -158,7 +165,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     ConvertCollection(_collection, CancellationToken)
                     .AsPages(continuationToken, pageHintSize);
 
-                await foreach (Page<BlobContainerItem> page in pages)
+                await foreach (Page<BlobContainerItem> page in pages.ConfigureAwait(false))
                 {
                     yield return ConvertPage(page);
                 }
@@ -186,7 +193,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     ConvertCollection(_collection, cancellationToken)
                     .AsPages();
 
-                await foreach (Page<BlobContainerItem> page in pages)
+                await foreach (Page<BlobContainerItem> page in pages.ConfigureAwait(false))
                 {
                     foreach (BlobContainerItem item in page.Values)
                     {

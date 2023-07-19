@@ -48,10 +48,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="identities">Collection of user identities.</param>
         /// <param name="password">User Password. If no value is provided, a
         /// default password is generated.</param>
+        /// <param name="appType">Determines the type of application which send
+        /// the create user request. Default is legacy portal. Possible values
+        /// include: 'portal', 'developerPortal'</param>
         /// <param name="confirmation">Determines the type of confirmation
         /// e-mail that will be sent to the newly created user. Possible values
         /// include: 'signup', 'invite'</param>
-        public UserCreateParameters(string email, string firstName, string lastName, string state = default(string), string note = default(string), IList<UserIdentityContract> identities = default(IList<UserIdentityContract>), string password = default(string), string confirmation = default(string))
+        public UserCreateParameters(string email, string firstName, string lastName, string state = default(string), string note = default(string), IList<UserIdentityContract> identities = default(IList<UserIdentityContract>), string password = default(string), string appType = default(string), string confirmation = default(string))
         {
             State = state;
             Note = note;
@@ -60,6 +63,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             FirstName = firstName;
             LastName = lastName;
             Password = password;
+            AppType = appType;
             Confirmation = confirmation;
             CustomInit();
         }
@@ -115,6 +119,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.password")]
         public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets determines the type of application which send the
+        /// create user request. Default is legacy portal. Possible values
+        /// include: 'portal', 'developerPortal'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.appType")]
+        public string AppType { get; set; }
 
         /// <summary>
         /// Gets or sets determines the type of confirmation e-mail that will

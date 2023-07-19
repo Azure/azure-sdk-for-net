@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.TrafficManager
             HeatMap = new HeatMapOperations(this);
             TrafficManagerUserMetricsKeys = new TrafficManagerUserMetricsKeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-04-01";
+            ApiVersion = "2018-08-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

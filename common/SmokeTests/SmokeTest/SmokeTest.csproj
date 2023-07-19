@@ -1,31 +1,45 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
+    <TargetFrameworks>net7.0;net6.0;net462</TargetFrameworks>
+    <LangVersion>11.0</LangVersion>
+    <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.0.0" />
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.0.0-preview.5" />
-    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.0.0" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.0.0" />
-    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <None Remove="Update-Dependencies.ps1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+  <ItemGroup Label="SmokeTestPackageReferences">
+    <!--
+      These references will not be included in scheduled smoke tests runs; they
+      will be replaced with a comprehensive set of the latest packages for the
+      current generation of SDKs.
+
+      The static set is included here to allow for local testing of the smoke tests project
+      without the need to run CI scripts to rewrite package references.
+    -->
+    <PackageReference Include="Azure.Identity" Version="1.5.0-beta.3" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.6.2" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.6.2" />
+    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.3.0-beta.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.5.10" />
+    <PackageReference Include="Microsoft.Azure.Devices" Version="1.36.0" />
+    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.16.2" />
+    <PackageReference Include="Azure.Template" Version="1.0.3-beta.1218030" />
+
+    <!-- This is needed to resolve a build conflict and force the correct version -->
+    <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'netcoreapp3.1'))">
+    <!-- This package supports netcoreapp3.1 -->
+    <PackageReference Remove="Microsoft.Azure.WebPubSub.AspNetCore" />
+  </ItemGroup>
 </Project>

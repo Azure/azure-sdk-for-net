@@ -27,6 +27,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         const string PartitionIdName = "x-opt-partition-id";
         const string ViaPartitionKeyName = "x-opt-via-partition-key";
         const string DeadLetterSourceName = "x-opt-deadletter-source";
+        const string MessageStateName = "x-opt-message-state";
         const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
         const string UriName = AmqpConstants.Vendor + ":uri";
         const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
@@ -113,7 +114,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             if (sbMessage.TimeToLive != TimeSpan.MaxValue)
             {
-                amqpMessage.Header.Ttl = (uint)sbMessage.TimeToLive.TotalMilliseconds;
+                amqpMessage.Header.Ttl = sbMessage.TimeToLive.TotalMilliseconds < UInt32.MaxValue ? (uint)sbMessage.TimeToLive.TotalMilliseconds : UInt32.MaxValue;
                 amqpMessage.Properties.CreationTime = DateTime.UtcNow;
 
                 if (AmqpConstants.MaxAbsoluteExpiryTime - amqpMessage.Properties.CreationTime.Value > sbMessage.TimeToLive)
@@ -274,6 +275,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 {
                     sbMessage.ReplyToSessionId = amqpMessage.Properties.ReplyToGroupId;
                 }
+
+                if (amqpMessage.Properties.CreationTime.HasValue && amqpMessage.Properties.AbsoluteExpiryTime.HasValue)
+                {
+                    // Overwrite TimeToLive from AbsoluteExpiryTime
+                    sbMessage.TimeToLive = amqpMessage.Properties.AbsoluteExpiryTime.Value - amqpMessage.Properties.CreationTime.Value;
+                }
             }
 
             // Do application properties before message annotations, because the application properties
@@ -322,6 +329,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                             break;
                         case DeadLetterSourceName:
                             sbMessage.SystemProperties.DeadLetterSource = (string)pair.Value;
+                            break;
+                        case MessageStateName:
+                            if (Enum.IsDefined(typeof(MessageState), (int)pair.Value))
+                            {
+                                sbMessage.SystemProperties.State = (MessageState)(int)pair.Value;
+                            }
+                            
                             break;
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))

@@ -11,6 +11,9 @@
     <ProjectReference Include="..\src\Microsoft.Azure.Management.PolicyInsights.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="3.15.1-preview" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

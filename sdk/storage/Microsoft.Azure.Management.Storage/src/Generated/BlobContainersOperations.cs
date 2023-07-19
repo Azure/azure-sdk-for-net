@@ -71,6 +71,10 @@ namespace Microsoft.Azure.Management.Storage
         /// Optional. When specified, only container names starting with the filter
         /// will be listed.
         /// </param>
+        /// <param name='include'>
+        /// Optional, used to include the properties for soft deleted blob containers.
+        /// Possible values include: 'deleted'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -92,7 +96,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ListContainerItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ListContainerItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string include = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -161,6 +165,7 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("maxpagesize", maxpagesize);
                 tracingParameters.Add("filter", filter);
+                tracingParameters.Add("include", include);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -182,6 +187,10 @@ namespace Microsoft.Azure.Management.Storage
             if (filter != null)
             {
                 _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
+            if (include != null)
+            {
+                _queryParameters.Add(string.Format("$include={0}", System.Uri.EscapeDataString(include)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -329,12 +338,8 @@ namespace Microsoft.Azure.Management.Storage
         /// numbers, lower-case letters and dash (-) only. Every dash (-) character
         /// must be immediately preceded and followed by a letter or number.
         /// </param>
-        /// <param name='publicAccess'>
-        /// Specifies whether data in the container may be accessed publicly and the
-        /// level of access. Possible values include: 'Container', 'Blob', 'None'
-        /// </param>
-        /// <param name='metadata'>
-        /// A name-value pair to associate with the container as metadata.
+        /// <param name='blobContainer'>
+        /// Properties of the blob container to create.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -357,7 +362,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BlobContainer>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BlobContainer>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -408,6 +413,10 @@ namespace Microsoft.Azure.Management.Storage
                     throw new ValidationException(ValidationRules.MinLength, "containerName", 3);
                 }
             }
+            if (blobContainer == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "blobContainer");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -429,12 +438,6 @@ namespace Microsoft.Azure.Management.Storage
                 {
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
-            }
-            BlobContainer blobContainer = new BlobContainer();
-            if (publicAccess != null || metadata != null)
-            {
-                blobContainer.PublicAccess = publicAccess;
-                blobContainer.Metadata = metadata;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -631,12 +634,8 @@ namespace Microsoft.Azure.Management.Storage
         /// numbers, lower-case letters and dash (-) only. Every dash (-) character
         /// must be immediately preceded and followed by a letter or number.
         /// </param>
-        /// <param name='publicAccess'>
-        /// Specifies whether data in the container may be accessed publicly and the
-        /// level of access. Possible values include: 'Container', 'Blob', 'None'
-        /// </param>
-        /// <param name='metadata'>
-        /// A name-value pair to associate with the container as metadata.
+        /// <param name='blobContainer'>
+        /// Properties to update for the blob container.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -659,7 +658,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BlobContainer>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BlobContainer>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -710,6 +709,10 @@ namespace Microsoft.Azure.Management.Storage
                     throw new ValidationException(ValidationRules.MinLength, "containerName", 3);
                 }
             }
+            if (blobContainer == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "blobContainer");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -731,12 +734,6 @@ namespace Microsoft.Azure.Management.Storage
                 {
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
-            }
-            BlobContainer blobContainer = new BlobContainer();
-            if (publicAccess != null || metadata != null)
-            {
-                blobContainer.PublicAccess = publicAccess;
-                blobContainer.Metadata = metadata;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1422,6 +1419,11 @@ namespace Microsoft.Azure.Management.Storage
         /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
         /// lower case at SRP.
         /// </param>
+        /// <param name='allowProtectedAppendWritesAll'>
+        /// When enabled, new blocks can be written to both 'Append and Bock Blobs'
+        /// while maintaining legal hold protection and compliance. Only new blocks can
+        /// be added and any existing blocks cannot be modified or deleted.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1443,7 +1445,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<LegalHold>> SetLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<LegalHold>> SetLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags, bool? allowProtectedAppendWritesAll = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1521,9 +1523,10 @@ namespace Microsoft.Azure.Management.Storage
                 throw new ValidationException(ValidationRules.CannotBeNull, "tags");
             }
             LegalHold legalHold = new LegalHold();
-            if (tags != null)
+            if (tags != null || allowProtectedAppendWritesAll != null)
             {
                 legalHold.Tags = tags;
+                legalHold.AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1706,6 +1709,11 @@ namespace Microsoft.Azure.Management.Storage
         /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
         /// lower case at SRP.
         /// </param>
+        /// <param name='allowProtectedAppendWritesAll'>
+        /// When enabled, new blocks can be written to both 'Append and Bock Blobs'
+        /// while maintaining legal hold protection and compliance. Only new blocks can
+        /// be added and any existing blocks cannot be modified or deleted.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1727,7 +1735,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<LegalHold>> ClearLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<LegalHold>> ClearLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags, bool? allowProtectedAppendWritesAll = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1805,9 +1813,10 @@ namespace Microsoft.Azure.Management.Storage
                 throw new ValidationException(ValidationRules.CannotBeNull, "tags");
             }
             LegalHold legalHold = new LegalHold();
-            if (tags != null)
+            if (tags != null || allowProtectedAppendWritesAll != null)
             {
                 legalHold.Tags = tags;
+                legalHold.AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1985,9 +1994,9 @@ namespace Microsoft.Azure.Management.Storage
         /// numbers, lower-case letters and dash (-) only. Every dash (-) character
         /// must be immediately preceded and followed by a letter or number.
         /// </param>
-        /// <param name='immutabilityPeriodSinceCreationInDays'>
-        /// The immutability period for the blobs in the container since the policy
-        /// creation, in days.
+        /// <param name='parameters'>
+        /// The ImmutabilityPolicy Properties that will be created or updated to a blob
+        /// container.
         /// </param>
         /// <param name='ifMatch'>
         /// The entity state (ETag) version of the immutability policy to update. A
@@ -2015,7 +2024,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, ImmutabilityPolicy parameters = default(ImmutabilityPolicy), string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2089,9 +2098,6 @@ namespace Microsoft.Azure.Management.Storage
                 }
             }
             string immutabilityPolicyName = "default";
-            ImmutabilityPolicy parameters = default(ImmutabilityPolicy);
-            parameters = new ImmutabilityPolicy();
-            parameters.ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2103,8 +2109,8 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("immutabilityPolicyName", immutabilityPolicyName);
-                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateImmutabilityPolicy", tracingParameters);
             }
@@ -2570,8 +2576,8 @@ namespace Microsoft.Azure.Management.Storage
         /// Aborts an unlocked immutability policy. The response of delete has
         /// immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is
         /// required for this operation. Deleting a locked immutability policy is not
-        /// allowed, only way is to delete the container after deleting all blobs
-        /// inside the container.
+        /// allowed, the only way is to delete the container after deleting all expired
+        /// blobs inside the policy locked container.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The name is
@@ -3186,9 +3192,9 @@ namespace Microsoft.Azure.Management.Storage
         /// value of "*" can be used to apply the operation only if the immutability
         /// policy already exists. If omitted, this operation will always be applied.
         /// </param>
-        /// <param name='immutabilityPeriodSinceCreationInDays'>
-        /// The immutability period for the blobs in the container since the policy
-        /// creation, in days.
+        /// <param name='parameters'>
+        /// The ImmutabilityPolicy Properties that will be extended for a blob
+        /// container.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3211,7 +3217,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersExtendImmutabilityPolicyHeaders>> ExtendImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersExtendImmutabilityPolicyHeaders>> ExtendImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters = default(ImmutabilityPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3288,9 +3294,6 @@ namespace Microsoft.Azure.Management.Storage
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
             }
-            ImmutabilityPolicy parameters = default(ImmutabilityPolicy);
-            parameters = new ImmutabilityPolicy();
-            parameters.ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3301,8 +3304,8 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("containerName", containerName);
-                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ExtendImmutabilityPolicy", tracingParameters);
             }
@@ -3740,6 +3743,286 @@ namespace Microsoft.Azure.Management.Storage
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// This operation migrates a blob container from container level WORM to
+        /// object level immutability enabled container. Prerequisites require a
+        /// container level immutability policy either in locked or unlocked state,
+        /// Account level versioning must be enabled and there should be no Legal hold
+        /// on the container.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The name is
+        /// case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource group.
+        /// Storage account names must be between 3 and 24 characters in length and use
+        /// numbers and lower-case letters only.
+        /// </param>
+        /// <param name='containerName'>
+        /// The name of the blob container within the specified storage account. Blob
+        /// container names must be between 3 and 63 characters in length and use
+        /// numbers, lower-case letters and dash (-) only. Every dash (-) character
+        /// must be immediately preceded and followed by a letter or number.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> ObjectLevelWormWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginObjectLevelWormWithHttpMessagesAsync(resourceGroupName, accountName, containerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation migrates a blob container from container level WORM to
+        /// object level immutability enabled container. Prerequisites require a
+        /// container level immutability policy either in locked or unlocked state,
+        /// Account level versioning must be enabled and there should be no Legal hold
+        /// on the container.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The name is
+        /// case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource group.
+        /// Storage account names must be between 3 and 24 characters in length and use
+        /// numbers and lower-case letters only.
+        /// </param>
+        /// <param name='containerName'>
+        /// The name of the blob container within the specified storage account. Blob
+        /// container names must be between 3 and 63 characters in length and use
+        /// numbers, lower-case letters and dash (-) only. Every dash (-) character
+        /// must be immediately preceded and followed by a letter or number.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> BeginObjectLevelWormWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (accountName != null)
+            {
+                if (accountName.Length > 24)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 24);
+                }
+                if (accountName.Length < 3)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
+                }
+            }
+            if (containerName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "containerName");
+            }
+            if (containerName != null)
+            {
+                if (containerName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "containerName", 63);
+                }
+                if (containerName.Length < 3)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "containerName", 3);
+                }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("containerName", containerName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginObjectLevelWorm", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/migrate").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
+            _url = _url.Replace("{containerName}", System.Uri.EscapeDataString(containerName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             if (_shouldTrace)
             {

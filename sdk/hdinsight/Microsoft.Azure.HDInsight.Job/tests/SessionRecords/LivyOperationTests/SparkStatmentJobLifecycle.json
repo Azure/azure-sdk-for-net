@@ -1,0 +1,311 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/livy/sessions",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnM=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"kind\": \"spark\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "02ed39d4-04a4-4665-a0fd-8a59a3cf8bf1"
+        ],
+        "X-Requested-By": [
+          "ambari"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "23"
+        ]
+      },
+      "ResponseHeaders": {
+        "Location": [
+          "/sessions/35"
+        ],
+        "request-id": [
+          "a51cb23afe44415cb2ce592d20ddbc16"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "x-ms-hdi-errorcode": [
+          "fc:Failed to get active leader, returning cached leader "
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Fri, 05 Jun 2020 08:31:29 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "191"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": 35,\r\n  \"appId\": null,\r\n  \"owner\": null,\r\n  \"proxyUser\": null,\r\n  \"state\": \"starting\",\r\n  \"kind\": \"spark\",\r\n  \"appInfo\": {\r\n    \"driverLogUrl\": null,\r\n    \"sparkUiUrl\": null\r\n  },\r\n  \"log\": [\r\n    \"stdout: \",\r\n    \"\\nstderr: \",\r\n    \"\\nYARN Diagnostics: \"\r\n  ]\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/livy/sessions/35/statements",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnMvMzUvc3RhdGVtZW50cw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9d538e4b-a7df-4123-a9dd-caa6a2ee78bd"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "request-id": [
+          "73b9dcc87db8435398168313f3483acf"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Fri, 05 Jun 2020 08:31:40 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "38"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"total_statements\": 0,\r\n  \"statements\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/livy/sessions/35/statements",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnMvMzUvc3RhdGVtZW50cw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c1b1e0ce-f5ed-4e72-999f-a19386cca142"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "request-id": [
+          "ff8cdcfb8cc74905af96dd5972b77561"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Fri, 05 Jun 2020 08:32:01 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "177"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"total_statements\": 1,\r\n  \"statements\": [\r\n    {\r\n      \"id\": 0,\r\n      \"code\": \"1+1\",\r\n      \"state\": \"available\",\r\n      \"output\": {\r\n        \"status\": \"ok\",\r\n        \"execution_count\": 0,\r\n        \"data\": {\r\n          \"text/plain\": \"res0: Int = 2\"\r\n        }\r\n      },\r\n      \"progress\": 1.0\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/livy/sessions/35/statements",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnMvMzUvc3RhdGVtZW50cw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"code\": \"1+1\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "098fa866-2d4d-446c-a04c-5264659f3632"
+        ],
+        "X-Requested-By": [
+          "ambari"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "21"
+        ]
+      },
+      "ResponseHeaders": {
+        "Location": [
+          "/sessions/35/statements/0"
+        ],
+        "request-id": [
+          "0f692e6001524f7d80ab76622a86db0b"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Fri, 05 Jun 2020 08:32:01 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "68"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": 0,\r\n  \"code\": \"1+1\",\r\n  \"state\": \"waiting\",\r\n  \"output\": null,\r\n  \"progress\": 0.0\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/livy/sessions/35/statements/0/cancel",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnMvMzUvc3RhdGVtZW50cy8wL2NhbmNlbA==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9fb8e660-5908-46f3-ae6a-cac9db4d29d5"
+        ],
+        "X-Requested-By": [
+          "ambari"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "request-id": [
+          "8889f8efbc2240a297cc093c0ebc31a2"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Fri, 05 Jun 2020 08:32:13 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "18"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"msg\": \"canceled\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/livy/sessions/35",
+      "EncodedRequestUri": "L2xpdnkvc2Vzc2lvbnMvMzU=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7e45bb9a-4683-41cf-adf1-80ab689a424e"
+        ],
+        "X-Requested-By": [
+          "ambari"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.HDInsight.Job.HDInsightJobClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "request-id": [
+          "6b5295364cf1414287744cdb78166926"
+        ],
+        "x-ms-hdi-active": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net"
+        ],
+        "x-ms-hdi-http-host": [
+          "hn0-shangw.4jhwm2oxfmoehnhvt2gwwtriqb.bx.internal.cloudapp.net:8998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Fri, 05 Jun 2020 08:32:13 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=UTF-8"
+        ],
+        "Content-Length": [
+          "17"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"msg\": \"deleted\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "964c10bb-8a6c-43bc-83d3-6b318c6c7305"
+  }
+}

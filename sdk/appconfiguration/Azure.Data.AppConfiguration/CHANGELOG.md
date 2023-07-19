@@ -1,6 +1,95 @@
 # Release History
 
-## 1.0.0
+## 1.3.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0-beta.2 (2023-07-11)
+
+### Features Added
+
+- Added configuration settings snapshot feature which allow users to create a point-in-time snapshot of their configuration store.
+
+### Other Changes
+
+- Removed protocol methods from the `ConfigurationClient`.
+
+## 1.3.0-beta.1 (2022-10-10)
+
+### Features Added
+
+- Added protocol methods to `ConfigurationClient` based on [this](https://github.com/Azure/azure-rest-api-specs/blob/e01d8afe9be7633ed36db014af16d47fec01f737/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/stable/1.0/appconfiguration.json) swagger definition.
+
+### Bugs Fixed
+
+- Fixed throwing `NullReferenceException` if the value of a `SecretReferenceConfigurationSetting` is null [(#31588)](https://github.com/Azure/azure-sdk-for-net/pull/31588).
+
+## 1.2.0 (2021-10-05)
+
+### Features Added
+
+- Added a `ConfigurationSetting` constructor parameter to set an `ETag`.
+
+## 1.2.0-beta.1 (2021-08-10)
+
+### Features Added
+
+- Added a `ConfigurationSetting` constructor parameter to set an `ETag`.
+
+## 1.1.0 (2021-07-06)
+
+### Breaking Changes
+
+- The `GetConfigurationSettingAsync` overload that takes an instance of `MatchConditions` temporary removed.
+
+## 1.1.0-beta.3 (2021-06-08)
+
+### Changes
+
+#### New Features
+- Added a `GetConfigurationSettingAsync` overload that takes an instance of `MatchConditions`.
+
+#### Key Bug Fixes
+
+- `FeatureFlagFilter` now allows parameter modification.
+
+## 1.0.3 (2021-05-14)
+
+### Changes
+
+- Dependency versions updated.
+
+## 1.1.0-beta.2 (2021-04-06)
+
+### Breaking changes
+
+- The `AddSyncToken` method renamed to `UpdateSyncToken`.
+
+## 1.1.0-beta.1 (2021-03-09)
+
+### Changes
+
+#### New Features
+
+- Added `SecretReferenceConfigurationSetting` type to represent a configuration setting that references a KeyVault Secret. 
+- Added `FeatureFlagConfigurationSetting` type to represent a configuration setting that controls a feature flag.
+- Added `AddSyncToken` to `ConfigurationClient` to be able to provide external synchronization tokens.
+
+## 1.0.2 (2020-09-10)
+
+- Provide AddConfigurationClient with support for TokenCredential
+
+## 1.0.1 (2020-07-07)
+
+- Update the tag list for the AzConfig package
+
+## 1.0.0 
 
 ### Breaking changes
 
@@ -10,11 +99,11 @@
 
 - Fixed multiple issues with connection string parsing in `ConfigurationClient`.
 
-## 1.0.0-preview.6
+## 1.0.0-preview.6 
 
 - Bugfixes: [#8920](https://github.com/Azure/azure-sdk-for-net/issues/8920)
 
-## 1.0.0-preview.5
+## 1.0.0-preview.5 
 
 ### Breaking changes
 
@@ -27,7 +116,7 @@
 - Added new overload for the method `ConfigurationClient.GetRevisions` that accepts key and optional label.
 - Added new overload for the method `ConfigurationClient.GetConfigurationSetting` that accepts `ConfigurationSetting` and its datetime stamp.
 
-## 1.0.0-preview.4
+## 1.0.0-preview.4 
 
 ### Breaking changes
 
@@ -46,11 +135,11 @@
 - Made `ConfigurationSetting` serializable by `System.Text.Json` serializers.
 - Updated documentation and samples.
 
-## 1.0.0-preview.3
+## 1.0.0-preview.3 
 
 - Fixed an issue where special characters were escaped incorrectly.
 
-## 1.0.0-preview.2
+## 1.0.0-preview.2 
 
 - Enabled conditional requests.
 - Added support for setting `x-ms-client-request-id`, `x-ms-correlation-request-id`, and `correlation-context` headers.

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Supported Operating system details.
+    /// Supported operating system details.
     /// </summary>
     public partial class SupportedOSDetails
     {
@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="osName">The name.</param>
         /// <param name="osType">The type.</param>
-        /// <param name="osVersions">List of version for OS.</param>
+        /// <param name="osVersions">The list of version for operating
+        /// system.</param>
         public SupportedOSDetails(string osName = default(string), string osType = default(string), IList<OSVersionWrapper> osVersions = default(IList<OSVersionWrapper>))
         {
             OsName = osName;
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string OsType { get; set; }
 
         /// <summary>
-        /// Gets or sets list of version for OS.
+        /// Gets or sets the list of version for operating system.
         /// </summary>
         [JsonProperty(PropertyName = "osVersions")]
         public IList<OSVersionWrapper> OsVersions { get; set; }

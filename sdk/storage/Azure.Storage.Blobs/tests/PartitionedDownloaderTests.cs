@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Blobs.Test
 {
     [TestFixture(true)]
     [TestFixture(false)]
@@ -27,6 +27,7 @@ namespace Azure.Storage.Blobs.Tests
             IfModifiedSince = DateTimeOffset.Now,
             LeaseId = "MyImportantLease"
         };
+        private static readonly DownloadTransferValidationOptions s_validationOptions = new DownloadTransferValidationOptions();
         private static readonly ETag s_etag = new ETag("0xQWERTY");
 
         public PartitionedDownloaderTests(bool async)
@@ -40,11 +41,13 @@ namespace Azure.Storage.Blobs.Tests
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(0);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
             SetupDownload(blockClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object);
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                transferValidation: s_validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -58,11 +61,13 @@ namespace Azure.Storage.Blobs.Tests
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(10);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
             SetupDownload(blockClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object);
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                transferValidation: s_validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -76,20 +81,47 @@ namespace Azure.Storage.Blobs.Tests
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
-            BlobProperties smallLengthProperties = new BlobProperties()
-            {
-                ContentLength = 100
-            };
-
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupDownload(blockClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10}, 20);
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 20
+                },
+                transferValidation: s_validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
-            // First block request is 20, and 10 for every block after that.
             Assert.AreEqual(dataSource.Requests.Count, 9);
+            AssertContent(100, stream);
+            Assert.NotNull(result);
+        }
+
+        [Test]
+        public async Task RespectsInitialTransferSizeBeforeDownloadingInBlocks()
+        {
+            MemoryStream stream = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100);
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            SetupDownload(blockClient, dataSource);
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 40,
+                    InitialTransferLength = 10
+                },
+                transferValidation: s_validationOptions);
+
+            Response result = await InvokeDownloadToAsync(downloader, stream);
+
+            Assert.AreEqual(dataSource.Requests.Count, 4);
             AssertContent(100, stream);
             Assert.NotNull(result);
         }
@@ -100,16 +132,18 @@ namespace Azure.Storage.Blobs.Tests
             MemoryStream stream = new MemoryStream();
             MockDataSource dataSource = new MockDataSource(100);
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
-            BlobProperties properties = new BlobProperties()
-            {
-                ContentLength = 100,
-                ETag = s_etag
-            };
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
             SetupDownload(blockClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10}, 10);
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                },
+                transferValidation: s_validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -142,24 +176,22 @@ namespace Azure.Storage.Blobs.Tests
 
             MemoryStream stream = new MemoryStream();
             Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
-            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
-            BlobProperties smallLengthProperties = new BlobProperties()
-            {
-                ContentLength = 100
-            };
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
-            if (_async)
-            {
-                blockClient.Setup(c => c.DownloadAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-                    .ThrowsAsync(e);
-            }
-            else
-            {
-                blockClient.Setup(c => c.Download(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-                    .Throws(e);
-            }
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.IsAny<DownloadTransferValidationOptions>(),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)).ThrowsAsync(e);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10}, 20);
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions() { MaximumTransferLength = 10},
+                transferValidation: s_validationOptions);
 
             Exception thrown = Assert.ThrowsAsync<Exception>(async () => await InvokeDownloadToAsync(downloader, stream));
 
@@ -179,28 +211,25 @@ namespace Azure.Storage.Blobs.Tests
 
         private void SetupDownload(Mock<BlobBaseClient> blockClient, MockDataSource dataSource)
         {
-            if (_async)
-            {
-                blockClient.Setup(c => c.DownloadAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-                    .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>(dataSource.GetStreamAsync);
-            }
-            else
-            {
-                blockClient.Setup(c => c.Download(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-                    .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>(dataSource.GetStream);
-            }
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && options != s_validationOptions && !options.AutoValidateChecksum),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) => async
+                    ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
+                    : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }
 
         private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
         {
-            if (_async)
-            {
-                return await downloader.DownloadToAsync(stream, s_conditions, s_cancellationToken);
-            }
-            else
-            {
-                return downloader.DownloadTo(stream, s_conditions, s_cancellationToken);
-            }
+            return await downloader.DownloadToInternal(stream, s_conditions, _async, s_cancellationToken);
         }
 
         private class MockDataSource
@@ -214,15 +243,36 @@ namespace Azure.Storage.Blobs.Tests
                 _length = length;
             }
 
-            public async Task<Response<BlobDownloadInfo>> GetStreamAsync(HttpRange range, BlobRequestConditions conditions = default, bool hash = default, CancellationToken token = default)
+            public async Task<Response<BlobDownloadStreamingResult>> GetStreamInternal(
+                HttpRange range,
+                BlobRequestConditions conditions,
+                DownloadTransferValidationOptions transferValidation,
+                IProgress<long> progress,
+                string operationName,
+                bool async,
+                CancellationToken cancellationToken)
+            {
+                if (async)
+                {
+                    await Task.Delay(25);
+                }
+                return GetStream(
+                    range,
+                    conditions,
+                    transferValidation,
+                    progress,
+                    cancellationToken);
+            }
+
+            public async ValueTask<Response<BlobDownloadStreamingResult>> GetStreamAsync(HttpRange range, BlobRequestConditions conditions = default, DownloadTransferValidationOptions validation = default, IProgress<long> progress = default, CancellationToken token = default)
             {
                 await Task.Delay(25);
-                return GetStream(range, conditions, hash, token);
+                return GetStream(range, conditions, validation, progress, token);
             }
 
             public HttpRange FullRange => new HttpRange(0, _length);
 
-            public Response<BlobDownloadInfo> GetStream(HttpRange range, BlobRequestConditions conditions, bool hash, CancellationToken token)
+            public Response<BlobDownloadStreamingResult> GetStream(HttpRange range, BlobRequestConditions conditions, DownloadTransferValidationOptions validation, IProgress<long> progress, CancellationToken token)
             {
                 lock (Requests)
                 {
@@ -244,36 +294,39 @@ namespace Azure.Storage.Blobs.Tests
 
                 memoryStream.Position = 0;
 
-                return Response.FromValue(new BlobDownloadInfo(new FlattenedDownloadProperties()
+                return Response.FromValue(new BlobDownloadStreamingResult()
                 {
-                    ContentRange = $"bytes {range.Offset}-{range.Offset + contentLength}/{_length}",
-                    ContentLength = contentLength,
                     Content = memoryStream,
-                    LastModified = DateTimeOffset.Now,
-                    Metadata = new Dictionary<string, string>() { { "meta", "data"}},
-                    BlobType = BlobType.Page,
-                    CopyStatusDescription = "test",
-                    CopyId = "test",
-                    CopyProgress = "test",
-                    CopySource = new Uri("http://example.com"),
-                    CopyStatus = CopyStatus.Failed,
-                    LeaseDuration = LeaseDurationType.Fixed,
-                    LeaseState = LeaseState.Expired,
-                    LeaseStatus = LeaseStatus.Unlocked,
-                    ContentType = "test",
-                    ETag = s_etag,
-                    ContentHash = new byte[]{ 1, 2, 3},
-                    ContentEncoding = "test",
-                    ContentDisposition = "test",
-                    ContentLanguage = "test",
-                    CacheControl = "test",
-                    BlobSequenceNumber = 12,
-                    AcceptRanges = "test",
-                    BlobCommittedBlockCount = 5,
-                    IsServerEncrypted = true,
-                    EncryptionKeySha256 = "test",
-                    CopyCompletionTime =  DateTimeOffset.Now
-                }), new MockResponse(200));
+                    Details = new BlobDownloadDetails()
+                    {
+                        BlobType = BlobType.Page,
+                        ContentLength = contentLength,
+                        ContentType = "test",
+                        ContentHash = new byte[] { 1, 2, 3 },
+                        LastModified = DateTimeOffset.Now,
+                        Metadata = new Dictionary<string, string>() { { "meta", "data" } },
+                        ContentRange = $"bytes {range.Offset}-{range.Offset + contentLength}/{_length}",
+                        ETag = s_etag,
+                        ContentEncoding = "test",
+                        CacheControl = "test",
+                        ContentDisposition = "test",
+                        ContentLanguage = "test",
+                        BlobSequenceNumber = 12,
+                        CopyCompletedOn = DateTimeOffset.Now,
+                        CopyStatusDescription = "test",
+                        CopyId = "test",
+                        CopyProgress = "test",
+                        CopySource = new Uri("http://example.com"),
+                        CopyStatus = CopyStatus.Failed,
+                        LeaseDuration = LeaseDurationType.Fixed,
+                        LeaseState = LeaseState.Expired,
+                        LeaseStatus = LeaseStatus.Unlocked,
+                        AcceptRanges = "test",
+                        BlobCommittedBlockCount = 5,
+                        IsServerEncrypted = true,
+                        EncryptionKeySha256 = "test",
+                    }
+                }, new MockResponse(200));
             }
         }
     }

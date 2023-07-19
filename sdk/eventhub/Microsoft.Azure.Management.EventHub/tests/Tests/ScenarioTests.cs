@@ -6,6 +6,9 @@ namespace EventHub.Tests.ScenarioTests
 {
     using System.Net;
     using Microsoft.Azure.Management.EventHub;
+    using Microsoft.Azure.Management.KeyVault;
+    using Microsoft.Azure.Management.Network;
+    using Microsoft.Azure.Management.ManagedServiceIdentity;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
@@ -14,6 +17,9 @@ namespace EventHub.Tests.ScenarioTests
     {
         private ResourceManagementClient _resourceManagementClient;
         private EventHubManagementClient _EventHubManagementClient;
+        private KeyVaultManagementClient _KeyVaultManagementClient;
+        private NetworkManagementClient _NetworkManagementClient;
+        private ManagedServiceIdentityClient _IdentityManagementClient;
         private RecordedDelegatingHandler handler = new RecordedDelegatingHandler();
 
         protected bool m_initialized = false;
@@ -33,6 +39,9 @@ namespace EventHub.Tests.ScenarioTests
                     {
                         _resourceManagementClient = EventHubManagementHelper.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                         _EventHubManagementClient = EventHubManagementHelper.GetEventHubManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        _KeyVaultManagementClient = EventHubManagementHelper.GetKeyVaultManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        _NetworkManagementClient = EventHubManagementHelper.GetNetworkManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        _IdentityManagementClient = EventHubManagementHelper.GetIdentityManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                     }
                 }
             }
@@ -52,6 +61,30 @@ namespace EventHub.Tests.ScenarioTests
             {               
                 return _EventHubManagementClient;
             }
-        }       
+        }
+
+        public KeyVaultManagementClient KeyVaultManagementClient
+        {
+            get
+            {
+                return _KeyVaultManagementClient;
+            }
+        }
+
+        public NetworkManagementClient NetworkManagementClient
+        {
+            get
+            {
+                return _NetworkManagementClient;
+            }
+        }
+
+        public ManagedServiceIdentityClient IdentityManagementClient
+        {
+            get
+            {
+                return _IdentityManagementClient;
+            }
+        }
     }
 }

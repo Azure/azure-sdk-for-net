@@ -34,20 +34,25 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the AssetFilter class.
         /// </summary>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="presentationTimeRange">The presentation time
         /// range.</param>
         /// <param name="firstQuality">The first quality.</param>
         /// <param name="tracks">The tracks selection conditions.</param>
-        public AssetFilter(string id = default(string), string name = default(string), string type = default(string), PresentationTimeRange presentationTimeRange = default(PresentationTimeRange), FirstQuality firstQuality = default(FirstQuality), IList<FilterTrackSelection> tracks = default(IList<FilterTrackSelection>))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public AssetFilter(string id = default(string), string name = default(string), string type = default(string), PresentationTimeRange presentationTimeRange = default(PresentationTimeRange), FirstQuality firstQuality = default(FirstQuality), IList<FilterTrackSelection> tracks = default(IList<FilterTrackSelection>), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             PresentationTimeRange = presentationTimeRange;
             FirstQuality = firstQuality;
             Tracks = tracks;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -73,6 +78,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.tracks")]
         public IList<FilterTrackSelection> Tracks { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

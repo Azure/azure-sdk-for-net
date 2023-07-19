@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage
 {
@@ -46,18 +46,39 @@ namespace Azure.Storage
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credential">Credential to use.</param>
+        /// <param name="resourceUri">Resource Uri. Must not contain shared access signature.</param>
         /// <returns>An authentication policy.</returns>
-        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential) =>
-            new BearerTokenAuthenticationPolicy(
+        public static HttpPipelinePolicy AsPolicy<TUriBuilder>(this AzureSasCredential credential, Uri resourceUri)
+        {
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNull(credential, nameof(credential));
+            var queryParameters = resourceUri.GetQueryParameters();
+            if (queryParameters.ContainsKey("sig"))
+            {
+                throw Errors.SasCredentialRequiresUriWithoutSas<TUriBuilder>(resourceUri);
+            }
+            return new AzureSasCredentialSynchronousPolicy(credential);
+        }
+
+        /// <summary>
+        /// Get an authentication policy to sign Storage requests.
+        /// </summary>
+        /// <param name="credential">Credential to use.</param>
+        /// <param name="options"> The <see cref="ISupportsTenantIdChallenges"/> to apply to the credential. </param>
+        /// <returns>An authentication policy.</returns>
+        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, ClientOptions options) =>
+            new StorageBearerTokenChallengeAuthorizationPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)),
-                StorageScope);
+                StorageScope,
+                options is ISupportsTenantIdChallenges { EnableTenantDiscovery: true });
 
         /// <summary>
         /// Get an optional authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credentials">Optional credentials to use.</param>
+        /// <param name="options"> The <see cref="ClientOptions"/> </param>
         /// <returns>An optional authentication policy.</returns>
-        public static HttpPipelinePolicy GetAuthenticationPolicy(object credentials = null)
+        public static HttpPipelinePolicy GetAuthenticationPolicy(object credentials = null, ClientOptions options = null)
         {
             // Use the credentials to decide on the authentication policy
             switch (credentials)
@@ -68,7 +89,7 @@ namespace Azure.Storage
                 case StorageSharedKeyCredential sharedKey:
                     return sharedKey.AsPolicy();
                 case TokenCredential token:
-                    return token.AsPolicy();
+                    return token.AsPolicy(options);
                 default:
                     throw Errors.InvalidCredentials(credentials.GetType().FullName);
             }
@@ -83,21 +104,24 @@ namespace Azure.Storage
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
         {
-            List<HttpPipelinePolicy> perRetryClientPolicies = new List<HttpPipelinePolicy>();
-            StorageResponseClassifier classifier = new StorageResponseClassifier();
+            StorageResponseClassifier classifier = new();
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerCallPolicies = { StorageServerTimeoutPolicy.Shared },
+                ResponseClassifier = classifier,
+                RequestFailedDetailsParser = new StorageRequestFailedDetailsParser()
+            };
+
             if (geoRedundantSecondaryStorageUri != null)
             {
-                perRetryClientPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
+                pipelineOptions.PerRetryPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
                 classifier.SecondaryStorageUri = geoRedundantSecondaryStorageUri;
             }
 
-            perRetryClientPolicies.Add(StorageRequestValidationPipelinePolicy.Shared);
-            perRetryClientPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
-            return HttpPipelineBuilder.Build(
-               options,
-               Array.Empty<HttpPipelinePolicy>(),
-               perRetryClientPolicies.ToArray(),
-               classifier);
+            pipelineOptions.PerRetryPolicies.Add(new StorageRequestValidationPipelinePolicy());
+            pipelineOptions.PerRetryPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
+
+            return HttpPipelineBuilder.Build(pipelineOptions);
         }
 
         /// <summary>

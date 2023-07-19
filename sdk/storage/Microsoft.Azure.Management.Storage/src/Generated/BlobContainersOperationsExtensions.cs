@@ -47,9 +47,13 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional. When specified, only container names starting with the filter
             /// will be listed.
             /// </param>
-            public static IPage<ListContainerItem> List(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string))
+            /// <param name='include'>
+            /// Optional, used to include the properties for soft deleted blob containers.
+            /// Possible values include: 'deleted'
+            /// </param>
+            public static IPage<ListContainerItem> List(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string include = default(string))
             {
-                return operations.ListAsync(resourceGroupName, accountName, maxpagesize, filter).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, accountName, maxpagesize, filter, include).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -76,12 +80,16 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional. When specified, only container names starting with the filter
             /// will be listed.
             /// </param>
+            /// <param name='include'>
+            /// Optional, used to include the properties for soft deleted blob containers.
+            /// Possible values include: 'deleted'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ListContainerItem>> ListAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ListContainerItem>> ListAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string include = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, maxpagesize, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, maxpagesize, filter, include, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -111,16 +119,12 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers, lower-case letters and dash (-) only. Every dash (-) character
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
-            /// <param name='publicAccess'>
-            /// Specifies whether data in the container may be accessed publicly and the
-            /// level of access. Possible values include: 'Container', 'Blob', 'None'
+            /// <param name='blobContainer'>
+            /// Properties of the blob container to create.
             /// </param>
-            /// <param name='metadata'>
-            /// A name-value pair to associate with the container as metadata.
-            /// </param>
-            public static BlobContainer Create(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>))
+            public static BlobContainer Create(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer)
             {
-                return operations.CreateAsync(resourceGroupName, accountName, containerName, publicAccess, metadata).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, accountName, containerName, blobContainer).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -147,19 +151,15 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers, lower-case letters and dash (-) only. Every dash (-) character
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
-            /// <param name='publicAccess'>
-            /// Specifies whether data in the container may be accessed publicly and the
-            /// level of access. Possible values include: 'Container', 'Blob', 'None'
-            /// </param>
-            /// <param name='metadata'>
-            /// A name-value pair to associate with the container as metadata.
+            /// <param name='blobContainer'>
+            /// Properties of the blob container to create.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BlobContainer> CreateAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BlobContainer> CreateAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, containerName, publicAccess, metadata, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, containerName, blobContainer, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -188,16 +188,12 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers, lower-case letters and dash (-) only. Every dash (-) character
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
-            /// <param name='publicAccess'>
-            /// Specifies whether data in the container may be accessed publicly and the
-            /// level of access. Possible values include: 'Container', 'Blob', 'None'
+            /// <param name='blobContainer'>
+            /// Properties to update for the blob container.
             /// </param>
-            /// <param name='metadata'>
-            /// A name-value pair to associate with the container as metadata.
-            /// </param>
-            public static BlobContainer Update(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>))
+            public static BlobContainer Update(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer)
             {
-                return operations.UpdateAsync(resourceGroupName, accountName, containerName, publicAccess, metadata).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, containerName, blobContainer).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,19 +219,15 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers, lower-case letters and dash (-) only. Every dash (-) character
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
-            /// <param name='publicAccess'>
-            /// Specifies whether data in the container may be accessed publicly and the
-            /// level of access. Possible values include: 'Container', 'Blob', 'None'
-            /// </param>
-            /// <param name='metadata'>
-            /// A name-value pair to associate with the container as metadata.
+            /// <param name='blobContainer'>
+            /// Properties to update for the blob container.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BlobContainer> UpdateAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess = default(PublicAccess?), IDictionary<string, string> metadata = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BlobContainer> UpdateAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, containerName, publicAccess, metadata, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, containerName, blobContainer, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -381,9 +373,14 @@ namespace Microsoft.Azure.Management.Storage
             /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
             /// lower case at SRP.
             /// </param>
-            public static LegalHold SetLegalHold(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags)
+            /// <param name='allowProtectedAppendWritesAll'>
+            /// When enabled, new blocks can be written to both 'Append and Bock Blobs'
+            /// while maintaining legal hold protection and compliance. Only new blocks can
+            /// be added and any existing blocks cannot be modified or deleted.
+            /// </param>
+            public static LegalHold SetLegalHold(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags, bool? allowProtectedAppendWritesAll = default(bool?))
             {
-                return operations.SetLegalHoldAsync(resourceGroupName, accountName, containerName, tags).GetAwaiter().GetResult();
+                return operations.SetLegalHoldAsync(resourceGroupName, accountName, containerName, tags, allowProtectedAppendWritesAll).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -413,12 +410,17 @@ namespace Microsoft.Azure.Management.Storage
             /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
             /// lower case at SRP.
             /// </param>
+            /// <param name='allowProtectedAppendWritesAll'>
+            /// When enabled, new blocks can be written to both 'Append and Bock Blobs'
+            /// while maintaining legal hold protection and compliance. Only new blocks can
+            /// be added and any existing blocks cannot be modified or deleted.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LegalHold> SetLegalHoldAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LegalHold> SetLegalHoldAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags, bool? allowProtectedAppendWritesAll = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.SetLegalHoldWithHttpMessagesAsync(resourceGroupName, accountName, containerName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.SetLegalHoldWithHttpMessagesAsync(resourceGroupName, accountName, containerName, tags, allowProtectedAppendWritesAll, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -451,9 +453,14 @@ namespace Microsoft.Azure.Management.Storage
             /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
             /// lower case at SRP.
             /// </param>
-            public static LegalHold ClearLegalHold(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags)
+            /// <param name='allowProtectedAppendWritesAll'>
+            /// When enabled, new blocks can be written to both 'Append and Bock Blobs'
+            /// while maintaining legal hold protection and compliance. Only new blocks can
+            /// be added and any existing blocks cannot be modified or deleted.
+            /// </param>
+            public static LegalHold ClearLegalHold(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags, bool? allowProtectedAppendWritesAll = default(bool?))
             {
-                return operations.ClearLegalHoldAsync(resourceGroupName, accountName, containerName, tags).GetAwaiter().GetResult();
+                return operations.ClearLegalHoldAsync(resourceGroupName, accountName, containerName, tags, allowProtectedAppendWritesAll).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -483,12 +490,17 @@ namespace Microsoft.Azure.Management.Storage
             /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
             /// lower case at SRP.
             /// </param>
+            /// <param name='allowProtectedAppendWritesAll'>
+            /// When enabled, new blocks can be written to both 'Append and Bock Blobs'
+            /// while maintaining legal hold protection and compliance. Only new blocks can
+            /// be added and any existing blocks cannot be modified or deleted.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LegalHold> ClearLegalHoldAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LegalHold> ClearLegalHoldAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags, bool? allowProtectedAppendWritesAll = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ClearLegalHoldWithHttpMessagesAsync(resourceGroupName, accountName, containerName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ClearLegalHoldWithHttpMessagesAsync(resourceGroupName, accountName, containerName, tags, allowProtectedAppendWritesAll, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -516,18 +528,18 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers, lower-case letters and dash (-) only. Every dash (-) character
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
-            /// <param name='immutabilityPeriodSinceCreationInDays'>
-            /// The immutability period for the blobs in the container since the policy
-            /// creation, in days.
+            /// <param name='parameters'>
+            /// The ImmutabilityPolicy Properties that will be created or updated to a blob
+            /// container.
             /// </param>
             /// <param name='ifMatch'>
             /// The entity state (ETag) version of the immutability policy to update. A
             /// value of "*" can be used to apply the operation only if the immutability
             /// policy already exists. If omitted, this operation will always be applied.
             /// </param>
-            public static ImmutabilityPolicy CreateOrUpdateImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string))
+            public static ImmutabilityPolicy CreateOrUpdateImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, ImmutabilityPolicy parameters = default(ImmutabilityPolicy), string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, immutabilityPeriodSinceCreationInDays, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -552,9 +564,9 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers, lower-case letters and dash (-) only. Every dash (-) character
             /// must be immediately preceded and followed by a letter or number.
             /// </param>
-            /// <param name='immutabilityPeriodSinceCreationInDays'>
-            /// The immutability period for the blobs in the container since the policy
-            /// creation, in days.
+            /// <param name='parameters'>
+            /// The ImmutabilityPolicy Properties that will be created or updated to a blob
+            /// container.
             /// </param>
             /// <param name='ifMatch'>
             /// The entity state (ETag) version of the immutability policy to update. A
@@ -564,9 +576,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImmutabilityPolicy> CreateOrUpdateImmutabilityPolicyAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImmutabilityPolicy> CreateOrUpdateImmutabilityPolicyAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, ImmutabilityPolicy parameters = default(ImmutabilityPolicy), string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(resourceGroupName, accountName, containerName, immutabilityPeriodSinceCreationInDays, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(resourceGroupName, accountName, containerName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -646,8 +658,8 @@ namespace Microsoft.Azure.Management.Storage
             /// Aborts an unlocked immutability policy. The response of delete has
             /// immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is
             /// required for this operation. Deleting a locked immutability policy is not
-            /// allowed, only way is to delete the container after deleting all blobs
-            /// inside the container.
+            /// allowed, the only way is to delete the container after deleting all expired
+            /// blobs inside the policy locked container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -681,8 +693,8 @@ namespace Microsoft.Azure.Management.Storage
             /// Aborts an unlocked immutability policy. The response of delete has
             /// immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is
             /// required for this operation. Deleting a locked immutability policy is not
-            /// allowed, only way is to delete the container after deleting all blobs
-            /// inside the container.
+            /// allowed, the only way is to delete the container after deleting all expired
+            /// blobs inside the policy locked container.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -818,13 +830,13 @@ namespace Microsoft.Azure.Management.Storage
             /// value of "*" can be used to apply the operation only if the immutability
             /// policy already exists. If omitted, this operation will always be applied.
             /// </param>
-            /// <param name='immutabilityPeriodSinceCreationInDays'>
-            /// The immutability period for the blobs in the container since the policy
-            /// creation, in days.
+            /// <param name='parameters'>
+            /// The ImmutabilityPolicy Properties that will be extended for a blob
+            /// container.
             /// </param>
-            public static ImmutabilityPolicy ExtendImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays)
+            public static ImmutabilityPolicy ExtendImmutabilityPolicy(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters = default(ImmutabilityPolicy))
             {
-                return operations.ExtendImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, immutabilityPeriodSinceCreationInDays).GetAwaiter().GetResult();
+                return operations.ExtendImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -855,16 +867,16 @@ namespace Microsoft.Azure.Management.Storage
             /// value of "*" can be used to apply the operation only if the immutability
             /// policy already exists. If omitted, this operation will always be applied.
             /// </param>
-            /// <param name='immutabilityPeriodSinceCreationInDays'>
-            /// The immutability period for the blobs in the container since the policy
-            /// creation, in days.
+            /// <param name='parameters'>
+            /// The ImmutabilityPolicy Properties that will be extended for a blob
+            /// container.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImmutabilityPolicy> ExtendImmutabilityPolicyAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImmutabilityPolicy> ExtendImmutabilityPolicyAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters = default(ImmutabilityPolicy), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ExtendImmutabilityPolicyWithHttpMessagesAsync(resourceGroupName, accountName, containerName, ifMatch, immutabilityPeriodSinceCreationInDays, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ExtendImmutabilityPolicyWithHttpMessagesAsync(resourceGroupName, accountName, containerName, ifMatch, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -936,6 +948,132 @@ namespace Microsoft.Azure.Management.Storage
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// This operation migrates a blob container from container level WORM to
+            /// object level immutability enabled container. Prerequisites require a
+            /// container level immutability policy either in locked or unlocked state,
+            /// Account level versioning must be enabled and there should be no Legal hold
+            /// on the container.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='containerName'>
+            /// The name of the blob container within the specified storage account. Blob
+            /// container names must be between 3 and 63 characters in length and use
+            /// numbers, lower-case letters and dash (-) only. Every dash (-) character
+            /// must be immediately preceded and followed by a letter or number.
+            /// </param>
+            public static void ObjectLevelWorm(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName)
+            {
+                operations.ObjectLevelWormAsync(resourceGroupName, accountName, containerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation migrates a blob container from container level WORM to
+            /// object level immutability enabled container. Prerequisites require a
+            /// container level immutability policy either in locked or unlocked state,
+            /// Account level versioning must be enabled and there should be no Legal hold
+            /// on the container.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='containerName'>
+            /// The name of the blob container within the specified storage account. Blob
+            /// container names must be between 3 and 63 characters in length and use
+            /// numbers, lower-case letters and dash (-) only. Every dash (-) character
+            /// must be immediately preceded and followed by a letter or number.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ObjectLevelWormAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ObjectLevelWormWithHttpMessagesAsync(resourceGroupName, accountName, containerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// This operation migrates a blob container from container level WORM to
+            /// object level immutability enabled container. Prerequisites require a
+            /// container level immutability policy either in locked or unlocked state,
+            /// Account level versioning must be enabled and there should be no Legal hold
+            /// on the container.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='containerName'>
+            /// The name of the blob container within the specified storage account. Blob
+            /// container names must be between 3 and 63 characters in length and use
+            /// numbers, lower-case letters and dash (-) only. Every dash (-) character
+            /// must be immediately preceded and followed by a letter or number.
+            /// </param>
+            public static void BeginObjectLevelWorm(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName)
+            {
+                operations.BeginObjectLevelWormAsync(resourceGroupName, accountName, containerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation migrates a blob container from container level WORM to
+            /// object level immutability enabled container. Prerequisites require a
+            /// container level immutability policy either in locked or unlocked state,
+            /// Account level versioning must be enabled and there should be no Legal hold
+            /// on the container.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='containerName'>
+            /// The name of the blob container within the specified storage account. Blob
+            /// container names must be between 3 and 63 characters in length and use
+            /// numbers, lower-case letters and dash (-) only. Every dash (-) character
+            /// must be immediately preceded and followed by a letter or number.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginObjectLevelWormAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginObjectLevelWormWithHttpMessagesAsync(resourceGroupName, accountName, containerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

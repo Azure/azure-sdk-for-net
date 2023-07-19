@@ -33,7 +33,27 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         /// <param name="authorizationPolicies">The shared access policies you
         /// can use to secure a connection to the IoT hub.</param>
+        /// <param name="disableLocalAuth">If true, SAS tokens with Iot hub
+        /// scoped SAS keys cannot be used for authentication.</param>
+        /// <param name="disableDeviceSAS">If true, all device(including Edge
+        /// devices but excluding modules) scoped SAS keys cannot be used for
+        /// authentication.</param>
+        /// <param name="disableModuleSAS">If true, all module scoped SAS keys
+        /// cannot be used for authentication.</param>
+        /// <param name="restrictOutboundNetworkAccess">If true, egress from
+        /// IotHub will be restricted to only the allowed FQDNs that are
+        /// configured via allowedFqdnList.</param>
+        /// <param name="allowedFqdnList">List of allowed FQDNs(Fully Qualified
+        /// Domain Name) for egress from Iot Hub.</param>
+        /// <param name="publicNetworkAccess">Whether requests from Public
+        /// Network are allowed. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
         /// <param name="ipFilterRules">The IP filter rules.</param>
+        /// <param name="minTlsVersion">Specifies the minimum TLS version to
+        /// support for this hub. Can be set to "1.2" to have clients that use
+        /// a TLS version below 1.2 to be rejected.</param>
+        /// <param name="privateEndpointConnections">Private endpoint
+        /// connections created on this IotHub</param>
         /// <param name="provisioningState">The provisioning state.</param>
         /// <param name="state">The hub state.</param>
         /// <param name="hostName">The name of the host.</param>
@@ -58,12 +78,26 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="features">The capabilities and features enabled for
         /// the IoT hub. Possible values include: 'None',
         /// 'DeviceManagement'</param>
+        /// <param name="encryption">The encryption properties for the IoT
+        /// hub.</param>
         /// <param name="locations">Primary and secondary location for iot
         /// hub</param>
-        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), IotHubPropertiesDeviceStreams deviceStreams = default(IotHubPropertiesDeviceStreams), string features = default(string), IList<IotHubLocationDescription> locations = default(IList<IotHubLocationDescription>))
+        /// <param name="enableDataResidency">This property when set to true,
+        /// will enable data residency, thus, disabling disaster
+        /// recovery.</param>
+        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), bool? disableLocalAuth = default(bool?), bool? disableDeviceSAS = default(bool?), bool? disableModuleSAS = default(bool?), bool? restrictOutboundNetworkAccess = default(bool?), IList<string> allowedFqdnList = default(IList<string>), string publicNetworkAccess = default(string), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), NetworkRuleSetProperties networkRuleSets = default(NetworkRuleSetProperties), string minTlsVersion = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), IotHubPropertiesDeviceStreams deviceStreams = default(IotHubPropertiesDeviceStreams), string features = default(string), EncryptionPropertiesDescription encryption = default(EncryptionPropertiesDescription), IList<IotHubLocationDescription> locations = default(IList<IotHubLocationDescription>), bool? enableDataResidency = default(bool?), RootCertificateProperties rootCertificate = default(RootCertificateProperties))
         {
             AuthorizationPolicies = authorizationPolicies;
+            DisableLocalAuth = disableLocalAuth;
+            DisableDeviceSAS = disableDeviceSAS;
+            DisableModuleSAS = disableModuleSAS;
+            RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
+            AllowedFqdnList = allowedFqdnList;
+            PublicNetworkAccess = publicNetworkAccess;
             IpFilterRules = ipFilterRules;
+            NetworkRuleSets = networkRuleSets;
+            MinTlsVersion = minTlsVersion;
+            PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             State = state;
             HostName = hostName;
@@ -76,7 +110,10 @@ namespace Microsoft.Azure.Management.IotHub.Models
             Comments = comments;
             DeviceStreams = deviceStreams;
             Features = features;
+            Encryption = encryption;
             Locations = locations;
+            EnableDataResidency = enableDataResidency;
+            RootCertificate = rootCertificate;
             CustomInit();
         }
 
@@ -93,10 +130,72 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public IList<SharedAccessSignatureAuthorizationRule> AuthorizationPolicies { get; set; }
 
         /// <summary>
+        /// Gets or sets if true, SAS tokens with Iot hub scoped SAS keys
+        /// cannot be used for authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, all device(including Edge devices but
+        /// excluding modules) scoped SAS keys cannot be used for
+        /// authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "disableDeviceSAS")]
+        public bool? DisableDeviceSAS { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, all module scoped SAS keys cannot be used for
+        /// authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "disableModuleSAS")]
+        public bool? DisableModuleSAS { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, egress from IotHub will be restricted to only
+        /// the allowed FQDNs that are configured via allowedFqdnList.
+        /// </summary>
+        [JsonProperty(PropertyName = "restrictOutboundNetworkAccess")]
+        public bool? RestrictOutboundNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of allowed FQDNs(Fully Qualified Domain Name) for
+        /// egress from Iot Hub.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowedFqdnList")]
+        public IList<string> AllowedFqdnList { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether requests from Public Network are allowed.
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
         /// Gets or sets the IP filter rules.
         /// </summary>
         [JsonProperty(PropertyName = "ipFilterRules")]
         public IList<IpFilterRule> IpFilterRules { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "networkRuleSets")]
+        public NetworkRuleSetProperties NetworkRuleSets { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the minimum TLS version to support for this
+        /// hub. Can be set to "1.2" to have clients that use a TLS version
+        /// below 1.2 to be rejected.
+        /// </summary>
+        [JsonProperty(PropertyName = "minTlsVersion")]
+        public string MinTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets private endpoint connections created on this IotHub
+        /// </summary>
+        [JsonProperty(PropertyName = "privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
 
         /// <summary>
         /// Gets the provisioning state.
@@ -180,10 +279,28 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string Features { get; set; }
 
         /// <summary>
+        /// Gets or sets the encryption properties for the IoT hub.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryption")]
+        public EncryptionPropertiesDescription Encryption { get; set; }
+
+        /// <summary>
         /// Gets primary and secondary location for iot hub
         /// </summary>
         [JsonProperty(PropertyName = "locations")]
         public IList<IotHubLocationDescription> Locations { get; private set; }
+
+        /// <summary>
+        /// Gets or sets this property when set to true, will enable data
+        /// residency, thus, disabling disaster recovery.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableDataResidency")]
+        public bool? EnableDataResidency { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "rootCertificate")]
+        public RootCertificateProperties RootCertificate { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -210,6 +327,20 @@ namespace Microsoft.Azure.Management.IotHub.Models
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (NetworkRuleSets != null)
+            {
+                NetworkRuleSets.Validate();
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element2 in PrivateEndpointConnections)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }

@@ -21,8 +21,6 @@ namespace Azure.Data.AppConfiguration
             loggedHeaderNames.Add("Sync-Token");
             loggedHeaderNames.Add("x-ms-correlation-request-id");
             loggedHeaderNames.Add("x-ms-request-id ");
-
-            clientOptions.Diagnostics.LoggedQueryParameters.Add("api-version");
         }
     }
 }

@@ -30,14 +30,17 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Initializes a new instance of the Operation class.
         /// </summary>
         /// <param name="name">The operation name.</param>
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
         /// <param name="display">The object that describes the
         /// operation.</param>
         /// <param name="origin">The intended executor of the
         /// operation.</param>
         /// <param name="properties">Properties of the operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), object properties = default(object))
+        public Operation(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay), string origin = default(string), object properties = default(object))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
             Properties = properties;
@@ -57,6 +60,12 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </remarks>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// Gets or sets the object that describes the operation.

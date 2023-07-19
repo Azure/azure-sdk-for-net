@@ -50,7 +50,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             Assert.Null(state.ShutdownException);
         }
 
-        [Fact]
+        [Fact(Skip ="Intermittent failures.  Tracked by #12930")]
         [DisplayTestMethodName]
         public void TimeoutInvokeTest()
         {

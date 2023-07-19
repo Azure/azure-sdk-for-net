@@ -42,6 +42,41 @@ namespace Azure.Storage.Sas
         Delete = 16,
 
         /// <summary>
+        /// Indicates that reading and writing Tags are permitted.
+        /// </summary>
+        Tag = 32,
+
+        /// <summary>
+        /// Indicates that deleting a Blob Version is permitted.
+        /// </summary>
+        DeleteBlobVersion = 64,
+
+        /// <summary>
+        /// Indicates that List is permitted.
+        /// </summary>
+        List = 128,
+
+        /// <summary>
+        /// Indicates that Move is permitted.
+        /// </summary>
+        Move = 256,
+
+        /// <summary>
+        /// Indicates that Execute is permitted.
+        /// </summary>
+        Execute = 512,
+
+        /// <summary>
+        /// Indicates that setting immutability policy is permitted.
+        /// </summary>
+        SetImmutabilityPolicy = 1024,
+
+        /// <summary>
+        /// Indicates that Permanent Delete is permitted.
+        /// </summary>
+        PermanentDelete = 2048,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -55,7 +90,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal static partial class BlobExtensions
     {
-
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="BlobSasBuilder.Permissions"/>.
@@ -83,6 +117,34 @@ namespace Azure.Storage.Blobs
             if ((permissions & BlobSasPermissions.Delete) == BlobSasPermissions.Delete)
             {
                 sb.Append(Constants.Sas.Permissions.Delete);
+            }
+            if ((permissions & BlobSasPermissions.DeleteBlobVersion) == BlobSasPermissions.DeleteBlobVersion)
+            {
+                sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
+            }
+            if ((permissions & BlobSasPermissions.PermanentDelete) == BlobSasPermissions.PermanentDelete)
+            {
+                sb.Append(Constants.Sas.Permissions.PermanentDelete);
+            }
+            if ((permissions & BlobSasPermissions.List) == BlobSasPermissions.List)
+            {
+                sb.Append(Constants.Sas.Permissions.List);
+            }
+            if ((permissions & BlobSasPermissions.Tag) == BlobSasPermissions.Tag)
+            {
+                sb.Append(Constants.Sas.Permissions.Tag);
+            }
+            if ((permissions & BlobSasPermissions.Move) == BlobSasPermissions.Move)
+            {
+                sb.Append(Constants.Sas.Permissions.Move);
+            }
+            if ((permissions & BlobSasPermissions.Execute) == BlobSasPermissions.Execute)
+            {
+                sb.Append(Constants.Sas.Permissions.Execute);
+            }
+            if ((permissions & BlobSasPermissions.SetImmutabilityPolicy) == BlobSasPermissions.SetImmutabilityPolicy)
+            {
+                sb.Append(Constants.Sas.Permissions.SetImmutabilityPolicy);
             }
             return sb.ToString();
         }

@@ -3,7 +3,7 @@
       "ProtocolName": "Models.NameValuePair",
       "SummaryComment": "Represents a name-value pair.",
       "IsUsedInCollections": true,
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

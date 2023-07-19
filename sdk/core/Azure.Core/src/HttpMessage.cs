@@ -12,10 +12,9 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage: IDisposable
+    public sealed class HttpMessage : IDisposable
     {
-        private Dictionary<string, object>? _properties;
-
+        private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
 
         /// <summary>
@@ -25,9 +24,11 @@ namespace Azure.Core
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
         {
+            Argument.AssertNotNull(request, nameof(Request));
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
+            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
 
         /// <summary>
@@ -59,20 +60,60 @@ namespace Azure.Core
         /// </summary>
         public bool HasResponse => _response != null;
 
+        internal void ClearResponse() => _response = null;
+
         /// <summary>
-        /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
+        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
         /// </summary>
         public CancellationToken CancellationToken { get; internal set; }
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; }
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
         /// </summary>
         public bool BufferResponse { get; set; }
+
+        /// <summary>
+        /// Gets or sets the network timeout value for this message. If <c>null</c> the value provided in <see cref="RetryOptions.NetworkTimeout"/> would be used instead.
+        /// Defaults to <c>null</c>.
+        /// </summary>
+        public TimeSpan? NetworkTimeout { get; set; }
+
+        internal int RetryNumber { get; set; }
+
+        internal DateTimeOffset ProcessingStartTime { get; set; }
+
+        /// <summary>
+        /// The processing context for the message.
+        /// </summary>
+        public MessageProcessingContext ProcessingContext => new(this);
+
+        internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
+        {
+            if (context == null)
+            {
+                return;
+            }
+
+            context.Freeze();
+
+            if (context.Policies?.Count > 0)
+            {
+                Policies ??= new(context.Policies.Count);
+                Policies.AddRange(context.Policies);
+            }
+
+            if (classifier != null)
+            {
+                ResponseClassifier = context.Apply(classifier);
+            }
+        }
+
+        internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
@@ -83,7 +124,12 @@ namespace Azure.Core
         public bool TryGetProperty(string name, out object? value)
         {
             value = null;
-            return _properties?.TryGetValue(name, out value) == true;
+            if (_propertyBag.IsEmpty || !_propertyBag.TryGetValue((ulong)typeof(MessagePropertyKey).TypeHandle.Value, out var rawValue))
+            {
+                return false;
+            }
+            var properties = (Dictionary<string, object>)rawValue!;
+            return properties.TryGetValue(name, out value);
         }
 
         /// <summary>
@@ -93,13 +139,45 @@ namespace Azure.Core
         /// <param name="value">The property value.</param>
         public void SetProperty(string name, object value)
         {
-            _properties ??= new Dictionary<string, object>();
-
-            _properties[name] = value;
+            Dictionary<string, object> properties;
+            if (!_propertyBag.TryGetValue((ulong)typeof(MessagePropertyKey).TypeHandle.Value, out var rawValue))
+            {
+                properties = new Dictionary<string, object>();
+                _propertyBag.Set((ulong)typeof(MessagePropertyKey).TypeHandle.Value, properties);
+            }
+            else
+            {
+                properties = (Dictionary<string, object>)rawValue!;
+            }
+            properties[name] = value;
         }
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> would result in exception.
+        /// Gets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
+        /// </summary>
+        /// <param name="type">The property type.</param>
+        /// <param name="value">The property value.</param>
+        /// <remarks>
+        /// The key value is of type <c>Type</c> for a couple of reasons. Primarily, it allows values to be stored such that though the accessor methods
+        /// are public, storing values keyed by internal types make them inaccessible to other assemblies. This protects internal values from being overwritten
+        /// by external code. See the <see cref="TelemetryDetails"/> and <see cref="UserAgentValueKey"/> types for an example of this usage. Secondly, <c>Type</c>
+        /// comparisons are faster than string comparisons.
+        /// </remarks>
+        /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
+        public bool TryGetProperty(Type type, out object? value) =>
+            _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
+
+        /// <summary>
+        /// Sets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
+        /// Internal properties can be keyed with internal types to prevent external code from overwriting these values.
+        /// </summary>
+        /// <param name="type">The key for the value.</param>
+        /// <param name="value">The property value.</param>
+        public void SetProperty(Type type, object value) =>
+            _propertyBag.Set((ulong)type.TypeHandle.Value, value);
+
+        /// <summary>
+        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/> would result in exception.
         /// </summary>
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
@@ -108,7 +186,7 @@ namespace Azure.Core
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
-                case Stream stream :
+                case Stream stream:
                     _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
                     return stream;
                 default:
@@ -121,11 +199,18 @@ namespace Azure.Core
         /// </summary>
         public void Dispose()
         {
-            Request?.Dispose();
-            _response?.Dispose();
+            Request.Dispose();
+            _propertyBag.Dispose();
+
+            var response = _response;
+            if (response != null)
+            {
+                _response = null;
+                response.Dispose();
+            }
         }
 
-        private class ResponseShouldNotBeUsedStream: Stream
+        private class ResponseShouldNotBeUsedStream : Stream
         {
             public Stream Original { get; }
 
@@ -175,5 +260,10 @@ namespace Azure.Core
                 set => throw CreateException();
             }
         }
+
+        /// <summary>
+        /// Exists as a private key entry into the <see cref="_propertyBag"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
+        /// </summary>
+        private class MessagePropertyKey { }
     }
 }

@@ -3,86 +3,40 @@
 
 ﻿namespace Microsoft.Azure.Batch
 {
-    using System.Diagnostics;
-    using System.Linq;
+    using Microsoft.Rest.Azure;
     using System.Threading;
-    using Models = Microsoft.Azure.Batch.Protocol.Models;
+    using System.Threading.Tasks;
+    using Models = Protocol.Models;
 
-    internal class AsyncListTasksEnumerator : PagedEnumeratorBase<CloudTask>
+    internal class AsyncListTasksEnumerator : AsyncListEnumerator<CloudTask, Models.CloudTask, Models.TaskListHeaders>
     {
         private readonly JobOperations _jobOperations;
         private readonly string _jobId;
-        private readonly BehaviorManager _behaviorMgr;
-        private readonly DetailLevel _detailLevel;
-
-#region // constructors
-        private AsyncListTasksEnumerator()
-        {
-        }
 
         internal AsyncListTasksEnumerator(
                 JobOperations jobOperations,
                 string jobId,
                 BehaviorManager behaviorMgr,
                 DetailLevel detailLevel)
+        : base(behaviorMgr, detailLevel)
         {
-            this._jobOperations = jobOperations;
-            this._jobId = jobId;
-            this._behaviorMgr = behaviorMgr;
-            this._detailLevel = detailLevel;
+            _jobOperations = jobOperations;
+            _jobId = jobId;
         }
 
-#endregion // constructors
-
-        public override CloudTask Current  // for IPagedEnumerator<T> and IEnumerator<T>
+        internal override CloudTask Wrap(Models.CloudTask protocolObj)
         {
-            get
-            {
-                // start with the current object off of base
-                object curObj = base._currentBatch[base._currentIndex];
-
-                // it must be a protocol object from previous call
-                Models.CloudTask protoTask = curObj as Models.CloudTask;
-
-                Debug.Assert(null != protoTask);
-
-                // wrap protocol object
-                CloudTask wrapped = new CloudTask(this._jobOperations.ParentBatchClient, this._jobId, protoTask, _behaviorMgr.BaseBehaviors);
-
-                return wrapped;
-            }
+            return new CloudTask(_jobOperations.ParentBatchClient, _jobId, protocolObj, behaviorMgr.BaseBehaviors);
         }
 
-        /// <summary>
-        /// fetch another batch of objects from the server
-        /// </summary>
-        protected async override System.Threading.Tasks.Task GetNextBatchFromServerAsync(SkipTokenHandler skipHandler, CancellationToken cancellationToken)
+        internal override Task<AzureOperationResponse<IPage<Models.CloudTask>, Models.TaskListHeaders>> GetTaskResult(SkipTokenHandler skipHandler, CancellationToken cancellationToken)
         {
-            do
-            {
-                // start the protocol layer call
-                var asyncTask = this._jobOperations.ParentBatchClient.ProtocolLayer.ListTasks(
-                    this._jobId,
+            return _jobOperations.ParentBatchClient.ProtocolLayer.ListTasks(
+                    _jobId,
                     skipHandler.SkipToken,
-                    this._behaviorMgr,
-                    this._detailLevel,
+                    behaviorMgr,
+                    detailLevel,
                     cancellationToken);
-
-                var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-                // remember any skiptoken returned.  This also sets the bool
-                skipHandler.SkipToken = response.Body.NextPageLink;
-
-                // remember the protocol tasks returned
-                base._currentBatch = null;
-
-                if (null != response.Body.GetEnumerator())
-                {
-                    base._currentBatch = response.Body.ToArray();
-                }
-            }
-            // it is possible for there to be no results so we keep trying
-            while (skipHandler.ThereIsMoreData && ((null == _currentBatch) || _currentBatch.Length <= 0));
         }
     }
 }

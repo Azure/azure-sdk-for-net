@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// auth.</param>
         /// <param name="tenantId">Indicates the tenant id for aad
         /// auth.</param>
-        public WebhookReceiver(string name, string serviceUri, bool useCommonAlertSchema, bool? useAadAuth = default(bool?), string objectId = default(string), string identifierUri = default(string), string tenantId = default(string))
+        public WebhookReceiver(string name, string serviceUri, bool? useCommonAlertSchema = default(bool?), bool? useAadAuth = default(bool?), string objectId = default(string), string identifierUri = default(string), string tenantId = default(string))
         {
             Name = name;
             ServiceUri = serviceUri;
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Gets or sets indicates whether to use common alert schema.
         /// </summary>
         [JsonProperty(PropertyName = "useCommonAlertSchema")]
-        public bool UseCommonAlertSchema { get; set; }
+        public bool? UseCommonAlertSchema { get; set; }
 
         /// <summary>
         /// Gets or sets indicates whether or not use AAD authentication.

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="networkWatcherFlowAnalyticsConfiguration">Parameters
         /// that define the configuration of traffic analytics.</param>
-        public TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration)
+        public TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration = default(TrafficAnalyticsConfigurationProperties))
         {
             NetworkWatcherFlowAnalyticsConfiguration = networkWatcherFlowAnalyticsConfiguration;
             CustomInit();
@@ -50,22 +49,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "networkWatcherFlowAnalyticsConfiguration")]
         public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (NetworkWatcherFlowAnalyticsConfiguration == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NetworkWatcherFlowAnalyticsConfiguration");
-            }
-            if (NetworkWatcherFlowAnalyticsConfiguration != null)
-            {
-                NetworkWatcherFlowAnalyticsConfiguration.Validate();
-            }
-        }
     }
 }

@@ -49,12 +49,13 @@ namespace Microsoft.Azure.Management.MixedReality
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request.
+        /// The API version to be used with the HTTP request.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Azure subscription ID.
+        /// The Azure subscription ID. This is a GUID-formatted string (e.g.
+        /// 00000000-0000-0000-0000-000000000000)
         /// </summary>
         public string SubscriptionId { get; set; }
 
@@ -85,6 +86,16 @@ namespace Microsoft.Azure.Management.MixedReality
         /// Gets the ISpatialAnchorsAccountsOperations.
         /// </summary>
         public virtual ISpatialAnchorsAccountsOperations SpatialAnchorsAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IRemoteRenderingAccountsOperations.
+        /// </summary>
+        public virtual IRemoteRenderingAccountsOperations RemoteRenderingAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IObjectAnchorsAccountsOperations.
+        /// </summary>
+        public virtual IObjectAnchorsAccountsOperations ObjectAnchorsAccounts { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the MixedRealityClient class.
@@ -329,8 +340,10 @@ namespace Microsoft.Azure.Management.MixedReality
         {
             Operations = new Operations(this);
             SpatialAnchorsAccounts = new SpatialAnchorsAccountsOperations(this);
+            RemoteRenderingAccounts = new RemoteRenderingAccountsOperations(this);
+            ObjectAnchorsAccounts = new ObjectAnchorsAccountsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-02-28-preview";
+            ApiVersion = "2021-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -365,7 +378,7 @@ namespace Microsoft.Azure.Management.MixedReality
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
         /// <summary>
-        /// Check Name Availability for global uniqueness
+        /// Check Name Availability for local uniqueness
         /// </summary>
         /// <param name='location'>
         /// The location in which uniqueness will be verified.
@@ -379,7 +392,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -519,13 +532,14 @@ namespace Microsoft.Azure.Management.MixedReality
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
+                    CloudError _errorBody =  SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -535,6 +549,10 @@ namespace Microsoft.Azure.Management.MixedReality
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);

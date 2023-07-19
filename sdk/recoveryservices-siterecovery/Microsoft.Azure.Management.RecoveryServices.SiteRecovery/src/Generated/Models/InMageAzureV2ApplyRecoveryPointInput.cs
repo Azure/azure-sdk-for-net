@@ -28,28 +28,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             CustomInit();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the
-        /// InMageAzureV2ApplyRecoveryPointInput class.
-        /// </summary>
-        /// <param name="vaultLocation">The vault location where the recovery
-        /// Vm resides.</param>
-        public InMageAzureV2ApplyRecoveryPointInput(string vaultLocation = default(string))
-        {
-            VaultLocation = vaultLocation;
-            CustomInit();
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the vault location where the recovery Vm resides.
-        /// </summary>
-        [JsonProperty(PropertyName = "vaultLocation")]
-        public string VaultLocation { get; set; }
 
     }
 }

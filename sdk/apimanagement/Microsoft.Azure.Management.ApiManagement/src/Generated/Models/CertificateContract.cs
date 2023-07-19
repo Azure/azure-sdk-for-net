@@ -38,16 +38,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ`
         /// as specified by the ISO 8601 standard.
         /// </param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
-        public CertificateContract(string subject, string thumbprint, System.DateTime expirationDate, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="keyVault">KeyVault location details of the
+        /// certificate.</param>
+        public CertificateContract(string subject, string thumbprint, System.DateTime expirationDate, string id = default(string), string name = default(string), string type = default(string), KeyVaultContractProperties keyVault = default(KeyVaultContractProperties))
             : base(id, name, type)
         {
             Subject = subject;
             Thumbprint = thumbprint;
             ExpirationDate = expirationDate;
+            KeyVault = keyVault;
             CustomInit();
         }
 
@@ -76,6 +81,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.expirationDate")]
         public System.DateTime ExpirationDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets keyVault location details of the certificate.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVault")]
+        public KeyVaultContractProperties KeyVault { get; set; }
 
         /// <summary>
         /// Validate the object.

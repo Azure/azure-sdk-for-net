@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties of the invoice download.
+    /// The properties of a document.
     /// </summary>
     public partial class Document
     {
@@ -29,13 +29,17 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the Document class.
         /// </summary>
-        /// <param name="kind">Document type. Possible values include:
-        /// 'Invoice', 'VoidNote', 'Receipt', 'CreditNote'</param>
+        /// <param name="kind">The type of the document. Possible values
+        /// include: 'Invoice', 'VoidNote', 'TaxReceipt', 'CreditNote'</param>
         /// <param name="url">Document URL.</param>
-        public Document(string kind = default(string), string url = default(string))
+        /// <param name="source">The source of the document. ENF for Brazil and
+        /// DRS for rest of the world. Possible values include: 'DRS',
+        /// 'ENF'</param>
+        public Document(string kind = default(string), string url = default(string), string source = default(string))
         {
             Kind = kind;
             Url = url;
+            Source = source;
             CustomInit();
         }
 
@@ -45,8 +49,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets document type. Possible values include: 'Invoice', 'VoidNote',
-        /// 'Receipt', 'CreditNote'
+        /// Gets the type of the document. Possible values include: 'Invoice',
+        /// 'VoidNote', 'TaxReceipt', 'CreditNote'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; private set; }
@@ -56,6 +60,13 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; private set; }
+
+        /// <summary>
+        /// Gets the source of the document. ENF for Brazil and DRS for rest of
+        /// the world. Possible values include: 'DRS', 'ENF'
+        /// </summary>
+        [JsonProperty(PropertyName = "source")]
+        public string Source { get; private set; }
 
     }
 }

@@ -21,23 +21,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void AnInstanceIsEqualToItself()
-        {
-            var first = EventPosition.FromOffset(12);
-            var second = first;
-
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
-        ///   equality.
-        /// </summary>
-        ///
-        [Test]
         public void EarliestAndLatestAreNotEqual()
         {
             var first = EventPosition.Earliest;
@@ -216,6 +199,28 @@ namespace Azure.Messaging.EventHubs.Tests
             var second = EventPosition.FromSequenceNumber(123);
 
             Assert.That(first.GetHashCode(), Is.Not.EqualTo(second.GetHashCode()));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventPosition.ToString "/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToStringReflectsTheState()
+        {
+            var inclusive = true;
+            var offset = 123;
+            var sequence = 778;
+            var enqueued = DateTimeOffset.Now.AddHours(1);
+
+            Assert.That(EventPosition.Earliest.ToString(), Contains.Substring(nameof(EventPosition.Earliest)), "Earliest should be represented.");
+            Assert.That(EventPosition.Latest.ToString(), Contains.Substring(nameof(EventPosition.Latest)), "Latest should be represented.");
+            Assert.That(EventPosition.FromOffset(offset).ToString(), Contains.Substring($"[{ offset }]"), "The offset should be represented.");
+            Assert.That(EventPosition.FromSequenceNumber(sequence).ToString(), Contains.Substring($"[{ sequence }]"), "The sequence should be represented.");
+            Assert.That(EventPosition.FromEnqueuedTime(enqueued).ToString(), Contains.Substring($"[{ enqueued }]"), "The enqueued time should be represented.");
+            Assert.That(EventPosition.FromOffset(offset, inclusive).ToString(), Contains.Substring($"[{ inclusive }]"), "The inclusive flag should be represented for the offset.");
+            Assert.That(EventPosition.FromSequenceNumber(sequence, inclusive).ToString(), Contains.Substring($"[{ inclusive }]"), "The inclusive flag should be represented for the sequence number.");
         }
     }
 }

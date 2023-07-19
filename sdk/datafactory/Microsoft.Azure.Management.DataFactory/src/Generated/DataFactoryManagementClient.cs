@@ -141,11 +141,6 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual ITriggerRunsOperations TriggerRuns { get; private set; }
 
         /// <summary>
-        /// Gets the IRerunTriggersOperations.
-        /// </summary>
-        public virtual IRerunTriggersOperations RerunTriggers { get; private set; }
-
-        /// <summary>
         /// Gets the IDataFlowsOperations.
         /// </summary>
         public virtual IDataFlowsOperations DataFlows { get; private set; }
@@ -154,6 +149,41 @@ namespace Microsoft.Azure.Management.DataFactory
         /// Gets the IDataFlowDebugSessionOperations.
         /// </summary>
         public virtual IDataFlowDebugSessionOperations DataFlowDebugSession { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedVirtualNetworksOperations.
+        /// </summary>
+        public virtual IManagedVirtualNetworksOperations ManagedVirtualNetworks { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedPrivateEndpointsOperations.
+        /// </summary>
+        public virtual IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; private set; }
+
+        /// <summary>
+        /// Gets the ICredentialOperations.
+        /// </summary>
+        public virtual ICredentialOperations CredentialOperations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndPointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndPointConnectionsOperations PrivateEndPointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IGlobalParametersOperations.
+        /// </summary>
+        public virtual IGlobalParametersOperations GlobalParameters { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
@@ -409,9 +439,15 @@ namespace Microsoft.Azure.Management.DataFactory
             ActivityRuns = new ActivityRunsOperations(this);
             Triggers = new TriggersOperations(this);
             TriggerRuns = new TriggerRunsOperations(this);
-            RerunTriggers = new RerunTriggersOperations(this);
             DataFlows = new DataFlowsOperations(this);
             DataFlowDebugSession = new DataFlowDebugSessionOperations(this);
+            ManagedVirtualNetworks = new ManagedVirtualNetworksOperations(this);
+            ManagedPrivateEndpoints = new ManagedPrivateEndpointsOperations(this);
+            CredentialOperations = new CredentialOperations(this);
+            PrivateEndPointConnections = new PrivateEndPointConnectionsOperations(this);
+            PrivateEndpointConnection = new PrivateEndpointConnectionOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            GlobalParameters = new GlobalParametersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-06-01";
             AcceptLanguage = "en-US";
@@ -461,22 +497,28 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Trigger>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataFlow>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataFlow>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Credential>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Credential>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetCompression>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetCompression>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetStorageFormat>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetStorageFormat>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetLocation>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetLocation>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StoreReadSettings>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StoreReadSettings>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CompressionReadSettings>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CompressionReadSettings>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FormatReadSettings>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FormatReadSettings>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StoreReadSettings>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StoreReadSettings>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExportSettings>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ExportSettings>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySource>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySource>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ImportSettings>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ImportSettings>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StoreWriteSettings>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StoreWriteSettings>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FormatWriteSettings>("type"));
@@ -489,6 +531,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CustomSetupBase>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SsisObjectMetadata>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SsisObjectMetadata>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopyTranslator>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopyTranslator>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

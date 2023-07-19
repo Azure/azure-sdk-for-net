@@ -24,9 +24,16 @@ namespace Microsoft.Azure.Batch
     public partial class ImageReference : ITransportObjectProvider<Models.ImageReference>, IPropertyMetadata
     {
         #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageReference"/> class.
+        /// </summary>
+        public ImageReference()
+        {
+        }
 
         internal ImageReference(Models.ImageReference protocolObject)
         {
+            this.ExactVersion = protocolObject.ExactVersion;
             this.Offer = protocolObject.Offer;
             this.Publisher = protocolObject.Publisher;
             this.Sku = protocolObject.Sku;
@@ -37,6 +44,12 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region ImageReference
+
+        /// <summary>
+        /// Gets the specific version of the platform image or marketplace image used to create the node. This read-only 
+        /// field differs from 'version' only if the value specified for 'version' when the pool was created was 'latest'.
+        /// </summary>
+        public string ExactVersion { get; }
 
         /// <summary>
         /// Gets the offer type of the Azure Virtual Machines Marketplace Image.
@@ -72,15 +85,12 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets the ARM resource identifier of the Virtual Machine Image or Shared Image Gallery Image. Computes Compute 
-        /// Nodes of the Pool will be created using this Image Id. This is of either the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName} 
-        /// for Virtual Machine Image or /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionId} 
-        /// for SIG image.
+        /// Nodes of the Pool will be created using this Image Id. This is of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionId}.
         /// </summary>
         /// <remarks>
-        /// This property is mutually exclusive with other <see cref="ImageReference"/> properties. For Virtual Machine Image 
-        /// it must be in the same region and subscription as the Azure Batch account. For SIG image it must have replicas 
-        /// in the same region as the Azure Batch account. For information about the firewall settings for the Batch Compute 
-        /// Node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+        /// This property is mutually exclusive with other <see cref="ImageReference"/> properties. The Shared Image Gallery 
+        /// image must have replicas in the same region as the Azure Batch account. For information about the firewall settings 
+        /// for the Batch Compute Node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
         public string VirtualMachineImageId { get; }
 

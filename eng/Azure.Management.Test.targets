@@ -1,0 +1,22 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ManagementTestSharedSources>$(MSBuildThisFileDirectory)/../common/ManagementTestShared</ManagementTestSharedSources>
+    <RbacSharedSources>$(MSBuildThisFileDirectory)/../sdk/testcommon/Azure.Graph.Rbac/src</RbacSharedSources>
+    </PropertyGroup>
+
+  <ItemGroup Condition="'$(UseNewMgmtFramework)' == 'false'">
+    <Compile Include="$(ManagementTestSharedSources)/Current/**/*.cs"
+             Link="TestShared/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseNewMgmtFramework)' == '' or '$(UseNewMgmtFramework)' == 'true'">
+    <Compile Include="$(ManagementTestSharedSources)/Redesign/**/*.cs"
+             Link="TestShared/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TestHelperProjects.Contains('Rbac1.6'))">
+    <Compile Include="$(RbacSharedSources)/**/*.cs"
+             Link="Rbac/%(RecursiveDir)%(Filename)%(Extension)"
+             Exclude="$(RbacSharedSources)/Properties/AssemblyInfo.cs" />
+  </ItemGroup>
+</Project>

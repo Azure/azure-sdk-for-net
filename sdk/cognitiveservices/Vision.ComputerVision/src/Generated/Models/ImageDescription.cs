@@ -39,12 +39,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="captions">A list of captions, sorted by confidence
         /// level.</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        public ImageDescription(IList<string> tags = default(IList<string>), IList<ImageCaption> captions = default(IList<ImageCaption>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
+        public ImageDescription(IList<string> tags = default(IList<string>), IList<ImageCaption> captions = default(IList<ImageCaption>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata), string modelVersion = default(string))
         {
             Tags = tags;
             Captions = captions;
             RequestId = requestId;
             Metadata = metadata;
+            ModelVersion = modelVersion;
             CustomInit();
         }
 
@@ -75,6 +76,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public ImageMetadata Metadata { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "modelVersion")]
+        public string ModelVersion { get; set; }
 
     }
 }

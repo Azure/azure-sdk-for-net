@@ -47,6 +47,36 @@ namespace Azure.Storage.Sas
         List = 32,
 
         /// <summary>
+        /// Indicates that reading and writing Tags are permitted.
+        /// </summary>
+        Tag = 64,
+
+        /// <summary>
+        /// Indicates that deleting a Blob Version is permitted.
+        /// </summary>
+        DeleteBlobVersion = 128,
+
+        /// <summary>
+        /// Indicates that Move is permitted.
+        /// </summary>
+        Move = 256,
+
+        /// <summary>
+        /// Indicates that Execute is permitted.
+        /// </summary>
+        Execute = 512,
+
+        /// <summary>
+        /// Indicates that setting immutability policy is permitted.
+        /// </summary>
+        SetImmutabilityPolicy = 1024,
+
+        /// <summary>
+        /// Indicates that filtering by tag is permitted.
+        /// </summary>
+        Filter = 2048,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -60,7 +90,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal static partial class BlobExtensions
     {
-
         /// <summary>
         /// Create a permissions string to provide
         /// <see cref="BlobSasBuilder.Permissions"/>.
@@ -89,9 +118,25 @@ namespace Azure.Storage.Blobs
             {
                 sb.Append(Constants.Sas.Permissions.Delete);
             }
+            if ((permissions & BlobContainerSasPermissions.DeleteBlobVersion) == BlobContainerSasPermissions.DeleteBlobVersion)
+            {
+                sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
+            }
             if ((permissions & BlobContainerSasPermissions.List) == BlobContainerSasPermissions.List)
             {
                 sb.Append(Constants.Sas.Permissions.List);
+            }
+            if ((permissions & BlobContainerSasPermissions.Tag) == BlobContainerSasPermissions.Tag)
+            {
+                sb.Append(Constants.Sas.Permissions.Tag);
+            }
+            if ((permissions & BlobContainerSasPermissions.Filter) == BlobContainerSasPermissions.Filter)
+            {
+                sb.Append(Constants.Sas.Permissions.FilterByTags);
+            }
+            if ((permissions & BlobContainerSasPermissions.SetImmutabilityPolicy) == BlobContainerSasPermissions.SetImmutabilityPolicy)
+            {
+                sb.Append(Constants.Sas.Permissions.SetImmutabilityPolicy);
             }
             return sb.ToString();
         }

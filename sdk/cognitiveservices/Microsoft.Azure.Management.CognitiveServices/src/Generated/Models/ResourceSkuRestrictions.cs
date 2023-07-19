@@ -55,33 +55,33 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the type of restrictions. Possible values include: 'Location',
-        /// 'Zone'
+        /// Gets or sets the type of restrictions. Possible values include:
+        /// 'Location', 'Zone'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public ResourceSkuRestrictionsType? Type { get; private set; }
+        public ResourceSkuRestrictionsType? Type { get; set; }
 
         /// <summary>
-        /// Gets the value of restrictions. If the restriction type is set to
-        /// location. This would be different locations where the SKU is
+        /// Gets or sets the value of restrictions. If the restriction type is
+        /// set to location. This would be different locations where the SKU is
         /// restricted.
         /// </summary>
         [JsonProperty(PropertyName = "values")]
-        public IList<string> Values { get; private set; }
+        public IList<string> Values { get; set; }
 
         /// <summary>
-        /// Gets the information about the restriction where the SKU cannot be
-        /// used.
+        /// Gets or sets the information about the restriction where the SKU
+        /// cannot be used.
         /// </summary>
         [JsonProperty(PropertyName = "restrictionInfo")]
-        public ResourceSkuRestrictionInfo RestrictionInfo { get; private set; }
+        public ResourceSkuRestrictionInfo RestrictionInfo { get; set; }
 
         /// <summary>
-        /// Gets the reason for restriction. Possible values include:
+        /// Gets or sets the reason for restriction. Possible values include:
         /// 'QuotaId', 'NotAvailableForSubscription'
         /// </summary>
         [JsonProperty(PropertyName = "reasonCode")]
-        public string ReasonCode { get; private set; }
+        public string ReasonCode { get; set; }
 
     }
 }

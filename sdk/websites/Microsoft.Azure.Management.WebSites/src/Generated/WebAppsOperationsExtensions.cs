@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all apps for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all apps for a subscription.
+            /// Description for Get all apps for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all apps for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all apps for a subscription.
+            /// Description for Get all apps for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -62,7 +62,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all web, mobile, and API apps in the specified resource group.
             /// </summary>
             /// <remarks>
-            /// Gets all web, mobile, and API apps in the specified resource group.
+            /// Description for Gets all web, mobile, and API apps in the specified
+            /// resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -84,7 +85,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all web, mobile, and API apps in the specified resource group.
             /// </summary>
             /// <remarks>
-            /// Gets all web, mobile, and API apps in the specified resource group.
+            /// Description for Gets all web, mobile, and API apps in the specified
+            /// resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -112,7 +114,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the details of a web, mobile, or API app.
             /// </summary>
             /// <remarks>
-            /// Gets the details of a web, mobile, or API app.
+            /// Description for Gets the details of a web, mobile, or API app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -132,7 +134,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the details of a web, mobile, or API app.
             /// </summary>
             /// <remarks>
-            /// Gets the details of a web, mobile, or API app.
+            /// Description for Gets the details of a web, mobile, or API app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -159,8 +161,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -185,8 +187,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -216,7 +218,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a web, mobile, or API app, or one of the deployment slots.
             /// </summary>
             /// <remarks>
-            /// Deletes a web, mobile, or API app, or one of the deployment slots.
+            /// Description for Deletes a web, mobile, or API app, or one of the deployment
+            /// slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -231,9 +234,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// If true, web app metrics are also deleted.
             /// </param>
             /// <param name='deleteEmptyServerFarm'>
-            /// Specify true if the App Service plan will be empty after app deletion and
-            /// you want to delete the empty App Service plan. By default, the empty App
-            /// Service plan is not deleted.
+            /// Specify false if you want to keep empty App Service plan. By default, empty
+            /// App Service plan is deleted.
             /// </param>
             public static void Delete(this IWebAppsOperations operations, string resourceGroupName, string name, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?))
             {
@@ -244,7 +246,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a web, mobile, or API app, or one of the deployment slots.
             /// </summary>
             /// <remarks>
-            /// Deletes a web, mobile, or API app, or one of the deployment slots.
+            /// Description for Deletes a web, mobile, or API app, or one of the deployment
+            /// slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -259,9 +262,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// If true, web app metrics are also deleted.
             /// </param>
             /// <param name='deleteEmptyServerFarm'>
-            /// Specify true if the App Service plan will be empty after app deletion and
-            /// you want to delete the empty App Service plan. By default, the empty App
-            /// Service plan is not deleted.
+            /// Specify false if you want to keep empty App Service plan. By default, empty
+            /// App Service plan is deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -276,8 +278,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -302,8 +304,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -333,7 +335,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Analyze a custom hostname.
             /// </summary>
             /// <remarks>
-            /// Analyze a custom hostname.
+            /// Description for Analyze a custom hostname.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -356,7 +358,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Analyze a custom hostname.
             /// </summary>
             /// <remarks>
-            /// Analyze a custom hostname.
+            /// Description for Analyze a custom hostname.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -386,8 +388,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Applies the configuration settings from the target slot onto the current
-            /// slot.
+            /// Description for Applies the configuration settings from the target slot
+            /// onto the current slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -411,8 +413,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Applies the configuration settings from the target slot onto the current
-            /// slot.
+            /// Description for Applies the configuration settings from the target slot
+            /// onto the current slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -438,7 +440,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a backup of an app.
             /// </summary>
             /// <remarks>
-            /// Creates a backup of an app.
+            /// Description for Creates a backup of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -462,7 +464,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a backup of an app.
             /// </summary>
             /// <remarks>
-            /// Creates a backup of an app.
+            /// Description for Creates a backup of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -492,7 +494,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets existing backups of an app.
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -512,7 +514,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets existing backups of an app.
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -538,7 +540,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a backup of an app by its ID.
             /// </summary>
             /// <remarks>
-            /// Gets a backup of an app by its ID.
+            /// Description for Gets a backup of an app by its ID.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -561,7 +563,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a backup of an app by its ID.
             /// </summary>
             /// <remarks>
-            /// Gets a backup of an app by its ID.
+            /// Description for Gets a backup of an app by its ID.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -590,7 +592,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a backup of an app by its ID.
             /// </summary>
             /// <remarks>
-            /// Deletes a backup of an app by its ID.
+            /// Description for Deletes a backup of an app by its ID.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -613,7 +615,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a backup of an app by its ID.
             /// </summary>
             /// <remarks>
-            /// Deletes a backup of an app by its ID.
+            /// Description for Deletes a backup of an app by its ID.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -642,10 +644,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// request body.
             /// </summary>
             /// <remarks>
-            /// Gets status of a web app backup that may be in progress, including secrets
-            /// associated with the backup, such as the Azure Storage SAS URL. Also can be
-            /// used to update the SAS URL for the backup if a new URL is passed in the
-            /// request body.
+            /// Description for Gets status of a web app backup that may be in progress,
+            /// including secrets associated with the backup, such as the Azure Storage SAS
+            /// URL. Also can be used to update the SAS URL for the backup if a new URL is
+            /// passed in the request body.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -674,10 +676,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// request body.
             /// </summary>
             /// <remarks>
-            /// Gets status of a web app backup that may be in progress, including secrets
-            /// associated with the backup, such as the Azure Storage SAS URL. Also can be
-            /// used to update the SAS URL for the backup if a new URL is passed in the
-            /// request body.
+            /// Description for Gets status of a web app backup that may be in progress,
+            /// including secrets associated with the backup, such as the Azure Storage SAS
+            /// URL. Also can be used to update the SAS URL for the backup if a new URL is
+            /// passed in the request body.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -710,8 +712,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
+            /// Description for Restores a specific backup to another app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -738,8 +740,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
+            /// Description for Restores a specific backup to another app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -765,10 +767,256 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static IPage<CsmPublishingCredentialsPoliciesEntity> ListBasicPublishingCredentialsPolicies(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.ListBasicPublishingCredentialsPoliciesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CsmPublishingCredentialsPoliciesEntity>> ListBasicPublishingCredentialsPoliciesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBasicPublishingCredentialsPoliciesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity GetFtpAllowed(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetFtpAllowedAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> GetFtpAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFtpAllowedWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity UpdateFtpAllowed(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity)
+            {
+                return operations.UpdateFtpAllowedAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> UpdateFtpAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateFtpAllowedWithHttpMessagesAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed on the site or
+            /// not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity GetScmAllowed(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetScmAllowedAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed on the site or
+            /// not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> GetScmAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetScmAllowedWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates whether user publishing credentials are allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether user publishing credentials are allowed on
+            /// the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity UpdateScmAllowed(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity)
+            {
+                return operations.UpdateScmAllowedAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates whether user publishing credentials are allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether user publishing credentials are allowed on
+            /// the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> UpdateScmAllowedAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateScmAllowedWithHttpMessagesAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List the configurations of an app
             /// </summary>
             /// <remarks>
-            /// List the configurations of an app
+            /// Description for List the configurations of an app
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -788,7 +1036,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the configurations of an app
             /// </summary>
             /// <remarks>
-            /// List the configurations of an app
+            /// Description for List the configurations of an app
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -814,7 +1062,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Replaces the application settings of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the application settings of an app.
+            /// Description for Replaces the application settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -837,7 +1085,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Replaces the application settings of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the application settings of an app.
+            /// Description for Replaces the application settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -866,7 +1114,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the application settings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the application settings of an app.
+            /// Description for Gets the application settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -886,7 +1134,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the application settings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the application settings of an app.
+            /// Description for Gets the application settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -913,8 +1161,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// app.
             /// </summary>
             /// <remarks>
-            /// Updates the Authentication / Authorization settings associated with web
-            /// app.
+            /// Description for Updates the Authentication / Authorization settings
+            /// associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -938,8 +1186,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// app.
             /// </summary>
             /// <remarks>
-            /// Updates the Authentication / Authorization settings associated with web
-            /// app.
+            /// Description for Updates the Authentication / Authorization settings
+            /// associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -968,7 +1216,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Authentication/Authorization settings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Authentication/Authorization settings of an app.
+            /// Description for Gets the Authentication/Authorization settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -988,7 +1236,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Authentication/Authorization settings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Authentication/Authorization settings of an app.
+            /// Description for Gets the Authentication/Authorization settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1011,10 +1259,166 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static SiteAuthSettingsV2 GetAuthSettingsV2WithoutSecrets(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetAuthSettingsV2WithoutSecretsAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteAuthSettingsV2> GetAuthSettingsV2WithoutSecretsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAuthSettingsV2WithoutSecretsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='siteAuthSettingsV2'>
+            /// Auth settings associated with web app.
+            /// </param>
+            public static SiteAuthSettingsV2 UpdateAuthSettingsV2(this IWebAppsOperations operations, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2)
+            {
+                return operations.UpdateAuthSettingsV2Async(resourceGroupName, name, siteAuthSettingsV2).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='siteAuthSettingsV2'>
+            /// Auth settings associated with web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteAuthSettingsV2> UpdateAuthSettingsV2Async(this IWebAppsOperations operations, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateAuthSettingsV2WithHttpMessagesAsync(resourceGroupName, name, siteAuthSettingsV2, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static SiteAuthSettingsV2 GetAuthSettingsV2(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetAuthSettingsV2Async(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteAuthSettingsV2> GetAuthSettingsV2Async(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAuthSettingsV2WithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Updates the Azure storage account configurations of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the Azure storage account configurations of an app.
+            /// Description for Updates the Azure storage account configurations of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1037,7 +1441,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the Azure storage account configurations of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the Azure storage account configurations of an app.
+            /// Description for Updates the Azure storage account configurations of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1066,7 +1470,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Azure storage account configurations of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Azure storage account configurations of an app.
+            /// Description for Gets the Azure storage account configurations of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1086,7 +1490,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Azure storage account configurations of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Azure storage account configurations of an app.
+            /// Description for Gets the Azure storage account configurations of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1112,7 +1516,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the backup configuration of an app.
+            /// Description for Updates the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1135,7 +1539,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the backup configuration of an app.
+            /// Description for Updates the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1164,7 +1568,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Deletes the backup configuration of an app.
+            /// Description for Deletes the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1184,7 +1588,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Deletes the backup configuration of an app.
+            /// Description for Deletes the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1207,7 +1611,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the backup configuration of an app.
+            /// Description for Gets the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1227,7 +1631,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the backup configuration of an app.
+            /// Description for Gets the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1250,10 +1654,204 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static IPage<ApiKVReference> GetAppSettingsKeyVaultReferences(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetAppSettingsKeyVaultReferencesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetAppSettingsKeyVaultReferencesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingsKeyVaultReferencesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='appSettingKey'>
+            /// App Setting key name.
+            /// </param>
+            public static ApiKVReference GetAppSettingKeyVaultReference(this IWebAppsOperations operations, string resourceGroupName, string name, string appSettingKey)
+            {
+                return operations.GetAppSettingKeyVaultReferenceAsync(resourceGroupName, name, appSettingKey).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='appSettingKey'>
+            /// App Setting key name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiKVReference> GetAppSettingKeyVaultReferenceAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string appSettingKey, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingKeyVaultReferenceWithHttpMessagesAsync(resourceGroupName, name, appSettingKey, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static IPage<ApiKVReference> GetSiteConnectionStringKeyVaultReferences(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferencesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetSiteConnectionStringKeyVaultReferencesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferencesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionStringKey'>
+            /// </param>
+            public static ApiKVReference GetSiteConnectionStringKeyVaultReference(this IWebAppsOperations operations, string resourceGroupName, string name, string connectionStringKey)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferenceAsync(resourceGroupName, name, connectionStringKey).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionStringKey'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiKVReference> GetSiteConnectionStringKeyVaultReferenceAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string connectionStringKey, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferenceWithHttpMessagesAsync(resourceGroupName, name, connectionStringKey, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Replaces the connection strings of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the connection strings of an app.
+            /// Description for Replaces the connection strings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1276,7 +1874,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Replaces the connection strings of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the connection strings of an app.
+            /// Description for Replaces the connection strings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1305,7 +1903,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the connection strings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the connection strings of an app.
+            /// Description for Gets the connection strings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1325,7 +1923,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the connection strings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the connection strings of an app.
+            /// Description for Gets the connection strings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1351,7 +1949,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the logging configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the logging configuration of an app.
+            /// Description for Gets the logging configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1371,7 +1969,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the logging configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the logging configuration of an app.
+            /// Description for Gets the logging configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1397,7 +1995,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the logging configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the logging configuration of an app.
+            /// Description for Updates the logging configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1421,7 +2019,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the logging configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the logging configuration of an app.
+            /// Description for Updates the logging configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1451,7 +2049,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Replaces the metadata of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the metadata of an app.
+            /// Description for Replaces the metadata of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1474,7 +2072,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Replaces the metadata of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the metadata of an app.
+            /// Description for Replaces the metadata of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1503,7 +2101,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the metadata of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the metadata of an app.
+            /// Description for Gets the metadata of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1523,7 +2121,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the metadata of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the metadata of an app.
+            /// Description for Gets the metadata of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1549,7 +2147,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Git/FTP publishing credentials of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
+            /// Description for Gets the Git/FTP publishing credentials of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1569,7 +2167,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Git/FTP publishing credentials of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
+            /// Description for Gets the Git/FTP publishing credentials of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1595,7 +2193,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the Push settings associated with web app.
             /// </summary>
             /// <remarks>
-            /// Updates the Push settings associated with web app.
+            /// Description for Updates the Push settings associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1618,7 +2216,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the Push settings associated with web app.
             /// </summary>
             /// <remarks>
-            /// Updates the Push settings associated with web app.
+            /// Description for Updates the Push settings associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1647,7 +2245,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Push settings associated with web app.
             /// </summary>
             /// <remarks>
-            /// Gets the Push settings associated with web app.
+            /// Description for Gets the Push settings associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1667,7 +2265,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Push settings associated with web app.
             /// </summary>
             /// <remarks>
-            /// Gets the Push settings associated with web app.
+            /// Description for Gets the Push settings associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1694,8 +2292,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot (not swapped).
             /// </summary>
             /// <remarks>
-            /// Gets the names of app settings and connection strings that stick to the
-            /// slot (not swapped).
+            /// Description for Gets the names of app settings and connection strings that
+            /// stick to the slot (not swapped).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1716,8 +2314,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot (not swapped).
             /// </summary>
             /// <remarks>
-            /// Gets the names of app settings and connection strings that stick to the
-            /// slot (not swapped).
+            /// Description for Gets the names of app settings and connection strings that
+            /// stick to the slot (not swapped).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1744,8 +2342,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// with the slot during swap operation.
             /// </summary>
             /// <remarks>
-            /// Updates the names of application settings and connection string that remain
-            /// with the slot during swap operation.
+            /// Description for Updates the names of application settings and connection
+            /// string that remain with the slot during swap operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1769,8 +2367,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// with the slot during swap operation.
             /// </summary>
             /// <remarks>
-            /// Updates the names of application settings and connection string that remain
-            /// with the slot during swap operation.
+            /// Description for Updates the names of application settings and connection
+            /// string that remain with the slot during swap operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1800,8 +2398,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// default documents, virtual applications, Always On, etc.
             /// </summary>
             /// <remarks>
-            /// Gets the configuration of an app, such as platform version and bitness,
-            /// default documents, virtual applications, Always On, etc.
+            /// Description for Gets the configuration of an app, such as platform version
+            /// and bitness, default documents, virtual applications, Always On, etc.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1822,8 +2420,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// default documents, virtual applications, Always On, etc.
             /// </summary>
             /// <remarks>
-            /// Gets the configuration of an app, such as platform version and bitness,
-            /// default documents, virtual applications, Always On, etc.
+            /// Description for Gets the configuration of an app, such as platform version
+            /// and bitness, default documents, virtual applications, Always On, etc.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1849,7 +2447,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the configuration of an app.
+            /// Description for Updates the configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1872,7 +2470,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the configuration of an app.
+            /// Description for Updates the configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1901,7 +2499,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the configuration of an app.
+            /// Description for Updates the configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1924,7 +2522,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the configuration of an app.
+            /// Description for Updates the configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1954,8 +2552,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// the list contains a timestamp and the ID of the snapshot.
             /// </summary>
             /// <remarks>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
+            /// Description for Gets a list of web app configuration snapshots identifiers.
+            /// Each element of the list contains a timestamp and the ID of the snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1976,8 +2574,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// the list contains a timestamp and the ID of the snapshot.
             /// </summary>
             /// <remarks>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
+            /// Description for Gets a list of web app configuration snapshots identifiers.
+            /// Each element of the list contains a timestamp and the ID of the snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2003,7 +2601,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a snapshot of the configuration of an app at a previous point in time.
             /// </summary>
             /// <remarks>
-            /// Gets a snapshot of the configuration of an app at a previous point in time.
+            /// Description for Gets a snapshot of the configuration of an app at a
+            /// previous point in time.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2026,7 +2625,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a snapshot of the configuration of an app at a previous point in time.
             /// </summary>
             /// <remarks>
-            /// Gets a snapshot of the configuration of an app at a previous point in time.
+            /// Description for Gets a snapshot of the configuration of an app at a
+            /// previous point in time.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2055,7 +2655,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Reverts the configuration of an app to a previous snapshot.
             /// </summary>
             /// <remarks>
-            /// Reverts the configuration of an app to a previous snapshot.
+            /// Description for Reverts the configuration of an app to a previous snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2078,7 +2678,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Reverts the configuration of an app to a previous snapshot.
             /// </summary>
             /// <remarks>
-            /// Reverts the configuration of an app to a previous snapshot.
+            /// Description for Reverts the configuration of an app to a previous snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2104,7 +2704,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the last lines of docker logs for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the last lines of docker logs for the given site
+            /// Description for Gets the last lines of docker logs for the given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2124,7 +2724,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the last lines of docker logs for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the last lines of docker logs for the given site
+            /// Description for Gets the last lines of docker logs for the given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2149,7 +2749,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the ZIP archived docker log files for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the ZIP archived docker log files for the given site
+            /// Description for Gets the ZIP archived docker log files for the given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2169,7 +2769,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the ZIP archived docker log files for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the ZIP archived docker log files for the given site
+            /// Description for Gets the ZIP archived docker log files for the given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2194,7 +2794,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List continuous web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List continuous web jobs for an app, or a deployment slot.
+            /// Description for List continuous web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2214,7 +2814,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List continuous web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List continuous web jobs for an app, or a deployment slot.
+            /// Description for List continuous web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2240,7 +2840,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a continuous web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Gets a continuous web job by its ID for an app, or a deployment slot.
+            /// Description for Gets a continuous web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2263,7 +2864,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a continuous web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Gets a continuous web job by its ID for an app, or a deployment slot.
+            /// Description for Gets a continuous web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2292,7 +2894,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a continuous web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a continuous web job by its ID for an app, or a deployment slot.
+            /// Description for Delete a continuous web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2315,7 +2918,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a continuous web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a continuous web job by its ID for an app, or a deployment slot.
+            /// Description for Delete a continuous web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2341,7 +2945,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start a continuous web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Start a continuous web job for an app, or a deployment slot.
+            /// Description for Start a continuous web job for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2364,7 +2969,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start a continuous web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Start a continuous web job for an app, or a deployment slot.
+            /// Description for Start a continuous web job for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2390,7 +2996,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop a continuous web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Stop a continuous web job for an app, or a deployment slot.
+            /// Description for Stop a continuous web job for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2413,7 +3019,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop a continuous web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Stop a continuous web job for an app, or a deployment slot.
+            /// Description for Stop a continuous web job for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2439,7 +3045,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List deployments for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List deployments for an app, or a deployment slot.
+            /// Description for List deployments for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2459,7 +3065,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List deployments for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List deployments for an app, or a deployment slot.
+            /// Description for List deployments for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2485,7 +3091,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a deployment by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get a deployment by its ID for an app, or a deployment slot.
+            /// Description for Get a deployment by its ID for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2508,7 +3115,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a deployment by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get a deployment by its ID for an app, or a deployment slot.
+            /// Description for Get a deployment by its ID for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2537,7 +3145,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create a deployment for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create a deployment for an app, or a deployment slot.
+            /// Description for Create a deployment for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2563,7 +3171,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create a deployment for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create a deployment for an app, or a deployment slot.
+            /// Description for Create a deployment for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2595,7 +3203,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a deployment by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a deployment by its ID for an app, or a deployment slot.
+            /// Description for Delete a deployment by its ID for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2618,7 +3227,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a deployment by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a deployment by its ID for an app, or a deployment slot.
+            /// Description for Delete a deployment by its ID for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2645,8 +3255,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// List deployment log for specific deployment for an app, or a deployment
-            /// slot.
+            /// Description for List deployment log for specific deployment for an app, or
+            /// a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2671,8 +3281,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// List deployment log for specific deployment for an app, or a deployment
-            /// slot.
+            /// Description for List deployment log for specific deployment for an app, or
+            /// a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2704,9 +3314,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// backup.
             /// </summary>
             /// <remarks>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage. Use this to get information about the databases stored in a
-            /// backup.
+            /// Description for Discovers an existing app backup that can be restored from
+            /// a blob in Azure storage. Use this to get information about the databases
+            /// stored in a backup.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2732,9 +3342,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// backup.
             /// </summary>
             /// <remarks>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage. Use this to get information about the databases stored in a
-            /// backup.
+            /// Description for Discovers an existing app backup that can be restored from
+            /// a blob in Azure storage. Use this to get information about the databases
+            /// stored in a backup.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2764,7 +3374,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists ownership identifiers for domain associated with web app.
             /// </summary>
             /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
+            /// Description for Lists ownership identifiers for domain associated with web
+            /// app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2784,7 +3395,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists ownership identifiers for domain associated with web app.
             /// </summary>
             /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
+            /// Description for Lists ownership identifiers for domain associated with web
+            /// app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2810,7 +3422,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get domain ownership identifier for web app.
             /// </summary>
             /// <remarks>
-            /// Get domain ownership identifier for web app.
+            /// Description for Get domain ownership identifier for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2833,7 +3445,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get domain ownership identifier for web app.
             /// </summary>
             /// <remarks>
-            /// Get domain ownership identifier for web app.
+            /// Description for Get domain ownership identifier for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2863,8 +3475,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// ownership identifier.
             /// </summary>
             /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
+            /// Description for Creates a domain ownership identifier for web app, or
+            /// updates an existing ownership identifier.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2891,8 +3503,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// ownership identifier.
             /// </summary>
             /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
+            /// Description for Creates a domain ownership identifier for web app, or
+            /// updates an existing ownership identifier.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2924,7 +3536,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a domain ownership identifier for a web app.
             /// </summary>
             /// <remarks>
-            /// Deletes a domain ownership identifier for a web app.
+            /// Description for Deletes a domain ownership identifier for a web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2947,7 +3559,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a domain ownership identifier for a web app.
             /// </summary>
             /// <remarks>
-            /// Deletes a domain ownership identifier for a web app.
+            /// Description for Deletes a domain ownership identifier for a web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2974,8 +3586,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// ownership identifier.
             /// </summary>
             /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
+            /// Description for Creates a domain ownership identifier for web app, or
+            /// updates an existing ownership identifier.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3002,8 +3614,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// ownership identifier.
             /// </summary>
             /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
+            /// Description for Creates a domain ownership identifier for web app, or
+            /// updates an existing ownership identifier.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3035,7 +3647,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the status of the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the status of the last MSDeploy operation.
+            /// Description for Get the status of the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3055,7 +3667,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the status of the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the status of the last MSDeploy operation.
+            /// Description for Get the status of the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3081,7 +3693,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3104,7 +3716,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3133,7 +3745,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the MSDeploy Log for the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the MSDeploy Log for the last MSDeploy operation.
+            /// Description for Get the MSDeploy Log for the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3153,7 +3765,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the MSDeploy Log for the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the MSDeploy Log for the last MSDeploy operation.
+            /// Description for Get the MSDeploy Log for the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3176,10 +3788,106 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Invoke onedeploy status API /api/deployments and gets the deployment status
+            /// for the site
+            /// </summary>
+            /// <remarks>
+            /// Description for Invoke onedeploy status API /api/deployments and gets the
+            /// deployment status for the site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            public static object GetOneDeployStatus(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetOneDeployStatusAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Invoke onedeploy status API /api/deployments and gets the deployment status
+            /// for the site
+            /// </summary>
+            /// <remarks>
+            /// Description for Invoke onedeploy status API /api/deployments and gets the
+            /// deployment status for the site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetOneDeployStatusAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetOneDeployStatusWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Invoke the OneDeploy publish web app extension.
+            /// </summary>
+            /// <remarks>
+            /// Description for Invoke the OneDeploy publish web app extension.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            public static object CreateOneDeployOperation(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.CreateOneDeployOperationAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Invoke the OneDeploy publish web app extension.
+            /// </summary>
+            /// <remarks>
+            /// Description for Invoke the OneDeploy publish web app extension.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> CreateOneDeployOperationAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOneDeployOperationWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List the functions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List the functions for a web site, or a deployment slot.
+            /// Description for List the functions for a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3199,7 +3907,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the functions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List the functions for a web site, or a deployment slot.
+            /// Description for List the functions for a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3225,7 +3933,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Fetch a short lived token that can be exchanged for a master key.
             /// </summary>
             /// <remarks>
-            /// Fetch a short lived token that can be exchanged for a master key.
+            /// Description for Fetch a short lived token that can be exchanged for a
+            /// master key.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3245,7 +3954,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Fetch a short lived token that can be exchanged for a master key.
             /// </summary>
             /// <remarks>
-            /// Fetch a short lived token that can be exchanged for a master key.
+            /// Description for Fetch a short lived token that can be exchanged for a
+            /// master key.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3271,7 +3981,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get function information by its ID for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get function information by its ID for web site, or a deployment slot.
+            /// Description for Get function information by its ID for web site, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3294,7 +4005,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get function information by its ID for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get function information by its ID for web site, or a deployment slot.
+            /// Description for Get function information by its ID for web site, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3323,7 +4035,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create function for web site, or a deployment slot.
+            /// Description for Create function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3349,7 +4061,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create function for web site, or a deployment slot.
+            /// Description for Create function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3381,7 +4093,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a function for web site, or a deployment slot.
+            /// Description for Delete a function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3404,7 +4116,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a function for web site, or a deployment slot.
+            /// Description for Delete a function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3427,10 +4139,184 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Add or update a function secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Add or update a function secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// The name of the function.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='key'>
+            /// The key to create or update
+            /// </param>
+            public static KeyInfo CreateOrUpdateFunctionSecret(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string keyName, KeyInfo key)
+            {
+                return operations.CreateOrUpdateFunctionSecretAsync(resourceGroupName, name, functionName, keyName, key).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add or update a function secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Add or update a function secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// The name of the function.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='key'>
+            /// The key to create or update
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<KeyInfo> CreateOrUpdateFunctionSecretAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string keyName, KeyInfo key, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateFunctionSecretWithHttpMessagesAsync(resourceGroupName, name, functionName, keyName, key, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a function secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Delete a function secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// The name of the function.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            public static void DeleteFunctionSecret(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string keyName)
+            {
+                operations.DeleteFunctionSecretAsync(resourceGroupName, name, functionName, keyName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a function secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Delete a function secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// The name of the function.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteFunctionSecretAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string keyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteFunctionSecretWithHttpMessagesAsync(resourceGroupName, name, functionName, keyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get function keys for a function in a web site, or a deployment slot.
+            /// </summary>
+            /// <remarks>
+            /// Description for Get function keys for a function in a web site, or a
+            /// deployment slot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// Function name.
+            /// </param>
+            public static StringDictionary ListFunctionKeys(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName)
+            {
+                return operations.ListFunctionKeysAsync(resourceGroupName, name, functionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get function keys for a function in a web site, or a deployment slot.
+            /// </summary>
+            /// <remarks>
+            /// Description for Get function keys for a function in a web site, or a
+            /// deployment slot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// Function name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StringDictionary> ListFunctionKeysAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListFunctionKeysWithHttpMessagesAsync(resourceGroupName, name, functionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get function secrets for a function in a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get function secrets for a function in a web site, or a deployment slot.
+            /// Description for Get function secrets for a function in a web site, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3453,7 +4339,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get function secrets for a function in a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get function secrets for a function in a web site, or a deployment slot.
+            /// Description for Get function secrets for a function in a web site, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3479,10 +4366,261 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get host secrets for a function app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Get host secrets for a function app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            public static HostKeys ListHostKeys(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.ListHostKeysAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get host secrets for a function app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Get host secrets for a function app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<HostKeys> ListHostKeysAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListHostKeysWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This is to allow calling via powershell and ARM template.
+            /// </summary>
+            /// <remarks>
+            /// Description for This is to allow calling via powershell and ARM template.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static void ListSyncStatus(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                operations.ListSyncStatusAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This is to allow calling via powershell and ARM template.
+            /// </summary>
+            /// <remarks>
+            /// Description for This is to allow calling via powershell and ARM template.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ListSyncStatusAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ListSyncStatusWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Syncs function trigger metadata to the management database
+            /// </summary>
+            /// <remarks>
+            /// Description for Syncs function trigger metadata to the management database
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static void SyncFunctions(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                operations.SyncFunctionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Syncs function trigger metadata to the management database
+            /// </summary>
+            /// <remarks>
+            /// Description for Syncs function trigger metadata to the management database
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SyncFunctionsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SyncFunctionsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Add or update a host level secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Add or update a host level secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='keyType'>
+            /// The type of host key.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='key'>
+            /// The key to create or update
+            /// </param>
+            public static KeyInfo CreateOrUpdateHostSecret(this IWebAppsOperations operations, string resourceGroupName, string name, string keyType, string keyName, KeyInfo key)
+            {
+                return operations.CreateOrUpdateHostSecretAsync(resourceGroupName, name, keyType, keyName, key).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add or update a host level secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Add or update a host level secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='keyType'>
+            /// The type of host key.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='key'>
+            /// The key to create or update
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<KeyInfo> CreateOrUpdateHostSecretAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateHostSecretWithHttpMessagesAsync(resourceGroupName, name, keyType, keyName, key, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a host level secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Delete a host level secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='keyType'>
+            /// The type of host key.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            public static void DeleteHostSecret(this IWebAppsOperations operations, string resourceGroupName, string name, string keyType, string keyName)
+            {
+                operations.DeleteHostSecretAsync(resourceGroupName, name, keyType, keyName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a host level secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Delete a host level secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='keyType'>
+            /// The type of host key.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteHostSecretAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string keyType, string keyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteHostSecretWithHttpMessagesAsync(resourceGroupName, name, keyType, keyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Get hostname bindings for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
+            /// Description for Get hostname bindings for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3502,7 +4640,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get hostname bindings for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
+            /// Description for Get hostname bindings for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3529,8 +4667,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Get the named hostname binding for an app (or deployment slot, if
-            /// specified).
+            /// Description for Get the named hostname binding for an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3554,8 +4692,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Get the named hostname binding for an app (or deployment slot, if
-            /// specified).
+            /// Description for Get the named hostname binding for an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3584,7 +4722,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Creates a hostname binding for an app.
+            /// Description for Creates a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3611,7 +4749,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Creates a hostname binding for an app.
+            /// Description for Creates a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3644,7 +4782,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Deletes a hostname binding for an app.
+            /// Description for Deletes a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3667,7 +4805,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Deletes a hostname binding for an app.
+            /// Description for Deletes a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3693,7 +4831,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
             /// </summary>
             /// <remarks>
-            /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+            /// Description for Retrieves a specific Service Bus Hybrid Connection used by
+            /// this Web App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3719,7 +4858,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
             /// </summary>
             /// <remarks>
-            /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+            /// Description for Retrieves a specific Service Bus Hybrid Connection used by
+            /// this Web App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3751,7 +4891,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a new Hybrid Connection using a Service Bus relay.
             /// </summary>
             /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
+            /// Description for Creates a new Hybrid Connection using a Service Bus relay.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3780,7 +4920,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a new Hybrid Connection using a Service Bus relay.
             /// </summary>
             /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
+            /// Description for Creates a new Hybrid Connection using a Service Bus relay.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3815,7 +4955,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Removes a Hybrid Connection from this site.
             /// </summary>
             /// <remarks>
-            /// Removes a Hybrid Connection from this site.
+            /// Description for Removes a Hybrid Connection from this site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3841,7 +4981,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Removes a Hybrid Connection from this site.
             /// </summary>
             /// <remarks>
-            /// Removes a Hybrid Connection from this site.
+            /// Description for Removes a Hybrid Connection from this site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3870,7 +5010,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a new Hybrid Connection using a Service Bus relay.
             /// </summary>
             /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
+            /// Description for Creates a new Hybrid Connection using a Service Bus relay.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3899,7 +5039,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a new Hybrid Connection using a Service Bus relay.
             /// </summary>
             /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
+            /// Description for Creates a new Hybrid Connection using a Service Bus relay.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -3931,68 +5071,11 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </summary>
-            /// <remarks>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection.
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection.
-            /// </param>
-            public static HybridConnectionKey ListHybridConnectionKeys(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
-            {
-                return operations.ListHybridConnectionKeysAsync(resourceGroupName, name, namespaceName, relayName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </summary>
-            /// <remarks>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection.
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<HybridConnectionKey> ListHybridConnectionKeysAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListHybridConnectionKeysWithHttpMessagesAsync(resourceGroupName, name, namespaceName, relayName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Retrieves all Service Bus Hybrid Connections used by this Web App.
             /// </summary>
             /// <remarks>
-            /// Retrieves all Service Bus Hybrid Connections used by this Web App.
+            /// Description for Retrieves all Service Bus Hybrid Connections used by this
+            /// Web App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4012,7 +5095,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Retrieves all Service Bus Hybrid Connections used by this Web App.
             /// </summary>
             /// <remarks>
-            /// Retrieves all Service Bus Hybrid Connections used by this Web App.
+            /// Description for Retrieves all Service Bus Hybrid Connections used by this
+            /// Web App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4039,8 +5123,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets hybrid connections configured for an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets hybrid connections configured for an app (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4061,8 +5145,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets hybrid connections configured for an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets hybrid connections configured for an app (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4088,7 +5172,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a hybrid connection configuration by its name.
             /// </summary>
             /// <remarks>
-            /// Gets a hybrid connection configuration by its name.
+            /// Description for Gets a hybrid connection configuration by its name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4111,7 +5195,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a hybrid connection configuration by its name.
             /// </summary>
             /// <remarks>
-            /// Gets a hybrid connection configuration by its name.
+            /// Description for Gets a hybrid connection configuration by its name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4141,8 +5225,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// one (PATCH).
             /// </summary>
             /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
+            /// Description for Creates a new hybrid connection configuration (PUT), or
+            /// updates an existing one (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4169,8 +5253,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// one (PATCH).
             /// </summary>
             /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
+            /// Description for Creates a new hybrid connection configuration (PUT), or
+            /// updates an existing one (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4202,7 +5286,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a relay service connection by its name.
             /// </summary>
             /// <remarks>
-            /// Deletes a relay service connection by its name.
+            /// Description for Deletes a relay service connection by its name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4225,7 +5309,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a relay service connection by its name.
             /// </summary>
             /// <remarks>
-            /// Deletes a relay service connection by its name.
+            /// Description for Deletes a relay service connection by its name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4252,8 +5336,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// one (PATCH).
             /// </summary>
             /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
+            /// Description for Creates a new hybrid connection configuration (PUT), or
+            /// updates an existing one (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4280,8 +5364,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// one (PATCH).
             /// </summary>
             /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
+            /// Description for Creates a new hybrid connection configuration (PUT), or
+            /// updates an existing one (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4313,7 +5397,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all scale-out instances of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all scale-out instances of an app.
+            /// Description for Gets all scale-out instances of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4324,7 +5408,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiers(this IWebAppsOperations operations, string resourceGroupName, string name)
+            public static IPage<WebSiteInstanceStatus> ListInstanceIdentifiers(this IWebAppsOperations operations, string resourceGroupName, string name)
             {
                 return operations.ListInstanceIdentifiersAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
@@ -4333,7 +5417,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all scale-out instances of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all scale-out instances of an app.
+            /// Description for Gets all scale-out instances of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4347,9 +5431,59 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SiteInstance>> ListInstanceIdentifiersAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WebSiteInstanceStatus>> ListInstanceIdentifiersAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListInstanceIdentifiersWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all scale-out instances of an app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets all scale-out instances of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='instanceId'>
+            /// </param>
+            public static WebSiteInstanceStatus GetInstanceInfo(this IWebAppsOperations operations, string resourceGroupName, string name, string instanceId)
+            {
+                return operations.GetInstanceInfoAsync(resourceGroupName, name, instanceId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all scale-out instances of an app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets all scale-out instances of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='instanceId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WebSiteInstanceStatus> GetInstanceInfoAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetInstanceInfoWithHttpMessagesAsync(resourceGroupName, name, instanceId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -4359,7 +5493,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the status of the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the status of the last MSDeploy operation.
+            /// Description for Get the status of the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4382,7 +5516,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the status of the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the status of the last MSDeploy operation.
+            /// Description for Get the status of the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4411,7 +5545,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4437,7 +5571,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4469,7 +5603,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the MSDeploy Log for the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the MSDeploy Log for the last MSDeploy operation.
+            /// Description for Get the MSDeploy Log for the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4492,7 +5626,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the MSDeploy Log for the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the MSDeploy Log for the last MSDeploy operation.
+            /// Description for Get the MSDeploy Log for the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4522,8 +5656,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4548,8 +5682,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4580,8 +5714,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4609,8 +5743,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4644,8 +5778,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Terminate a process by its ID for a web site, or a deployment slot, or
-            /// specific scaled-out instance in a web site.
+            /// Description for Terminate a process by its ID for a web site, or a
+            /// deployment slot, or specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4673,8 +5807,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Terminate a process by its ID for a web site, or a deployment slot, or
-            /// specific scaled-out instance in a web site.
+            /// Description for Terminate a process by its ID for a web site, or a
+            /// deployment slot, or specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4705,8 +5839,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// Get a memory dump of a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for Get a memory dump of a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4734,8 +5868,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// Get a memory dump of a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for Get a memory dump of a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4768,8 +5902,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4797,8 +5931,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4832,8 +5966,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4864,8 +5998,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4902,8 +6036,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4931,8 +6065,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -4962,82 +6096,12 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </summary>
-            /// <remarks>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Site name.
-            /// </param>
-            /// <param name='processId'>
-            /// PID.
-            /// </param>
-            /// <param name='threadId'>
-            /// TID.
-            /// </param>
-            /// <param name='instanceId'>
-            /// ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances".
-            /// </param>
-            public static ProcessThreadInfo GetInstanceProcessThread(this IWebAppsOperations operations, string resourceGroupName, string name, string processId, string threadId, string instanceId)
-            {
-                return operations.GetInstanceProcessThreadAsync(resourceGroupName, name, processId, threadId, instanceId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </summary>
-            /// <remarks>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Site name.
-            /// </param>
-            /// <param name='processId'>
-            /// PID.
-            /// </param>
-            /// <param name='threadId'>
-            /// TID.
-            /// </param>
-            /// <param name='instanceId'>
-            /// ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances".
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ProcessThreadInfo> GetInstanceProcessThreadAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string processId, string threadId, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetInstanceProcessThreadWithHttpMessagesAsync(resourceGroupName, name, processId, threadId, instanceId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Shows whether an app can be cloned to another resource group or
             /// subscription.
             /// </summary>
             /// <remarks>
-            /// Shows whether an app can be cloned to another resource group or
-            /// subscription.
+            /// Description for Shows whether an app can be cloned to another resource
+            /// group or subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5058,8 +6122,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// subscription.
             /// </summary>
             /// <remarks>
-            /// Shows whether an app can be cloned to another resource group or
-            /// subscription.
+            /// Description for Shows whether an app can be cloned to another resource
+            /// group or subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5082,10 +6146,56 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets existing backups of an app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets existing backups of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static IPage<BackupItem> ListSiteBackups(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.ListSiteBackupsAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets existing backups of an app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets existing backups of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<BackupItem>> ListSiteBackupsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSiteBackupsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// This is to allow calling via powershell and ARM template.
             /// </summary>
             /// <remarks>
-            /// This is to allow calling via powershell and ARM template.
+            /// Description for This is to allow calling via powershell and ARM template.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5105,7 +6215,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// This is to allow calling via powershell and ARM template.
             /// </summary>
             /// <remarks>
-            /// This is to allow calling via powershell and ARM template.
+            /// Description for This is to allow calling via powershell and ARM template.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5128,122 +6238,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListMetricDefinitions(this IWebAppsOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListMetricDefinitionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ResourceMetricDefinition>> ListMetricDefinitionsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListMetricDefinitionsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='details'>
-            /// Specify "true" to include metric details in the response. It is "false" by
-            /// default.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only metrics specified in the filter (using OData syntax). For
-            /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
-            /// timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            public static IPage<ResourceMetric> ListMetrics(this IWebAppsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
-            {
-                return operations.ListMetricsAsync(resourceGroupName, name, details, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='details'>
-            /// Specify "true" to include metric details in the response. It is "false" by
-            /// default.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only metrics specified in the filter (using OData syntax). For
-            /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
-            /// timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ResourceMetric>> ListMetricsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListMetricsWithHttpMessagesAsync(resourceGroupName, name, details, filter, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Restores a web app.
             /// </summary>
             /// <remarks>
-            /// Restores a web app.
+            /// Description for Restores a web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5269,7 +6267,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app.
             /// </summary>
             /// <remarks>
-            /// Restores a web app.
+            /// Description for Restores a web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5301,7 +6299,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Migrates a local (in-app) MySql database to a remote MySql database.
             /// </summary>
             /// <remarks>
-            /// Migrates a local (in-app) MySql database to a remote MySql database.
+            /// Description for Migrates a local (in-app) MySql database to a remote MySql
+            /// database.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5324,7 +6323,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Migrates a local (in-app) MySql database to a remote MySql database.
             /// </summary>
             /// <remarks>
-            /// Migrates a local (in-app) MySql database to a remote MySql database.
+            /// Description for Migrates a local (in-app) MySql database to a remote MySql
+            /// database.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5354,8 +6354,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// or not MySql in app is enabled
             /// </summary>
             /// <remarks>
-            /// Returns the status of MySql in app migration, if one is active, and whether
-            /// or not MySql in app is enabled
+            /// Description for Returns the status of MySql in app migration, if one is
+            /// active, and whether or not MySql in app is enabled
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5376,8 +6376,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// or not MySql in app is enabled
             /// </summary>
             /// <remarks>
-            /// Returns the status of MySql in app migration, if one is active, and whether
-            /// or not MySql in app is enabled
+            /// Description for Returns the status of MySql in app migration, if one is
+            /// active, and whether or not MySql in app is enabled
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5403,7 +6403,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a Swift Virtual Network connection.
             /// </summary>
             /// <remarks>
-            /// Gets a Swift Virtual Network connection.
+            /// Description for Gets a Swift Virtual Network connection.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5423,7 +6423,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a Swift Virtual Network connection.
             /// </summary>
             /// <remarks>
-            /// Gets a Swift Virtual Network connection.
+            /// Description for Gets a Swift Virtual Network connection.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5452,9 +6452,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// in use by another App Service Plan other than the one this App is in.
             /// </summary>
             /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
+            /// Description for Integrates this Web App with a Virtual Network. This
+            /// requires that 1) "swiftSupported" is true when doing a GET against this
+            /// resource, and 2) that the target Subnet has already been delegated, and is
+            /// not
             /// in use by another App Service Plan other than the one this App is in.
             /// </remarks>
             /// <param name='operations'>
@@ -5469,9 +6470,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='connectionEnvelope'>
             /// Properties of the Virtual Network connection. See example.
             /// </param>
-            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
+            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnectionWithCheck(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
             {
-                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5481,9 +6482,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// in use by another App Service Plan other than the one this App is in.
             /// </summary>
             /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
+            /// Description for Integrates this Web App with a Virtual Network. This
+            /// requires that 1) "swiftSupported" is true when doing a GET against this
+            /// resource, and 2) that the target Subnet has already been delegated, and is
+            /// not
             /// in use by another App Service Plan other than the one this App is in.
             /// </remarks>
             /// <param name='operations'>
@@ -5501,9 +6503,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -5514,8 +6516,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot).
             /// </summary>
             /// <remarks>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
+            /// Description for Deletes a Swift Virtual Network connection from an app (or
+            /// deployment slot).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5536,8 +6538,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot).
             /// </summary>
             /// <remarks>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
+            /// Description for Deletes a Swift Virtual Network connection from an app (or
+            /// deployment slot).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5563,9 +6565,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// in use by another App Service Plan other than the one this App is in.
             /// </summary>
             /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
+            /// Description for Integrates this Web App with a Virtual Network. This
+            /// requires that 1) "swiftSupported" is true when doing a GET against this
+            /// resource, and 2) that the target Subnet has already been delegated, and is
+            /// not
             /// in use by another App Service Plan other than the one this App is in.
             /// </remarks>
             /// <param name='operations'>
@@ -5580,9 +6583,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='connectionEnvelope'>
             /// Properties of the Virtual Network connection. See example.
             /// </param>
-            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnection(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
+            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnectionWithCheck(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope)
             {
-                return operations.UpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
+                return operations.UpdateSwiftVirtualNetworkConnectionWithCheckAsync(resourceGroupName, name, connectionEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5592,9 +6595,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// in use by another App Service Plan other than the one this App is in.
             /// </summary>
             /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
+            /// Description for Integrates this Web App with a Virtual Network. This
+            /// requires that 1) "swiftSupported" is true when doing a GET against this
+            /// resource, and 2) that the target Subnet has already been delegated, and is
+            /// not
             /// in use by another App Service Plan other than the one this App is in.
             /// </remarks>
             /// <param name='operations'>
@@ -5612,9 +6616,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionWithCheckAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionWithCheckWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -5625,8 +6629,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets all network features used by the app (or deployment slot, if
-            /// specified).
+            /// Description for Gets all network features used by the app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5638,7 +6642,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='view'>
-            /// The type of view. This can either be "summary" or "detailed".
+            /// The type of view. Only "summary" is supported at this time.
             /// </param>
             public static NetworkFeatures ListNetworkFeatures(this IWebAppsOperations operations, string resourceGroupName, string name, string view)
             {
@@ -5650,8 +6654,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets all network features used by the app (or deployment slot, if
-            /// specified).
+            /// Description for Gets all network features used by the app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5663,7 +6667,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='view'>
-            /// The type of view. This can either be "summary" or "detailed".
+            /// The type of view. Only "summary" is supported at this time.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -5681,8 +6685,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5706,8 +6710,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5736,7 +6740,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site (To be deprecated).
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site (To be deprecated).
+            /// Description for Start capturing network packets for the site (To be
+            /// deprecated).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5765,7 +6770,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site (To be deprecated).
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site (To be deprecated).
+            /// Description for Start capturing network packets for the site (To be
+            /// deprecated).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5800,7 +6806,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5829,7 +6835,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5864,7 +6870,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop ongoing capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Stop ongoing capturing network packets for the site.
+            /// Description for Stop ongoing capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5884,7 +6890,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop ongoing capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Stop ongoing capturing network packets for the site.
+            /// Description for Stop ongoing capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5908,8 +6914,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5933,8 +6939,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5964,8 +6970,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -5989,8 +6995,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6020,8 +7026,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6045,8 +7051,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6076,8 +7082,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Generates a new publishing password for an app (or deployment slot, if
-            /// specified).
+            /// Description for Generates a new publishing password for an app (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6098,8 +7104,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Generates a new publishing password for an app (or deployment slot, if
-            /// specified).
+            /// Description for Generates a new publishing password for an app (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6122,7 +7128,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets perfmon counters for web app.
             /// </summary>
             /// <remarks>
-            /// Gets perfmon counters for web app.
+            /// Description for Gets perfmon counters for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6148,7 +7154,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets perfmon counters for web app.
             /// </summary>
             /// <remarks>
-            /// Gets perfmon counters for web app.
+            /// Description for Gets perfmon counters for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6180,7 +7186,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets web app's event logs.
             /// </summary>
             /// <remarks>
-            /// Gets web app's event logs.
+            /// Description for Gets web app's event logs.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6200,7 +7206,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets web app's event logs.
             /// </summary>
             /// <remarks>
-            /// Gets web app's event logs.
+            /// Description for Gets web app's event logs.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6226,7 +7232,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the premier add-ons of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the premier add-ons of an app.
+            /// Description for Gets the premier add-ons of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6246,7 +7252,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the premier add-ons of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the premier add-ons of an app.
+            /// Description for Gets the premier add-ons of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6272,7 +7278,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Gets a named add-on of an app.
+            /// Description for Gets a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6295,7 +7301,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Gets a named add-on of an app.
+            /// Description for Gets a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6324,7 +7330,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Updates a named add-on of an app.
+            /// Description for Updates a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6350,7 +7356,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Updates a named add-on of an app.
+            /// Description for Updates a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6382,7 +7388,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a premier add-on from an app.
             /// </summary>
             /// <remarks>
-            /// Delete a premier add-on from an app.
+            /// Description for Delete a premier add-on from an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6405,7 +7411,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a premier add-on from an app.
             /// </summary>
             /// <remarks>
-            /// Delete a premier add-on from an app.
+            /// Description for Delete a premier add-on from an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6431,7 +7437,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Updates a named add-on of an app.
+            /// Description for Updates a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6457,7 +7463,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Updates a named add-on of an app.
+            /// Description for Updates a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6490,8 +7496,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Networks that can access the site.
             /// </summary>
             /// <remarks>
-            /// Gets data around private site access enablement and authorized Virtual
-            /// Networks that can access the site.
+            /// Description for Gets data around private site access enablement and
+            /// authorized Virtual Networks that can access the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6512,8 +7518,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Networks that can access the site.
             /// </summary>
             /// <remarks>
-            /// Gets data around private site access enablement and authorized Virtual
-            /// Networks that can access the site.
+            /// Description for Gets data around private site access enablement and
+            /// authorized Virtual Networks that can access the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6540,8 +7546,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Networks that can access the site.
             /// </summary>
             /// <remarks>
-            /// Sets data around private site access enablement and authorized Virtual
-            /// Networks that can access the site.
+            /// Description for Sets data around private site access enablement and
+            /// authorized Virtual Networks that can access the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6565,8 +7571,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Networks that can access the site.
             /// </summary>
             /// <remarks>
-            /// Sets data around private site access enablement and authorized Virtual
-            /// Networks that can access the site.
+            /// Description for Sets data around private site access enablement and
+            /// authorized Virtual Networks that can access the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6592,12 +7598,262 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionList(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetPrivateEndpointConnectionListAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource GetPrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.GetPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource ApproveOrRejectPrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+            {
+                return operations.ApproveOrRejectPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> ApproveOrRejectPrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            public static object DeletePrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.DeletePrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeletePrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the private link resources
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the private link resources
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            public static PrivateLinkResourcesWrapper GetPrivateLinkResources(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetPrivateLinkResourcesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the private link resources
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the private link resources
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateLinkResourcesWrapper> GetPrivateLinkResourcesAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateLinkResourcesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get list of processes for a web site, or a deployment slot, or for a
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6618,8 +7874,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6646,8 +7902,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6671,8 +7927,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6702,8 +7958,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Terminate a process by its ID for a web site, or a deployment slot, or
-            /// specific scaled-out instance in a web site.
+            /// Description for Terminate a process by its ID for a web site, or a
+            /// deployment slot, or specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6727,8 +7983,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Terminate a process by its ID for a web site, or a deployment slot, or
-            /// specific scaled-out instance in a web site.
+            /// Description for Terminate a process by its ID for a web site, or a
+            /// deployment slot, or specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6755,8 +8011,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// Get a memory dump of a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for Get a memory dump of a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6780,8 +8036,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// Get a memory dump of a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for Get a memory dump of a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6810,8 +8066,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6835,8 +8091,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6866,8 +8122,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6894,8 +8150,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6928,8 +8184,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6953,8 +8209,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -6980,72 +8236,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </summary>
-            /// <remarks>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Site name.
-            /// </param>
-            /// <param name='processId'>
-            /// PID.
-            /// </param>
-            /// <param name='threadId'>
-            /// TID.
-            /// </param>
-            public static ProcessThreadInfo GetProcessThread(this IWebAppsOperations operations, string resourceGroupName, string name, string processId, string threadId)
-            {
-                return operations.GetProcessThreadAsync(resourceGroupName, name, processId, threadId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </summary>
-            /// <remarks>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Site name.
-            /// </param>
-            /// <param name='processId'>
-            /// PID.
-            /// </param>
-            /// <param name='threadId'>
-            /// TID.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ProcessThreadInfo> GetProcessThreadAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string processId, string threadId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetProcessThreadWithHttpMessagesAsync(resourceGroupName, name, processId, threadId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Get public certificates for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
+            /// Description for Get public certificates for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7065,7 +8259,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get public certificates for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
+            /// Description for Get public certificates for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7092,8 +8286,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Get the named public certificate for an app (or deployment slot, if
-            /// specified).
+            /// Description for Get the named public certificate for an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7117,8 +8311,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Get the named public certificate for an app (or deployment slot, if
-            /// specified).
+            /// Description for Get the named public certificate for an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7147,7 +8341,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Creates a hostname binding for an app.
+            /// Description for Creates a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7174,7 +8368,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Creates a hostname binding for an app.
+            /// Description for Creates a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7207,7 +8401,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Deletes a hostname binding for an app.
+            /// Description for Deletes a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7230,7 +8424,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Deletes a hostname binding for an app.
+            /// Description for Deletes a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7256,7 +8450,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the publishing profile for an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Gets the publishing profile for an app (or deployment slot, if specified).
+            /// Description for Gets the publishing profile for an app (or deployment slot,
+            /// if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7280,7 +8475,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the publishing profile for an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Gets the publishing profile for an app (or deployment slot, if specified).
+            /// Description for Gets the publishing profile for an app (or deployment slot,
+            /// if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7310,8 +8506,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// previously modified by calling the API with POST.
             /// </summary>
             /// <remarks>
-            /// Resets the configuration settings of the current slot if they were
-            /// previously modified by calling the API with POST.
+            /// Description for Resets the configuration settings of the current slot if
+            /// they were previously modified by calling the API with POST.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7332,8 +8528,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// previously modified by calling the API with POST.
             /// </summary>
             /// <remarks>
-            /// Resets the configuration settings of the current slot if they were
-            /// previously modified by calling the API with POST.
+            /// Description for Resets the configuration settings of the current slot if
+            /// they were previously modified by calling the API with POST.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7356,7 +8552,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restarts an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Restarts an app (or deployment slot, if specified).
+            /// Description for Restarts an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7384,7 +8580,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restarts an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Restarts an app (or deployment slot, if specified).
+            /// Description for Restarts an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7415,7 +8611,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Restores an app from a backup blob in Azure Storage.
+            /// Description for Restores an app from a backup blob in Azure Storage.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7438,7 +8634,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Restores an app from a backup blob in Azure Storage.
+            /// Description for Restores an app from a backup blob in Azure Storage.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7464,7 +8660,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a deleted web app to this web app.
             /// </summary>
             /// <remarks>
-            /// Restores a deleted web app to this web app.
+            /// Description for Restores a deleted web app to this web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7487,7 +8683,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a deleted web app to this web app.
             /// </summary>
             /// <remarks>
-            /// Restores a deleted web app to this web app.
+            /// Description for Restores a deleted web app to this web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7513,7 +8709,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app from a snapshot.
             /// </summary>
             /// <remarks>
-            /// Restores a web app from a snapshot.
+            /// Description for Restores a web app from a snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7537,7 +8733,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app from a snapshot.
             /// </summary>
             /// <remarks>
-            /// Restores a web app from a snapshot.
+            /// Description for Restores a web app from a snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7564,7 +8760,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get list of siteextensions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get list of siteextensions for a web site, or a deployment slot.
+            /// Description for Get list of siteextensions for a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7584,7 +8781,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get list of siteextensions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get list of siteextensions for a web site, or a deployment slot.
+            /// Description for Get list of siteextensions for a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7611,8 +8809,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Get site extension information by its ID for a web site, or a deployment
-            /// slot.
+            /// Description for Get site extension information by its ID for a web site, or
+            /// a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7636,8 +8834,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Get site extension information by its ID for a web site, or a deployment
-            /// slot.
+            /// Description for Get site extension information by its ID for a web site, or
+            /// a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7666,7 +8864,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Install site extension on a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Install site extension on a web site, or a deployment slot.
+            /// Description for Install site extension on a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7689,7 +8887,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Install site extension on a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Install site extension on a web site, or a deployment slot.
+            /// Description for Install site extension on a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7718,7 +8916,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Remove a site extension from a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Remove a site extension from a web site, or a deployment slot.
+            /// Description for Remove a site extension from a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7741,7 +8940,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Remove a site extension from a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Remove a site extension from a web site, or a deployment slot.
+            /// Description for Remove a site extension from a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7767,7 +8967,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets an app's deployment slots.
             /// </summary>
             /// <remarks>
-            /// Gets an app's deployment slots.
+            /// Description for Gets an app's deployment slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7787,7 +8987,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets an app's deployment slots.
             /// </summary>
             /// <remarks>
-            /// Gets an app's deployment slots.
+            /// Description for Gets an app's deployment slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7813,7 +9013,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the details of a web, mobile, or API app.
             /// </summary>
             /// <remarks>
-            /// Gets the details of a web, mobile, or API app.
+            /// Description for Gets the details of a web, mobile, or API app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7837,7 +9037,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the details of a web, mobile, or API app.
             /// </summary>
             /// <remarks>
-            /// Gets the details of a web, mobile, or API app.
+            /// Description for Gets the details of a web, mobile, or API app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7868,8 +9068,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7898,8 +9098,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7933,7 +9133,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a web, mobile, or API app, or one of the deployment slots.
             /// </summary>
             /// <remarks>
-            /// Deletes a web, mobile, or API app, or one of the deployment slots.
+            /// Description for Deletes a web, mobile, or API app, or one of the deployment
+            /// slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7952,9 +9153,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// If true, web app metrics are also deleted.
             /// </param>
             /// <param name='deleteEmptyServerFarm'>
-            /// Specify true if the App Service plan will be empty after app deletion and
-            /// you want to delete the empty App Service plan. By default, the empty App
-            /// Service plan is not deleted.
+            /// Specify false if you want to keep empty App Service plan. By default, empty
+            /// App Service plan is deleted.
             /// </param>
             public static void DeleteSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? deleteMetrics = default(bool?), bool? deleteEmptyServerFarm = default(bool?))
             {
@@ -7965,7 +9165,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a web, mobile, or API app, or one of the deployment slots.
             /// </summary>
             /// <remarks>
-            /// Deletes a web, mobile, or API app, or one of the deployment slots.
+            /// Description for Deletes a web, mobile, or API app, or one of the deployment
+            /// slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -7984,9 +9185,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// If true, web app metrics are also deleted.
             /// </param>
             /// <param name='deleteEmptyServerFarm'>
-            /// Specify true if the App Service plan will be empty after app deletion and
-            /// you want to delete the empty App Service plan. By default, the empty App
-            /// Service plan is not deleted.
+            /// Specify false if you want to keep empty App Service plan. By default, empty
+            /// App Service plan is deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -8001,8 +9201,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8031,8 +9231,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8066,7 +9266,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Analyze a custom hostname.
             /// </summary>
             /// <remarks>
-            /// Analyze a custom hostname.
+            /// Description for Analyze a custom hostname.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8093,7 +9293,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Analyze a custom hostname.
             /// </summary>
             /// <remarks>
-            /// Analyze a custom hostname.
+            /// Description for Analyze a custom hostname.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8127,8 +9327,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Applies the configuration settings from the target slot onto the current
-            /// slot.
+            /// Description for Applies the configuration settings from the target slot
+            /// onto the current slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8156,8 +9356,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Applies the configuration settings from the target slot onto the current
-            /// slot.
+            /// Description for Applies the configuration settings from the target slot
+            /// onto the current slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8187,7 +9387,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a backup of an app.
             /// </summary>
             /// <remarks>
-            /// Creates a backup of an app.
+            /// Description for Creates a backup of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8215,7 +9415,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a backup of an app.
             /// </summary>
             /// <remarks>
-            /// Creates a backup of an app.
+            /// Description for Creates a backup of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8249,7 +9449,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets existing backups of an app.
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8273,7 +9473,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets existing backups of an app.
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8303,7 +9503,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a backup of an app by its ID.
             /// </summary>
             /// <remarks>
-            /// Gets a backup of an app by its ID.
+            /// Description for Gets a backup of an app by its ID.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8330,7 +9530,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a backup of an app by its ID.
             /// </summary>
             /// <remarks>
-            /// Gets a backup of an app by its ID.
+            /// Description for Gets a backup of an app by its ID.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8363,7 +9563,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a backup of an app by its ID.
             /// </summary>
             /// <remarks>
-            /// Deletes a backup of an app by its ID.
+            /// Description for Deletes a backup of an app by its ID.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8390,7 +9590,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a backup of an app by its ID.
             /// </summary>
             /// <remarks>
-            /// Deletes a backup of an app by its ID.
+            /// Description for Deletes a backup of an app by its ID.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8423,10 +9623,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// request body.
             /// </summary>
             /// <remarks>
-            /// Gets status of a web app backup that may be in progress, including secrets
-            /// associated with the backup, such as the Azure Storage SAS URL. Also can be
-            /// used to update the SAS URL for the backup if a new URL is passed in the
-            /// request body.
+            /// Description for Gets status of a web app backup that may be in progress,
+            /// including secrets associated with the backup, such as the Azure Storage SAS
+            /// URL. Also can be used to update the SAS URL for the backup if a new URL is
+            /// passed in the request body.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8459,10 +9659,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// request body.
             /// </summary>
             /// <remarks>
-            /// Gets status of a web app backup that may be in progress, including secrets
-            /// associated with the backup, such as the Azure Storage SAS URL. Also can be
-            /// used to update the SAS URL for the backup if a new URL is passed in the
-            /// request body.
+            /// Description for Gets status of a web app backup that may be in progress,
+            /// including secrets associated with the backup, such as the Azure Storage SAS
+            /// URL. Also can be used to update the SAS URL for the backup if a new URL is
+            /// passed in the request body.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8499,8 +9699,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
+            /// Description for Restores a specific backup to another app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8531,8 +9731,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
+            /// Description for Restores a specific backup to another app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8562,10 +9762,276 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static IPage<CsmPublishingCredentialsPoliciesEntity> ListBasicPublishingCredentialsPoliciesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.ListBasicPublishingCredentialsPoliciesSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CsmPublishingCredentialsPoliciesEntity>> ListBasicPublishingCredentialsPoliciesSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBasicPublishingCredentialsPoliciesSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity GetFtpAllowedSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetFtpAllowedSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> GetFtpAllowedSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFtpAllowedSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity UpdateFtpAllowedSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, string slot)
+            {
+                return operations.UpdateFtpAllowedSlotAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates whether FTP is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether FTP is allowed on the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> UpdateFtpAllowedSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateFtpAllowedSlotWithHttpMessagesAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed on the site or
+            /// not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity GetScmAllowedSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetScmAllowedSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed on the site or
+            /// not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> GetScmAllowedSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetScmAllowedSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates whether user publishing credentials are allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether user publishing credentials are allowed on
+            /// the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static CsmPublishingCredentialsPoliciesEntity UpdateScmAllowedSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, string slot)
+            {
+                return operations.UpdateScmAllowedSlotAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates whether user publishing credentials are allowed on the site or not.
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates whether user publishing credentials are allowed on
+            /// the site or not.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='csmPublishingAccessPoliciesEntity'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CsmPublishingCredentialsPoliciesEntity> UpdateScmAllowedSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateScmAllowedSlotWithHttpMessagesAsync(resourceGroupName, name, csmPublishingAccessPoliciesEntity, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List the configurations of an app
             /// </summary>
             /// <remarks>
-            /// List the configurations of an app
+            /// Description for List the configurations of an app
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8589,7 +10055,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the configurations of an app
             /// </summary>
             /// <remarks>
-            /// List the configurations of an app
+            /// Description for List the configurations of an app
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8619,7 +10085,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Replaces the application settings of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the application settings of an app.
+            /// Description for Replaces the application settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8646,7 +10112,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Replaces the application settings of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the application settings of an app.
+            /// Description for Replaces the application settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8679,7 +10145,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the application settings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the application settings of an app.
+            /// Description for Gets the application settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8703,7 +10169,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the application settings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the application settings of an app.
+            /// Description for Gets the application settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8734,8 +10200,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// app.
             /// </summary>
             /// <remarks>
-            /// Updates the Authentication / Authorization settings associated with web
-            /// app.
+            /// Description for Updates the Authentication / Authorization settings
+            /// associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8763,8 +10229,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// app.
             /// </summary>
             /// <remarks>
-            /// Updates the Authentication / Authorization settings associated with web
-            /// app.
+            /// Description for Updates the Authentication / Authorization settings
+            /// associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8797,7 +10263,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Authentication/Authorization settings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Authentication/Authorization settings of an app.
+            /// Description for Gets the Authentication/Authorization settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8821,7 +10287,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Authentication/Authorization settings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Authentication/Authorization settings of an app.
+            /// Description for Gets the Authentication/Authorization settings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8848,10 +10314,182 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// the settings for the production slot.
+            /// </param>
+            public static SiteAuthSettingsV2 GetAuthSettingsV2WithoutSecretsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetAuthSettingsV2WithoutSecretsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// the settings for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteAuthSettingsV2> GetAuthSettingsV2WithoutSecretsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAuthSettingsV2WithoutSecretsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='siteAuthSettingsV2'>
+            /// Auth settings associated with web app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static SiteAuthSettingsV2 UpdateAuthSettingsV2Slot(this IWebAppsOperations operations, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, string slot)
+            {
+                return operations.UpdateAuthSettingsV2SlotAsync(resourceGroupName, name, siteAuthSettingsV2, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Updates site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app.
+            /// </param>
+            /// <param name='siteAuthSettingsV2'>
+            /// Auth settings associated with web app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteAuthSettingsV2> UpdateAuthSettingsV2SlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateAuthSettingsV2SlotWithHttpMessagesAsync(resourceGroupName, name, siteAuthSettingsV2, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// the settings for the production slot.
+            /// </param>
+            public static SiteAuthSettingsV2 GetAuthSettingsV2Slot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetAuthSettingsV2SlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets site's Authentication / Authorization settings for apps via the V2
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets site's Authentication / Authorization settings for
+            /// apps via the V2 format
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// the settings for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteAuthSettingsV2> GetAuthSettingsV2SlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAuthSettingsV2SlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Updates the Azure storage account configurations of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the Azure storage account configurations of an app.
+            /// Description for Updates the Azure storage account configurations of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8878,7 +10516,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the Azure storage account configurations of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the Azure storage account configurations of an app.
+            /// Description for Updates the Azure storage account configurations of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8911,7 +10549,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Azure storage account configurations of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Azure storage account configurations of an app.
+            /// Description for Gets the Azure storage account configurations of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8935,7 +10573,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Azure storage account configurations of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Azure storage account configurations of an app.
+            /// Description for Gets the Azure storage account configurations of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8965,7 +10603,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the backup configuration of an app.
+            /// Description for Updates the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -8992,7 +10630,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the backup configuration of an app.
+            /// Description for Updates the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9025,7 +10663,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Deletes the backup configuration of an app.
+            /// Description for Deletes the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9049,7 +10687,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Deletes the backup configuration of an app.
+            /// Description for Deletes the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9076,7 +10714,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the backup configuration of an app.
+            /// Description for Gets the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9100,7 +10738,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the backup configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the backup configuration of an app.
+            /// Description for Gets the backup configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9127,10 +10765,220 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static IPage<ApiKVReference> GetAppSettingsKeyVaultReferencesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetAppSettingsKeyVaultReferencesSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetAppSettingsKeyVaultReferencesSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingsKeyVaultReferencesSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='appSettingKey'>
+            /// App Setting key name.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static ApiKVReference GetAppSettingKeyVaultReferenceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string appSettingKey, string slot)
+            {
+                return operations.GetAppSettingKeyVaultReferenceSlotAsync(resourceGroupName, name, appSettingKey, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='appSettingKey'>
+            /// App Setting key name.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiKVReference> GetAppSettingKeyVaultReferenceSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string appSettingKey, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingKeyVaultReferenceSlotWithHttpMessagesAsync(resourceGroupName, name, appSettingKey, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static IPage<ApiKVReference> GetSiteConnectionStringKeyVaultReferencesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferencesSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetSiteConnectionStringKeyVaultReferencesSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferencesSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionStringKey'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static ApiKVReference GetSiteConnectionStringKeyVaultReferenceSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string connectionStringKey, string slot)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferenceSlotAsync(resourceGroupName, name, connectionStringKey, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='connectionStringKey'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiKVReference> GetSiteConnectionStringKeyVaultReferenceSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string connectionStringKey, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferenceSlotWithHttpMessagesAsync(resourceGroupName, name, connectionStringKey, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Replaces the connection strings of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the connection strings of an app.
+            /// Description for Replaces the connection strings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9157,7 +11005,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Replaces the connection strings of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the connection strings of an app.
+            /// Description for Replaces the connection strings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9190,7 +11038,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the connection strings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the connection strings of an app.
+            /// Description for Gets the connection strings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9214,7 +11062,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the connection strings of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the connection strings of an app.
+            /// Description for Gets the connection strings of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9244,7 +11092,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the logging configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the logging configuration of an app.
+            /// Description for Gets the logging configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9268,7 +11116,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the logging configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the logging configuration of an app.
+            /// Description for Gets the logging configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9298,7 +11146,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the logging configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the logging configuration of an app.
+            /// Description for Updates the logging configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9326,7 +11174,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the logging configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the logging configuration of an app.
+            /// Description for Updates the logging configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9360,7 +11208,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Replaces the metadata of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the metadata of an app.
+            /// Description for Replaces the metadata of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9387,7 +11235,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Replaces the metadata of an app.
             /// </summary>
             /// <remarks>
-            /// Replaces the metadata of an app.
+            /// Description for Replaces the metadata of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9420,7 +11268,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the metadata of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the metadata of an app.
+            /// Description for Gets the metadata of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9444,7 +11292,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the metadata of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the metadata of an app.
+            /// Description for Gets the metadata of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9474,7 +11322,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Git/FTP publishing credentials of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
+            /// Description for Gets the Git/FTP publishing credentials of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9498,7 +11346,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Git/FTP publishing credentials of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
+            /// Description for Gets the Git/FTP publishing credentials of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9528,7 +11376,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the Push settings associated with web app.
             /// </summary>
             /// <remarks>
-            /// Updates the Push settings associated with web app.
+            /// Description for Updates the Push settings associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9555,7 +11403,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the Push settings associated with web app.
             /// </summary>
             /// <remarks>
-            /// Updates the Push settings associated with web app.
+            /// Description for Updates the Push settings associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9588,7 +11436,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Push settings associated with web app.
             /// </summary>
             /// <remarks>
-            /// Gets the Push settings associated with web app.
+            /// Description for Gets the Push settings associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9612,7 +11460,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Push settings associated with web app.
             /// </summary>
             /// <remarks>
-            /// Gets the Push settings associated with web app.
+            /// Description for Gets the Push settings associated with web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9643,8 +11491,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// default documents, virtual applications, Always On, etc.
             /// </summary>
             /// <remarks>
-            /// Gets the configuration of an app, such as platform version and bitness,
-            /// default documents, virtual applications, Always On, etc.
+            /// Description for Gets the configuration of an app, such as platform version
+            /// and bitness, default documents, virtual applications, Always On, etc.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9669,8 +11517,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// default documents, virtual applications, Always On, etc.
             /// </summary>
             /// <remarks>
-            /// Gets the configuration of an app, such as platform version and bitness,
-            /// default documents, virtual applications, Always On, etc.
+            /// Description for Gets the configuration of an app, such as platform version
+            /// and bitness, default documents, virtual applications, Always On, etc.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9700,7 +11548,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the configuration of an app.
+            /// Description for Updates the configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9727,7 +11575,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the configuration of an app.
+            /// Description for Updates the configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9760,7 +11608,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the configuration of an app.
+            /// Description for Updates the configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9787,7 +11635,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the configuration of an app.
+            /// Description for Updates the configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9821,8 +11669,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// the list contains a timestamp and the ID of the snapshot.
             /// </summary>
             /// <remarks>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
+            /// Description for Gets a list of web app configuration snapshots identifiers.
+            /// Each element of the list contains a timestamp and the ID of the snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9847,8 +11695,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// the list contains a timestamp and the ID of the snapshot.
             /// </summary>
             /// <remarks>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
+            /// Description for Gets a list of web app configuration snapshots identifiers.
+            /// Each element of the list contains a timestamp and the ID of the snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9878,7 +11726,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a snapshot of the configuration of an app at a previous point in time.
             /// </summary>
             /// <remarks>
-            /// Gets a snapshot of the configuration of an app at a previous point in time.
+            /// Description for Gets a snapshot of the configuration of an app at a
+            /// previous point in time.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9905,7 +11754,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a snapshot of the configuration of an app at a previous point in time.
             /// </summary>
             /// <remarks>
-            /// Gets a snapshot of the configuration of an app at a previous point in time.
+            /// Description for Gets a snapshot of the configuration of an app at a
+            /// previous point in time.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9938,7 +11788,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Reverts the configuration of an app to a previous snapshot.
             /// </summary>
             /// <remarks>
-            /// Reverts the configuration of an app to a previous snapshot.
+            /// Description for Reverts the configuration of an app to a previous snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9965,7 +11815,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Reverts the configuration of an app to a previous snapshot.
             /// </summary>
             /// <remarks>
-            /// Reverts the configuration of an app to a previous snapshot.
+            /// Description for Reverts the configuration of an app to a previous snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -9995,7 +11845,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the last lines of docker logs for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the last lines of docker logs for the given site
+            /// Description for Gets the last lines of docker logs for the given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10019,7 +11869,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the last lines of docker logs for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the last lines of docker logs for the given site
+            /// Description for Gets the last lines of docker logs for the given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10048,7 +11898,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the ZIP archived docker log files for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the ZIP archived docker log files for the given site
+            /// Description for Gets the ZIP archived docker log files for the given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10072,7 +11922,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the ZIP archived docker log files for the given site
             /// </summary>
             /// <remarks>
-            /// Gets the ZIP archived docker log files for the given site
+            /// Description for Gets the ZIP archived docker log files for the given site
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10101,7 +11951,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List continuous web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List continuous web jobs for an app, or a deployment slot.
+            /// Description for List continuous web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10125,7 +11975,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List continuous web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List continuous web jobs for an app, or a deployment slot.
+            /// Description for List continuous web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10155,7 +12005,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a continuous web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Gets a continuous web job by its ID for an app, or a deployment slot.
+            /// Description for Gets a continuous web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10182,7 +12033,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a continuous web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Gets a continuous web job by its ID for an app, or a deployment slot.
+            /// Description for Gets a continuous web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10215,7 +12067,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a continuous web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a continuous web job by its ID for an app, or a deployment slot.
+            /// Description for Delete a continuous web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10242,7 +12095,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a continuous web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a continuous web job by its ID for an app, or a deployment slot.
+            /// Description for Delete a continuous web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10272,7 +12126,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start a continuous web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Start a continuous web job for an app, or a deployment slot.
+            /// Description for Start a continuous web job for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10299,7 +12154,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start a continuous web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Start a continuous web job for an app, or a deployment slot.
+            /// Description for Start a continuous web job for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10329,7 +12185,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop a continuous web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Stop a continuous web job for an app, or a deployment slot.
+            /// Description for Stop a continuous web job for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10356,7 +12212,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop a continuous web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Stop a continuous web job for an app, or a deployment slot.
+            /// Description for Stop a continuous web job for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10386,7 +12242,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List deployments for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List deployments for an app, or a deployment slot.
+            /// Description for List deployments for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10410,7 +12266,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List deployments for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List deployments for an app, or a deployment slot.
+            /// Description for List deployments for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10440,7 +12296,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a deployment by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get a deployment by its ID for an app, or a deployment slot.
+            /// Description for Get a deployment by its ID for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10467,7 +12324,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a deployment by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get a deployment by its ID for an app, or a deployment slot.
+            /// Description for Get a deployment by its ID for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10500,7 +12358,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create a deployment for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create a deployment for an app, or a deployment slot.
+            /// Description for Create a deployment for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10530,7 +12388,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create a deployment for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create a deployment for an app, or a deployment slot.
+            /// Description for Create a deployment for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10566,7 +12424,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a deployment by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a deployment by its ID for an app, or a deployment slot.
+            /// Description for Delete a deployment by its ID for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10593,7 +12452,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a deployment by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a deployment by its ID for an app, or a deployment slot.
+            /// Description for Delete a deployment by its ID for an app, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10624,8 +12484,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// List deployment log for specific deployment for an app, or a deployment
-            /// slot.
+            /// Description for List deployment log for specific deployment for an app, or
+            /// a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10654,8 +12514,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// List deployment log for specific deployment for an app, or a deployment
-            /// slot.
+            /// Description for List deployment log for specific deployment for an app, or
+            /// a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10691,9 +12551,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// backup.
             /// </summary>
             /// <remarks>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage. Use this to get information about the databases stored in a
-            /// backup.
+            /// Description for Discovers an existing app backup that can be restored from
+            /// a blob in Azure storage. Use this to get information about the databases
+            /// stored in a backup.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10723,9 +12583,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// backup.
             /// </summary>
             /// <remarks>
-            /// Discovers an existing app backup that can be restored from a blob in Azure
-            /// storage. Use this to get information about the databases stored in a
-            /// backup.
+            /// Description for Discovers an existing app backup that can be restored from
+            /// a blob in Azure storage. Use this to get information about the databases
+            /// stored in a backup.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10759,7 +12619,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists ownership identifiers for domain associated with web app.
             /// </summary>
             /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
+            /// Description for Lists ownership identifiers for domain associated with web
+            /// app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10783,7 +12644,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists ownership identifiers for domain associated with web app.
             /// </summary>
             /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
+            /// Description for Lists ownership identifiers for domain associated with web
+            /// app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10813,7 +12675,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get domain ownership identifier for web app.
             /// </summary>
             /// <remarks>
-            /// Get domain ownership identifier for web app.
+            /// Description for Get domain ownership identifier for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10840,7 +12702,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get domain ownership identifier for web app.
             /// </summary>
             /// <remarks>
-            /// Get domain ownership identifier for web app.
+            /// Description for Get domain ownership identifier for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10874,8 +12736,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// ownership identifier.
             /// </summary>
             /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
+            /// Description for Creates a domain ownership identifier for web app, or
+            /// updates an existing ownership identifier.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10906,8 +12768,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// ownership identifier.
             /// </summary>
             /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
+            /// Description for Creates a domain ownership identifier for web app, or
+            /// updates an existing ownership identifier.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10943,7 +12805,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a domain ownership identifier for a web app.
             /// </summary>
             /// <remarks>
-            /// Deletes a domain ownership identifier for a web app.
+            /// Description for Deletes a domain ownership identifier for a web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -10970,7 +12832,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a domain ownership identifier for a web app.
             /// </summary>
             /// <remarks>
-            /// Deletes a domain ownership identifier for a web app.
+            /// Description for Deletes a domain ownership identifier for a web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11001,8 +12863,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// ownership identifier.
             /// </summary>
             /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
+            /// Description for Creates a domain ownership identifier for web app, or
+            /// updates an existing ownership identifier.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11033,8 +12895,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// ownership identifier.
             /// </summary>
             /// <remarks>
-            /// Creates a domain ownership identifier for web app, or updates an existing
-            /// ownership identifier.
+            /// Description for Creates a domain ownership identifier for web app, or
+            /// updates an existing ownership identifier.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11070,7 +12932,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the status of the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the status of the last MSDeploy operation.
+            /// Description for Get the status of the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11094,7 +12956,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the status of the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the status of the last MSDeploy operation.
+            /// Description for Get the status of the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11124,7 +12986,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11151,7 +13013,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11184,7 +13046,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the MSDeploy Log for the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the MSDeploy Log for the last MSDeploy operation.
+            /// Description for Get the MSDeploy Log for the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11208,7 +13070,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the MSDeploy Log for the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the MSDeploy Log for the last MSDeploy operation.
+            /// Description for Get the MSDeploy Log for the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11238,7 +13100,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the functions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List the functions for a web site, or a deployment slot.
+            /// Description for List the functions for a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11250,8 +13112,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Site name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             public static IPage<FunctionEnvelope> ListInstanceFunctionsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
             {
@@ -11262,7 +13123,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the functions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List the functions for a web site, or a deployment slot.
+            /// Description for List the functions for a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11274,8 +13135,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Site name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -11292,7 +13152,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Fetch a short lived token that can be exchanged for a master key.
             /// </summary>
             /// <remarks>
-            /// Fetch a short lived token that can be exchanged for a master key.
+            /// Description for Fetch a short lived token that can be exchanged for a
+            /// master key.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11316,7 +13177,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Fetch a short lived token that can be exchanged for a master key.
             /// </summary>
             /// <remarks>
-            /// Fetch a short lived token that can be exchanged for a master key.
+            /// Description for Fetch a short lived token that can be exchanged for a
+            /// master key.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11346,7 +13208,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get function information by its ID for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get function information by its ID for web site, or a deployment slot.
+            /// Description for Get function information by its ID for web site, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11361,8 +13224,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Function name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             public static FunctionEnvelope GetInstanceFunctionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string slot)
             {
@@ -11373,7 +13235,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get function information by its ID for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get function information by its ID for web site, or a deployment slot.
+            /// Description for Get function information by its ID for web site, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11388,8 +13251,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Function name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -11406,7 +13268,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create function for web site, or a deployment slot.
+            /// Description for Create function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11421,8 +13283,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Function name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             /// <param name='functionEnvelope'>
             /// Function details.
@@ -11436,7 +13297,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create function for web site, or a deployment slot.
+            /// Description for Create function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11451,8 +13312,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Function name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             /// <param name='functionEnvelope'>
             /// Function details.
@@ -11472,7 +13332,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a function for web site, or a deployment slot.
+            /// Description for Delete a function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11487,8 +13347,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Function name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             public static void DeleteInstanceFunctionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string slot)
             {
@@ -11499,7 +13358,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a function for web site, or a deployment slot.
+            /// Description for Delete a function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11514,8 +13373,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Function name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -11526,10 +13384,142 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get function secrets for a function in a web site, or a deployment slot.
+            /// Add or update a function secret.
             /// </summary>
             /// <remarks>
-            /// Get function secrets for a function in a web site, or a deployment slot.
+            /// Description for Add or update a function secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// The name of the function.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            /// <param name='key'>
+            /// The key to create or update
+            /// </param>
+            public static KeyInfo CreateOrUpdateFunctionSecretSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string keyName, string slot, KeyInfo key)
+            {
+                return operations.CreateOrUpdateFunctionSecretSlotAsync(resourceGroupName, name, functionName, keyName, slot, key).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add or update a function secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Add or update a function secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// The name of the function.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            /// <param name='key'>
+            /// The key to create or update
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<KeyInfo> CreateOrUpdateFunctionSecretSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string keyName, string slot, KeyInfo key, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateFunctionSecretSlotWithHttpMessagesAsync(resourceGroupName, name, functionName, keyName, slot, key, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a function secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Delete a function secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// The name of the function.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            public static void DeleteFunctionSecretSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string keyName, string slot)
+            {
+                operations.DeleteFunctionSecretSlotAsync(resourceGroupName, name, functionName, keyName, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a function secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Delete a function secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// The name of the function.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteFunctionSecretSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string keyName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteFunctionSecretSlotWithHttpMessagesAsync(resourceGroupName, name, functionName, keyName, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get function keys for a function in a web site, or a deployment slot.
+            /// </summary>
+            /// <remarks>
+            /// Description for Get function keys for a function in a web site, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11544,8 +13534,67 @@ namespace Microsoft.Azure.Management.WebSites
             /// Function name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
+            /// </param>
+            public static StringDictionary ListFunctionKeysSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string slot)
+            {
+                return operations.ListFunctionKeysSlotAsync(resourceGroupName, name, functionName, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get function keys for a function in a web site, or a deployment slot.
+            /// </summary>
+            /// <remarks>
+            /// Description for Get function keys for a function in a web site, or a
+            /// deployment slot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// Function name.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StringDictionary> ListFunctionKeysSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListFunctionKeysSlotWithHttpMessagesAsync(resourceGroupName, name, functionName, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get function secrets for a function in a web site, or a deployment slot.
+            /// </summary>
+            /// <remarks>
+            /// Description for Get function secrets for a function in a web site, or a
+            /// deployment slot.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='functionName'>
+            /// Function name.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
             /// </param>
             public static FunctionSecrets ListFunctionSecretsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string functionName, string slot)
             {
@@ -11556,7 +13605,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get function secrets for a function in a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get function secrets for a function in a web site, or a deployment slot.
+            /// Description for Get function secrets for a function in a web site, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11571,8 +13621,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Function name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -11586,10 +13635,291 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Get host secrets for a function app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Get host secrets for a function app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            public static HostKeys ListHostKeysSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.ListHostKeysSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get host secrets for a function app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Get host secrets for a function app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<HostKeys> ListHostKeysSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListHostKeysSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This is to allow calling via powershell and ARM template.
+            /// </summary>
+            /// <remarks>
+            /// Description for This is to allow calling via powershell and ARM template.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            public static void ListSyncStatusSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                operations.ListSyncStatusSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This is to allow calling via powershell and ARM template.
+            /// </summary>
+            /// <remarks>
+            /// Description for This is to allow calling via powershell and ARM template.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ListSyncStatusSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ListSyncStatusSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Syncs function trigger metadata to the management database
+            /// </summary>
+            /// <remarks>
+            /// Description for Syncs function trigger metadata to the management database
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            public static void SyncFunctionsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                operations.SyncFunctionsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Syncs function trigger metadata to the management database
+            /// </summary>
+            /// <remarks>
+            /// Description for Syncs function trigger metadata to the management database
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SyncFunctionsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SyncFunctionsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Add or update a host level secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Add or update a host level secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='keyType'>
+            /// The type of host key.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            /// <param name='key'>
+            /// The key to create or update
+            /// </param>
+            public static KeyInfo CreateOrUpdateHostSecretSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string keyType, string keyName, string slot, KeyInfo key)
+            {
+                return operations.CreateOrUpdateHostSecretSlotAsync(resourceGroupName, name, keyType, keyName, slot, key).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add or update a host level secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Add or update a host level secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='keyType'>
+            /// The type of host key.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            /// <param name='key'>
+            /// The key to create or update
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<KeyInfo> CreateOrUpdateHostSecretSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string keyType, string keyName, string slot, KeyInfo key, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateHostSecretSlotWithHttpMessagesAsync(resourceGroupName, name, keyType, keyName, slot, key, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a host level secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Delete a host level secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='keyType'>
+            /// The type of host key.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            public static void DeleteHostSecretSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string keyType, string keyName, string slot)
+            {
+                operations.DeleteHostSecretSlotAsync(resourceGroupName, name, keyType, keyName, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a host level secret.
+            /// </summary>
+            /// <remarks>
+            /// Description for Delete a host level secret.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Site name.
+            /// </param>
+            /// <param name='keyType'>
+            /// The type of host key.
+            /// </param>
+            /// <param name='keyName'>
+            /// The name of the key.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteHostSecretSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string keyType, string keyName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteHostSecretSlotWithHttpMessagesAsync(resourceGroupName, name, keyType, keyName, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Get hostname bindings for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
+            /// Description for Get hostname bindings for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11613,7 +13943,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get hostname bindings for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
+            /// Description for Get hostname bindings for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11644,8 +13974,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Get the named hostname binding for an app (or deployment slot, if
-            /// specified).
+            /// Description for Get the named hostname binding for an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11673,8 +14003,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Get the named hostname binding for an app (or deployment slot, if
-            /// specified).
+            /// Description for Get the named hostname binding for an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11707,7 +14037,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Creates a hostname binding for an app.
+            /// Description for Creates a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11738,7 +14068,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Creates a hostname binding for an app.
+            /// Description for Creates a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11775,7 +14105,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Deletes a hostname binding for an app.
+            /// Description for Deletes a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11802,7 +14132,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Deletes a hostname binding for an app.
+            /// Description for Deletes a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11832,7 +14162,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
             /// </summary>
             /// <remarks>
-            /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+            /// Description for Retrieves a specific Service Bus Hybrid Connection used by
+            /// this Web App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11861,7 +14192,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
             /// </summary>
             /// <remarks>
-            /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+            /// Description for Retrieves a specific Service Bus Hybrid Connection used by
+            /// this Web App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11896,7 +14228,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a new Hybrid Connection using a Service Bus relay.
             /// </summary>
             /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
+            /// Description for Creates a new Hybrid Connection using a Service Bus relay.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11928,7 +14260,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a new Hybrid Connection using a Service Bus relay.
             /// </summary>
             /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
+            /// Description for Creates a new Hybrid Connection using a Service Bus relay.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11966,7 +14298,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Removes a Hybrid Connection from this site.
             /// </summary>
             /// <remarks>
-            /// Removes a Hybrid Connection from this site.
+            /// Description for Removes a Hybrid Connection from this site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -11995,7 +14327,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Removes a Hybrid Connection from this site.
             /// </summary>
             /// <remarks>
-            /// Removes a Hybrid Connection from this site.
+            /// Description for Removes a Hybrid Connection from this site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12027,7 +14359,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a new Hybrid Connection using a Service Bus relay.
             /// </summary>
             /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
+            /// Description for Creates a new Hybrid Connection using a Service Bus relay.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12059,7 +14391,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a new Hybrid Connection using a Service Bus relay.
             /// </summary>
             /// <remarks>
-            /// Creates a new Hybrid Connection using a Service Bus relay.
+            /// Description for Creates a new Hybrid Connection using a Service Bus relay.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12094,74 +14426,11 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </summary>
-            /// <remarks>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection.
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection.
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            public static HybridConnectionKey ListHybridConnectionKeysSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, string slot)
-            {
-                return operations.ListHybridConnectionKeysSlotAsync(resourceGroupName, name, namespaceName, relayName, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </summary>
-            /// <remarks>
-            /// Gets the send key name and value for a Hybrid Connection.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace for this hybrid connection.
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name for this hybrid connection.
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<HybridConnectionKey> ListHybridConnectionKeysSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListHybridConnectionKeysSlotWithHttpMessagesAsync(resourceGroupName, name, namespaceName, relayName, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Retrieves all Service Bus Hybrid Connections used by this Web App.
             /// </summary>
             /// <remarks>
-            /// Retrieves all Service Bus Hybrid Connections used by this Web App.
+            /// Description for Retrieves all Service Bus Hybrid Connections used by this
+            /// Web App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12184,7 +14453,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Retrieves all Service Bus Hybrid Connections used by this Web App.
             /// </summary>
             /// <remarks>
-            /// Retrieves all Service Bus Hybrid Connections used by this Web App.
+            /// Description for Retrieves all Service Bus Hybrid Connections used by this
+            /// Web App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12214,8 +14484,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets hybrid connections configured for an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets hybrid connections configured for an app (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12240,8 +14510,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets hybrid connections configured for an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets hybrid connections configured for an app (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12271,7 +14541,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a hybrid connection configuration by its name.
             /// </summary>
             /// <remarks>
-            /// Gets a hybrid connection configuration by its name.
+            /// Description for Gets a hybrid connection configuration by its name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12298,7 +14568,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a hybrid connection configuration by its name.
             /// </summary>
             /// <remarks>
-            /// Gets a hybrid connection configuration by its name.
+            /// Description for Gets a hybrid connection configuration by its name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12332,8 +14602,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// one (PATCH).
             /// </summary>
             /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
+            /// Description for Creates a new hybrid connection configuration (PUT), or
+            /// updates an existing one (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12364,8 +14634,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// one (PATCH).
             /// </summary>
             /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
+            /// Description for Creates a new hybrid connection configuration (PUT), or
+            /// updates an existing one (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12401,7 +14671,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a relay service connection by its name.
             /// </summary>
             /// <remarks>
-            /// Deletes a relay service connection by its name.
+            /// Description for Deletes a relay service connection by its name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12428,7 +14698,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a relay service connection by its name.
             /// </summary>
             /// <remarks>
-            /// Deletes a relay service connection by its name.
+            /// Description for Deletes a relay service connection by its name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12459,8 +14729,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// one (PATCH).
             /// </summary>
             /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
+            /// Description for Creates a new hybrid connection configuration (PUT), or
+            /// updates an existing one (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12491,8 +14761,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// one (PATCH).
             /// </summary>
             /// <remarks>
-            /// Creates a new hybrid connection configuration (PUT), or updates an existing
-            /// one (PATCH).
+            /// Description for Creates a new hybrid connection configuration (PUT), or
+            /// updates an existing one (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12528,7 +14798,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all scale-out instances of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all scale-out instances of an app.
+            /// Description for Gets all scale-out instances of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12543,7 +14813,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API gets the
             /// production slot instances.
             /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            public static IPage<WebSiteInstanceStatus> ListInstanceIdentifiersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
             {
                 return operations.ListInstanceIdentifiersSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
@@ -12552,7 +14822,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all scale-out instances of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all scale-out instances of an app.
+            /// Description for Gets all scale-out instances of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12570,9 +14840,67 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SiteInstance>> ListInstanceIdentifiersSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WebSiteInstanceStatus>> ListInstanceIdentifiersSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListInstanceIdentifiersSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all scale-out instances of an app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets all scale-out instances of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='instanceId'>
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API gets the
+            /// production slot instances.
+            /// </param>
+            public static WebSiteInstanceStatus GetInstanceInfoSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string instanceId, string slot)
+            {
+                return operations.GetInstanceInfoSlotAsync(resourceGroupName, name, instanceId, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all scale-out instances of an app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets all scale-out instances of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='instanceId'>
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API gets the
+            /// production slot instances.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WebSiteInstanceStatus> GetInstanceInfoSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string instanceId, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetInstanceInfoSlotWithHttpMessagesAsync(resourceGroupName, name, instanceId, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -12582,7 +14910,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the status of the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the status of the last MSDeploy operation.
+            /// Description for Get the status of the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12609,7 +14937,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the status of the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the status of the last MSDeploy operation.
+            /// Description for Get the status of the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12642,7 +14970,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12672,7 +15000,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12708,7 +15036,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the MSDeploy Log for the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the MSDeploy Log for the last MSDeploy operation.
+            /// Description for Get the MSDeploy Log for the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12735,7 +15063,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the MSDeploy Log for the last MSDeploy operation.
             /// </summary>
             /// <remarks>
-            /// Get the MSDeploy Log for the last MSDeploy operation.
+            /// Description for Get the MSDeploy Log for the last MSDeploy operation.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12769,8 +15097,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12799,8 +15127,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12835,8 +15163,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12868,8 +15196,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12907,8 +15235,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Terminate a process by its ID for a web site, or a deployment slot, or
-            /// specific scaled-out instance in a web site.
+            /// Description for Terminate a process by its ID for a web site, or a
+            /// deployment slot, or specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12940,8 +15268,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Terminate a process by its ID for a web site, or a deployment slot, or
-            /// specific scaled-out instance in a web site.
+            /// Description for Terminate a process by its ID for a web site, or a
+            /// deployment slot, or specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -12976,8 +15304,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// Get a memory dump of a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for Get a memory dump of a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13009,8 +15337,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// Get a memory dump of a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for Get a memory dump of a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13047,8 +15375,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13080,8 +15408,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13119,8 +15447,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13155,8 +15483,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13197,8 +15525,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13230,8 +15558,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13265,90 +15593,12 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </summary>
-            /// <remarks>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Site name.
-            /// </param>
-            /// <param name='processId'>
-            /// PID.
-            /// </param>
-            /// <param name='threadId'>
-            /// TID.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API returns
-            /// deployments for the production slot.
-            /// </param>
-            /// <param name='instanceId'>
-            /// ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances".
-            /// </param>
-            public static ProcessThreadInfo GetInstanceProcessThreadSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string processId, string threadId, string slot, string instanceId)
-            {
-                return operations.GetInstanceProcessThreadSlotAsync(resourceGroupName, name, processId, threadId, slot, instanceId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </summary>
-            /// <remarks>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Site name.
-            /// </param>
-            /// <param name='processId'>
-            /// PID.
-            /// </param>
-            /// <param name='threadId'>
-            /// TID.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API returns
-            /// deployments for the production slot.
-            /// </param>
-            /// <param name='instanceId'>
-            /// ID of a specific scaled-out instance. This is the value of the name
-            /// property in the JSON response from "GET api/sites/{siteName}/instances".
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ProcessThreadInfo> GetInstanceProcessThreadSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string processId, string threadId, string slot, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetInstanceProcessThreadSlotWithHttpMessagesAsync(resourceGroupName, name, processId, threadId, slot, instanceId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Shows whether an app can be cloned to another resource group or
             /// subscription.
             /// </summary>
             /// <remarks>
-            /// Shows whether an app can be cloned to another resource group or
-            /// subscription.
+            /// Description for Shows whether an app can be cloned to another resource
+            /// group or subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13373,8 +15623,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// subscription.
             /// </summary>
             /// <remarks>
-            /// Shows whether an app can be cloned to another resource group or
-            /// subscription.
+            /// Description for Shows whether an app can be cloned to another resource
+            /// group or subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13401,10 +15651,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// This is to allow calling via powershell and ARM template.
+            /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// This is to allow calling via powershell and ARM template.
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13416,8 +15666,61 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// restore a backup of the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// backups of the production slot.
+            /// </param>
+            public static IPage<BackupItem> ListSiteBackupsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.ListSiteBackupsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets existing backups of an app.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets existing backups of an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will get
+            /// backups of the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<BackupItem>> ListSiteBackupsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSiteBackupsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This is to allow calling via powershell and ARM template.
+            /// </summary>
+            /// <remarks>
+            /// Description for This is to allow calling via powershell and ARM template.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot.
             /// </param>
             public static FunctionSecrets ListSyncFunctionTriggersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
             {
@@ -13428,7 +15731,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// This is to allow calling via powershell and ARM template.
             /// </summary>
             /// <remarks>
-            /// This is to allow calling via powershell and ARM template.
+            /// Description for This is to allow calling via powershell and ARM template.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13440,8 +15743,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// restore a backup of the production slot.
+            /// Name of the deployment slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -13455,140 +15757,12 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// metric definitions of the production slot.
-            /// </param>
-            public static IPage<ResourceMetricDefinition> ListMetricDefinitionsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return operations.ListMetricDefinitionsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// metric definitions of the production slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ResourceMetricDefinition>> ListMetricDefinitionsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListMetricDefinitionsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// metrics of the production slot.
-            /// </param>
-            /// <param name='details'>
-            /// Specify "true" to include metric details in the response. It is "false" by
-            /// default.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only metrics specified in the filter (using OData syntax). For
-            /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
-            /// timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            public static IPage<ResourceMetric> ListMetricsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string))
-            {
-                return operations.ListMetricsSlotAsync(resourceGroupName, name, slot, details, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the app.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will get
-            /// metrics of the production slot.
-            /// </param>
-            /// <param name='details'>
-            /// Specify "true" to include metric details in the response. It is "false" by
-            /// default.
-            /// </param>
-            /// <param name='filter'>
-            /// Return only metrics specified in the filter (using OData syntax). For
-            /// example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and
-            /// startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and
-            /// timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ResourceMetric>> ListMetricsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListMetricsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, details, filter, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Returns the status of MySql in app migration, if one is active, and whether
             /// or not MySql in app is enabled
             /// </summary>
             /// <remarks>
-            /// Returns the status of MySql in app migration, if one is active, and whether
-            /// or not MySql in app is enabled
+            /// Description for Returns the status of MySql in app migration, if one is
+            /// active, and whether or not MySql in app is enabled
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13612,8 +15786,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// or not MySql in app is enabled
             /// </summary>
             /// <remarks>
-            /// Returns the status of MySql in app migration, if one is active, and whether
-            /// or not MySql in app is enabled
+            /// Description for Returns the status of MySql in app migration, if one is
+            /// active, and whether or not MySql in app is enabled
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13642,7 +15816,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a Swift Virtual Network connection.
             /// </summary>
             /// <remarks>
-            /// Gets a Swift Virtual Network connection.
+            /// Description for Gets a Swift Virtual Network connection.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13666,7 +15840,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a Swift Virtual Network connection.
             /// </summary>
             /// <remarks>
-            /// Gets a Swift Virtual Network connection.
+            /// Description for Gets a Swift Virtual Network connection.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13699,9 +15873,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// in use by another App Service Plan other than the one this App is in.
             /// </summary>
             /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
+            /// Description for Integrates this Web App with a Virtual Network. This
+            /// requires that 1) "swiftSupported" is true when doing a GET against this
+            /// resource, and 2) that the target Subnet has already been delegated, and is
+            /// not
             /// in use by another App Service Plan other than the one this App is in.
             /// </remarks>
             /// <param name='operations'>
@@ -13720,9 +15895,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will add
             /// or update connections for the production slot.
             /// </param>
-            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
+            public static SwiftVirtualNetwork CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
             {
-                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13732,9 +15907,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// in use by another App Service Plan other than the one this App is in.
             /// </summary>
             /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
+            /// Description for Integrates this Web App with a Virtual Network. This
+            /// requires that 1) "swiftSupported" is true when doing a GET against this
+            /// resource, and 2) that the target Subnet has already been delegated, and is
+            /// not
             /// in use by another App Service Plan other than the one this App is in.
             /// </remarks>
             /// <param name='operations'>
@@ -13756,9 +15932,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SwiftVirtualNetwork> CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -13769,8 +15945,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot).
             /// </summary>
             /// <remarks>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
+            /// Description for Deletes a Swift Virtual Network connection from an app (or
+            /// deployment slot).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13795,8 +15971,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot).
             /// </summary>
             /// <remarks>
-            /// Deletes a Swift Virtual Network connection from an app (or deployment
-            /// slot).
+            /// Description for Deletes a Swift Virtual Network connection from an app (or
+            /// deployment slot).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13826,9 +16002,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// in use by another App Service Plan other than the one this App is in.
             /// </summary>
             /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
+            /// Description for Integrates this Web App with a Virtual Network. This
+            /// requires that 1) "swiftSupported" is true when doing a GET against this
+            /// resource, and 2) that the target Subnet has already been delegated, and is
+            /// not
             /// in use by another App Service Plan other than the one this App is in.
             /// </remarks>
             /// <param name='operations'>
@@ -13847,9 +16024,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will add
             /// or update connections for the production slot.
             /// </param>
-            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
+            public static SwiftVirtualNetwork UpdateSwiftVirtualNetworkConnectionWithCheckSlot(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot)
             {
-                return operations.UpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
+                return operations.UpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(resourceGroupName, name, connectionEnvelope, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -13859,9 +16036,10 @@ namespace Microsoft.Azure.Management.WebSites
             /// in use by another App Service Plan other than the one this App is in.
             /// </summary>
             /// <remarks>
-            /// Integrates this Web App with a Virtual Network. This requires that 1)
-            /// "swiftSupported" is true when doing a GET against this resource, and 2)
-            /// that the target Subnet has already been delegated, and is not
+            /// Description for Integrates this Web App with a Virtual Network. This
+            /// requires that 1) "swiftSupported" is true when doing a GET against this
+            /// resource, and 2) that the target Subnet has already been delegated, and is
+            /// not
             /// in use by another App Service Plan other than the one this App is in.
             /// </remarks>
             /// <param name='operations'>
@@ -13883,9 +16061,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SwiftVirtualNetwork> UpdateSwiftVirtualNetworkConnectionWithCheckSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateSwiftVirtualNetworkConnectionWithCheckSlotWithHttpMessagesAsync(resourceGroupName, name, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -13896,8 +16074,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets all network features used by the app (or deployment slot, if
-            /// specified).
+            /// Description for Gets all network features used by the app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13909,7 +16087,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='view'>
-            /// The type of view. This can either be "summary" or "detailed".
+            /// The type of view. Only "summary" is supported at this time.
             /// </param>
             /// <param name='slot'>
             /// Name of the deployment slot. If a slot is not specified, the API will get
@@ -13925,8 +16103,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets all network features used by the app (or deployment slot, if
-            /// specified).
+            /// Description for Gets all network features used by the app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13938,7 +16116,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='view'>
-            /// The type of view. This can either be "summary" or "detailed".
+            /// The type of view. Only "summary" is supported at this time.
             /// </param>
             /// <param name='slot'>
             /// Name of the deployment slot. If a slot is not specified, the API will get
@@ -13960,8 +16138,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -13989,8 +16167,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14023,7 +16201,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site (To be deprecated).
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site (To be deprecated).
+            /// Description for Start capturing network packets for the site (To be
+            /// deprecated).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14055,7 +16234,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site (To be deprecated).
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site (To be deprecated).
+            /// Description for Start capturing network packets for the site (To be
+            /// deprecated).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14093,7 +16273,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14125,7 +16305,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14163,7 +16343,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop ongoing capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Stop ongoing capturing network packets for the site.
+            /// Description for Stop ongoing capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14186,7 +16366,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop ongoing capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Stop ongoing capturing network packets for the site.
+            /// Description for Stop ongoing capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14213,8 +16393,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14242,8 +16422,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14277,8 +16457,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14306,8 +16486,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14341,8 +16521,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14370,8 +16550,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// if specified).
             /// </summary>
             /// <remarks>
-            /// Gets a named operation for a network trace capturing (or deployment slot,
-            /// if specified).
+            /// Description for Gets a named operation for a network trace capturing (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14405,8 +16585,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Generates a new publishing password for an app (or deployment slot, if
-            /// specified).
+            /// Description for Generates a new publishing password for an app (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14431,8 +16611,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Generates a new publishing password for an app (or deployment slot, if
-            /// specified).
+            /// Description for Generates a new publishing password for an app (or
+            /// deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14459,7 +16639,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets perfmon counters for web app.
             /// </summary>
             /// <remarks>
-            /// Gets perfmon counters for web app.
+            /// Description for Gets perfmon counters for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14489,7 +16669,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets perfmon counters for web app.
             /// </summary>
             /// <remarks>
-            /// Gets perfmon counters for web app.
+            /// Description for Gets perfmon counters for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14525,7 +16705,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets web app's event logs.
             /// </summary>
             /// <remarks>
-            /// Gets web app's event logs.
+            /// Description for Gets web app's event logs.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14549,7 +16729,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets web app's event logs.
             /// </summary>
             /// <remarks>
-            /// Gets web app's event logs.
+            /// Description for Gets web app's event logs.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14579,7 +16759,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the premier add-ons of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the premier add-ons of an app.
+            /// Description for Gets the premier add-ons of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14603,7 +16783,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the premier add-ons of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the premier add-ons of an app.
+            /// Description for Gets the premier add-ons of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14633,7 +16813,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Gets a named add-on of an app.
+            /// Description for Gets a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14660,7 +16840,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Gets a named add-on of an app.
+            /// Description for Gets a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14693,7 +16873,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Updates a named add-on of an app.
+            /// Description for Updates a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14723,7 +16903,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Updates a named add-on of an app.
+            /// Description for Updates a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14759,7 +16939,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a premier add-on from an app.
             /// </summary>
             /// <remarks>
-            /// Delete a premier add-on from an app.
+            /// Description for Delete a premier add-on from an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14786,7 +16966,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a premier add-on from an app.
             /// </summary>
             /// <remarks>
-            /// Delete a premier add-on from an app.
+            /// Description for Delete a premier add-on from an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14816,7 +16996,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Updates a named add-on of an app.
+            /// Description for Updates a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14846,7 +17026,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates a named add-on of an app.
             /// </summary>
             /// <remarks>
-            /// Updates a named add-on of an app.
+            /// Description for Updates a named add-on of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14883,8 +17063,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Networks that can access the site.
             /// </summary>
             /// <remarks>
-            /// Gets data around private site access enablement and authorized Virtual
-            /// Networks that can access the site.
+            /// Description for Gets data around private site access enablement and
+            /// authorized Virtual Networks that can access the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14908,8 +17088,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Networks that can access the site.
             /// </summary>
             /// <remarks>
-            /// Gets data around private site access enablement and authorized Virtual
-            /// Networks that can access the site.
+            /// Description for Gets data around private site access enablement and
+            /// authorized Virtual Networks that can access the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14939,8 +17119,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Networks that can access the site.
             /// </summary>
             /// <remarks>
-            /// Sets data around private site access enablement and authorized Virtual
-            /// Networks that can access the site.
+            /// Description for Sets data around private site access enablement and
+            /// authorized Virtual Networks that can access the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14967,8 +17147,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Networks that can access the site.
             /// </summary>
             /// <remarks>
-            /// Sets data around private site access enablement and authorized Virtual
-            /// Networks that can access the site.
+            /// Description for Sets data around private site access enablement and
+            /// authorized Virtual Networks that can access the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -14997,12 +17177,286 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the site deployment slot.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionListSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetPrivateEndpointConnectionListSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the site deployment slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the site deployment slot.
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource GetPrivateEndpointConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot)
+            {
+                return operations.GetPrivateEndpointConnectionSlotAsync(resourceGroupName, name, privateEndpointConnectionName, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the site deployment slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource ApproveOrRejectPrivateEndpointConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, string slot)
+            {
+                return operations.ApproveOrRejectPrivateEndpointConnectionSlotAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> ApproveOrRejectPrivateEndpointConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ApproveOrRejectPrivateEndpointConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static object DeletePrivateEndpointConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot)
+            {
+                return operations.DeletePrivateEndpointConnectionSlotAsync(resourceGroupName, name, privateEndpointConnectionName, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeletePrivateEndpointConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeletePrivateEndpointConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the private link resources
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the private link resources
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static PrivateLinkResourcesWrapper GetPrivateLinkResourcesSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetPrivateLinkResourcesSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the private link resources
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the private link resources
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateLinkResourcesWrapper> GetPrivateLinkResourcesSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateLinkResourcesSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get list of processes for a web site, or a deployment slot, or for a
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15027,8 +17481,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15059,8 +17513,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15088,8 +17542,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15123,8 +17577,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Terminate a process by its ID for a web site, or a deployment slot, or
-            /// specific scaled-out instance in a web site.
+            /// Description for Terminate a process by its ID for a web site, or a
+            /// deployment slot, or specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15152,8 +17606,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Terminate a process by its ID for a web site, or a deployment slot, or
-            /// specific scaled-out instance in a web site.
+            /// Description for Terminate a process by its ID for a web site, or a
+            /// deployment slot, or specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15184,8 +17638,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// Get a memory dump of a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for Get a memory dump of a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15213,8 +17667,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// Get a memory dump of a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for Get a memory dump of a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15247,8 +17701,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15276,8 +17730,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15311,8 +17765,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15343,8 +17797,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// web site.
             /// </summary>
             /// <remarks>
-            /// Get process information by its ID for a specific scaled-out instance in a
-            /// web site.
+            /// Description for Get process information by its ID for a specific scaled-out
+            /// instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15381,8 +17835,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15410,8 +17864,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15441,80 +17895,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </summary>
-            /// <remarks>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Site name.
-            /// </param>
-            /// <param name='processId'>
-            /// PID.
-            /// </param>
-            /// <param name='threadId'>
-            /// TID.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API returns
-            /// deployments for the production slot.
-            /// </param>
-            public static ProcessThreadInfo GetProcessThreadSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string processId, string threadId, string slot)
-            {
-                return operations.GetProcessThreadSlotAsync(resourceGroupName, name, processId, threadId, slot).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </summary>
-            /// <remarks>
-            /// Get thread information by Thread ID for a specific process, in a specific
-            /// scaled-out instance in a web site.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Site name.
-            /// </param>
-            /// <param name='processId'>
-            /// PID.
-            /// </param>
-            /// <param name='threadId'>
-            /// TID.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API returns
-            /// deployments for the production slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ProcessThreadInfo> GetProcessThreadSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string processId, string threadId, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetProcessThreadSlotWithHttpMessagesAsync(resourceGroupName, name, processId, threadId, slot, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Get public certificates for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
+            /// Description for Get public certificates for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15538,7 +17922,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get public certificates for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
+            /// Description for Get public certificates for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15569,8 +17953,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Get the named public certificate for an app (or deployment slot, if
-            /// specified).
+            /// Description for Get the named public certificate for an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15598,8 +17982,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Get the named public certificate for an app (or deployment slot, if
-            /// specified).
+            /// Description for Get the named public certificate for an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15632,7 +18016,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Creates a hostname binding for an app.
+            /// Description for Creates a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15663,7 +18047,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Creates a hostname binding for an app.
+            /// Description for Creates a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15700,7 +18084,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Deletes a hostname binding for an app.
+            /// Description for Deletes a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15727,7 +18111,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes a hostname binding for an app.
             /// </summary>
             /// <remarks>
-            /// Deletes a hostname binding for an app.
+            /// Description for Deletes a hostname binding for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15757,7 +18141,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the publishing profile for an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Gets the publishing profile for an app (or deployment slot, if specified).
+            /// Description for Gets the publishing profile for an app (or deployment slot,
+            /// if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15785,7 +18170,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the publishing profile for an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Gets the publishing profile for an app (or deployment slot, if specified).
+            /// Description for Gets the publishing profile for an app (or deployment slot,
+            /// if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15819,8 +18205,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// previously modified by calling the API with POST.
             /// </summary>
             /// <remarks>
-            /// Resets the configuration settings of the current slot if they were
-            /// previously modified by calling the API with POST.
+            /// Description for Resets the configuration settings of the current slot if
+            /// they were previously modified by calling the API with POST.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15845,8 +18231,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// previously modified by calling the API with POST.
             /// </summary>
             /// <remarks>
-            /// Resets the configuration settings of the current slot if they were
-            /// previously modified by calling the API with POST.
+            /// Description for Resets the configuration settings of the current slot if
+            /// they were previously modified by calling the API with POST.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15873,7 +18259,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restarts an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Restarts an app (or deployment slot, if specified).
+            /// Description for Restarts an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15905,7 +18291,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restarts an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Restarts an app (or deployment slot, if specified).
+            /// Description for Restarts an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15940,7 +18326,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Restores an app from a backup blob in Azure Storage.
+            /// Description for Restores an app from a backup blob in Azure Storage.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15967,7 +18353,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Restores an app from a backup blob in Azure Storage.
+            /// Description for Restores an app from a backup blob in Azure Storage.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -15997,7 +18383,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a deleted web app to this web app.
             /// </summary>
             /// <remarks>
-            /// Restores a deleted web app to this web app.
+            /// Description for Restores a deleted web app to this web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16024,7 +18410,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a deleted web app to this web app.
             /// </summary>
             /// <remarks>
-            /// Restores a deleted web app to this web app.
+            /// Description for Restores a deleted web app to this web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16054,7 +18440,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app from a snapshot.
             /// </summary>
             /// <remarks>
-            /// Restores a web app from a snapshot.
+            /// Description for Restores a web app from a snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16082,7 +18468,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app from a snapshot.
             /// </summary>
             /// <remarks>
-            /// Restores a web app from a snapshot.
+            /// Description for Restores a web app from a snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16113,7 +18499,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get list of siteextensions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get list of siteextensions for a web site, or a deployment slot.
+            /// Description for Get list of siteextensions for a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16125,8 +18512,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Site name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             public static IPage<SiteExtensionInfo> ListSiteExtensionsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
             {
@@ -16137,7 +18524,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get list of siteextensions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get list of siteextensions for a web site, or a deployment slot.
+            /// Description for Get list of siteextensions for a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16149,8 +18537,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Site name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -16168,8 +18556,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Get site extension information by its ID for a web site, or a deployment
-            /// slot.
+            /// Description for Get site extension information by its ID for a web site, or
+            /// a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16184,8 +18572,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Site extension name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             public static SiteExtensionInfo GetSiteExtensionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string siteExtensionId, string slot)
             {
@@ -16197,8 +18585,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Get site extension information by its ID for a web site, or a deployment
-            /// slot.
+            /// Description for Get site extension information by its ID for a web site, or
+            /// a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16213,8 +18601,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Site extension name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -16231,7 +18619,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Install site extension on a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Install site extension on a web site, or a deployment slot.
+            /// Description for Install site extension on a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16246,8 +18634,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Site extension name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             public static SiteExtensionInfo InstallSiteExtensionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string siteExtensionId, string slot)
             {
@@ -16258,7 +18646,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Install site extension on a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Install site extension on a web site, or a deployment slot.
+            /// Description for Install site extension on a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16273,8 +18661,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Site extension name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -16291,7 +18679,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Remove a site extension from a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Remove a site extension from a web site, or a deployment slot.
+            /// Description for Remove a site extension from a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16318,7 +18707,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Remove a site extension from a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Remove a site extension from a web site, or a deployment slot.
+            /// Description for Remove a site extension from a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16348,7 +18738,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the difference in configuration settings between two web app slots.
             /// </summary>
             /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
+            /// Description for Get the difference in configuration settings between two
+            /// web app slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16375,7 +18766,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the difference in configuration settings between two web app slots.
             /// </summary>
             /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
+            /// Description for Get the difference in configuration settings between two
+            /// web app slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16408,7 +18800,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Swaps two deployment slots of an app.
             /// </summary>
             /// <remarks>
-            /// Swaps two deployment slots of an app.
+            /// Description for Swaps two deployment slots of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16435,7 +18827,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Swaps two deployment slots of an app.
             /// </summary>
             /// <remarks>
-            /// Swaps two deployment slots of an app.
+            /// Description for Swaps two deployment slots of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16465,7 +18857,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user.
+            /// Description for Returns all Snapshots to the user.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16488,7 +18880,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user.
+            /// Description for Returns all Snapshots to the user.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16517,7 +18909,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user from DRSecondary endpoint.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// Description for Returns all Snapshots to the user from DRSecondary
+            /// endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16540,7 +18933,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user from DRSecondary endpoint.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// Description for Returns all Snapshots to the user from DRSecondary
+            /// endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16569,7 +18963,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the source control configuration of an app.
+            /// Description for Gets the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16593,7 +18987,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the source control configuration of an app.
+            /// Description for Gets the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16623,7 +19017,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16650,7 +19044,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16683,7 +19077,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Deletes the source control configuration of an app.
+            /// Description for Deletes the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16698,16 +19092,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// delete the source control configuration for the production slot.
             /// </param>
-            public static void DeleteSourceControlSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            /// <param name='additionalFlags'>
+            /// </param>
+            public static void DeleteSourceControlSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string additionalFlags = default(string))
             {
-                operations.DeleteSourceControlSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+                operations.DeleteSourceControlSlotAsync(resourceGroupName, name, slot, additionalFlags).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Deletes the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Deletes the source control configuration of an app.
+            /// Description for Deletes the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16721,20 +19117,22 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='slot'>
             /// Name of the deployment slot. If a slot is not specified, the API will
             /// delete the source control configuration for the production slot.
+            /// </param>
+            /// <param name='additionalFlags'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteSourceControlSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteSourceControlSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string additionalFlags = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteSourceControlSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteSourceControlSlotWithHttpMessagesAsync(resourceGroupName, name, slot, additionalFlags, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16761,7 +19159,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16794,7 +19192,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Starts an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Starts an app (or deployment slot, if specified).
+            /// Description for Starts an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16818,7 +19216,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Starts an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Starts an app (or deployment slot, if specified).
+            /// Description for Starts an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16845,7 +19243,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16877,7 +19275,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16915,7 +19313,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stops an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Stops an app (or deployment slot, if specified).
+            /// Description for Stops an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16939,7 +19337,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stops an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Stops an app (or deployment slot, if specified).
+            /// Description for Stops an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16966,7 +19364,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop ongoing capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Stop ongoing capturing network packets for the site.
+            /// Description for Stop ongoing capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -16989,7 +19387,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop ongoing capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Stop ongoing capturing network packets for the site.
+            /// Description for Stop ongoing capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17015,7 +19413,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Sync web app repository.
             /// </summary>
             /// <remarks>
-            /// Sync web app repository.
+            /// Description for Sync web app repository.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17039,7 +19437,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Sync web app repository.
             /// </summary>
             /// <remarks>
-            /// Sync web app repository.
+            /// Description for Sync web app repository.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17063,10 +19461,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Syncs function trigger metadata to the scale controller
+            /// Syncs function trigger metadata to the management database
             /// </summary>
             /// <remarks>
-            /// Syncs function trigger metadata to the scale controller
+            /// Description for Syncs function trigger metadata to the management database
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17078,8 +19476,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// restore a backup of the production slot.
+            /// Name of the deployment slot.
             /// </param>
             public static void SyncFunctionTriggersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
             {
@@ -17087,10 +19484,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Syncs function trigger metadata to the scale controller
+            /// Syncs function trigger metadata to the management database
             /// </summary>
             /// <remarks>
-            /// Syncs function trigger metadata to the scale controller
+            /// Description for Syncs function trigger metadata to the management database
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17102,8 +19499,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the app.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API will
-            /// restore a backup of the production slot.
+            /// Name of the deployment slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -17117,7 +19513,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List triggered web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List triggered web jobs for an app, or a deployment slot.
+            /// Description for List triggered web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17141,7 +19537,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List triggered web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List triggered web jobs for an app, or a deployment slot.
+            /// Description for List triggered web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17171,7 +19567,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a triggered web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Gets a triggered web job by its ID for an app, or a deployment slot.
+            /// Description for Gets a triggered web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17186,8 +19583,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of Web Job.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             public static TriggeredWebJob GetTriggeredWebJobSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string webJobName, string slot)
             {
@@ -17198,7 +19595,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a triggered web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Gets a triggered web job by its ID for an app, or a deployment slot.
+            /// Description for Gets a triggered web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17213,8 +19611,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of Web Job.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -17231,7 +19629,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a triggered web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a triggered web job by its ID for an app, or a deployment slot.
+            /// Description for Delete a triggered web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17246,8 +19645,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of Web Job.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API deletes
+            /// web job for the production slot.
             /// </param>
             public static void DeleteTriggeredWebJobSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string webJobName, string slot)
             {
@@ -17258,7 +19657,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a triggered web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a triggered web job by its ID for an app, or a deployment slot.
+            /// Description for Delete a triggered web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17273,8 +19673,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of Web Job.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API deletes
+            /// web job for the production slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -17288,7 +19688,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List a triggered web job's history for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List a triggered web job's history for an app, or a deployment slot.
+            /// Description for List a triggered web job's history for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17303,8 +19704,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of Web Job.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             public static IPage<TriggeredJobHistory> ListTriggeredWebJobHistorySlot(this IWebAppsOperations operations, string resourceGroupName, string name, string webJobName, string slot)
             {
@@ -17315,7 +19716,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List a triggered web job's history for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List a triggered web job's history for an app, or a deployment slot.
+            /// Description for List a triggered web job's history for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17330,8 +19732,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of Web Job.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -17349,8 +19751,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Gets a triggered web job's history by its ID for an app, , or a deployment
-            /// slot.
+            /// Description for Gets a triggered web job's history by its ID for an app, ,
+            /// or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17368,8 +19770,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// History ID.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             public static TriggeredJobHistory GetTriggeredWebJobHistorySlot(this IWebAppsOperations operations, string resourceGroupName, string name, string webJobName, string id, string slot)
             {
@@ -17381,8 +19783,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Gets a triggered web job's history by its ID for an app, , or a deployment
-            /// slot.
+            /// Description for Gets a triggered web job's history by its ID for an app, ,
+            /// or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17400,8 +19802,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// History ID.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -17418,7 +19820,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Run a triggered web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Run a triggered web job for an app, or a deployment slot.
+            /// Description for Run a triggered web job for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17433,8 +19835,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of Web Job.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             public static void RunTriggeredWebJobSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string webJobName, string slot)
             {
@@ -17445,7 +19847,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Run a triggered web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Run a triggered web job for an app, or a deployment slot.
+            /// Description for Run a triggered web job for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17460,8 +19862,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of Web Job.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -17476,8 +19878,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets the quota usage information of an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17508,8 +19910,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets the quota usage information of an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17545,7 +19947,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the virtual networks the app (or deployment slot) is connected to.
             /// </summary>
             /// <remarks>
-            /// Gets the virtual networks the app (or deployment slot) is connected to.
+            /// Description for Gets the virtual networks the app (or deployment slot) is
+            /// connected to.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17560,7 +19963,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// virtual network connections for the production slot.
             /// </param>
-            public static IList<VnetInfo> ListVnetConnectionsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            public static IList<VnetInfoResource> ListVnetConnectionsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
             {
                 return operations.ListVnetConnectionsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
             }
@@ -17569,7 +19972,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the virtual networks the app (or deployment slot) is connected to.
             /// </summary>
             /// <remarks>
-            /// Gets the virtual networks the app (or deployment slot) is connected to.
+            /// Description for Gets the virtual networks the app (or deployment slot) is
+            /// connected to.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17587,7 +19991,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VnetInfo>> ListVnetConnectionsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<VnetInfoResource>> ListVnetConnectionsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListVnetConnectionsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -17600,8 +20004,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// name.
             /// </summary>
             /// <remarks>
-            /// Gets a virtual network the app (or deployment slot) is connected to by
-            /// name.
+            /// Description for Gets a virtual network the app (or deployment slot) is
+            /// connected to by name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17619,7 +20023,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// the named virtual network for the production slot.
             /// </param>
-            public static VnetInfo GetVnetConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string slot)
+            public static VnetInfoResource GetVnetConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string slot)
             {
                 return operations.GetVnetConnectionSlotAsync(resourceGroupName, name, vnetName, slot).GetAwaiter().GetResult();
             }
@@ -17629,8 +20033,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// name.
             /// </summary>
             /// <remarks>
-            /// Gets a virtual network the app (or deployment slot) is connected to by
-            /// name.
+            /// Description for Gets a virtual network the app (or deployment slot) is
+            /// connected to by name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17651,7 +20055,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VnetInfo> GetVnetConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VnetInfoResource> GetVnetConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetVnetConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, slot, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -17664,8 +20068,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// connection properties (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
+            /// Description for Adds a Virtual Network connection to an app or slot (PUT)
+            /// or updates the connection properties (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17686,7 +20090,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will add
             /// or update connections for the production slot.
             /// </param>
-            public static VnetInfo CreateOrUpdateVnetConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot)
+            public static VnetInfoResource CreateOrUpdateVnetConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope, string slot)
             {
                 return operations.CreateOrUpdateVnetConnectionSlotAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot).GetAwaiter().GetResult();
             }
@@ -17696,8 +20100,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// connection properties (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
+            /// Description for Adds a Virtual Network connection to an app or slot (PUT)
+            /// or updates the connection properties (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17721,7 +20125,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VnetInfo> CreateOrUpdateVnetConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VnetInfoResource> CreateOrUpdateVnetConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateVnetConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -17734,8 +20138,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// network.
             /// </summary>
             /// <remarks>
-            /// Deletes a connection from an app (or deployment slot to a named virtual
-            /// network.
+            /// Description for Deletes a connection from an app (or deployment slot to a
+            /// named virtual network.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17763,8 +20167,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// network.
             /// </summary>
             /// <remarks>
-            /// Deletes a connection from an app (or deployment slot to a named virtual
-            /// network.
+            /// Description for Deletes a connection from an app (or deployment slot to a
+            /// named virtual network.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17795,8 +20199,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// connection properties (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
+            /// Description for Adds a Virtual Network connection to an app or slot (PUT)
+            /// or updates the connection properties (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17817,7 +20221,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the deployment slot. If a slot is not specified, the API will add
             /// or update connections for the production slot.
             /// </param>
-            public static VnetInfo UpdateVnetConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot)
+            public static VnetInfoResource UpdateVnetConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope, string slot)
             {
                 return operations.UpdateVnetConnectionSlotAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot).GetAwaiter().GetResult();
             }
@@ -17827,8 +20231,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// connection properties (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
+            /// Description for Adds a Virtual Network connection to an app or slot (PUT)
+            /// or updates the connection properties (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17852,7 +20256,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VnetInfo> UpdateVnetConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VnetInfoResource> UpdateVnetConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateVnetConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -17864,7 +20268,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets an app's Virtual Network gateway.
             /// </summary>
             /// <remarks>
-            /// Gets an app's Virtual Network gateway.
+            /// Description for Gets an app's Virtual Network gateway.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17894,7 +20298,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets an app's Virtual Network gateway.
             /// </summary>
             /// <remarks>
-            /// Gets an app's Virtual Network gateway.
+            /// Description for Gets an app's Virtual Network gateway.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17930,7 +20334,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+            /// Description for Adds a gateway to a connected Virtual Network (PUT) or
+            /// updates it (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -17963,7 +20368,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+            /// Description for Adds a gateway to a connected Virtual Network (PUT) or
+            /// updates it (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18002,7 +20408,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+            /// Description for Adds a gateway to a connected Virtual Network (PUT) or
+            /// updates it (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18035,7 +20442,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+            /// Description for Adds a gateway to a connected Virtual Network (PUT) or
+            /// updates it (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18074,7 +20482,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List webjobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List webjobs for an app, or a deployment slot.
+            /// Description for List webjobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18098,7 +20506,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List webjobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List webjobs for an app, or a deployment slot.
+            /// Description for List webjobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18128,7 +20536,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get webjob information for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get webjob information for an app, or a deployment slot.
+            /// Description for Get webjob information for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18155,7 +20563,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get webjob information for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get webjob information for an app, or a deployment slot.
+            /// Description for Get webjob information for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18188,7 +20596,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the difference in configuration settings between two web app slots.
             /// </summary>
             /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
+            /// Description for Get the difference in configuration settings between two
+            /// web app slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18211,7 +20620,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the difference in configuration settings between two web app slots.
             /// </summary>
             /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
+            /// Description for Get the difference in configuration settings between two
+            /// web app slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18240,7 +20650,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Swaps two deployment slots of an app.
             /// </summary>
             /// <remarks>
-            /// Swaps two deployment slots of an app.
+            /// Description for Swaps two deployment slots of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18263,7 +20673,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Swaps two deployment slots of an app.
             /// </summary>
             /// <remarks>
-            /// Swaps two deployment slots of an app.
+            /// Description for Swaps two deployment slots of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18289,7 +20699,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user.
+            /// Description for Returns all Snapshots to the user.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18309,7 +20719,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user.
+            /// Description for Returns all Snapshots to the user.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18335,7 +20745,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user from DRSecondary endpoint.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// Description for Returns all Snapshots to the user from DRSecondary
+            /// endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18355,7 +20766,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user from DRSecondary endpoint.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// Description for Returns all Snapshots to the user from DRSecondary
+            /// endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18381,7 +20793,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the source control configuration of an app.
+            /// Description for Gets the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18401,7 +20813,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the source control configuration of an app.
+            /// Description for Gets the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18427,7 +20839,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18450,7 +20862,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18479,7 +20891,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Deletes the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Deletes the source control configuration of an app.
+            /// Description for Deletes the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18490,16 +20902,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static void DeleteSourceControl(this IWebAppsOperations operations, string resourceGroupName, string name)
+            /// <param name='additionalFlags'>
+            /// </param>
+            public static void DeleteSourceControl(this IWebAppsOperations operations, string resourceGroupName, string name, string additionalFlags = default(string))
             {
-                operations.DeleteSourceControlAsync(resourceGroupName, name).GetAwaiter().GetResult();
+                operations.DeleteSourceControlAsync(resourceGroupName, name, additionalFlags).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Deletes the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Deletes the source control configuration of an app.
+            /// Description for Deletes the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18509,20 +20923,22 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='name'>
             /// Name of the app.
+            /// </param>
+            /// <param name='additionalFlags'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteSourceControlAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteSourceControlAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string additionalFlags = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteSourceControlWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteSourceControlWithHttpMessagesAsync(resourceGroupName, name, additionalFlags, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18545,7 +20961,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18574,7 +20990,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Starts an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Starts an app (or deployment slot, if specified).
+            /// Description for Starts an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18594,7 +21010,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Starts an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Starts an app (or deployment slot, if specified).
+            /// Description for Starts an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18617,7 +21033,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18646,7 +21062,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18681,7 +21097,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stops an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Stops an app (or deployment slot, if specified).
+            /// Description for Stops an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18701,7 +21117,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stops an app (or deployment slot, if specified).
             /// </summary>
             /// <remarks>
-            /// Stops an app (or deployment slot, if specified).
+            /// Description for Stops an app (or deployment slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18724,7 +21140,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop ongoing capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Stop ongoing capturing network packets for the site.
+            /// Description for Stop ongoing capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18744,7 +21160,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Stop ongoing capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Stop ongoing capturing network packets for the site.
+            /// Description for Stop ongoing capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18767,7 +21183,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Sync web app repository.
             /// </summary>
             /// <remarks>
-            /// Sync web app repository.
+            /// Description for Sync web app repository.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18787,7 +21203,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Sync web app repository.
             /// </summary>
             /// <remarks>
-            /// Sync web app repository.
+            /// Description for Sync web app repository.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18807,10 +21223,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Syncs function trigger metadata to the scale controller
+            /// Syncs function trigger metadata to the management database
             /// </summary>
             /// <remarks>
-            /// Syncs function trigger metadata to the scale controller
+            /// Description for Syncs function trigger metadata to the management database
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18827,10 +21243,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Syncs function trigger metadata to the scale controller
+            /// Syncs function trigger metadata to the management database
             /// </summary>
             /// <remarks>
-            /// Syncs function trigger metadata to the scale controller
+            /// Description for Syncs function trigger metadata to the management database
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18853,7 +21269,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List triggered web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List triggered web jobs for an app, or a deployment slot.
+            /// Description for List triggered web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18873,7 +21289,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List triggered web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List triggered web jobs for an app, or a deployment slot.
+            /// Description for List triggered web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18899,7 +21315,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a triggered web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Gets a triggered web job by its ID for an app, or a deployment slot.
+            /// Description for Gets a triggered web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18922,7 +21339,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets a triggered web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Gets a triggered web job by its ID for an app, or a deployment slot.
+            /// Description for Gets a triggered web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18951,7 +21369,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a triggered web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a triggered web job by its ID for an app, or a deployment slot.
+            /// Description for Delete a triggered web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -18974,7 +21393,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a triggered web job by its ID for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Delete a triggered web job by its ID for an app, or a deployment slot.
+            /// Description for Delete a triggered web job by its ID for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19000,7 +21420,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List a triggered web job's history for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List a triggered web job's history for an app, or a deployment slot.
+            /// Description for List a triggered web job's history for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19023,7 +21444,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List a triggered web job's history for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List a triggered web job's history for an app, or a deployment slot.
+            /// Description for List a triggered web job's history for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19053,8 +21475,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Gets a triggered web job's history by its ID for an app, , or a deployment
-            /// slot.
+            /// Description for Gets a triggered web job's history by its ID for an app, ,
+            /// or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19081,8 +21503,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// slot.
             /// </summary>
             /// <remarks>
-            /// Gets a triggered web job's history by its ID for an app, , or a deployment
-            /// slot.
+            /// Description for Gets a triggered web job's history by its ID for an app, ,
+            /// or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19114,7 +21536,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Run a triggered web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Run a triggered web job for an app, or a deployment slot.
+            /// Description for Run a triggered web job for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19137,7 +21559,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Run a triggered web job for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Run a triggered web job for an app, or a deployment slot.
+            /// Description for Run a triggered web job for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19164,8 +21586,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets the quota usage information of an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19192,8 +21614,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets the quota usage information of an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19225,7 +21647,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the virtual networks the app (or deployment slot) is connected to.
             /// </summary>
             /// <remarks>
-            /// Gets the virtual networks the app (or deployment slot) is connected to.
+            /// Description for Gets the virtual networks the app (or deployment slot) is
+            /// connected to.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19236,7 +21659,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            public static IList<VnetInfo> ListVnetConnections(this IWebAppsOperations operations, string resourceGroupName, string name)
+            public static IList<VnetInfoResource> ListVnetConnections(this IWebAppsOperations operations, string resourceGroupName, string name)
             {
                 return operations.ListVnetConnectionsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
@@ -19245,7 +21668,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the virtual networks the app (or deployment slot) is connected to.
             /// </summary>
             /// <remarks>
-            /// Gets the virtual networks the app (or deployment slot) is connected to.
+            /// Description for Gets the virtual networks the app (or deployment slot) is
+            /// connected to.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19259,7 +21683,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VnetInfo>> ListVnetConnectionsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<VnetInfoResource>> ListVnetConnectionsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListVnetConnectionsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -19272,8 +21696,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// name.
             /// </summary>
             /// <remarks>
-            /// Gets a virtual network the app (or deployment slot) is connected to by
-            /// name.
+            /// Description for Gets a virtual network the app (or deployment slot) is
+            /// connected to by name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19287,7 +21711,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='vnetName'>
             /// Name of the virtual network.
             /// </param>
-            public static VnetInfo GetVnetConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName)
+            public static VnetInfoResource GetVnetConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName)
             {
                 return operations.GetVnetConnectionAsync(resourceGroupName, name, vnetName).GetAwaiter().GetResult();
             }
@@ -19297,8 +21721,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// name.
             /// </summary>
             /// <remarks>
-            /// Gets a virtual network the app (or deployment slot) is connected to by
-            /// name.
+            /// Description for Gets a virtual network the app (or deployment slot) is
+            /// connected to by name.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19315,7 +21739,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VnetInfo> GetVnetConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VnetInfoResource> GetVnetConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetVnetConnectionWithHttpMessagesAsync(resourceGroupName, name, vnetName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -19328,8 +21752,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// connection properties (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
+            /// Description for Adds a Virtual Network connection to an app or slot (PUT)
+            /// or updates the connection properties (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19346,7 +21770,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='connectionEnvelope'>
             /// Properties of the Virtual Network connection. See example.
             /// </param>
-            public static VnetInfo CreateOrUpdateVnetConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope)
+            public static VnetInfoResource CreateOrUpdateVnetConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope)
             {
                 return operations.CreateOrUpdateVnetConnectionAsync(resourceGroupName, name, vnetName, connectionEnvelope).GetAwaiter().GetResult();
             }
@@ -19356,8 +21780,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// connection properties (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
+            /// Description for Adds a Virtual Network connection to an app or slot (PUT)
+            /// or updates the connection properties (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19377,7 +21801,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VnetInfo> CreateOrUpdateVnetConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VnetInfoResource> CreateOrUpdateVnetConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateVnetConnectionWithHttpMessagesAsync(resourceGroupName, name, vnetName, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -19390,8 +21814,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// network.
             /// </summary>
             /// <remarks>
-            /// Deletes a connection from an app (or deployment slot to a named virtual
-            /// network.
+            /// Description for Deletes a connection from an app (or deployment slot to a
+            /// named virtual network.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19415,8 +21839,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// network.
             /// </summary>
             /// <remarks>
-            /// Deletes a connection from an app (or deployment slot to a named virtual
-            /// network.
+            /// Description for Deletes a connection from an app (or deployment slot to a
+            /// named virtual network.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19443,8 +21867,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// connection properties (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
+            /// Description for Adds a Virtual Network connection to an app or slot (PUT)
+            /// or updates the connection properties (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19461,7 +21885,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='connectionEnvelope'>
             /// Properties of the Virtual Network connection. See example.
             /// </param>
-            public static VnetInfo UpdateVnetConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope)
+            public static VnetInfoResource UpdateVnetConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope)
             {
                 return operations.UpdateVnetConnectionAsync(resourceGroupName, name, vnetName, connectionEnvelope).GetAwaiter().GetResult();
             }
@@ -19471,8 +21895,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// connection properties (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a Virtual Network connection to an app or slot (PUT) or updates the
-            /// connection properties (PATCH).
+            /// Description for Adds a Virtual Network connection to an app or slot (PUT)
+            /// or updates the connection properties (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19492,7 +21916,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VnetInfo> UpdateVnetConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VnetInfoResource> UpdateVnetConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateVnetConnectionWithHttpMessagesAsync(resourceGroupName, name, vnetName, connectionEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -19504,7 +21928,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets an app's Virtual Network gateway.
             /// </summary>
             /// <remarks>
-            /// Gets an app's Virtual Network gateway.
+            /// Description for Gets an app's Virtual Network gateway.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19530,7 +21954,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets an app's Virtual Network gateway.
             /// </summary>
             /// <remarks>
-            /// Gets an app's Virtual Network gateway.
+            /// Description for Gets an app's Virtual Network gateway.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19562,7 +21986,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+            /// Description for Adds a gateway to a connected Virtual Network (PUT) or
+            /// updates it (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19591,7 +22016,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+            /// Description for Adds a gateway to a connected Virtual Network (PUT) or
+            /// updates it (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19626,7 +22052,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+            /// Description for Adds a gateway to a connected Virtual Network (PUT) or
+            /// updates it (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19655,7 +22082,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
             /// </summary>
             /// <remarks>
-            /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+            /// Description for Adds a gateway to a connected Virtual Network (PUT) or
+            /// updates it (PATCH).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19690,7 +22118,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List webjobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List webjobs for an app, or a deployment slot.
+            /// Description for List webjobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19710,7 +22138,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List webjobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List webjobs for an app, or a deployment slot.
+            /// Description for List webjobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19736,7 +22164,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get webjob information for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get webjob information for an app, or a deployment slot.
+            /// Description for Get webjob information for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19759,7 +22187,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get webjob information for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get webjob information for an app, or a deployment slot.
+            /// Description for Get webjob information for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19789,8 +22217,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19815,8 +22243,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19847,8 +22275,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
+            /// Description for Restores a specific backup to another app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19875,8 +22303,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
+            /// Description for Restores a specific backup to another app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19905,7 +22333,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Git/FTP publishing credentials of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
+            /// Description for Gets the Git/FTP publishing credentials of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19925,7 +22353,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Git/FTP publishing credentials of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
+            /// Description for Gets the Git/FTP publishing credentials of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19951,7 +22379,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -19974,7 +22402,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20003,7 +22431,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create function for web site, or a deployment slot.
+            /// Description for Create function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20029,7 +22457,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create function for web site, or a deployment slot.
+            /// Description for Create function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20061,7 +22489,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20087,7 +22515,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20119,7 +22547,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app.
             /// </summary>
             /// <remarks>
-            /// Restores a web app.
+            /// Description for Restores a web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20145,7 +22573,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app.
             /// </summary>
             /// <remarks>
-            /// Restores a web app.
+            /// Description for Restores a web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20177,7 +22605,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Migrates a local (in-app) MySql database to a remote MySql database.
             /// </summary>
             /// <remarks>
-            /// Migrates a local (in-app) MySql database to a remote MySql database.
+            /// Description for Migrates a local (in-app) MySql database to a remote MySql
+            /// database.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20200,7 +22629,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Migrates a local (in-app) MySql database to a remote MySql database.
             /// </summary>
             /// <remarks>
-            /// Migrates a local (in-app) MySql database to a remote MySql database.
+            /// Description for Migrates a local (in-app) MySql database to a remote MySql
+            /// database.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20229,7 +22659,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20258,7 +22688,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20290,10 +22720,114 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource BeginApproveOrRejectPrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+            {
+                return operations.BeginApproveOrRejectPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> BeginApproveOrRejectPrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            public static object BeginDeletePrivateEndpointConnection(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.BeginDeletePrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> BeginDeletePrivateEndpointConnectionAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Restores an app from a backup blob in Azure Storage.
+            /// Description for Restores an app from a backup blob in Azure Storage.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20316,7 +22850,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Restores an app from a backup blob in Azure Storage.
+            /// Description for Restores an app from a backup blob in Azure Storage.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20342,7 +22876,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a deleted web app to this web app.
             /// </summary>
             /// <remarks>
-            /// Restores a deleted web app to this web app.
+            /// Description for Restores a deleted web app to this web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20365,7 +22899,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a deleted web app to this web app.
             /// </summary>
             /// <remarks>
-            /// Restores a deleted web app to this web app.
+            /// Description for Restores a deleted web app to this web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20391,7 +22925,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app from a snapshot.
             /// </summary>
             /// <remarks>
-            /// Restores a web app from a snapshot.
+            /// Description for Restores a web app from a snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20415,7 +22949,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app from a snapshot.
             /// </summary>
             /// <remarks>
-            /// Restores a web app from a snapshot.
+            /// Description for Restores a web app from a snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20442,7 +22976,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Install site extension on a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Install site extension on a web site, or a deployment slot.
+            /// Description for Install site extension on a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20465,7 +22999,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Install site extension on a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Install site extension on a web site, or a deployment slot.
+            /// Description for Install site extension on a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20495,8 +23029,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20525,8 +23059,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// updates an existing app.
             /// </summary>
             /// <remarks>
-            /// Creates a new web, mobile, or API app in an existing resource group, or
-            /// updates an existing app.
+            /// Description for Creates a new web, mobile, or API app in an existing
+            /// resource group, or updates an existing app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20561,8 +23095,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
+            /// Description for Restores a specific backup to another app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20593,8 +23127,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Restores a specific backup to another app (or deployment slot, if
-            /// specified).
+            /// Description for Restores a specific backup to another app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20627,7 +23161,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Git/FTP publishing credentials of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
+            /// Description for Gets the Git/FTP publishing credentials of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20651,7 +23185,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets the Git/FTP publishing credentials of an app.
             /// </summary>
             /// <remarks>
-            /// Gets the Git/FTP publishing credentials of an app.
+            /// Description for Gets the Git/FTP publishing credentials of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20681,7 +23215,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20708,7 +23242,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20741,7 +23275,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create function for web site, or a deployment slot.
+            /// Description for Create function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20756,8 +23290,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Function name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             /// <param name='functionEnvelope'>
             /// Function details.
@@ -20771,7 +23304,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create function for web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Create function for web site, or a deployment slot.
+            /// Description for Create function for web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20786,8 +23319,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Function name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot.
             /// </param>
             /// <param name='functionEnvelope'>
             /// Function details.
@@ -20807,7 +23339,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20837,7 +23369,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Invoke the MSDeploy web app extension.
             /// </summary>
             /// <remarks>
-            /// Invoke the MSDeploy web app extension.
+            /// Description for Invoke the MSDeploy web app extension.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20873,7 +23405,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20905,7 +23437,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20940,10 +23472,122 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource BeginApproveOrRejectPrivateEndpointConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, string slot)
+            {
+                return operations.BeginApproveOrRejectPrivateEndpointConnectionSlotAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> BeginApproveOrRejectPrivateEndpointConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginApproveOrRejectPrivateEndpointConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static object BeginDeletePrivateEndpointConnectionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot)
+            {
+                return operations.BeginDeletePrivateEndpointConnectionSlotAsync(resourceGroupName, name, privateEndpointConnectionName, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> BeginDeletePrivateEndpointConnectionSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeletePrivateEndpointConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Restores an app from a backup blob in Azure Storage.
+            /// Description for Restores an app from a backup blob in Azure Storage.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -20970,7 +23614,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores an app from a backup blob in Azure Storage.
             /// </summary>
             /// <remarks>
-            /// Restores an app from a backup blob in Azure Storage.
+            /// Description for Restores an app from a backup blob in Azure Storage.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21000,7 +23644,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a deleted web app to this web app.
             /// </summary>
             /// <remarks>
-            /// Restores a deleted web app to this web app.
+            /// Description for Restores a deleted web app to this web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21027,7 +23671,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a deleted web app to this web app.
             /// </summary>
             /// <remarks>
-            /// Restores a deleted web app to this web app.
+            /// Description for Restores a deleted web app to this web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21057,7 +23701,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app from a snapshot.
             /// </summary>
             /// <remarks>
-            /// Restores a web app from a snapshot.
+            /// Description for Restores a web app from a snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21085,7 +23729,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Restores a web app from a snapshot.
             /// </summary>
             /// <remarks>
-            /// Restores a web app from a snapshot.
+            /// Description for Restores a web app from a snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21116,7 +23760,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Install site extension on a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Install site extension on a web site, or a deployment slot.
+            /// Description for Install site extension on a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21131,8 +23775,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Site extension name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             public static SiteExtensionInfo BeginInstallSiteExtensionSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string siteExtensionId, string slot)
             {
@@ -21143,7 +23787,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Install site extension on a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Install site extension on a web site, or a deployment slot.
+            /// Description for Install site extension on a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21158,8 +23802,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Site extension name.
             /// </param>
             /// <param name='slot'>
-            /// Name of the deployment slot. If a slot is not specified, the API deletes a
-            /// deployment for the production slot.
+            /// Name of the deployment slot. If a slot is not specified, the API uses the
+            /// production slot.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -21176,7 +23820,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Swaps two deployment slots of an app.
             /// </summary>
             /// <remarks>
-            /// Swaps two deployment slots of an app.
+            /// Description for Swaps two deployment slots of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21203,7 +23847,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Swaps two deployment slots of an app.
             /// </summary>
             /// <remarks>
-            /// Swaps two deployment slots of an app.
+            /// Description for Swaps two deployment slots of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21233,7 +23877,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21260,7 +23904,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21293,7 +23937,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21325,7 +23969,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21363,7 +24007,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Swaps two deployment slots of an app.
             /// </summary>
             /// <remarks>
-            /// Swaps two deployment slots of an app.
+            /// Description for Swaps two deployment slots of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21386,7 +24030,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Swaps two deployment slots of an app.
             /// </summary>
             /// <remarks>
-            /// Swaps two deployment slots of an app.
+            /// Description for Swaps two deployment slots of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21412,7 +24056,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21435,7 +24079,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Updates the source control configuration of an app.
             /// </summary>
             /// <remarks>
-            /// Updates the source control configuration of an app.
+            /// Description for Updates the source control configuration of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21464,7 +24108,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21493,7 +24137,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Start capturing network packets for the site.
             /// </summary>
             /// <remarks>
-            /// Start capturing network packets for the site.
+            /// Description for Start capturing network packets for the site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21528,7 +24172,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all apps for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all apps for a subscription.
+            /// Description for Get all apps for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21545,7 +24189,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all apps for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all apps for a subscription.
+            /// Description for Get all apps for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21568,7 +24212,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all web, mobile, and API apps in the specified resource group.
             /// </summary>
             /// <remarks>
-            /// Gets all web, mobile, and API apps in the specified resource group.
+            /// Description for Gets all web, mobile, and API apps in the specified
+            /// resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21585,7 +24230,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all web, mobile, and API apps in the specified resource group.
             /// </summary>
             /// <remarks>
-            /// Gets all web, mobile, and API apps in the specified resource group.
+            /// Description for Gets all web, mobile, and API apps in the specified
+            /// resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21608,7 +24254,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets existing backups of an app.
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21625,7 +24271,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets existing backups of an app.
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21645,10 +24291,54 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CsmPublishingCredentialsPoliciesEntity> ListBasicPublishingCredentialsPoliciesNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.ListBasicPublishingCredentialsPoliciesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CsmPublishingCredentialsPoliciesEntity>> ListBasicPublishingCredentialsPoliciesNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBasicPublishingCredentialsPoliciesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List the configurations of an app
             /// </summary>
             /// <remarks>
-            /// List the configurations of an app
+            /// Description for List the configurations of an app
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21665,7 +24355,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the configurations of an app
             /// </summary>
             /// <remarks>
-            /// List the configurations of an app
+            /// Description for List the configurations of an app
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21685,12 +24375,92 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApiKVReference> GetAppSettingsKeyVaultReferencesNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetAppSettingsKeyVaultReferencesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetAppSettingsKeyVaultReferencesNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingsKeyVaultReferencesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApiKVReference> GetSiteConnectionStringKeyVaultReferencesNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferencesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetSiteConnectionStringKeyVaultReferencesNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferencesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of web app configuration snapshots identifiers. Each element of
             /// the list contains a timestamp and the ID of the snapshot.
             /// </summary>
             /// <remarks>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
+            /// Description for Gets a list of web app configuration snapshots identifiers.
+            /// Each element of the list contains a timestamp and the ID of the snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21708,8 +24478,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// the list contains a timestamp and the ID of the snapshot.
             /// </summary>
             /// <remarks>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
+            /// Description for Gets a list of web app configuration snapshots identifiers.
+            /// Each element of the list contains a timestamp and the ID of the snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21732,7 +24502,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List continuous web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List continuous web jobs for an app, or a deployment slot.
+            /// Description for List continuous web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21749,7 +24519,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List continuous web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List continuous web jobs for an app, or a deployment slot.
+            /// Description for List continuous web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21772,7 +24542,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List deployments for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List deployments for an app, or a deployment slot.
+            /// Description for List deployments for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21789,7 +24559,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List deployments for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List deployments for an app, or a deployment slot.
+            /// Description for List deployments for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21812,7 +24582,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists ownership identifiers for domain associated with web app.
             /// </summary>
             /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
+            /// Description for Lists ownership identifiers for domain associated with web
+            /// app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21829,7 +24600,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists ownership identifiers for domain associated with web app.
             /// </summary>
             /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
+            /// Description for Lists ownership identifiers for domain associated with web
+            /// app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21852,7 +24624,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the functions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List the functions for a web site, or a deployment slot.
+            /// Description for List the functions for a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21869,7 +24641,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the functions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List the functions for a web site, or a deployment slot.
+            /// Description for List the functions for a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21892,7 +24664,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get hostname bindings for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
+            /// Description for Get hostname bindings for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21909,7 +24681,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get hostname bindings for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
+            /// Description for Get hostname bindings for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21932,7 +24704,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all scale-out instances of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all scale-out instances of an app.
+            /// Description for Gets all scale-out instances of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21940,7 +24712,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiersNext(this IWebAppsOperations operations, string nextPageLink)
+            public static IPage<WebSiteInstanceStatus> ListInstanceIdentifiersNext(this IWebAppsOperations operations, string nextPageLink)
             {
                 return operations.ListInstanceIdentifiersNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -21949,7 +24721,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all scale-out instances of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all scale-out instances of an app.
+            /// Description for Gets all scale-out instances of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21960,7 +24732,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SiteInstance>> ListInstanceIdentifiersNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WebSiteInstanceStatus>> ListInstanceIdentifiersNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListInstanceIdentifiersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -21973,8 +24745,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -21992,8 +24764,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22017,8 +24789,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22036,8 +24808,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22061,8 +24833,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22080,8 +24852,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22101,10 +24873,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
+            /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22112,56 +24884,16 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceMetricDefinition> ListMetricDefinitionsNext(this IWebAppsOperations operations, string nextPageLink)
+            public static IPage<BackupItem> ListSiteBackupsNext(this IWebAppsOperations operations, string nextPageLink)
             {
-                return operations.ListMetricDefinitionsNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListSiteBackupsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
+            /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ResourceMetricDefinition>> ListMetricDefinitionsNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListMetricDefinitionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceMetric> ListMetricsNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListMetricsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22172,9 +24904,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceMetric>> ListMetricsNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<BackupItem>> ListSiteBackupsNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListMetricsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSiteBackupsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -22184,7 +24916,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets perfmon counters for web app.
             /// </summary>
             /// <remarks>
-            /// Gets perfmon counters for web app.
+            /// Description for Gets perfmon counters for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22201,7 +24933,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets perfmon counters for web app.
             /// </summary>
             /// <remarks>
-            /// Gets perfmon counters for web app.
+            /// Description for Gets perfmon counters for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22221,12 +24953,54 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionListNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetPrivateEndpointConnectionListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get list of processes for a web site, or a deployment slot, or for a
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22244,8 +25018,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22269,8 +25043,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22288,8 +25062,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22313,8 +25087,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22332,8 +25106,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22356,7 +25130,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get public certificates for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
+            /// Description for Get public certificates for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22373,7 +25147,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get public certificates for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
+            /// Description for Get public certificates for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22396,7 +25170,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get list of siteextensions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get list of siteextensions for a web site, or a deployment slot.
+            /// Description for Get list of siteextensions for a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22413,7 +25188,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get list of siteextensions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get list of siteextensions for a web site, or a deployment slot.
+            /// Description for Get list of siteextensions for a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22436,7 +25212,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets an app's deployment slots.
             /// </summary>
             /// <remarks>
-            /// Gets an app's deployment slots.
+            /// Description for Gets an app's deployment slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22453,7 +25229,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets an app's deployment slots.
             /// </summary>
             /// <remarks>
-            /// Gets an app's deployment slots.
+            /// Description for Gets an app's deployment slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22476,7 +25252,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets existing backups of an app.
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22493,7 +25269,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets existing backups of an app.
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22513,10 +25289,54 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CsmPublishingCredentialsPoliciesEntity> ListBasicPublishingCredentialsPoliciesSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.ListBasicPublishingCredentialsPoliciesSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a
+            /// given site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Returns whether Scm basic auth is allowed and whether Ftp
+            /// is allowed for a given site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CsmPublishingCredentialsPoliciesEntity>> ListBasicPublishingCredentialsPoliciesSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBasicPublishingCredentialsPoliciesSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List the configurations of an app
             /// </summary>
             /// <remarks>
-            /// List the configurations of an app
+            /// Description for List the configurations of an app
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22533,7 +25353,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the configurations of an app
             /// </summary>
             /// <remarks>
-            /// List the configurations of an app
+            /// Description for List the configurations of an app
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22553,12 +25373,92 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApiKVReference> GetAppSettingsKeyVaultReferencesSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetAppSettingsKeyVaultReferencesSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetAppSettingsKeyVaultReferencesSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAppSettingsKeyVaultReferencesSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ApiKVReference> GetSiteConnectionStringKeyVaultReferencesSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetSiteConnectionStringKeyVaultReferencesSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the config reference app settings and status of an app
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the config reference app settings and status of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ApiKVReference>> GetSiteConnectionStringKeyVaultReferencesSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSiteConnectionStringKeyVaultReferencesSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of web app configuration snapshots identifiers. Each element of
             /// the list contains a timestamp and the ID of the snapshot.
             /// </summary>
             /// <remarks>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
+            /// Description for Gets a list of web app configuration snapshots identifiers.
+            /// Each element of the list contains a timestamp and the ID of the snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22576,8 +25476,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// the list contains a timestamp and the ID of the snapshot.
             /// </summary>
             /// <remarks>
-            /// Gets a list of web app configuration snapshots identifiers. Each element of
-            /// the list contains a timestamp and the ID of the snapshot.
+            /// Description for Gets a list of web app configuration snapshots identifiers.
+            /// Each element of the list contains a timestamp and the ID of the snapshot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22600,7 +25500,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List continuous web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List continuous web jobs for an app, or a deployment slot.
+            /// Description for List continuous web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22617,7 +25517,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List continuous web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List continuous web jobs for an app, or a deployment slot.
+            /// Description for List continuous web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22640,7 +25540,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List deployments for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List deployments for an app, or a deployment slot.
+            /// Description for List deployments for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22657,7 +25557,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List deployments for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List deployments for an app, or a deployment slot.
+            /// Description for List deployments for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22680,7 +25580,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists ownership identifiers for domain associated with web app.
             /// </summary>
             /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
+            /// Description for Lists ownership identifiers for domain associated with web
+            /// app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22697,7 +25598,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists ownership identifiers for domain associated with web app.
             /// </summary>
             /// <remarks>
-            /// Lists ownership identifiers for domain associated with web app.
+            /// Description for Lists ownership identifiers for domain associated with web
+            /// app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22720,7 +25622,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the functions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List the functions for a web site, or a deployment slot.
+            /// Description for List the functions for a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22737,7 +25639,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List the functions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List the functions for a web site, or a deployment slot.
+            /// Description for List the functions for a web site, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22760,7 +25662,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get hostname bindings for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
+            /// Description for Get hostname bindings for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22777,7 +25679,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get hostname bindings for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get hostname bindings for an app or a deployment slot.
+            /// Description for Get hostname bindings for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22800,7 +25702,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all scale-out instances of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all scale-out instances of an app.
+            /// Description for Gets all scale-out instances of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22808,7 +25710,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SiteInstance> ListInstanceIdentifiersSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            public static IPage<WebSiteInstanceStatus> ListInstanceIdentifiersSlotNext(this IWebAppsOperations operations, string nextPageLink)
             {
                 return operations.ListInstanceIdentifiersSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -22817,7 +25719,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets all scale-out instances of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all scale-out instances of an app.
+            /// Description for Gets all scale-out instances of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22828,7 +25730,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SiteInstance>> ListInstanceIdentifiersSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WebSiteInstanceStatus>> ListInstanceIdentifiersSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListInstanceIdentifiersSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -22841,8 +25743,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22860,8 +25762,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22885,8 +25787,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22904,8 +25806,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22929,8 +25831,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22948,8 +25850,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22969,10 +25871,10 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
+            /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -22980,56 +25882,16 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceMetricDefinition> ListMetricDefinitionsSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            public static IPage<BackupItem> ListSiteBackupsSlotNext(this IWebAppsOperations operations, string nextPageLink)
             {
-                return operations.ListMetricDefinitionsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListSiteBackupsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
+            /// Gets existing backups of an app.
             /// </summary>
             /// <remarks>
-            /// Gets all metric definitions of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ResourceMetricDefinition>> ListMetricDefinitionsSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListMetricDefinitionsSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceMetric> ListMetricsSlotNext(this IWebAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListMetricsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
-            /// </summary>
-            /// <remarks>
-            /// Gets performance metrics of an app (or deployment slot, if specified).
+            /// Description for Gets existing backups of an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23040,9 +25902,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceMetric>> ListMetricsSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<BackupItem>> ListSiteBackupsSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListMetricsSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSiteBackupsSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -23052,7 +25914,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets perfmon counters for web app.
             /// </summary>
             /// <remarks>
-            /// Gets perfmon counters for web app.
+            /// Description for Gets perfmon counters for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23069,7 +25931,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Gets perfmon counters for web app.
             /// </summary>
             /// <remarks>
-            /// Gets perfmon counters for web app.
+            /// Description for Gets perfmon counters for web app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23089,12 +25951,54 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionListSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.GetPrivateEndpointConnectionListSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get list of processes for a web site, or a deployment slot, or for a
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23112,8 +26016,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specific scaled-out instance in a web site.
             /// </summary>
             /// <remarks>
-            /// Get list of processes for a web site, or a deployment slot, or for a
-            /// specific scaled-out instance in a web site.
+            /// Description for Get list of processes for a web site, or a deployment slot,
+            /// or for a specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23137,8 +26041,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23156,8 +26060,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// instance in a web site.
             /// </summary>
             /// <remarks>
-            /// List module information for a process by its ID for a specific scaled-out
-            /// instance in a web site.
+            /// Description for List module information for a process by its ID for a
+            /// specific scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23181,8 +26085,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23200,8 +26104,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// in a web site.
             /// </summary>
             /// <remarks>
-            /// List the threads in a process by its ID for a specific scaled-out instance
-            /// in a web site.
+            /// Description for List the threads in a process by its ID for a specific
+            /// scaled-out instance in a web site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23224,7 +26128,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get public certificates for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
+            /// Description for Get public certificates for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23241,7 +26145,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get public certificates for an app or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get public certificates for an app or a deployment slot.
+            /// Description for Get public certificates for an app or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23264,7 +26168,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get list of siteextensions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get list of siteextensions for a web site, or a deployment slot.
+            /// Description for Get list of siteextensions for a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23281,7 +26186,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get list of siteextensions for a web site, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// Get list of siteextensions for a web site, or a deployment slot.
+            /// Description for Get list of siteextensions for a web site, or a deployment
+            /// slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23304,7 +26210,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the difference in configuration settings between two web app slots.
             /// </summary>
             /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
+            /// Description for Get the difference in configuration settings between two
+            /// web app slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23321,7 +26228,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the difference in configuration settings between two web app slots.
             /// </summary>
             /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
+            /// Description for Get the difference in configuration settings between two
+            /// web app slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23344,7 +26252,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user.
+            /// Description for Returns all Snapshots to the user.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23361,7 +26269,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user.
+            /// Description for Returns all Snapshots to the user.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23384,7 +26292,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user from DRSecondary endpoint.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// Description for Returns all Snapshots to the user from DRSecondary
+            /// endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23401,7 +26310,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user from DRSecondary endpoint.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// Description for Returns all Snapshots to the user from DRSecondary
+            /// endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23424,7 +26334,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List triggered web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List triggered web jobs for an app, or a deployment slot.
+            /// Description for List triggered web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23441,7 +26351,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List triggered web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List triggered web jobs for an app, or a deployment slot.
+            /// Description for List triggered web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23464,7 +26374,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List a triggered web job's history for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List a triggered web job's history for an app, or a deployment slot.
+            /// Description for List a triggered web job's history for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23481,7 +26392,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List a triggered web job's history for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List a triggered web job's history for an app, or a deployment slot.
+            /// Description for List a triggered web job's history for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23505,8 +26417,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets the quota usage information of an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23524,8 +26436,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets the quota usage information of an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23548,7 +26460,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List webjobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List webjobs for an app, or a deployment slot.
+            /// Description for List webjobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23565,7 +26477,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List webjobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List webjobs for an app, or a deployment slot.
+            /// Description for List webjobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23588,7 +26500,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the difference in configuration settings between two web app slots.
             /// </summary>
             /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
+            /// Description for Get the difference in configuration settings between two
+            /// web app slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23605,7 +26518,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get the difference in configuration settings between two web app slots.
             /// </summary>
             /// <remarks>
-            /// Get the difference in configuration settings between two web app slots.
+            /// Description for Get the difference in configuration settings between two
+            /// web app slots.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23628,7 +26542,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user.
+            /// Description for Returns all Snapshots to the user.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23645,7 +26559,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user.
+            /// Description for Returns all Snapshots to the user.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23668,7 +26582,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user from DRSecondary endpoint.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// Description for Returns all Snapshots to the user from DRSecondary
+            /// endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23685,7 +26600,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Returns all Snapshots to the user from DRSecondary endpoint.
             /// </summary>
             /// <remarks>
-            /// Returns all Snapshots to the user from DRSecondary endpoint.
+            /// Description for Returns all Snapshots to the user from DRSecondary
+            /// endpoint.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23708,7 +26624,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List triggered web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List triggered web jobs for an app, or a deployment slot.
+            /// Description for List triggered web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23725,7 +26641,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List triggered web jobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List triggered web jobs for an app, or a deployment slot.
+            /// Description for List triggered web jobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23748,7 +26664,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List a triggered web job's history for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List a triggered web job's history for an app, or a deployment slot.
+            /// Description for List a triggered web job's history for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23765,7 +26682,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// List a triggered web job's history for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List a triggered web job's history for an app, or a deployment slot.
+            /// Description for List a triggered web job's history for an app, or a
+            /// deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23789,8 +26707,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets the quota usage information of an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23808,8 +26726,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// specified).
             /// </summary>
             /// <remarks>
-            /// Gets the quota usage information of an app (or deployment slot, if
-            /// specified).
+            /// Description for Gets the quota usage information of an app (or deployment
+            /// slot, if specified).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23832,7 +26750,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List webjobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List webjobs for an app, or a deployment slot.
+            /// Description for List webjobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -23849,7 +26767,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List webjobs for an app, or a deployment slot.
             /// </summary>
             /// <remarks>
-            /// List webjobs for an app, or a deployment slot.
+            /// Description for List webjobs for an app, or a deployment slot.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -6,13 +6,14 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
     /// <summary>
     /// Provides the client configuration options for connecting to Azure Data Lake service.
     /// </summary>
-    public class DataLakeClientOptions : ClientOptions
+    public class DataLakeClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -22,25 +23,115 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The versions of Azure Data Lake Sevice supported by this client
         /// library.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services" />.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
+        /// Versioning for the Azure Storage services</see>.
         /// </summary>
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
             /// The 2019-02-02 service version described at
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services#version-2019-02-02" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2019-02-02">
+            /// Version 2019-02-02</see>
             /// </summary>
-            V2019_02_02 = 1
+            V2019_02_02 = 1,
+
+            /// <summary>
+            /// The 2019-07-07 service version described at
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2019-07-07">
+            /// Version 2019-07-07</see>
+            /// </summary>
+            V2019_07_07 = 2,
+
+            /// <summary>
+            /// The 2019-12-12 service version.
+            /// </summary>
+            V2019_12_12 = 3,
+
+            /// <summary>
+            /// The 2020-02-10 service version.
+            /// </summary>
+            V2020_02_10 = 4,
+
+            /// <summary>
+            /// The 2020-04-08 service version.
+            /// </summary>
+            V2020_04_08 = 5,
+
+            /// <summary>
+            /// The 2020-06-12 service version.
+            /// </summary>
+            V2020_06_12 = 6,
+
+            /// <summary>
+            /// The 2020-08-14 service version.
+            /// </summary>
+            V2020_08_04 = 7,
+
+            /// <summary>
+            /// The 2020-10-02 service version.
+            /// </summary>
+            V2020_10_02 = 8,
+
+            /// <summary>
+            /// The 2020-12-06 service version.
+            /// </summary>
+            V2020_12_06 = 9,
+
+            /// <summary>
+            /// The 2021-02-12 service version.
+            /// </summary>
+            V2021_02_12 = 10,
+
+            /// <summary>
+            /// The 2021-04-10 serivce version.
+            /// </summary>
+            V2021_04_10 = 11,
+
+            /// <summary>
+            /// The 2021-06-08 service version.
+            /// </summary>
+            V2021_06_08 = 12,
+
+            /// <summary>
+            /// The 2021-08-06 service version.
+            /// </summary>
+            V2021_08_06 = 13,
+
+            /// <summary>
+            /// The 2021-10-04 service version.
+            /// </summary>
+            V2021_10_04 = 14,
+
+            /// <summary>
+            /// The 2021-12-02 service version.
+            /// </summary>
+            V2021_12_02 = 15,
+
+            /// <summary>
+            /// The 2022-11-02 service version.
+            /// </summary>
+            V2022_11_02 = 16,
+
+            /// <summary>
+            /// The 2023-01-03 service version.
+            /// </summary>
+            V2023_01_03 = 17
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services" />.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
+        /// Versioning for the Azure Storage services</see>.
         /// </summary>
         public ServiceVersion Version { get; }
+
+        /// <summary>
+        /// Gets the <see cref="CustomerProvidedKey"/> to be used when making requests.
+        /// </summary>
+        public DataLakeCustomerProvidedKey? CustomerProvidedKey { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeClientOptions"/>
@@ -52,7 +143,16 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakeClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
+            if (ServiceVersion.V2019_02_02 <= version
+                && version <= StorageVersionExtensions.MaxVersion)
+            {
+                Version = version;
+            }
+            else
+            {
+                throw Errors.VersionNotSupported(nameof(version));
+            }
+
             this.Initialize();
             AddHeadersAndQueryParameters();
         }
@@ -68,6 +168,14 @@ namespace Azure.Storage.Files.DataLake
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <inheritdoc />
+        public bool EnableTenantDiscovery { get; set; }
+
+        /// <summary>
+        /// Transfer validation options to be applied to blob transfers from this client.
+        /// </summary>
+        public TransferValidationOptions TransferValidation { get; } = new();
 
         /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>

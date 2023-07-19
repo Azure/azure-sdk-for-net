@@ -7,34 +7,27 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b74a3f26-3601-499f-ade1-002028676385"
+          "19c360ab-2530-4ef5-8820-e5e086205902"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.9.0.0"
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.12.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Mon, 22 Oct 2018 21:31:10 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "Set-Cookie": [
-          "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
-        ],
         "x-ms-request-id": [
-          "e8daa499-7c19-417b-af52-cecceed6913a"
+          "8f1a2908-50ef-407a-bc0d-a4f53cd8bba6"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -42,14 +35,20 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "Set-Cookie": [
+          "x-ms-gateway-slice=Production; path=/; secure; samesite=none; httponly"
+        ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "c2bdc894-8f58-465c-9cd6-7130d5991745"
+          "0e760d1e-578e-4668-9bec-71c3cceb929a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181022T213110Z:c2bdc894-8f58-465c-9cd6-7130d5991745"
+          "WESTUS2:20210612T004143Z:0e760d1e-578e-4668-9bec-71c3cceb929a"
+        ],
+        "Date": [
+          "Sat, 12 Jun 2021 00:41:42 GMT"
         ],
         "Content-Length": [
           "87"

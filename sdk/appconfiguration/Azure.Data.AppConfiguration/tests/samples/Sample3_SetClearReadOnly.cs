@@ -2,18 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [LiveOnly]
     public partial class ConfigurationSamples
     {
         [Test]
         public void SetClearReadOnly()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:AzConfigSample3_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);

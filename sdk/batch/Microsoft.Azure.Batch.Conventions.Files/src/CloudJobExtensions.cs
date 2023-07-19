@@ -13,15 +13,15 @@
 // limitations under the License.
 
 ﻿using Microsoft.Azure.Batch.Conventions.Files.Utilities;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Sas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static Microsoft.WindowsAzure.Storage.Blob.SharedAccessBlobPermissions;
 
 namespace Microsoft.Azure.Batch.Conventions.Files
 {
@@ -36,44 +36,44 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// Gets the <see cref="JobOutputStorage"/> for a specified <see cref="CloudJob"/>.
         /// </summary>
         /// <param name="job">The job for which to get output storage.</param>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob service client linked to the Azure Batch storage account.</param>
         /// <returns>A JobOutputStorage for the specified job.</returns>
-        public static JobOutputStorage OutputStorage(this CloudJob job, CloudStorageAccount storageAccount)
+        public static JobOutputStorage OutputStorage(this CloudJob job, BlobServiceClient blobClient)
         {
             if (job == null)
             {
                 throw new ArgumentNullException(nameof(job));
             }
-            if (storageAccount == null)
+            if (blobClient == null)
             {
-                throw new ArgumentNullException(nameof(storageAccount));
+                throw new ArgumentNullException(nameof(blobClient));
             }
 
-            return new JobOutputStorage(storageAccount, job.Id);
+            return new JobOutputStorage(blobClient, job.Id);
         }
 
         /// <summary>
         /// Creates an Azure blob storage container for the outputs of a <see cref="CloudJob"/>.
         /// </summary>
         /// <param name="job">The job for which to create the container.</param>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob service client linked to the Azure Batch storage account.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
-        public static async Task PrepareOutputStorageAsync(this CloudJob job, CloudStorageAccount storageAccount, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task PrepareOutputStorageAsync(this CloudJob job, BlobServiceClient blobClient, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (job == null)
             {
                 throw new ArgumentNullException(nameof(job));
             }
-            if (storageAccount == null)
+            if (blobClient == null)
             {
-                throw new ArgumentNullException(nameof(storageAccount));
+                throw new ArgumentNullException(nameof(blobClient));
             }
 
             var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(job.Id);
-            var jobOutputContainer = storageAccount.CreateCloudBlobClient().GetContainerReference(jobOutputContainerName);
+            var jobOutputContainer = blobClient.GetBlobContainerClient(jobOutputContainerName);
 
-            await jobOutputContainer.CreateIfNotExistsAsync(BlobContainerPublicAccessType.Off, null, null, cancellationToken).ConfigureAwait(false);
+            await jobOutputContainer.CreateIfNotExistsAsync(PublicAccessType.None, null, null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -83,13 +83,13 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <see cref="TaskOutputStorage.TaskOutputStorage(Uri, string)"/> constructors that take a <see cref="Uri"/>.
         /// </summary>
         /// <param name="job">The job for which to create the container.</param>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob service client linked to the Azure Batch storage account.</param>
         /// <returns>The URL, including SAS, of the job output container.</returns>
         /// <remarks>The SAS expires after 7 days. This default is chosen to match the maximum time that
         /// tasks can remain active.</remarks>
-        public static string GetOutputStorageContainerUrl(this CloudJob job, CloudStorageAccount storageAccount)
+        public static string GetOutputStorageContainerUrl(this CloudJob job, BlobServiceClient blobClient)
         {
-            return GetOutputStorageContainerUrl(job, storageAccount, DefaultSasExpiry);
+            return GetOutputStorageContainerUrl(job, blobClient, DefaultSasExpiry);
         }
 
         /// <summary>
@@ -99,31 +99,35 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <see cref="TaskOutputStorage.TaskOutputStorage(Uri, string)"/> constructors that take a <see cref="Uri"/>.
         /// </summary>
         /// <param name="job">The job for which to create the container.</param>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob service client linked to the Azure Batch storage account.</param>
         /// <param name="expiryTime">The duration for which the SAS is valid.  This should be long enough
         /// to allow all tasks of the job to be created and run to completion, including leeway for errors
         /// and retries.</param>
         /// <returns>The URL, including SAS, of the job output container.</returns>
-        public static string GetOutputStorageContainerUrl(this CloudJob job, CloudStorageAccount storageAccount, TimeSpan expiryTime)
+        public static string GetOutputStorageContainerUrl(this CloudJob job, BlobServiceClient blobClient, TimeSpan expiryTime)
         {
             if (job == null)
             {
                 throw new ArgumentNullException(nameof(job));
             }
-            if (storageAccount == null)
+            if (blobClient == null)
             {
-                throw new ArgumentNullException(nameof(storageAccount));
+                throw new ArgumentNullException(nameof(blobClient));
             }
+
+            if (!blobClient.CanGenerateAccountSasUri)
+            {
+                throw new Exception("Blob service client must be authorized with shared key credentials to create a service SAS URL");
+            }
+
             if (expiryTime <= TimeSpan.Zero)
             {
                 throw new ArgumentException("Shared access signature expiry time must be greater than zero", nameof(expiryTime));
             }
 
             var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(job.Id);
-            var container = storageAccount.CreateCloudBlobClient().GetContainerReference(jobOutputContainerName);
-            var accessPolicy = CreateWriteAccessPolicy(expiryTime);
-            var containerSas = container.GetSharedAccessSignature(accessPolicy);
-            var containerUrl = container.Uri.AbsoluteUri + containerSas;
+            var container = blobClient.GetBlobContainerClient(jobOutputContainerName);
+            var containerUrl = GetSharedAccessSignature(container, expiryTime);
 
             return containerUrl;
         }
@@ -154,13 +158,21 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         public static string GetOutputStoragePath(this CloudJob job, JobOutputKind kind)
             => StoragePath.JobStoragePath.BlobNamePrefixImpl(kind);
 
-        private static SharedAccessBlobPolicy CreateWriteAccessPolicy(TimeSpan expiryTime)
+        private static string GetSharedAccessSignature(BlobContainerClient containerClient, TimeSpan expiryTime)
         {
-            return new SharedAccessBlobPolicy
+            BlobSasBuilder sasBuilder = new BlobSasBuilder()
             {
-                Permissions = Add | Create | List | Read | Write,
-                SharedAccessExpiryTime = DateTime.UtcNow.Add(expiryTime),
+                BlobContainerName = containerClient.Name,
+                Resource = "c"
             };
+
+            sasBuilder.SetPermissions(BlobSasPermissions.Add | BlobSasPermissions.Create | BlobSasPermissions.List | BlobSasPermissions.Read | BlobSasPermissions.Write);
+            sasBuilder.ExpiresOn = DateTime.UtcNow.Add(expiryTime);
+
+            Uri sasUri = containerClient.GenerateSasUri(sasBuilder);
+
+            return sasUri.AbsoluteUri;
         }
+
     }
 }

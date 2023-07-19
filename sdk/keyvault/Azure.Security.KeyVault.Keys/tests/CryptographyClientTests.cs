@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -37,8 +37,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void VerifyDataAsyncArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (byte[])null, new byte[0]));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (Stream)null, new byte[0]));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (byte[])null, Array.Empty<byte>()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.VerifyDataAsync(SignatureAlgorithm.ES256Value, (Stream)null, Array.Empty<byte>()));
         }
     }
 }

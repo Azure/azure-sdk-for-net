@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters to update or create an Api Version Set Contract.
+    /// Parameters to update or create an API Version Set Contract.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ApiVersionSetUpdateParameters
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// `header`.</param>
         /// <param name="displayName">Name of API Version Set</param>
         /// <param name="versioningScheme">An value that determines where the
-        /// API Version identifer will be located in a HTTP request. Possible
+        /// API Version identifier will be located in a HTTP request. Possible
         /// values include: 'Segment', 'Query', 'Header'</param>
         public ApiVersionSetUpdateParameters(string description = default(string), string versionQueryName = default(string), string versionHeaderName = default(string), string displayName = default(string), string versioningScheme = default(string))
         {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets an value that determines where the API Version
-        /// identifer will be located in a HTTP request. Possible values
+        /// identifier will be located in a HTTP request. Possible values
         /// include: 'Segment', 'Query', 'Header'
         /// </summary>
         [JsonProperty(PropertyName = "properties.versioningScheme")]

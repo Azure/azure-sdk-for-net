@@ -1,0 +1,246 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"Import Version Test LUIS App V2\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3fc290e189af4d33a677dfa763782b26"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4121.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "156"
+        ]
+      },
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "dec8bf6b-a518-4f91-816c-8a103c3668bf"
+        ],
+        "Request-Id": [
+          "dec8bf6b-a518-4f91-816c-8a103c3668bf"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/d43c0fbf-4a95-4913-b630-b36ff8cabbca"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Sun, 05 Apr 2020 16:08:53 GMT"
+        ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/d43c0fbf-4a95-4913-b630-b36ff8cabbca"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "\"d43c0fbf-4a95-4913-b630-b36ff8cabbca\"",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/d43c0fbf-4a95-4913-b630-b36ff8cabbca/versions/import?versionId=0.2",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2Q0M2MwZmJmLTRhOTUtNDkxMy1iNjMwLWIzNmZmOGNhYmJjYS92ZXJzaW9ucy9pbXBvcnQ/dmVyc2lvbklkPTAuMg==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"LuisBot\",\r\n  \"versionId\": \"0.2\",\r\n  \"desc\": \"\",\r\n  \"culture\": \"en-us\",\r\n  \"intents\": [\r\n    {\r\n      \"name\": \"dateintent\"\r\n    },\r\n    {\r\n      \"name\": \"Help\"\r\n    },\r\n    {\r\n      \"name\": \"None\"\r\n    },\r\n    {\r\n      \"name\": \"SearchHotels\"\r\n    },\r\n    {\r\n      \"name\": \"ShowHotelsReviews\"\r\n    }\r\n  ],\r\n  \"entities\": [\r\n    {\r\n      \"name\": \"AirportCode\"\r\n    },\r\n    {\r\n      \"name\": \"Hotel\"\r\n    }\r\n  ],\r\n  \"closedLists\": [\r\n    {\r\n      \"name\": \"closedlist\",\r\n      \"subLists\": [\r\n        {\r\n          \"canonicalForm\": \"a\",\r\n          \"list\": [\r\n            \"b\",\r\n            \"c\",\r\n            \"d\"\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"composites\": [],\r\n  \"regex_features\": [\r\n    {\r\n      \"pattern\": \"[a-z]{3}\",\r\n      \"activated\": true,\r\n      \"name\": \"AirportCodeRegex\"\r\n    }\r\n  ],\r\n  \"utterances\": [\r\n    {\r\n      \"text\": \"i need help\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"help me\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"tomorrow\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"search for hotels in seattle\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"what can i do?\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"next monday\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"next year\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"look for hotels in miami\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"show me hotels in california\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"show me the reviews of the amazing bot resort\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 23,\r\n          \"endPos\": 44,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"can i see the reviews of extended bot hotel?\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 25,\r\n          \"endPos\": 42,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find reviews of hotelxya\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 16,\r\n          \"endPos\": 23,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"show me reviews of the amazing hotel\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 19,\r\n          \"endPos\": 35,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"what are the available options?\",\r\n      \"intent\": \"Help\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"best hotels in seattle\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"hotels in los angeles\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"can you show me hotels from los angeles?\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": []\r\n    },\r\n    {\r\n      \"text\": \"can you show me the reviews of the amazing resort & hotel\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 31,\r\n          \"endPos\": 56,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"what are the reviews of the hotel bot framework?\",\r\n      \"intent\": \"ShowHotelsReviews\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 24,\r\n          \"endPos\": 46,\r\n          \"entity\": \"Hotel\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find hotels near eze\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 17,\r\n          \"endPos\": 19,\r\n          \"entity\": \"AirportCode\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"where can i stay near nnn?\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 22,\r\n          \"endPos\": 24,\r\n          \"entity\": \"AirportCode\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"show hotels near att airport\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 17,\r\n          \"endPos\": 19,\r\n          \"entity\": \"AirportCode\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find hotels near agl\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 17,\r\n          \"endPos\": 19,\r\n          \"entity\": \"AirportCode\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"find hotels around eze airport\",\r\n      \"intent\": \"SearchHotels\",\r\n      \"entities\": [\r\n        {\r\n          \"startPos\": 19,\r\n          \"endPos\": 21,\r\n          \"entity\": \"AirportCode\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"text\": \"01/7\",\r\n      \"intent\": \"dateintent\",\r\n      \"entities\": []\r\n    }\r\n  ],\r\n  \"luis_schema_version\": \"2.1.0\",\r\n  \"bing_entities\": [\r\n    \"datetimeV2\",\r\n    \"geographyV2\"\r\n  ],\r\n  \"model_features\": [\r\n    {\r\n      \"name\": \"Near\",\r\n      \"mode\": true,\r\n      \"words\": \"near,around,close,nearby\",\r\n      \"activated\": true\r\n    },\r\n    {\r\n      \"name\": \"Show\",\r\n      \"mode\": true,\r\n      \"words\": \"show,find,look,search\",\r\n      \"activated\": true\r\n    }\r\n  ]\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3fc290e189af4d33a677dfa763782b26"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4121.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "5326"
+        ]
+      },
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "70249335-d569-4377-b0c4-aa7ea6de8604"
+        ],
+        "Request-Id": [
+          "70249335-d569-4377-b0c4-aa7ea6de8604"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/d43c0fbf-4a95-4913-b630-b36ff8cabbca/versions/0.2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Sun, 05 Apr 2020 16:08:54 GMT"
+        ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/d43c0fbf-4a95-4913-b630-b36ff8cabbca/versions/0.2"
+        ],
+        "Content-Length": [
+          "5"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "\"0.2\"",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/d43c0fbf-4a95-4913-b630-b36ff8cabbca/versions/0.2/",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2Q0M2MwZmJmLTRhOTUtNDkxMy1iNjMwLWIzNmZmOGNhYmJjYS92ZXJzaW9ucy8wLjIv",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3fc290e189af4d33a677dfa763782b26"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4121.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "824c21dd-f263-4ecc-984b-dd7f03007d90"
+        ],
+        "Request-Id": [
+          "824c21dd-f263-4ecc-984b-dd7f03007d90"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Sun, 05 Apr 2020 16:08:54 GMT"
+        ],
+        "Content-Length": [
+          "319"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"version\": \"0.2\",\r\n  \"createdDateTime\": \"2020-04-05T16:08:53Z\",\r\n  \"lastModifiedDateTime\": \"2020-04-05T16:08:54Z\",\r\n  \"lastTrainedDateTime\": null,\r\n  \"lastPublishedDateTime\": null,\r\n  \"endpointUrl\": null,\r\n  \"assignedEndpointKey\": null,\r\n  \"externalApiKeys\": null,\r\n  \"intentsCount\": 5,\r\n  \"entitiesCount\": 2,\r\n  \"endpointHitsCount\": 0,\r\n  \"trainingStatus\": \"NeedsTraining\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/d43c0fbf-4a95-4913-b630-b36ff8cabbca?force=false",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2Q0M2MwZmJmLTRhOTUtNDkxMy1iNjMwLWIzNmZmOGNhYmJjYT9mb3JjZT1mYWxzZQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3fc290e189af4d33a677dfa763782b26"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4121.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "1b5d7803-2870-4fa8-871b-c861f9ba7b52"
+        ],
+        "Request-Id": [
+          "1b5d7803-2870-4fa8-871b-c861f9ba7b52"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Sun, 05 Apr 2020 16:08:55 GMT"
+        ],
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

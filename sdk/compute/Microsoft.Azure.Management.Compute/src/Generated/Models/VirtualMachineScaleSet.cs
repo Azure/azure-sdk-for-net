@@ -64,29 +64,53 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="uniqueId">Specifies the ID which uniquely identifies a
         /// Virtual Machine Scale Set.</param>
         /// <param name="singlePlacementGroup">When true this limits the scale
-        /// set to a single placement group, of max size 100 virtual
-        /// machines.</param>
+        /// set to a single placement group, of max size 100 virtual machines.
+        /// NOTE: If singlePlacementGroup is true, it may be modified to false.
+        /// However, if singlePlacementGroup is false, it may not be modified
+        /// to true.</param>
         /// <param name="zoneBalance">Whether to force strictly even Virtual
-        /// Machine distribution cross x-zones in case there is zone
-        /// outage.</param>
+        /// Machine distribution cross x-zones in case there is zone outage.
+        /// zoneBalance property can only be set if the zones property of the
+        /// scale set contains more than one zone. If there are no zones or
+        /// only one zone specified, then zoneBalance property should not be
+        /// set.</param>
         /// <param name="platformFaultDomainCount">Fault Domain count for each
         /// placement group.</param>
         /// <param name="proximityPlacementGroup">Specifies information about
         /// the proximity placement group that the virtual machine scale set
-        /// should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2018-04-01.</param>
+        /// should be assigned to. Minimum api-version: 2018-04-01.</param>
+        /// <param name="hostGroup">Specifies information about the dedicated
+        /// host group that the virtual machine scale set resides in. Minimum
+        /// api-version: 2020-06-01.</param>
         /// <param name="additionalCapabilities">Specifies additional
         /// capabilities enabled or disabled on the Virtual Machines in the
         /// Virtual Machine Scale Set. For instance: whether the Virtual
         /// Machines have the capability to support attaching managed data
         /// disks with UltraSSD_LRS storage account type.</param>
-        /// <param name="scaleInPolicy">Specifies the scale-in policy that
-        /// decides which virtual machines are chosen for removal when a
-        /// Virtual Machine Scale Set is scaled-in.</param>
+        /// <param name="scaleInPolicy">Specifies the policies applied when
+        /// scaling in Virtual Machines in the Virtual Machine Scale
+        /// Set.</param>
+        /// <param name="orchestrationMode">Specifies the orchestration mode
+        /// for the virtual machine scale set. Possible values include:
+        /// 'Uniform', 'Flexible'</param>
+        /// <param name="spotRestorePolicy">Specifies the Spot Restore
+        /// properties for the virtual machine scale set.</param>
+        /// <param name="priorityMixPolicy">Specifies the desired targets for
+        /// mixing Spot and Regular priority VMs within the same VMSS Flex
+        /// instance.</param>
+        /// <param name="timeCreated">Specifies the time at which the Virtual
+        /// Machine Scale Set resource was created. Minimum api-version:
+        /// 2021-11-01.</param>
+        /// <param name="constrainedMaximumCapacity">Optional property which
+        /// must either be set to True or omitted.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
-        /// <param name="zones">The virtual machine scale set zones.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>))
+        /// <param name="zones">The virtual machine scale set zones. NOTE:
+        /// Availability zones can only be set when you create the scale
+        /// set</param>
+        /// <param name="extendedLocation">The extended location of the Virtual
+        /// Machine Scale Set.</param>
+        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), SubResource hostGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), string orchestrationMode = default(string), SpotRestorePolicy spotRestorePolicy = default(SpotRestorePolicy), PriorityMixPolicy priorityMixPolicy = default(PriorityMixPolicy), System.DateTime? timeCreated = default(System.DateTime?), bool? constrainedMaximumCapacity = default(bool?), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -102,10 +126,17 @@ namespace Microsoft.Azure.Management.Compute.Models
             ZoneBalance = zoneBalance;
             PlatformFaultDomainCount = platformFaultDomainCount;
             ProximityPlacementGroup = proximityPlacementGroup;
+            HostGroup = hostGroup;
             AdditionalCapabilities = additionalCapabilities;
             ScaleInPolicy = scaleInPolicy;
+            OrchestrationMode = orchestrationMode;
+            SpotRestorePolicy = spotRestorePolicy;
+            PriorityMixPolicy = priorityMixPolicy;
+            TimeCreated = timeCreated;
+            ConstrainedMaximumCapacity = constrainedMaximumCapacity;
             Identity = identity;
             Zones = zones;
+            ExtendedLocation = extendedLocation;
             CustomInit();
         }
 
@@ -181,7 +212,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets when true this limits the scale set to a single
-        /// placement group, of max size 100 virtual machines.
+        /// placement group, of max size 100 virtual machines. NOTE: If
+        /// singlePlacementGroup is true, it may be modified to false. However,
+        /// if singlePlacementGroup is false, it may not be modified to true.
         /// </summary>
         [JsonProperty(PropertyName = "properties.singlePlacementGroup")]
         public bool? SinglePlacementGroup { get; set; }
@@ -189,6 +222,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets whether to force strictly even Virtual Machine
         /// distribution cross x-zones in case there is zone outage.
+        /// zoneBalance property can only be set if the zones property of the
+        /// scale set contains more than one zone. If there are no zones or
+        /// only one zone specified, then zoneBalance property should not be
+        /// set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.zoneBalance")]
         public bool? ZoneBalance { get; set; }
@@ -202,11 +239,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies information about the proximity placement
         /// group that the virtual machine scale set should be assigned to.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2018-04-01.
+        /// Minimum api-version: 2018-04-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
         public SubResource ProximityPlacementGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the dedicated host group
+        /// that the virtual machine scale set resides in. Minimum api-version:
+        /// 2020-06-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hostGroup")]
+        public SubResource HostGroup { get; set; }
 
         /// <summary>
         /// Gets or sets specifies additional capabilities enabled or disabled
@@ -219,12 +263,46 @@ namespace Microsoft.Azure.Management.Compute.Models
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the scale-in policy that decides which
-        /// virtual machines are chosen for removal when a Virtual Machine
-        /// Scale Set is scaled-in.
+        /// Gets or sets specifies the policies applied when scaling in Virtual
+        /// Machines in the Virtual Machine Scale Set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleInPolicy")]
         public ScaleInPolicy ScaleInPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the orchestration mode for the virtual
+        /// machine scale set. Possible values include: 'Uniform', 'Flexible'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.orchestrationMode")]
+        public string OrchestrationMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Spot Restore properties for the virtual
+        /// machine scale set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.spotRestorePolicy")]
+        public SpotRestorePolicy SpotRestorePolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the desired targets for mixing Spot and
+        /// Regular priority VMs within the same VMSS Flex instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.priorityMixPolicy")]
+        public PriorityMixPolicy PriorityMixPolicy { get; set; }
+
+        /// <summary>
+        /// Gets specifies the time at which the Virtual Machine Scale Set
+        /// resource was created. Minimum api-version: 2021-11-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.timeCreated")]
+        public System.DateTime? TimeCreated { get; private set; }
+
+        /// <summary>
+        /// Gets or sets optional property which must either be set to True or
+        /// omitted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.constrainedMaximumCapacity")]
+        public bool? ConstrainedMaximumCapacity { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if
@@ -234,10 +312,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualMachineScaleSetIdentity Identity { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine scale set zones.
+        /// Gets or sets the virtual machine scale set zones. NOTE:
+        /// Availability zones can only be set when you create the scale set
         /// </summary>
         [JsonProperty(PropertyName = "zones")]
         public IList<string> Zones { get; set; }
+
+        /// <summary>
+        /// Gets or sets the extended location of the Virtual Machine Scale
+        /// Set.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -255,6 +341,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (VirtualMachineProfile != null)
             {
                 VirtualMachineProfile.Validate();
+            }
+            if (PriorityMixPolicy != null)
+            {
+                PriorityMixPolicy.Validate();
             }
         }
     }

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="limit">The maximum allowed usage.</param>
         /// <param name="name">The details about the localizable name of the
         /// used resource.</param>
-        public Usage(string unit = default(string), int? currentValue = default(int?), int? limit = default(int?), LocalizedName name = default(LocalizedName))
+        public Usage(string unit = default(string), long? currentValue = default(long?), long? limit = default(long?), LocalizedName name = default(LocalizedName))
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Gets or sets the current usage.
         /// </summary>
         [JsonProperty(PropertyName = "currentValue")]
-        public int? CurrentValue { get; set; }
+        public long? CurrentValue { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum allowed usage.
         /// </summary>
         [JsonProperty(PropertyName = "limit")]
-        public int? Limit { get; set; }
+        public long? Limit { get; set; }
 
         /// <summary>
         /// Gets or sets the details about the localizable name of the used

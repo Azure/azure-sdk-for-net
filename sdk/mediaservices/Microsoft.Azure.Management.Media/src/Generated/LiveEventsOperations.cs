@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.Media
         public AzureMediaServicesClient Client { get; private set; }
 
         /// <summary>
-        /// List Live Events
+        /// List live events
         /// </summary>
         /// <remarks>
-        /// Lists the Live Events in the account.
+        /// Lists all the live events in the account.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -97,10 +97,7 @@ namespace Microsoft.Azure.Management.Media
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -110,6 +107,7 @@ namespace Microsoft.Azure.Management.Media
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -120,9 +118,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -184,11 +182,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -248,7 +246,7 @@ namespace Microsoft.Azure.Management.Media
         /// Get Live Event
         /// </summary>
         /// <remarks>
-        /// Gets a Live Event.
+        /// Gets properties of a live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -257,7 +255,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -265,7 +263,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -313,10 +311,7 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "liveEventName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -327,6 +322,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("liveEventName", liveEventName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -338,9 +334,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{liveEventName}", System.Uri.EscapeDataString(liveEventName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -400,13 +396,13 @@ namespace Microsoft.Azure.Management.Media
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -466,7 +462,7 @@ namespace Microsoft.Azure.Management.Media
         /// Create Live Event
         /// </summary>
         /// <remarks>
-        /// Creates a Live Event.
+        /// Creates a new live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -475,10 +471,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='parameters'>
-        /// Live Event properties needed for creation.
+        /// Live event properties needed for creation.
         /// </param>
         /// <param name='autoStart'>
         /// The flag indicates if the resource should be automatically started on
@@ -498,7 +494,7 @@ namespace Microsoft.Azure.Management.Media
         }
 
         /// <summary>
-        /// Updates a existing Live Event.
+        /// Updates settings on an existing live event.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -507,10 +503,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='parameters'>
-        /// Live Event properties needed for creation.
+        /// Live event properties needed for patch.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -529,7 +525,7 @@ namespace Microsoft.Azure.Management.Media
         /// Delete Live Event
         /// </summary>
         /// <remarks>
-        /// Deletes a Live Event.
+        /// Deletes a live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -538,7 +534,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -554,10 +550,11 @@ namespace Microsoft.Azure.Management.Media
         }
 
         /// <summary>
-        /// Start Live Event
+        /// Allocate resources for a live event
         /// </summary>
         /// <remarks>
-        /// Starts an existing Live Event.
+        /// A live event is in StandBy state after allocation completes, and is ready
+        /// to start.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -566,7 +563,36 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> AllocateWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginAllocateWithHttpMessagesAsync(resourceGroupName, accountName, liveEventName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Start Live Event
+        /// </summary>
+        /// <remarks>
+        /// A live event in Stopped or StandBy state will be in Running state after the
+        /// start operation completes.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='accountName'>
+        /// The Media Services account name.
+        /// </param>
+        /// <param name='liveEventName'>
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -585,7 +611,7 @@ namespace Microsoft.Azure.Management.Media
         /// Stop Live Event
         /// </summary>
         /// <remarks>
-        /// Stops an existing Live Event.
+        /// Stops a running live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -594,10 +620,12 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='removeOutputsOnStop'>
-        /// The flag indicates if remove LiveOutputs on Stop.
+        /// The flag indicates whether live outputs are automatically deleted when live
+        /// event is being stopped. Deleting live outputs do not delete the underlying
+        /// assets.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -616,7 +644,10 @@ namespace Microsoft.Azure.Management.Media
         /// Reset Live Event
         /// </summary>
         /// <remarks>
-        /// Resets an existing Live Event.
+        /// Resets an existing live event. All live outputs for the live event are
+        /// deleted and the live event is stopped and will be started again. All assets
+        /// used by the live outputs and streaming locators created on these assets are
+        /// unaffected.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -625,7 +656,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -644,7 +675,7 @@ namespace Microsoft.Azure.Management.Media
         /// Create Live Event
         /// </summary>
         /// <remarks>
-        /// Creates a Live Event.
+        /// Creates a new live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -653,10 +684,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='parameters'>
-        /// Live Event properties needed for creation.
+        /// Live event properties needed for creation.
         /// </param>
         /// <param name='autoStart'>
         /// The flag indicates if the resource should be automatically started on
@@ -668,7 +699,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -716,10 +747,6 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "liveEventName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
@@ -728,6 +755,7 @@ namespace Microsoft.Azure.Management.Media
             {
                 parameters.Validate();
             }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -738,6 +766,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("liveEventName", liveEventName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("autoStart", autoStart);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -751,9 +780,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{liveEventName}", System.Uri.EscapeDataString(liveEventName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (autoStart != null)
             {
@@ -823,13 +852,13 @@ namespace Microsoft.Azure.Management.Media
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -879,7 +908,7 @@ namespace Microsoft.Azure.Management.Media
                 }
             }
             // Deserialize Response
-            if ((int)_statusCode == 202)
+            if ((int)_statusCode == 201)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -904,7 +933,7 @@ namespace Microsoft.Azure.Management.Media
         }
 
         /// <summary>
-        /// Updates a existing Live Event.
+        /// Updates settings on an existing live event.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -913,10 +942,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='parameters'>
-        /// Live Event properties needed for creation.
+        /// Live event properties needed for patch.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -924,7 +953,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -972,14 +1001,11 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "liveEventName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -990,6 +1016,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("liveEventName", liveEventName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
@@ -1002,9 +1029,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{liveEventName}", System.Uri.EscapeDataString(liveEventName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1072,11 +1099,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1154,7 +1181,7 @@ namespace Microsoft.Azure.Management.Media
         /// Delete Live Event
         /// </summary>
         /// <remarks>
-        /// Deletes a Live Event.
+        /// Deletes a live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -1163,7 +1190,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1171,7 +1198,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1216,10 +1243,7 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "liveEventName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1230,6 +1254,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("liveEventName", liveEventName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -1241,9 +1266,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{liveEventName}", System.Uri.EscapeDataString(liveEventName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1305,11 +1330,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1348,10 +1373,11 @@ namespace Microsoft.Azure.Management.Media
         }
 
         /// <summary>
-        /// Start Live Event
+        /// Allocate resources for a live event
         /// </summary>
         /// <remarks>
-        /// Starts an existing Live Event.
+        /// A live event is in StandBy state after allocation completes, and is ready
+        /// to start.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -1360,7 +1386,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1368,7 +1394,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1380,7 +1406,7 @@ namespace Microsoft.Azure.Management.Media
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginAllocateWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1413,10 +1439,7 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "liveEventName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1427,20 +1450,21 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("liveEventName", liveEventName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginStart", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginAllocate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/start").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/allocate").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{liveEventName}", System.Uri.EscapeDataString(liveEventName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1502,11 +1526,207 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Start Live Event
+        /// </summary>
+        /// <remarks>
+        /// A live event in Stopped or StandBy state will be in Running state after the
+        /// start operation completes.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='accountName'>
+        /// The Media Services account name.
+        /// </param>
+        /// <param name='liveEventName'>
+        /// The name of the live event, maximum length is 32.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string accountName, string liveEventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (liveEventName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "liveEventName");
+            }
+            if (liveEventName != null)
+            {
+                if (liveEventName.Length > 32)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "liveEventName", 32);
+                }
+                if (liveEventName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "liveEventName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(liveEventName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "liveEventName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
+                }
+            }
+            string apiVersion = "2021-11-01";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("liveEventName", liveEventName);
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginStart", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/start").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
+            _url = _url.Replace("{liveEventName}", System.Uri.EscapeDataString(liveEventName));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1548,7 +1768,7 @@ namespace Microsoft.Azure.Management.Media
         /// Stop Live Event
         /// </summary>
         /// <remarks>
-        /// Stops an existing Live Event.
+        /// Stops a running live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -1557,10 +1777,12 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='removeOutputsOnStop'>
-        /// The flag indicates if remove LiveOutputs on Stop.
+        /// The flag indicates whether live outputs are automatically deleted when live
+        /// event is being stopped. Deleting live outputs do not delete the underlying
+        /// assets.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1568,7 +1790,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1613,10 +1835,7 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "liveEventName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             LiveEventActionInput parameters = new LiveEventActionInput();
             if (removeOutputsOnStop != null)
             {
@@ -1632,6 +1851,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("liveEventName", liveEventName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginStop", tracingParameters);
@@ -1644,9 +1864,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{liveEventName}", System.Uri.EscapeDataString(liveEventName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1714,11 +1934,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1760,7 +1980,10 @@ namespace Microsoft.Azure.Management.Media
         /// Reset Live Event
         /// </summary>
         /// <remarks>
-        /// Resets an existing Live Event.
+        /// Resets an existing live event. All live outputs for the live event are
+        /// deleted and the live event is stopped and will be started again. All assets
+        /// used by the live outputs and streaming locators created on these assets are
+        /// unaffected.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -1769,7 +1992,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1777,7 +2000,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1822,10 +2045,7 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "liveEventName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1836,6 +2056,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("liveEventName", liveEventName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginReset", tracingParameters);
             }
@@ -1847,9 +2068,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{liveEventName}", System.Uri.EscapeDataString(liveEventName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1911,11 +2132,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1954,10 +2175,10 @@ namespace Microsoft.Azure.Management.Media
         }
 
         /// <summary>
-        /// List Live Events
+        /// List live events
         /// </summary>
         /// <remarks>
-        /// Lists the Live Events in the account.
+        /// Lists all the live events in the account.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1968,7 +2189,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2064,11 +2285,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;

@@ -35,10 +35,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="properties">Properties of the Deployment
         /// resource</param>
-        public DeploymentResource(string id = default(string), string name = default(string), string type = default(string), DeploymentResourceProperties properties = default(DeploymentResourceProperties))
-            : base(id, name, type)
+        /// <param name="sku">Sku of the Deployment resource</param>
+        public DeploymentResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), DeploymentResourceProperties properties = default(DeploymentResourceProperties), Sku sku = default(Sku))
+            : base(id, name, type, systemData)
         {
             Properties = properties;
+            Sku = sku;
             CustomInit();
         }
 
@@ -52,6 +54,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public DeploymentResourceProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets sku of the Deployment resource
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
         /// <summary>
         /// Validate the object.

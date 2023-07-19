@@ -1,0 +1,16 @@
+parameters:
+  EmulatorInstallPath: "$(Agent.HomeDirectory)/../../Program Files/Azure Cosmos DB Emulator/Microsoft.Azure.Cosmos.Emulator.exe"
+  EmulatorMsiUrl: "https://aka.ms/cosmosdb-emulator"
+  StartParameters: ''
+
+steps:
+  - task: Powershell@2
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Cosmos-Emulator.ps1
+      arguments: >
+        -EmulatorMsiUrl "${{ parameters.EmulatorMsiUrl }}"
+        -StartParameters "${{ parameters.StartParameters }}"
+        -Emulator "${{ parameters.EmulatorInstallPath }}"
+        -Stage "Launch"
+      pwsh: true
+    displayName: Launch Public Cosmos DB Emulator

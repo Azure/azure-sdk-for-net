@@ -600,30 +600,120 @@ namespace Microsoft.Azure.Batch.Common
     public static class PoolResizeErrorCodes
     {
         /// <summary>
-        /// The account has reached its quota of compute nodes.
+        /// Desired number of nodes could not be allocated due to a stop resize operation
         /// </summary>
-        public const string AccountCoreQuotaReached = "AccountCoreQuotaReached";
+        public const string ResizeStopped = "ResizeStopped";
 
         /// <summary>
-        /// An error occurred while trying to allocate the desired number of compute nodes.
-        /// </summary>
-        public const string AllocationFailed = "AllocationFailed";
-
-        /// <summary>
-        /// The Batch service was unable to allocate the desired number of compute nodes within the resize timeout.
-        /// </summary>
-        public const string AllocationTimedOut = "AllocationTimedout";
-
-        /// <summary>
-        /// An error occurred when removing compute nodes from the pool.
+        /// One or more failures were encountered in removing nodes from the pool
         /// </summary>
         public const string RemoveNodesFailed = "RemoveNodesFailed";
 
         /// <summary>
-        /// The user stopped the resize operation.
+        /// Desired number of nodes could not be allocated as the resize timeout was reached
         /// </summary>
-        public const string ResizeStopped = "ResizeStopped";
-
+        public const string AllocationTimedOut = "AllocationTimedout";
+        
+        /// <summary>
+        /// Desired number of nodes could not be allocated
+        /// </summary>
+        public const string AllocationFailed = "AllocationFailed";
+        
+        /// <summary>
+        /// The specified account has reached core quota
+        /// </summary>
+        public const string AccountCoreQuotaReached = "AccountCoreQuotaReached";
+        
+        /// <summary>
+        /// The specified account has reached low priority core quota
+        /// </summary>
+        public const string AccountLowPriorityCoreQuotaReached = "AccountLowPriorityCoreQuotaReached";
+        
+        /// <summary>
+        /// The marketplace resource plan is missing required publisher property
+        /// </summary>
+        public const string MissingPublisherPropertyInMarketPlacePlan = "MissingPublisherPropertyInMarketPlacePlan";
+        
+        /// <summary>
+        /// Allocation failed because the allocation condition is too restrictive. Please remove some constraints and try again
+        /// </summary>
+        public const string OverconstrainedAllocationRequestError = "OverconstrainedAllocationRequestError";
+        
+        /// <summary>
+        /// Communication enabled pool has reached the maximum VM count
+        /// </summary>
+        public const string CommunicationEnabledPoolReachedMaxVMCount = "CommunicationEnabledPoolReachedMaxVMCount";
+        
+        /// <summary>
+        /// The specified account has reached spot core quota
+        /// </summary>
+        public const string AccountSpotCoreQuotaReached = "AccountSpotCoreQuotaReached";
+        
+        /// <summary>
+        /// Pool creation failed with error 'Failed to perform resource identity operation'
+        /// </summary>
+        public const string FailedIdentityOperation = "FailedIdentityOperation";
+        
+        /// <summary>
+        /// Pool creation failed with disk encryption error
+        /// </summary>
+        public const string DiskEncryptionFailure = "DiskEncryptionFailure";
+        
+        /// <summary>
+        /// A dependent resource specified for the Pool was not found.
+        /// </summary>
+        public const string DependentResourceNotFound = "DependentResourceNotFound";
+        
+        /// <summary>
+        /// Assigned policy on resource has blocked pool operation.
+        /// </summary>
+        public const string OperationsRestrictedByPolicy = "OperationsRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on PublicIP has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnPublicIPRestrictedByPolicy = "OperationsOnPublicIPRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Custom Image has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnImageRestrictedByPolicy = "OperationsOnImageRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Network Security Group has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnNetworkSecurityGroupRestrictedByPolicy = "OperationsOnNetworkSecurityGroupRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Load Balancer has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnLoadBalancerRestrictedByPolicy = "OperationsOnLoadBalancerRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Virtual Network has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnVirtualNetworkRestrictedByPolicy = "OperationsOnVirtualNetworkRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Private Link has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnPrivateLinkRestrictedByPolicy = "OperationsOnPrivateLinkRestrictedByPolicy";
+        
+        /// <summary>
+        /// Assigned policy on Private Endpoint has blocked pool operation.
+        /// </summary>
+        public const string OperationsOnPrivateEndpointRestrictedByPolicy = "OperationsOnPrivateEndpointRestrictedByPolicy";
+        
+        /// <summary>
+        /// Requested VM size is not compatible with requested configuration.
+        /// </summary>
+        public const string IncompatibleVMSize = "IncompatibleVMSize";
+        
+        /// <summary>
+        /// Requested VM size is not supported.
+        /// </summary>
+        public const string UnsupportedVMSize = "UnsupportedVMSize";
+        
         /// <summary>
         /// The reason for the failure is not known.
         /// </summary>
@@ -726,9 +816,84 @@ namespace Microsoft.Azure.Batch.Common
         public const string ResourceFileWriteFailed = "ResourceFileWriteFailed";
 
         /// <summary>
+        /// The task process exited with a nonzero exit code.
+        /// </summary>
+        public const string FailureExitCode = "FailureExitCode";
+
+        /// <summary>
         /// The task ended.
         /// </summary>
         public const string TaskEnded = "TaskEnded";
+
+        /// <summary>
+        /// The container image was invalid.
+        /// </summary>
+        public const string ContainerInvalidImage = "ContainerInvalidImage";
+
+        /// <summary>
+        /// The specified container registry was invalid.
+        /// </summary>
+        public const string ContainerInvalidRegistry = "ContainerInvalidRegistry";
+
+        /// <summary>
+        /// At least one value of the specified Task container settings is invalid.
+        /// </summary>
+        public const string ContainerInvalidSettings = "ContainerInvalidSettings";
+
+        /// <summary>
+        /// There was an unknown error encountered while attempting to run a Task in a container.
+        /// </summary>
+        public const string ContainerMiscError = "ContainerMiscError";
+
+        /// <summary>
+        /// Access to the Azure Storage resource file Container was denied.
+        /// </summary>
+        public const string ResourceContainerAccessDenied = "ResourceContainerAccessDenied";
+
+        /// <summary>
+        /// The Azure Storage Container was not found.
+        /// </summary>
+        public const string ResourceContainerNotFound = "ResourceContainerNotFound";
+
+        /// <summary>
+        /// The compute node was unable to list blobs from the specified Azure Storage Container.
+        /// </summary>
+        public const string ResourceContainerListTimedOut = "ResourceContainerListTimedOut";
+
+        /// <summary>
+        /// The compute node hit an unexpected error when attempting to list blobs from the specified Azure Storage Container.
+        /// </summary>
+        public const string ResourceContainerListMiscError = "ResourceContainerListMiscError";
+
+        /// <summary>
+        /// There was an error attempting to configure the specified mounts.
+        /// </summary>
+        public const string MountConfigurationError = "MountConfigurationError";
+
+        /// <summary>
+        /// Access to the Azure Storage Container for uploading Output Files was denied.
+        /// </summary>
+        public const string FileUploadAccessDenied = "FileUploadAccessDenied";
+
+        /// <summary>
+        /// The Azure Storage Container for uploading Output Files was not found.
+        /// </summary>
+        public const string FileUploadContainerNotFound = "FileUploadContainerNotFound";
+
+        /// <summary>
+        /// There was a conflict encountered when uploading Output Files.
+        /// </summary>
+        public const string FileUploadConflict = "FileUploadConflict";
+
+        /// <summary>
+        /// The compute node timed out while uploading Output Files.
+        /// </summary>
+        public const string FileUploadTimedOut = "FileUploadTimedOut";
+
+        /// <summary>
+        /// The compute node hit an unexpected error when uploading Output Files.
+        /// </summary>
+        public const string FileUploadMiscError = "FileUploadMiscError";
 
         /// <summary>
         /// The reason for the scheduling error is unknown.

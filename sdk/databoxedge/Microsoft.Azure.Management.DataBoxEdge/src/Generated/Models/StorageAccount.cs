@@ -32,25 +32,28 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccount class.
         /// </summary>
+        /// <param name="dataPolicy">Data policy of the storage Account.
+        /// Possible values include: 'Cloud', 'Local'</param>
         /// <param name="id">The path ID that uniquely identifies the
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
+        /// <param name="systemData">StorageAccount object on ASE
+        /// device</param>
         /// <param name="description">Description for the storage
         /// Account.</param>
         /// <param name="storageAccountStatus">Current status of the storage
         /// account. Possible values include: 'OK', 'Offline', 'Unknown',
         /// 'Updating', 'NeedsAttention'</param>
-        /// <param name="dataPolicy">Data policy of the storage Account.
-        /// Possible values include: 'Cloud', 'Local'</param>
         /// <param name="storageAccountCredentialId">Storage Account Credential
         /// Id</param>
         /// <param name="blobEndpoint">BlobEndpoint of Storage Account</param>
         /// <param name="containerCount">The Container Count. Present only for
         /// Storage Accounts with DataPolicy set to Cloud.</param>
-        public StorageAccount(string id = default(string), string name = default(string), string type = default(string), string description = default(string), string storageAccountStatus = default(string), string dataPolicy = default(string), string storageAccountCredentialId = default(string), string blobEndpoint = default(string), int? containerCount = default(int?))
+        public StorageAccount(string dataPolicy, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string description = default(string), string storageAccountStatus = default(string), string storageAccountCredentialId = default(string), string blobEndpoint = default(string), int? containerCount = default(int?))
             : base(id, name, type)
         {
+            SystemData = systemData;
             Description = description;
             StorageAccountStatus = storageAccountStatus;
             DataPolicy = dataPolicy;
@@ -64,6 +67,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets storageAccount object on ASE device
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Gets or sets description for the storage Account.
@@ -104,5 +113,18 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         [JsonProperty(PropertyName = "properties.containerCount")]
         public int? ContainerCount { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DataPolicy == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DataPolicy");
+            }
+        }
     }
 }

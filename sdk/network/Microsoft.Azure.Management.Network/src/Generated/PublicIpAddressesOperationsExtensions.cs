@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network
     public static partial class PublicIPAddressesOperationsExtensions
     {
             /// <summary>
-            /// Deletes the specified public IP address.
+            /// Gets information about all public IP addresses on a cloud service level.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -30,12 +30,165 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
             /// </param>
-            public static void Delete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
+            public static IPage<PublicIPAddress> ListCloudServicePublicIPAddresses(this IPublicIPAddressesOperations operations, string resourceGroupName, string cloudServiceName)
             {
-                operations.DeleteAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
+                return operations.ListCloudServicePublicIPAddressesAsync(resourceGroupName, cloudServiceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about all public IP addresses on a cloud service level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PublicIPAddress>> ListCloudServicePublicIPAddressesAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCloudServicePublicIPAddressesWithHttpMessagesAsync(resourceGroupName, cloudServiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets information about all public IP addresses in a role instance IP
+            /// configuration in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            /// <param name='roleInstanceName'>
+            /// The name of role instance.
+            /// </param>
+            /// <param name='networkInterfaceName'>
+            /// The network interface name.
+            /// </param>
+            /// <param name='ipConfigurationName'>
+            /// The IP configuration name.
+            /// </param>
+            public static IPage<PublicIPAddress> ListCloudServiceRoleInstancePublicIPAddresses(this IPublicIPAddressesOperations operations, string resourceGroupName, string cloudServiceName, string roleInstanceName, string networkInterfaceName, string ipConfigurationName)
+            {
+                return operations.ListCloudServiceRoleInstancePublicIPAddressesAsync(resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, ipConfigurationName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about all public IP addresses in a role instance IP
+            /// configuration in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            /// <param name='roleInstanceName'>
+            /// The name of role instance.
+            /// </param>
+            /// <param name='networkInterfaceName'>
+            /// The network interface name.
+            /// </param>
+            /// <param name='ipConfigurationName'>
+            /// The IP configuration name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PublicIPAddress>> ListCloudServiceRoleInstancePublicIPAddressesAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string cloudServiceName, string roleInstanceName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCloudServiceRoleInstancePublicIPAddressesWithHttpMessagesAsync(resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, ipConfigurationName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the specified public IP address in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            /// <param name='roleInstanceName'>
+            /// The role instance name.
+            /// </param>
+            /// <param name='networkInterfaceName'>
+            /// The name of the network interface.
+            /// </param>
+            /// <param name='ipConfigurationName'>
+            /// The name of the IP configuration.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP Address.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands referenced resources.
+            /// </param>
+            public static PublicIPAddress GetCloudServicePublicIPAddress(this IPublicIPAddressesOperations operations, string resourceGroupName, string cloudServiceName, string roleInstanceName, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand = default(string))
+            {
+                return operations.GetCloudServicePublicIPAddressAsync(resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, ipConfigurationName, publicIpAddressName, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the specified public IP address in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='cloudServiceName'>
+            /// The name of the cloud service.
+            /// </param>
+            /// <param name='roleInstanceName'>
+            /// The role instance name.
+            /// </param>
+            /// <param name='networkInterfaceName'>
+            /// The name of the network interface.
+            /// </param>
+            /// <param name='ipConfigurationName'>
+            /// The name of the IP configuration.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP Address.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands referenced resources.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PublicIPAddress> GetCloudServicePublicIPAddressAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string cloudServiceName, string roleInstanceName, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCloudServicePublicIPAddressWithHttpMessagesAsync(resourceGroupName, cloudServiceName, roleInstanceName, networkInterfaceName, ipConfigurationName, publicIpAddressName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -48,14 +201,34 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
+            /// </param>
+            public static PublicIPAddressesDeleteHeaders Delete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
+            {
+                return operations.DeleteAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified public IP address.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP address.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublicIPAddressesDeleteHeaders> DeleteAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -68,7 +241,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
             /// </param>
             /// <param name='expand'>
             /// Expands referenced resources.
@@ -88,7 +261,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
             /// </param>
             /// <param name='expand'>
             /// Expands referenced resources.
@@ -253,6 +426,46 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<IPage<PublicIPAddress>> ListAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of a Public IP Address
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP address.
+            /// </param>
+            public static PublicIpDdosProtectionStatusResult DdosProtectionStatus(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
+            {
+                return operations.DdosProtectionStatusAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of a Public IP Address
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP address.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PublicIpDdosProtectionStatusResult> DdosProtectionStatusAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DdosProtectionStatusWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -440,11 +653,11 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
             /// </param>
-            public static void BeginDelete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
+            public static PublicIPAddressesDeleteHeaders BeginDelete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
+                return operations.BeginDeleteAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -457,14 +670,17 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublicIPAddressesDeleteHeaders> BeginDeleteAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -508,6 +724,116 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<PublicIPAddress> BeginCreateOrUpdateAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of a Public IP Address
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP address.
+            /// </param>
+            public static PublicIpDdosProtectionStatusResult BeginDdosProtectionStatus(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
+            {
+                return operations.BeginDdosProtectionStatusAsync(resourceGroupName, publicIpAddressName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Ddos Protection Status of a Public IP Address
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the public IP address.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PublicIpDdosProtectionStatusResult> BeginDdosProtectionStatusAsync(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDdosProtectionStatusWithHttpMessagesAsync(resourceGroupName, publicIpAddressName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets information about all public IP addresses on a cloud service level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PublicIPAddress> ListCloudServicePublicIPAddressesNext(this IPublicIPAddressesOperations operations, string nextPageLink)
+            {
+                return operations.ListCloudServicePublicIPAddressesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about all public IP addresses on a cloud service level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PublicIPAddress>> ListCloudServicePublicIPAddressesNextAsync(this IPublicIPAddressesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCloudServicePublicIPAddressesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets information about all public IP addresses in a role instance IP
+            /// configuration in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PublicIPAddress> ListCloudServiceRoleInstancePublicIPAddressesNext(this IPublicIPAddressesOperations operations, string nextPageLink)
+            {
+                return operations.ListCloudServiceRoleInstancePublicIPAddressesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about all public IP addresses in a role instance IP
+            /// configuration in a cloud service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PublicIPAddress>> ListCloudServiceRoleInstancePublicIPAddressesNextAsync(this IPublicIPAddressesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCloudServiceRoleInstancePublicIPAddressesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

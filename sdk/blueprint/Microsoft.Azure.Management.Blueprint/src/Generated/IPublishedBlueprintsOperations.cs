@@ -27,13 +27,11 @@ namespace Microsoft.Azure.Management.Blueprint
         /// Publish a new version of the blueprint definition with the latest
         /// artifacts. Published blueprint definitions are immutable.
         /// </summary>
-        /// <param name='scope'>
+        /// <param name='resourceScope'>
         /// The scope of the resource. Valid scopes are: management group
         /// (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}'). For
-        /// blueprint assignments management group scope is reserved for future
-        /// use.
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
         /// Name of the blueprint definition.
@@ -59,17 +57,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PublishedBlueprint>> CreateWithHttpMessagesAsync(string scope, string blueprintName, string versionId, PublishedBlueprint publishedBlueprint = default(PublishedBlueprint), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PublishedBlueprint>> CreateWithHttpMessagesAsync(string resourceScope, string blueprintName, string versionId, PublishedBlueprint publishedBlueprint = default(PublishedBlueprint), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a published version of a blueprint definition.
         /// </summary>
-        /// <param name='scope'>
+        /// <param name='resourceScope'>
         /// The scope of the resource. Valid scopes are: management group
         /// (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}'). For
-        /// blueprint assignments management group scope is reserved for future
-        /// use.
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
         /// Name of the blueprint definition.
@@ -92,17 +88,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PublishedBlueprint>> GetWithHttpMessagesAsync(string scope, string blueprintName, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PublishedBlueprint>> GetWithHttpMessagesAsync(string resourceScope, string blueprintName, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a published version of a blueprint definition.
         /// </summary>
-        /// <param name='scope'>
+        /// <param name='resourceScope'>
         /// The scope of the resource. Valid scopes are: management group
         /// (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}'). For
-        /// blueprint assignments management group scope is reserved for future
-        /// use.
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
         /// Name of the blueprint definition.
@@ -125,17 +119,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PublishedBlueprint>> DeleteWithHttpMessagesAsync(string scope, string blueprintName, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PublishedBlueprint>> DeleteWithHttpMessagesAsync(string resourceScope, string blueprintName, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List published versions of given blueprint definition.
         /// </summary>
-        /// <param name='scope'>
+        /// <param name='resourceScope'>
         /// The scope of the resource. Valid scopes are: management group
         /// (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}'). For
-        /// blueprint assignments management group scope is reserved for future
-        /// use.
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
         /// Name of the blueprint definition.
@@ -155,7 +147,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PublishedBlueprint>>> ListWithHttpMessagesAsync(string scope, string blueprintName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PublishedBlueprint>>> ListWithHttpMessagesAsync(string resourceScope, string blueprintName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List published versions of given blueprint definition.
         /// </summary>

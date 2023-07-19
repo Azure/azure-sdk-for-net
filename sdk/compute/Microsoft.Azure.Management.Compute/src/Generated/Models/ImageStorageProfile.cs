@@ -35,12 +35,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For
         /// more information about disks, see [About disks and VHDs for Azure
         /// virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).</param>
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).</param>
         /// <param name="dataDisks">Specifies the parameters that are used to
         /// add a data disk to a virtual machine. &lt;br&gt;&lt;br&gt; For more
         /// information about disks, see [About disks and VHDs for Azure
         /// virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).</param>
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).</param>
         /// <param name="zoneResilient">Specifies whether an image is zone
         /// resilient or not. Default is false. Zone resilient images can be
         /// created only in regions that provide Zone Redundant Storage
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// used by the virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
         /// For more information about disks, see [About disks and VHDs for
         /// Azure virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).
         /// </summary>
         [JsonProperty(PropertyName = "osDisk")]
         public ImageOSDisk OsDisk { get; set; }
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk to a virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For
         /// more information about disks, see [About disks and VHDs for Azure
         /// virtual
-        /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
+        /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).
         /// </summary>
         [JsonProperty(PropertyName = "dataDisks")]
         public IList<ImageDataDisk> DataDisks { get; set; }

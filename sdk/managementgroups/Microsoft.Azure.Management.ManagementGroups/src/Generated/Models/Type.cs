@@ -21,8 +21,8 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum Type
     {
-        [EnumMember(Value = "/providers/Microsoft.Management/managementGroups")]
-        HyphenMinusprovidersHyphenMinusMicrosoftFullStopManagementHyphenMinusmanagementGroups
+        [EnumMember(Value = "Microsoft.Management/managementGroups")]
+        MicrosoftManagementManagementGroups
     }
     internal static class TypeEnumExtension
     {
@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         {
             switch( value )
             {
-                case Type.HyphenMinusprovidersHyphenMinusMicrosoftFullStopManagementHyphenMinusmanagementGroups:
-                    return "/providers/Microsoft.Management/managementGroups";
+                case Type.MicrosoftManagementManagementGroups:
+                    return "Microsoft.Management/managementGroups";
             }
             return null;
         }
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         {
             switch( value )
             {
-                case "/providers/Microsoft.Management/managementGroups":
-                    return Type.HyphenMinusprovidersHyphenMinusMicrosoftFullStopManagementHyphenMinusmanagementGroups;
+                case "Microsoft.Management/managementGroups":
+                    return Type.MicrosoftManagementManagementGroups;
             }
             return null;
         }

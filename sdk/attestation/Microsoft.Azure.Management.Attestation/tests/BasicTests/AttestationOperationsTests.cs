@@ -11,6 +11,7 @@ using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Linq;
@@ -37,44 +38,123 @@ namespace Attestation.Tests.ScenarioTests
                 jwk.X5c = new List<string>() { System.Convert.ToBase64String(certificate.Export(X509ContentType.Cert)) };
                 jwks.Keys = new List<JSONWebKey>() { jwk };
 
-                var instanceParams = new AttestationServiceCreationParams {  PolicySigningCertificates = jwks};
+                var creationParams = new AttestationServiceCreationParams
+                {
+                    Location = testBase.location,
+                    Tags = new Dictionary<string, string>
+                    {
+                        { "Key1", "Value1" },
+                        { "Key2", "Value2" }
+                    },
+                    Properties  = new AttestationServiceCreationSpecificParams
+                    {
+                        PolicySigningCertificates = jwks
+                    }
+                };
                 try
                 {
                     var createdAttestation = testBase.client.AttestationProviders.Create(
                         resourceGroupName: testBase.rgName,
                         providerName: testBase.attestationName,
-                        creationParams: instanceParams
+                        creationParams: creationParams
                     );
                     ValidateAttestationProvider(createdAttestation,
                         testBase.attestationName,
                         testBase.rgName,
-                        testBase.subscriptionId);
+                        testBase.subscriptionId,
+                        creationParams);
 
-                   testBase.client.AttestationProviders.Get(
+                    testBase.client.AttestationProviders.Get(
                         resourceGroupName: testBase.rgName,
                         providerName: testBase.attestationName);
+
+                    // Get EUS Test default provider and validate
+                    string defaultProviderName = "sharedeus";
+                    string defaultProviderLocation = "East US";
+                    var defaultProvider = testBase.client.AttestationProviders.GetDefaultByLocation(location: defaultProviderLocation);
+
+                    ValidateDefaultProvider(defaultProvider,
+                        defaultProviderName,
+                       defaultProviderLocation);
+
+                    // List all Test default providers and validate
+                    var defaultProviderList =  testBase.client.AttestationProviders.ListDefault();
+                    ValidateDefaultProviderList(defaultProviderList);
                 }
                 finally 
                 {
                     testBase.client.AttestationProviders.Delete(
                         resourceGroupName: testBase.rgName,
                         providerName: testBase.attestationName);
-
                 }
             }
         }
 
         private void ValidateAttestationProvider(
-            AttestationProvider attestaton,
+            AttestationProvider attestation,
             string expectedAttestationName,
             string expectedResourceGroupName,
-            string expectedSubId)
+            string expectedSubId,
+            AttestationServiceCreationParams creationParams)
         {
-            Assert.NotNull(attestaton);
-            Assert.Equal(expectedAttestationName, attestaton.Name);
-            string resourceIdFormat = "subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Attestation/attestationProviders/{2}";
+            Assert.NotNull(attestation);
+            Assert.Equal(expectedAttestationName, attestation.Name);
+
+            string resourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Attestation/attestationProviders/{2}";
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedAttestationName);
-            Assert.Equal(expectedResourceId, attestaton.Id);
+            Assert.Equal(expectedResourceId, attestation.Id);
+
+            if (creationParams.Tags != null)
+            {
+                Assert.Equal(attestation.Tags.Count, creationParams.Tags.Count);
+                Assert.False(creationParams.Tags.Except(attestation.Tags).Any());
+                Assert.False(attestation.Tags.Except(creationParams.Tags).Any());
+            }
+            else
+            {
+                Assert.Null(attestation.Tags);
+            }
+
+            Assert.True(creationParams.Location.Equals(attestation.Location, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private void ValidateDefaultProvider(
+            AttestationProvider defaultProvider,
+            string expectedAttestationName,
+            string expectedLocation =  "")
+        {
+            Assert.NotNull(defaultProvider);
+            Assert.Equal(expectedAttestationName, defaultProvider.Name);
+
+            string resourceIdFormat = "/providers/Microsoft.Attestation/attestationProviders/{0}";
+            string expectedResourceId = string.Format(resourceIdFormat, expectedAttestationName);
+            Assert.Equal(expectedResourceId, defaultProvider.Id);
+
+            Assert.Null(defaultProvider.Tags);
+            if (!string.IsNullOrEmpty(expectedLocation))
+            {
+                Assert.True(expectedLocation.Equals(defaultProvider.Location, StringComparison.InvariantCultureIgnoreCase));
+            }
+        }
+
+        private void ValidateDefaultProviderList(AttestationProviderListResult defaultProviderList)
+        {
+            Assert.NotNull(defaultProviderList);
+            Assert.IsType<AttestationProviderListResult>(defaultProviderList);
+            Assert.True(defaultProviderList.Value.Count > 0);
+
+            string resourceIdFormat = "/providers/Microsoft.Attestation/attestationProviders/shared";
+            string nameFormat = "shared";
+
+            foreach (AttestationProvider defaultProvider in defaultProviderList.Value)
+            {
+                Assert.StartsWith(nameFormat, defaultProvider.Name);
+                Assert.StartsWith(resourceIdFormat, defaultProvider.Id);
+                Assert.Null(defaultProvider.Tags);
+                Assert.NotEmpty(defaultProvider.Location);
+                Assert.StartsWith("https://" + defaultProvider.Name, defaultProvider.AttestUri);
+                Assert.EndsWith("attest.azure.net", defaultProvider.AttestUri);
+            }
         }
     }
 }

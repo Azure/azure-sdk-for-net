@@ -10,15 +10,18 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Operation Result.
+    /// Long Running Git Operation Results.
     /// </summary>
-    public partial class OperationResultContract
+    [Rest.Serialization.JsonTransformation]
+    public partial class OperationResultContract : Resource
     {
         /// <summary>
         /// Initializes a new instance of the OperationResultContract class.
@@ -31,7 +34,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the OperationResultContract class.
         /// </summary>
-        /// <param name="id">Operation result identifier.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="operationResultContractId">Operation result
+        /// identifier.</param>
         /// <param name="status">Status of an async operation. Possible values
         /// include: 'Started', 'InProgress', 'Succeeded', 'Failed'</param>
         /// <param name="started">Start time of an async operation. The date
@@ -48,9 +58,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// the TenantConfiguration_Validate operation. It contains the log the
         /// entities which will be updated/created/deleted as part of the
         /// TenantConfiguration_Deploy operation.</param>
-        public OperationResultContract(string id = default(string), AsyncOperationStatus? status = default(AsyncOperationStatus?), System.DateTime? started = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), string resultInfo = default(string), ErrorResponseBody error = default(ErrorResponseBody), IList<OperationResultLogItemContract> actionLog = default(IList<OperationResultLogItemContract>))
+        public OperationResultContract(string id = default(string), string name = default(string), string type = default(string), string operationResultContractId = default(string), AsyncOperationStatus? status = default(AsyncOperationStatus?), System.DateTime? started = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), string resultInfo = default(string), ErrorResponseBody error = default(ErrorResponseBody), IList<OperationResultLogItemContract> actionLog = default(IList<OperationResultLogItemContract>))
+            : base(id, name, type)
         {
-            Id = id;
+            OperationResultContractId = operationResultContractId;
             Status = status;
             Started = started;
             Updated = updated;
@@ -68,14 +79,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Gets or sets operation result identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "properties.id")]
+        public string OperationResultContractId { get; set; }
 
         /// <summary>
         /// Gets or sets status of an async operation. Possible values include:
         /// 'Started', 'InProgress', 'Succeeded', 'Failed'
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "properties.status")]
         public AsyncOperationStatus? Status { get; set; }
 
         /// <summary>
@@ -84,7 +95,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// ISO 8601 standard.
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "started")]
+        [JsonProperty(PropertyName = "properties.started")]
         public System.DateTime? Started { get; set; }
 
         /// <summary>
@@ -93,19 +104,19 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// specified by the ISO 8601 standard.
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "updated")]
+        [JsonProperty(PropertyName = "properties.updated")]
         public System.DateTime? Updated { get; set; }
 
         /// <summary>
         /// Gets or sets optional result info.
         /// </summary>
-        [JsonProperty(PropertyName = "resultInfo")]
+        [JsonProperty(PropertyName = "properties.resultInfo")]
         public string ResultInfo { get; set; }
 
         /// <summary>
         /// Gets or sets error Body Contract
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
+        [JsonProperty(PropertyName = "properties.error")]
         public ErrorResponseBody Error { get; set; }
 
         /// <summary>
@@ -114,7 +125,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// entities which will be updated/created/deleted as part of the
         /// TenantConfiguration_Deploy operation.
         /// </summary>
-        [JsonProperty(PropertyName = "actionLog")]
+        [JsonProperty(PropertyName = "properties.actionLog")]
         public IList<OperationResultLogItemContract> ActionLog { get; private set; }
 
     }

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities
 {
@@ -31,6 +31,23 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities
             var blobContent = new byte[byteCount];
             Array.Copy(buffer, blobContent, byteCount);
             return blobContent;
+        }
+
+        /*
+         * Blob clients within the Storage.Blobs sdk return Uris with encoded paths
+         * Check the list of OutputFileRefernces and see if the decoded URI matches the target
+         */
+        internal static bool CheckOutputFileRefListContainsDenotedUri(List<OutputFileReference> blobs, string uriTargetPathDenotation)
+        {
+            foreach (OutputFileReference blob in blobs)
+            {
+                string decodedAbsoluteUri = WebUtility.UrlDecode(blob.Uri.AbsoluteUri);
+                if (decodedAbsoluteUri.EndsWith(uriTargetPathDenotation))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

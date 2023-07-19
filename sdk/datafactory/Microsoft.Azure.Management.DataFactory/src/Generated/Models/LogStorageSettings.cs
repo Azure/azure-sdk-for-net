@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Log storage settings.
+    /// (Deprecated. Please use LogSettings) Log storage settings.
     /// </summary>
     public partial class LogStorageSettings
     {
@@ -40,11 +40,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="path">The path to storage for storing detailed logs of
         /// activity execution. Type: string (or Expression with resultType
         /// string).</param>
-        public LogStorageSettings(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object path = default(object))
+        /// <param name="logLevel">Gets or sets the log level, support: Info,
+        /// Warning. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="enableReliableLogging">Specifies whether to enable
+        /// reliable logging. Type: boolean (or Expression with resultType
+        /// boolean).</param>
+        public LogStorageSettings(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object path = default(object), object logLevel = default(object), object enableReliableLogging = default(object))
         {
             AdditionalProperties = additionalProperties;
             LinkedServiceName = linkedServiceName;
             Path = path;
+            LogLevel = logLevel;
+            EnableReliableLogging = enableReliableLogging;
             CustomInit();
         }
 
@@ -73,6 +81,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public object Path { get; set; }
+
+        /// <summary>
+        /// Gets or sets the log level, support: Info, Warning. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "logLevel")]
+        public object LogLevel { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether to enable reliable logging. Type:
+        /// boolean (or Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "enableReliableLogging")]
+        public object EnableReliableLogging { get; set; }
 
         /// <summary>
         /// Validate the object.

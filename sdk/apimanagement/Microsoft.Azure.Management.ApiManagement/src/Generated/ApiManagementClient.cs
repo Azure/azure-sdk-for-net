@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.ApiManagement
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// ApiManagement Client
@@ -177,6 +179,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual ICertificateOperations Certificate { get; private set; }
 
         /// <summary>
+        /// Gets the IContentTypeOperations.
+        /// </summary>
+        public virtual IContentTypeOperations ContentType { get; private set; }
+
+        /// <summary>
+        /// Gets the IContentItemOperations.
+        /// </summary>
+        public virtual IContentItemOperations ContentItem { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeletedServicesOperations.
+        /// </summary>
+        public virtual IDeletedServicesOperations DeletedServices { get; private set; }
+
+        /// <summary>
         /// Gets the IApiManagementOperations.
         /// </summary>
         public virtual IApiManagementOperations ApiManagementOperations { get; private set; }
@@ -200,6 +217,26 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IEmailTemplateOperations.
         /// </summary>
         public virtual IEmailTemplateOperations EmailTemplate { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewayOperations.
+        /// </summary>
+        public virtual IGatewayOperations Gateway { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewayHostnameConfigurationOperations.
+        /// </summary>
+        public virtual IGatewayHostnameConfigurationOperations GatewayHostnameConfiguration { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewayApiOperations.
+        /// </summary>
+        public virtual IGatewayApiOperations GatewayApi { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewayCertificateAuthorityOperations.
+        /// </summary>
+        public virtual IGatewayCertificateAuthorityOperations GatewayCertificateAuthority { get; private set; }
 
         /// <summary>
         /// Gets the IGroupOperations.
@@ -227,6 +264,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual ILoggerOperations Logger { get; private set; }
 
         /// <summary>
+        /// Gets the INamedValueOperations.
+        /// </summary>
+        public virtual INamedValueOperations NamedValue { get; private set; }
+
+        /// <summary>
         /// Gets the INetworkStatusOperations.
         /// </summary>
         public virtual INetworkStatusOperations NetworkStatus { get; private set; }
@@ -252,14 +294,29 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IOpenIdConnectProviderOperations OpenIdConnectProvider { get; private set; }
 
         /// <summary>
+        /// Gets the IOutboundNetworkDependenciesEndpointsOperations.
+        /// </summary>
+        public virtual IOutboundNetworkDependenciesEndpointsOperations OutboundNetworkDependenciesEndpoints { get; private set; }
+
+        /// <summary>
         /// Gets the IPolicyOperations.
         /// </summary>
         public virtual IPolicyOperations Policy { get; private set; }
 
         /// <summary>
-        /// Gets the IPolicySnippetOperations.
+        /// Gets the IPolicyDescriptionOperations.
         /// </summary>
-        public virtual IPolicySnippetOperations PolicySnippet { get; private set; }
+        public virtual IPolicyDescriptionOperations PolicyDescription { get; private set; }
+
+        /// <summary>
+        /// Gets the IPortalRevisionOperations.
+        /// </summary>
+        public virtual IPortalRevisionOperations PortalRevision { get; private set; }
+
+        /// <summary>
+        /// Gets the IPortalSettingsOperations.
+        /// </summary>
+        public virtual IPortalSettingsOperations PortalSettings { get; private set; }
 
         /// <summary>
         /// Gets the ISignInSettingsOperations.
@@ -275,6 +332,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IDelegationSettingsOperations.
         /// </summary>
         public virtual IDelegationSettingsOperations DelegationSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; private set; }
 
         /// <summary>
         /// Gets the IProductOperations.
@@ -302,11 +364,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IProductPolicyOperations ProductPolicy { get; private set; }
 
         /// <summary>
-        /// Gets the IPropertyOperations.
-        /// </summary>
-        public virtual IPropertyOperations Property { get; private set; }
-
-        /// <summary>
         /// Gets the IQuotaByCounterKeysOperations.
         /// </summary>
         public virtual IQuotaByCounterKeysOperations QuotaByCounterKeys { get; private set; }
@@ -325,6 +382,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IReportsOperations.
         /// </summary>
         public virtual IReportsOperations Reports { get; private set; }
+
+        /// <summary>
+        /// Gets the IGlobalSchemaOperations.
+        /// </summary>
+        public virtual IGlobalSchemaOperations GlobalSchema { get; private set; }
+
+        /// <summary>
+        /// Gets the ITenantSettingsOperations.
+        /// </summary>
+        public virtual ITenantSettingsOperations TenantSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IApiManagementSkusOperations.
+        /// </summary>
+        public virtual IApiManagementSkusOperations ApiManagementSkus { get; private set; }
 
         /// <summary>
         /// Gets the ISubscriptionOperations.
@@ -642,36 +714,50 @@ namespace Microsoft.Azure.Management.ApiManagement
             Backend = new BackendOperations(this);
             Cache = new CacheOperations(this);
             Certificate = new CertificateOperations(this);
+            ContentType = new ContentTypeOperations(this);
+            ContentItem = new ContentItemOperations(this);
+            DeletedServices = new DeletedServicesOperations(this);
             ApiManagementOperations = new ApiManagementOperations(this);
             ApiManagementServiceSkus = new ApiManagementServiceSkusOperations(this);
             ApiManagementService = new ApiManagementServiceOperations(this);
             Diagnostic = new DiagnosticOperations(this);
             EmailTemplate = new EmailTemplateOperations(this);
+            Gateway = new GatewayOperations(this);
+            GatewayHostnameConfiguration = new GatewayHostnameConfigurationOperations(this);
+            GatewayApi = new GatewayApiOperations(this);
+            GatewayCertificateAuthority = new GatewayCertificateAuthorityOperations(this);
             Group = new GroupOperations(this);
             GroupUser = new GroupUserOperations(this);
             IdentityProvider = new IdentityProviderOperations(this);
             Issue = new IssueOperations(this);
             Logger = new LoggerOperations(this);
+            NamedValue = new NamedValueOperations(this);
             NetworkStatus = new NetworkStatusOperations(this);
             Notification = new NotificationOperations(this);
             NotificationRecipientUser = new NotificationRecipientUserOperations(this);
             NotificationRecipientEmail = new NotificationRecipientEmailOperations(this);
             OpenIdConnectProvider = new OpenIdConnectProviderOperations(this);
+            OutboundNetworkDependenciesEndpoints = new OutboundNetworkDependenciesEndpointsOperations(this);
             Policy = new PolicyOperations(this);
-            PolicySnippet = new PolicySnippetOperations(this);
+            PolicyDescription = new PolicyDescriptionOperations(this);
+            PortalRevision = new PortalRevisionOperations(this);
+            PortalSettings = new PortalSettingsOperations(this);
             SignInSettings = new SignInSettingsOperations(this);
             SignUpSettings = new SignUpSettingsOperations(this);
             DelegationSettings = new DelegationSettingsOperations(this);
+            PrivateEndpointConnection = new PrivateEndpointConnectionOperations(this);
             Product = new ProductOperations(this);
             ProductApi = new ProductApiOperations(this);
             ProductGroup = new ProductGroupOperations(this);
             ProductSubscriptions = new ProductSubscriptionsOperations(this);
             ProductPolicy = new ProductPolicyOperations(this);
-            Property = new PropertyOperations(this);
             QuotaByCounterKeys = new QuotaByCounterKeysOperations(this);
             QuotaByPeriodKeys = new QuotaByPeriodKeysOperations(this);
             Region = new RegionOperations(this);
             Reports = new ReportsOperations(this);
+            GlobalSchema = new GlobalSchemaOperations(this);
+            TenantSettings = new TenantSettingsOperations(this);
+            ApiManagementSkus = new ApiManagementSkusOperations(this);
             Subscription = new SubscriptionOperations(this);
             TagResource = new TagResourceOperations(this);
             TenantAccess = new TenantAccessOperations(this);
@@ -684,7 +770,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             UserConfirmationPassword = new UserConfirmationPasswordOperations(this);
             ApiExport = new ApiExportOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-01-01";
+            ApiVersion = "2021-08-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -718,5 +804,258 @@ namespace Microsoft.Azure.Management.ApiManagement
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
+        /// <summary>
+        /// Performs a connectivity check between the API Management service and a
+        /// given destination, and returns metrics for the connection, as well as
+        /// errors encountered while trying to establish it.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='connectivityCheckRequestParams'>
+        /// Connectivity Check request parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ConnectivityCheckResponse>> PerformConnectivityCheckAsyncWithHttpMessagesAsync(string resourceGroupName, string serviceName, ConnectivityCheckRequest connectivityCheckRequestParams, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<ConnectivityCheckResponse> _response = await BeginPerformConnectivityCheckAsyncWithHttpMessagesAsync(resourceGroupName, serviceName, connectivityCheckRequestParams, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await this.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Performs a connectivity check between the API Management service and a
+        /// given destination, and returns metrics for the connection, as well as
+        /// errors encountered while trying to establish it.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='connectivityCheckRequestParams'>
+        /// Connectivity Check request parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<ConnectivityCheckResponse>> BeginPerformConnectivityCheckAsyncWithHttpMessagesAsync(string resourceGroupName, string serviceName, ConnectivityCheckRequest connectivityCheckRequestParams, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (serviceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "serviceName");
+            }
+            if (serviceName != null)
+            {
+                if (serviceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "serviceName", 50);
+                }
+                if (serviceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "serviceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(serviceName, "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+            }
+            if (connectivityCheckRequestParams == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectivityCheckRequestParams");
+            }
+            if (connectivityCheckRequestParams != null)
+            {
+                connectivityCheckRequestParams.Validate();
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("connectivityCheckRequestParams", connectivityCheckRequestParams);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginPerformConnectivityCheckAsync", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/connectivityCheck").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(connectivityCheckRequestParams != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(connectivityCheckRequestParams, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<ConnectivityCheckResponse>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ConnectivityCheckResponse>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
     }
 }

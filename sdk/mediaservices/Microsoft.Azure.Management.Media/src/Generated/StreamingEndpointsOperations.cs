@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Media
         /// List StreamingEndpoints
         /// </summary>
         /// <remarks>
-        /// Lists the StreamingEndpoints in the account.
+        /// Lists the streaming endpoints in the account.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -97,10 +97,7 @@ namespace Microsoft.Azure.Management.Media
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -110,6 +107,7 @@ namespace Microsoft.Azure.Management.Media
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -120,9 +118,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -184,11 +182,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -248,7 +246,7 @@ namespace Microsoft.Azure.Management.Media
         /// Get StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Gets a StreamingEndpoint.
+        /// Gets a streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -257,7 +255,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -265,7 +263,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -313,10 +311,7 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "streamingEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -327,6 +322,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("streamingEndpointName", streamingEndpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -338,9 +334,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{streamingEndpointName}", System.Uri.EscapeDataString(streamingEndpointName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -400,13 +396,13 @@ namespace Microsoft.Azure.Management.Media
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -466,7 +462,7 @@ namespace Microsoft.Azure.Management.Media
         /// Create StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Creates a StreamingEndpoint.
+        /// Creates a streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -475,10 +471,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='parameters'>
-        /// StreamingEndpoint properties needed for creation.
+        /// Streaming endpoint properties needed for creation.
         /// </param>
         /// <param name='autoStart'>
         /// The flag indicates if the resource should be automatically started on
@@ -501,7 +497,7 @@ namespace Microsoft.Azure.Management.Media
         /// Update StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Updates a existing StreamingEndpoint.
+        /// Updates a existing streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -510,10 +506,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='parameters'>
-        /// StreamingEndpoint properties needed for creation.
+        /// Streaming endpoint properties needed for creation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -532,7 +528,7 @@ namespace Microsoft.Azure.Management.Media
         /// Delete StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Deletes a StreamingEndpoint.
+        /// Deletes a streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -541,7 +537,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -557,10 +553,10 @@ namespace Microsoft.Azure.Management.Media
         }
 
         /// <summary>
-        /// Start StreamingEndpoint
+        /// List StreamingEndpoint skus
         /// </summary>
         /// <remarks>
-        /// Starts an existing StreamingEndpoint.
+        /// List streaming endpoint supported skus.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -569,7 +565,223 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<StreamingEndpointSkuInfoListResult>> SkusWithHttpMessagesAsync(string resourceGroupName, string accountName, string streamingEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (streamingEndpointName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "streamingEndpointName");
+            }
+            if (streamingEndpointName != null)
+            {
+                if (streamingEndpointName.Length > 24)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "streamingEndpointName", 24);
+                }
+                if (streamingEndpointName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "streamingEndpointName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(streamingEndpointName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "streamingEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
+                }
+            }
+            string apiVersion = "2021-11-01";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("streamingEndpointName", streamingEndpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Skus", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}/skus").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
+            _url = _url.Replace("{streamingEndpointName}", System.Uri.EscapeDataString(streamingEndpointName));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<StreamingEndpointSkuInfoListResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<StreamingEndpointSkuInfoListResult>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Start StreamingEndpoint
+        /// </summary>
+        /// <remarks>
+        /// Starts an existing streaming endpoint.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the Azure subscription.
+        /// </param>
+        /// <param name='accountName'>
+        /// The Media Services account name.
+        /// </param>
+        /// <param name='streamingEndpointName'>
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -588,7 +800,7 @@ namespace Microsoft.Azure.Management.Media
         /// Stop StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Stops an existing StreamingEndpoint.
+        /// Stops an existing streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -597,7 +809,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -616,7 +828,7 @@ namespace Microsoft.Azure.Management.Media
         /// Scale StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Scales an existing StreamingEndpoint.
+        /// Scales an existing streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -625,10 +837,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='scaleUnit'>
-        /// The scale unit number of the StreamingEndpoint.
+        /// The scale unit number of the streaming endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -647,7 +859,7 @@ namespace Microsoft.Azure.Management.Media
         /// Create StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Creates a StreamingEndpoint.
+        /// Creates a streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -656,10 +868,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='parameters'>
-        /// StreamingEndpoint properties needed for creation.
+        /// Streaming endpoint properties needed for creation.
         /// </param>
         /// <param name='autoStart'>
         /// The flag indicates if the resource should be automatically started on
@@ -671,7 +883,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -719,10 +931,6 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "streamingEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
@@ -731,6 +939,7 @@ namespace Microsoft.Azure.Management.Media
             {
                 parameters.Validate();
             }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -741,6 +950,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("streamingEndpointName", streamingEndpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("autoStart", autoStart);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -754,9 +964,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{streamingEndpointName}", System.Uri.EscapeDataString(streamingEndpointName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (autoStart != null)
             {
@@ -826,13 +1036,13 @@ namespace Microsoft.Azure.Management.Media
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -882,7 +1092,7 @@ namespace Microsoft.Azure.Management.Media
                 }
             }
             // Deserialize Response
-            if ((int)_statusCode == 202)
+            if ((int)_statusCode == 201)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -910,7 +1120,7 @@ namespace Microsoft.Azure.Management.Media
         /// Update StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Updates a existing StreamingEndpoint.
+        /// Updates a existing streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -919,10 +1129,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='parameters'>
-        /// StreamingEndpoint properties needed for creation.
+        /// Streaming endpoint properties needed for creation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -930,7 +1140,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -978,14 +1188,11 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "streamingEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -996,6 +1203,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("streamingEndpointName", streamingEndpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
@@ -1008,9 +1216,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{streamingEndpointName}", System.Uri.EscapeDataString(streamingEndpointName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1078,11 +1286,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1160,7 +1368,7 @@ namespace Microsoft.Azure.Management.Media
         /// Delete StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Deletes a StreamingEndpoint.
+        /// Deletes a streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -1169,7 +1377,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1177,7 +1385,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1222,10 +1430,7 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "streamingEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1236,6 +1441,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("streamingEndpointName", streamingEndpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -1247,9 +1453,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{streamingEndpointName}", System.Uri.EscapeDataString(streamingEndpointName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1311,11 +1517,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1357,7 +1563,7 @@ namespace Microsoft.Azure.Management.Media
         /// Start StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Starts an existing StreamingEndpoint.
+        /// Starts an existing streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -1366,7 +1572,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1374,7 +1580,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1419,10 +1625,7 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "streamingEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1433,6 +1636,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("streamingEndpointName", streamingEndpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginStart", tracingParameters);
             }
@@ -1444,9 +1648,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{streamingEndpointName}", System.Uri.EscapeDataString(streamingEndpointName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1508,11 +1712,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1554,7 +1758,7 @@ namespace Microsoft.Azure.Management.Media
         /// Stop StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Stops an existing StreamingEndpoint.
+        /// Stops an existing streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -1563,7 +1767,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1571,7 +1775,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1616,10 +1820,7 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "streamingEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1630,6 +1831,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("streamingEndpointName", streamingEndpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginStop", tracingParameters);
             }
@@ -1641,9 +1843,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{streamingEndpointName}", System.Uri.EscapeDataString(streamingEndpointName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1705,11 +1907,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1751,7 +1953,7 @@ namespace Microsoft.Azure.Management.Media
         /// Scale StreamingEndpoint
         /// </summary>
         /// <remarks>
-        /// Scales an existing StreamingEndpoint.
+        /// Scales an existing streaming endpoint.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -1760,10 +1962,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='streamingEndpointName'>
-        /// The name of the StreamingEndpoint.
+        /// The name of the streaming endpoint, maximum length is 24.
         /// </param>
         /// <param name='scaleUnit'>
-        /// The scale unit number of the StreamingEndpoint.
+        /// The scale unit number of the streaming endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1771,7 +1973,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1816,10 +2018,7 @@ namespace Microsoft.Azure.Management.Media
                     throw new ValidationException(ValidationRules.Pattern, "streamingEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2021-11-01";
             StreamingEntityScaleUnit parameters = new StreamingEntityScaleUnit();
             if (scaleUnit != null)
             {
@@ -1835,6 +2034,7 @@ namespace Microsoft.Azure.Management.Media
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("streamingEndpointName", streamingEndpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginScale", tracingParameters);
@@ -1847,9 +2047,9 @@ namespace Microsoft.Azure.Management.Media
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{streamingEndpointName}", System.Uri.EscapeDataString(streamingEndpointName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1917,11 +2117,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1963,7 +2163,7 @@ namespace Microsoft.Azure.Management.Media
         /// List StreamingEndpoints
         /// </summary>
         /// <remarks>
-        /// Lists the StreamingEndpoints in the account.
+        /// Lists the streaming endpoints in the account.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1974,7 +2174,7 @@ namespace Microsoft.Azure.Management.Media
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ApiErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2070,11 +2270,11 @@ namespace Microsoft.Azure.Management.Media
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ApiError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ApiError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;

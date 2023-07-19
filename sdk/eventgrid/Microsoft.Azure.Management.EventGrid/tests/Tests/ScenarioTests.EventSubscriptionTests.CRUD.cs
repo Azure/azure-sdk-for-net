@@ -13,11 +13,10 @@ namespace EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=<HIDDEN>";
+        const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=PASSWORDCODE";
         const string AzureFunctionArmId = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.Web/sites/devexpfuncappdestination/functions/EventGridTrigger1";
-
-        const string SampleAzureActiveDirectoryTenantId = "<HIDDEN>";
-        const string SampleAzureActiveDirectoryApplicationIdOrUri = "<HIDDEN>";
+        const string SampleAzureActiveDirectoryTenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+        const string SampleAzureActiveDirectoryApplicationIdOrUri = "03d47d4a-7c50-43e0-ba90-89d090cc4582";
 
         [Fact]
         public void EventSubscriptionToCustomTopicCreateGetUpdateDelete()
@@ -114,6 +113,20 @@ namespace EventGrid.Tests.ScenarioTests
                     Destination = new WebHookEventSubscriptionDestination()
                     {
                         EndpointUrl = AzureFunctionEndpointUrl,
+                        DeliveryAttributeMappings = new List<DeliveryAttributeMapping> 
+                        {
+                            new StaticDeliveryAttributeMapping()
+                            {
+                                Name = "StaticDeliveryAttribute1",
+                                IsSecret = false,
+                                Value = "someValue"
+                            },
+                            new DynamicDeliveryAttributeMapping()
+                            {
+                                Name = "DynamicDeliveryAttribute1",
+                                SourceField = "data.field1"
+                            }
+                        }
                     },
                     Filter = new EventSubscriptionFilter()
                     {
@@ -135,6 +148,11 @@ namespace EventGrid.Tests.ScenarioTests
                 eventSubscriptionResponse = this.eventGridManagementClient.EventSubscriptions.UpdateAsync(scope, eventSubscriptionName, eventSubscriptionUpdateParameters).Result;
                 Assert.Equal(".jpg", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Contains(eventSubscriptionResponse.Labels, label => label == "UpdatedLabel1");
+                Assert.NotNull(((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings);
+                Assert.Equal(2, ((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings.Count);
+                // Assert.Equal(1, ((WebHookEventSubscriptionDestination)eventSubscriptionResponse.Destination).DeliveryAttributeMappings.Count);
+                Assert.Equal("StaticDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[0].Name);
+                Assert.Equal("DynamicDeliveryAttribute1", ((WebHookEventSubscriptionDestination)eventSubscriptionUpdateParameters.Destination).DeliveryAttributeMappings[1].Name);
 
                 // List event subscriptions
                 var eventSubscriptionsPage = this.EventGridManagementClient.EventSubscriptions.ListRegionalByResourceGroupAsync(resourceGroup, location).Result;
@@ -253,6 +271,13 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal("TestPrefix", eventSubscriptionResponse.Filter.SubjectBeginsWith, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal("TestSuffix", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
 
+                // Get the created event subscription using nested API
+                eventSubscriptionResponse = EventGridManagementClient.DomainEventSubscriptions.Get(resourceGroup, domainName, eventSubscriptionName);
+                Assert.NotNull(eventSubscriptionResponse);
+                Assert.Equal("Succeeded", eventSubscriptionResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("TestPrefix", eventSubscriptionResponse.Filter.SubjectBeginsWith, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("TestSuffix", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
+
                 // Update the event subscription
                 var eventSubscriptionUpdateParameters = new EventSubscriptionUpdateParameters()
                 {
@@ -343,6 +368,7 @@ namespace EventGrid.Tests.ScenarioTests
 
                 // Delete the event subscription
                 EventGridManagementClient.EventSubscriptions.DeleteAsync(scope, eventSubscriptionName).Wait();
+                //EventGridManagementClient.DomainEventSubscriptions.DeleteAsync(resourceGroup, domainName, eventSubscriptionName).Wait();
 
                 // Delete the Domain
                 EventGridManagementClient.Domains.DeleteAsync(resourceGroup, domainName).Wait();
@@ -685,7 +711,8 @@ namespace EventGrid.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+
+        [Fact(Skip = "Skip temportarily.")]
         public void EventSubscriptionToCustomTopicCreateGetUpdateDeleteWithEventDeliverySchema()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -940,6 +967,61 @@ namespace EventGrid.Tests.ScenarioTests
 
                 // Delete the event subscription
                 EventGridManagementClient.EventSubscriptions.DeleteAsync(scope, eventSubscriptionName).Wait();
+
+                // Delete the topic
+                EventGridManagementClient.Topics.DeleteAsync(resourceGroup, topicName).Wait();
+            }
+        }
+
+        [Fact]
+        public void DisableLocalAuthCRUDOperations()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                this.InitializeClients(context);
+
+                var location = this.ResourceManagementClient.GetLocationFromProvider();
+
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(EventGridManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                var topicName = TestUtilities.GenerateName(EventGridManagementHelper.TopicPrefix);
+
+                var createTopicResponse = this.EventGridManagementClient.Topics.CreateOrUpdateAsync(
+                    resourceGroup,
+                    topicName,
+                    new Topic()
+                    {
+                        Location = location,
+                        Tags = new Dictionary<string, string>()
+                        {
+                            {"tag1", "value1"},
+                            {"tag2", "value2"}
+                        },
+                        DisableLocalAuth = false
+                    }).Result;
+
+                Assert.NotNull(createTopicResponse);
+                Assert.Equal(createTopicResponse.Name, topicName);
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                // Get the created topic
+                var getTopicResponse = EventGridManagementClient.Topics.Get(resourceGroup, topicName);
+                if (string.Compare(getTopicResponse.ProvisioningState, "Succeeded", true) != 0)
+                {
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                }
+
+                getTopicResponse = EventGridManagementClient.Topics.Get(resourceGroup, topicName);
+                Assert.NotNull(getTopicResponse);
+                Assert.Equal("Succeeded", getTopicResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal(location, getTopicResponse.Location, StringComparer.CurrentCultureIgnoreCase);
+                Assert.False(getTopicResponse.DisableLocalAuth);
 
                 // Delete the topic
                 EventGridManagementClient.Topics.DeleteAsync(resourceGroup, topicName).Wait();

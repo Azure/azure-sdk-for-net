@@ -2,31 +2,40 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    [LiveOnly]
-    public partial class TextAnalyticsSamples
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public void DetectLanguage()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #region Snippet:Sample1_DetectLanguage
+            string document =
+                "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
+                + " invocar el método de Detección de Lenguaje del servicio de Text Analytics en Microsoft Azure."
+                + " También muestra cómo acceder a la información retornada por el servicio. Esta funcionalidad es"
+                + " útil para los sistemas de contenido que recopilan texto arbitrario, donde el lenguaje no se conoce"
+                + " de antemano. Puede usarse para detectar una amplia gama de lenguajes, variantes, dialectos y"
+                + " algunos idiomas regionales o culturales.";
 
-            #region Snippet:DetectLanguage
-            string input = "Este documento está en español.";
+            try
+            {
+                Response<DetectedLanguage> response = client.DetectLanguage(document);
+                DetectedLanguage language = response.Value;
 
-            // Detect the language the input text is written in
-            DetectLanguageResult result = client.DetectLanguage(input);
-            DetectedLanguage language = result.PrimaryLanguage;
-
-            Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
+                Console.WriteLine($"Detected language is {language.Name} with a confidence score of {language.ConfidenceScore}.");
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
+            }
             #endregion
         }
     }

@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 IList<ResourceSku> cacheSkuResponse = client.Skus.List().Value;
                 Assert.True(cacheSkuResponse.Count >= 1);
                 foreach (ResourceSku resourceSku in cacheSkuResponse)
@@ -83,8 +83,10 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
+                string[] array = { "READ_HEAVY_INFREQ", "WRITE_WORKLOAD_15", "WRITE_AROUND", "WRITE_WORKLOAD_CHECK_30", "WRITE_WORKLOAD_CHECK_60", "WRITE_WORKLOAD_CLOUDWS", "READ_HEAVY_CHECK_180" };
+
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 IList<UsageModel> usageModelResponse = client.UsageModels.List().Value;
                 Assert.True(usageModelResponse.Count >= 1);
                 foreach (UsageModel usageModel in usageModelResponse)
@@ -92,9 +94,19 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                     this.testOutputHelper.WriteLine("Usage Model display - {0}", usageModel.Display.Description);
                     this.testOutputHelper.WriteLine("Usage Model type - {0}", usageModel.TargetType);
                     this.testOutputHelper.WriteLine("Usage Model name - {0}", usageModel.ModelName);
-                    string[] array = { "READ_HEAVY_INFREQ", "WRITE_WORKLOAD_15", "WRITE_AROUND" };
+                    
                     if (string.Equals(usageModel.TargetType, "Nfs"))
                     {
+                        Assert.Contains(usageModel.ModelName, array);
+                    }
+                }
+
+                UsageModelsResult result = UsageModelsExtensions.List(client.UsageModels);
+                if(result.Value != null)
+                {
+                    IList<UsageModel> usageModels = result.Value;
+                    foreach(UsageModel usageModel in usageModels) {
+                        testOutputHelper.WriteLine(usageModel.ModelName);
                         Assert.Contains(usageModel.ModelName, array);
                     }
                 }

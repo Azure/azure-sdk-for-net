@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,19 +29,26 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the Encryption class.
         /// </summary>
+        /// <param name="services">List of services which support
+        /// encryption.</param>
         /// <param name="keySource">The encryption keySource (provider).
         /// Possible values (case-insensitive):  Microsoft.Storage,
         /// Microsoft.Keyvault. Possible values include: 'Microsoft.Storage',
         /// 'Microsoft.Keyvault'</param>
-        /// <param name="services">List of services which support
-        /// encryption.</param>
+        /// <param name="requireInfrastructureEncryption">A boolean indicating
+        /// whether or not the service applies a secondary layer of encryption
+        /// with platform managed keys for data at rest.</param>
         /// <param name="keyVaultProperties">Properties provided by key
         /// vault.</param>
-        public Encryption(string keySource, EncryptionServices services = default(EncryptionServices), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties))
+        /// <param name="encryptionIdentity">The identity to be used with
+        /// service-side encryption at rest.</param>
+        public Encryption(EncryptionServices services = default(EncryptionServices), string keySource = default(string), bool? requireInfrastructureEncryption = default(bool?), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), EncryptionIdentity encryptionIdentity = default(EncryptionIdentity))
         {
             Services = services;
             KeySource = keySource;
+            RequireInfrastructureEncryption = requireInfrastructureEncryption;
             KeyVaultProperties = keyVaultProperties;
+            EncryptionIdentity = encryptionIdentity;
             CustomInit();
         }
 
@@ -66,23 +72,25 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string KeySource { get; set; }
 
         /// <summary>
+        /// Gets or sets a boolean indicating whether or not the service
+        /// applies a secondary layer of encryption with platform managed keys
+        /// for data at rest.
+        /// </summary>
+        [JsonProperty(PropertyName = "requireInfrastructureEncryption")]
+        public bool? RequireInfrastructureEncryption { get; set; }
+
+        /// <summary>
         /// Gets or sets properties provided by key vault.
         /// </summary>
         [JsonProperty(PropertyName = "keyvaultproperties")]
         public KeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the identity to be used with service-side encryption
+        /// at rest.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (KeySource == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeySource");
-            }
-        }
+        [JsonProperty(PropertyName = "identity")]
+        public EncryptionIdentity EncryptionIdentity { get; set; }
+
     }
 }

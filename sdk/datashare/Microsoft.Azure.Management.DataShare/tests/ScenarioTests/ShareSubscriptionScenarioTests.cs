@@ -21,7 +21,7 @@ namespace DataShare.Tests.ScenarioTests
                     resourceGroupName,
                     accountName,
                     shareSubscriptionName,
-                    new Synchronize());
+                    new Synchronize(synchronizationMode: "FullSync"));
         }
 
         internal static async Task CreateAsync(

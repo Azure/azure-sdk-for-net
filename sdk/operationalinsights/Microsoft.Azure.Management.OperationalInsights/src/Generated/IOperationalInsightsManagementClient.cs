@@ -41,16 +41,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Client Api Version.
-        /// </summary>
-        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -72,14 +65,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
 
 
         /// <summary>
-        /// Gets the ILinkedServicesOperations.
+        /// Gets the IOperations.
         /// </summary>
-        ILinkedServicesOperations LinkedServices { get; }
-
-        /// <summary>
-        /// Gets the IDataSourcesOperations.
-        /// </summary>
-        IDataSourcesOperations DataSources { get; }
+        IOperations Operations { get; }
 
         /// <summary>
         /// Gets the IWorkspacesOperations.
@@ -87,9 +75,94 @@ namespace Microsoft.Azure.Management.OperationalInsights
         IWorkspacesOperations Workspaces { get; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IDeletedWorkspacesOperations.
         /// </summary>
-        IOperations Operations { get; }
+        IDeletedWorkspacesOperations DeletedWorkspaces { get; }
+
+        /// <summary>
+        /// Gets the ITablesOperations.
+        /// </summary>
+        ITablesOperations Tables { get; }
+
+        /// <summary>
+        /// Gets the IDataExportsOperations.
+        /// </summary>
+        IDataExportsOperations DataExports { get; }
+
+        /// <summary>
+        /// Gets the IDataSourcesOperations.
+        /// </summary>
+        IDataSourcesOperations DataSources { get; }
+
+        /// <summary>
+        /// Gets the IIntelligencePacksOperations.
+        /// </summary>
+        IIntelligencePacksOperations IntelligencePacks { get; }
+
+        /// <summary>
+        /// Gets the ILinkedServicesOperations.
+        /// </summary>
+        ILinkedServicesOperations LinkedServices { get; }
+
+        /// <summary>
+        /// Gets the ILinkedStorageAccountsOperations.
+        /// </summary>
+        ILinkedStorageAccountsOperations LinkedStorageAccounts { get; }
+
+        /// <summary>
+        /// Gets the IManagementGroupsOperations.
+        /// </summary>
+        IManagementGroupsOperations ManagementGroups { get; }
+
+        /// <summary>
+        /// Gets the IOperationStatusesOperations.
+        /// </summary>
+        IOperationStatusesOperations OperationStatuses { get; }
+
+        /// <summary>
+        /// Gets the ISharedKeysOperations.
+        /// </summary>
+        ISharedKeysOperations SharedKeys { get; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        IUsagesOperations Usages { get; }
+
+        /// <summary>
+        /// Gets the IStorageInsightConfigsOperations.
+        /// </summary>
+        IStorageInsightConfigsOperations StorageInsightConfigs { get; }
+
+        /// <summary>
+        /// Gets the ISavedSearchesOperations.
+        /// </summary>
+        ISavedSearchesOperations SavedSearches { get; }
+
+        /// <summary>
+        /// Gets the IAvailableServiceTiersOperations.
+        /// </summary>
+        IAvailableServiceTiersOperations AvailableServiceTiers { get; }
+
+        /// <summary>
+        /// Gets the IGatewaysOperations.
+        /// </summary>
+        IGatewaysOperations Gateways { get; }
+
+        /// <summary>
+        /// Gets the ISchemaOperations.
+        /// </summary>
+        ISchemaOperations Schema { get; }
+
+        /// <summary>
+        /// Gets the IWorkspacePurgeOperations.
+        /// </summary>
+        IWorkspacePurgeOperations WorkspacePurge { get; }
+
+        /// <summary>
+        /// Gets the IClustersOperations.
+        /// </summary>
+        IClustersOperations Clusters { get; }
 
     }
 }

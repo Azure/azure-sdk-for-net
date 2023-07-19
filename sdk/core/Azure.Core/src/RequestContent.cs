@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using Azure.Core.Buffers;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Buffers;
+using System.IO;
+using System.Text;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Buffers;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -15,6 +18,8 @@ namespace Azure.Core
     /// </summary>
     public abstract class RequestContent : IDisposable
     {
+        private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
+
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.
         /// </summary>
@@ -51,6 +56,80 @@ namespace Azure.Core
         /// <param name="bytes">The <see cref="ReadOnlySequence{T}"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="ReadOnlySequence{T}"/>.</returns>
         public static RequestContent Create(ReadOnlySequence<byte> bytes) => new ReadOnlySequenceContent(bytes);
+
+        /// <summary>
+        /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>/
+        /// </summary>
+        /// <param name="content">The <see cref="string"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="string"/>.</returns>
+        /// <remarks>The returned content represents the UTF-8 Encoding of the given string.</remarks>
+        public static RequestContent Create(string content) => Create(s_UTF8NoBomEncoding.GetBytes(content));
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="BinaryData"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryData"/>.</returns>
+        public static RequestContent Create(BinaryData content) => new MemoryContent(content.ToMemory());
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="DynamicData"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.</returns>
+        public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(object serializable) => Create(serializable, JsonObjectSerializer.Default);
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
+        /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(object serializable, ObjectSerializer? serializer) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
+        /// <param name="propertyNameFormat">The format to use for property names in the serialized content.</param>
+        /// <param name="dateTimeFormat">The format to use for DateTime and DateTimeOffset values in the serialized content.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(object serializable, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
+        {
+            DynamicDataOptions options = new()
+            {
+                PropertyNameFormat = propertyNameFormat,
+                DateTimeFormat = dateTimeFormat
+            };
+            JsonSerializerOptions serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
+            ObjectSerializer serializer = new JsonObjectSerializer(serializerOptions);
+            return Create(serializer.Serialize(serializable));
+        }
+
+        /// <summary>
+        /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="string"/> to use.</param>
+        public static implicit operator RequestContent(string content) => Create(content);
+
+        /// <summary>
+        /// Creates a RequestContent that wraps a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="BinaryData"/> to use.</param>
+        public static implicit operator RequestContent(BinaryData content) => Create(content);
+
+        /// <summary>
+        /// Creates a RequestContent that wraps a <see cref="DynamicData"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="DynamicData"/> to use.</param>
+        public static implicit operator RequestContent(DynamicData content) => Create(content);
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
@@ -103,10 +182,11 @@ namespace Azure.Core
                 {
                     while (true)
                     {
-                        cancellationToken.ThrowIfCancellationRequested();
+                        CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         var read = _stream.Read(buffer, 0, buffer.Length);
-                        if (read == 0) { break; }
-                        cancellationToken.ThrowIfCancellationRequested();
+                        if (read == 0)
+                        { break; }
+                        CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         stream.Write(buffer, 0, read);
                     }
                 }
@@ -170,7 +250,9 @@ namespace Azure.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
+#pragma warning disable CA1835 // WriteAsync(Memory<>) overload is not available in all targets
                 await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
+#pragma warning restore // WriteAsync(Memory<>) overload is not available in all targets
             }
         }
 
@@ -225,6 +307,35 @@ namespace Azure.Core
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+            }
+        }
+
+        private sealed class DynamicDataContent : RequestContent
+        {
+            private readonly DynamicData _data;
+
+            public DynamicDataContent(DynamicData data) => _data = data;
+
+            public override void Dispose()
+            {
+                _data.Dispose();
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                _data.WriteTo(stream);
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = default;
+                return false;
+            }
+
+            public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                _data.WriteTo(stream);
+                return Task.CompletedTask;
             }
         }
     }

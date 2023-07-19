@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -22,10 +24,23 @@ namespace Azure.Messaging.EventHubs
     ///   producer or consumer client.
     /// </summary>
     ///
-    /// <seealso href="https://docs.microsoft.com/en-us/Azure/event-hubs/event-hubs-about" />
+    /// <seealso href="https://docs.microsoft.com/en-us/Azure/event-hubs/event-hubs-about">About Azure Event Hubs</seealso>
     ///
     public class EventHubConnection : IAsyncDisposable
     {
+        /// <summary>
+        ///   The default transport type to assume when forming credentials, when no
+        ///   transport type was specified.
+        /// </summary>
+        ///
+        private static EventHubsTransportType DefaultCredentialTransportType { get; } = new EventHubConnectionOptions().TransportType;
+
+        /// <summary>
+        ///   The default retry policy to use when no explicit retry policy is specified.
+        /// </summary>
+        ///
+        private static EventHubsRetryPolicy DefaultRetryPolicy { get; } = new BasicRetryPolicy(new EventHubsRetryOptions());
+
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the connection is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -149,30 +164,77 @@ namespace Azure.Messaging.EventHubs
             connectionOptions = connectionOptions?.Clone() ?? new EventHubConnectionOptions();
             ValidateConnectionOptions(connectionOptions);
 
-            ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
-            ValidateConnectionProperties(connectionStringProperties, eventHubName, nameof(connectionString));
+            var connectionStringProperties = EventHubsConnectionStringProperties.Parse(connectionString);
+            connectionStringProperties.Validate(eventHubName, nameof(connectionString));
 
-            var fullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
+            var fullyQualifiedNamespace = connectionStringProperties.FullyQualifiedNamespace;
 
             if (string.IsNullOrEmpty(eventHubName))
             {
                 eventHubName = connectionStringProperties.EventHubName;
             }
 
-            var sharedAccessSignature = new SharedAccessSignature
-            (
-                 BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName),
-                 connectionStringProperties.SharedAccessKeyName,
-                 connectionStringProperties.SharedAccessKey
-            );
+            SharedAccessSignature sharedAccessSignature;
 
-            var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
-            var tokenCredentials = new EventHubTokenCredential(sharedCredentials, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+            if (string.IsNullOrEmpty(connectionStringProperties.SharedAccessSignature))
+            {
+                sharedAccessSignature = new SharedAccessSignature(
+                     BuildConnectionSignatureAuthorizationResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName),
+                     connectionStringProperties.SharedAccessKeyName,
+                     connectionStringProperties.SharedAccessKey);
+            }
+            else
+            {
+                sharedAccessSignature = new SharedAccessSignature(connectionStringProperties.SharedAccessSignature);
+            }
+
+            var tokenCredentials = new EventHubTokenCredential(new SharedAccessCredential(sharedAccessSignature));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             Options = connectionOptions;
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredentials, connectionOptions);
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, DefaultRetryPolicy.CalculateTryTimeout(0), tokenCredentials, connectionOptions);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubConnection"/> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the connection with.</param>
+        /// <param name="credential">The <see cref="AzureNamedKeyCredential"/> to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
+        ///
+        public EventHubConnection(string fullyQualifiedNamespace,
+                                  string eventHubName,
+                                  AzureNamedKeyCredential credential,
+                                  EventHubConnectionOptions connectionOptions = default) : this(fullyQualifiedNamespace,
+                                                                                                eventHubName,
+                                                                                                TranslateNamedKeyCredential(credential, fullyQualifiedNamespace, eventHubName, connectionOptions?.TransportType),
+                                                                                                connectionOptions)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubConnection"/> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the connection with.</param>
+        /// <param name="credential">The <see cref="AzureSasCredential"/> to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
+        ///
+        public EventHubConnection(string fullyQualifiedNamespace,
+                                  string eventHubName,
+                                  AzureSasCredential credential,
+                                  EventHubConnectionOptions connectionOptions = default) : this(fullyQualifiedNamespace,
+                                                                                                eventHubName,
+                                                                                                new SharedAccessCredential(credential),
+                                                                                                connectionOptions)
+        {
         }
 
         /// <summary>
@@ -189,30 +251,22 @@ namespace Azure.Messaging.EventHubs
                                   TokenCredential credential,
                                   EventHubConnectionOptions connectionOptions = default)
         {
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
             connectionOptions = connectionOptions?.Clone() ?? new EventHubConnectionOptions();
             ValidateConnectionOptions(connectionOptions);
 
-            switch (credential)
-            {
-                case SharedAccessSignatureCredential _:
-                    break;
-
-                case EventHubSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
-                    break;
-            }
-
-            var tokenCredential = new EventHubTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+            var tokenCredential = new EventHubTokenCredential(credential);
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             Options = connectionOptions;
 
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredential, connectionOptions);
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, DefaultRetryPolicy.CalculateTryTimeout(0), tokenCredential, connectionOptions);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -231,10 +285,10 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async virtual Task CloseAsync(CancellationToken cancellationToken = default)
+        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubConnection), EventHubName, FullyQualifiedNamespace);
+            EventHubsEventSource.Log.ClientCloseStart(nameof(EventHubConnection), EventHubName, FullyQualifiedNamespace);
 
             try
             {
@@ -242,12 +296,12 @@ namespace Azure.Messaging.EventHubs
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConnection), EventHubName, FullyQualifiedNamespace, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubConnection), EventHubName, FullyQualifiedNamespace, ex.Message);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubConnection), EventHubName, FullyQualifiedNamespace);
+                EventHubsEventSource.Log.ClientCloseComplete(nameof(EventHubConnection), EventHubName, FullyQualifiedNamespace);
             }
         }
 
@@ -258,7 +312,11 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
+        public virtual async ValueTask DisposeAsync()
+        {
+            await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -299,8 +357,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The set of information for the Event Hub that this connection is associated with.</returns>
         ///
-        internal virtual Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
-                                                                     CancellationToken cancellationToken = default) => InnerClient.GetPropertiesAsync(retryPolicy, cancellationToken);
+        internal virtual async Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
+                                                                           CancellationToken cancellationToken = default) => await InnerClient.GetPropertiesAsync(retryPolicy, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Retrieves the set of identifiers for the partitions of an Event Hub.
@@ -332,9 +390,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The set of information for the requested partition under the Event Hub this connection is associated with.</returns>
         ///
-        internal virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                               EventHubsRetryPolicy retryPolicy,
-                                                                               CancellationToken cancellationToken = default) => InnerClient.GetPartitionPropertiesAsync(partitionId, retryPolicy, cancellationToken);
+        internal virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
+                                                                                     EventHubsRetryPolicy retryPolicy,
+                                                                                     CancellationToken cancellationToken = default) => await InnerClient.GetPartitionPropertiesAsync(partitionId, retryPolicy, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Creates a producer strongly aligned with the active protocol and transport,
@@ -342,15 +400,21 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
+        /// <param name="producerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
+        /// <param name="requestedFeatures">The flags specifying the set of special transport features that should be opted-into.</param>
+        /// <param name="partitionOptions">The set of options, if any, that should be considered when initializing the producer.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
         internal virtual TransportProducer CreateTransportProducer(string partitionId,
+                                                                   string producerIdentifier,
+                                                                   TransportProducerFeatures requestedFeatures,
+                                                                   PartitionPublishingOptions partitionOptions,
                                                                    EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-            return InnerClient.CreateProducer(partitionId, retryPolicy);
+            return InnerClient.CreateProducer(partitionId, producerIdentifier, requestedFeatures, partitionOptions, retryPolicy);
         }
 
         /// <summary>
@@ -372,27 +436,33 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="consumerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="invalidateConsumerWhenPartitionStolen">Indicates whether or not the consumer should consider itself invalid when a partition is stolen.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
         internal virtual TransportConsumer CreateTransportConsumer(string consumerGroup,
                                                                    string partitionId,
+                                                                   string consumerIdentifier,
                                                                    EventPosition eventPosition,
                                                                    EventHubsRetryPolicy retryPolicy,
                                                                    bool trackLastEnqueuedEventProperties = true,
+                                                                   bool invalidateConsumerWhenPartitionStolen = false,
                                                                    long? ownerLevel = default,
-                                                                   uint? prefetchCount = default)
+                                                                   uint? prefetchCount = default,
+                                                                   long? prefetchSizeInBytes = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
+            return InnerClient.CreateConsumer(consumerGroup, partitionId, consumerIdentifier, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, invalidateConsumerWhenPartitionStolen, ownerLevel, prefetchCount, prefetchSizeInBytes);
         }
 
         /// <summary>
@@ -402,6 +472,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of a specific Event Hub.</param>
+        /// <param name="operationTimeout">The amount of time to allow for an AMQP operation using the link to complete before attempting to cancel it.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
         /// <param name="options">The set of options to use for the client.</param>
         ///
@@ -415,8 +486,10 @@ namespace Azure.Messaging.EventHubs
         ///   creation of clones or otherwise protecting the parameters is assumed to be the purview of the caller.
         /// </remarks>
         ///
+        [SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "`TransportType` is a reasonable name.  It's the property on the options argument which is invalid.")]
         internal virtual TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                string eventHubName,
+                                                               TimeSpan operationTimeout,
                                                                EventHubTokenCredential credential,
                                                                EventHubConnectionOptions options)
         {
@@ -424,7 +497,7 @@ namespace Azure.Messaging.EventHubs
             {
                 case EventHubsTransportType.AmqpTcp:
                 case EventHubsTransportType.AmqpWebSockets:
-                    return new AmqpClient(fullyQualifiedNamespace, eventHubName, credential, options);
+                    return new AmqpClient(fullyQualifiedNamespace, eventHubName, operationTimeout, credential, options);
 
                 default:
                     throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
@@ -432,19 +505,59 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Builds the audience for use in the signature.
+        ///   Creates an <see cref="EventHubConnection" /> based on the provided options and credential.
+        /// </summary>
+        ///
+        /// <typeparam name="TCredential">The type of credential being used.</typeparam>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the producer with.</param>
+        /// <param name="credential">The credential to use for authorization.  This may be of type <see cref="TokenCredential" />, <see cref="AzureSasCredential" />, or <see cref="AzureNamedKeyCredential" />.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
+        ///
+        /// <returns>The connection that was created.</returns>
+        ///
+        /// <remarks>
+        ///   Ownership of the connection is transferred to the caller.  The caller holds responsibility
+        ///   for closing the connection and other cleanup activities.
+        /// </remarks>
+        ///
+        internal static EventHubConnection CreateWithCredential<TCredential>(string fullyQualifiedNamespace,
+                                                                             string eventHubName,
+                                                                             TCredential credential,
+                                                                             EventHubConnectionOptions options) =>
+            credential switch
+            {
+                TokenCredential cred => new EventHubConnection(fullyQualifiedNamespace, eventHubName, cred, options),
+                AzureSasCredential cred => new EventHubConnection(fullyQualifiedNamespace, eventHubName, cred, options),
+                AzureNamedKeyCredential cred => new EventHubConnection(fullyQualifiedNamespace, eventHubName, cred, options),
+                _ => throw new ArgumentException(Resources.UnsupportedCredential, nameof(credential))
+            };
+
+        /// <summary>
+        ///   Builds the fully-qualified identifier for the connection, for use with signature-based authorization.
         /// </summary>
         ///
         /// <param name="transportType">The type of protocol and transport that will be used for communicating with the Event Hubs service.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
         ///
-        /// <returns>The value to use as the audience of the signature.</returns>
+        /// <returns>The value to use as the resource for the signature.</returns>
         ///
-        private static string BuildAudienceResource(EventHubsTransportType transportType,
-                                                    string fullyQualifiedNamespace,
-                                                    string eventHubName)
+        internal static string BuildConnectionSignatureAuthorizationResource(EventHubsTransportType transportType,
+                                                                             string fullyQualifiedNamespace,
+                                                                             string eventHubName)
         {
+            // If there is no namespace, there is no basis for a URL and the
+            // resource is empty.
+
+            if (string.IsNullOrEmpty(fullyQualifiedNamespace))
+            {
+                return string.Empty;
+            }
+
+            // Form a normalized URI to identify the resource.
+
             var builder = new UriBuilder(fullyQualifiedNamespace)
             {
                 Scheme = transportType.GetUriScheme(),
@@ -455,7 +568,7 @@ namespace Azure.Messaging.EventHubs
                 UserName = string.Empty,
             };
 
-            if (builder.Path.EndsWith("/"))
+            if (builder.Path.EndsWith("/", StringComparison.Ordinal))
             {
                 builder.Path = builder.Path.TrimEnd('/');
             }
@@ -464,44 +577,21 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Performs the actions needed to validate the set of properties for connecting to the
-        ///   Event Hubs service, as passed to this client during creation.
+        ///   Translates an <see cref="AzureNamedKeyCredential"/> into the equivalent shared access signature credential.
         /// </summary>
         ///
-        /// <param name="properties">The set of properties parsed from the connection string associated this client.</param>
-        /// <param name="eventHubName">The name of the Event Hub passed independent of the connection string, allowing easier use of a namespace-level connection string.</param>
-        /// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
+        /// <param name="credential">The credential to translate.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace being connected to.</param>
+        /// <param name="eventHubName">The name of the Event Hub being connected to.</param>
+        /// <param name="transportType">The type of transport being used for the connection.</param>
         ///
-        /// <remarks>
-        ///   In the case that the properties violate an invariant or otherwise represent a combination that
-        ///   is not permissible, an appropriate exception will be thrown.
-        /// </remarks>
+        /// <returns>The <see cref="SharedAccessCredential" /> which the <paramref name="credential" /> was translated to.</returns>
         ///
-        private static void ValidateConnectionProperties(ConnectionStringProperties properties,
-                                                         string eventHubName,
-                                                         string connectionStringArgumentName)
-        {
-            // The Event Hub name may only be specified in one of the possible forms, either as part of the
-            // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
-            // value, then do not consider this a failure.
-
-            if ((!string.IsNullOrEmpty(eventHubName))
-                && (!string.IsNullOrEmpty(properties.EventHubName))
-                && (!string.Equals(eventHubName, properties.EventHubName, StringComparison.InvariantCultureIgnoreCase)))
-            {
-                throw new ArgumentException(Resources.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
-            }
-
-            // Ensure that each of the needed components are present for connecting.
-
-            if ((string.IsNullOrEmpty(eventHubName)) && (string.IsNullOrEmpty(properties.EventHubName))
-                || (string.IsNullOrEmpty(properties.Endpoint?.Host))
-                || (string.IsNullOrEmpty(properties.SharedAccessKeyName))
-                || (string.IsNullOrEmpty(properties.SharedAccessKey)))
-            {
-                throw new ArgumentException(Resources.MissingConnectionInformation, connectionStringArgumentName);
-            }
-        }
+        private static SharedAccessCredential TranslateNamedKeyCredential(AzureNamedKeyCredential credential,
+                                                                          string fullyQualifiedNamespace,
+                                                                          string eventHubName,
+                                                                          EventHubsTransportType? transportType) =>
+            new SharedAccessCredential(credential, BuildConnectionSignatureAuthorizationResource(transportType ?? DefaultCredentialTransportType, fullyQualifiedNamespace, eventHubName));
 
         /// <summary>
         ///   Performs the actions needed to validate the <see cref="EventHubConnectionOptions" /> associated

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Schema Contract details.
+    /// API Schema Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class SchemaContract : Resource
@@ -41,17 +41,27 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi`
         /// Schema use `application/vnd.oai.openapi.components+json`
         /// &lt;/br&gt; - `WADL Schema` use
-        /// `application/vnd.ms-azure-apim.wadl.grammars+xml`. </param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
-        /// <param name="document">Properties of the Schema Document.</param>
-        public SchemaContract(string contentType, string id = default(string), string name = default(string), string type = default(string), object document = default(object))
+        /// `application/vnd.ms-azure-apim.wadl.grammars+xml`.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="value">Json escaped string defining the document
+        /// representing the Schema. Used for schemas other than
+        /// Swagger/OpenAPI.</param>
+        /// <param name="definitions">Types definitions. Used for
+        /// Swagger/OpenAPI v1 schemas only, null otherwise.</param>
+        /// <param name="components">Types definitions. Used for
+        /// Swagger/OpenAPI v2/v3 schemas only, null otherwise.</param>
+        public SchemaContract(string contentType, string id = default(string), string name = default(string), string type = default(string), string value = default(string), object definitions = default(object), object components = default(object))
             : base(id, name, type)
         {
             ContentType = contentType;
-            Document = document;
+            Value = value;
+            Definitions = definitions;
+            Components = components;
             CustomInit();
         }
 
@@ -76,10 +86,25 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets properties of the Schema Document.
+        /// Gets or sets json escaped string defining the document representing
+        /// the Schema. Used for schemas other than Swagger/OpenAPI.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.document")]
-        public object Document { get; set; }
+        [JsonProperty(PropertyName = "properties.document.value")]
+        public string Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets types definitions. Used for Swagger/OpenAPI v1 schemas
+        /// only, null otherwise.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.document.definitions")]
+        public object Definitions { get; set; }
+
+        /// <summary>
+        /// Gets or sets types definitions. Used for Swagger/OpenAPI v2/v3
+        /// schemas only, null otherwise.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.document.components")]
+        public object Components { get; set; }
 
         /// <summary>
         /// Validate the object.

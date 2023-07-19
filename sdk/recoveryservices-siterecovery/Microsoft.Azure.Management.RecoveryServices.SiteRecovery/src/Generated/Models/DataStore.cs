@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// The data store details of the MT.
+    /// The datastore details of the MT.
     /// </summary>
     public partial class DataStore
     {

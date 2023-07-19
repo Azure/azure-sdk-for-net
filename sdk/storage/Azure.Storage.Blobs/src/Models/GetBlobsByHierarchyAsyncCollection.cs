@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -33,25 +35,42 @@ namespace Azure.Storage.Blobs.Models
         public override async ValueTask<Page<BlobHierarchyItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
-            bool isAsync,
+            bool async,
             CancellationToken cancellationToken)
         {
-            Task<Response<BlobsHierarchySegment>> task = _client.GetBlobsByHierarchyInternal(
-                continuationToken,
-                _delimiter,
-                _traits,
-                _states,
-                _prefix,
-                pageSizeHint,
-                isAsync,
-                cancellationToken);
-            Response<BlobsHierarchySegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
+            Response<ListBlobsHierarchySegmentResponse> response;
 
-            var items = new List<BlobHierarchyItem>();
-            items.AddRange(response.Value.BlobPrefixes.Select(p => new BlobHierarchyItem(p.Name, null)));
-            items.AddRange(response.Value.BlobItems.Select(b => new BlobHierarchyItem(null, b)));
+            if (async)
+            {
+                response = await _client.GetBlobsByHierarchyInternal(
+                    marker: continuationToken,
+                    delimiter: _delimiter,
+                    traits: _traits,
+                    states: _states,
+                    prefix: _prefix,
+                    pageSizeHint: pageSizeHint,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                response = _client.GetBlobsByHierarchyInternal(
+                    marker: continuationToken,
+                    delimiter: _delimiter,
+                    traits: _traits,
+                    states: _states,
+                    prefix: _prefix,
+                    pageSizeHint: pageSizeHint,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .EnsureCompleted();
+            }
+
+            List<BlobHierarchyItem> items = new List<BlobHierarchyItem>();
+
+            items.AddRange(response.Value.Segment.BlobPrefixes.Select(p => new BlobHierarchyItem(p.Name.ToBlobNameString(), null)));
+            items.AddRange(response.Value.Segment.BlobItems.Select(b => new BlobHierarchyItem(null, b.ToBlobItem())));
             return Page<BlobHierarchyItem>.FromValues(
                 items.ToArray(),
                 response.Value.NextMarker,

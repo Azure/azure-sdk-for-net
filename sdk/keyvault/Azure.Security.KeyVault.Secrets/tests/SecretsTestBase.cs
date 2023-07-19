@@ -5,18 +5,27 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
-    [NonParallelizable]
-    public abstract class SecretsTestBase : RecordedTestBase
+    [ClientTestFixture(
+        SecretClientOptions.ServiceVersion.V7_4,
+        SecretClientOptions.ServiceVersion.V7_3,
+        SecretClientOptions.ServiceVersion.V7_2,
+        SecretClientOptions.ServiceVersion.V7_1,
+        SecretClientOptions.ServiceVersion.V7_0)]
+    public abstract class SecretsTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
+        protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
+            ? TimeSpan.Zero
+            : KeyVaultTestEnvironment.DefaultPollingInterval;
 
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        private readonly SecretClientOptions.ServiceVersion _serviceVersion;
 
         public SecretClient Client { get; set; }
 
@@ -26,27 +35,48 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         private readonly ConcurrentQueue<string> _secretsToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _secretsToPurge = new ConcurrentStack<string>();
 
-        protected SecretsTestBase(bool isAsync) : base(isAsync)
+        private KeyVaultTestEventListener _listener;
+
+        protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
-        internal SecretClient GetClient(TestRecording recording = null)
+        internal SecretClient GetClient(TokenCredential credential = default)
         {
-            recording ??= Recording;
-
             return InstrumentClient
                 (new SecretClient(
-                    new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-                    recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(new SecretClientOptions())));
+                    new Uri(TestEnvironment.KeyVaultUrl),
+                    credential ?? TestEnvironment.Credential,
+                    InstrumentClientOptions(
+                        new SecretClientOptions(_serviceVersion)
+                        {
+                            Diagnostics =
+                            {
+                                LoggedHeaderNames =
+                                {
+                                    "x-ms-request-id",
+                                }
+                            },
+                        })));
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
+
+            _listener = new KeyVaultTestEventListener();
 
             Client = GetClient();
-            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+            VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
+        }
+
+        public override async Task StopTestRecordingAsync()
+        {
+            _listener?.Dispose();
+
+            await base.StopTestRecordingAsync();
         }
 
         [TearDown]
@@ -180,7 +210,16 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedSecretAsync(name).ConfigureAwait(false), delay: PollingInterval);
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        return await Client.GetDeletedSecretAsync(name).ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        throw new InconclusiveException($"Timed out while waiting for secret '{name}' to be deleted");
+                    }
+                }, delay: PollingInterval);
             }
         }
 
@@ -218,6 +257,25 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             {
                 return TestRetryHelper.RetryAsync(async () => await Client.GetSecretAsync(name).ConfigureAwait(false), delay: PollingInterval);
             }
+        }
+
+        protected TokenCredential GetCredential(string tenantId)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new MockCredential();
+            }
+
+            return new ClientSecretCredential(
+                tenantId ?? TestEnvironment.TenantId,
+                TestEnvironment.ClientId,
+                TestEnvironment.ClientSecret,
+                new ClientSecretCredentialOptions()
+                {
+                    AuthorityHost = new Uri(TestEnvironment.AuthorityHostUrl),
+                    AdditionallyAllowedTenants = { TestEnvironment.TenantId },
+                }
+            );
         }
     }
 }

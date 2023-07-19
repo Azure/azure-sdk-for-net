@@ -28,5 +28,6 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public const string KustoDatabase = "KustoDatabase";
         public const string SqlDBTable = "SqlDBTable";
         public const string SqlDWTable = "SqlDWTable";
+        public const string SynapseWorkspaceSqlPoolTable = "SynapseWorkspaceSqlPoolTable";
     }
 }

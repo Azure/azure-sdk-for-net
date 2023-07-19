@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.DataBox.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,23 +35,26 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// 'CompletedWithErrors', 'Cancelled',
         /// 'Failed_IssueReportedAtCustomer', 'Failed_IssueDetectedAtAzureDC',
         /// 'Aborted', 'CompletedWithWarnings', 'ReadyToDispatchFromAzureDC',
-        /// 'ReadyToReceiveAtAzureDC'</param>
+        /// 'ReadyToReceiveAtAzureDC', 'Created', 'ShippedToAzureDC',
+        /// 'AwaitingShipmentDetails', 'PreparingToShipFromAzureDC',
+        /// 'ShippedToCustomer'</param>
         /// <param name="displayName">Display name of the job stage.</param>
         /// <param name="stageStatus">Status of the job stage. Possible values
         /// include: 'None', 'InProgress', 'Succeeded', 'Failed', 'Cancelled',
-        /// 'Cancelling', 'SucceededWithErrors'</param>
+        /// 'Cancelling', 'SucceededWithErrors', 'WaitingForCustomerAction',
+        /// 'SucceededWithWarnings', 'WaitingForCustomerActionForKek',
+        /// 'WaitingForCustomerActionForCleanUp',
+        /// 'CustomerActionPerformedForCleanUp'</param>
         /// <param name="stageTime">Time for the job stage in UTC ISO 8601
         /// format.</param>
         /// <param name="jobStageDetails">Job Stage Details</param>
-        /// <param name="errorDetails">Error details for the stage.</param>
-        public JobStages(StageName? stageName = default(StageName?), string displayName = default(string), StageStatus? stageStatus = default(StageStatus?), System.DateTime? stageTime = default(System.DateTime?), object jobStageDetails = default(object), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>))
+        public JobStages(string stageName = default(string), string displayName = default(string), StageStatus? stageStatus = default(StageStatus?), System.DateTime? stageTime = default(System.DateTime?), object jobStageDetails = default(object))
         {
             StageName = stageName;
             DisplayName = displayName;
             StageStatus = stageStatus;
             StageTime = stageTime;
             JobStageDetails = jobStageDetails;
-            ErrorDetails = errorDetails;
             CustomInit();
         }
 
@@ -69,10 +70,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// 'CompletedWithErrors', 'Cancelled',
         /// 'Failed_IssueReportedAtCustomer', 'Failed_IssueDetectedAtAzureDC',
         /// 'Aborted', 'CompletedWithWarnings', 'ReadyToDispatchFromAzureDC',
-        /// 'ReadyToReceiveAtAzureDC'
+        /// 'ReadyToReceiveAtAzureDC', 'Created', 'ShippedToAzureDC',
+        /// 'AwaitingShipmentDetails', 'PreparingToShipFromAzureDC',
+        /// 'ShippedToCustomer'
         /// </summary>
         [JsonProperty(PropertyName = "stageName")]
-        public StageName? StageName { get; private set; }
+        public string StageName { get; private set; }
 
         /// <summary>
         /// Gets display name of the job stage.
@@ -83,7 +86,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Gets status of the job stage. Possible values include: 'None',
         /// 'InProgress', 'Succeeded', 'Failed', 'Cancelled', 'Cancelling',
-        /// 'SucceededWithErrors'
+        /// 'SucceededWithErrors', 'WaitingForCustomerAction',
+        /// 'SucceededWithWarnings', 'WaitingForCustomerActionForKek',
+        /// 'WaitingForCustomerActionForCleanUp',
+        /// 'CustomerActionPerformedForCleanUp'
         /// </summary>
         [JsonProperty(PropertyName = "stageStatus")]
         public StageStatus? StageStatus { get; private set; }
@@ -99,12 +105,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "jobStageDetails")]
         public object JobStageDetails { get; private set; }
-
-        /// <summary>
-        /// Gets error details for the stage.
-        /// </summary>
-        [JsonProperty(PropertyName = "errorDetails")]
-        public IList<JobErrorDetails> ErrorDetails { get; private set; }
 
     }
 }

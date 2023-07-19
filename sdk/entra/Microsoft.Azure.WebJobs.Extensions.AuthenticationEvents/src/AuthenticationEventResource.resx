@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Ex_Comparable_Not_Found" xml:space="preserve">
+    <value>Comparable '{0}' cannot be match.</value>
+  </data>
+  <data name="Ex_Context_Null" xml:space="preserve">
+    <value>ListenerFactoryContext is null</value>
+  </data>
+  <data name="Ex_Event_Missing" xml:space="preserve">
+    <value>Cannot determine the event from payload, please check that the incoming payload is a valid JSON string and contains the event type.</value>
+  </data>
+  <data name="Ex_File_Exists" xml:space="preserve">
+    <value>File '{0}' could not be written. Already exists.</value>
+  </data>
+  <data name="Ex_Gen_Failure" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="Ex_Invalid_Action" xml:space="preserve">
+    <value>The action '{0}' is invalid, please use one of the following actions: '{1}'</value>
+  </data>
+  <data name="Ex_Invalid_Event" xml:space="preserve">
+    <value>Invalid event type.</value>
+  </data>
+  <data name="Ex_Invalid_EventSchema" xml:space="preserve">
+    <value>Invalid schema event.</value>
+  </data>
+  <data name="Ex_Invalid_EventType" xml:space="preserve">
+    <value>Type for Versioning needs to be derived from IEventRequest</value>
+  </data>
+  <data name="Ex_Invalid_Function" xml:space="preserve">
+    <value>Cannot find related listener for function: {0}, available functions: {1}</value>
+  </data>
+  <data name="Ex_Invalid_Inbound" xml:space="preserve">
+    <value>An HttpRequestMessage is required</value>
+  </data>
+  <data name="Ex_Invalid_JsonPath" xml:space="preserve">
+    <value>Cannot find json path set value</value>
+  </data>
+  <data name="Ex_Invalid_Payload" xml:space="preserve">
+    <value>Invalid Payload detected.</value>
+  </data>
+  <data name="Ex_Invalid_Response" xml:space="preserve">
+    <value>Response validation failed, see inner exceptions.</value>
+  </data>
+  <data name="Ex_Invalid_Return" xml:space="preserve">
+    <value>Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.</value>
+  </data>
+  <data name="Ex_Invalid_SchemaVersion" xml:space="preserve">
+    <value>Invalid version on Schema</value>
+  </data>
+  <data name="Ex_Leg_payload" xml:space="preserve">
+    <value>Cannot assign legacy payload to cloud events.</value>
+  </data>
+  <data name="Ex_Missing_Def" xml:space="preserve">
+    <value>Cannot find the correct Event Metadata based on the input parameter: {0}</value>
+  </data>
+  <data name="Ex_Missing_Function" xml:space="preserve">
+    <value>Please supply the function name via the query parameter: functionName, available functions: {0}</value>
+  </data>
+  <data name="Ex_Missing_Request_Response" xml:space="preserve">
+    <value>Cannot find the response on the request.</value>
+  </data>
+  <data name="Ex_No_Action" xml:space="preserve">
+    <value>No Actions Found. Please supply atleast one action.</value>
+  </data>
+  <data name="Ex_No_Attr" xml:space="preserve">
+    <value>Cannot determine the validation path, missing version attribute on Version Enum.</value>
+  </data>
+  <data name="Ex_No_Lock" xml:space="preserve">
+    <value>Could not get exclusive lock to the resource.</value>
+  </data>
+  <data name="Ex_OpenApi_Missing" xml:space="preserve">
+    <value>No associated open api document found for version.</value>
+  </data>
+  <data name="Ex_Parm_Mismatch" xml:space="preserve">
+    <value>The parameter on the function signature does not match the expected parameter type of '{0}'. Got: '{1}'</value>
+  </data>
+  <data name="Ex_Response_Mismatch" xml:space="preserve">
+    <value>The response is expected to be of type: {0}</value>
+  </data>
+  <data name="Ex_Token_Version" xml:space="preserve">
+    <value>Invalid token version {0}, supported versions are: {1}</value>
+  </data>
+  <data name="Ex_Trigger_Required_Attrs" xml:space="preserve">
+    <value>Please supply both the TenantId and AudienceAppId in variables in your binding configuration. (Or app settings {0} and {1})</value>
+  </data>
+  <data name="Log_EventHandler_Url" xml:space="preserve">
+    <value>Listener registered at: {0}</value>
+  </data>
+  <data name="Out_Console_FunctName" xml:space="preserve">
+    <value>Function name: </value>
+  </data>
+  <data name="Out_Console_FunctUrl" xml:space="preserve">
+    <value>Function url: </value>
+  </data>
+  <data name="Out_Console_Seperator" xml:space="preserve">
+    <value>--------------------------</value>
+  </data>
+  <data name="Status_Good" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="Val_Non_Default" xml:space="preserve">
+    <value>The '{0}' field is missing.</value>
+  </data>
+  <data name="Val_One_Of" xml:space="preserve">
+    <value>The '{0}' field needs to contain one of the following values: </value>
+  </data>
+</root>

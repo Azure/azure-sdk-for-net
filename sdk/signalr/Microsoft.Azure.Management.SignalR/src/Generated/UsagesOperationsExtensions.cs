@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.SignalR
     public static partial class UsagesOperationsExtensions
     {
             /// <summary>
-            /// List usage quotas for Azure SignalR service by location.
+            /// List resource usage quotas by location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// List usage quotas for Azure SignalR service by location.
+            /// List resource usage quotas by location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// List usage quotas for Azure SignalR service by location.
+            /// List resource usage quotas by location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// List usage quotas for Azure SignalR service by location.
+            /// List resource usage quotas by location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

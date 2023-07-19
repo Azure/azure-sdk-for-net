@@ -180,7 +180,8 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='expand'>
             /// May be used to expand the properties within account's properties. By
             /// default, data is not included when fetching properties. Currently we only
-            /// support geoReplicationStats. Possible values include: 'geoReplicationStats'
+            /// support geoReplicationStats and blobRestoreStatus. Possible values include:
+            /// 'geoReplicationStats', 'blobRestoreStatus'
             /// </param>
             public static StorageAccount GetProperties(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountExpand? expand = default(StorageAccountExpand?))
             {
@@ -207,7 +208,8 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='expand'>
             /// May be used to expand the properties within account's properties. By
             /// default, data is not included when fetching properties. Currently we only
-            /// support geoReplicationStats. Possible values include: 'geoReplicationStats'
+            /// support geoReplicationStats and blobRestoreStatus. Possible values include:
+            /// 'geoReplicationStats', 'blobRestoreStatus'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -332,7 +334,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static IEnumerable<StorageAccount> ListByResourceGroup(this IStorageAccountsOperations operations, string resourceGroupName)
+            public static IPage<StorageAccount> ListByResourceGroup(this IStorageAccountsOperations operations, string resourceGroupName)
             {
                 return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
@@ -352,7 +354,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<StorageAccount>> ListByResourceGroupAsync(this IStorageAccountsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<StorageAccount>> ListByResourceGroupAsync(this IStorageAccountsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -626,6 +628,164 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
+            /// Live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='requestType'>
+            /// Required. Hierarchical namespace migration type can either be a
+            /// hierarchical namespace validation request 'HnsOnValidationRequest' or a
+            /// hydration request 'HnsOnHydrationRequest'. The validation request will
+            /// validate the migration whereas the hydration request will migrate the
+            /// account.
+            /// </param>
+            public static void HierarchicalNamespaceMigration(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string requestType)
+            {
+                operations.HierarchicalNamespaceMigrationAsync(resourceGroupName, accountName, requestType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='requestType'>
+            /// Required. Hierarchical namespace migration type can either be a
+            /// hierarchical namespace validation request 'HnsOnValidationRequest' or a
+            /// hydration request 'HnsOnHydrationRequest'. The validation request will
+            /// validate the migration whereas the hydration request will migrate the
+            /// account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task HierarchicalNamespaceMigrationAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string requestType, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.HierarchicalNamespaceMigrationWithHttpMessagesAsync(resourceGroupName, accountName, requestType, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Abort live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            public static void AbortHierarchicalNamespaceMigration(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.AbortHierarchicalNamespaceMigrationAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Abort live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task AbortHierarchicalNamespaceMigrationAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.AbortHierarchicalNamespaceMigrationWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restore blobs in the specified blob ranges
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='timeToRestore'>
+            /// Restore blob to the specified time.
+            /// </param>
+            /// <param name='blobRanges'>
+            /// Blob ranges to restore.
+            /// </param>
+            public static BlobRestoreStatus RestoreBlobRanges(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, System.DateTime timeToRestore, IList<BlobRestoreRange> blobRanges)
+            {
+                return operations.RestoreBlobRangesAsync(resourceGroupName, accountName, timeToRestore, blobRanges).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restore blobs in the specified blob ranges
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='timeToRestore'>
+            /// Restore blob to the specified time.
+            /// </param>
+            /// <param name='blobRanges'>
+            /// Blob ranges to restore.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BlobRestoreStatus> RestoreBlobRangesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, System.DateTime timeToRestore, IList<BlobRestoreRange> blobRanges, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RestoreBlobRangesWithHttpMessagesAsync(resourceGroupName, accountName, timeToRestore, blobRanges, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Revoke user delegation keys.
             /// </summary>
             /// <param name='operations'>
@@ -778,6 +938,164 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
+            /// Live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='requestType'>
+            /// Required. Hierarchical namespace migration type can either be a
+            /// hierarchical namespace validation request 'HnsOnValidationRequest' or a
+            /// hydration request 'HnsOnHydrationRequest'. The validation request will
+            /// validate the migration whereas the hydration request will migrate the
+            /// account.
+            /// </param>
+            public static void BeginHierarchicalNamespaceMigration(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string requestType)
+            {
+                operations.BeginHierarchicalNamespaceMigrationAsync(resourceGroupName, accountName, requestType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='requestType'>
+            /// Required. Hierarchical namespace migration type can either be a
+            /// hierarchical namespace validation request 'HnsOnValidationRequest' or a
+            /// hydration request 'HnsOnHydrationRequest'. The validation request will
+            /// validate the migration whereas the hydration request will migrate the
+            /// account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginHierarchicalNamespaceMigrationAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string requestType, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginHierarchicalNamespaceMigrationWithHttpMessagesAsync(resourceGroupName, accountName, requestType, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Abort live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            public static void BeginAbortHierarchicalNamespaceMigration(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.BeginAbortHierarchicalNamespaceMigrationAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Abort live Migration of storage account to enable Hns
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginAbortHierarchicalNamespaceMigrationAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginAbortHierarchicalNamespaceMigrationWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Restore blobs in the specified blob ranges
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='timeToRestore'>
+            /// Restore blob to the specified time.
+            /// </param>
+            /// <param name='blobRanges'>
+            /// Blob ranges to restore.
+            /// </param>
+            public static BlobRestoreStatus BeginRestoreBlobRanges(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, System.DateTime timeToRestore, IList<BlobRestoreRange> blobRanges)
+            {
+                return operations.BeginRestoreBlobRangesAsync(resourceGroupName, accountName, timeToRestore, blobRanges).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Restore blobs in the specified blob ranges
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='timeToRestore'>
+            /// Restore blob to the specified time.
+            /// </param>
+            /// <param name='blobRanges'>
+            /// Blob ranges to restore.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BlobRestoreStatus> BeginRestoreBlobRangesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, System.DateTime timeToRestore, IList<BlobRestoreRange> blobRanges, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRestoreBlobRangesWithHttpMessagesAsync(resourceGroupName, accountName, timeToRestore, blobRanges, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all the storage accounts available under the subscription. Note that
             /// storage keys are not returned; use the ListKeys operation for this.
             /// </summary>
@@ -808,6 +1126,44 @@ namespace Microsoft.Azure.Management.Storage
             public static async Task<IPage<StorageAccount>> ListNextAsync(this IStorageAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all the storage accounts available under the given resource group.
+            /// Note that storage keys are not returned; use the ListKeys operation for
+            /// this.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<StorageAccount> ListByResourceGroupNext(this IStorageAccountsOperations operations, string nextPageLink)
+            {
+                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all the storage accounts available under the given resource group.
+            /// Note that storage keys are not returned; use the ListKeys operation for
+            /// this.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<StorageAccount>> ListByResourceGroupNextAsync(this IStorageAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

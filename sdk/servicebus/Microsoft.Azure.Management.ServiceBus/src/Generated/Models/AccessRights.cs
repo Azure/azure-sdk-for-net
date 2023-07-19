@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AccessRights.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AccessRights
+    public static class AccessRights
     {
-        [EnumMember(Value = "Manage")]
-        Manage,
-        [EnumMember(Value = "Send")]
-        Send,
-        [EnumMember(Value = "Listen")]
-        Listen
-    }
-    internal static class AccessRightsEnumExtension
-    {
-        internal static string ToSerializedValue(this AccessRights? value)
-        {
-            return value == null ? null : ((AccessRights)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this AccessRights value)
-        {
-            switch( value )
-            {
-                case AccessRights.Manage:
-                    return "Manage";
-                case AccessRights.Send:
-                    return "Send";
-                case AccessRights.Listen:
-                    return "Listen";
-            }
-            return null;
-        }
-
-        internal static AccessRights? ParseAccessRights(this string value)
-        {
-            switch( value )
-            {
-                case "Manage":
-                    return AccessRights.Manage;
-                case "Send":
-                    return AccessRights.Send;
-                case "Listen":
-                    return AccessRights.Listen;
-            }
-            return null;
-        }
+        public const string Manage = "Manage";
+        public const string Send = "Send";
+        public const string Listen = "Listen";
     }
 }

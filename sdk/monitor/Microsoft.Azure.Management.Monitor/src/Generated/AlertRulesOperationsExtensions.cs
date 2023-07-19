@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.Monitor
     public static partial class AlertRulesOperationsExtensions
     {
             /// <summary>
-            /// Creates or updates an alert rule.
+            /// Creates or updates a classic metric alert rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='ruleName'>
             /// The name of the rule.
@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Creates or updates an alert rule.
+            /// Creates or updates a classic metric alert rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='ruleName'>
             /// The name of the rule.
@@ -70,13 +70,13 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Deletes an alert rule
+            /// Deletes a classic metric alert rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='ruleName'>
             /// The name of the rule.
@@ -87,13 +87,13 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Deletes an alert rule
+            /// Deletes a classic metric alert rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='ruleName'>
             /// The name of the rule.
@@ -107,13 +107,13 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Gets an alert rule
+            /// Gets a classic metric alert rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='ruleName'>
             /// The name of the rule.
@@ -124,13 +124,13 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Gets an alert rule
+            /// Gets a classic metric alert rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='ruleName'>
             /// The name of the rule.
@@ -147,14 +147,14 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Updates an existing AlertRuleResource. To update other fields use the
-            /// CreateOrUpdate method.
+            /// Updates an existing classic metric AlertRuleResource. To update other
+            /// fields use the CreateOrUpdate method.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='ruleName'>
             /// The name of the rule.
@@ -168,14 +168,14 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Updates an existing AlertRuleResource. To update other fields use the
-            /// CreateOrUpdate method.
+            /// Updates an existing classic metric AlertRuleResource. To update other
+            /// fields use the CreateOrUpdate method.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='ruleName'>
             /// The name of the rule.
@@ -195,13 +195,13 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// List the alert rules within a resource group.
+            /// List the classic metric alert rules within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IEnumerable<AlertRuleResource> ListByResourceGroup(this IAlertRulesOperations operations, string resourceGroupName)
             {
@@ -209,13 +209,13 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// List the alert rules within a resource group.
+            /// List the classic metric alert rules within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// List the alert rules within a subscription.
+            /// List the classic metric alert rules within a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// List the alert rules within a subscription.
+            /// List the classic metric alert rules within a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

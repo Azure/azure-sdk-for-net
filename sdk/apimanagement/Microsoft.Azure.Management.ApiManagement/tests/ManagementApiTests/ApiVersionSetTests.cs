@@ -16,6 +16,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class ApiVersionSetTests : TestBase
     {
         [Fact]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

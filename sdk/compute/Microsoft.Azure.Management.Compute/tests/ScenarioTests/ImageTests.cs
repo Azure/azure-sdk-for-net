@@ -20,15 +20,22 @@ namespace Compute.Tests
         public void TestCreateImage_with_DiskEncryptionSet()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            using (MockContext context = MockContext.Start(this.GetType()))
+            try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
-                EnsureClientsInitialized(context);
-              
-                string diskEncryptionSetId = getDefaultDiskEncryptionSetId();
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+                    EnsureClientsInitialized(context);
 
-                CreateImageTestHelper(originalTestLocation, diskEncryptionSetId);
+                    string diskEncryptionSetId = getDefaultDiskEncryptionSetId();
 
+                    CreateImageTestHelper(originalTestLocation, diskEncryptionSetId);
+
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
             }
         }
         
@@ -37,11 +44,18 @@ namespace Compute.Tests
         public void TestCreateImage_without_DiskEncryptionSet()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            using (MockContext context = MockContext.Start(this.GetType()))
+            try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "FranceCentral");
-                EnsureClientsInitialized(context);
-                CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null);
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+                    EnsureClientsInitialized(context);
+                    CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null);
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
             }
         }
 
@@ -71,7 +85,7 @@ namespace Compute.Tests
                     var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
                     var vhduri = vhdContainer + string.Format("/{0}.vhd", HttpMockServer.GetAssetName("TestImageOperations", TestPrefix));
 
-                    vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
+                    vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4V2;
                     vm.StorageProfile.DataDisks = new List<DataDisk>();
                     foreach (int index in new int[] { 1, 2 })
                     {

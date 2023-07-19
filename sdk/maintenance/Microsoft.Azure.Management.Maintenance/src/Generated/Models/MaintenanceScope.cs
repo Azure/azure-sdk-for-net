@@ -16,9 +16,38 @@ namespace Microsoft.Azure.Management.Maintenance.Models
     /// </summary>
     public static class MaintenanceScope
     {
-        public const string All = "All";
+        /// <summary>
+        /// This maintenance scope controls installation of azure platform
+        /// updates i.e. services on physical nodes hosting customer VMs.
+        /// </summary>
         public const string Host = "Host";
+        /// <summary>
+        /// This maintenance scope controls the default update maintenance of
+        /// the Azure Resource
+        /// </summary>
         public const string Resource = "Resource";
-        public const string InResource = "InResource";
+        /// <summary>
+        /// This maintenance scope controls os image installation on VM/VMSS
+        /// </summary>
+        public const string OSImage = "OSImage";
+        /// <summary>
+        /// This maintenance scope controls extension installation on VM/VMSS
+        /// </summary>
+        public const string Extension = "Extension";
+        /// <summary>
+        /// This maintenance scope controls installation of windows and linux
+        /// packages on VM/VMSS
+        /// </summary>
+        public const string InGuestPatch = "InGuestPatch";
+        /// <summary>
+        /// This maintenance scope controls installation of SQL server platform
+        /// updates.
+        /// </summary>
+        public const string SQLDB = "SQLDB";
+        /// <summary>
+        /// This maintenance scope controls installation of SQL managed
+        /// instance platform update.
+        /// </summary>
+        public const string SQLManagedInstance = "SQLManagedInstance";
     }
 }

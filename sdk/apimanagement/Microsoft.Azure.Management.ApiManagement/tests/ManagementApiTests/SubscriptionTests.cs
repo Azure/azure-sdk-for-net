@@ -11,12 +11,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using System.Net;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
     public class SubscriptionTests : TestBase
     {
         [Fact]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -79,14 +81,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                     "*");
 
                 // add new subscription
-                string newSubscriptionId = TestUtilities.GenerateName("newSubscriptionId");
-                string globalSubscriptionId = TestUtilities.GenerateName("globalSubscriptionId");
+                string newSubscriptionId = TestUtilities.GenerateName("subscription");
+                string globalSubscriptionId = TestUtilities.GenerateName("globalSubscription");
 
                 try
                 {
-                    string newSubscriptionName = TestUtilities.GenerateName("newSubscriptionName");
-                    string newSubscriptionPk = TestUtilities.GenerateName("newSubscriptionPK");
-                    string newSubscriptionSk = TestUtilities.GenerateName("newSubscriptionSK");
+                    string newSubscriptionName = TestUtilities.GenerateName("newSubscription1");
+                    string newSubscriptionPk = TestUtilities.GenerateName("newSubscription2");
+                    string newSubscriptionSk = TestUtilities.GenerateName("newSubscription3");
                     var newSubscriptionState = SubscriptionState.Active;
 
                     var newSubscriptionCreate = new SubscriptionCreateParameters(
@@ -110,7 +112,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(firstSubscription.OwnerId, subscriptionContract.OwnerId);
                     Assert.Equal(newSubscriptionState, subscriptionContract.State);
                     Assert.Equal(newSubscriptionSk, subscriptionContract.SecondaryKey);
-                    Assert.Equal(newSubscriptionPk, subscriptionContract.PrimaryKey);
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                        Assert.Equal(newSubscriptionPk, subscriptionContract.PrimaryKey);
                     Assert.Equal(newSubscriptionName, subscriptionContract.DisplayName);
 
                     var subscriptionResponse = await testBase.client.Subscription.GetWithHttpMessagesAsync(
@@ -130,9 +133,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(2, productSubscriptions.Count());
 
                     // patch the subscription
-                    string patchedName = TestUtilities.GenerateName("patchedName");
-                    string patchedPk = TestUtilities.GenerateName("patchedPk");
-                    string patchedSk = TestUtilities.GenerateName("patchedSk");
+                    string patchedName = TestUtilities.GenerateName("patched1");
+                    string patchedPk = TestUtilities.GenerateName("patched2");
+                    string patchedSk = TestUtilities.GenerateName("patched3");
                     var patchedExpirationDate = new DateTime(2025, 5 + 2, 20);
 
                     testBase.client.Subscription.Update(
@@ -157,10 +160,18 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(getResponse);
                     Assert.Equal(newSubscriptionId, getResponse.Name);
                     Assert.Equal(patchedName, getResponse.DisplayName);
-                    Assert.Equal(patchedPk, getResponse.PrimaryKey);
-                    Assert.Equal(patchedSk, getResponse.SecondaryKey);
+                    Assert.Null(getResponse.PrimaryKey);
+                    Assert.Null(getResponse.SecondaryKey);
                     Assert.Equal(newSubscriptionState, getResponse.State);
                     Assert.Equal(patchedExpirationDate, getResponse.ExpirationDate);
+
+                    var secretsResponse = testBase.client.Subscription.ListSecrets(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newSubscriptionId);
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                        Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
+                    Assert.Equal(patchedSk, secretsResponse.SecondaryKey);
 
                     // regenerate primary key
                     testBase.client.Subscription.RegeneratePrimaryKey(
@@ -169,20 +180,30 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newSubscriptionId);
 
                     // get the subscription to check the key
-                    getResponse = testBase.client.Subscription.Get(
+                    var keysResponse = testBase.client.Subscription.ListSecrets(
                         testBase.rgName,
                         testBase.serviceName,
                         newSubscriptionId);
 
-                    Assert.NotNull(getResponse);
-                    Assert.NotEqual(patchedPk, getResponse.PrimaryKey);
-                    Assert.Equal(patchedSk, getResponse.SecondaryKey);
+                    Assert.NotNull(keysResponse);
+                    Assert.NotEqual(patchedPk, keysResponse.PrimaryKey);
+                    Assert.Equal(patchedSk, keysResponse.SecondaryKey);
 
                     // regenerate secondary key
                     testBase.client.Subscription.RegenerateSecondaryKey(
                         testBase.rgName,
                         testBase.serviceName,
                         newSubscriptionId);
+
+                    // get the subscription to check the key
+                    var keysHttpResponse = await testBase.client.Subscription.ListSecretsWithHttpMessagesAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newSubscriptionId);
+
+                    Assert.NotNull(keysHttpResponse);
+                    Assert.NotEqual(patchedPk, keysHttpResponse.Body.PrimaryKey);
+                    Assert.NotEqual(patchedSk, keysHttpResponse.Body.SecondaryKey);
 
                     // get the subscription to check the key
                     subscriptionResponse = await testBase.client.Subscription.GetWithHttpMessagesAsync(
@@ -192,9 +213,9 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(subscriptionResponse);
                     Assert.NotNull(subscriptionResponse.Headers.ETag);
-                    Assert.NotEqual(patchedPk, subscriptionResponse.Body.PrimaryKey);
-                    Assert.NotEqual(patchedSk, subscriptionResponse.Body.SecondaryKey);
-                    
+                    Assert.Null(subscriptionResponse.Body.PrimaryKey);
+                    Assert.Null(subscriptionResponse.Body.SecondaryKey);
+
                     // delete the subscription
                     testBase.client.Subscription.Delete(
                         testBase.rgName,

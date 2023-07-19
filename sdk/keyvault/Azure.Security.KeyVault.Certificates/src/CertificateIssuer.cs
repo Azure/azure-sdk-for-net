@@ -185,7 +185,6 @@ namespace Azure.Security.KeyVault.Certificates
                             admin.ReadProperties(elem);
                             AdministratorContacts.Add(admin);
                         }
-                        Password = prop.Value.GetString();
                         break;
                 }
             }
@@ -261,7 +260,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (!string.IsNullOrEmpty(OrganizationId))
             {
-                json.WriteString(s_organizationIdPropertyNameBytes, AccountId);
+                json.WriteString(s_organizationIdPropertyNameBytes, OrganizationId);
             }
 
             if (!_administratorContacts.IsNullOrEmpty())

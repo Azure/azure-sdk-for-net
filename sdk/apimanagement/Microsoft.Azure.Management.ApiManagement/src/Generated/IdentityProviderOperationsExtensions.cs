@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static IdentityProviderContract CreateOrUpdate(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, IdentityProviderContract parameters, string ifMatch = default(string))
+            public static IdentityProviderContract CreateOrUpdate(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, IdentityProviderCreateContract parameters, string ifMatch = default(string))
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, identityProviderName, parameters, ifMatch).GetAwaiter().GetResult();
             }
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IdentityProviderContract> CreateOrUpdateAsync(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, IdentityProviderContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IdentityProviderContract> CreateOrUpdateAsync(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, IdentityProviderCreateContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, identityProviderName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -251,9 +251,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, IdentityProviderUpdateParameters parameters, string ifMatch)
+            public static IdentityProviderContract Update(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, IdentityProviderUpdateParameters parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, identityProviderName, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, identityProviderName, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -283,9 +283,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, IdentityProviderUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IdentityProviderContract> UpdateAsync(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, IdentityProviderUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, identityProviderName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, identityProviderName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -341,6 +344,54 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task DeleteAsync(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, identityProviderName, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the client secret details of the Identity Provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='identityProviderName'>
+            /// Identity Provider Type identifier. Possible values include: 'facebook',
+            /// 'google', 'microsoft', 'twitter', 'aad', 'aadB2C'
+            /// </param>
+            public static ClientSecretContract ListSecrets(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName)
+            {
+                return operations.ListSecretsAsync(resourceGroupName, serviceName, identityProviderName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the client secret details of the Identity Provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='identityProviderName'>
+            /// Identity Provider Type identifier. Possible values include: 'facebook',
+            /// 'google', 'microsoft', 'twitter', 'aad', 'aadB2C'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClientSecretContract> ListSecretsAsync(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, identityProviderName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

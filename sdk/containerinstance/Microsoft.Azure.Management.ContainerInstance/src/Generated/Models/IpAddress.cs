@@ -39,13 +39,17 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// 'Private'</param>
         /// <param name="ip">The IP exposed to the public internet.</param>
         /// <param name="dnsNameLabel">The Dns name label for the IP.</param>
+        /// <param name="dnsNameLabelReusePolicy">The value representing the
+        /// security enum. Possible values include: 'Unsecure', 'TenantReuse',
+        /// 'SubscriptionReuse', 'ResourceGroupReuse', 'Noreuse'</param>
         /// <param name="fqdn">The FQDN for the IP.</param>
-        public IpAddress(IList<Port> ports, string type, string ip = default(string), string dnsNameLabel = default(string), string fqdn = default(string))
+        public IpAddress(IList<Port> ports, string type, string ip = default(string), string dnsNameLabel = default(string), string dnsNameLabelReusePolicy = default(string), string fqdn = default(string))
         {
             Ports = ports;
             Type = type;
             Ip = ip;
             DnsNameLabel = dnsNameLabel;
+            DnsNameLabelReusePolicy = dnsNameLabelReusePolicy;
             Fqdn = fqdn;
             CustomInit();
         }
@@ -79,6 +83,14 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </summary>
         [JsonProperty(PropertyName = "dnsNameLabel")]
         public string DnsNameLabel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value representing the security enum. Possible
+        /// values include: 'Unsecure', 'TenantReuse', 'SubscriptionReuse',
+        /// 'ResourceGroupReuse', 'Noreuse'
+        /// </summary>
+        [JsonProperty(PropertyName = "dnsNameLabelReusePolicy")]
+        public string DnsNameLabelReusePolicy { get; set; }
 
         /// <summary>
         /// Gets the FQDN for the IP.

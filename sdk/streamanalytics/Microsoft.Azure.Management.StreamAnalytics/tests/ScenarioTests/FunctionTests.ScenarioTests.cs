@@ -218,10 +218,10 @@ namespace StreamAnalytics.Tests
                     Script = javaScriptFunctionCode
 
                 };
-                CloudException cloudException = Assert.Throws<CloudException>(
+                ErrorException errorException = Assert.Throws<ErrorException>(
                     () => streamAnalyticsManagementClient.Functions.RetrieveDefaultDefinition(resourceGroupName, jobName, functionName, retrieveDefaultDefinitionParameters));
-                Assert.Equal(HttpStatusCode.InternalServerError, cloudException.Response.StatusCode);
-                Assert.Contains(@"Retrieve default definition is not supported for function type: Microsoft.StreamAnalytics/JavascriptUdf", cloudException.Response.Content);
+                Assert.Equal(HttpStatusCode.InternalServerError, errorException.Response.StatusCode);
+                Assert.Contains(@"Retrieve default definition is not supported for function type: Microsoft.StreamAnalytics/JavascriptUdf", errorException.Response.Content);
 
                 // PUT function
                 var putResponse = await streamAnalyticsManagementClient.Functions.CreateOrReplaceWithHttpMessagesAsync(function, resourceGroupName, jobName, functionName);

@@ -41,23 +41,29 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// run has to happen.</param>
         /// <param name="agentConfiguration">The machine configuration of the
         /// run agent.</param>
+        /// <param name="agentPoolName">The dedicated agent pool for the
+        /// task.</param>
         /// <param name="timeout">Run timeout in seconds.</param>
         /// <param name="step">The properties for updating a task step.</param>
         /// <param name="trigger">The properties for updating trigger
         /// properties.</param>
         /// <param name="credentials">The parameters that describes a set of
         /// credentials that will be used when this run is invoked.</param>
+        /// <param name="logTemplate">The template that describes the
+        /// repository and tag information for run log artifact.</param>
         /// <param name="tags">The ARM resource tags.</param>
-        public TaskUpdateParameters(IdentityProperties identity = default(IdentityProperties), string status = default(string), PlatformUpdateParameters platform = default(PlatformUpdateParameters), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TaskStepUpdateParameters step = default(TaskStepUpdateParameters), TriggerUpdateParameters trigger = default(TriggerUpdateParameters), Credentials credentials = default(Credentials), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TaskUpdateParameters(IdentityProperties identity = default(IdentityProperties), string status = default(string), PlatformUpdateParameters platform = default(PlatformUpdateParameters), AgentProperties agentConfiguration = default(AgentProperties), string agentPoolName = default(string), int? timeout = default(int?), TaskStepUpdateParameters step = default(TaskStepUpdateParameters), TriggerUpdateParameters trigger = default(TriggerUpdateParameters), Credentials credentials = default(Credentials), string logTemplate = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Identity = identity;
             Status = status;
             Platform = platform;
             AgentConfiguration = agentConfiguration;
+            AgentPoolName = agentPoolName;
             Timeout = timeout;
             Step = step;
             Trigger = trigger;
             Credentials = credentials;
+            LogTemplate = logTemplate;
             Tags = tags;
             CustomInit();
         }
@@ -94,6 +100,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public AgentProperties AgentConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets the dedicated agent pool for the task.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.agentPoolName")]
+        public string AgentPoolName { get; set; }
+
+        /// <summary>
         /// Gets or sets run timeout in seconds.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeout")]
@@ -117,6 +129,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.credentials")]
         public Credentials Credentials { get; set; }
+
+        /// <summary>
+        /// Gets or sets the template that describes the repository and tag
+        /// information for run log artifact.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.logTemplate")]
+        public string LogTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets the ARM resource tags.

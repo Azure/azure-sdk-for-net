@@ -1,0 +1,38 @@
+parameters:
+  - name: SubscriptionConfiguration
+    type: string
+    default: $(sub-config-azure-cloud-test-resources)
+  - name: SubscriptionConfigurations
+    type: object
+    default: null
+
+steps:
+  - ${{ if parameters.SubscriptionConfiguration }}:
+    - pwsh: |
+        $config = @'
+          ${{ parameters.SubscriptionConfiguration }}
+        '@ | ConvertFrom-Json -AsHashtable
+
+        . ./eng/common/TestResources/SubConfig-Helpers.ps1
+        SetSubscriptionConfiguration $config
+      displayName: Initialize SubscriptionConfiguration variable
+
+  - ${{ if parameters.SubscriptionConfigurations }}:
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]{}"
+      displayName: Initialize SubscriptionConfiguration variable for merging
+      condition: eq(variables['SubscriptionConfiguration'], '')
+
+    - ${{ each config in parameters.SubscriptionConfigurations }}:
+      - pwsh: |
+          $configBase = @'
+            $(SubscriptionConfiguration)
+          '@ | ConvertFrom-Json -AsHashtable
+          $config = @'
+            ${{ config }}
+          '@ | ConvertFrom-Json -AsHashtable
+
+          . ./eng/common/TestResources/SubConfig-Helpers.ps1
+          UpdateSubscriptionConfiguration $configBase $config
+
+        displayName: Merge Test Resource Configurations

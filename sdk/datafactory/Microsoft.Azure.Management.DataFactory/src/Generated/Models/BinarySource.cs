@@ -41,11 +41,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="storeSettings">Binary store settings.</param>
-        public BinarySource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        /// <param name="formatSettings">Binary format settings.</param>
+        public BinarySource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), BinaryReadSettings formatSettings = default(BinaryReadSettings))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             StoreSettings = storeSettings;
+            FormatSettings = formatSettings;
             CustomInit();
         }
 
@@ -59,6 +64,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "storeSettings")]
         public StoreReadSettings StoreSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets binary format settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "formatSettings")]
+        public BinaryReadSettings FormatSettings { get; set; }
 
     }
 }

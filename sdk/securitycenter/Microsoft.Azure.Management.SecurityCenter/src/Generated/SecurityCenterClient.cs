@@ -77,6 +77,21 @@ namespace Microsoft.Azure.Management.Security
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IMdeOnboardingsOperations.
+        /// </summary>
+        public virtual IMdeOnboardingsOperations MdeOnboardings { get; private set; }
+
+        /// <summary>
+        /// Gets the ICustomAssessmentAutomationsOperations.
+        /// </summary>
+        public virtual ICustomAssessmentAutomationsOperations CustomAssessmentAutomations { get; private set; }
+
+        /// <summary>
+        /// Gets the ICustomEntityStoreAssignmentsOperations.
+        /// </summary>
+        public virtual ICustomEntityStoreAssignmentsOperations CustomEntityStoreAssignments { get; private set; }
+
+        /// <summary>
         /// Gets the IComplianceResultsOperations.
         /// </summary>
         public virtual IComplianceResultsOperations ComplianceResults { get; private set; }
@@ -87,14 +102,9 @@ namespace Microsoft.Azure.Management.Security
         public virtual IPricingsOperations Pricings { get; private set; }
 
         /// <summary>
-        /// Gets the IAlertsOperations.
+        /// Gets the IAdvancedThreatProtectionOperations.
         /// </summary>
-        public virtual IAlertsOperations Alerts { get; private set; }
-
-        /// <summary>
-        /// Gets the ISettingsOperations.
-        /// </summary>
-        public virtual ISettingsOperations Settings { get; private set; }
+        public virtual IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; private set; }
 
         /// <summary>
         /// Gets the IDeviceSecurityGroupsOperations.
@@ -122,31 +132,6 @@ namespace Microsoft.Azure.Management.Security
         public virtual IIotSecuritySolutionsAnalyticsRecommendationOperations IotSecuritySolutionsAnalyticsRecommendation { get; private set; }
 
         /// <summary>
-        /// Gets the IAllowedConnectionsOperations.
-        /// </summary>
-        public virtual IAllowedConnectionsOperations AllowedConnections { get; private set; }
-
-        /// <summary>
-        /// Gets the IDiscoveredSecuritySolutionsOperations.
-        /// </summary>
-        public virtual IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; private set; }
-
-        /// <summary>
-        /// Gets the IExternalSecuritySolutionsOperations.
-        /// </summary>
-        public virtual IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; private set; }
-
-        /// <summary>
-        /// Gets the IJitNetworkAccessPoliciesOperations.
-        /// </summary>
-        public virtual IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IAdaptiveApplicationControlsOperations.
-        /// </summary>
-        public virtual IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; private set; }
-
-        /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         public virtual ILocationsOperations Locations { get; private set; }
@@ -160,16 +145,6 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the ITasksOperations.
         /// </summary>
         public virtual ITasksOperations Tasks { get; private set; }
-
-        /// <summary>
-        /// Gets the ITopologyOperations.
-        /// </summary>
-        public virtual ITopologyOperations Topology { get; private set; }
-
-        /// <summary>
-        /// Gets the IAdvancedThreatProtectionOperations.
-        /// </summary>
-        public virtual IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; private set; }
 
         /// <summary>
         /// Gets the IAutoProvisioningSettingsOperations.
@@ -212,14 +187,194 @@ namespace Microsoft.Azure.Management.Security
         public virtual IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; private set; }
 
         /// <summary>
+        /// Gets the ISubAssessmentsOperations.
+        /// </summary>
+        public virtual ISubAssessmentsOperations SubAssessments { get; private set; }
+
+        /// <summary>
+        /// Gets the IAutomationsOperations.
+        /// </summary>
+        public virtual IAutomationsOperations Automations { get; private set; }
+
+        /// <summary>
+        /// Gets the IAlertsSuppressionRulesOperations.
+        /// </summary>
+        public virtual IAlertsSuppressionRulesOperations AlertsSuppressionRules { get; private set; }
+
+        /// <summary>
         /// Gets the IServerVulnerabilityAssessmentOperations.
         /// </summary>
         public virtual IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; private set; }
 
         /// <summary>
-        /// Gets the ISubAssessmentsOperations.
+        /// Gets the IAssessmentsMetadataOperations.
         /// </summary>
-        public virtual ISubAssessmentsOperations SubAssessments { get; private set; }
+        public virtual IAssessmentsMetadataOperations AssessmentsMetadata { get; private set; }
+
+        /// <summary>
+        /// Gets the IAssessmentsOperations.
+        /// </summary>
+        public virtual IAssessmentsOperations Assessments { get; private set; }
+
+        /// <summary>
+        /// Gets the IAdaptiveApplicationControlsOperations.
+        /// </summary>
+        public virtual IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; private set; }
+
+        /// <summary>
+        /// Gets the IAdaptiveNetworkHardeningsOperations.
+        /// </summary>
+        public virtual IAdaptiveNetworkHardeningsOperations AdaptiveNetworkHardenings { get; private set; }
+
+        /// <summary>
+        /// Gets the IAllowedConnectionsOperations.
+        /// </summary>
+        public virtual IAllowedConnectionsOperations AllowedConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the ITopologyOperations.
+        /// </summary>
+        public virtual ITopologyOperations Topology { get; private set; }
+
+        /// <summary>
+        /// Gets the IJitNetworkAccessPoliciesOperations.
+        /// </summary>
+        public virtual IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiscoveredSecuritySolutionsOperations.
+        /// </summary>
+        public virtual IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecuritySolutionsReferenceDataOperations.
+        /// </summary>
+        public virtual ISecuritySolutionsReferenceDataOperations SecuritySolutionsReferenceData { get; private set; }
+
+        /// <summary>
+        /// Gets the IExternalSecuritySolutionsOperations.
+        /// </summary>
+        public virtual IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecureScoresOperations.
+        /// </summary>
+        public virtual ISecureScoresOperations SecureScores { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecureScoreControlsOperations.
+        /// </summary>
+        public virtual ISecureScoreControlsOperations SecureScoreControls { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecureScoreControlDefinitionsOperations.
+        /// </summary>
+        public virtual ISecureScoreControlDefinitionsOperations SecureScoreControlDefinitions { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecuritySolutionsOperations.
+        /// </summary>
+        public virtual ISecuritySolutionsOperations SecuritySolutions { get; private set; }
+
+        /// <summary>
+        /// Gets the IConnectorsOperations.
+        /// </summary>
+        public virtual IConnectorsOperations Connectors { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentScansOperations SqlVulnerabilityAssessmentScans { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScanResultsOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentScanResultsOperations SqlVulnerabilityAssessmentScanResults { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentBaselineRulesOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentBaselineRulesOperations SqlVulnerabilityAssessmentBaselineRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IAlertsOperations.
+        /// </summary>
+        public virtual IAlertsOperations Alerts { get; private set; }
+
+        /// <summary>
+        /// Gets the ISettingsOperations.
+        /// </summary>
+        public virtual ISettingsOperations Settings { get; private set; }
+
+        /// <summary>
+        /// Gets the IIngestionSettingsOperations.
+        /// </summary>
+        public virtual IIngestionSettingsOperations IngestionSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the ISoftwareInventoriesOperations.
+        /// </summary>
+        public virtual ISoftwareInventoriesOperations SoftwareInventories { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorsOperations.
+        /// </summary>
+        public virtual ISecurityConnectorsOperations SecurityConnectors { get; private set; }
+
+        /// <summary>
+        /// Gets the IGovernanceRuleOperations.
+        /// </summary>
+        public virtual IGovernanceRuleOperations GovernanceRule { get; private set; }
+
+        /// <summary>
+        /// Gets the IGovernanceRulesOperations.
+        /// </summary>
+        public virtual IGovernanceRulesOperations GovernanceRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorGovernanceRuleOperations.
+        /// </summary>
+        public virtual ISecurityConnectorGovernanceRuleOperations SecurityConnectorGovernanceRule { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorGovernanceRulesOperations.
+        /// </summary>
+        public virtual ISecurityConnectorGovernanceRulesOperations SecurityConnectorGovernanceRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ISubscriptionGovernanceRulesExecuteStatusOperations.
+        /// </summary>
+        public virtual ISubscriptionGovernanceRulesExecuteStatusOperations SubscriptionGovernanceRulesExecuteStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorGovernanceRulesExecuteStatusOperations.
+        /// </summary>
+        public virtual ISecurityConnectorGovernanceRulesExecuteStatusOperations SecurityConnectorGovernanceRulesExecuteStatus { get; private set; }
+
+        /// <summary>
+        /// Gets the IGovernanceAssignmentsOperations.
+        /// </summary>
+        public virtual IGovernanceAssignmentsOperations GovernanceAssignments { get; private set; }
+
+        /// <summary>
+        /// Gets the IApplicationsOperations.
+        /// </summary>
+        public virtual IApplicationsOperations Applications { get; private set; }
+
+        /// <summary>
+        /// Gets the IApplicationOperations.
+        /// </summary>
+        public virtual IApplicationOperations Application { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorApplicationsOperations.
+        /// </summary>
+        public virtual ISecurityConnectorApplicationsOperations SecurityConnectorApplications { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorApplicationOperations.
+        /// </summary>
+        public virtual ISecurityConnectorApplicationOperations SecurityConnectorApplication { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
@@ -462,25 +617,20 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         private void Initialize()
         {
+            MdeOnboardings = new MdeOnboardingsOperations(this);
+            CustomAssessmentAutomations = new CustomAssessmentAutomationsOperations(this);
+            CustomEntityStoreAssignments = new CustomEntityStoreAssignmentsOperations(this);
             ComplianceResults = new ComplianceResultsOperations(this);
             Pricings = new PricingsOperations(this);
-            Alerts = new AlertsOperations(this);
-            Settings = new SettingsOperations(this);
+            AdvancedThreatProtection = new AdvancedThreatProtectionOperations(this);
             DeviceSecurityGroups = new DeviceSecurityGroupsOperations(this);
             IotSecuritySolution = new IotSecuritySolutionOperations(this);
             IotSecuritySolutionAnalytics = new IotSecuritySolutionAnalyticsOperations(this);
             IotSecuritySolutionsAnalyticsAggregatedAlert = new IotSecuritySolutionsAnalyticsAggregatedAlertOperations(this);
             IotSecuritySolutionsAnalyticsRecommendation = new IotSecuritySolutionsAnalyticsRecommendationOperations(this);
-            AllowedConnections = new AllowedConnectionsOperations(this);
-            DiscoveredSecuritySolutions = new DiscoveredSecuritySolutionsOperations(this);
-            ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
-            JitNetworkAccessPolicies = new JitNetworkAccessPoliciesOperations(this);
-            AdaptiveApplicationControls = new AdaptiveApplicationControlsOperations(this);
             Locations = new LocationsOperations(this);
             Operations = new Operations(this);
             Tasks = new TasksOperations(this);
-            Topology = new TopologyOperations(this);
-            AdvancedThreatProtection = new AdvancedThreatProtectionOperations(this);
             AutoProvisioningSettings = new AutoProvisioningSettingsOperations(this);
             Compliances = new CompliancesOperations(this);
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
@@ -489,8 +639,44 @@ namespace Microsoft.Azure.Management.Security
             RegulatoryComplianceStandards = new RegulatoryComplianceStandardsOperations(this);
             RegulatoryComplianceControls = new RegulatoryComplianceControlsOperations(this);
             RegulatoryComplianceAssessments = new RegulatoryComplianceAssessmentsOperations(this);
-            ServerVulnerabilityAssessment = new ServerVulnerabilityAssessmentOperations(this);
             SubAssessments = new SubAssessmentsOperations(this);
+            Automations = new AutomationsOperations(this);
+            AlertsSuppressionRules = new AlertsSuppressionRulesOperations(this);
+            ServerVulnerabilityAssessment = new ServerVulnerabilityAssessmentOperations(this);
+            AssessmentsMetadata = new AssessmentsMetadataOperations(this);
+            Assessments = new AssessmentsOperations(this);
+            AdaptiveApplicationControls = new AdaptiveApplicationControlsOperations(this);
+            AdaptiveNetworkHardenings = new AdaptiveNetworkHardeningsOperations(this);
+            AllowedConnections = new AllowedConnectionsOperations(this);
+            Topology = new TopologyOperations(this);
+            JitNetworkAccessPolicies = new JitNetworkAccessPoliciesOperations(this);
+            DiscoveredSecuritySolutions = new DiscoveredSecuritySolutionsOperations(this);
+            SecuritySolutionsReferenceData = new SecuritySolutionsReferenceDataOperations(this);
+            ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
+            SecureScores = new SecureScoresOperations(this);
+            SecureScoreControls = new SecureScoreControlsOperations(this);
+            SecureScoreControlDefinitions = new SecureScoreControlDefinitionsOperations(this);
+            SecuritySolutions = new SecuritySolutionsOperations(this);
+            Connectors = new ConnectorsOperations(this);
+            SqlVulnerabilityAssessmentScans = new SqlVulnerabilityAssessmentScansOperations(this);
+            SqlVulnerabilityAssessmentScanResults = new SqlVulnerabilityAssessmentScanResultsOperations(this);
+            SqlVulnerabilityAssessmentBaselineRules = new SqlVulnerabilityAssessmentBaselineRulesOperations(this);
+            Alerts = new AlertsOperations(this);
+            Settings = new SettingsOperations(this);
+            IngestionSettings = new IngestionSettingsOperations(this);
+            SoftwareInventories = new SoftwareInventoriesOperations(this);
+            SecurityConnectors = new SecurityConnectorsOperations(this);
+            GovernanceRule = new GovernanceRuleOperations(this);
+            GovernanceRules = new GovernanceRulesOperations(this);
+            SecurityConnectorGovernanceRule = new SecurityConnectorGovernanceRuleOperations(this);
+            SecurityConnectorGovernanceRules = new SecurityConnectorGovernanceRulesOperations(this);
+            SubscriptionGovernanceRulesExecuteStatus = new SubscriptionGovernanceRulesExecuteStatusOperations(this);
+            SecurityConnectorGovernanceRulesExecuteStatus = new SecurityConnectorGovernanceRulesExecuteStatusOperations(this);
+            GovernanceAssignments = new GovernanceAssignmentsOperations(this);
+            Applications = new ApplicationsOperations(this);
+            Application = new ApplicationOperations(this);
+            SecurityConnectorApplications = new SecurityConnectorApplicationsOperations(this);
+            SecurityConnectorApplication = new SecurityConnectorApplicationOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -521,12 +707,32 @@ namespace Microsoft.Azure.Management.Security
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExternalSecuritySolution>("kind"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ExternalSecuritySolution>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CustomAlertRule>("ruleType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CustomAlertRule>("ruleType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResourceDetails>("source"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResourceDetails>("source"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdditionalData>("assessedResourceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdditionalData>("assessedResourceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AutomationAction>("actionType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AutomationAction>("actionType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExternalSecuritySolution>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ExternalSecuritySolution>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AuthenticationDetailsProperties>("authenticationType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AuthenticationDetailsProperties>("authenticationType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResourceIdentifier>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResourceIdentifier>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AlertSimulatorRequestProperties>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AlertSimulatorRequestProperties>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Setting>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Setting>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CloudOffering>("offeringType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CloudOffering>("offeringType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EnvironmentData>("environmentType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EnvironmentData>("environmentType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AwsOrganizationalData>("organizationMembershipType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AwsOrganizationalData>("organizationMembershipType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<GcpOrganizationalData>("organizationMembershipType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<GcpOrganizationalData>("organizationMembershipType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

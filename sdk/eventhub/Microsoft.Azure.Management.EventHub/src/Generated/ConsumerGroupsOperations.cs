@@ -66,8 +66,11 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='consumerGroupName'>
         /// The consumer group name
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to create or update a consumer group resource.
+        /// <param name='userMetadata'>
+        /// User Metadata is a placeholder to store user-defined string data with
+        /// maximum length 1024. e.g. it can be used to store descriptive data, such as
+        /// list of teams and their contact information also user-defined configuration
+        /// settings can be stored.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -90,7 +93,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ConsumerGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConsumerGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, string userMetadata = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -128,6 +131,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 256);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -148,10 +155,6 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "consumerGroupName", 1);
                 }
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -159,6 +162,11 @@ namespace Microsoft.Azure.Management.EventHub
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            ConsumerGroup parameters = new ConsumerGroup();
+            if (userMetadata != null)
+            {
+                parameters.UserMetadata = userMetadata;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -385,6 +393,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 256);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -616,6 +628,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 256);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -873,6 +889,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 256);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);

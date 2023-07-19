@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.ServiceFabricManagedClusters.csproj" />
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" VersionOverride="1.0.0" />
+  </ItemGroup>
+</Project>

@@ -57,6 +57,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<IList<OutputFile>> OutputFilesProperty;
             public readonly PropertyAccessor<Common.TaskState?> PreviousStateProperty;
             public readonly PropertyAccessor<DateTime?> PreviousStateTransitionTimeProperty;
+            public readonly PropertyAccessor<int?> RequiredSlotsProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
             public readonly PropertyAccessor<Common.TaskState?> StateProperty;
             public readonly PropertyAccessor<DateTime?> StateTransitionTimeProperty;
@@ -87,6 +88,7 @@ namespace Microsoft.Azure.Batch
                 this.OutputFilesProperty = this.CreatePropertyAccessor<IList<OutputFile>>(nameof(OutputFiles), BindingAccess.Read | BindingAccess.Write);
                 this.PreviousStateProperty = this.CreatePropertyAccessor<Common.TaskState?>(nameof(PreviousState), BindingAccess.None);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(PreviousStateTransitionTime), BindingAccess.None);
+                this.RequiredSlotsProperty = this.CreatePropertyAccessor<int?>(nameof(RequiredSlots), BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>(nameof(ResourceFiles), BindingAccess.Read | BindingAccess.Write);
                 this.StateProperty = this.CreatePropertyAccessor<Common.TaskState?>(nameof(State), BindingAccess.None);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(StateTransitionTime), BindingAccess.None);
@@ -180,6 +182,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.PreviousStateTransitionTime,
                     nameof(PreviousStateTransitionTime),
                     BindingAccess.Read);
+                this.RequiredSlotsProperty = this.CreatePropertyAccessor(
+                    protocolObject.RequiredSlots,
+                    nameof(RequiredSlots),
+                    BindingAccess.Read);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor(
                     ResourceFile.ConvertFromProtocolCollectionAndFreeze(protocolObject.ResourceFiles),
                     nameof(ResourceFiles),
@@ -221,6 +227,14 @@ namespace Microsoft.Azure.Batch
         }
 
         #region Constructors
+
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="CloudTask"/> class.
+        /// </summary>
+        protected CloudTask()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
 
         internal CloudTask(
             BatchClient parentBatchClient,
@@ -485,6 +499,19 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the number of scheduling slots that the Task required to run.
+        /// </summary>
+        /// <remarks>
+        /// The default is 1. A Task can only be scheduled to run on a compute node if the node has enough free scheduling 
+        /// slots available. For multi-instance Tasks, this must be 1.
+        /// </remarks>
+        public int? RequiredSlots
+        {
+            get { return this.propertyContainer.RequiredSlotsProperty.Value; }
+            set { this.propertyContainer.RequiredSlotsProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
         /// line.
         /// </summary>
@@ -589,6 +616,7 @@ namespace Microsoft.Azure.Batch
                 Id = this.Id,
                 MultiInstanceSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.MultiInstanceSettings, (o) => o.GetTransportObject()),
                 OutputFiles = UtilitiesInternal.ConvertToProtocolCollection(this.OutputFiles),
+                RequiredSlots = this.RequiredSlots,
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),
                 UserIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.UserIdentity, (o) => o.GetTransportObject()),
             };

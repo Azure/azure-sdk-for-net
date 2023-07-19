@@ -92,6 +92,21 @@ namespace Microsoft.Azure.Management.SignalR
         public virtual IUsagesOperations Usages { get; private set; }
 
         /// <summary>
+        /// Gets the ISignalRPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual ISignalRPrivateEndpointConnectionsOperations SignalRPrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the ISignalRPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual ISignalRPrivateLinkResourcesOperations SignalRPrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the ISignalRSharedPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual ISignalRSharedPrivateLinkResourcesOperations SignalRSharedPrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SignalRManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -335,8 +350,11 @@ namespace Microsoft.Azure.Management.SignalR
             Operations = new Operations(this);
             SignalR = new SignalROperations(this);
             Usages = new UsagesOperations(this);
+            SignalRPrivateEndpointConnections = new SignalRPrivateEndpointConnectionsOperations(this);
+            SignalRPrivateLinkResources = new SignalRPrivateLinkResourcesOperations(this);
+            SignalRSharedPrivateLinkResources = new SignalRSharedPrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-10-01";
+            ApiVersion = "2021-06-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

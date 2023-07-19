@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// The namespace name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Aauthorization Rule Name.
+        /// Authorization Rule Name.
         /// </param>
         /// <param name='parameters'>
         /// The shared access authorization rule.
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SharedAccessAuthorizationRuleListResult>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceListKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Regenerates the Primary/Secondary Keys to the Namespace
         /// Authorization Rule

@@ -154,23 +154,23 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         }
 
         [Fact]
-        public async Task CannotPassANullKindWhenGetting()
+        public void CannotPassANullKindWhenGetting()
         {
-            var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => _storage.GetOutputAsync(null, "test.txt"));
+            var ex = Assert.Throws<ArgumentNullException>(() => _storage.GetOutput(null, "test.txt"));
             Assert.Equal("kind", ex.ParamName);
         }
 
         [Fact]
-        public async Task CannotPassANullFilePathWhenGetting()
+        public void CannotPassANullFilePathWhenGetting()
         {
-            var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => _storage.GetOutputAsync(TaskOutputKind.TaskLog, null));
+            var ex = Assert.Throws<ArgumentNullException>(() => _storage.GetOutput(TaskOutputKind.TaskLog, null));
             Assert.Equal("filePath", ex.ParamName);
         }
 
         [Fact]
-        public async Task CannotPassAnEmptyFilePathWhenGetting()
+        public void CannotPassAnEmptyFilePathWhenGetting()
         {
-            var ex = await Assert.ThrowsAsync<ArgumentException>(() => _storage.GetOutputAsync(TaskOutputKind.TaskLog, ""));
+            var ex = Assert.Throws<ArgumentException>(() => _storage.GetOutput(TaskOutputKind.TaskLog, ""));
             Assert.Equal("filePath", ex.ParamName);
         }
 

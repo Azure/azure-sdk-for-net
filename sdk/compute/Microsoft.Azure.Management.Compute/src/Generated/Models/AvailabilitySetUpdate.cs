@@ -36,9 +36,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the AvailabilitySetUpdate class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
         /// <param name="platformUpdateDomainCount">Update Domain
         /// count.</param>
         /// <param name="platformFaultDomainCount">Fault Domain count.</param>
@@ -46,12 +43,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// machines in the availability set.</param>
         /// <param name="proximityPlacementGroup">Specifies information about
         /// the proximity placement group that the availability set should be
-        /// assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2018-04-01.</param>
+        /// assigned to. Minimum api-version: 2018-04-01.</param>
         /// <param name="statuses">The resource status information.</param>
         /// <param name="sku">Sku of the availability set</param>
-        public AvailabilitySetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), IList<SubResource> virtualMachines = default(IList<SubResource>), SubResource proximityPlacementGroup = default(SubResource), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), Sku sku = default(Sku))
-            : base(tags, id, name, type)
+        public AvailabilitySetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), IList<SubResource> virtualMachines = default(IList<SubResource>), SubResource proximityPlacementGroup = default(SubResource), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), Sku sku = default(Sku))
+            : base(tags)
         {
             PlatformUpdateDomainCount = platformUpdateDomainCount;
             PlatformFaultDomainCount = platformFaultDomainCount;
@@ -88,9 +84,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies information about the proximity placement
-        /// group that the availability set should be assigned to.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2018-04-01.
+        /// group that the availability set should be assigned to. Minimum
+        /// api-version: 2018-04-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
         public SubResource ProximityPlacementGroup { get; set; }

@@ -75,6 +75,10 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal(location, getDomainResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Contains(getDomainResponse.Tags, tag => tag.Key == "originalTag1");
 
+                //// Diable test as identity is not part of GA Version yet.
+                //// Assert.Null(getDomainResponse.Identity);
+                Assert.Null(getDomainResponse.InboundIpRules);
+
                 // Get all domains created within a resourceGroup
                 IPage<Domain> domainsInResourceGroupPage = this.EventGridManagementClient.Domains.ListByResourceGroupAsync(resourceGroup).Result;
                 var domainsInResourceGroupList = new List<Domain>();
@@ -154,19 +158,33 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Contains(replaceDomainResponse.Tags, tag => tag.Key == "replacedTag1");
                 Assert.DoesNotContain(replaceDomainResponse.Tags, tag => tag.Key == "originalTag1");
 
-                // Update the domain
-                var updateDomainTagsDictionary = new Dictionary<string, string>()
+                // Update the domain with tags & allow traffic from all ips
+                var domainUpdateParameters = new DomainUpdateParameters()
                 {
-                    { "updatedTag1", "updatedValue1" },
-                    { "updatedTag2", "updatedValue2" }
+                    Tags = new Dictionary<string, string>()
+                    {
+                        { "updatedTag1", "updatedValue1" },
+                        { "updatedTag2", "updatedValue2" }
+                    },
+                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
                 };
 
-                var updateDomainResponse = this.EventGridManagementClient.Domains.UpdateAsync(resourceGroup, domainName, updateDomainTagsDictionary).Result;
+                var updateDomainResponse = this.EventGridManagementClient.Domains.UpdateAsync(resourceGroup, domainName, domainUpdateParameters).Result;
                 Assert.Contains(updateDomainResponse.Tags, tag => tag.Key == "updatedTag1");
                 Assert.DoesNotContain(updateDomainResponse.Tags, tag => tag.Key == "replacedTag1");
+                Assert.True(updateDomainResponse.PublicNetworkAccess == PublicNetworkAccess.Enabled);
+                Assert.Null(updateDomainResponse.InboundIpRules);
+
+                // Update the Topic with IP filtering feature
+                domain.PublicNetworkAccess = PublicNetworkAccess.Disabled;
+                domain.InboundIpRules = new List<InboundIpRule>();
+                domain.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.67.98" });
+                domain.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.90.100" });
+                var updateDomainResponseWithIpFilteringFeature = this.EventGridManagementClient.Domains.CreateOrUpdateAsync(resourceGroup, domainName, domain).Result;
+                Assert.False(updateDomainResponseWithIpFilteringFeature.PublicNetworkAccess == PublicNetworkAccess.Enabled);
+                Assert.True(updateDomainResponseWithIpFilteringFeature.InboundIpRules.Count() == 2);
 
                 // Create domain topic manually.
-
                 DomainTopic createDomainTopicResponse = this.EventGridManagementClient.DomainTopics.CreateOrUpdateAsync(resourceGroup, domainName, domainTopicName1).Result;
 
                 Assert.NotNull(createDomainTopicResponse);
@@ -232,6 +250,70 @@ namespace EventGrid.Tests.ScenarioTests
 
                 // Delete domain
                 this.EventGridManagementClient.Domains.DeleteAsync(resourceGroup, domainName).Wait();
+            }
+        }
+
+        [Fact]
+        public void DomainDisableLocalAuthAndAutoCreateAndAutoDelete()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                this.InitializeClients(context);
+
+                var location = this.ResourceManagementClient.GetLocationFromProvider();
+
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(EventGridManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                var domainName = TestUtilities.GenerateName(EventGridManagementHelper.DomainPrefix);
+                var domainTopicName1 = TestUtilities.GenerateName(EventGridManagementHelper.DomainTopicPrefix);
+                var domainTopicName2 = TestUtilities.GenerateName(EventGridManagementHelper.DomainTopicPrefix);
+
+                // Temporarily commenting this out as this is not yet enabled for the new API version
+                // var operationsResponse = this.EventGridManagementClient.Operations.List();
+
+                var originalTagsDictionary = new Dictionary<string, string>()
+                {
+                    {"originalTag1", "originalValue1"},
+                    {"originalTag2", "originalValue2"}
+                };
+
+                Domain domain = new Domain()
+                {
+                    Location = location,
+                    Tags = originalTagsDictionary,
+                    InputSchema = InputSchema.CloudEventSchemaV10,
+                    DisableLocalAuth = false,
+                    AutoCreateTopicWithFirstSubscription = false,
+                    AutoDeleteTopicWithLastSubscription = false,
+                    InputSchemaMapping = new JsonInputSchemaMapping()
+                    {
+                        Topic = new JsonField("myTopicField")
+                    }
+                };
+
+                var createDomainResponse = this.EventGridManagementClient.Domains.CreateOrUpdateAsync(resourceGroup, domainName, domain).Result;
+                Assert.NotNull(createDomainResponse);
+                Assert.Equal(createDomainResponse.Name, domainName);
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                // Get the created domain
+                var getDomainResponse = this.EventGridManagementClient.Domains.Get(resourceGroup, domainName);
+                if (string.Compare(getDomainResponse.ProvisioningState, "Succeeded", true) != 0)
+                {
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                }
+
+                getDomainResponse = this.EventGridManagementClient.Domains.Get(resourceGroup, domainName);
+                Assert.NotNull(getDomainResponse);
+                Assert.False(getDomainResponse.DisableLocalAuth);
+                Assert.False(getDomainResponse.AutoCreateTopicWithFirstSubscription);
+                Assert.False(getDomainResponse.AutoDeleteTopicWithLastSubscription);
             }
         }
     }

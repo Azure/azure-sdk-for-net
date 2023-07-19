@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Response object for supported operating systems API.
+    /// Supported operating systems.
     /// </summary>
     public partial class SupportedOperatingSystems : Resource
     {
@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="name">Resource Name</param>
         /// <param name="type">Resource Type</param>
         /// <param name="location">Resource Location</param>
-        /// <param name="properties">Properties model for supported OS
-        /// API.</param>
+        /// <param name="properties">The supported operating systems
+        /// properties.</param>
         public SupportedOperatingSystems(string id = default(string), string name = default(string), string type = default(string), string location = default(string), SupportedOSProperties properties = default(SupportedOSProperties))
             : base(id, name, type, location)
         {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties model for supported OS API.
+        /// Gets or sets the supported operating systems properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public SupportedOSProperties Properties { get; set; }

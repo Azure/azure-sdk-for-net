@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationPoliciesOperationsExtensions
     {
             /// <summary>
-            /// Gets the list of replication policies
+            /// Gets the list of replication policies.
             /// </summary>
             /// <remarks>
             /// Lists the replication policies for a vault.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Gets the list of replication policies
+            /// Gets the list of replication policies.
             /// </summary>
             /// <remarks>
             /// Lists the replication policies for a vault.
@@ -99,16 +99,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Creates the policy.
             /// </summary>
             /// <remarks>
-            /// The operation to create a replication policy
+            /// The operation to create a replication policy.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyName'>
-            /// Replication policy name
+            /// Replication policy name.
             /// </param>
             /// <param name='input'>
-            /// Create policy input
+            /// Create policy input.
             /// </param>
             public static Policy Create(this IReplicationPoliciesOperations operations, string policyName, CreatePolicyInput input)
             {
@@ -119,16 +119,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Creates the policy.
             /// </summary>
             /// <remarks>
-            /// The operation to create a replication policy
+            /// The operation to create a replication policy.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyName'>
-            /// Replication policy name
+            /// Replication policy name.
             /// </param>
             /// <param name='input'>
-            /// Create policy input
+            /// Create policy input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Policy Id.
             /// </param>
             /// <param name='input'>
-            /// Update Policy Input
+            /// Update Policy Input.
             /// </param>
             public static Policy Update(this IReplicationPoliciesOperations operations, string policyName, UpdatePolicyInput input)
             {
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Policy Id.
             /// </param>
             /// <param name='input'>
-            /// Update Policy Input
+            /// Update Policy Input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -228,16 +228,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Creates the policy.
             /// </summary>
             /// <remarks>
-            /// The operation to create a replication policy
+            /// The operation to create a replication policy.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyName'>
-            /// Replication policy name
+            /// Replication policy name.
             /// </param>
             /// <param name='input'>
-            /// Create policy input
+            /// Create policy input.
             /// </param>
             public static Policy BeginCreate(this IReplicationPoliciesOperations operations, string policyName, CreatePolicyInput input)
             {
@@ -248,16 +248,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Creates the policy.
             /// </summary>
             /// <remarks>
-            /// The operation to create a replication policy
+            /// The operation to create a replication policy.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyName'>
-            /// Replication policy name
+            /// Replication policy name.
             /// </param>
             /// <param name='input'>
-            /// Create policy input
+            /// Create policy input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Policy Id.
             /// </param>
             /// <param name='input'>
-            /// Update Policy Input
+            /// Update Policy Input.
             /// </param>
             public static Policy BeginUpdate(this IReplicationPoliciesOperations operations, string policyName, UpdatePolicyInput input)
             {
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Policy Id.
             /// </param>
             /// <param name='input'>
-            /// Update Policy Input
+            /// Update Policy Input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Gets the list of replication policies
+            /// Gets the list of replication policies.
             /// </summary>
             /// <remarks>
             /// Lists the replication policies for a vault.
@@ -371,7 +371,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Gets the list of replication policies
+            /// Gets the list of replication policies.
             /// </summary>
             /// <remarks>
             /// Lists the replication policies for a vault.

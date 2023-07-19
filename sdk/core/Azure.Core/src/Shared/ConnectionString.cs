@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Azure.Core
@@ -20,6 +21,9 @@ namespace Azure.Core
             return new ConnectionString(ParseSegments(connectionString, segmentSeparator, keywordValueSeparator), segmentSeparator, keywordValueSeparator);
         }
 
+        public static ConnectionString Empty(string segmentSeparator = ";", string keywordValueSeparator = "=") =>
+            new(new Dictionary<string, string>(), segmentSeparator, keywordValueSeparator);
+
         private ConnectionString(Dictionary<string, string> pairs, string pairSeparator, string keywordValueSeparator)
         {
             _pairs = pairs;
@@ -30,8 +34,20 @@ namespace Azure.Core
         public string GetRequired(string keyword) =>
             _pairs.TryGetValue(keyword, out var value) ? value : throw new InvalidOperationException($"Required keyword '{keyword}' is missing in connection string.");
 
-        public string GetNonRequired(string keyword) =>
+        public string? GetNonRequired(string keyword) =>
             _pairs.TryGetValue(keyword, out var value) ? value : null;
+
+        public bool TryGetSegmentValue(string keyword, out string? value) =>
+            _pairs.TryGetValue(keyword, out value);
+
+        public string? GetSegmentValueOrDefault(string keyword, string defaultValue) =>
+            _pairs.TryGetValue(keyword, out var value) switch {
+                false => defaultValue,
+                true => value
+            };
+
+        public bool ContainsSegmentKey(string keyword) =>
+            _pairs.ContainsKey(keyword);
 
         public void Replace(string keyword, string value)
         {
@@ -41,8 +57,16 @@ namespace Azure.Core
             }
         }
 
+        public void Add(string keyword, string value) =>
+            _pairs.Add(keyword, value);
+
         public override string ToString()
         {
+            if (_pairs.Count == 0)
+            {
+                return string.Empty;
+            }
+
             var stringBuilder = new StringBuilder();
             var isFirst = true;
             foreach (KeyValuePair<string, string> pair in _pairs)

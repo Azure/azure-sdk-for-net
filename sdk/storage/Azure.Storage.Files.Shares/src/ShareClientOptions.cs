@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -19,25 +20,143 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// The versions of Azure File Storage supported by this client
         /// library.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services" />.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
+        /// Versioning for the Azure Storage services</see>.
         /// </summary>
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
             /// The 2019-02-02 service version described at
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services#version-2019-02-02" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2019-02-02">
+            /// Version 2019-02-02</see>
             /// </summary>
-            V2019_02_02 = 1
+            V2019_02_02 = 1,
+
+            /// <summary>
+            /// The 2019-07-07 service version described at
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2019-07-07">
+            /// Version 2019-07-07</see>
+            /// </summary>
+            V2019_07_07 = 2,
+
+            /// <summary>
+            /// The 2019-12-12 service version.
+            /// </summary>
+            V2019_12_12 = 3,
+
+            /// <summary>
+            /// The 2020-02-10 service version.
+            /// </summary>
+            V2020_02_10 = 4,
+
+            /// <summary>
+            /// The 2020-04-08 service version.
+            /// </summary>
+            V2020_04_08 = 5,
+
+            /// <summary>
+            /// The 2020-06-12 service version.
+            /// </summary>
+            V2020_06_12 = 6,
+
+            /// <summary>
+            /// The 2020-08-14 service version.
+            /// </summary>
+            V2020_08_04 = 7,
+
+            /// <summary>
+            /// The 2020-10-02 service version.
+            /// </summary>
+            V2020_10_02 = 8,
+
+            /// <summary>
+            /// The 2020-12-06 service version.
+            /// </summary>
+            V2020_12_06 = 9,
+
+            /// <summary>
+            /// The 2021-02-12 service version.
+            /// </summary>
+            V2021_02_12 = 10,
+
+            /// <summary>
+            /// The 2021-04-10 serivce version.
+            /// </summary>
+            V2021_04_10 = 11,
+
+            /// <summary>
+            /// The 2021-06-08 service version.
+            /// </summary>
+            V2021_06_08 = 12,
+
+            /// <summary>
+            /// The 2021-08-06 service version.
+            /// </summary>
+            V2021_08_06 = 13,
+
+            /// <summary>
+            /// The 2021-10-04 service version.
+            /// </summary>
+            V2021_10_04 = 14,
+
+            /// <summary>
+            /// The 2021-12-02 service version.
+            /// </summary>
+            V2021_12_02 = 15,
+
+            /// <summary>
+            /// The 2022-11-02 service version.
+            /// </summary>
+            V2022_11_02 = 16,
+
+            /// <summary>
+            /// The 2023-01-03 service version.
+            /// </summary>
+            V2023_01_03 = 17
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services" />.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
+        /// Versioning for the Azure Storage services</see>.
         /// </summary>
         public ServiceVersion Version { get; }
+
+        /// <summary>
+        /// Transfer validation options to be applied to file transfers from this client.
+        /// </summary>
+        public TransferValidationOptions TransferValidation { get; } = new();
+
+        /// <summary>
+        /// If set to true, trailing dot (.) will be allowed to suffex directory and file names.
+        /// If false, the trailing dot will be trimmed.
+        /// Supported by x-ms-version 2022-11-02 and above.
+        /// </summary>
+        public bool? AllowTrailingDot { get; set; }
+
+        /// <summary>
+        /// If set to true, trailing dot (.) will be allowed to source file names.
+        /// If false, the trailing dot will be trimmed.
+        /// Supported by x-ms-version 2022-11-02 and above.
+        /// Applicable to <see cref="ShareFileClient.Rename(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.RenameAsync(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.UploadRangeFromUri(System.Uri, HttpRange, HttpRange, Models.ShareFileUploadRangeFromUriOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.UploadRangeFromUriAsync(System.Uri, HttpRange, HttpRange, Models.ShareFileUploadRangeFromUriOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.StartCopy(System.Uri, Models.ShareFileCopyOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareFileClient.StartCopyAsync(System.Uri, Models.ShareFileCopyOptions, System.Threading.CancellationToken)"/>,
+        /// <see cref="ShareDirectoryClient.Rename(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
+        /// and <see cref="ShareDirectoryClient.RenameAsync(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>.
+        /// </summary>
+        public bool? AllowSourceTrailingDot { get; set; }
+
+        /// <summary>
+        /// Share Token Intent.  For use with token authentication.  Used to indicate the intent of the request.
+        /// This is currently required when using token authentication.
+        /// </summary>
+        public ShareTokenIntent? ShareTokenIntent { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClientOptions"/>
@@ -49,7 +168,16 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         public ShareClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
+            if (ServiceVersion.V2019_02_02 <= version
+                && version <= StorageVersionExtensions.MaxVersion)
+            {
+                Version = version;
+            }
+            else
+            {
+                throw Errors.VersionNotSupported(nameof(version));
+            }
+
             this.Initialize();
             AddHeadersAndQueryParameters();
         }

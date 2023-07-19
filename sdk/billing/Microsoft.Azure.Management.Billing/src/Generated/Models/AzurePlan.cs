@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Details about the azure plan.
+    /// Details of the Azure plan.
     /// </summary>
     public partial class AzurePlan
     {

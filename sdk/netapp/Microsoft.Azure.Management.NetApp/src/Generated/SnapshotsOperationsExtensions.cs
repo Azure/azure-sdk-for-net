@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static Snapshot Get(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static Snapshot Create(this ISnapshotsOperations operations, Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -240,9 +240,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
-            public static Snapshot Update(this ISnapshotsOperations operations, SnapshotPatch body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
+            public static Snapshot Update(this ISnapshotsOperations operations, object body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
                 return operations.UpdateAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
             }
@@ -272,12 +272,12 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Snapshot> UpdateAsync(this ISnapshotsOperations operations, SnapshotPatch body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Snapshot> UpdateAsync(this ISnapshotsOperations operations, object body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static void Delete(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -344,6 +344,75 @@ namespace Microsoft.Azure.Management.NetApp
             public static async Task DeleteAsync(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Create a new Snapshot Restore Files request
+            /// </summary>
+            /// <remarks>
+            /// Restore the specified files from the specified snapshot to the active
+            /// filesystem
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Restore payload supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='snapshotName'>
+            /// The name of the snapshot
+            /// </param>
+            public static void RestoreFiles(this ISnapshotsOperations operations, SnapshotRestoreFiles body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
+            {
+                operations.RestoreFilesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a new Snapshot Restore Files request
+            /// </summary>
+            /// <remarks>
+            /// Restore the specified files from the specified snapshot to the active
+            /// filesystem
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Restore payload supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='snapshotName'>
+            /// The name of the snapshot
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RestoreFilesAsync(this ISnapshotsOperations operations, SnapshotRestoreFiles body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RestoreFilesWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -371,7 +440,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static Snapshot BeginCreate(this ISnapshotsOperations operations, Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -403,7 +472,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -411,6 +480,76 @@ namespace Microsoft.Azure.Management.NetApp
             public static async Task<Snapshot> BeginCreateAsync(this ISnapshotsOperations operations, Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a snapshot
+            /// </summary>
+            /// <remarks>
+            /// Patch a snapshot
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Snapshot object supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='snapshotName'>
+            /// The name of the snapshot
+            /// </param>
+            public static Snapshot BeginUpdate(this ISnapshotsOperations operations, object body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
+            {
+                return operations.BeginUpdateAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a snapshot
+            /// </summary>
+            /// <remarks>
+            /// Patch a snapshot
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Snapshot object supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='snapshotName'>
+            /// The name of the snapshot
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Snapshot> BeginUpdateAsync(this ISnapshotsOperations operations, object body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -438,7 +577,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             public static void BeginDelete(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
@@ -467,7 +606,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// The name of the volume
             /// </param>
             /// <param name='snapshotName'>
-            /// The name of the mount target
+            /// The name of the snapshot
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -475,6 +614,75 @@ namespace Microsoft.Azure.Management.NetApp
             public static async Task BeginDeleteAsync(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Create a new Snapshot Restore Files request
+            /// </summary>
+            /// <remarks>
+            /// Restore the specified files from the specified snapshot to the active
+            /// filesystem
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Restore payload supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='snapshotName'>
+            /// The name of the snapshot
+            /// </param>
+            public static void BeginRestoreFiles(this ISnapshotsOperations operations, SnapshotRestoreFiles body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
+            {
+                operations.BeginRestoreFilesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a new Snapshot Restore Files request
+            /// </summary>
+            /// <remarks>
+            /// Restore the specified files from the specified snapshot to the active
+            /// filesystem
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Restore payload supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='snapshotName'>
+            /// The name of the snapshot
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRestoreFilesAsync(this ISnapshotsOperations operations, SnapshotRestoreFiles body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRestoreFilesWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

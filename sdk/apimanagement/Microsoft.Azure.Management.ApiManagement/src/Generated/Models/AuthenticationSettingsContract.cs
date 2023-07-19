@@ -33,15 +33,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         /// <param name="oAuth2">OAuth2 Authentication settings</param>
         /// <param name="openid">OpenID Connect Authentication Settings</param>
-        /// <param name="subscriptionKeyRequired">Specifies whether
-        /// subscription key is required during call to this API, true - API is
-        /// included into closed products only, false - API is included into
-        /// open products alone, null - there is a mix of products.</param>
-        public AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2 = default(OAuth2AuthenticationSettingsContract), OpenIdAuthenticationSettingsContract openid = default(OpenIdAuthenticationSettingsContract), bool? subscriptionKeyRequired = default(bool?))
+        public AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2 = default(OAuth2AuthenticationSettingsContract), OpenIdAuthenticationSettingsContract openid = default(OpenIdAuthenticationSettingsContract))
         {
             OAuth2 = oAuth2;
             Openid = openid;
-            SubscriptionKeyRequired = subscriptionKeyRequired;
             CustomInit();
         }
 
@@ -61,15 +56,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "openid")]
         public OpenIdAuthenticationSettingsContract Openid { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies whether subscription key is required during
-        /// call to this API, true - API is included into closed products only,
-        /// false - API is included into open products alone, null - there is a
-        /// mix of products.
-        /// </summary>
-        [JsonProperty(PropertyName = "subscriptionKeyRequired")]
-        public bool? SubscriptionKeyRequired { get; set; }
 
     }
 }

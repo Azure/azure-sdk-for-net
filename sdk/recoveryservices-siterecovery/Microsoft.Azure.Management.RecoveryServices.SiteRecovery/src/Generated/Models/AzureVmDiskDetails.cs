@@ -41,7 +41,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// VM.</param>
         /// <param name="diskEncryptionSetId">The DiskEncryptionSet ARM
         /// ID.</param>
-        public AzureVmDiskDetails(string vhdType = default(string), string vhdId = default(string), string diskId = default(string), string vhdName = default(string), string maxSizeMB = default(string), string targetDiskLocation = default(string), string targetDiskName = default(string), string lunId = default(string), string diskEncryptionSetId = default(string))
+        /// <param name="customTargetDiskName">The custom target Azure disk
+        /// name.</param>
+        public AzureVmDiskDetails(string vhdType = default(string), string vhdId = default(string), string diskId = default(string), string vhdName = default(string), string maxSizeMB = default(string), string targetDiskLocation = default(string), string targetDiskName = default(string), string lunId = default(string), string diskEncryptionSetId = default(string), string customTargetDiskName = default(string))
         {
             VhdType = vhdType;
             VhdId = vhdId;
@@ -52,6 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetDiskName = targetDiskName;
             LunId = lunId;
             DiskEncryptionSetId = diskEncryptionSetId;
+            CustomTargetDiskName = customTargetDiskName;
             CustomInit();
         }
 
@@ -113,6 +116,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionSetId")]
         public string DiskEncryptionSetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom target Azure disk name.
+        /// </summary>
+        [JsonProperty(PropertyName = "customTargetDiskName")]
+        public string CustomTargetDiskName { get; set; }
 
     }
 }

@@ -16,20 +16,38 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// </summary>
     public static class DataSourceKind
     {
-        public const string AzureActivityLog = "AzureActivityLog";
-        public const string ChangeTrackingPath = "ChangeTrackingPath";
-        public const string ChangeTrackingDefaultPath = "ChangeTrackingDefaultPath";
-        public const string ChangeTrackingDefaultRegistry = "ChangeTrackingDefaultRegistry";
-        public const string ChangeTrackingCustomRegistry = "ChangeTrackingCustomRegistry";
-        public const string CustomLog = "CustomLog";
-        public const string CustomLogCollection = "CustomLogCollection";
-        public const string GenericDataSource = "GenericDataSource";
-        public const string IISLogs = "IISLogs";
-        public const string LinuxPerformanceObject = "LinuxPerformanceObject";
-        public const string LinuxPerformanceCollection = "LinuxPerformanceCollection";
-        public const string LinuxSyslog = "LinuxSyslog";
-        public const string LinuxSyslogCollection = "LinuxSyslogCollection";
         public const string WindowsEvent = "WindowsEvent";
         public const string WindowsPerformanceCounter = "WindowsPerformanceCounter";
+        public const string IISLogs = "IISLogs";
+        public const string LinuxSyslog = "LinuxSyslog";
+        public const string LinuxSyslogCollection = "LinuxSyslogCollection";
+        public const string LinuxPerformanceObject = "LinuxPerformanceObject";
+        public const string LinuxPerformanceCollection = "LinuxPerformanceCollection";
+        public const string CustomLog = "CustomLog";
+        public const string CustomLogCollection = "CustomLogCollection";
+        public const string AzureAuditLog = "AzureAuditLog";
+        public const string AzureActivityLog = "AzureActivityLog";
+        public const string GenericDataSource = "GenericDataSource";
+        public const string ChangeTrackingCustomPath = "ChangeTrackingCustomPath";
+        public const string ChangeTrackingPath = "ChangeTrackingPath";
+        public const string ChangeTrackingServices = "ChangeTrackingServices";
+        public const string ChangeTrackingDataTypeConfiguration = "ChangeTrackingDataTypeConfiguration";
+        public const string ChangeTrackingDefaultRegistry = "ChangeTrackingDefaultRegistry";
+        public const string ChangeTrackingRegistry = "ChangeTrackingRegistry";
+        public const string ChangeTrackingLinuxPath = "ChangeTrackingLinuxPath";
+        public const string LinuxChangeTrackingPath = "LinuxChangeTrackingPath";
+        public const string ChangeTrackingContentLocation = "ChangeTrackingContentLocation";
+        public const string WindowsTelemetry = "WindowsTelemetry";
+        public const string Office365 = "Office365";
+        public const string SecurityWindowsBaselineConfiguration = "SecurityWindowsBaselineConfiguration";
+        public const string SecurityCenterSecurityWindowsBaselineConfiguration = "SecurityCenterSecurityWindowsBaselineConfiguration";
+        public const string SecurityEventCollectionConfiguration = "SecurityEventCollectionConfiguration";
+        public const string SecurityInsightsSecurityEventCollectionConfiguration = "SecurityInsightsSecurityEventCollectionConfiguration";
+        public const string ImportComputerGroup = "ImportComputerGroup";
+        public const string NetworkMonitoring = "NetworkMonitoring";
+        public const string Itsm = "Itsm";
+        public const string DnsAnalytics = "DnsAnalytics";
+        public const string ApplicationInsights = "ApplicationInsights";
+        public const string SqlDataClassification = "SqlDataClassification";
     }
 }

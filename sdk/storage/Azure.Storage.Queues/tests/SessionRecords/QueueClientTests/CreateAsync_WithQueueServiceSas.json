@@ -1,15 +1,16 @@
-{
+﻿{
   "Entries": [
     {
-      "RequestUri": "https://jolovstorage.queue.core.windows.net/test-queue-8a7a4872-23f6-21a0-ea58-9e860474f068?sv=2019-02-02\u0026st=2019-12-03T03%3A50%3A20Z\u0026se=2019-12-03T05%3A50%3A20Z\u0026sp=raup\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.queue.core.windows.net/test-queue-034a7b09-6747-58cb-a1c4-c95dce6a9e93?sv=2023-01-03&st=2021-01-26T17%3A51%3A11Z&se=2021-01-26T19%3A51%3A11Z&sp=raup&sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "traceparent": "00-cdabc84ce3452b4eb2ceb5bdf820897d-23fe34181c1d954c-00",
+        "Accept": "application/xml",
+        "traceparent": "00-b7aaa838136560459192a5ab0520b72d-f61979189c66c147-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.1.0-dev.20191202.1\u002B27a1653c299c1f8bf2faf8ee9641c2b2cc747a23",
-          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Queues/12.7.0-alpha.20210126.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "5a91740c-23b1-8ac5-c20c-8cc01ee453ff",
+        "x-ms-client-request-id": "7bdee3a0-f07a-e79b-fcb2-633e98a7adf0",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -18,25 +19,25 @@
       "ResponseHeaders": {
         "Content-Length": "246",
         "Content-Type": "application/xml",
-        "Date": "Tue, 03 Dec 2019 04:50:20 GMT",
+        "Date": "Tue, 26 Jan 2021 18:51:10 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-error-code": "AuthorizationFailure",
-        "x-ms-request-id": "6384232e-1003-001a-2a95-a9dec0000000",
+        "x-ms-request-id": "207f024f-9003-006b-6a14-f45d36000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationFailure\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation.\n",
-        "RequestId:6384232e-1003-001a-2a95-a9dec0000000\n",
-        "Time:2019-12-03T04:50:21.0336845Z\u003C/Message\u003E\u003C/Error\u003E"
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>AuthorizationFailure</Code><Message>This request is not authorized to perform this operation.\n",
+        "RequestId:207f024f-9003-006b-6a14-f45d36000000\n",
+        "Time:2021-01-26T18:51:11.0074691Z</Message></Error>"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-12-02T20:50:20.3289288-08:00",
-    "RandomSeed": "1535542887",
-    "Storage_TestConfigDefault": "ProductionTenant\njolovstorage\nU2FuaXRpemVk\nhttps://jolovstorage.blob.core.windows.net\nhttps://jolovstorage.file.core.windows.net\nhttps://jolovstorage.queue.core.windows.net\nhttps://jolovstorage.table.core.windows.net\n\n\n\n\nhttps://jolovstorage-secondary.blob.core.windows.net\nhttps://jolovstorage-secondary.file.core.windows.net\nhttps://jolovstorage-secondary.queue.core.windows.net\nhttps://jolovstorage-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://jolovstorage.blob.core.windows.net/;QueueEndpoint=https://jolovstorage.queue.core.windows.net/;FileEndpoint=https://jolovstorage.file.core.windows.net/;BlobSecondaryEndpoint=https://jolovstorage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://jolovstorage-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://jolovstorage-secondary.file.core.windows.net/;AccountName=jolovstorage;AccountKey=Sanitized"
+    "DateTimeOffsetNow": "2021-01-26T12:51:11.5793434-06:00",
+    "RandomSeed": "1123651227",
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

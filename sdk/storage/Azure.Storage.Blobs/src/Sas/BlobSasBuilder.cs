@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,7 +14,9 @@ namespace Azure.Storage.Sas
     /// <summary>
     /// <see cref="BlobSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage container or blob.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+    /// Create a service SAS</see>.
     /// </summary>
     public class BlobSasBuilder
     {
@@ -22,6 +25,13 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        /// <remarks>
+        /// This property has been deprecated and we will always use the latest
+        /// storage SAS version of the Storage service supported. This change
+        /// does not have any impact on how your application generates or makes
+        /// use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
@@ -82,30 +92,41 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// The name of the blob being made accessible, or
-        /// <see cref="String.Empty"/> for a container SAS.
+        /// <see cref="string.Empty"/> for a container SAS.
         /// </summary>
         public string BlobName { get; set; }
 
         /// <summary>
         /// The name of the snapshot being made accessible, or
-        /// <see cref="String.Empty"/> for a blob SAS.
+        /// <see cref="string.Empty"/> for a blob SAS.
         /// </summary>
         public string Snapshot { get; set; }
+
+        /// <summary>
+        /// The name of the blob version being made accessible, or
+        /// <see cref="string.Empty"/> for a blob SAS.
+        /// </summary>
+        public string BlobVersionId { get; set; }
 
         /// <summary>
         /// Specifies which resources are accessible via the shared access
         /// signature.
         ///
-        /// Specify b if the shared resource is a blob. This grants access to
+        /// Specify "b" if the shared resource is a blob. This grants access to
         /// the content and metadata of the blob.
         ///
-        /// Specify c if the shared resource is a blob container. This grants
+        /// Specify "c" if the shared resource is a blob container. This grants
         /// access to the content and metadata of any blob in the container,
         /// and to the list of blobs in the container.
         ///
-        /// Beginning in version 2018-11-09, specify bs if the shared resource
+        /// Beginning in version 2018-11-09, specify "bs" if the shared resource
         /// is a blob snapshot.  This grants access to the content and
         /// metadata of the specific snapshot, but not the corresponding root
+        /// blob.
+        ///
+        /// Beginning in version 2019-12-12, specify "bv" if the shared resource
+        /// is a blob version.  This grants access to the content and
+        /// metadata of the specific version, but not the corresponding root
         /// blob.
         /// </summary>
         public string Resource { get; set; }
@@ -122,19 +143,100 @@ namespace Azure.Storage.Sas
         public string ContentDisposition { get; set; }
 
         /// <summary>
-        /// Override the value returned for Cache-Encoding response header.
+        /// Override the value returned for Content-Encoding response header.
         /// </summary>
         public string ContentEncoding { get; set; }
 
         /// <summary>
-        /// Override the value returned for Cache-Language response header.
+        /// Override the value returned for Content-Language response header.
         /// </summary>
         public string ContentLanguage { get; set; }
 
         /// <summary>
-        /// Override the value returned for Cache-Type response header.
+        /// Override the value returned for Content-Type response header.
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// the AAD Object ID of a user authorized by the owner of the
+        /// User Delegation Key to perform the action granted by the SAS.
+        /// The Azure Storage service will ensure that the owner of the
+        /// user delegation key has the required permissions before granting access.
+        /// No additional permission check for the user specified in this value will be performed.
+        /// This is only used with generating User Delegation SAS.
+        /// </summary>
+        public string PreauthorizedAgentObjectId { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// to correlate the storage audit logs with the audit logs used by the
+        /// principal generating and distributing SAS. This is only used for
+        /// User Delegation SAS.
+        /// </summary>
+        public string CorrelationId { get; set; }
+
+        /// <summary>
+        /// Optional.  Encryption scope to use when sending requests authorized with this SAS URI.
+        /// </summary>
+        public string EncryptionScope { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="BlobSasBuilder(BlobSasPermissions, DateTimeOffset)"/>
+        /// to create a Service SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public BlobSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
+        /// class to create a Blob Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public BlobSasBuilder(BlobSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
+        /// class to create a Blob Container Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public BlobSasBuilder(BlobContainerSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
 
         /// <summary>
         /// Sets the permissions for a blob SAS.
@@ -181,6 +283,40 @@ namespace Azure.Storage.Sas
         }
 
         /// <summary>
+        /// Sets the permissions for a Version SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="SnapshotSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(BlobVersionSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
+        /// <param name="rawPermissions">
+        /// Raw permissions string for the SAS.
+        /// </param>
+        /// <param name="normalize">
+        /// If the permissions should be validated and correctly ordered.
+        /// </param>
+        public void SetPermissions(
+            string rawPermissions,
+            bool normalize = default)
+        {
+            if (normalize)
+            {
+                rawPermissions = SasExtensions.ValidateAndSanitizeRawPermissions(
+                    permissions: rawPermissions,
+                    validPermissionsInOrder: Constants.Sas.ValidPermissionsInOrder);
+            }
+
+            SetPermissions(rawPermissions);
+        }
+
+        /// <summary>
         /// Sets the permissions for the SAS using a raw permissions string.
         /// </summary>
         /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
@@ -211,7 +347,7 @@ namespace Azure.Storage.Sas
             var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
+            string stringToSign = String.Join("\n",
                 Permissions,
                 startTime,
                 expiryTime,
@@ -221,16 +357,17 @@ namespace Azure.Storage.Sas
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
-                Snapshot,
+                Snapshot ?? BlobVersionId,
+                EncryptionScope,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
                 ContentLanguage,
                 ContentType);
 
-            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
+            string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
-            var p = new BlobSasQueryParameters(
+            BlobSasQueryParameters p = new BlobSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -246,7 +383,8 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                encryptionScope: EncryptionScope);
             return p;
         }
 
@@ -269,37 +407,41 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-            var signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            var signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
-                Permissions,
-                startTime,
-                expiryTime,
-                GetCanonicalName(accountName, BlobContainerName ?? String.Empty, BlobName ?? String.Empty),
-                userDelegationKey.SignedObjectId,
-                userDelegationKey.SignedTenantId,
-                signedStart,
-                signedExpiry,
-                userDelegationKey.SignedService,
-                userDelegationKey.SignedVersion,
-                IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
-                Version,
-                Resource,
-                Snapshot,
-                CacheControl,
-                ContentDisposition,
-                ContentEncoding,
-                ContentLanguage,
-                ContentType);
+            string stringToSign = string.Join("\n",
+                    Permissions,
+                    startTime,
+                    expiryTime,
+                    GetCanonicalName(accountName, BlobContainerName ?? string.Empty, BlobName ?? string.Empty),
+                    userDelegationKey.SignedObjectId,
+                    userDelegationKey.SignedTenantId,
+                    signedStart,
+                    signedExpiry,
+                    userDelegationKey.SignedService,
+                    userDelegationKey.SignedVersion,
+                    PreauthorizedAgentObjectId,
+                    null, // AgentObjectId - enabled only in HNS accounts
+                    CorrelationId,
+                    IPRange.ToString(),
+                    SasExtensions.ToProtocolString(Protocol),
+                    Version,
+                    Resource,
+                    Snapshot ?? BlobVersionId,
+                    EncryptionScope,
+                    CacheControl,
+                    ContentDisposition,
+                    ContentEncoding,
+                    ContentLanguage,
+                    ContentType);
 
-            var signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
+            string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
-            var p = new BlobSasQueryParameters(
+            BlobSasQueryParameters p = new BlobSasQueryParameters(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -321,7 +463,10 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                authorizedAadObjectId: PreauthorizedAgentObjectId,
+                correlationId: CorrelationId,
+                encryptionScope: EncryptionScope);
             return p;
         }
 
@@ -361,16 +506,20 @@ namespace Azure.Storage.Sas
         /// </summary>
         private void EnsureState()
         {
-            if (ExpiresOn == default)
+            if (Identifier == default)
             {
-                throw Errors.SasMissingData(nameof(ExpiresOn));
+                if (ExpiresOn == default)
+                {
+                    throw Errors.SasMissingData(nameof(ExpiresOn));
+                }
+                if (string.IsNullOrEmpty(Permissions))
+                {
+                    throw Errors.SasMissingData(nameof(Permissions));
+                }
             }
-            if (string.IsNullOrEmpty(Permissions))
-            {
-                throw Errors.SasMissingData(nameof(Permissions));
-            }
+
             // Container
-            if (String.IsNullOrEmpty(BlobName))
+            if (string.IsNullOrEmpty(BlobName))
             {
                 Resource = Constants.Sas.Resource.Container;
             }
@@ -379,21 +528,23 @@ namespace Azure.Storage.Sas
             else
             {
                 // Blob
-                if (String.IsNullOrEmpty(Snapshot))
+                if (string.IsNullOrEmpty(Snapshot) && string.IsNullOrEmpty(BlobVersionId))
                 {
                     Resource = Constants.Sas.Resource.Blob;
                 }
                 // Snapshot
-                else
+                else if (string.IsNullOrEmpty(BlobVersionId))
                 {
                     Resource = Constants.Sas.Resource.BlobSnapshot;
                 }
+                // Blob Version
+                else
+                {
+                    Resource = Constants.Sas.Resource.BlobVersion;
+                }
+            }
 
-            }
-            if (String.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
         }
 
         /// <summary>
@@ -419,5 +570,30 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the BlobSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        internal static BlobSasBuilder DeepCopy(BlobSasBuilder originalBlobSasBuilder)
+            => new()
+            {
+                Version = originalBlobSasBuilder.Version,
+                Protocol = originalBlobSasBuilder.Protocol,
+                StartsOn = originalBlobSasBuilder.StartsOn,
+                ExpiresOn = originalBlobSasBuilder.ExpiresOn,
+                Permissions = originalBlobSasBuilder.Permissions,
+                IPRange = originalBlobSasBuilder.IPRange,
+                Identifier = originalBlobSasBuilder.Identifier,
+                BlobContainerName = originalBlobSasBuilder.BlobContainerName,
+                BlobName = originalBlobSasBuilder.BlobName,
+                Snapshot = originalBlobSasBuilder.Snapshot,
+                BlobVersionId = originalBlobSasBuilder.BlobVersionId,
+                Resource = originalBlobSasBuilder.Resource,
+                CacheControl = originalBlobSasBuilder.CacheControl,
+                ContentDisposition = originalBlobSasBuilder.ContentDisposition,
+                ContentEncoding = originalBlobSasBuilder.ContentEncoding,
+                ContentLanguage = originalBlobSasBuilder.ContentLanguage,
+                ContentType = originalBlobSasBuilder.ContentType,
+                PreauthorizedAgentObjectId = originalBlobSasBuilder.PreauthorizedAgentObjectId,
+                CorrelationId = originalBlobSasBuilder.CorrelationId,
+                EncryptionScope = originalBlobSasBuilder.EncryptionScope
+            };
     }
 }

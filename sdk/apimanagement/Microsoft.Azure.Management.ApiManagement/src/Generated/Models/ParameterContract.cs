@@ -39,7 +39,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="required">Specifies whether parameter is required or
         /// not.</param>
         /// <param name="values">Parameter values.</param>
-        public ParameterContract(string name, string type, string description = default(string), string defaultValue = default(string), bool? required = default(bool?), IList<string> values = default(IList<string>))
+        /// <param name="schemaId">Schema identifier.</param>
+        /// <param name="typeName">Type name defined by the schema.</param>
+        /// <param name="examples">Exampled defined for the parameter.</param>
+        public ParameterContract(string name, string type, string description = default(string), string defaultValue = default(string), bool? required = default(bool?), IList<string> values = default(IList<string>), string schemaId = default(string), string typeName = default(string), IDictionary<string, ParameterExampleContract> examples = default(IDictionary<string, ParameterExampleContract>))
         {
             Name = name;
             Description = description;
@@ -47,6 +50,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             DefaultValue = defaultValue;
             Required = required;
             Values = values;
+            SchemaId = schemaId;
+            TypeName = typeName;
+            Examples = examples;
             CustomInit();
         }
 
@@ -90,6 +96,24 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "values")]
         public IList<string> Values { get; set; }
+
+        /// <summary>
+        /// Gets or sets schema identifier.
+        /// </summary>
+        [JsonProperty(PropertyName = "schemaId")]
+        public string SchemaId { get; set; }
+
+        /// <summary>
+        /// Gets or sets type name defined by the schema.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeName")]
+        public string TypeName { get; set; }
+
+        /// <summary>
+        /// Gets or sets exampled defined for the parameter.
+        /// </summary>
+        [JsonProperty(PropertyName = "examples")]
+        public IDictionary<string, ParameterExampleContract> Examples { get; set; }
 
         /// <summary>
         /// Validate the object.

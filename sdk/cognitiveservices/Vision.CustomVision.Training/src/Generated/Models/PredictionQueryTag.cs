@@ -42,17 +42,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public System.Guid Id { get; private set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "minThreshold")]
-        public double MinThreshold { get; private set; }
+        public double MinThreshold { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "maxThreshold")]
-        public double MaxThreshold { get; private set; }
+        public double MaxThreshold { get; set; }
 
     }
 }

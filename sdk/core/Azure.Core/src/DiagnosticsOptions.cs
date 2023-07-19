@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace Azure.Core
 {
     /// <summary>
-    /// Exposes client options related to logging, telemetry and distributed tracing.
+    /// Exposes client options related to logging, telemetry, and distributed tracing.
     /// </summary>
     public class DiagnosticsOptions
     {
@@ -16,38 +16,63 @@ namespace Azure.Core
 
         private string? _applicationId;
 
-        internal DiagnosticsOptions()
-        {
-            IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
-            IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
-            ApplicationId = DefaultApplicationId;
-            LoggedHeaderNames = new List<string>()
-            {
-                "x-ms-client-request-id",
-                "x-ms-return-client-request-id",
-                "traceparent",
+        /// <summary>
+        /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
+        /// </summary>
+        protected internal DiagnosticsOptions() : this(ClientOptions.Default.Diagnostics)
+        { }
 
-                "Accept",
-                "Cache-Control",
-                "Connection",
-                "Content-Length",
-                "Content-Type",
-                "Date",
-                "ETag",
-                "Expires",
-                "If-Match",
-                "If-Modified-Since",
-                "If-None-Match",
-                "If-Unmodified-Since",
-                "Last-Modified",
-                "Pragma",
-                "Request-Id",
-                "Retry-After",
-                "Server",
-                "Transfer-Encoding",
-                "User-Agent"
-            };
-            LoggedQueryParameters = new List<string>();
+        /// <summary>
+        /// Initializes the newly created <see cref="DiagnosticsOptions"/> with the same settings as the specified <paramref name="diagnosticsOptions"/>.
+        /// </summary>
+        /// <param name="diagnosticsOptions">The <see cref="DiagnosticsOptions"/> to model the newly created instance on.</param>
+        internal DiagnosticsOptions(DiagnosticsOptions? diagnosticsOptions)
+        {
+            if (diagnosticsOptions != null)
+            {
+                ApplicationId = diagnosticsOptions.ApplicationId;
+                IsLoggingEnabled = diagnosticsOptions.IsLoggingEnabled;
+                IsTelemetryEnabled = diagnosticsOptions.IsTelemetryEnabled;
+                LoggedHeaderNames = new List<string>(diagnosticsOptions.LoggedHeaderNames);
+                LoggedQueryParameters = new List<string>(diagnosticsOptions.LoggedQueryParameters);
+                LoggedContentSizeLimit = diagnosticsOptions.LoggedContentSizeLimit;
+                IsDistributedTracingEnabled = diagnosticsOptions.IsDistributedTracingEnabled;
+                IsLoggingContentEnabled = diagnosticsOptions.IsLoggingContentEnabled;
+            }
+            else
+            {
+                LoggedHeaderNames = new List<string>()
+                {
+                    "x-ms-request-id",
+                    "x-ms-client-request-id",
+                    "x-ms-return-client-request-id",
+                    "traceparent",
+                    "MS-CV",
+                    "Accept",
+                    "Cache-Control",
+                    "Connection",
+                    "Content-Length",
+                    "Content-Type",
+                    "Date",
+                    "ETag",
+                    "Expires",
+                    "If-Match",
+                    "If-Modified-Since",
+                    "If-None-Match",
+                    "If-Unmodified-Since",
+                    "Last-Modified",
+                    "Pragma",
+                    "Request-Id",
+                    "Retry-After",
+                    "Server",
+                    "Transfer-Encoding",
+                    "User-Agent",
+                    "WWW-Authenticate" // OAuth Challenge header.
+                };
+                LoggedQueryParameters = new List<string> { "api-version" };
+                IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
+                IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
+            }
         }
 
         /// <summary>
@@ -56,7 +81,7 @@ namespace Azure.Core
         public bool IsLoggingEnabled { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets value indicating whether distributed tracing spans are going to be created for this clients methods calls and HTTP calls.
+        /// Gets or sets value indicating whether distributed tracing activities (<see cref="System.Diagnostics.Activity"/>) are going to be created for the clients methods calls and HTTP calls.
         /// </summary>
         public bool IsDistributedTracingEnabled { get; set; } = true;
 
@@ -78,17 +103,17 @@ namespace Azure.Core
         public int LoggedContentSizeLimit { get; set; } = 4 * 1024;
 
         /// <summary>
-        /// Gets a list of headers names that are not redacted during logging.
+        /// Gets a list of header names that are not redacted during logging.
         /// </summary>
-        public IList<string> LoggedHeaderNames { get; }
+        public IList<string> LoggedHeaderNames { get; internal set; }
 
         /// <summary>
         /// Gets a list of query parameter names that are not redacted during logging.
         /// </summary>
-        public IList<string> LoggedQueryParameters { get; }
+        public IList<string> LoggedQueryParameters { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the value sent a the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
+        /// Gets or sets the value sent as the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
         /// </summary>
         public string? ApplicationId
         {
@@ -106,17 +131,21 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets the default application id. Default application id would be set on all instances.
         /// </summary>
-        public static string? DefaultApplicationId { get; set; }
-
-        private static bool? EnvironmentVariableToBool(string value)
+        public static string? DefaultApplicationId
         {
-            if (string.Equals("true", value, StringComparison.OrdinalIgnoreCase) ||
+            get => ClientOptions.Default.Diagnostics.ApplicationId;
+            set => ClientOptions.Default.Diagnostics.ApplicationId = value;
+        }
+
+        private static bool? EnvironmentVariableToBool(string? value)
+        {
+            if (string.Equals(bool.TrueString, value, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals("1", value, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
 
-            if (string.Equals("false", value, StringComparison.OrdinalIgnoreCase) ||
+            if (string.Equals(bool.FalseString, value, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals("0", value, StringComparison.OrdinalIgnoreCase))
             {
                 return false;

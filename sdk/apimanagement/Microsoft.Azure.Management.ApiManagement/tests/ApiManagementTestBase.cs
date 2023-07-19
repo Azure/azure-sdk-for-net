@@ -16,6 +16,7 @@ using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Network;
 using Xunit;
 using Microsoft.Azure.Management.EventHub;
+using Microsoft.Azure.Management.ManagedServiceIdentity;
 
 namespace ApiManagement.Tests
 {
@@ -27,6 +28,10 @@ namespace ApiManagement.Tests
         private const string LocationKey = "Location";
         private const string TestCertificateKey = "TestCertificate";
         private const string TestCertificatePasswordKey = "TestCertificatePassword";
+        private const string TestKeyVaultSecretKey = "testKeyVaultSecretUrl";
+        private const string TestBackupStorageAccount = "TestBackupStorageAccount";
+        private const string TestBackupUserMsiClientId = "TestBackupUserMsiClientId";
+        private const string TestBackupUserMsiResourceId = "TestBackupUserMsiResourceId";
 
         public string location { get; set; }
         public string subscriptionId { get; set; }
@@ -35,12 +40,17 @@ namespace ApiManagement.Tests
         public StorageManagementClient storageClient { get; set; }
         public NetworkManagementClient networkClient { get; set; }
         public EventHubManagementClient eventHubClient { get; set; }
+        public ManagedServiceIdentityClient managedIdentityClient { get; set; }
         public string rgName { get; internal set; }
         public Dictionary<string, string> tags { get; internal set; }
         public string serviceName { get; internal set; }
         public ApiManagementServiceResource serviceProperties { get; internal set; }
         public string base64EncodedTestCertificateData { get; internal set; }
         public string testCertificatePassword { get; internal set; }
+        public string testKeyVaultSecretUrl { get; internal set; }
+        public string testBackupStorageAccountName { get; internal set; }
+        public string testBackupUserMsiClientId { get; internal set; }
+        public string testBackupUserMsiId { get; internal set; }
 
         public ApiManagementTestBase(MockContext context)
         {
@@ -49,6 +59,7 @@ namespace ApiManagement.Tests
             this.storageClient = context.GetServiceClient<StorageManagementClient>();
             this.networkClient = context.GetServiceClient<NetworkManagementClient>();
             this.eventHubClient = context.GetServiceClient<EventHubManagementClient>();
+            this.managedIdentityClient = context.GetServiceClient<ManagedServiceIdentityClient>();
 
             Initialize();
         }
@@ -99,6 +110,30 @@ namespace ApiManagement.Tests
                     HttpMockServer.Variables[TestCertificatePasswordKey] = testCertificatePassword;
                 }
 
+                if (testEnv.ConnectionString.KeyValuePairs.TryGetValue(TestKeyVaultSecretKey, out string testKeyVaultSecretUrl))
+                {
+                    this.testKeyVaultSecretUrl = testKeyVaultSecretUrl;
+                    HttpMockServer.Variables[TestKeyVaultSecretKey] = testKeyVaultSecretUrl;
+                }
+
+                if (testEnv.ConnectionString.KeyValuePairs.TryGetValue(TestBackupStorageAccount, out string testBackupStorageAccount))
+                {
+                    this.testBackupStorageAccountName = testBackupStorageAccount;
+                    HttpMockServer.Variables[TestBackupStorageAccount] = testBackupStorageAccount;
+                }
+
+                if (testEnv.ConnectionString.KeyValuePairs.TryGetValue(TestBackupUserMsiClientId, out string backupUserMsiClientId))
+                {
+                    this.testBackupUserMsiClientId = backupUserMsiClientId;
+                    HttpMockServer.Variables[TestBackupUserMsiClientId] = backupUserMsiClientId;
+                }
+
+                if (testEnv.ConnectionString.KeyValuePairs.TryGetValue(TestBackupUserMsiResourceId, out string backupUserMsiId))
+                {
+                    this.testBackupUserMsiId = backupUserMsiId;
+                    HttpMockServer.Variables[TestBackupUserMsiResourceId] = backupUserMsiId;
+                }
+
                 this.subscriptionId = testEnv.SubscriptionId;
                 HttpMockServer.Variables[SubIdKey] = subscriptionId;
                 HttpMockServer.Variables[ServiceNameKey] = this.serviceName;
@@ -122,6 +157,26 @@ namespace ApiManagement.Tests
                 {
                     this.testCertificatePassword = testCertificatePwd;
                 }
+                HttpMockServer.Variables.TryGetValue(TestKeyVaultSecretKey, out var testKVSecretUrl);
+                if (!string.IsNullOrEmpty(testKVSecretUrl))
+                {
+                    this.testKeyVaultSecretUrl = testKVSecretUrl;
+                }
+                HttpMockServer.Variables.TryGetValue(TestBackupStorageAccount, out string testBackupStorageAccount);
+                if (!string.IsNullOrEmpty(testBackupStorageAccount))
+                {
+                    this.testBackupStorageAccountName = testBackupStorageAccount;
+                }
+                HttpMockServer.Variables.TryGetValue(TestBackupUserMsiClientId, out string backupUserMsiClientId);
+                if(!string.IsNullOrEmpty(backupUserMsiClientId))
+                {
+                    this.testBackupUserMsiClientId = backupUserMsiClientId;
+                }
+                HttpMockServer.Variables.TryGetValue(TestBackupUserMsiResourceId, out string backupUserMsiId);
+                if (!string.IsNullOrEmpty(backupUserMsiId))
+                { 
+                    this.testBackupUserMsiId = backupUserMsiId;
+                }
             }
 
             tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
@@ -136,8 +191,9 @@ namespace ApiManagement.Tests
                 Location = location,
                 PublisherEmail = "apim@autorestsdk.com",
                 PublisherName = "autorestsdk",
-                Tags = tags
-            };
+                Tags = tags,
+                Identity = new ApiManagementServiceIdentity("SystemAssigned")
+        };
         }
 
         public void TryCreateApiManagementService()
@@ -224,12 +280,30 @@ namespace ApiManagement.Tests
                         new RepresentationContract
                         {
                             ContentType = "text/plain",
-                            Sample = "sample_" + TestUtilities.GenerateName(),
+                            Examples = new Dictionary<string, ParameterExampleContract>
+                            {
+                                ["default"] = new ParameterExampleContract
+                                {
+                                    Description = "My default request example",
+                                    ExternalValue = "https://contoso.com",
+                                    Summary = "Just an example",
+                                    Value = "default"
+                                }
+                            }
                         },
                         new RepresentationContract
                         {
                             ContentType = "application/xml",
-                            Sample = "sample_" + TestUtilities.GenerateName(),
+                                                        Examples = new Dictionary<string, ParameterExampleContract>
+                            {
+                                ["default"] = new ParameterExampleContract
+                                {
+                                    Description = "My default request example",
+                                    ExternalValue = "https://contoso.com",
+                                    Summary = "Just an example",
+                                    Value = "default"
+                                }
+                            },
                         }
                     }
                 },
@@ -244,13 +318,29 @@ namespace ApiManagement.Tests
                             new RepresentationContract
                             {
                                 ContentType = "application/json",
-                                Sample = "sample_" + TestUtilities.GenerateName()
-                            },
+                            Examples = new Dictionary<string, ParameterExampleContract>
+                            {
+                                ["default"] = new ParameterExampleContract
+                                {
+                                    Description = "My default request example",
+                                    ExternalValue = "https://contoso.com",
+                                    Summary = "Just an example",
+                                    Value = "default"
+                                }
+                            }                            },
                             new RepresentationContract
                             {
                                 ContentType = "application/xml",
-                                Sample = "sample_" + TestUtilities.GenerateName()
-                            }
+                            Examples = new Dictionary<string, ParameterExampleContract>
+                            {
+                                ["default"] = new ParameterExampleContract
+                                {
+                                    Description = "My default request example",
+                                    ExternalValue = "https://contoso.com",
+                                    Summary = "Just an example",
+                                    Value = "default"
+                                }
+                            }                            }
                         }
                     }
                 }

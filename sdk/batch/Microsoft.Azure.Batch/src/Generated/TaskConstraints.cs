@@ -74,6 +74,14 @@ namespace Microsoft.Azure.Batch
             this.MaxTaskRetryCount = maxTaskRetryCount;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="TaskConstraints"/> class.
+        /// </summary>
+        protected TaskConstraints()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal TaskConstraints(Models.TaskConstraints protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

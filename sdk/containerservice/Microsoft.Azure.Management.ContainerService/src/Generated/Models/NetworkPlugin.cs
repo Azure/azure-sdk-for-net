@@ -16,7 +16,17 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     /// </summary>
     public static class NetworkPlugin
     {
+        /// <summary>
+        /// Use the Azure CNI network plugin. See [Azure CNI (advanced)
+        /// networking](https://docs.microsoft.com/azure/aks/concepts-network#azure-cni-advanced-networking)
+        /// for more information.
+        /// </summary>
         public const string Azure = "azure";
+        /// <summary>
+        /// Use the Kubenet network plugin. See [Kubenet (basic)
+        /// networking](https://docs.microsoft.com/azure/aks/concepts-network#kubenet-basic-networking)
+        /// for more information.
+        /// </summary>
         public const string Kubenet = "kubenet";
     }
 }

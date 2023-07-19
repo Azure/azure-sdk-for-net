@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "azsadmin/resource-manager/fabric" -AutoRestVersion "latest" -SdkRootDirectory $PSScriptRoot
+Start-AutoRestCodeGeneration -ResourceProvider "azsadmin/resource-manager/fabric" -AutoRestVersion "v2" -SdkRootDirectory $PSScriptRoot

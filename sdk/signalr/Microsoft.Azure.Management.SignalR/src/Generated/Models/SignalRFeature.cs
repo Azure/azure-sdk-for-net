@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// Feature of a SignalR resource, which controls the SignalR runtime
-    /// behavior.
+    /// Feature of a resource, which controls the runtime behavior.
     /// </summary>
     public partial class SignalRFeature
     {
@@ -33,24 +32,37 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Initializes a new instance of the SignalRFeature class.
         /// </summary>
+        /// <param name="flag">FeatureFlags is the supported features of Azure
+        /// SignalR service.
+        /// - ServiceMode: Flag for backend server for SignalR service. Values
+        /// allowed: "Default": have your own backend server; "Serverless":
+        /// your application doesn't have a backend server; "Classic": for
+        /// backward compatibility. Support both Default and Serverless mode
+        /// but not recommended; "PredefinedOnly": for future use.
+        /// - EnableConnectivityLogs: "true"/"false", to enable/disable the
+        /// connectivity log category respectively.
+        /// - EnableMessagingLogs: "true"/"false", to enable/disable the
+        /// connectivity log category respectively.
+        /// - EnableLiveTrace: Live Trace allows you to know what's happening
+        /// inside Azure SignalR service, it will give you live traces in real
+        /// time, it will be helpful when you developing your own Azure SignalR
+        /// based web application or self-troubleshooting some issues. Please
+        /// note that live traces are counted as outbound messages that will be
+        /// charged. Values allowed: "true"/"false", to enable/disable live
+        /// trace feature. Possible values include: 'ServiceMode',
+        /// 'EnableConnectivityLogs', 'EnableMessagingLogs',
+        /// 'EnableLiveTrace'</param>
         /// <param name="value">Value of the feature flag. See Azure SignalR
-        /// service document
-        /// https://docs.microsoft.com/en-us/azure/azure-signalr/ for allowed
-        /// values.</param>
+        /// service document https://docs.microsoft.com/azure/azure-signalr/
+        /// for allowed values.</param>
         /// <param name="properties">Optional properties related to this
         /// feature.</param>
-        public SignalRFeature(string value, IDictionary<string, string> properties = default(IDictionary<string, string>))
+        public SignalRFeature(string flag, string value, IDictionary<string, string> properties = default(IDictionary<string, string>))
         {
+            Flag = flag;
             Value = value;
             Properties = properties;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for SignalRFeature class.
-        /// </summary>
-        static SignalRFeature()
-        {
-            Flag = "ServiceMode";
         }
 
         /// <summary>
@@ -59,8 +71,32 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets featureFlags is the supported features of Azure
+        /// SignalR service.
+        /// - ServiceMode: Flag for backend server for SignalR service. Values
+        /// allowed: "Default": have your own backend server; "Serverless":
+        /// your application doesn't have a backend server; "Classic": for
+        /// backward compatibility. Support both Default and Serverless mode
+        /// but not recommended; "PredefinedOnly": for future use.
+        /// - EnableConnectivityLogs: "true"/"false", to enable/disable the
+        /// connectivity log category respectively.
+        /// - EnableMessagingLogs: "true"/"false", to enable/disable the
+        /// connectivity log category respectively.
+        /// - EnableLiveTrace: Live Trace allows you to know what's happening
+        /// inside Azure SignalR service, it will give you live traces in real
+        /// time, it will be helpful when you developing your own Azure SignalR
+        /// based web application or self-troubleshooting some issues. Please
+        /// note that live traces are counted as outbound messages that will be
+        /// charged. Values allowed: "true"/"false", to enable/disable live
+        /// trace feature. Possible values include: 'ServiceMode',
+        /// 'EnableConnectivityLogs', 'EnableMessagingLogs', 'EnableLiveTrace'
+        /// </summary>
+        [JsonProperty(PropertyName = "flag")]
+        public string Flag { get; set; }
+
+        /// <summary>
         /// Gets or sets value of the feature flag. See Azure SignalR service
-        /// document https://docs.microsoft.com/en-us/azure/azure-signalr/ for
+        /// document https://docs.microsoft.com/azure/azure-signalr/ for
         /// allowed values.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
@@ -73,12 +109,6 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public IDictionary<string, string> Properties { get; set; }
 
         /// <summary>
-        /// Kind of feature. Required.
-        /// </summary>
-        [JsonProperty(PropertyName = "flag")]
-        public static string Flag { get; private set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -86,6 +116,10 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Flag == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Flag");
+            }
             if (Value == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Value");

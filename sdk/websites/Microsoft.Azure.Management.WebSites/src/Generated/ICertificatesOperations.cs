@@ -27,8 +27,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all certificates for a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all certificates for a subscription.
+        /// Description for Get all certificates for a subscription.
         /// </remarks>
+        /// <param name='filter'>
+        /// Return only information specified in the filter (using OData
+        /// syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -44,12 +48,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Certificate>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Certificate>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all certificates in a resource group.
         /// </summary>
         /// <remarks>
-        /// Get all certificates in a resource group.
+        /// Description for Get all certificates in a resource group.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -74,7 +78,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get a certificate.
         /// </summary>
         /// <remarks>
-        /// Get a certificate.
+        /// Description for Get a certificate.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -102,7 +106,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a certificate.
         /// </summary>
         /// <remarks>
-        /// Create or update a certificate.
+        /// Description for Create or update a certificate.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -133,7 +137,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Delete a certificate.
         /// </summary>
         /// <remarks>
-        /// Delete a certificate.
+        /// Description for Delete a certificate.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -147,7 +151,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -158,7 +162,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Create or update a certificate.
         /// </summary>
         /// <remarks>
-        /// Create or update a certificate.
+        /// Description for Create or update a certificate.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -189,7 +193,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all certificates for a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all certificates for a subscription.
+        /// Description for Get all certificates for a subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -214,7 +218,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all certificates in a resource group.
         /// </summary>
         /// <remarks>
-        /// Get all certificates in a resource group.
+        /// Description for Get all certificates in a resource group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

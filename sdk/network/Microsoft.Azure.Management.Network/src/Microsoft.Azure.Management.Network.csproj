@@ -5,14 +5,21 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
-		<Description>Provides management capabilities for Network services.</Description>
+		<Description>
+			Provides management capabilities for Network services.
+			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
+		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.17.1-preview</Version>
+		<Version>26.0.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Bugfix in PrivateLinkServiceConnectionState: property "ActionRequired" renamed to "ActionsRequired"
-		]]></PackageReleaseNotes>
+			- Added flowlog property in virtual network
+			- adding auth status property to circuit 
+			- Add support for State flag in Custom Rule
+			- Fix LRO header model validation
+			- Add new status code for application gateway custom error page
+			- Fix missing resource id in application gateway list example		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

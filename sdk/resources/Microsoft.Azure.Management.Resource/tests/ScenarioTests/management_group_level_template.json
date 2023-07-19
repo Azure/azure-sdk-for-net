@@ -1,10 +1,18 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "tianosatestgl"
+      "defaultValue": "tagsa2"
+    },
+    "managementGroupName": {
+      "type": "string",
+      "defaultValue": "tag-mg-sdk"
+    },
+    "subscriptionId": {
+      "type": "string",
+      "defaultValue": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
     }
   },
   "variables": {
@@ -37,8 +45,8 @@
       "apiVersion": "2016-12-01",
       "dependsOn": [ "policy2" ],
       "properties": {
-        "scope": "/providers/Microsoft.Management/managementGroups/tiano-mgtest01",
-        "policyDefinitionId": "[concat('/providers/Microsoft.Management/managementGroups/tiano-mgtest01/', 'providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]"
+        "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('managementGroupName'))]",
+        "policyDefinitionId": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('managementGroupName'), '/providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]"
       }
     },
     {
@@ -46,7 +54,7 @@
       "name": "sdktest-subnested",
       "apiVersion": "2018-05-01",
       "location": "West US",
-      "subscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b",
+      "subscriptionId": "[parameters('subscriptionId')]",
       "properties": {
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
@@ -62,7 +70,7 @@
               "type": "Microsoft.Resources/resourceGroups",
               "name": "rg-001",
               "apiVersion": "2018-05-01",
-              "location": "East US 2 EUAP",
+              "location": "East US",
               "properties": {
 
               }

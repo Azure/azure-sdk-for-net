@@ -1,14 +1,19 @@
-﻿Installing AutoRest version: latest
+﻿Installing AutoRest version: v2
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storagesync/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\github\anpint\azure-sdk-for-net\sdk
-2019-11-05 18:30:32 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/storagesync/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\github\anpint\azure-sdk-for-net\sdk
+2022-03-01 18:54:17 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
-Branch:      master
-Commit:      c42f3f3427766255b06a01846e1ec497c4d3c94a
+Branch:      main
+Commit:      56cf5d41fd670c6c13a13ba761fb93a26b374c59
 AutoRest information
-Requested version: latest
-Bootstrapper version:    autorest@2.0.4407
+Requested version: 2.0.4421
+Bootstrapper version:    autorest@2.0.4413
+npm notice 
+npm notice New minor version of npm available! 8.3.0 -> 8.5.2
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.5.2>
+npm notice Run `npm install -g npm@8.5.2` to update!
+npm notice

@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         {
             DeploymentScripts = new DeploymentScriptsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-10-01-preview";
+            ApiVersion = "2020-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

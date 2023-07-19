@@ -12,34 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Azure;
+using Azure.Storage.Blobs.Specialized;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
 {
     internal static class BlobUtils
     {
-        internal static async Task EnsureExistsAsync(this CloudAppendBlob blob)
+        internal static async Task EnsureExistsAsync(this AppendBlobClient blob)
         {
             try
             {
-                await blob.CreateOrReplaceAsync(AccessCondition.GenerateIfNotExistsCondition(), null, null).ConfigureAwait(false);
+                await blob.CreateIfNotExistsAsync().ConfigureAwait(false);
             }
-            catch (StorageException ex) when (ex.StorageErrorCodeIs("BlobAlreadyExists"))
+            //Blob already exists
+            catch (RequestFailedException rfex) when ((int)System.Net.HttpStatusCode.NotFound == rfex.Status)
             {
             }
-        }
-
-        internal static bool StorageErrorCodeIs(this StorageException ex, string errorCodeToTestFor)
-        {
-            var errorCode = ex?.RequestInformation?.ExtendedErrorInformation?.ErrorCode;
-
-            return errorCodeToTestFor.Equals(errorCode, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

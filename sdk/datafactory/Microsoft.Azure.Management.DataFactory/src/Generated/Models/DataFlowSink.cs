@@ -32,10 +32,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="name">Transformation name.</param>
         /// <param name="description">Transformation description.</param>
         /// <param name="dataset">Dataset reference.</param>
-        public DataFlowSink(string name, string description = default(string), DatasetReference dataset = default(DatasetReference))
-            : base(name, description)
+        /// <param name="linkedService">Linked service reference.</param>
+        /// <param name="flowlet">Flowlet Reference</param>
+        /// <param name="schemaLinkedService">Schema linked service
+        /// reference.</param>
+        /// <param name="rejectedDataLinkedService">Rejected data linked
+        /// service reference.</param>
+        public DataFlowSink(string name, string description = default(string), DatasetReference dataset = default(DatasetReference), LinkedServiceReference linkedService = default(LinkedServiceReference), DataFlowReference flowlet = default(DataFlowReference), LinkedServiceReference schemaLinkedService = default(LinkedServiceReference), LinkedServiceReference rejectedDataLinkedService = default(LinkedServiceReference))
+            : base(name, description, dataset, linkedService, flowlet)
         {
-            Dataset = dataset;
+            SchemaLinkedService = schemaLinkedService;
+            RejectedDataLinkedService = rejectedDataLinkedService;
             CustomInit();
         }
 
@@ -45,10 +52,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets dataset reference.
+        /// Gets or sets schema linked service reference.
         /// </summary>
-        [JsonProperty(PropertyName = "dataset")]
-        public DatasetReference Dataset { get; set; }
+        [JsonProperty(PropertyName = "schemaLinkedService")]
+        public LinkedServiceReference SchemaLinkedService { get; set; }
+
+        /// <summary>
+        /// Gets or sets rejected data linked service reference.
+        /// </summary>
+        [JsonProperty(PropertyName = "rejectedDataLinkedService")]
+        public LinkedServiceReference RejectedDataLinkedService { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -59,9 +72,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Dataset != null)
+            if (SchemaLinkedService != null)
             {
-                Dataset.Validate();
+                SchemaLinkedService.Validate();
+            }
+            if (RejectedDataLinkedService != null)
+            {
+                RejectedDataLinkedService.Validate();
             }
         }
     }

@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/660b0539-b643-4769-adee-83c40a2b34af/providers/Microsoft.HDInsight/locations/East%20US%202/usages?api-version=2018-06-01-preview",
+      "RequestUri": "/subscriptions/0ce505de-6568-4f7e-8525-e29a4a915700/providers/Microsoft.HDInsight/locations/South%20Central%20US/usages?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7eae7a77-ea4b-4563-8c71-52f9c750cdff"
+          "1382b713-6395-4e19-b8d6-13c7d9563d66"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26628.05",
+          "FxVersion/4.6.30411.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.14393.",
-          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/4.2.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/7.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -26,28 +26,31 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "0c2c1852-a458-4dc2-a07f-b012b0ceeb48"
+          "34883a4b-c25c-44b0-87c4-8891cb1c201a"
         ],
         "x-ms-hdi-served-by": [
-          "global"
+          "southcentralus"
         ],
         "x-ms-correlation-request-id": [
-          "c868e03f-6ba9-454a-b932-847f4ad12f29"
+          "a6889c6f-8eef-4b8c-a144-b543a2b540fa"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-routing-request-id": [
+          "JAPANEAST:20210915T044847Z:a6889c6f-8eef-4b8c-a144-b543a2b540fa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11980"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20190124T194041Z:c868e03f-6ba9-454a-b932-847f4ad12f29"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 24 Jan 2019 19:40:40 GMT"
+          "Wed, 15 Sep 2021 04:48:47 GMT"
         ],
         "Content-Length": [
           "110"
@@ -59,28 +62,30 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 950,\r\n      \"limit\": 1000,\r\n      \"name\": {\r\n        \"value\": \"cores\",\r\n        \"localizedValue\": \"Cores\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"unit\": \"Count\",\r\n      \"currentValue\": 120,\r\n      \"limit\": 3000,\r\n      \"name\": {\r\n        \"value\": \"cores\",\r\n        \"localizedValue\": \"Cores\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {
     ".ctor": [
-      "admin3098",
-      "Password13463",
-      "sshuser181",
-      "Password11196",
-      "f2f6371f-b8cd-4c2f-be10-d34458e6b8ff",
-      "hdicsharprg2897",
-      "hdicsharpstorage4372",
-      "hdicsharpmsi6829",
-      "hdicsharpvault557",
-      "hdicsharpadls1888",
-      "default76",
-      "storageaccountkey4510",
-      "660b0539-b643-4769-adee-83c40a2b34af"
+      "admin7395",
+      "Password1!7219",
+      "sshuser5821",
+      "Password1!9962",
+      "3684393a-4f5c-4692-9269-6706a2f15af6",
+      "hdicsharprg3139",
+      "hdicsharpstorage458",
+      "hdicsharpmsi7163",
+      "hdicsharpvault8764",
+      "hdicsharpadls9937",
+      "default2909",
+      "storageaccountkey7189"
+    ],
+    "TestInitialize": [
+      "0ce505de-6568-4f7e-8525-e29a4a915700"
     ]
   },
   "Variables": {
-    "SubscriptionId": "660b0539-b643-4769-adee-83c40a2b34af"
+    "SubscriptionId": "0ce505de-6568-4f7e-8525-e29a4a915700"
   }
 }

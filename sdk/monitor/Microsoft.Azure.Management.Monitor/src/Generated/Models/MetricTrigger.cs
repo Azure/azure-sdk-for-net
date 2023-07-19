@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -40,7 +42,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// minute.</param>
         /// <param name="statistic">the metric statistic type. How the metrics
         /// from multiple instances are combined. Possible values include:
-        /// 'Average', 'Min', 'Max', 'Sum'</param>
+        /// 'Average', 'Min', 'Max', 'Sum', 'Count'</param>
         /// <param name="timeWindow">the range of time in which instance data
         /// is collected. This value must be greater than the delay in metric
         /// collection, which can vary from resource-to-resource. Must be
@@ -55,16 +57,28 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// 'LessThan', 'LessThanOrEqual'</param>
         /// <param name="threshold">the threshold of the metric that triggers
         /// the scale action.</param>
-        public MetricTrigger(string metricName, string metricResourceUri, System.TimeSpan timeGrain, MetricStatisticType statistic, System.TimeSpan timeWindow, TimeAggregationType timeAggregation, ComparisonOperationType operatorProperty, double threshold)
+        /// <param name="metricNamespace">the namespace of the metric that
+        /// defines what the rule monitors.</param>
+        /// <param name="metricResourceLocation">the location of the resource
+        /// the rule monitors.</param>
+        /// <param name="dimensions">List of dimension conditions. For example:
+        /// [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}].</param>
+        /// <param name="dividePerInstance">a value indicating whether metric
+        /// should divide per instance.</param>
+        public MetricTrigger(string metricName, string metricResourceUri, System.TimeSpan timeGrain, MetricStatisticType statistic, System.TimeSpan timeWindow, TimeAggregationType timeAggregation, ComparisonOperationType operatorProperty, double threshold, string metricNamespace = default(string), string metricResourceLocation = default(string), IList<ScaleRuleMetricDimension> dimensions = default(IList<ScaleRuleMetricDimension>), bool? dividePerInstance = default(bool?))
         {
             MetricName = metricName;
+            MetricNamespace = metricNamespace;
             MetricResourceUri = metricResourceUri;
+            MetricResourceLocation = metricResourceLocation;
             TimeGrain = timeGrain;
             Statistic = statistic;
             TimeWindow = timeWindow;
             TimeAggregation = timeAggregation;
             OperatorProperty = operatorProperty;
             Threshold = threshold;
+            Dimensions = dimensions;
+            DividePerInstance = dividePerInstance;
             CustomInit();
         }
 
@@ -81,11 +95,24 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string MetricName { get; set; }
 
         /// <summary>
+        /// Gets or sets the namespace of the metric that defines what the rule
+        /// monitors.
+        /// </summary>
+        [JsonProperty(PropertyName = "metricNamespace")]
+        public string MetricNamespace { get; set; }
+
+        /// <summary>
         /// Gets or sets the resource identifier of the resource the rule
         /// monitors.
         /// </summary>
         [JsonProperty(PropertyName = "metricResourceUri")]
         public string MetricResourceUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the resource the rule monitors.
+        /// </summary>
+        [JsonProperty(PropertyName = "metricResourceLocation")]
+        public string MetricResourceLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the granularity of metrics the rule monitors. Must be
@@ -98,7 +125,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Gets or sets the metric statistic type. How the metrics from
         /// multiple instances are combined. Possible values include:
-        /// 'Average', 'Min', 'Max', 'Sum'
+        /// 'Average', 'Min', 'Max', 'Sum', 'Count'
         /// </summary>
         [JsonProperty(PropertyName = "statistic")]
         public MetricStatisticType Statistic { get; set; }
@@ -137,6 +164,20 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public double Threshold { get; set; }
 
         /// <summary>
+        /// Gets or sets list of dimension conditions. For example:
+        /// [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}].
+        /// </summary>
+        [JsonProperty(PropertyName = "dimensions")]
+        public IList<ScaleRuleMetricDimension> Dimensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether metric should divide per
+        /// instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "dividePerInstance")]
+        public bool? DividePerInstance { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -151,6 +192,16 @@ namespace Microsoft.Azure.Management.Monitor.Models
             if (MetricResourceUri == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "MetricResourceUri");
+            }
+            if (Dimensions != null)
+            {
+                foreach (var element in Dimensions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

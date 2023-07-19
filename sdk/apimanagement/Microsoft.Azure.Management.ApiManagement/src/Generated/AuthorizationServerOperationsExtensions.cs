@@ -250,9 +250,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IAuthorizationServerOperations operations, string resourceGroupName, string serviceName, string authsid, AuthorizationServerUpdateContract parameters, string ifMatch)
+            public static AuthorizationServerContract Update(this IAuthorizationServerOperations operations, string resourceGroupName, string serviceName, string authsid, AuthorizationServerUpdateContract parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, authsid, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, authsid, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -282,9 +282,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IAuthorizationServerOperations operations, string resourceGroupName, string serviceName, string authsid, AuthorizationServerUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AuthorizationServerContract> UpdateAsync(this IAuthorizationServerOperations operations, string resourceGroupName, string serviceName, string authsid, AuthorizationServerUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, authsid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, authsid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -338,6 +341,52 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task DeleteAsync(this IAuthorizationServerOperations operations, string resourceGroupName, string serviceName, string authsid, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, authsid, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the client secret details of the authorization server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='authsid'>
+            /// Identifier of the authorization server.
+            /// </param>
+            public static AuthorizationServerSecretsContract ListSecrets(this IAuthorizationServerOperations operations, string resourceGroupName, string serviceName, string authsid)
+            {
+                return operations.ListSecretsAsync(resourceGroupName, serviceName, authsid).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the client secret details of the authorization server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='authsid'>
+            /// Identifier of the authorization server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AuthorizationServerSecretsContract> ListSecretsAsync(this IAuthorizationServerOperations operations, string resourceGroupName, string serviceName, string authsid, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, authsid, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Parameters for updating a factory resource.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class FactoryUpdateParameters
     {
         /// <summary>
@@ -34,10 +37,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="tags">The resource tags.</param>
         /// <param name="identity">Managed service identity of the
         /// factory.</param>
-        public FactoryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), FactoryIdentity identity = default(FactoryIdentity))
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for the data factory. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        public FactoryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), FactoryIdentity identity = default(FactoryIdentity), string publicNetworkAccess = default(string))
         {
             Tags = tags;
             Identity = identity;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -58,5 +65,25 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "identity")]
         public FactoryIdentity Identity { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether or not public network access is allowed for
+        /// the data factory. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Identity != null)
+            {
+                Identity.Validate();
+            }
+        }
     }
 }

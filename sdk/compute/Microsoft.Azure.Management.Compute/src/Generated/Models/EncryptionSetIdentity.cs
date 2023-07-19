@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,8 +33,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the EncryptionSetIdentity class.
         /// </summary>
         /// <param name="type">The type of Managed Identity used by the
-        /// DiskEncryptionSet. Only SystemAssigned is supported. Possible
-        /// values include: 'SystemAssigned'</param>
+        /// DiskEncryptionSet. Only SystemAssigned is supported for new
+        /// creations. Disk Encryption Sets can be updated with Identity type
+        /// None during migration of subscription to a new Azure Active
+        /// Directory tenant; it will cause the encrypted resources to lose
+        /// access to the keys. Possible values include: 'SystemAssigned',
+        /// 'UserAssigned', 'SystemAssigned, UserAssigned', 'None'</param>
         /// <param name="principalId">The object id of the Managed Identity
         /// Resource. This will be sent to the RP from ARM via the
         /// x-ms-identity-principal-id header in the PUT request if the
@@ -41,11 +47,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Resource. This will be sent to the RP from ARM via the
         /// x-ms-client-tenant-id header in the PUT request if the resource has
         /// a systemAssigned(implicit) identity</param>
-        public EncryptionSetIdentity(string type = default(string), string principalId = default(string), string tenantId = default(string))
+        /// <param name="userAssignedIdentities">The list of user identities
+        /// associated with the disk encryption set. The user identity
+        /// dictionary key references will be ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
+        public EncryptionSetIdentity(string type = default(string), string principalId = default(string), string tenantId = default(string), IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentitiesValue>))
         {
             Type = type;
             PrincipalId = principalId;
             TenantId = tenantId;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -56,8 +67,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the type of Managed Identity used by the
-        /// DiskEncryptionSet. Only SystemAssigned is supported. Possible
-        /// values include: 'SystemAssigned'
+        /// DiskEncryptionSet. Only SystemAssigned is supported for new
+        /// creations. Disk Encryption Sets can be updated with Identity type
+        /// None during migration of subscription to a new Azure Active
+        /// Directory tenant; it will cause the encrypted resources to lose
+        /// access to the keys. Possible values include: 'SystemAssigned',
+        /// 'UserAssigned', 'SystemAssigned, UserAssigned', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
@@ -78,6 +93,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the list of user identities associated with the disk
+        /// encryption set. The user identity dictionary key references will be
+        /// ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
 
     }
 }

@@ -36,10 +36,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the AuthorizationServerUpdateContract
         /// class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="description">Description of the authorization server.
         /// Can contain HTML formatting tags.</param>
         /// <param name="authorizationMethods">HTTP verbs supported by the
@@ -67,8 +69,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// values.</param>
         /// <param name="bearerTokenSendingMethods">Specifies the mechanism by
         /// which access token is passed to the API. </param>
-        /// <param name="clientSecret">Client or app secret registered with
-        /// this authorization server.</param>
         /// <param name="resourceOwnerUsername">Can be optionally specified
         /// when resource owner password grant type is supported by this
         /// authorization server. Default resource owner username.</param>
@@ -87,7 +87,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// client uses to request the access token.</param>
         /// <param name="clientId">Client or app id registered with this
         /// authorization server.</param>
-        public AuthorizationServerUpdateContract(string id = default(string), string name = default(string), string type = default(string), string description = default(string), IList<AuthorizationMethod?> authorizationMethods = default(IList<AuthorizationMethod?>), IList<string> clientAuthenticationMethod = default(IList<string>), IList<TokenBodyParameterContract> tokenBodyParameters = default(IList<TokenBodyParameterContract>), string tokenEndpoint = default(string), bool? supportState = default(bool?), string defaultScope = default(string), IList<string> bearerTokenSendingMethods = default(IList<string>), string clientSecret = default(string), string resourceOwnerUsername = default(string), string resourceOwnerPassword = default(string), string displayName = default(string), string clientRegistrationEndpoint = default(string), string authorizationEndpoint = default(string), IList<string> grantTypes = default(IList<string>), string clientId = default(string))
+        /// <param name="clientSecret">Client or app secret registered with
+        /// this authorization server. This property will not be filled on
+        /// 'GET' operations! Use '/listSecrets' POST request to get the
+        /// value.</param>
+        public AuthorizationServerUpdateContract(string id = default(string), string name = default(string), string type = default(string), string description = default(string), IList<AuthorizationMethod?> authorizationMethods = default(IList<AuthorizationMethod?>), IList<string> clientAuthenticationMethod = default(IList<string>), IList<TokenBodyParameterContract> tokenBodyParameters = default(IList<TokenBodyParameterContract>), string tokenEndpoint = default(string), bool? supportState = default(bool?), string defaultScope = default(string), IList<string> bearerTokenSendingMethods = default(IList<string>), string resourceOwnerUsername = default(string), string resourceOwnerPassword = default(string), string displayName = default(string), string clientRegistrationEndpoint = default(string), string authorizationEndpoint = default(string), IList<string> grantTypes = default(IList<string>), string clientId = default(string), string clientSecret = default(string))
             : base(id, name, type)
         {
             Description = description;
@@ -98,7 +102,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             SupportState = supportState;
             DefaultScope = defaultScope;
             BearerTokenSendingMethods = bearerTokenSendingMethods;
-            ClientSecret = clientSecret;
             ResourceOwnerUsername = resourceOwnerUsername;
             ResourceOwnerPassword = resourceOwnerPassword;
             DisplayName = displayName;
@@ -106,6 +109,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             AuthorizationEndpoint = authorizationEndpoint;
             GrantTypes = grantTypes;
             ClientId = clientId;
+            ClientSecret = clientSecret;
             CustomInit();
         }
 
@@ -178,13 +182,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public IList<string> BearerTokenSendingMethods { get; set; }
 
         /// <summary>
-        /// Gets or sets client or app secret registered with this
-        /// authorization server.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.clientSecret")]
-        public string ClientSecret { get; set; }
-
-        /// <summary>
         /// Gets or sets can be optionally specified when resource owner
         /// password grant type is supported by this authorization server.
         /// Default resource owner username.
@@ -234,6 +231,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientId")]
         public string ClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets client or app secret registered with this
+        /// authorization server. This property will not be filled on 'GET'
+        /// operations! Use '/listSecrets' POST request to get the value.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientSecret")]
+        public string ClientSecret { get; set; }
 
         /// <summary>
         /// Validate the object.

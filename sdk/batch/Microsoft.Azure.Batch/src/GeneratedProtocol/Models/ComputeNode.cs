@@ -56,6 +56,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// running Job Tasks on the Compute Node. This includes Job Manager
         /// Tasks and normal Tasks, but not Job Preparation, Job Release or
         /// Start Tasks.</param>
+        /// <param name="runningTaskSlotsCount">The total number of scheduling
+        /// slots used by currently running Job Tasks on the Compute Node. This
+        /// includes Job Manager Tasks and normal Tasks, but not Job
+        /// Preparation, Job Release or Start Tasks.</param>
         /// <param name="totalTasksSucceeded">The total number of Job Tasks
         /// which completed successfully (with exitCode 0) on the Compute Node.
         /// This includes Job Manager Tasks and normal Tasks, but not Job
@@ -71,14 +75,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="errors">The list of errors that are currently being
         /// encountered by the Compute Node.</param>
         /// <param name="isDedicated">Whether this Compute Node is a dedicated
-        /// Compute Node. If false, the Compute Node is a low-priority Compute
-        /// Node.</param>
+        /// Compute Node. If false, the Compute Node is a Spot/Low-priority
+        /// Compute Node.</param>
         /// <param name="endpointConfiguration">The endpoint configuration for
         /// the Compute Node.</param>
         /// <param name="nodeAgentInfo">Information about the Compute Node
         /// agent version and the time the Compute Node upgraded to a new
         /// version.</param>
-        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), IList<TaskInformation> recentTasks = default(IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ComputeNodeError> errors = default(IList<ComputeNodeError>), bool? isDedicated = default(bool?), ComputeNodeEndpointConfiguration endpointConfiguration = default(ComputeNodeEndpointConfiguration), NodeAgentInformation nodeAgentInfo = default(NodeAgentInformation))
+        /// <param name="virtualMachineInfo">Info about the current state of
+        /// the virtual machine.</param>
+        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? runningTaskSlotsCount = default(int?), int? totalTasksSucceeded = default(int?), IList<TaskInformation> recentTasks = default(IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ComputeNodeError> errors = default(IList<ComputeNodeError>), bool? isDedicated = default(bool?), ComputeNodeEndpointConfiguration endpointConfiguration = default(ComputeNodeEndpointConfiguration), NodeAgentInformation nodeAgentInfo = default(NodeAgentInformation), VirtualMachineInfo virtualMachineInfo = default(VirtualMachineInfo))
         {
             Id = id;
             Url = url;
@@ -92,6 +98,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             VmSize = vmSize;
             TotalTasksRun = totalTasksRun;
             RunningTasksCount = runningTasksCount;
+            RunningTaskSlotsCount = runningTaskSlotsCount;
             TotalTasksSucceeded = totalTasksSucceeded;
             RecentTasks = recentTasks;
             StartTask = startTask;
@@ -101,6 +108,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             IsDedicated = isDedicated;
             EndpointConfiguration = endpointConfiguration;
             NodeAgentInfo = nodeAgentInfo;
+            VirtualMachineInfo = virtualMachineInfo;
             CustomInit();
         }
 
@@ -131,8 +139,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the current state of the Compute Node.
         /// </summary>
         /// <remarks>
-        /// The low-priority Compute Node has been preempted. Tasks which were
-        /// running on the Compute Node when it was preempted will be
+        /// The Spot/Low-priority Compute Node has been preempted. Tasks which
+        /// were running on the Compute Node when it was preempted will be
         /// rescheduled when another Compute Node becomes available. Possible
         /// values include: 'idle', 'rebooting', 'reimaging', 'running',
         /// 'unusable', 'creating', 'starting', 'waitingForStartTask',
@@ -234,6 +242,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? RunningTasksCount { get; set; }
 
         /// <summary>
+        /// Gets or sets the total number of scheduling slots used by currently
+        /// running Job Tasks on the Compute Node. This includes Job Manager
+        /// Tasks and normal Tasks, but not Job Preparation, Job Release or
+        /// Start Tasks.
+        /// </summary>
+        [JsonProperty(PropertyName = "runningTaskSlotsCount")]
+        public int? RunningTaskSlotsCount { get; set; }
+
+        /// <summary>
         /// Gets or sets the total number of Job Tasks which completed
         /// successfully (with exitCode 0) on the Compute Node. This includes
         /// Job Manager Tasks and normal Tasks, but not Job Preparation, Job
@@ -280,6 +297,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// 'certs' directory is created in the user's home directory (e.g.,
         /// /home/{user-name}/certs) and Certificates are placed in that
         /// directory.
+        ///
+        /// Warning: This property is deprecated and will be removed after
+        /// February, 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
         /// </remarks>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
@@ -293,7 +315,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets whether this Compute Node is a dedicated Compute Node.
-        /// If false, the Compute Node is a low-priority Compute Node.
+        /// If false, the Compute Node is a Spot/Low-priority Compute Node.
         /// </summary>
         [JsonProperty(PropertyName = "isDedicated")]
         public bool? IsDedicated { get; set; }
@@ -310,6 +332,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "nodeAgentInfo")]
         public NodeAgentInformation NodeAgentInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets info about the current state of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "virtualMachineInfo")]
+        public VirtualMachineInfo VirtualMachineInfo { get; set; }
 
     }
 }

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the SwitchProtectionInput class.
         /// </summary>
-        /// <param name="properties">Switch protection properties</param>
+        /// <param name="properties">Switch protection properties.</param>
         public SwitchProtectionInput(SwitchProtectionInputProperties properties = default(SwitchProtectionInputProperties))
         {
             Properties = properties;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets switch protection properties
+        /// Gets or sets switch protection properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public SwitchProtectionInputProperties Properties { get; set; }

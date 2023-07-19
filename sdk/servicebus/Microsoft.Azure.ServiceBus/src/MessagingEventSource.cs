@@ -423,17 +423,17 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.AmqpSendAuthenticationTokenStart(address.ToString(), audience, resource, claims.ToString());
+                this.AmqpSendAuthenticationTokenStart(address.ToString(), audience, resource, string.Join(",", claims));
             }
         }
 
-        [Event(40, Level = EventLevel.Verbose, Message = "AmqpSendAuthenticanToken started. Address: {0}, Audience: {1}, Resource: {2}, Claims: {3}")]
+        [Event(40, Level = EventLevel.Verbose, Message = "AmqpSendAuthenticationToken started. Address: {0}, Audience: {1}, Resource: {2}, Claims: {3}")]
         void AmqpSendAuthenticationTokenStart(string address, string audience, string resource, string claims)
         {
             this.WriteEvent(40, address, audience, resource, claims);
         }
 
-        [Event(41, Level = EventLevel.Verbose, Message = "AmqpSendAuthenticanToken done.")]
+        [Event(41, Level = EventLevel.Verbose, Message = "AmqpSendAuthenticationToken done.")]
         public void AmqpSendAuthenticationTokenStop()
         {
             if (this.IsEnabled())
@@ -1378,6 +1378,51 @@ namespace Microsoft.Azure.ServiceBus
             if (this.IsEnabled())
             {
                 this.WriteEvent(117, objectName, details);
+            }
+        }
+
+        [Event(118, Level = EventLevel.Informational, Message = "{0}: Unregister MessageHandler start.")]
+        public void UnregisterMessageHandlerStart(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(118, clientId);
+            }
+        }
+
+        [Event(119, Level = EventLevel.Informational, Message = "{0}: Unregister MessageHandler done.")]
+        public void UnregisterMessageHandlerStop(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(119, clientId);
+            }
+        }
+
+        [Event(120, Level = EventLevel.Informational, Message = "{0}: Unregister SessionHandler start.")]
+        public void UnregisterSessionHandlerStart(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(120, clientId);
+            }
+        }
+
+        [Event(121, Level = EventLevel.Informational, Message = "{0}: Unregister SessionHandler done.")]
+        public void UnregisterSessionHandlerStop(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(121, clientId);
+            }
+        }
+
+        [Event(122, Level = EventLevel.Error, Message = "Error occurred: {0}")]
+        public void Error(string errorMsg)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(122, errorMsg);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿# Programmer's Guide to Service Fabric Processor
+# Programmer's Guide to Service Fabric Processor
 
 ## Introduction
 

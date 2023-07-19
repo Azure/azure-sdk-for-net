@@ -33,12 +33,15 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="message">Error message of the given entry.</param>
         /// <param name="target">Target of the given error entry.</param>
         /// <param name="details">Error details of the given entry.</param>
-        public StorageSyncApiError(string code = default(string), string message = default(string), string target = default(string), StorageSyncErrorDetails details = default(StorageSyncErrorDetails))
+        /// <param name="innererror">Inner error details of the given
+        /// entry.</param>
+        public StorageSyncApiError(string code = default(string), string message = default(string), string target = default(string), StorageSyncErrorDetails details = default(StorageSyncErrorDetails), StorageSyncInnerErrorDetails innererror = default(StorageSyncInnerErrorDetails))
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
+            Innererror = innererror;
             CustomInit();
         }
 
@@ -70,6 +73,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "details")]
         public StorageSyncErrorDetails Details { get; set; }
+
+        /// <summary>
+        /// Gets or sets inner error details of the given entry.
+        /// </summary>
+        [JsonProperty(PropertyName = "innererror")]
+        public StorageSyncInnerErrorDetails Innererror { get; set; }
 
     }
 }

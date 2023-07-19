@@ -8,8 +8,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-#pragma warning disable SA1402  // File may only contain a single type
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
@@ -52,19 +50,5 @@ namespace Azure.Storage.Blobs.Models
             Prefix = prefix;
             Blob = blob;
         }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobHierarchyItem instance for mocking.
-        /// </summary>
-        public static BlobHierarchyItem BlobHierarchyItem(
-            string prefix,
-            BlobItem blob) =>
-            new BlobHierarchyItem(prefix, blob);
     }
 }

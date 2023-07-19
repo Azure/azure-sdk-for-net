@@ -1,5 +1,177 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 25.0.0
+- Upgrade to rest api version 2022-05-01.
+- Support Create or Update Storage Account with AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions as 'AADKERB'.
+
+**Breaking changes**
+
+- new ActiveDirectoryProperties() parameter change: "domainGuid" moved from the 3rd to the 2nd parameter; "netBiosDomainName", "forestName", "domainSid", "azureStorageSid" changed from required to optional.
+- new Encryption() parameter change: "keySource" changed from required to optional, and moved from the 1st to the 2nd parameter; "services" moved from the 2nd to the 1st parameter.
+
+### Changes in 24.0.0
+- Upgrade to rest api version 2021-09-01.
+- Support create/update Storage account with new property dnsEndpointType.
+- Support Storage account new access tier Premium.
+- Support Storage account new readonly property storageAccountSkuConversionStatus.
+- Support Storage account new readonly property Encryption.KeyVaultProperties.CurrentVersionedKeyExpirationTimestamp.
+- Support ManagementPolicy action condition daysAfterCreationGreaterThan on base blob.
+- Support ManagementPolicy action condition daysAfterLastTierChangeTimeGreaterThan, only apply to tierToArchive action.
+- Support Blob service new property DeleteRetentionPolicy.AllowPermanentDelete.
+- Support CORS rule AllowedMethods Patch. 
+- Support table new property SignedIdentifiers.
+- Support output BlobInventoryPolicySchema property Destination which can be input from old API version.
+- Support blob inventory new filter IncludeDeleted, ExcludePrefix.
+- Support blob inventory new blob SchemaFields: Tags, Etag, ContentType, ContentEncoding, ContentLanguage, ContentCRC64, CacheControl, ContentDisposition, LeaseStatus, LeaseState, LeaseDuration, ServerEncrypted, Deleted, DeletionId, DeletedTime, RemainingRetentionDays, ImmutabilityPolicyUntilDate, ImmutabilityPolicyMode, LegalHold, CopyId, CopyStatus, CopySource, CopyProgress, CopyCompletionTime, CopyStatusDescription, CustomerProvidedKeySha256, RehydratePriority, ArchiveStatus, XmsBlobSequenceNumber, EncryptionScope, IncrementalCopy, TagCount.
+- Support blob inventory new container SchemaFields: Etag, DefaultEncryptionScope, DenyEncryptionScopeOverride, ImmutableStorageWithVersioningEnabled, Deleted, Version, DeletedTime, RemainingRetentionDays.
+
+**Breaking changes**
+
+- StorageManagementClient.LocalUsers.List() output type change from LocalUsers to IEnumerable<LocalUser>.
+
+### Changes in 23.1.0
+- Upgrade to rest api version 2021-08-01.
+- Support create/update Storage account with enable/disable Sftp and Localuser.
+- Support CreateOrUpdate/Delete/Get/List/ListKeys/RegeneratePassword on Storage account local users.
+- Support create/update account with AllowedCopyScope.
+- Support create/update account with 2 new ActiveDirectoryProperties: samAccountName, accountType.
+- Support create/update account with new EncryptionIdentity: FederatedIdentityClientId.
+
+### Changes in 23.0.0
+- Upgrade to rest api version 2021-06-01.
+- Support Storage account HierarchicalNamespace migration.
+- Support create/update Storage account with enable/disable PublicNetworkAccess.
+- Support create/update account with ImmutableStorageWithVersioning.
+- Support create/update account with defaultToOAuthAuthentication.
+- Support blob Inventory new schema fields: AccessTierInferred and Tags.
+- Support create/update Blob Container with enableNfsV3RootSquash and enableNfsV3AllSquash.
+- Support AllowProtectedAppendWritesAll in set container ImmutabilityPolicy and set container LegalHold.
+
+**Breaking changes**
+
+- Remove StorageFileDataSmbShareOwner from Microsoft.Azure.Management.Storage.Models.DefaultSharePermission.
+- In StorageManagementClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(), StorageManagementClient.BlobContainers.ExtendImmutabilityPolicy(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.ImmutabilityPolicy, to input all ImmutabilityPolicy properties, and remove 2 parameters to input ImmutabilityPolicy properties: immutabilityPeriodSinceCreationInDays, allowProtectedAppendWrites.
+- In Microsoft.Azure.Management.Storage.Models.AccessPolicy, rename Start to StartTime, Expiry to ExpiryTime.
+
+### Changes in 22.0.0
+- Upgrade to rest api version 2021-04-01.
+- Support File Share lease and delete share with leased share snapshots.
+- Support File Share access policy
+- Support Blob Container with ImmutableStorageWithVersioning enabled.
+- Support new account property AllowCrossTenantReplication
+- Support DefaultSharePermission
+- Support Blob Inventory GA policy
+
+**Breaking changes**
+
+- BlobInventoryPolicySchema property Destination is removed, and Destination is added to BlobInventoryPolicyRule.
+- Following Enum are removed: PutSharesExpand, GetShareExpand, ListSharesExpand. Need to input the expand string in Put/Get/List file share API according to the parameter description.
+
+### Changes in 21.0.0
+
+**Breaking changes**
+
+- StorageAccount.KeyCreationTime type change from Dictionary to 'Microsoft.Azure.Management.Storage.Models.KeyCreationTime'.
+
+### Changes in 20.0.0
+- Upgrade to rest api version 2021-02-01.
+- Support KeyPolicy,SasPolicy in create/update Storage account.
+- Added a new property "CreationTime" to Microsoft.Azure.Management.Storage.Models.StorageAccountKey object.
+
+**Breaking changes**
+
+- StorageManagementClient.FileShares.List() parameter "expand" type change to enum to string.
+- StorageManagementClient.FileShares.Create() parameter "expand" type change to enum to string.
+
+### Changes in 19.0.0
+- Upgrade to rest api version 2021-01-01
+- Support create/get/delete/list File share snapshot
+- Support ChangeFeed.RetentionInDays
+- Support User Identity in create and update Storage account
+- Support RequireInfrastructureEncryption in create Encryption Scope
+- Add 2 new properties to Encryption Scope KeyVaultProperties: CurrentVersionedKeyIdentifier, LastKeyRotationTimestamp
+- Support add ManagementPolicy action to blob version
+- Support ManagementPolicy action TierToCool, TierToArchive on blob snapshot.
+- Support add ManagementPolicy with filter blob type as AppendBlob
+- Support Update File Service properties with SMB settings: Versions, AuthenticationMethods, KerberosTicketEncryption, ChannelEncryption
+- Support EnableNfsV3 in create Storage account
+- Support AllowSharedKeyAccess in create/update Storage account
+
+**Breaking changes**
+
+- StorageManagementClient.StorageAccounts.ListByResourceGroup() output type change from IEnumerable<StorageAccount> to IPage<StorageAccount>, to support list account with nextlink.
+- Microsoft.Azure.Management.Storage.Models.StorageAccountUpdateParameters.Identity.Type, Microsoft.Azure.Management.Storage.Models.StorageAccountCreateParameters.Identity.Type have default single value as IdentityType.SystemAssigned before. Now must assign value to be used in create or update storage account, since it support multiple value now.
+- Microsoft.Azure.Management.Storage.Models.VirtualNetworkRule.State type change from enum to string.
+
+### Changes in 18.0.0-beta
+- Upgrade to rest api version 2020-08-01-preview
+- Support enanble ContainerDeleteRetentionPolicy in BlobServices properties
+- Support enable LastAccessTimeTrackingPolicy in BlobServices properties
+- Support DaysAfterLastAccessTimeGreaterThan,EnableAutoTierToHotFromCool in ManagementPolicy BaseBlob Actions
+- Support List deleted containers
+- Support enable ProtocolSettings.Smb.Multichannel on FileServices properties
+- Support ResourceAccessRule in Microsoft.Azure.Management.Storage.Models.NetworkRuleSet
+- Support Set ExtendedLocation in create storage account
+- Support Blob Inventory rule of storage account
+
+**Breaking changes**
+
+- In StorageManagementClient.FileServices.SetServiceProperties(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.FileServiceProperties, to input all FileService properties, and remove 2 parameters to input FileService properties: cors， shareDeleteRetentionPolicy.
+
+### Changes in 17.2.0
+- Update BlobServiceProperties.RestorePolicy: add new property "MinRestoreTime", deprecate old property "LastEnabledTime"
+
+### Changes in 17.1.0
+
+- Support Create or Update Storage Account with MinimumTlsVersion, AllowBlobPublicAccess
+
+### Changes in 17.0.0
+
+- Support Table and Queue create/get/list/remove
+- Support list deleted blob containers
+- Support create/update File share with access tier
+
+**Breaking changes**
+
+- The type of Microsoft.Azure.Management.Storage.Models.FileShare.ShareUsageBytes change from int? to long?.
+
+### Changes in 16.0.0
+
+- Support TagFilter in ManagementPolicy
+- Support enable File share soft delete in File service properties, list shares include deleted shares, and restore deleted share
+- Support create File share with EnabledProtocols, RootSquash, AccessTier
+- Support Update File share with RootSquash, AccessTier
+- Support get File share with ShareUsageBytes
+
+**Breaking changes**
+
+- In StorageManagementClient.FileShares.Create(), StorageManagementClient.FileShares.Update(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.FileShare, to input all share properties, and remove 2 parameters to input share properties: metadata, shareQuota.
+
+### Changes in 15.1.0
+- Support create/update/remove/get/list Object Replication Policy on Storage account
+
+### Changes in 15.0.0
+
+- Support create blob contaienr with EncryptionScope
+- In get Storage Account, return 2 new properties: CurrentVersionedKeyIdentifier, LastKeyRotationTimestamp, in returned account Encryption KeyVaultProperties
+
+**Breaking changes**
+
+- In StorageManagementClient.BlobContainers.Create(), StorageManagementClient.BlobContainers.Update(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.BlobContainer, to input all container properties, and remove 2 parameters to input container properties: metadata, publicAccess.
+
+### Changes in 14.5.0
+
+- Support allowProtectedAppendWrites in blob container ImmutabilityPolicy
+- Support create/update/get/list EncryptionScope
+
+### Changes in 14.4.0
+
+- Support Point In Time Restore, to restore blob ranges
+
+### Changes in 14.3.0
+
+- Support Queue/Table Encyrtpion Keytype when create Storage account
+
 ### Changes in 14.2.0
 
 - Change the maximum limitation for share size from 100000(GiB) to 102400(GiB)

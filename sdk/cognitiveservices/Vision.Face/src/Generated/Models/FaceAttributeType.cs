@@ -48,7 +48,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         [EnumMember(Value = "exposure")]
         Exposure,
         [EnumMember(Value = "noise")]
-        Noise
+        Noise,
+        [EnumMember(Value = "mask")]
+        Mask,
+        [EnumMember(Value = "qualityForRecognition")]
+        QualityForRecognition
     }
     internal static class FaceAttributeTypeEnumExtension
     {
@@ -89,6 +93,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                     return "exposure";
                 case FaceAttributeType.Noise:
                     return "noise";
+                case FaceAttributeType.Mask:
+                    return "mask";
+                case FaceAttributeType.QualityForRecognition:
+                    return "qualityForRecognition";
             }
             return null;
         }
@@ -125,6 +133,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                     return FaceAttributeType.Exposure;
                 case "noise":
                     return FaceAttributeType.Noise;
+                case "mask":
+                    return FaceAttributeType.Mask;
+                case "qualityForRecognition":
+                    return FaceAttributeType.QualityForRecognition;
             }
             return null;
         }

@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<NodeAgentInformation> NodeAgentInformationProperty;
             public readonly PropertyAccessor<IReadOnlyList<TaskInformation>> RecentTasksProperty;
             public readonly PropertyAccessor<int?> RunningTasksCountProperty;
+            public readonly PropertyAccessor<int?> RunningTaskSlotsCountProperty;
             public readonly PropertyAccessor<Common.SchedulingState?> SchedulingStateProperty;
             public readonly PropertyAccessor<StartTask> StartTaskProperty;
             public readonly PropertyAccessor<StartTaskInformation> StartTaskInformationProperty;
@@ -44,6 +45,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<int?> TotalTasksRunProperty;
             public readonly PropertyAccessor<int?> TotalTasksSucceededProperty;
             public readonly PropertyAccessor<string> UrlProperty;
+            public readonly PropertyAccessor<VirtualMachineInfo> VirtualMachineInfoProperty;
             public readonly PropertyAccessor<string> VirtualMachineSizeProperty;
             public PropertyContainer(Models.ComputeNode protocolObject) : base(BindingState.Bound)
             {
@@ -95,6 +97,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.RunningTasksCount,
                     nameof(RunningTasksCount),
                     BindingAccess.Read);
+                this.RunningTaskSlotsCountProperty = this.CreatePropertyAccessor(
+                    protocolObject.RunningTaskSlotsCount,
+                    nameof(RunningTaskSlotsCount),
+                    BindingAccess.Read);
                 this.SchedulingStateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.SchedulingState, Common.SchedulingState>(protocolObject.SchedulingState),
                     nameof(SchedulingState),
@@ -126,6 +132,10 @@ namespace Microsoft.Azure.Batch
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
                     nameof(Url),
+                    BindingAccess.Read);
+                this.VirtualMachineInfoProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.VirtualMachineInfo, o => new VirtualMachineInfo(o).Freeze()),
+                    nameof(VirtualMachineInfo),
                     BindingAccess.Read);
                 this.VirtualMachineSizeProperty = this.CreatePropertyAccessor(
                     protocolObject.VmSize,
@@ -279,6 +289,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets the total number of scheduling slots used by currently running Job Tasks on the Compute Node. This includes 
+        /// Job Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start Tasks.
+        /// </summary>
+        public int? RunningTaskSlotsCount
+        {
+            get { return this.propertyContainer.RunningTaskSlotsCountProperty.Value; }
+        }
+
+        /// <summary>
         /// Gets whether the node is available for task scheduling.
         /// </summary>
         public Common.SchedulingState? SchedulingState
@@ -343,6 +362,14 @@ namespace Microsoft.Azure.Batch
         public string Url
         {
             get { return this.propertyContainer.UrlProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets info about the current state of the virtual machine.
+        /// </summary>
+        public VirtualMachineInfo VirtualMachineInfo
+        {
+            get { return this.propertyContainer.VirtualMachineInfoProperty.Value; }
         }
 
         /// <summary>

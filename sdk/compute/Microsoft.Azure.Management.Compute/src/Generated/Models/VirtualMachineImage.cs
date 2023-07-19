@@ -42,16 +42,26 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// virtual machine. For more information about using tags, see [Using
         /// tags to organize your Azure
         /// resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md).</param>
+        /// <param name="extendedLocation">The extended location of the Virtual
+        /// Machine.</param>
         /// <param name="hyperVGeneration">Possible values include: 'V1',
         /// 'V2'</param>
-        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>), AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default(AutomaticOSUpgradeProperties), string hyperVGeneration = default(string))
-            : base(name, location, id, tags)
+        /// <param name="disallowed">Specifies disallowed configuration for the
+        /// VirtualMachine created from the image</param>
+        /// <param name="architecture">Possible values include: 'x64',
+        /// 'Arm64'</param>
+        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>), AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default(AutomaticOSUpgradeProperties), string hyperVGeneration = default(string), DisallowedConfiguration disallowed = default(DisallowedConfiguration), IList<VirtualMachineImageFeature> features = default(IList<VirtualMachineImageFeature>), string architecture = default(string), ImageDeprecationStatus imageDeprecationStatus = default(ImageDeprecationStatus))
+            : base(name, location, id, tags, extendedLocation)
         {
             Plan = plan;
             OsDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
             AutomaticOSUpgradeProperties = automaticOSUpgradeProperties;
             HyperVGeneration = hyperVGeneration;
+            Disallowed = disallowed;
+            Features = features;
+            Architecture = architecture;
+            ImageDeprecationStatus = imageDeprecationStatus;
             CustomInit();
         }
 
@@ -85,6 +95,29 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hyperVGeneration")]
         public string HyperVGeneration { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies disallowed configuration for the
+        /// VirtualMachine created from the image
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disallowed")]
+        public DisallowedConfiguration Disallowed { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.features")]
+        public IList<VirtualMachineImageFeature> Features { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'x64', 'Arm64'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.architecture")]
+        public string Architecture { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.imageDeprecationStatus")]
+        public ImageDeprecationStatus ImageDeprecationStatus { get; set; }
 
         /// <summary>
         /// Validate the object.

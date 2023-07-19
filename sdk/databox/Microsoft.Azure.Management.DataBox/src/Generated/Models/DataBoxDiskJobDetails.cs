@@ -34,26 +34,41 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="contactDetails">Contact details for notification and
         /// shipping.</param>
+        /// <param name="jobStages">List of stages that run in the job.</param>
         /// <param name="shippingAddress">Shipping address of the
         /// customer.</param>
-        /// <param name="destinationAccountDetails">Destination account
-        /// details.</param>
-        /// <param name="expectedDataSizeInTerabytes">The expected size of the
-        /// data, which needs to be transferred in this job, in
-        /// terabytes.</param>
-        /// <param name="jobStages">List of stages that run in the job.</param>
         /// <param name="deliveryPackage">Delivery package shipping
         /// details.</param>
         /// <param name="returnPackage">Return package shipping
         /// details.</param>
-        /// <param name="errorDetails">Error details for failure. This is
-        /// optional.</param>
+        /// <param name="dataImportDetails">Details of the data to be imported
+        /// into azure.</param>
+        /// <param name="dataExportDetails">Details of the data to be exported
+        /// from azure.</param>
         /// <param name="preferences">Preferences for the order.</param>
         /// <param name="copyLogDetails">List of copy log details.</param>
         /// <param name="reverseShipmentLabelSasKey">Shared access key to
         /// download the return shipment label</param>
         /// <param name="chainOfCustodySasKey">Shared access key to download
         /// the chain of custody logs</param>
+        /// <param name="keyEncryptionKey">Details about which key encryption
+        /// type is being used.</param>
+        /// <param name="expectedDataSizeInTeraBytes">The expected size of the
+        /// data, which needs to be transferred in this job, in
+        /// terabytes.</param>
+        /// <param name="actions">Available actions on the job.</param>
+        /// <param name="lastMitigationActionOnJob">Last mitigation action
+        /// performed on the job.</param>
+        /// <param name="datacenterAddress">Datacenter address to ship to, for
+        /// the given sku and storage location.</param>
+        /// <param name="dataCenterCode">DataCenter code. Possible values
+        /// include: 'Invalid', 'BY2', 'BY1', 'ORK70', 'AM2', 'AMS20', 'BY21',
+        /// 'BY24', 'MWH01', 'AMS06', 'SSE90', 'SYD03', 'SYD23', 'CBR20',
+        /// 'YTO20', 'CWL20', 'LON24', 'BOM01', 'BL20', 'BL7', 'SEL20',
+        /// 'TYO01', 'BN1', 'SN5', 'CYS04', 'TYO22', 'YTO21', 'YQB20', 'FRA22',
+        /// 'MAA01', 'CPQ02', 'CPQ20', 'SIN20', 'HKG20', 'SG2', 'MEL23',
+        /// 'SEL21', 'OSA20', 'SHA03', 'BJB', 'JNB22', 'JNB21', 'MNZ21', 'SN8',
+        /// 'AUH20', 'ZRH20', 'PUS20', 'AdHoc', 'CH1', 'DSM05'</param>
         /// <param name="preferredDisks">User preference on what size disks are
         /// needed for the job. The map is from the disk size in TB to the
         /// count. Eg. {2,5} means 5 disks of 2 TB size. Key is string but will
@@ -64,8 +79,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// after the disks are shipped to the customer.</param>
         /// <param name="passkey">User entered passkey for DataBox Disk
         /// job.</param>
-        public DataBoxDiskJobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, IList<DestinationAccountDetails> destinationAccountDetails, int? expectedDataSizeInTerabytes = default(int?), IList<JobStages> jobStages = default(IList<JobStages>), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), IDictionary<string, int?> preferredDisks = default(IDictionary<string, int?>), IList<DataBoxDiskCopyProgress> copyProgress = default(IList<DataBoxDiskCopyProgress>), IDictionary<string, int?> disksAndSizeDetails = default(IDictionary<string, int?>), string passkey = default(string))
-            : base(contactDetails, shippingAddress, destinationAccountDetails, expectedDataSizeInTerabytes, jobStages, deliveryPackage, returnPackage, errorDetails, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey)
+        public DataBoxDiskJobDetails(ContactDetails contactDetails, IList<JobStages> jobStages = default(IList<JobStages>), ShippingAddress shippingAddress = default(ShippingAddress), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<DataImportDetails> dataImportDetails = default(IList<DataImportDetails>), IList<DataExportDetails> dataExportDetails = default(IList<DataExportDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), KeyEncryptionKey keyEncryptionKey = default(KeyEncryptionKey), int? expectedDataSizeInTeraBytes = default(int?), IList<CustomerResolutionCode?> actions = default(IList<CustomerResolutionCode?>), LastMitigationActionOnJob lastMitigationActionOnJob = default(LastMitigationActionOnJob), DatacenterAddressResponse datacenterAddress = default(DatacenterAddressResponse), string dataCenterCode = default(string), IDictionary<string, int?> preferredDisks = default(IDictionary<string, int?>), IList<DataBoxDiskCopyProgress> copyProgress = default(IList<DataBoxDiskCopyProgress>), IDictionary<string, int?> disksAndSizeDetails = default(IDictionary<string, int?>), string passkey = default(string))
+            : base(contactDetails, jobStages, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, keyEncryptionKey, expectedDataSizeInTeraBytes, actions, lastMitigationActionOnJob, datacenterAddress, dataCenterCode)
         {
             PreferredDisks = preferredDisks;
             CopyProgress = copyProgress;

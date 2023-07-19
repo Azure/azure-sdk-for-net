@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.Reservations
     using System.Threading.Tasks;
 
     /// <summary>
-    /// This API describe Azure Reservation
     /// </summary>
     public partial interface IAzureReservationAPIClient : System.IDisposable
     {
@@ -43,11 +42,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
         ServiceClientCredentials Credentials { get; }
-
-        /// <summary>
-        /// Supported version for this document is 2019-04-01
-        /// </summary>
-        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -84,6 +78,26 @@ namespace Microsoft.Azure.Management.Reservations
         IOperationOperations Operation { get; }
 
         /// <summary>
+        /// Gets the ICalculateExchangeOperations.
+        /// </summary>
+        ICalculateExchangeOperations CalculateExchange { get; }
+
+        /// <summary>
+        /// Gets the IExchangeOperations.
+        /// </summary>
+        IExchangeOperations Exchange { get; }
+
+        /// <summary>
+        /// Gets the IQuotaOperations.
+        /// </summary>
+        IQuotaOperations Quota { get; }
+
+        /// <summary>
+        /// Gets the IQuotaRequestStatusOperations.
+        /// </summary>
+        IQuotaRequestStatusOperations QuotaRequestStatus { get; }
+
+        /// <summary>
         /// Get the regions and skus that are available for RI purchase for the
         /// specified Azure subscription.
         /// </summary>
@@ -97,13 +111,22 @@ namespace Microsoft.Azure.Management.Reservations
         /// Filters the skus based on the location specified in this parameter.
         /// This can be an azure region or global
         /// </param>
+        /// <param name='publisherId'>
+        /// Publisher id used to get the third party products
+        /// </param>
+        /// <param name='offerId'>
+        /// Offer id used to get the third party products
+        /// </param>
+        /// <param name='planId'>
+        /// Plan id used to get the third party products
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType, string location = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType = default(string), string location = default(string), string publisherId = default(string), string offerId = default(string), string planId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get list of applicable `Reservation`s.

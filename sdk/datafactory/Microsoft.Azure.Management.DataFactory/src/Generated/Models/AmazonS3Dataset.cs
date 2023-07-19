@@ -156,6 +156,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "BucketName");
             }
+            if (Compression != null)
+            {
+                Compression.Validate();
+            }
         }
     }
 }

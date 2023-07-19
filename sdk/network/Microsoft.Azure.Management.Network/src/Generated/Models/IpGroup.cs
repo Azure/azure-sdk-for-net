@@ -44,16 +44,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="ipAddresses">IpAddresses/IpAddressPrefixes in the
         /// IpGroups resource.</param>
-        /// <param name="firewalls">List of references to Azure resources that
-        /// this IpGroups is associated with.</param>
+        /// <param name="firewalls">List of references to Firewall resources
+        /// that this IpGroups is associated with.</param>
+        /// <param name="firewallPolicies">List of references to Firewall
+        /// Policies resources that this IpGroups is associated with.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public IpGroup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<string> ipAddresses = default(IList<string>), IList<SubResource> firewalls = default(IList<SubResource>), string etag = default(string))
+        public IpGroup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<string> ipAddresses = default(IList<string>), IList<SubResource> firewalls = default(IList<SubResource>), IList<SubResource> firewallPolicies = default(IList<SubResource>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ProvisioningState = provisioningState;
             IpAddresses = ipAddresses;
             Firewalls = firewalls;
+            FirewallPolicies = firewallPolicies;
             Etag = etag;
             CustomInit();
         }
@@ -78,11 +81,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> IpAddresses { get; set; }
 
         /// <summary>
-        /// Gets list of references to Azure resources that this IpGroups is
+        /// Gets list of references to Firewall resources that this IpGroups is
         /// associated with.
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewalls")]
         public IList<SubResource> Firewalls { get; private set; }
+
+        /// <summary>
+        /// Gets list of references to Firewall Policies resources that this
+        /// IpGroups is associated with.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallPolicies")]
+        public IList<SubResource> FirewallPolicies { get; private set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

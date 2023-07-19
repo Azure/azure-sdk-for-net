@@ -194,17 +194,11 @@ namespace Azure.Storage.Files.DataLake.Models
             var sb = new StringBuilder();
             sb.Append(Owner.ToSymbolicRolePermissions());
             sb.Append(Group.ToSymbolicRolePermissions());
-            sb.Append(Other.ToSymbolicRolePermissions());
-
-            if (StickyBit)
-            {
-                sb.Remove(8, 1);
-                sb.Append("t");
-            }
+            sb.Append(Other.ToSymbolicRolePermissions(StickyBit));
 
             if (ExtendedAcls)
             {
-                sb.Append("+");
+                sb.Append('+');
             }
 
             return sb.ToString();

@@ -31,6 +31,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             yield return new object[] { AmqpError.TimeoutError, typeof(EventHubsException), EventHubsException.FailureReason.ServiceTimeout };
             yield return new object[] { AmqpError.ServerBusyError, typeof(EventHubsException), EventHubsException.FailureReason.ServiceBusy };
+            yield return new object[] { AmqpError.ProducerStolenError, typeof(EventHubsException), EventHubsException.FailureReason.ProducerDisconnected };
+            yield return new object[] { AmqpError.SequenceOutOfOrderError, typeof(EventHubsException), EventHubsException.FailureReason.InvalidClientState };
             yield return new object[] { AmqpError.ArgumentError, typeof(ArgumentException), null };
             yield return new object[] { AmqpError.ArgumentOutOfRangeError, typeof(ArgumentOutOfRangeException), null };
 
@@ -41,6 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { AmqpErrorCode.ResourceLimitExceeded, typeof(EventHubsException), EventHubsException.FailureReason.QuotaExceeded };
             yield return new object[] { AmqpErrorCode.NotAllowed, typeof(InvalidOperationException), null };
             yield return new object[] { AmqpErrorCode.NotImplemented, typeof(NotSupportedException), null };
+            yield return new object[] { AmqpErrorCode.IllegalState, typeof(EventHubsException), EventHubsException.FailureReason.ClientClosed };
         }
 
         /// <summary>
@@ -77,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should be a generic Event Hubs exception");
-            Assert.That(exception.Message, Is.EqualTo(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
+            Assert.That(exception.Message, Does.StartWith(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
             Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be considered transient");
         }
 
@@ -323,7 +326,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should be a generic Event Hubs exception");
-            Assert.That(exception.Message, Is.EqualTo(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
+            Assert.That(exception.Message, Does.StartWith(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
             Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be considered transient");
         }
 
@@ -432,6 +435,32 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
             Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The exception reason should match.");
+            Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpError.CreateExceptionForError" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateExceptionForErrorWithIllegalStateCondition()
+        {
+            var description = $"'someclient' is closed";
+            var resourceName = "TestHub";
+
+            var error = new Error
+            {
+                Condition = AmqpErrorCode.IllegalState,
+                Description = description
+            };
+
+            Exception exception = AmqpError.CreateExceptionForError(error, resourceName);
+
+            Assert.That(exception, Is.Not.Null, "An exception should have been created");
+            Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should match");
+            Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be transient.");
+            Assert.That(((EventHubsException)exception).Reason, Is.EqualTo(EventHubsException.FailureReason.ClientClosed), "The exception reason should match.");
             Assert.That(exception.Message, Is.SupersetOf(description), "The exception message should contain the description");
         }
 

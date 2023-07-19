@@ -43,13 +43,17 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="customBlockResponseBody">If the action type is block,
         /// customer can override the response body. The body must be specified
         /// in base64 encoding.</param>
-        public PolicySettings(string enabledState = default(string), string mode = default(string), string redirectUrl = default(string), int? customBlockResponseStatusCode = default(int?), string customBlockResponseBody = default(string))
+        /// <param name="requestBodyCheck">Describes if policy managed rules
+        /// will inspect the request body content. Possible values include:
+        /// 'Disabled', 'Enabled'</param>
+        public PolicySettings(string enabledState = default(string), string mode = default(string), string redirectUrl = default(string), int? customBlockResponseStatusCode = default(int?), string customBlockResponseBody = default(string), string requestBodyCheck = default(string))
         {
             EnabledState = enabledState;
             Mode = mode;
             RedirectUrl = redirectUrl;
             CustomBlockResponseStatusCode = customBlockResponseStatusCode;
             CustomBlockResponseBody = customBlockResponseBody;
+            RequestBodyCheck = requestBodyCheck;
             CustomInit();
         }
 
@@ -94,6 +98,14 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "customBlockResponseBody")]
         public string CustomBlockResponseBody { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes if policy managed rules will inspect the
+        /// request body content. Possible values include: 'Disabled',
+        /// 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "requestBodyCheck")]
+        public string RequestBodyCheck { get; set; }
 
         /// <summary>
         /// Validate the object.

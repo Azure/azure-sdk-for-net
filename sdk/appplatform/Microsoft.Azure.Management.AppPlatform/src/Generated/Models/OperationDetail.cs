@@ -30,16 +30,20 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// Initializes a new instance of the OperationDetail class.
         /// </summary>
         /// <param name="name">Name of the operation</param>
-        /// <param name="dataAction">Indicates whether the operation is a data
-        /// action</param>
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
         /// <param name="display">Display of the operation</param>
+        /// <param name="actionType">Enum. Indicates the action type.
+        /// "Internal" refers to actions that are for internal only APIs.
+        /// Possible values include: 'Internal'</param>
         /// <param name="origin">Origin of the operation</param>
         /// <param name="properties">Properties of the operation</param>
-        public OperationDetail(string name = default(string), bool? dataAction = default(bool?), OperationDisplay display = default(OperationDisplay), string origin = default(string), OperationProperties properties = default(OperationProperties))
+        public OperationDetail(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay), string actionType = default(string), string origin = default(string), OperationProperties properties = default(OperationProperties))
         {
             Name = name;
-            DataAction = dataAction;
+            IsDataAction = isDataAction;
             Display = display;
+            ActionType = actionType;
             Origin = origin;
             Properties = properties;
             CustomInit();
@@ -59,14 +63,22 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <summary>
         /// Gets or sets indicates whether the operation is a data action
         /// </summary>
-        [JsonProperty(PropertyName = "dataAction")]
-        public bool? DataAction { get; set; }
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
         /// <summary>
         /// Gets or sets display of the operation
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets enum. Indicates the action type. "Internal" refers to actions
+        /// that are for internal only APIs. Possible values include:
+        /// 'Internal'
+        /// </summary>
+        [JsonProperty(PropertyName = "actionType")]
+        public string ActionType { get; private set; }
 
         /// <summary>
         /// Gets or sets origin of the operation

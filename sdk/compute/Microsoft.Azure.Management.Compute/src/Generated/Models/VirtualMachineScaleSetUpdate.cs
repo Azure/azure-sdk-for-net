@@ -37,9 +37,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
         /// <param name="sku">The virtual machine scale set sku.</param>
         /// <param name="plan">The purchase plan when deploying a virtual
         /// machine scale set from VM Marketplace images.</param>
@@ -56,24 +53,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// hence ensure that the extensions do not run on the extra
         /// overprovisioned VMs.</param>
         /// <param name="singlePlacementGroup">When true this limits the scale
-        /// set to a single placement group, of max size 100 virtual
-        /// machines.</param>
+        /// set to a single placement group, of max size 100 virtual machines.
+        /// NOTE: If singlePlacementGroup is true, it may be modified to false.
+        /// However, if singlePlacementGroup is false, it may not be modified
+        /// to true.</param>
         /// <param name="additionalCapabilities">Specifies additional
         /// capabilities enabled or disabled on the Virtual Machines in the
         /// Virtual Machine Scale Set. For instance: whether the Virtual
         /// Machines have the capability to support attaching managed data
         /// disks with UltraSSD_LRS storage account type.</param>
-        /// <param name="scaleInPolicy">Specifies the scale-in policy that
-        /// decides which virtual machines are chosen for removal when a
-        /// Virtual Machine Scale Set is scaled-in.</param>
+        /// <param name="scaleInPolicy">Specifies the policies applied when
+        /// scaling in Virtual Machines in the Virtual Machine Scale
+        /// Set.</param>
         /// <param name="proximityPlacementGroup">Specifies information about
         /// the proximity placement group that the virtual machine scale set
         /// should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2018-04-01.</param>
+        /// <param name="priorityMixPolicy">Specifies the desired targets for
+        /// mixing Spot and Regular priority VMs within the same VMSS Flex
+        /// instance.</param>
+        /// <param name="spotRestorePolicy">Specifies the Spot Restore
+        /// properties for the virtual machine scale set.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
-        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), SubResource proximityPlacementGroup = default(SubResource), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
-            : base(tags, id, name, type)
+        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), SubResource proximityPlacementGroup = default(SubResource), PriorityMixPolicy priorityMixPolicy = default(PriorityMixPolicy), SpotRestorePolicy spotRestorePolicy = default(SpotRestorePolicy), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
+            : base(tags)
         {
             Sku = sku;
             Plan = plan;
@@ -86,6 +90,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             AdditionalCapabilities = additionalCapabilities;
             ScaleInPolicy = scaleInPolicy;
             ProximityPlacementGroup = proximityPlacementGroup;
+            PriorityMixPolicy = priorityMixPolicy;
+            SpotRestorePolicy = spotRestorePolicy;
             Identity = identity;
             CustomInit();
         }
@@ -144,7 +150,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets when true this limits the scale set to a single
-        /// placement group, of max size 100 virtual machines.
+        /// placement group, of max size 100 virtual machines. NOTE: If
+        /// singlePlacementGroup is true, it may be modified to false. However,
+        /// if singlePlacementGroup is false, it may not be modified to true.
         /// </summary>
         [JsonProperty(PropertyName = "properties.singlePlacementGroup")]
         public bool? SinglePlacementGroup { get; set; }
@@ -160,9 +168,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the scale-in policy that decides which
-        /// virtual machines are chosen for removal when a Virtual Machine
-        /// Scale Set is scaled-in.
+        /// Gets or sets specifies the policies applied when scaling in Virtual
+        /// Machines in the Virtual Machine Scale Set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleInPolicy")]
         public ScaleInPolicy ScaleInPolicy { get; set; }
@@ -175,6 +182,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
         public SubResource ProximityPlacementGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the desired targets for mixing Spot and
+        /// Regular priority VMs within the same VMSS Flex instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.priorityMixPolicy")]
+        public PriorityMixPolicy PriorityMixPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Spot Restore properties for the virtual
+        /// machine scale set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.spotRestorePolicy")]
+        public SpotRestorePolicy SpotRestorePolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if
@@ -194,6 +215,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (UpgradePolicy != null)
             {
                 UpgradePolicy.Validate();
+            }
+            if (PriorityMixPolicy != null)
+            {
+                PriorityMixPolicy.Validate();
             }
         }
     }

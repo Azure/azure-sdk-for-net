@@ -26,5 +26,10 @@
   <ItemGroup>
     <Folder Include="SessionRecords\ServiceBus.Tests.ScenarioTests.ScenarioTests\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.KeyVault" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Azure.Management.ManagedServiceIdentity" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="22.0.0" />
+  </ItemGroup>
 
 </Project>

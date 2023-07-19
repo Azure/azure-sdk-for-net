@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The publishing profile of a gallery Image Version.
+    /// The publishing profile of a gallery image version.
     /// </summary>
     public partial class GalleryApplicationVersionPublishingProfile : GalleryArtifactPublishingProfileBase
     {
@@ -45,24 +45,36 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// deployed from the latest version of the Image Definition won't use
         /// this Image Version.</param>
         /// <param name="publishedDate">The timestamp for when the gallery
-        /// Image Version is published.</param>
+        /// image version is published.</param>
         /// <param name="endOfLifeDate">The end of life date of the gallery
-        /// Image Version. This property can be used for decommissioning
+        /// image version. This property can be used for decommissioning
         /// purposes. This property is updatable.</param>
         /// <param name="storageAccountType">Specifies the storage account type
         /// to be used to store the image. This property is not updatable.
-        /// Possible values include: 'Standard_LRS', 'Standard_ZRS'</param>
-        /// <param name="contentType">Optional. May be used to help process
-        /// this file. The type of file contained in the source, e.g. zip,
-        /// json, etc.</param>
+        /// Possible values include: 'Standard_LRS', 'Standard_ZRS',
+        /// 'Premium_LRS'</param>
+        /// <param name="replicationMode">Optional parameter which specifies
+        /// the mode to be used for replication. This property is not
+        /// updatable. Possible values include: 'Full', 'Shallow'</param>
+        /// <param name="targetExtendedLocations">The target extended locations
+        /// where the Image Version is going to be replicated to. This property
+        /// is updatable.</param>
+        /// <param name="advancedSettings">Optional. Additional settings to
+        /// pass to the vm-application-manager extension. For advanced use
+        /// only.</param>
         /// <param name="enableHealthCheck">Optional. Whether or not this
         /// application reports health.</param>
-        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string contentType = default(string), bool? enableHealthCheck = default(bool?))
-            : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType)
+        /// <param name="customActions">A list of custom actions that can be
+        /// performed with this Gallery Application Version.</param>
+        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string replicationMode = default(string), IList<GalleryTargetExtendedLocation> targetExtendedLocations = default(IList<GalleryTargetExtendedLocation>), UserArtifactManage manageActions = default(UserArtifactManage), UserArtifactSettings settings = default(UserArtifactSettings), IDictionary<string, string> advancedSettings = default(IDictionary<string, string>), bool? enableHealthCheck = default(bool?), IList<GalleryApplicationCustomAction> customActions = default(IList<GalleryApplicationCustomAction>))
+            : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, replicationMode, targetExtendedLocations)
         {
             Source = source;
-            ContentType = contentType;
+            ManageActions = manageActions;
+            Settings = settings;
+            AdvancedSettings = advancedSettings;
             EnableHealthCheck = enableHealthCheck;
+            CustomActions = customActions;
             CustomInit();
         }
 
@@ -77,11 +89,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         public UserArtifactSource Source { get; set; }
 
         /// <summary>
-        /// Gets or sets optional. May be used to help process this file. The
-        /// type of file contained in the source, e.g. zip, json, etc.
         /// </summary>
-        [JsonProperty(PropertyName = "contentType")]
-        public string ContentType { get; set; }
+        [JsonProperty(PropertyName = "manageActions")]
+        public UserArtifactManage ManageActions { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "settings")]
+        public UserArtifactSettings Settings { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional. Additional settings to pass to the
+        /// vm-application-manager extension. For advanced use only.
+        /// </summary>
+        [JsonProperty(PropertyName = "advancedSettings")]
+        public IDictionary<string, string> AdvancedSettings { get; set; }
 
         /// <summary>
         /// Gets or sets optional. Whether or not this application reports
@@ -89,6 +111,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "enableHealthCheck")]
         public bool? EnableHealthCheck { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of custom actions that can be performed with
+        /// this Gallery Application Version.
+        /// </summary>
+        [JsonProperty(PropertyName = "customActions")]
+        public IList<GalleryApplicationCustomAction> CustomActions { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -105,6 +134,20 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (Source != null)
             {
                 Source.Validate();
+            }
+            if (ManageActions != null)
+            {
+                ManageActions.Validate();
+            }
+            if (CustomActions != null)
+            {
+                foreach (var element in CustomActions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

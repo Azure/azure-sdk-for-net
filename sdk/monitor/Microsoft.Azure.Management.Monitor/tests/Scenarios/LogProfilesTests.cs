@@ -16,7 +16,7 @@ namespace Monitor.Tests.Scenarios
 {
     public class LogProfilesTests : TestBase
     {
-        private const string ResourceId = "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/providers/microsoft.insights/logprofiles/default";
+        private const string ResourceId = "/subscriptions/07c0b09d-9f69-4e6e-8d05-f59f67299cb2/providers/Microsoft.Insights/logprofiles/default";
         private static string DefaultName = "default";
         private RecordedDelegatingHandler handler;
 

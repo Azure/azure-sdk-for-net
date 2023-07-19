@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -10,7 +11,8 @@ namespace Compute.Tests
 {
     public class VMScaleSetVMTestsBase : VMScaleSetTestsBase
     {
-        protected void ValidateVMScaleSetVM(VirtualMachineScaleSet vmScaleSet, string instanceId, VirtualMachineScaleSetVM vmScaleSetVMOut, bool hasManagedDisks = false)
+        protected void ValidateVMScaleSetVM(VirtualMachineScaleSet vmScaleSet, string instanceId, VirtualMachineScaleSetVM vmScaleSetVMOut, bool hasManagedDisks = false,
+            string dedicatedHostGroupReferenceId = null)
         {
             VirtualMachineScaleSetVM vmScaleSetVMModel = GenerateVMScaleSetVMModel(vmScaleSet, instanceId, hasManagedDisks);
 
@@ -86,10 +88,16 @@ namespace Compute.Tests
             }
         }
 
-        protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView, bool hasManagedDisks = false)
+        protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView, bool hasManagedDisks = false,
+            string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null, string expectedHyperVGeneration = null, string dedicatedHostReferenceId = null)
         {
             Assert.NotNull(vmScaleSetVMInstanceView);
             Assert.Contains(vmScaleSetVMInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
+
+            Assert.Equal(expectedComputerName, vmScaleSetVMInstanceView.ComputerName, StringComparer.OrdinalIgnoreCase);
+            Assert.Equal(expectedOSName, vmScaleSetVMInstanceView.OsName, StringComparer.OrdinalIgnoreCase);
+            Assert.Equal(expectedOSVersion, vmScaleSetVMInstanceView.OsVersion, StringComparer.OrdinalIgnoreCase);
+            Assert.Equal(expectedHyperVGeneration, vmScaleSetVMInstanceView.HyperVGeneration, StringComparer.OrdinalIgnoreCase);
 
             if (!hasManagedDisks)
             {
@@ -102,6 +110,11 @@ namespace Compute.Tests
                 Assert.NotNull(diskInstanceView.Statuses[0].DisplayStatus);
                 Assert.NotNull(diskInstanceView.Statuses[0].Code);
                 Assert.NotNull(diskInstanceView.Statuses[0].Level);
+            }
+
+            if (dedicatedHostReferenceId != null)
+            {
+                Assert.Equal(dedicatedHostReferenceId, vmScaleSetVMInstanceView.AssignedHost, StringComparer.OrdinalIgnoreCase);
             }
         }
 

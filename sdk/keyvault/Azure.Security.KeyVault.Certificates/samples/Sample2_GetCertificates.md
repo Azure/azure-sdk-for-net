@@ -1,17 +1,17 @@
 # Listing certificates, certificate versions, and deleted certificates
 
-This sample demonstrates how to list certificates, versions of given certificates, and list deleted certificates in a soft delete-enabled key vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+This sample demonstrates how to list certificates, versions of given certificates, and list deleted certificates in a soft delete-enabled Azure Key Vault.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) for links and instructions.
 
 ## Creating a CertificateClient
 
-To create a new `CertificateClient` to create, get, update, or delete certificates, you need the endpoint to a Key Vault and credentials.
+To create a new `CertificateClient` to create, get, update, or delete certificates, you need the endpoint to an Azure Key Vault and credentials.
 You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:CertificatesSample2CertificateClient
-var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 ```
 
 ## Creating certificates
@@ -47,7 +47,7 @@ Let's list the certificates which exist in the vault along with their thumbprint
 ```C# Snippet:CertificatesSample2ListCertificates
 foreach (CertificateProperties cert in client.GetPropertiesOfCertificates())
 {
-    Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {BitConverter.ToString(cert.X509Thumbprint)}");
+    Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {cert.X509ThumbprintString}");
 }
 ```
 
@@ -80,7 +80,7 @@ foreach (CertificateProperties cert in client.GetPropertiesOfCertificateVersions
 ## Deleting certificates
 
 The certificates are no longer needed.
-You need to delete them from the Key Vault.
+You need to delete them from the Azure Key Vault.
 
 ```C# Snippet:CertificatesSample2DeleteCertificates
 DeleteCertificateOperation operation1 = client.StartDeleteCertificate(certName1);
@@ -99,7 +99,7 @@ while (!operation1.HasCompleted || !operation2.HasCompleted)
 
 ## Listing deleted certificates
 
-You can list all the deleted and non-purged certificates, assuming Key Vault is soft delete-enabled.
+You can list all the deleted and non-purged certificates, assuming Azure Key Vault is soft delete-enabled.
 
 ```C# Snippet:CertificatesSample2ListDeletedCertificates
 foreach (DeletedCertificate deletedCert in client.GetDeletedCertificates())
@@ -108,11 +108,4 @@ foreach (DeletedCertificate deletedCert in client.GetDeletedCertificates())
 }
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample2_GetCertificates.cs](../tests/samples/Sample2_GetCertificates.cs)
-* [Asynchronous Sample2_GetCertificatesAsync.cs](../tests/samples/Sample2_GetCertificatesAsync.cs)
-
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

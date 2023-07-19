@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -45,12 +44,13 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// <param name="etag">The Etag field is *not* required. If it is
         /// provided in the response body, it must also be provided as a header
         /// per the normal ETag convention.</param>
-        public ProvisioningServiceDescription(string location, IotDpsPropertiesDescription properties, IotDpsSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
+        public ProvisioningServiceDescription(string location, IotDpsPropertiesDescription properties, IotDpsSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
             Properties = properties;
             Sku = sku;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -80,22 +80,9 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         public IotDpsSkuInfo Sku { get; set; }
 
         /// <summary>
-        /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
-            if (Sku == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
-            }
-        }
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
     }
 }

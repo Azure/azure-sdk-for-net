@@ -1,2 +1,0 @@
-The official Azure SDK Track 2 library for the Cognitive Services Text Analytics service can be found under the path: azure-sdk-for-net\sdk\textanalytics
-

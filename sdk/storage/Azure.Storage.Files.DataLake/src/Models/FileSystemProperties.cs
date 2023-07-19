@@ -21,17 +21,17 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// <see cref="LeaseStatus"/> of the file system.
         /// </summary>
-        public LeaseStatus? LeaseStatus { get; internal set; }
+        public DataLakeLeaseStatus? LeaseStatus { get; internal set; }
 
         /// <summary>
         /// <see cref="LeaseState"/> of the file system.
         /// </summary>
-        public LeaseState? LeaseState { get; internal set; }
+        public DataLakeLeaseState? LeaseState { get; internal set; }
 
         /// <summary>
-        /// <see cref="LeaseDurationType"/> of the file system.
+        /// <see cref="DataLakeLeaseDuration"/> of the file system.
         /// </summary>
-        public LeaseDurationType? LeaseDuration { get; internal set; }
+        public DataLakeLeaseDuration? LeaseDuration { get; internal set; }
 
         /// <summary>
         /// <see cref="PublicAccessType"/> of the file system.
@@ -60,6 +60,26 @@ namespace Azure.Storage.Files.DataLake.Models
         /// The file systems's metadata.
         /// </summary>
         public IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
+        /// DeletedTime.
+        /// </summary>
+        public System.DateTimeOffset? DeletedOn { get; internal set; }
+
+        /// <summary>
+        /// RemainingRetentionDays.
+        /// </summary>
+        public int? RemainingRetentionDays { get; internal set; }
+
+        /// <summary>
+        /// DefaultEncryptionScope.
+        /// </summary>
+        public string DefaultEncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// DenyEncryptionScopeOverride.
+        /// </summary>
+        public bool? PreventEncryptionScopeOverride { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of FileSystemProperties instances.

@@ -24,5 +24,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Azure Application Insights as log destination.
         /// </summary>
         public const string ApplicationInsights = "applicationInsights";
+        /// <summary>
+        /// Azure Monitor
+        /// </summary>
+        public const string AzureMonitor = "azureMonitor";
     }
 }

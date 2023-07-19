@@ -575,11 +575,11 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupForTopicTypeWithHttpMessagesAsync(string resourceGroupName, string location, string topicTypeName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all event subscriptions for a specific topic.
+        /// List all event subscriptions.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions that have been created for a specific
-        /// topic.
+        /// resource.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -673,6 +673,44 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListByDomainTopicWithHttpMessagesAsync(string resourceGroupName, string domainName, string topicName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get delivery attributes for an event subscription.
+        /// </summary>
+        /// <remarks>
+        /// Get all delivery attributes for an event subscription.
+        /// </remarks>
+        /// <param name='scope'>
+        /// The scope of the event subscription. The scope can be a
+        /// subscription, or a resource group, or a top level resource
+        /// belonging to a resource provider namespace, or an EventGrid topic.
+        /// For example, use '/subscriptions/{subscriptionId}/' for a
+        /// subscription,
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
+        /// for a resource group, and
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+        /// for a resource, and
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}'
+        /// for an EventGrid topic.
+        /// </param>
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DeliveryAttributeListResult>> GetDeliveryAttributesWithHttpMessagesAsync(string scope, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update an event subscription.
         /// </summary>
@@ -1009,11 +1047,11 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupForTopicTypeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all event subscriptions for a specific topic.
+        /// List all event subscriptions.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions that have been created for a specific
-        /// topic.
+        /// resource.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

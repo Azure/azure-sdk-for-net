@@ -39,13 +39,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// name of the log storage account.</param>
         /// <param name="diskType">The disk type. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'</param>
-        public VMwareCbtDiskInput(string diskId, string isOSDisk, string logStorageAccountId, string logStorageAccountSasSecretName, string diskType = default(string))
+        /// <param name="diskEncryptionSetId">The DiskEncryptionSet ARM
+        /// Id.</param>
+        public VMwareCbtDiskInput(string diskId, string isOSDisk, string logStorageAccountId, string logStorageAccountSasSecretName, string diskType = default(string), string diskEncryptionSetId = default(string))
         {
             DiskId = diskId;
+            DiskType = diskType;
             IsOSDisk = isOSDisk;
             LogStorageAccountId = logStorageAccountId;
             LogStorageAccountSasSecretName = logStorageAccountSasSecretName;
-            DiskType = diskType;
+            DiskEncryptionSetId = diskEncryptionSetId;
             CustomInit();
         }
 
@@ -59,6 +62,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskId")]
         public string DiskId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disk type. Possible values include:
+        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'
+        /// </summary>
+        [JsonProperty(PropertyName = "diskType")]
+        public string DiskType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the disk is the OS disk.
@@ -79,11 +89,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string LogStorageAccountSasSecretName { get; set; }
 
         /// <summary>
-        /// Gets or sets the disk type. Possible values include:
-        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'
+        /// Gets or sets the DiskEncryptionSet ARM Id.
         /// </summary>
-        [JsonProperty(PropertyName = "diskType")]
-        public string DiskType { get; set; }
+        [JsonProperty(PropertyName = "diskEncryptionSetId")]
+        public string DiskEncryptionSetId { get; set; }
 
         /// <summary>
         /// Validate the object.

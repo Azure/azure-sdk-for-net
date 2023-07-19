@@ -78,7 +78,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A producer created for a specific partition cannot send events using a partition key. This producer is associated with partition &apos;{0}&apos;..
+        ///   Looks up a localized string similar to An event cannot be published using both a partition key and a partition identifier.  This operation specified partition key `{0}` and partition id `{1}`..
         /// </summary>
         internal static string CannotSendWithPartitionIdAndPartitionKey
         {
@@ -100,9 +100,9 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The Event Hub client responsible for this information.
+        ///   Looks up a localized string similar to The Event Hub client responsible for this information is not available.
         /// </summary>
-        internal static string ClientNeededForThisInformation
+        internal static string ClientNeededForThisInformationNotAvailable
         {
             get
             {
@@ -166,6 +166,50 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to An error was encountered while executing developer-provided to process events.  This will normally fault the task responsible for partition processing, causing it to be restarted from the last checkpoint.  On some hosts, it may crash the process.  It is very strongly advised that all developer-provided code include a try/catch wrapper and no exceptions are allowed to bubble..
+        /// </summary>
+        internal static string DeveloperCodeEventProcessingError
+        {
+            get
+            {
+                return ResourceManager.GetString("DeveloperCodeEventProcessingError", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to An error was encountered while executing custom code, such as in an event handler..
+        /// </summary>
+        internal static string DeveloperCodeError
+        {
+            get
+            {
+                return ResourceManager.GetString("DeveloperCodeError", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to [Developer Code Exception] : {0}..
+        /// </summary>
+        internal static string DeveloperCodeExceptionMessageMask
+        {
+            get
+            {
+                return ResourceManager.GetString("DeveloperCodeExceptionMessageMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The event batch is currently being used in communication with the Event Hubs service; events may not be added until the active operation is complete..
+        /// </summary>
+        internal static string EventBatchIsLocked
+        {
+            get
+            {
+                return ResourceManager.GetString("EventBatchIsLocked", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Could not create a reader of events for Event Hub: &apos;{0}&apos;, partition: &apos;{1}&apos;, consumer group: &apos;{2}&apos;..
         /// </summary>
         internal static string FailedToCreateReader
@@ -221,6 +265,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The value '{0}' is not a well-formed Event Hubs fully qualified namespace..
+        /// </summary>
+        internal static string InvalidFullyQualifiedNamespace
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidFullyQualifiedNamespace", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to An invalid message body was encountered.  Either the body was null or an incorrect type. Expected: {0}.
         /// </summary>
         internal static string InvalidMessageBody
@@ -239,6 +294,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("InvalidSharedAccessSignature", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The endpoint address could not be parsed; it was either malformed or not using the `sb://` scheme..
+        /// </summary>
+        internal static string InvalidEndpointAddress
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidEndpointAddress", resourceCulture);
             }
         }
 
@@ -419,7 +485,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The requested retry mode, &apos;{0}&apos;, is not known; a retry delay canot be determined..
+        ///   Looks up a localized string similar to The requested retry mode, &apos;{0}&apos;, is not known; a retry delay cannot be determined..
         /// </summary>
         internal static string UnknownRetryMode
         {
@@ -529,6 +595,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Executing developer-provided code to process events..
+        /// </summary>
+        internal static string OperationEventProcessingDeveloperCode
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationEventProcessingDeveloperCode", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Retrieving list of ownership from the storage service..
         /// </summary>
         internal static string OperationListOwnership
@@ -558,6 +635,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("OperationListCheckpoints", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Executing a load balancing cycle..
+        /// </summary>
+        internal static string OperationLoadBalancing
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationLoadBalancing", resourceCulture);
             }
         }
 
@@ -595,6 +683,28 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Performing the main Event Processor loop..
+        /// </summary>
+        internal static string OperationEventProcessingLoop
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationEventProcessingLoop", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Surrendering ownership of a partition..
+        /// </summary>
+        internal static string OperationSurrenderOwnership
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationSurrenderOwnership", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The last enqueued event properties cannot be read when an event is not available..
         /// </summary>
         internal static string CannotReadLastEnqueuedEventPropertiesWithoutEvent
@@ -602,6 +712,193 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("CannotReadLastEnqueuedEventPropertiesWithoutEvent", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to One or more exceptions occurred during event processing.  Please see the inner exceptions for more detail..
+        /// </summary>
+        internal static string AggregateEventProcessingExceptionMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("AggregateEventProcessingExceptionMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The authorization for a connection string may specifiy a shared key or precomputed shared access signature, but not both.  Please verify that your connection string does not have the `SharedAccessSignature` token if you are passing the  `SharedKeyName` and `SharedKey`..
+        /// </summary>
+        internal static string OnlyOneSharedAccessAuthorizationMayBeSpecified
+        {
+            get
+            {
+                return ResourceManager.GetString("OnlyOneSharedAccessAuthorizationMayBeSpecified", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The producer was configured to use features that require publishing to a specific partition.  Publishing with automatic routing or using a partition key is not supported by this producer..
+        /// </summary>
+        internal static string CannotPublishToGateway
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotPublishToGateway", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to These events have already been successfully published.  When idempotent publishing is enabled, events that were acknowledged by the Event Hubs service may not be published again..
+        /// </summary>
+        internal static string IdempotentAlreadyPublished
+        {
+            get
+            {
+                return ResourceManager.GetString("IdempotentAlreadyPublished", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The ListCheckpointsAsync method has been superseded by GetCheckpointAsync and should no longer be called..
+        /// </summary>
+        internal static string ListCheckpointsAsyncObsolete
+        {
+            get
+            {
+                return ResourceManager.GetString("ListCheckpointsAsyncObsolete", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The type of AMQP body for the message could not be determined..
+        /// </summary>
+        internal static string UnknownAmqpBodyType
+        {
+            get
+            {
+                return ResourceManager.GetString("UnknownAmqpBodyType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The event body cannot be retrieved using the {1} property of {0}.  A body of type {2} can be accessed using the {3} method of {0} and inspecting the underlying AMQP message..
+        /// </summary>
+        internal static string RawAmqpBodyTypeMask
+        {
+            get
+            {
+                return ResourceManager.GetString("RawAmqpBodyTypeMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The given key '{0}' was not present in the dictionary..
+        /// </summary>
+        internal static string DictionaryKeyNotFoundMask
+        {
+            get
+            {
+                return ResourceManager.GetString("DictionaryKeyNotFoundMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not a supported value body type..
+        /// </summary>
+        internal static string InvalidAmqpMessageValueBodyMask
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidAmqpMessageValueBodyMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} key `{1}` has a value of type `{2}` which is not supported for AMQP transport..
+        /// </summary>
+        internal static string InvalidAmqpMessageDictionaryTypeMask
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidAmqpMessageDictionaryTypeMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to This handler cannot be changed after an event has been enqueued; closing or disposing the producer will unregister any current hander..
+        /// </summary>
+        internal static string CannotChangeHandlersWhenPublishing
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotChangeHandlersWhenPublishing", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to WARNING: A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{0}' seconds.  Partition Ownership Interval '{1}' seconds..
+        /// </summary>
+        internal static string ProcessorLoadBalancingCycleSlowMask
+        {
+            get
+            {
+                return ResourceManager.GetString("ProcessorLoadBalancingCycleSlowMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to WARNING: The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured for intervals that may cause stability issues with partition ownership.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  It is advised to adjust the intervals in the processor options.  Load Balancing Interval '{1:0:00}' seconds.  Partition Ownership Interval '{1:0:00}' seconds..
+        /// </summary>
+        internal static string ProcessorLoadBalancingIntervalsTooCloseMask
+        {
+            get
+            {
+                return ResourceManager.GetString("ProcessorLoadBalancingIntervalsTooCloseMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Events cannot be enqueued processing without the {0} handler set..
+        /// </summary>
+        internal static string CannotEnqueueEventWithoutHandler
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotEnqueueEventWithoutHandler", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Events cannot be published to the requested partition; no partition with the id `{2}` are associated with the Event Hub..
+        /// </summary>
+        internal static string CannotSendToUknownPartition
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotSendToUknownPartition", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The event is too large for be published to the Event Hub: '{0}`.  Size limit: {1} bytes..
+        /// </summary>
+        internal static string EventTooLargeMask
+        {
+            get
+            {
+                return ResourceManager.GetString("EventTooLargeMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to For troubleshooting information, see https://aka.ms/azsdk/net/eventhubs/exceptions/troubleshoot.
+        /// </summary>
+        internal static string TroubleshootingGuideLink
+        {
+            get
+            {
+                return ResourceManager.GetString("TroubleshootingGuideLink", resourceCulture);
             }
         }
     }

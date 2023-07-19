@@ -1,0 +1,61 @@
+name: Core Feature Request
+description: Create a feature request for Azure.Core.  Please note that this template is intended to be used by Azure SDK authors to request infrastructure features; for other requests, please [open a general issue](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
+title: "[Core] "
+labels: ["Azure.Core", "client", "feature-request", "needs-team-triage"]
+assignees: ["christothes","annelo-msft","JoshLove-msft", "jsquire"]
+
+body:
+  - type: dropdown
+    id: apichange
+    attributes:
+      label: API Change Needed
+      description: Is a public API change needed for this feature?
+      options:
+        - "Yes"
+        - "No"
+        - "Unsure"
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: Background and motivation
+      description: Please describe the purpose and value of the new feature and/or API here.
+      placeholder: Purpose
+    validations:
+      required: true
+  - type: textarea
+    id: api-proposal
+    attributes:
+      label: API / Feature Proposal
+      description: |
+        Please provide the specific public API signature diff that you are proposing and/or proposed feature designs. Include a link to Api View if one exists. ```
+      placeholder: API declaration (no method bodies)
+      value: |
+        ```C#
+        namespace Azure.Core
+        {
+            public class MyFancyCollection<T> : IEnumerable<T>
+            {
+                public void Fancy(T item);
+            }
+        }
+        ```
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Time Constraints and Dependencies
+      description: Please outline any relevant deadline dates related to this feature. Please also list any client libraries that will consume these changes and describe the scenario this enables.```
+      placeholder: This feature is a dependency for Azure.Foo.Bar to Release in October 2023.
+    validations:
+      required: true
+  - type: textarea
+    id: stakeholders
+    attributes:
+      label: Stakeholders
+      description: Please tag any parties that are stakeholders in this feature
+      placeholder: GitHub handles eg. @johndoe ,  @sallymae
+    validations:
+      required: false

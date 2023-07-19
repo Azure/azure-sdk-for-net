@@ -19,11 +19,11 @@
                 + "UAT4yJGWL+7l4/qfmqblb96n";
 
             public const string Name = "DPStestCert";
-            public const string Subject = "CN=Azure IoT Root CA";
+            public const string Subject = "Azure IoT Root CA";
             public const string Thumbprint = "9F0983E8F2DB2DB3582997FEF331247D872DEE32";
         }
 
-        public const string DefaultLocation = "eastus";
+        public const string DefaultLocation = "WestUS2";
 
         public static class DefaultSku
         {
@@ -32,9 +32,9 @@
             public const string Tier = "S1";
         }
 
-        public static readonly string[] AllocationPolicies = {"Hashed", "GeoLatency", "Static"};
+        public static readonly string[] AllocationPolicies = { "Hashed", "GeoLatency", "Static" };
 
-        public const int ArmAttemptWaitMS = 500;
+        public const int ArmAttemptWaitMs = 500;
         public const int RandomAllocationWeight = 870084357;
         public const int ArmAttemptLimit = 5;
     }

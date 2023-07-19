@@ -13,6 +13,7 @@ using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json.Linq;
 using Xunit;
@@ -26,7 +27,10 @@ namespace Compute.Tests
             string name = "vmssext01",
             string publisher = "Microsoft.Compute",
             string type = "VMAccessAgent",
-            string version = "2.0")
+            string version = "2.0",
+            bool autoUpdateMinorVersion = true,
+            bool? enableAutomaticUpgrade = null,
+            bool? suppressFailures = null)
         {
             var vmExtension = new VirtualMachineScaleSetExtension
             {
@@ -34,9 +38,11 @@ namespace Compute.Tests
                 Publisher = publisher,
                 Type1 = type,
                 TypeHandlerVersion = version,
-                AutoUpgradeMinorVersion = true,
+                AutoUpgradeMinorVersion = autoUpdateMinorVersion,
                 Settings = "{}",
-                ProtectedSettings = "{}"
+                ProtectedSettings = "{}",
+                EnableAutomaticUpgrade = enableAutomaticUpgrade,
+                SuppressFailures = suppressFailures
             };
 
             return vmExtension;
@@ -109,7 +115,12 @@ namespace Compute.Tests
             int? osDiskSizeInGB = null,
             string machineSizeType = null,
             bool? enableUltraSSD = false,
-            string diskEncryptionSetId = null)
+            string diskEncryptionSetId = null,
+            AutomaticRepairsPolicy automaticRepairsPolicy = null,
+            DiagnosticsProfile bootDiagnosticsProfile = null,
+            int? faultDomainCount = null,
+            int? capacity = null,
+            VirtualMachineScaleSetHardwareProfile hardwareProfile = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = TestUtilities.GenerateName(TestPrefix);
@@ -117,7 +128,7 @@ namespace Compute.Tests
             var vmssName = TestUtilities.GenerateName("vmss");
             bool createOSDisk = !hasManagedDisks || osDiskSizeInGB != null;
 
-            string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA0 : VirtualMachineSizeTypes.StandardA1V2;
+            string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA1V2 : VirtualMachineSizeTypes.StandardA1V2;
 
             var vmScaleSet = new VirtualMachineScaleSet()
             {
@@ -125,7 +136,7 @@ namespace Compute.Tests
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
                 Sku = new CM.Sku()
                 {
-                    Capacity = 2,
+                    Capacity = capacity ?? 2,
                     Name = machineSizeType == null ? vmSize : machineSizeType
                 },
                 Zones = zones,
@@ -173,6 +184,7 @@ namespace Compute.Tests
                             }
                         }
                     },
+                    HardwareProfile = hardwareProfile,
                     OsProfile = new VirtualMachineScaleSetOSProfile()
                     {
                         ComputerNamePrefix = "test",
@@ -212,8 +224,19 @@ namespace Compute.Tests
                         }
                     },
                     ExtensionProfile = new VirtualMachineScaleSetExtensionProfile(),
-                }
+                },
+                AutomaticRepairsPolicy = automaticRepairsPolicy
             };
+
+            if (bootDiagnosticsProfile != null)
+            {
+                vmScaleSet.VirtualMachineProfile.DiagnosticsProfile = bootDiagnosticsProfile;
+            }
+
+            if (faultDomainCount != null)
+            {
+                vmScaleSet.PlatformFaultDomainCount = faultDomainCount;
+            }
 
             if (enableUltraSSD == true)
             {
@@ -254,7 +277,19 @@ namespace Compute.Tests
             string ppgId = null,
             string machineSizeType = null,
             bool? enableUltraSSD = false,
-            string diskEncryptionSetId = null)
+            string diskEncryptionSetId = null,
+            AutomaticRepairsPolicy automaticRepairsPolicy = null,
+            bool? encryptionAtHostEnabled = null,
+            bool singlePlacementGroup = true,
+            DiagnosticsProfile bootDiagnosticsProfile = null,
+            int? faultDomainCount = null,
+            int? capacity = null,
+            string dedicatedHostGroupReferenceId = null,
+            string dedicatedHostGroupName = null,
+            string dedicatedHostName = null,
+            string userData = null,
+            string capacityReservationGroupReferenceId = null,
+            VirtualMachineScaleSetHardwareProfile hardwareProfile = null)
         {
             try
             {
@@ -275,7 +310,19 @@ namespace Compute.Tests
                                                                                      ppgId: ppgId,
                                                                                      machineSizeType: machineSizeType,
                                                                                      enableUltraSSD: enableUltraSSD,
-                                                                                     diskEncryptionSetId: diskEncryptionSetId);
+                                                                                     diskEncryptionSetId: diskEncryptionSetId,
+                                                                                     automaticRepairsPolicy: automaticRepairsPolicy,
+                                                                                     encryptionAtHostEnabled: encryptionAtHostEnabled,
+                                                                                     singlePlacementGroup: singlePlacementGroup,
+                                                                                     bootDiagnosticsProfile: bootDiagnosticsProfile,
+                                                                                     faultDomainCount: faultDomainCount,
+                                                                                     capacity: capacity,
+                                                                                     dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
+                                                                                     dedicatedHostGroupName: dedicatedHostGroupName,
+                                                                                     dedicatedHostName: dedicatedHostName,
+                                                                                     userData: userData,
+                                                                                     capacityReservationGroupReferenceId: capacityReservationGroupReferenceId,
+                                                                                     hardwareProfile: hardwareProfile);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -356,7 +403,19 @@ namespace Compute.Tests
             string ppgId = null,
             string machineSizeType = null,
             bool? enableUltraSSD = false,
-            string diskEncryptionSetId = null)
+            string diskEncryptionSetId = null,
+            AutomaticRepairsPolicy automaticRepairsPolicy = null,
+            bool? encryptionAtHostEnabled = null,
+            bool singlePlacementGroup = true,
+            DiagnosticsProfile bootDiagnosticsProfile = null,
+            int? faultDomainCount = null,
+            int? capacity = null,
+            string dedicatedHostGroupReferenceId = null,
+            string dedicatedHostGroupName = null,
+            string dedicatedHostName = null,
+            string userData = null,
+            string capacityReservationGroupReferenceId = null,
+            VirtualMachineScaleSetHardwareProfile hardwareProfile = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -382,18 +441,32 @@ namespace Compute.Tests
             inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount?.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks,
                 healthProbeId: loadBalancer?.Probes?.FirstOrDefault()?.Id,
                 loadBalancerBackendPoolId: loadBalancer?.BackendAddressPools?.FirstOrDefault()?.Id, zones: zones, osDiskSizeInGB: osDiskSizeInGB,
-                machineSizeType: machineSizeType, enableUltraSSD: enableUltraSSD, diskEncryptionSetId: diskEncryptionSetId);
+                machineSizeType: machineSizeType, enableUltraSSD: enableUltraSSD, diskEncryptionSetId: diskEncryptionSetId, automaticRepairsPolicy: automaticRepairsPolicy,
+                bootDiagnosticsProfile: bootDiagnosticsProfile, faultDomainCount: faultDomainCount, capacity: capacity, hardwareProfile: hardwareProfile);
             if (vmScaleSetCustomizer != null)
             {
                 vmScaleSetCustomizer(inputVMScaleSet);
             }
+
+            if (encryptionAtHostEnabled != null)
+            {
+                inputVMScaleSet.VirtualMachineProfile.SecurityProfile = new SecurityProfile
+                {
+                    EncryptionAtHost = encryptionAtHostEnabled.Value
+                };
+            }
+            
+            inputVMScaleSet.VirtualMachineProfile.UserData = userData;
 
             if (hasDiffDisks)
             {
                 VirtualMachineScaleSetOSDisk osDisk = new VirtualMachineScaleSetOSDisk();
                 osDisk.Caching = CachingTypes.ReadOnly;
                 osDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-                osDisk.DiffDiskSettings = new DiffDiskSettings { Option = DiffDiskOptions.Local };
+                osDisk.DiffDiskSettings = new DiffDiskSettings {
+                    Option = DiffDiskOptions.Local,
+                    Placement = DiffDiskPlacement.CacheDisk
+                    };
                 inputVMScaleSet.VirtualMachineProfile.StorageProfile.OsDisk = osDisk;
             }
 
@@ -404,12 +477,48 @@ namespace Compute.Tests
                 inputVMScaleSet.ProximityPlacementGroup = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = ppgId };
             }
 
-            var createOrUpdateResponse = m_CrpClient.VirtualMachineScaleSets.CreateOrUpdate(rgName, vmssName, inputVMScaleSet);
+            if (dedicatedHostGroupReferenceId != null)
+            {
+                CreateDedicatedHostGroup(rgName, dedicatedHostGroupName, availabilityZone: null);
+                CreateDedicatedHost(rgName, dedicatedHostGroupName, dedicatedHostName, "DSv3-Type1");
+                inputVMScaleSet.HostGroup = new CM.SubResource() { Id = dedicatedHostGroupReferenceId };
+            }
 
-            Assert.True(createOrUpdateResponse.Name == vmssName);
-            Assert.True(createOrUpdateResponse.Location.ToLower() == inputVMScaleSet.Location.ToLower().Replace(" ", ""));
+            if (!string.IsNullOrEmpty(capacityReservationGroupReferenceId))
+            {
+                inputVMScaleSet.VirtualMachineProfile.CapacityReservation = new CapacityReservationProfile
+                {
+                    CapacityReservationGroup = new CM.SubResource
+                    {
+                        Id = capacityReservationGroupReferenceId
+                    }
+                };
+            }
 
-            ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks, ppgId: ppgId);
+            inputVMScaleSet.SinglePlacementGroup = singlePlacementGroup ? (bool?) null : false;
+
+            VirtualMachineScaleSet createOrUpdateResponse = null;
+
+            try
+            {
+                createOrUpdateResponse = m_CrpClient.VirtualMachineScaleSets.CreateOrUpdate(rgName, vmssName, inputVMScaleSet);
+
+                Assert.True(createOrUpdateResponse.Name == vmssName);
+                Assert.True(createOrUpdateResponse.Location.ToLower() == inputVMScaleSet.Location.ToLower().Replace(" ", ""));
+            }
+            catch (CloudException e)
+            {
+                if (e.Message.Contains("the allotted time"))
+                {
+                    createOrUpdateResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks, ppgId: ppgId, dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId);
 
             return createOrUpdateResponse;
         }
@@ -428,7 +537,8 @@ namespace Compute.Tests
             }
         }
 
-        protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false, string ppgId = null)
+        protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false, string ppgId = null,
+            string dedicatedHostGroupReferenceId = null)
         {
             Assert.True(!string.IsNullOrEmpty(vmScaleSetOut.ProvisioningState));
 
@@ -539,7 +649,7 @@ namespace Compute.Tests
                 }
             }
 
-            if (vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy != null)
+            if (vmScaleSet.UpgradePolicy?.AutomaticOSUpgradePolicy != null)
             {
                 bool expectedDisableAutomaticRollbackValue = vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback ?? false;
                 Assert.True(vmScaleSetOut.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback == expectedDisableAutomaticRollbackValue);
@@ -553,8 +663,50 @@ namespace Compute.Tests
                 bool expectedAutomaticRepairsEnabledValue = vmScaleSet.AutomaticRepairsPolicy.Enabled ?? false;
                 Assert.True(vmScaleSetOut.AutomaticRepairsPolicy.Enabled == expectedAutomaticRepairsEnabledValue);
 
-                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT30M";
+                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT10M";
                 Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.GracePeriod, expectedAutomaticRepairsGracePeriodValue, ignoreCase: true);
+
+                string expectedAutomaticRepairsRepairActionValue = vmScaleSet.AutomaticRepairsPolicy.RepairAction ?? "replace";
+                Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.RepairAction, expectedAutomaticRepairsRepairActionValue, ignoreCase: true);
+            }
+
+            if (vmScaleSet.UpgradePolicy?.RollingUpgradePolicy != null)
+            {
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent
+                                == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent, "MaxBatchInstancePercent value is unexpected.");
+                }
+
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyInstancePercent != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyInstancePercent
+                                == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyInstancePercent, "MaxUnhealthyInstancePercent value is unexpected.");
+                }
+
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyUpgradedInstancePercent != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyUpgradedInstancePercent
+                                == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyUpgradedInstancePercent, "MaxUnhealthyUpgradedInstancePercent value is unexpected.");
+                }
+
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade
+                        == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade, "EnableCrossZoneUpgrade value does not match");
+                }
+
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.PrioritizeUnhealthyInstances != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.PrioritizeUnhealthyInstances
+                        == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.PrioritizeUnhealthyInstances, "PrioritizeUnhealthyInstances value does not match");
+                }
+
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.RollbackFailedInstancesOnPolicyBreach != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.RollbackFailedInstancesOnPolicyBreach
+                        == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.RollbackFailedInstancesOnPolicyBreach, "RollbackFailedInstancesOnPolicyBreach value does not match");
+                }
             }
 
             if (vmScaleSet.VirtualMachineProfile.OsProfile.Secrets != null &&
@@ -648,6 +800,16 @@ namespace Compute.Tests
             if(ppgId != null)
             {
                 Assert.Equal(ppgId, vmScaleSetOut.ProximityPlacementGroup.Id, StringComparer.OrdinalIgnoreCase);
+            }
+
+            if (dedicatedHostGroupReferenceId != null)
+            {
+                Assert.Equal(dedicatedHostGroupReferenceId, vmScaleSetOut.HostGroup.Id, StringComparer.OrdinalIgnoreCase);
+            }
+
+            if(vmScaleSet.ScaleInPolicy?.ForceDeletion != null)
+            {
+                Assert.Equal(vmScaleSet.ScaleInPolicy.ForceDeletion, vmScaleSetOut.ScaleInPolicy.ForceDeletion);
             }
         }
 

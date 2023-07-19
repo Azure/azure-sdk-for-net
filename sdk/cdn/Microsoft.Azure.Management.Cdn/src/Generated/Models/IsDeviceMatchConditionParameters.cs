@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -34,12 +33,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the IsDeviceMatchConditionParameters
         /// class.
         /// </summary>
-        /// <param name="matchValues">The match value for the condition of the
-        /// delivery rule</param>
         /// <param name="negateCondition">Describes if this is negate condition
         /// or not</param>
+        /// <param name="matchValues">The match value for the condition of the
+        /// delivery rule</param>
         /// <param name="transforms">List of transforms</param>
-        public IsDeviceMatchConditionParameters(IList<string> matchValues, bool? negateCondition = default(bool?), IList<string> transforms = default(IList<string>))
+        public IsDeviceMatchConditionParameters(bool? negateCondition = default(bool?), IList<string> matchValues = default(IList<string>), IList<string> transforms = default(IList<string>))
         {
             NegateCondition = negateCondition;
             MatchValues = matchValues;
@@ -89,18 +88,5 @@ namespace Microsoft.Azure.Management.Cdn.Models
         [JsonProperty(PropertyName = "operator")]
         public static string OperatorProperty { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (MatchValues == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MatchValues");
-            }
-        }
     }
 }

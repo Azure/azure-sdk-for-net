@@ -20,17 +20,18 @@ namespace Batch.Tests.ScenarioTests
 
         public string Location { get; private set; }
 
-        protected MockContext StartMockContextAndInitializeClients(string className,
+        protected MockContext StartMockContextAndInitializeClients(
+            Type type,
             // Automatically populates the methodName parameter with the calling method, which
             // gets used to generate recorder file names.
             [System.Runtime.CompilerServices.CallerMemberName]
             string methodName = "")
         {
-            MockContext context = MockContext.Start(className, methodName);
-            this.Location = FindLocation(context);
+            MockContext context = MockContext.Start(type, methodName);
+            Location = FindLocation(context);
 
-            this.ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
-            this.BatchManagementClient = context.GetServiceClient<BatchManagementClient>();
+            ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
+            BatchManagementClient = context.GetServiceClient<BatchManagementClient>();
             return context;
         }
 

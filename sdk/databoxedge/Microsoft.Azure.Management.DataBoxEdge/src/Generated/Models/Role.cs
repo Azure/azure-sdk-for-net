@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataBoxEdge.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -32,9 +33,11 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
-        public Role(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="systemData">Role configured on ASE resource</param>
+        public Role(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -42,6 +45,12 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets role configured on ASE resource
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
     }
 }

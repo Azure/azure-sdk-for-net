@@ -3,21 +3,16 @@ using Microsoft.Azure.CognitiveServices.ContentModerator;
 using Microsoft.Azure.CognitiveServices.ContentModerator.Models;
 using System.Collections.Generic;
 using System.Net;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Linq;
 using ContentModeratorTests.Helpers;
 using System.IO;
-using d = System.Drawing;
-using ContentModeratorTests.Data;
-using System.Reflection;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 
 namespace ContentModeratorTests
 {
-        public class ImageModerator : TestBase
+    public class ImageModerator : TestBase
     {
 
         ContentModeratorClient client = null;
@@ -27,17 +22,17 @@ namespace ContentModeratorTests
         public static List<ImageList> allImageLists;
         public static ImageIds allImages;
 
-        
+
         BodyModel ImageUrlToModerate = new BodyModel ("URL", "https://pbs.twimg.com/media/BfopodJCUAAjmkU.jpg:large");
         BodyModel ImageUrlToModerate1 = new BodyModel ("URL", "https://hashblobsm2.blob.core.windows.net/testimages/BMPOCR_lessthan_128px.bmp");
         ImageListManagement ilm = new ImageListManagement();
-        
-        
-        
+
+
+
         public ImageModerator()
         {
             TestSetUpConfiguration();
-            
+
         }
 
         internal void TestCleanup()
@@ -63,10 +58,9 @@ namespace ContentModeratorTests
                     Assert.True(allImageLists.TrueForAll(x => !string.IsNullOrEmpty(((int)x.Id).ToString()) && !string.IsNullOrEmpty(x.Name) && x.Metadata != null), "Failed to get the result");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
         }
 
@@ -93,12 +87,12 @@ namespace ContentModeratorTests
                     var evaluate = results.Evaluate;
                     Assert.NotNull(evaluate);
                     Assert.Equal(HttpStatusCode.OK,evaluate.Response.StatusCode);
-                    
+
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -128,9 +122,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -144,7 +138,7 @@ namespace ContentModeratorTests
                 using (MockContext context = MockContext.Start("ImageModerator"))
                 {
                     HttpMockServer.Initialize("ImageModerator", "Match");
-                 
+
                     api = ContentModeratorAPI.MATCH;
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
                     results = Constants.GetImageResponse(client, api, "", ImageUrlToModerate);
@@ -158,9 +152,9 @@ namespace ContentModeratorTests
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -187,9 +181,9 @@ namespace ContentModeratorTests
                     Assert.True(Helpers.Utilities.VerifyOCR(ocr.Body), TestBase.ErrorMessage);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
         #endregion
@@ -208,9 +202,9 @@ namespace ContentModeratorTests
                 using (MockContext context = MockContext.Start("ImageModerator"))
                 {
                     HttpMockServer.Initialize("ImageModerator", "EvaluateRaw");
-                    
+
                     wait(2);
-                   
+
                     Stream imgStream = new FileStream(rawImageCurrentPath, FileMode.Open, FileAccess.Read);
                     api = ContentModeratorAPI.EVALUATE;
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
@@ -228,15 +222,14 @@ namespace ContentModeratorTests
                         var ex = results.InnerException;
                         Assert.NotNull(ex);
                         Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
-                       
+
                     }
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
         }
 
@@ -249,9 +242,9 @@ namespace ContentModeratorTests
                 using (MockContext context = MockContext.Start("ImageModerator"))
                 {
                     HttpMockServer.Initialize("ImageModerator", "FindFacesRaw");
-                    
+
                     //wait(2);
-                    
+
 
                     Stream imgStream = new FileStream(rawImageCurrentPath, FileMode.Open, FileAccess.Read);
                     api = ContentModeratorAPI.FIND_FACES;
@@ -273,9 +266,9 @@ namespace ContentModeratorTests
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -309,9 +302,9 @@ namespace ContentModeratorTests
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -346,20 +339,20 @@ namespace ContentModeratorTests
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
         #endregion
 
-      
-
-        
 
 
-      
+
+
+
+
 
     }
 }

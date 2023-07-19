@@ -22,48 +22,6 @@ namespace Microsoft.Azure.Management.DataBox
     public static partial class ServiceOperationsExtensions
     {
             /// <summary>
-            /// This method provides the list of available skus for the given subscription
-            /// and location.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location of the resource
-            /// </param>
-            /// <param name='availableSkuRequest'>
-            /// Filters for showing the available skus.
-            /// </param>
-            public static IPage<SkuInformation> ListAvailableSkus(this IServiceOperations operations, string location, AvailableSkuRequest availableSkuRequest)
-            {
-                return operations.ListAvailableSkusAsync(location, availableSkuRequest).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// This method provides the list of available skus for the given subscription
-            /// and location.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location of the resource
-            /// </param>
-            /// <param name='availableSkuRequest'>
-            /// Filters for showing the available skus.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<SkuInformation>> ListAvailableSkusAsync(this IServiceOperations operations, string location, AvailableSkuRequest availableSkuRequest, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListAvailableSkusWithHttpMessagesAsync(location, availableSkuRequest, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// This method provides the list of available skus for the given subscription,
             /// resource group and location.
             /// </summary>
@@ -112,7 +70,7 @@ namespace Microsoft.Azure.Management.DataBox
             }
 
             /// <summary>
-            /// [DEPRECATED NOTICE: This operation will soon be removed] This method
+            /// [DEPRECATED NOTICE: This operation will soon be removed]. This method
             /// validates the customer shipping address and provide alternate addresses if
             /// any.
             /// </summary>
@@ -132,7 +90,7 @@ namespace Microsoft.Azure.Management.DataBox
             }
 
             /// <summary>
-            /// [DEPRECATED NOTICE: This operation will soon be removed] This method
+            /// [DEPRECATED NOTICE: This operation will soon be removed]. This method
             /// validates the customer shipping address and provide alternate addresses if
             /// any.
             /// </summary>
@@ -248,7 +206,8 @@ namespace Microsoft.Azure.Management.DataBox
             }
 
             /// <summary>
-            /// This API provides configuration details specific to given region/location.
+            /// This API provides configuration details specific to given region/location
+            /// at Subscription level.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -256,19 +215,17 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='scheduleAvailabilityRequest'>
-            /// Request body to get the availability for scheduling orders.
+            /// <param name='regionConfigurationRequest'>
+            /// Request body to get the configuration for the region.
             /// </param>
-            /// <param name='transportAvailabilityRequest'>
-            /// Request body to get the transport availability for given sku.
-            /// </param>
-            public static RegionConfigurationResponse RegionConfiguration(this IServiceOperations operations, string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest))
+            public static RegionConfigurationResponse RegionConfiguration(this IServiceOperations operations, string location, RegionConfigurationRequest regionConfigurationRequest)
             {
-                return operations.RegionConfigurationAsync(location, scheduleAvailabilityRequest, transportAvailabilityRequest).GetAwaiter().GetResult();
+                return operations.RegionConfigurationAsync(location, regionConfigurationRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// This API provides configuration details specific to given region/location.
+            /// This API provides configuration details specific to given region/location
+            /// at Subscription level.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -276,54 +233,65 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='scheduleAvailabilityRequest'>
-            /// Request body to get the availability for scheduling orders.
-            /// </param>
-            /// <param name='transportAvailabilityRequest'>
-            /// Request body to get the transport availability for given sku.
+            /// <param name='regionConfigurationRequest'>
+            /// Request body to get the configuration for the region.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegionConfigurationResponse> RegionConfigurationAsync(this IServiceOperations operations, string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegionConfigurationResponse> RegionConfigurationAsync(this IServiceOperations operations, string location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegionConfigurationWithHttpMessagesAsync(location, scheduleAvailabilityRequest, transportAvailabilityRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegionConfigurationWithHttpMessagesAsync(location, regionConfigurationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// This method provides the list of available skus for the given subscription
-            /// and location.
+            /// This API provides configuration details specific to given region/location
+            /// at Resource group level.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
             /// </param>
-            public static IPage<SkuInformation> ListAvailableSkusNext(this IServiceOperations operations, string nextPageLink)
+            /// <param name='location'>
+            /// The location of the resource
+            /// </param>
+            /// <param name='regionConfigurationRequest'>
+            /// Request body to get the configuration for the region at resource group
+            /// level.
+            /// </param>
+            public static RegionConfigurationResponse RegionConfigurationByResourceGroup(this IServiceOperations operations, string resourceGroupName, string location, RegionConfigurationRequest regionConfigurationRequest)
             {
-                return operations.ListAvailableSkusNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.RegionConfigurationByResourceGroupAsync(resourceGroupName, location, regionConfigurationRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// This method provides the list of available skus for the given subscription
-            /// and location.
+            /// This API provides configuration details specific to given region/location
+            /// at Resource group level.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='location'>
+            /// The location of the resource
+            /// </param>
+            /// <param name='regionConfigurationRequest'>
+            /// Request body to get the configuration for the region at resource group
+            /// level.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SkuInformation>> ListAvailableSkusNextAsync(this IServiceOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegionConfigurationResponse> RegionConfigurationByResourceGroupAsync(this IServiceOperations operations, string resourceGroupName, string location, RegionConfigurationRequest regionConfigurationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAvailableSkusNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegionConfigurationByResourceGroupWithHttpMessagesAsync(resourceGroupName, location, regionConfigurationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

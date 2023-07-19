@@ -1,0 +1,53 @@
+{
+    "displayNames": {
+      "/p:UseProjectReferenceToAzureClients=false": "PackageRef",
+      "/p:UseProjectReferenceToAzureClients=true": "ProjectRef"
+    },
+    "matrix": {
+      "Agent": {
+        "Ubuntu-20.04_NETCore3.1": {
+          "OSVmImage": "MMSUbuntu20.04",
+          "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+          "TestTargetFramework": "netcoreapp3.1"
+        }
+      },
+      "AdditionalTestArguments": [
+        "/p:UseProjectReferenceToAzureClients=false",
+        "/p:UseProjectReferenceToAzureClients=true"
+      ],
+      "BuildConfiguration": [
+        "Debug",
+        "Release"
+      ]
+    },
+    "include": [
+      {
+        "Agent": {
+          "windows2022": {
+            "OSVmImage": "windows-2022",
+            "Pool": "azsdk-pool-mms-win-2022-general",
+            "TestTargetFramework": "netcoreapp3.1"
+          }
+        },
+        "TestMode": {
+          "netcoreapp31_Test_Record": {
+            "SupportsRecording": true
+          }
+        }
+      },
+      {
+        "Agent": {
+          "Ubuntu-20.04_NETCore3.1": {
+            "OSVmImage": "MMSUbuntu20.04",
+            "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+            "TestTargetFramework": "netcoreapp3.1"
+          }
+        },
+        "TestMode": {
+          "netcoreapp31_Test_Record": {
+            "SupportsRecording": true
+          }
+        }
+      }
+    ]
+  }

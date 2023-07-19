@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake
@@ -42,38 +44,14 @@ namespace Azure.Storage.Files.DataLake
         public virtual Uri Uri => _uri;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="DataLakeClientConfiguration"/>.
         /// </summary>
-        private readonly HttpPipeline _pipeline;
+        private readonly DataLakeClientConfiguration _clientConfiguration;
 
         /// <summary>
-        /// Gets tghe <see cref="HttpPipeline"/> transport pipeline used to
-        /// send every request.
+        /// <see cref="DataLakeClientConfiguration"/>.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => _pipeline;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        private readonly DataLakeClientOptions.ServiceVersion _version;
-
-        /// <summary>
-        /// The version of the service to use when sending requests.
-        /// </summary>
-        internal virtual DataLakeClientOptions.ServiceVersion Version => _version;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual DataLakeClientConfiguration ClientConfiguration => _clientConfiguration;
 
         /// <summary>
         /// The Storage account name corresponding to the file service client.
@@ -95,6 +73,12 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public virtual bool CanGenerateAccountSasUri => ClientConfiguration.SharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
@@ -112,7 +96,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Uri"/> referencing the Data Lake service.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri)
-            : this(serviceUri, (HttpPipelinePolicy)null, null)
+            : this(serviceUri, (HttpPipelinePolicy)null, null, storageSharedKeyCredential:null)
         {
         }
 
@@ -129,8 +113,67 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, DataLakeClientOptions options)
-            : this(serviceUri, (HttpPipelinePolicy)null, options)
+            : this(serviceUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential:null)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
+        /// </param>
+        public DataLakeServiceClient(string connectionString)
+            : this(connectionString, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DataLakeServiceClient(string connectionString, DataLakeClientOptions options)
+        {
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            StorageSharedKeyCredential sharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            options ??= new DataLakeClientOptions();
+            HttpPipelinePolicy authPolicy = sharedKeyCredential.AsPolicy();
+
+            _clientConfiguration = new DataLakeClientConfiguration(
+                pipeline: options.Build(authPolicy),
+                sharedKeyCredential: sharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                clientOptions: options,
+                customerProvidedKey: options.CustomerProvidedKey);
+
+            _uri = conn.BlobEndpoint;
+            _blobUri = new DataLakeUriBuilder(_uri).ToBlobUri();
+
+            _blobServiceClient = BlobServiceClientInternals.Create(
+                _blobUri,
+                _clientConfiguration.Pipeline,
+                authPolicy,
+                _clientConfiguration.ClientOptions.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientDiagnostics);
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -144,7 +187,7 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, StorageSharedKeyCredential credential)
-            : this(serviceUri, credential.AsPolicy(), null)
+            : this(serviceUri, credential.AsPolicy(), null, credential)
         {
         }
 
@@ -164,7 +207,50 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
-            : this(serviceUri, credential.AsPolicy(), options)
+            : this(serviceUri, credential.AsPolicy(), options, null, credential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeServiceClient(Uri serviceUri, AzureSasCredential credential)
+            : this(serviceUri, credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public DataLakeServiceClient(Uri serviceUri, AzureSasCredential credential, DataLakeClientOptions options)
+            : this(serviceUri, credential.AsPolicy<DataLakeUriBuilder>(serviceUri), options, null, credential)
         {
         }
 
@@ -179,7 +265,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, TokenCredential credential)
-            : this(serviceUri, credential.AsPolicy(), null)
+            : this(serviceUri, credential.AsPolicy(new DataLakeClientOptions()), null, storageSharedKeyCredential:null)
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -200,7 +286,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(serviceUri, credential.AsPolicy(), options)
+            : this(serviceUri, credential.AsPolicy(options), options, storageSharedKeyCredential:null)
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -220,10 +306,74 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal DataLakeServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
-            : this(serviceUri, authentication, options, null)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
+            : this(serviceUri, authentication, options, null, storageSharedKeyCredential)
         {
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            AzureSasCredential sasCredential)
+            : this(serviceUri, authentication, options, null, sasCredential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileSystemUri">
+        /// A <see cref="Uri"/> referencing the file system that includes the
+        /// name of the account and the name of the file system.
+        /// </param>
+        /// <param name="clientConfiguration">
+        /// <see cref="DataLakeClientConfiguration"/>.
+        /// </param>
+        internal DataLakeServiceClient(
+            Uri fileSystemUri,
+            DataLakeClientConfiguration clientConfiguration)
+        {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
+            _uri = fileSystemUri;
+            _blobUri = uriBuilder.ToBlobUri();
+
+            _clientConfiguration = clientConfiguration;
+
+            _blobServiceClient = BlobServiceClientInternals.Create(
+                _blobUri,
+                _clientConfiguration.Pipeline,
+                // auth is included in pipeline in client configuration.
+                // blobs keeps it separate for niche use cases that are inaccessible from datalake clients
+                authentication: default,
+                _clientConfiguration.ClientOptions.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientDiagnostics);
         }
 
         /// <summary>
@@ -242,24 +392,86 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         /// <param name="clientDiagnostics"></param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         internal DataLakeServiceClient(
             Uri serviceUri,
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
-            ClientDiagnostics clientDiagnostics)
+            ClientDiagnostics clientDiagnostics,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             options ??= new DataLakeClientOptions();
-            _pipeline = options.Build(authentication);
+
             _uri = serviceUri;
             _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
-            _version = options.Version;
-            _clientDiagnostics = clientDiagnostics ?? new ClientDiagnostics(options);
+
+            _clientConfiguration = new DataLakeClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                clientDiagnostics: clientDiagnostics ?? new ClientDiagnostics(options),
+                clientOptions: options,
+                customerProvidedKey: options.CustomerProvidedKey);
+
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
-                _pipeline,
+                _clientConfiguration.Pipeline,
                 authentication,
-                Version.AsBlobsVersion(),
-                _clientDiagnostics);
+                _clientConfiguration.ClientOptions.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientDiagnostics);
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="clientDiagnostics"></param>
+        /// <param name="sasCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            ClientDiagnostics clientDiagnostics,
+            AzureSasCredential sasCredential)
+        {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+            options ??= new DataLakeClientOptions();
+
+            _uri = serviceUri;
+            _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
+
+            _clientConfiguration = new DataLakeClientConfiguration(
+                pipeline: options.Build(authentication),
+                sasCredential: sasCredential,
+                clientDiagnostics: clientDiagnostics ?? new ClientDiagnostics(options),
+                clientOptions: options,
+                customerProvidedKey: options.CustomerProvidedKey);
+
+            _blobServiceClient = BlobServiceClientInternals.Create(
+                _blobUri,
+                _clientConfiguration.Pipeline,
+                authentication,
+                _clientConfiguration.ClientOptions.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientDiagnostics);
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -268,7 +480,12 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         private class BlobServiceClientInternals : BlobServiceClient
         {
-            public static BlobServiceClient Create(Uri uri, HttpPipeline pipeline, HttpPipelinePolicy authentication, BlobClientOptions.ServiceVersion version, ClientDiagnostics diagnostics)
+            public static BlobServiceClient Create(
+                Uri uri,
+                HttpPipeline pipeline,
+                HttpPipelinePolicy authentication,
+                BlobClientOptions.ServiceVersion version,
+                ClientDiagnostics diagnostics)
             {
                 return BlobServiceClient.CreateClient(
                     uri,
@@ -295,7 +512,9 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="DataLakeFileSystemClient"/> for the desired share.
         /// </returns>
         public virtual DataLakeFileSystemClient GetFileSystemClient(string fileSystemName)
-            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeFileSystemClient(
+                Uri.AppendToPath(fileSystemName),
+                ClientConfiguration);
 
         #region Get User Delegation Key
         /// <summary>
@@ -328,7 +547,7 @@ namespace Azure.Storage.Files.DataLake
             DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
             try
             {
@@ -384,7 +603,7 @@ namespace Azure.Storage.Files.DataLake
             DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
             try
             {
@@ -415,12 +634,94 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get File Systems
         /// <summary>
-        /// The <see cref="GetFileSystems"/> operation returns an async
-        /// sequence of file systems in the storage account.  Enumerating the
+        /// The <see cref="GetFileSystems(FileSystemTraits, FileSystemStates, string, CancellationToken)"/>
+        /// operation returns an async sequence of file systems in the storage account.  Enumerating the
         /// file systems may make multiple requests to the service while fetching
         /// all the values.  File systems are ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">
+        /// List Containers</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the file systems.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for shaping the file systems.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only file systems
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{FileSystemItem}"/>
+        /// describing the file systems in the storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Pageable<FileSystemItem> GetFileSystems(
+            FileSystemTraits traits = FileSystemTraits.None,
+            FileSystemStates states = FileSystemStates.None,
+            string prefix = default,
+            CancellationToken cancellationToken = default) =>
+            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, states, prefix).ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetFileSystemsAsync(FileSystemTraits, FileSystemStates, string, CancellationToken)"/>
+        /// operation returns an async sequence of file systems in the storage account.  Enumerating the
+        /// files systems may make multiple requests to the service while fetching
+        /// all the values.  File systems are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">
+        /// List Containers</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the file systems.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for shaping the file systems.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only file systems
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// file systems in the storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<FileSystemItem> GetFileSystemsAsync(
+            FileSystemTraits traits = FileSystemTraits.None,
+            FileSystemStates states = FileSystemStates.None,
+            string prefix = default,
+            CancellationToken cancellationToken = default) =>
+            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, states, prefix).ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetFileSystems(FileSystemTraits, string, CancellationToken)"/>
+        /// operation returns an async sequence of file systems in the storage account.
+        /// Enumerating the file systems may make multiple requests to the service while fetching
+        /// all the values.  File systems are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">
+        /// List Containers</see>.
         /// </summary>
         /// <param name="traits">
         /// Specifies trait options for shaping the file systems.
@@ -441,19 +742,25 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Pageable<FileSystemItem> GetFileSystems(
-            FileSystemTraits traits = FileSystemTraits.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, prefix).ToSyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            FileSystemTraits traits,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, default, prefix).ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetFileSystemsAsync"/> operation returns an async
-        /// sequence of file systems in the storage account.  Enumerating the
-        /// files systems may make multiple requests to the service while fetching
+        /// The <see cref="GetFileSystemsAsync(FileSystemTraits, string, CancellationToken)"/>
+        /// operation returns an async sequence of file systems in the storage account.
+        /// Enumerating the files systems may make multiple requests to the service while fetching
         /// all the values.  File systems are ordered lexicographically by name.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">
+        /// List Containers</see>.
         /// </summary>
         /// <param name="traits">
         /// Specifies trait options for shaping the file systems.
@@ -474,39 +781,32 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual AsyncPageable<FileSystemItem> GetFileSystemsAsync(
-            FileSystemTraits traits = FileSystemTraits.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, prefix).ToAsyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            FileSystemTraits traits,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetFileSystemsAsyncCollection(_blobServiceClient, traits, default, prefix).ToAsyncCollection(cancellationToken);
         #endregion Get File Systems
 
         #region Create File System
         /// <summary>
-        /// The <see cref="CreateFileSystem"/> operation creates a new
-        /// file system under the specified account. If the file systen with the
+        /// The <see cref="CreateFileSystem(string, DataLakeFileSystemCreateOptions, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file systen with the
         /// same name already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
         /// </summary>
         /// <param name="fileSystemName">
         /// The name of the file system to create.
         /// </param>
-        /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and path data.
-        /// Clients can enumerate paths within the file system via anonymous
-        /// request, but cannot enumerate file systems within the storage
-        /// account.  <see cref="PublicAccessType.Path"/> specifies public
-        /// read access for paths.  Path data within this file system can be
-        /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate paths within the file system via anonymous
-        /// request.  <see cref="PublicAccessType.None"/> specifies that the
-        /// file system data is private to the account owner.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file system.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -522,18 +822,19 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<DataLakeFileSystemClient> CreateFileSystem(
             string fileSystemName,
-            PublicAccessType publicAccessType = PublicAccessType.None,
-            Metadata metadata = default,
+            DataLakeFileSystemCreateOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
 
             try
             {
                 scope.Start();
 
                 DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
-                Response<FileSystemInfo> response = fileSystem.Create(publicAccessType, metadata, cancellationToken);
+                Response<FileSystemInfo> response = fileSystem.Create(
+                    options,
+                    cancellationToken);
                 return Response.FromValue(fileSystem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -548,11 +849,69 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateFileSystemAsync"/> operation creates a new
+        /// The <see cref="CreateFileSystem(string, DataLakeFileSystemCreateOptions, CancellationToken)"/>
+        /// operation creates a new
         /// file system under the specified account. If the file system with the
         /// same name already exists, the operation fails.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="fileSystemName">
+        /// The name of the file system to create.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemClient}"/> referencing the
+        /// newly created file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileSystemClient>> CreateFileSystemAsync(
+            string fileSystemName,
+            DataLakeFileSystemCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
+                Response<FileSystemInfo> response = await fileSystem.CreateAsync(
+                    options,
+                    cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(fileSystem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateFileSystem(string, PublicAccessType, Metadata, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file systen with the
+        /// same name already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
         /// </summary>
         /// <param name="fileSystemName">
         /// The name of the file system to create.
@@ -585,20 +944,99 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<DataLakeFileSystemClient>> CreateFileSystemAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<DataLakeFileSystemClient> CreateFileSystem(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string fileSystemName,
-            PublicAccessType publicAccessType = PublicAccessType.None,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default)
+            PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
 
             try
             {
                 scope.Start();
 
                 DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
-                Response<FileSystemInfo> response = await fileSystem.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
+                Response<FileSystemInfo> response = fileSystem.Create(
+                    publicAccessType,
+                    metadata,
+                    cancellationToken);
+                return Response.FromValue(fileSystem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateFileSystemAsync(string, DataLakeFileSystemCreateOptions, CancellationToken)"/>
+        /// operation creates a new file system under the specified account. If the file system with the
+        /// same name already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="fileSystemName">
+        /// The name of the file system to create.
+        /// </param>
+        /// <param name="publicAccessType">
+        /// Optionally specifies whether data in the file system may be accessed
+        /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
+        /// request, but cannot enumerate file systems within the storage
+        /// account.  <see cref="PublicAccessType.Path"/> specifies public
+        /// read access for paths.  Path data within this file system can be
+        /// read via anonymous request, but file system data is not available.
+        /// Clients cannot enumerate paths within the file system via anonymous
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// file system data is private to the account owner.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this file system.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemClient}"/> referencing the
+        /// newly created file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<DataLakeFileSystemClient>> CreateFileSystemAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string fileSystemName,
+            PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
+                Response<FileSystemInfo> response = await fileSystem.CreateAsync(
+                    publicAccessType,
+                    metadata,
+                    cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(fileSystem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -617,9 +1055,12 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteFileSystem"/> operation marks the
         /// specified file system for deletion. The file system and any paths
-        /// contained within it are later deleted during garbage collection.
+        /// contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
         /// </summary>
         /// <param name="fileSystemName">
         /// The name of the file system to delete.
@@ -633,7 +1074,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -644,7 +1085,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
 
             try
             {
@@ -669,9 +1110,12 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteFileSystemAsync"/> operation marks the
         /// specified file system for deletion. The file system and any paths
-        /// contained within it are later deleted during garbage collection.
+        /// contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
         /// </summary>
         /// <param name="fileSystemName">
         /// The name of the file system to delete.
@@ -685,7 +1129,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -696,7 +1140,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
 
             try
             {
@@ -719,5 +1163,529 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Delete File System
+
+        #region Undelete File System
+        /// <summary>
+        /// Restores a previously deleted file system.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the filesystem.
+        /// </summary>
+        /// <param name="deletedFileSystemName">
+        /// The name of the previously deleted file system.
+        /// </param>
+        /// <param name="deleteFileSystemVersion">
+        /// The version of the previously deleted file system.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileSystemClient> UndeleteFileSystem(
+            string deletedFileSystemName,
+            string deleteFileSystemVersion,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerClient> response = _blobServiceClient.UndeleteBlobContainer(
+                    deletedFileSystemName,
+                    deleteFileSystemVersion,
+                    cancellationToken);
+
+                DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                    response.Value.Uri,
+                    ClientConfiguration);
+
+                return Response.FromValue(
+                    fileSystemClient,
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Restores a previously deleted file system.
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the filesystem.
+        /// </summary>
+        /// <param name="deletedFileSystemName">
+        /// The name of the previously deleted file system.
+        /// </param>
+        /// <param name="deleteFileSystemVersion">
+        /// The version of the previously deleted file system.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the undeleted file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileSystemClient>> UndeleteFileSystemAsync(
+            string deletedFileSystemName,
+            string deleteFileSystemVersion,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(UndeleteFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerClient> response = await _blobServiceClient.UndeleteBlobContainerAsync(
+                    deletedFileSystemName,
+                    deleteFileSystemVersion,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                    response.Value.Uri,
+                    ClientConfiguration);
+
+                return Response.FromValue(
+                    fileSystemClient,
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Undelete File System
+
+        #region Rename File System
+        ///// <summary>
+        ///// Renames an existing Blob File System.
+        ///// </summary>
+        ///// <param name="sourceFileSystemName">
+        ///// The name of the source File System.
+        ///// </param>
+        ///// <param name="destinationFileSystemName">
+        ///// The name of the destination File System.
+        ///// </param>
+        ///// <param name="sourceConditions">
+        ///// Optional <see cref="DataLakeRequestConditions"/> that
+        ///// source file system has to meet to proceed with rename.
+        ///// Note that LeaseId is the only request condition enforced by
+        ///// this API.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed file system.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //internal virtual Response<DataLakeFileSystemClient> RenameFileSystem(
+        //    string sourceFileSystemName,
+        //    string destinationFileSystemName,
+        //    DataLakeRequestConditions sourceConditions = default,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(RenameFileSystem)}");
+
+        //    try
+        //    {
+        //        scope.Start();
+
+        //        Response<BlobContainerClient> response = _blobServiceClient.RenameBlobContainer(
+        //            sourceFileSystemName,
+        //            destinationFileSystemName,
+        //            sourceConditions.ToBlobRequestConditions(),
+        //            cancellationToken);
+
+        //        DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+        //            response.Value.Uri,
+        //            Pipeline,
+        //            SharedKeyCredential,
+        //            Version,
+        //            ClientDiagnostics);
+
+        //        return Response.FromValue(
+        //            fileSystemClient,
+        //            response.GetRawResponse());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        scope.Failed(ex);
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        scope.Dispose();
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Renames an existing Blob File System.
+        ///// </summary>
+        ///// <param name="sourceFileSystemName">
+        ///// The name of the source File System.
+        ///// </param>
+        ///// <param name="destinationFileSystemName">
+        ///// The name of the destination File System.
+        ///// </param>
+        ///// <param name="sourceConditions">
+        ///// Optional <see cref="DataLakeRequestConditions"/> that
+        ///// source file system has to meet to proceed with rename.
+        ///// Note that LeaseId is the only request condition enforced by
+        ///// this API.
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed file system.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //internal virtual async Task<Response<DataLakeFileSystemClient>> RenameFileSystemAsync(
+        //    string sourceFileSystemName,
+        //    string destinationFileSystemName,
+        //    DataLakeRequestConditions sourceConditions = default,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(RenameFileSystem)}");
+
+        //    try
+        //    {
+        //        scope.Start();
+
+        //        Response<BlobContainerClient> response = await _blobServiceClient.RenameBlobContainerAsync(
+        //            sourceFileSystemName,
+        //            destinationFileSystemName,
+        //            sourceConditions.ToBlobRequestConditions(),
+        //            cancellationToken)
+        //            .ConfigureAwait(false);
+
+        //        DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+        //            response.Value.Uri,
+        //            Pipeline,
+        //            SharedKeyCredential,
+        //            Version,
+        //            ClientDiagnostics);
+
+        //        return Response.FromValue(
+        //            fileSystemClient,
+        //            response.GetRawResponse());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        scope.Failed(ex);
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        scope.Dispose();
+        //    }
+        //}
+        #endregion Rename File System
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>
+        /// returns a <see cref="Uri"/> that generates a DataLake Account
+        /// Shared Access Signature (SAS) based on the Client properties
+        /// and parameters passed. The SAS is signed by the
+        /// shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateAccountSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Specifies the list of permissions that can be set in the SasBuilder
+        /// See <see cref="DataLakeSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Specifies when to set the expires time in the sas builder.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types associated with the shared access signature.
+        /// The user is restricted to operations on the specified resources.
+        /// See <see cref="AccountSasResourceTypes"/>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public Uri GenerateAccountSasUri(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasResourceTypes resourceTypes) =>
+            GenerateAccountSasUri(new AccountSasBuilder(
+                permissions,
+                expiresOn,
+                AccountSasServices.Blobs,
+                resourceTypes));
+
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a DataLake Account Shared Access Signature (SAS)
+        /// based on the Client properties and builder passed.
+        /// The SAS is signed by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateAccountSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public Uri GenerateAccountSasUri(
+            AccountSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.Services.HasFlag(AccountSasServices.Blobs))
+            {
+                throw Errors.SasServiceNotMatching(
+                    nameof(builder.Services),
+                    nameof(builder),
+                    nameof(AccountSasServices.Blobs));
+            }
+            DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString();
+            return sasUri.ToUri();
+        }
+        #endregion
+
+        #region Get Service Properties
+        /// <summary>
+        /// The <see cref="GetProperties"/> operation gets the properties
+        /// of a storage account’s Data Lake service, including properties for
+        /// Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-properties">
+        /// Get Blob Service Properties</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeServiceProperties}"/> describing
+        /// the service properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeServiceProperties> GetProperties(
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetProperties)}");
+            try
+            {
+                scope.Start();
+                Response<Azure.Storage.Blobs.Models.BlobServiceProperties> response = _blobServiceClient.GetProperties(cancellationToken);
+                return Response.FromValue(
+                    response.Value.ToDataLakeServiceProperties(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetPropertiesAsync"/> operation gets the properties
+        /// of a storage account’s Data Lake service, including properties for
+        /// Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-properties">
+        /// Get Blob Service Properties</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakeServiceProperties}"/> describing
+        /// the service properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeServiceProperties>> GetPropertiesAsync(
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetProperties)}");
+            try
+            {
+                scope.Start();
+                Response<Azure.Storage.Blobs.Models.BlobServiceProperties> response
+                    = await _blobServiceClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(
+                    response.Value.ToDataLakeServiceProperties(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Get Service Properties
+
+        #region Set Service Properties
+        /// <summary>
+        /// The <see cref="SetProperties"/> operation sets properties for
+        /// a storage account’s Data Lake service endpoint, including properties
+        /// for Storage Analytics, CORS (Cross-Origin Resource Sharing) rules
+        /// and soft delete settings.  You can also use this operation to set
+        /// the default request version for all incoming requests to the Blob
+        /// service that do not have a version specified.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-service-properties">
+        /// Set Blob Service Properties</see>.
+        /// </summary>
+        /// <param name="properties">The Data Lake service properties.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing
+        /// the service properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response SetProperties(
+            DataLakeServiceProperties properties,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(SetProperties)}");
+            try
+            {
+                scope.Start();
+                return _blobServiceClient.SetProperties(
+                    properties.ToBlobServiceProperties(),
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetPropertiesAsync"/> operation sets properties for
+        /// a storage account’s Data Lake service endpoint, including properties
+        /// for Storage Analytics, CORS (Cross-Origin Resource Sharing) rules
+        /// and soft delete settings.  You can also use this operation to set
+        /// the default request version for all incoming requests to the Blob
+        /// service that do not have a version specified.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-service-properties">
+        /// Set Blob Service Properties</see>.
+        /// </summary>
+        /// <param name="properties">The Data Lake service properties.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing
+        /// the service properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> SetPropertiesAsync(
+            DataLakeServiceProperties properties,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(SetProperties)}");
+            try
+            {
+                scope.Start();
+                return await _blobServiceClient.SetPropertiesAsync(
+                    properties.ToBlobServiceProperties(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Set Service Properties
     }
 }

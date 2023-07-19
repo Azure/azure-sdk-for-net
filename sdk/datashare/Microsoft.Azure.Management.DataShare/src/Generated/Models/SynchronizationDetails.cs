@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="dataSetType">Type of the data set. Possible values
         /// include: 'Blob', 'Container', 'BlobFolder', 'AdlsGen2FileSystem',
         /// 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File',
-        /// 'KustoCluster', 'KustoDatabase', 'SqlDBTable', 'SqlDWTable'</param>
+        /// 'KustoCluster', 'KustoDatabase', 'SqlDBTable', 'SqlDWTable',
+        /// 'SynapseWorkspaceSqlPoolTable'</param>
         /// <param name="durationMs">Duration of data set level copy</param>
         /// <param name="endTime">End time of data set level copy</param>
         /// <param name="filesRead">The number of files read from the source
@@ -89,7 +90,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// Gets type of the data set. Possible values include: 'Blob',
         /// 'Container', 'BlobFolder', 'AdlsGen2FileSystem', 'AdlsGen2Folder',
         /// 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File', 'KustoCluster',
-        /// 'KustoDatabase', 'SqlDBTable', 'SqlDWTable'
+        /// 'KustoDatabase', 'SqlDBTable', 'SqlDWTable',
+        /// 'SynapseWorkspaceSqlPoolTable'
         /// </summary>
         [JsonProperty(PropertyName = "dataSetType")]
         public string DataSetType { get; private set; }

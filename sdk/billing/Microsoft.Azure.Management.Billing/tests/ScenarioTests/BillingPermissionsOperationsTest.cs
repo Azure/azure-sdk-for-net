@@ -15,9 +15,9 @@ namespace Billing.Tests.ScenarioTests
 {
     public class BillingPermissionsOperationsTest : TestBase
     {
-        private const string BillingAccountName = "723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31";
-        private const string BillingProfileName = "H6RI-TXWC-BG7-PGB";
-        private const string InvoiceSectionName = "ICYS-ZE5B-PJA-PGB";
+        private const string BillingAccountName = "692a1ef6-595a-5578-8776-de10c9d64861:5869ea10-a21e-423f-9213-2ca0d1938908_2019-05-31";
+        private const string BillingProfileName = "DSNH-WUZE-BG7-TGB";
+        private const string InvoiceSectionName = "CGPK-BEXW-PJA-TGB";
         private const string OrganizationViewPermission = "50000000-aaaa-bbbb-cccc-200000000001";
         private const string ViewBillingProfilePermission = "40000000-aaaa-bbbb-cccc-200000000006";
         private const string ViewInvoiceSectionPropertiesPermission = "30000000-aaaa-bbbb-cccc-200000000001";
@@ -39,8 +39,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingPermissions);
-                Assert.True(billingPermissions.Value.Count > 0);
-                Assert.Contains(OrganizationViewPermission, billingPermissions.Value.First().Actions);
+                Assert.True(billingPermissions.Any());
+                Assert.Contains(OrganizationViewPermission, billingPermissions.First().Actions);
             }
         }
 
@@ -61,8 +61,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingPermissions);
-                Assert.True(billingPermissions.Value.Count > 0);
-                Assert.Contains(ViewBillingProfilePermission, billingPermissions.Value.First().Actions);
+                Assert.True(billingPermissions.Any());
+                Assert.Contains(ViewBillingProfilePermission, billingPermissions.First().Actions);
             }
         }
 
@@ -84,9 +84,9 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingPermissions);
-                Assert.True(billingPermissions.Value.Count > 0);
+                Assert.True(billingPermissions.Any());
                 // There are no permissions for Customer for a non partner account
-                Assert.True(billingPermissions.Value.First().Actions.Count == 0);
+                Assert.True(billingPermissions.First().Actions.Count == 0);
             }
         }
 
@@ -107,8 +107,8 @@ namespace Billing.Tests.ScenarioTests
 
                 // Verify the response
                 Assert.NotNull(billingPermissions);
-                Assert.True(billingPermissions.Value.Count > 0);
-                Assert.Contains(ViewInvoiceSectionPropertiesPermission, billingPermissions.Value.First().Actions);
+                Assert.True(billingPermissions.Any());
+                Assert.Contains(ViewInvoiceSectionPropertiesPermission, billingPermissions.First().Actions);
             }
         }
     }

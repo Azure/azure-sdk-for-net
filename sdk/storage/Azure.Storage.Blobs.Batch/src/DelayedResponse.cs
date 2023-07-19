@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Specialized
@@ -29,7 +30,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// BlobRestClient.Group.OperationName_CreateResponse methods which
         /// correctly throw when necessary.
         /// </summary>
-        private readonly Func<Response, Response> _processResponse = null;
+        private readonly Func<Response, Response> _processResponse;
 
         /// <summary>
         /// Gets the live Response or throws an InvalidOperationException if

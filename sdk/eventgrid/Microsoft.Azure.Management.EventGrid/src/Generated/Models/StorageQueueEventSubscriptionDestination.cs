@@ -42,10 +42,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="queueName">The name of the Storage queue under a
         /// storage account that is the destination of an event
         /// subscription.</param>
-        public StorageQueueEventSubscriptionDestination(string resourceId = default(string), string queueName = default(string))
+        /// <param name="queueMessageTimeToLiveInSeconds">Storage queue message
+        /// time to live in seconds.</param>
+        public StorageQueueEventSubscriptionDestination(string resourceId = default(string), string queueName = default(string), long? queueMessageTimeToLiveInSeconds = default(long?))
         {
             ResourceId = resourceId;
             QueueName = queueName;
+            QueueMessageTimeToLiveInSeconds = queueMessageTimeToLiveInSeconds;
             CustomInit();
         }
 
@@ -68,6 +71,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.queueName")]
         public string QueueName { get; set; }
+
+        /// <summary>
+        /// Gets or sets storage queue message time to live in seconds.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.queueMessageTimeToLiveInSeconds")]
+        public long? QueueMessageTimeToLiveInSeconds { get; set; }
 
     }
 }

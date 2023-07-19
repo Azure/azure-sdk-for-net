@@ -162,7 +162,7 @@ namespace Authorization.Tests
             var authorizationClient = new AuthorizationManagementClient(
                 TestEnvironmentFactory.GetTestEnvironment().BaseUri,
                 cred);
-            foreach (var assignment in authorizationClient.RoleAssignments.List(null))
+            foreach (var assignment in authorizationClient.RoleAssignments.ListForSubscription(null))
             {
                 if (assignment.Id.Contains(BasicTests.ResourceGroup))
                 {

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
     /// <summary>
     /// The description of the service.
     /// </summary>
-    public partial class ServicesDescription : Resource
+    public partial class ServicesDescription : ServicesResource
     {
         /// <summary>
         /// Initializes a new instance of the ServicesDescription class.
@@ -40,12 +40,17 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <param name="tags">The resource tags.</param>
         /// <param name="etag">An etag associated with the resource, used for
         /// optimistic concurrency when editing it.</param>
+        /// <param name="identity">Setting indicating whether the service has a
+        /// managed identity associated with it.</param>
         /// <param name="properties">The common properties of a
         /// service.</param>
-        public ServicesDescription(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ServicesProperties properties = default(ServicesProperties))
-            : base(kind, location, id, name, type, tags, etag)
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
+        public ServicesDescription(Kind kind, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), ServicesResourceIdentity identity = default(ServicesResourceIdentity), ServicesProperties properties = default(ServicesProperties), SystemData systemData = default(SystemData))
+            : base(kind, location, id, name, type, tags, etag, identity)
         {
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -59,6 +64,13 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public ServicesProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets metadata pertaining to creation and last modification
+        /// of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -10,20 +9,20 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
     /// <summary>
     /// This sample demonstrates how to wrap and unwrap a symmetric key with an RSA key using the synchronous methods of the <see cref="CryptographyClient">.
     /// </summary>
-    [LiveOnly]
     public partial class Sample6_WrapUnwrap
     {
         [Test]
         public void WrapUnwrapSync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:KeysSample6KeyClient
             var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
@@ -45,7 +44,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #endregion
 
             #region Snippet:KeysSample6GenerateKey
-            byte[] keyData = AesManaged.Create().Key;
+            byte[] keyData = Aes.Create().Key;
             Debug.WriteLine($"Generated Key: {Convert.ToBase64String(keyData)}");
             #endregion
 
@@ -56,10 +55,9 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             #region Snippet:KeysSample6UnwrapKey
             UnwrapResult unwrapResult = cryptoClient.UnwrapKey(KeyWrapAlgorithm.RsaOaep, wrapResult.EncryptedKey);
-            Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Key)}");
+            Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Convert.ToBase64String(unwrapResult.Key)}");
             #endregion
 
-            #region Snippet:KeysSample6DeleteKey
             DeleteKeyOperation operation = keyClient.StartDeleteKey(rsaKeyName);
 
             // You only need to wait for completion if you want to purge or recover the key.
@@ -69,7 +67,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
                 operation.UpdateStatus();
             }
-            #endregion
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
             keyClient.PurgeDeletedKey(rsaKeyName);

@@ -57,12 +57,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// performing the last resize on the Pool.</param>
         /// <param name="currentDedicatedNodes">The number of dedicated Compute
         /// Nodes currently in the Pool.</param>
-        /// <param name="currentLowPriorityNodes">The number of low-priority
-        /// Compute Nodes currently in the Pool.</param>
+        /// <param name="currentLowPriorityNodes">The number of
+        /// Spot/Low-priority Compute Nodes currently in the Pool.</param>
         /// <param name="targetDedicatedNodes">The desired number of dedicated
         /// Compute Nodes in the Pool.</param>
         /// <param name="targetLowPriorityNodes">The desired number of
-        /// low-priority Compute Nodes in the Pool.</param>
+        /// Spot/Low-priority Compute Nodes in the Pool.</param>
         /// <param name="enableAutoScale">Whether the Pool size should
         /// automatically adjust over time.</param>
         /// <param name="autoScaleFormula">A formula for the desired number of
@@ -85,8 +85,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="applicationLicenses">The list of application licenses
         /// the Batch service will make available on each Compute Node in the
         /// Pool.</param>
-        /// <param name="maxTasksPerNode">The maximum number of Tasks that can
-        /// run concurrently on a single Compute Node in the Pool.</param>
+        /// <param name="taskSlotsPerNode">The number of task slots that can be
+        /// used to run concurrent tasks on a single compute node in the
+        /// pool.</param>
         /// <param name="taskSchedulingPolicy">How Tasks are distributed across
         /// Compute Nodes in a Pool.</param>
         /// <param name="userAccounts">The list of user Accounts to be created
@@ -97,7 +98,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the entire lifetime of the Pool.</param>
         /// <param name="mountConfiguration">A list of file systems to mount on
         /// each node in the pool.</param>
-        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>))
+        /// <param name="identity">The identity of the Batch pool, if
+        /// configured.</param>
+        /// <param name="targetNodeCommunicationMode">The desired node
+        /// communication mode for the pool.</param>
+        /// <param name="currentNodeCommunicationMode">The current state of the
+        /// pool communication mode.</param>
+        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), BatchPoolIdentity identity = default(BatchPoolIdentity), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?), NodeCommunicationMode? currentNodeCommunicationMode = default(NodeCommunicationMode?))
         {
             Id = id;
             DisplayName = displayName;
@@ -128,12 +135,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             CertificateReferences = certificateReferences;
             ApplicationPackageReferences = applicationPackageReferences;
             ApplicationLicenses = applicationLicenses;
-            MaxTasksPerNode = maxTasksPerNode;
+            TaskSlotsPerNode = taskSlotsPerNode;
             TaskSchedulingPolicy = taskSchedulingPolicy;
             UserAccounts = userAccounts;
             Metadata = metadata;
             Stats = stats;
             MountConfiguration = mountConfiguration;
+            Identity = identity;
+            TargetNodeCommunicationMode = targetNodeCommunicationMode;
+            CurrentNodeCommunicationMode = currentNodeCommunicationMode;
             CustomInit();
         }
 
@@ -298,12 +308,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? CurrentDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of low-priority Compute Nodes currently in
-        /// the Pool.
+        /// Gets or sets the number of Spot/Low-priority Compute Nodes
+        /// currently in the Pool.
         /// </summary>
         /// <remarks>
-        /// Low-priority Compute Nodes which have been preempted are included
-        /// in this count.
+        /// Spot/Low-priority Compute Nodes which have been preempted are
+        /// included in this count.
         /// </remarks>
         [JsonProperty(PropertyName = "currentLowPriorityNodes")]
         public int? CurrentLowPriorityNodes { get; set; }
@@ -316,8 +326,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of low-priority Compute Nodes in
-        /// the Pool.
+        /// Gets or sets the desired number of Spot/Low-priority Compute Nodes
+        /// in the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "targetLowPriorityNodes")]
         public int? TargetLowPriorityNodes { get; set; }
@@ -327,7 +337,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// time.
         /// </summary>
         /// <remarks>
-        /// If false, at least one of targetDedicateNodes and
+        /// If false, at least one of targetDedicatedNodes and
         /// targetLowPriorityNodes must be specified. If true, the
         /// autoScaleFormula property is required and the Pool automatically
         /// resizes according to the formula. The default value is false.
@@ -407,6 +417,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// 'certs' directory is created in the user's home directory (e.g.,
         /// /home/{user-name}/certs) and Certificates are placed in that
         /// directory.
+        ///
+        /// Warning: This property is deprecated and will be removed after
+        /// February, 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
         /// </remarks>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
@@ -437,15 +452,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public IList<string> ApplicationLicenses { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of Tasks that can run concurrently
-        /// on a single Compute Node in the Pool.
+        /// Gets or sets the number of task slots that can be used to run
+        /// concurrent tasks on a single compute node in the pool.
         /// </summary>
         /// <remarks>
         /// The default value is 1. The maximum value is the smaller of 4 times
-        /// the number of cores of the vmSize of the Pool or 256.
+        /// the number of cores of the vmSize of the pool or 256.
         /// </remarks>
-        [JsonProperty(PropertyName = "maxTasksPerNode")]
-        public int? MaxTasksPerNode { get; set; }
+        [JsonProperty(PropertyName = "taskSlotsPerNode")]
+        public int? TaskSlotsPerNode { get; set; }
 
         /// <summary>
         /// Gets or sets how Tasks are distributed across Compute Nodes in a
@@ -494,6 +509,37 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "mountConfiguration")]
         public IList<MountConfiguration> MountConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the Batch pool, if configured.
+        /// </summary>
+        /// <remarks>
+        /// The list of user identities associated with the Batch pool. The
+        /// user identity dictionary key references will be ARM resource ids in
+        /// the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+        /// </remarks>
+        [JsonProperty(PropertyName = "identity")]
+        public BatchPoolIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desired node communication mode for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the default value is Default. Possible values include:
+        /// 'default', 'classic', 'simplified'
+        /// </remarks>
+        [JsonProperty(PropertyName = "targetNodeCommunicationMode")]
+        public NodeCommunicationMode? TargetNodeCommunicationMode { get; set; }
+
+        /// <summary>
+        /// Gets the current state of the pool communication mode.
+        /// </summary>
+        /// <remarks>
+        /// Possible values include: 'default', 'classic', 'simplified'
+        /// </remarks>
+        [JsonProperty(PropertyName = "currentNodeCommunicationMode")]
+        public NodeCommunicationMode? CurrentNodeCommunicationMode { get; private set; }
 
     }
 }

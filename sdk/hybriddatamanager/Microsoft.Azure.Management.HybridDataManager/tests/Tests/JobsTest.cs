@@ -22,7 +22,7 @@ namespace HybridData.Tests.Tests
         {
             try
             {
-                JobId = "1fc3cf96-a62f-47b4-ae6b-add6d6543f7a";
+                JobId = "99ef93fe-36be-43e4-bebf-de6746730601";
                 var job = Client.Jobs.Get(dataServiceName: DataServiceName,
                     jobDefinitionName: JobDefinitionName,
                     jobId: JobId,
@@ -41,7 +41,7 @@ namespace HybridData.Tests.Tests
         {
             try
             {
-                JobId = "1fc3cf96-a62f-47b4-ae6b-add6d6543f7a";
+                JobId = "6eca9b3d-5ffe-4b44-9607-1ba838371ff7";
                 Client.Jobs.BeginCancel(dataServiceName: DataServiceName,
                     jobDefinitionName: JobDefinitionName,
                     jobId: JobId,
@@ -64,7 +64,7 @@ namespace HybridData.Tests.Tests
         [Fact]
         public void Jobs_Resume()
         {
-            JobId = "8ae39e0e-df7b-453e-8599-db47a277e543";
+            JobId = "99ef93fe-36be-43e4-bebf-de6746730601";
             try
             {
                 Client.Jobs.BeginResume(dataServiceName: DataServiceName,

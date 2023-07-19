@@ -32,40 +32,48 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the VMNicInputDetails class.
         /// </summary>
         /// <param name="nicId">The nic Id.</param>
-        /// <param name="recoveryVMSubnetName">Recovery VM subnet name.</param>
-        /// <param name="replicaNicStaticIPAddress">Replica nic static IP
-        /// address.</param>
+        /// <param name="ipConfigs">The IP configurations to be used by NIC
+        /// during test failover and failover.</param>
         /// <param name="selectionType">Selection type for failover.</param>
-        /// <param name="recoveryPublicIpAddressId">The id of the public IP
-        /// address resource associated with the NIC.</param>
         /// <param name="recoveryNetworkSecurityGroupId">The id of the NSG
         /// associated with the NIC.</param>
-        /// <param name="recoveryLBBackendAddressPoolIds">The target backend
-        /// address pools for the NIC.</param>
         /// <param name="enableAcceleratedNetworkingOnRecovery">Whether the NIC
         /// has accelerated networking enabled.</param>
-        /// <param name="tfoVMSubnetName">The subnet to be used by NIC during
-        /// test failover.</param>
         /// <param name="tfoNetworkSecurityGroupId">The NSG to be used by NIC
         /// during test failover.</param>
         /// <param name="enableAcceleratedNetworkingOnTfo">Whether the test NIC
         /// has accelerated networking enabled.</param>
-        /// <param name="tfoIPConfigs">The IP configurations to be used by NIC
-        /// during test failover.</param>
-        public VMNicInputDetails(string nicId = default(string), string recoveryVMSubnetName = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string), string recoveryPublicIpAddressId = default(string), string recoveryNetworkSecurityGroupId = default(string), IList<string> recoveryLBBackendAddressPoolIds = default(IList<string>), bool? enableAcceleratedNetworkingOnRecovery = default(bool?), string tfoVMSubnetName = default(string), string tfoNetworkSecurityGroupId = default(string), bool? enableAcceleratedNetworkingOnTfo = default(bool?), IList<IPConfig> tfoIPConfigs = default(IList<IPConfig>))
+        /// <param name="recoveryNicName">The name of the NIC to be used when
+        /// creating target NICs.</param>
+        /// <param name="recoveryNicResourceGroupName">The resource group of
+        /// the NIC to be used when creating target NICs.</param>
+        /// <param name="reuseExistingNic">A value indicating whether an
+        /// existing NIC is allowed to be reused during failover subject to
+        /// availability.</param>
+        /// <param name="tfoNicName">The name of the NIC to be used when
+        /// creating target NICs in TFO.</param>
+        /// <param name="tfoNicResourceGroupName">The resource group of the NIC
+        /// to be used when creating target NICs in TFO.</param>
+        /// <param name="tfoReuseExistingNic">A value indicating whether an
+        /// existing NIC is allowed to be reused during test failover subject
+        /// to availability.</param>
+        /// <param name="targetNicName">Target NIC name.</param>
+        public VMNicInputDetails(string nicId = default(string), IList<IPConfigInputDetails> ipConfigs = default(IList<IPConfigInputDetails>), string selectionType = default(string), string recoveryNetworkSecurityGroupId = default(string), bool? enableAcceleratedNetworkingOnRecovery = default(bool?), string tfoNetworkSecurityGroupId = default(string), bool? enableAcceleratedNetworkingOnTfo = default(bool?), string recoveryNicName = default(string), string recoveryNicResourceGroupName = default(string), bool? reuseExistingNic = default(bool?), string tfoNicName = default(string), string tfoNicResourceGroupName = default(string), bool? tfoReuseExistingNic = default(bool?), string targetNicName = default(string))
         {
             NicId = nicId;
-            RecoveryVMSubnetName = recoveryVMSubnetName;
-            ReplicaNicStaticIPAddress = replicaNicStaticIPAddress;
+            IpConfigs = ipConfigs;
             SelectionType = selectionType;
-            RecoveryPublicIpAddressId = recoveryPublicIpAddressId;
             RecoveryNetworkSecurityGroupId = recoveryNetworkSecurityGroupId;
-            RecoveryLBBackendAddressPoolIds = recoveryLBBackendAddressPoolIds;
             EnableAcceleratedNetworkingOnRecovery = enableAcceleratedNetworkingOnRecovery;
-            TfoVMSubnetName = tfoVMSubnetName;
             TfoNetworkSecurityGroupId = tfoNetworkSecurityGroupId;
             EnableAcceleratedNetworkingOnTfo = enableAcceleratedNetworkingOnTfo;
-            TfoIPConfigs = tfoIPConfigs;
+            RecoveryNicName = recoveryNicName;
+            RecoveryNicResourceGroupName = recoveryNicResourceGroupName;
+            ReuseExistingNic = reuseExistingNic;
+            TfoNicName = tfoNicName;
+            TfoNicResourceGroupName = tfoNicResourceGroupName;
+            TfoReuseExistingNic = tfoReuseExistingNic;
+            TargetNicName = targetNicName;
             CustomInit();
         }
 
@@ -81,16 +89,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string NicId { get; set; }
 
         /// <summary>
-        /// Gets or sets recovery VM subnet name.
+        /// Gets or sets the IP configurations to be used by NIC during test
+        /// failover and failover.
         /// </summary>
-        [JsonProperty(PropertyName = "recoveryVMSubnetName")]
-        public string RecoveryVMSubnetName { get; set; }
-
-        /// <summary>
-        /// Gets or sets replica nic static IP address.
-        /// </summary>
-        [JsonProperty(PropertyName = "replicaNicStaticIPAddress")]
-        public string ReplicaNicStaticIPAddress { get; set; }
+        [JsonProperty(PropertyName = "ipConfigs")]
+        public IList<IPConfigInputDetails> IpConfigs { get; set; }
 
         /// <summary>
         /// Gets or sets selection type for failover.
@@ -99,35 +102,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string SelectionType { get; set; }
 
         /// <summary>
-        /// Gets or sets the id of the public IP address resource associated
-        /// with the NIC.
-        /// </summary>
-        [JsonProperty(PropertyName = "recoveryPublicIpAddressId")]
-        public string RecoveryPublicIpAddressId { get; set; }
-
-        /// <summary>
         /// Gets or sets the id of the NSG associated with the NIC.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryNetworkSecurityGroupId")]
         public string RecoveryNetworkSecurityGroupId { get; set; }
 
         /// <summary>
-        /// Gets or sets the target backend address pools for the NIC.
-        /// </summary>
-        [JsonProperty(PropertyName = "recoveryLBBackendAddressPoolIds")]
-        public IList<string> RecoveryLBBackendAddressPoolIds { get; set; }
-
-        /// <summary>
         /// Gets or sets whether the NIC has accelerated networking enabled.
         /// </summary>
         [JsonProperty(PropertyName = "enableAcceleratedNetworkingOnRecovery")]
         public bool? EnableAcceleratedNetworkingOnRecovery { get; set; }
-
-        /// <summary>
-        /// Gets or sets the subnet to be used by NIC during test failover.
-        /// </summary>
-        [JsonProperty(PropertyName = "tfoVMSubnetName")]
-        public string TfoVMSubnetName { get; set; }
 
         /// <summary>
         /// Gets or sets the NSG to be used by NIC during test failover.
@@ -143,11 +127,52 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public bool? EnableAcceleratedNetworkingOnTfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the IP configurations to be used by NIC during test
-        /// failover.
+        /// Gets or sets the name of the NIC to be used when creating target
+        /// NICs.
         /// </summary>
-        [JsonProperty(PropertyName = "tfoIPConfigs")]
-        public IList<IPConfig> TfoIPConfigs { get; set; }
+        [JsonProperty(PropertyName = "recoveryNicName")]
+        public string RecoveryNicName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource group of the NIC to be used when creating
+        /// target NICs.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryNicResourceGroupName")]
+        public string RecoveryNicResourceGroupName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether an existing NIC is allowed
+        /// to be reused during failover subject to availability.
+        /// </summary>
+        [JsonProperty(PropertyName = "reuseExistingNic")]
+        public bool? ReuseExistingNic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the NIC to be used when creating target
+        /// NICs in TFO.
+        /// </summary>
+        [JsonProperty(PropertyName = "tfoNicName")]
+        public string TfoNicName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource group of the NIC to be used when creating
+        /// target NICs in TFO.
+        /// </summary>
+        [JsonProperty(PropertyName = "tfoNicResourceGroupName")]
+        public string TfoNicResourceGroupName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether an existing NIC is allowed
+        /// to be reused during test failover subject to availability.
+        /// </summary>
+        [JsonProperty(PropertyName = "tfoReuseExistingNic")]
+        public bool? TfoReuseExistingNic { get; set; }
+
+        /// <summary>
+        /// Gets or sets target NIC name.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetNicName")]
+        public string TargetNicName { get; set; }
 
     }
 }

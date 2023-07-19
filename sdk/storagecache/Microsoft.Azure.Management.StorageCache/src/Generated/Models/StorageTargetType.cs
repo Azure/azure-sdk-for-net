@@ -15,5 +15,6 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public const string Nfs3 = "nfs3";
         public const string Clfs = "clfs";
         public const string Unknown = "unknown";
+        public const string BlobNfs = "blobNfs";
     }
 }

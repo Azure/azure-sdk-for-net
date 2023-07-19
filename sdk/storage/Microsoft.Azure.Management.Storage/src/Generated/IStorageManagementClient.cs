@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.Storage
         IStorageAccountsOperations StorageAccounts { get; }
 
         /// <summary>
+        /// Gets the IDeletedAccountsOperations.
+        /// </summary>
+        IDeletedAccountsOperations DeletedAccounts { get; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }
@@ -95,6 +100,11 @@ namespace Microsoft.Azure.Management.Storage
         IManagementPoliciesOperations ManagementPolicies { get; }
 
         /// <summary>
+        /// Gets the IBlobInventoryPoliciesOperations.
+        /// </summary>
+        IBlobInventoryPoliciesOperations BlobInventoryPolicies { get; }
+
+        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
@@ -103,6 +113,21 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IObjectReplicationPoliciesOperations.
+        /// </summary>
+        IObjectReplicationPoliciesOperations ObjectReplicationPolicies { get; }
+
+        /// <summary>
+        /// Gets the ILocalUsersOperations.
+        /// </summary>
+        ILocalUsersOperations LocalUsers { get; }
+
+        /// <summary>
+        /// Gets the IEncryptionScopesOperations.
+        /// </summary>
+        IEncryptionScopesOperations EncryptionScopes { get; }
 
         /// <summary>
         /// Gets the IBlobServicesOperations.
@@ -123,6 +148,26 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IFileSharesOperations.
         /// </summary>
         IFileSharesOperations FileShares { get; }
+
+        /// <summary>
+        /// Gets the IQueueServicesOperations.
+        /// </summary>
+        IQueueServicesOperations QueueServices { get; }
+
+        /// <summary>
+        /// Gets the IQueueOperations.
+        /// </summary>
+        IQueueOperations Queue { get; }
+
+        /// <summary>
+        /// Gets the ITableServicesOperations.
+        /// </summary>
+        ITableServicesOperations TableServices { get; }
+
+        /// <summary>
+        /// Gets the ITableOperations.
+        /// </summary>
+        ITableOperations Table { get; }
 
     }
 }

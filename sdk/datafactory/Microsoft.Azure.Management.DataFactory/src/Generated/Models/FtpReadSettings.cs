@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="recursive">If true, files under the folder path will
         /// be read recursively. Default is true. Type: boolean (or Expression
         /// with resultType boolean).</param>
@@ -43,15 +46,36 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).</param>
         /// <param name="wildcardFileName">Ftp wildcardFileName. Type: string
         /// (or Expression with resultType string).</param>
+        /// <param name="enablePartitionDiscovery">Indicates whether to enable
+        /// partition discovery.</param>
+        /// <param name="partitionRootPath">Specify the root path where
+        /// partition discovery starts from. Type: string (or Expression with
+        /// resultType string).</param>
+        /// <param name="deleteFilesAfterCompletion">Indicates whether the
+        /// source files need to be deleted after copy completion. Default is
+        /// false. Type: boolean (or Expression with resultType
+        /// boolean).</param>
+        /// <param name="fileListPath">Point to a text file that lists each
+        /// file (relative path to the path configured in the dataset) that you
+        /// want to copy. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="useBinaryTransfer">Specify whether to use binary
         /// transfer mode for FTP stores.</param>
-        public FtpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? useBinaryTransfer = default(bool?))
-            : base(additionalProperties, maxConcurrentConnections)
+        /// <param name="disableChunking">If true, disable parallel reading
+        /// within each file. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
+        public FtpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object deleteFilesAfterCompletion = default(object), object fileListPath = default(object), bool? useBinaryTransfer = default(bool?), object disableChunking = default(object))
+            : base(additionalProperties, maxConcurrentConnections, disableMetricsCollection)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
             WildcardFileName = wildcardFileName;
+            EnablePartitionDiscovery = enablePartitionDiscovery;
+            PartitionRootPath = partitionRootPath;
+            DeleteFilesAfterCompletion = deleteFilesAfterCompletion;
+            FileListPath = fileListPath;
             UseBinaryTransfer = useBinaryTransfer;
+            DisableChunking = disableChunking;
             CustomInit();
         }
 
@@ -83,11 +107,48 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object WildcardFileName { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates whether to enable partition discovery.
+        /// </summary>
+        [JsonProperty(PropertyName = "enablePartitionDiscovery")]
+        public bool? EnablePartitionDiscovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify the root path where partition discovery starts
+        /// from. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "partitionRootPath")]
+        public object PartitionRootPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the source files need to be deleted
+        /// after copy completion. Default is false. Type: boolean (or
+        /// Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "deleteFilesAfterCompletion")]
+        public object DeleteFilesAfterCompletion { get; set; }
+
+        /// <summary>
+        /// Gets or sets point to a text file that lists each file (relative
+        /// path to the path configured in the dataset) that you want to copy.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "fileListPath")]
+        public object FileListPath { get; set; }
+
+        /// <summary>
         /// Gets or sets specify whether to use binary transfer mode for FTP
         /// stores.
         /// </summary>
         [JsonProperty(PropertyName = "useBinaryTransfer")]
         public bool? UseBinaryTransfer { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, disable parallel reading within each file.
+        /// Default is false. Type: boolean (or Expression with resultType
+        /// boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "disableChunking")]
+        public object DisableChunking { get; set; }
 
     }
 }

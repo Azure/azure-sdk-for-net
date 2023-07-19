@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// specified order for application gateway.</param>
         /// <param name="minProtocolVersion">Minimum version of Ssl protocol to
         /// be supported on application gateway. Possible values include:
-        /// 'TLSv1_0', 'TLSv1_1', 'TLSv1_2'</param>
+        /// 'TLSv1_0', 'TLSv1_1', 'TLSv1_2', 'TLSv1_3'</param>
         public ApplicationGatewaySslPredefinedPolicy(string id = default(string), string name = default(string), IList<string> cipherSuites = default(IList<string>), string minProtocolVersion = default(string))
             : base(id)
         {
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets minimum version of Ssl protocol to be supported on
         /// application gateway. Possible values include: 'TLSv1_0', 'TLSv1_1',
-        /// 'TLSv1_2'
+        /// 'TLSv1_2', 'TLSv1_3'
         /// </summary>
         [JsonProperty(PropertyName = "properties.minProtocolVersion")]
         public string MinProtocolVersion { get; set; }

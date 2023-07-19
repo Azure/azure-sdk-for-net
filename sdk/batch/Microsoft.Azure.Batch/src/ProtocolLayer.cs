@@ -391,7 +391,7 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<Models.TaskCounts, Models.JobGetTaskCountsHeaders>> GetJobTaskCounts(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public Task<AzureOperationResponse<Models.TaskCountsResult, Models.JobGetTaskCountsHeaders>> GetJobTaskCounts(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new JobGetTaskCountsBatchRequest(this._client, cancellationToken);
 
@@ -412,11 +412,13 @@
             Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
+            int? maxParallelTasks,
+            bool? allowTaskPreemption,
             IList<Models.MetadataItem> metadata,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.JobUpdateParameter(poolInfo, priority, constraints, metadata, onAllTasksComplete);
+            var parameters = new Models.JobUpdateParameter(poolInfo, priority, maxParallelTasks, allowTaskPreemption, constraints, metadata, onAllTasksComplete);
             var request = new JobUpdateBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.UpdateWithHttpMessagesAsync(
@@ -434,6 +436,8 @@
         public Task<AzureOperationHeaderResponse<Models.JobPatchHeaders>> PatchJob(
             string jobId,
             int? priority,
+            int? maxParallelTasks,
+            bool? allowTaskPreemption,
             Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
@@ -441,7 +445,7 @@
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.JobPatchParameter(priority, onAllTasksComplete, constraints, poolInfo, metadata);
+            var parameters = new Models.JobPatchParameter(priority, maxParallelTasks, allowTaskPreemption, onAllTasksComplete, constraints, poolInfo, metadata);
             var request = new JobPatchBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.PatchWithHttpMessagesAsync(
@@ -868,6 +872,7 @@
             Models.CertificateReference[] certRefs,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metaData,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
@@ -877,7 +882,7 @@
             metaData = metaData ?? new Models.MetadataItem[0];
             applicationPackageReferences = applicationPackageReferences ?? new Models.ApplicationPackageReference[0];
 
-            var parameters = new Models.PoolUpdatePropertiesParameter(certRefs, applicationPackageReferences, metaData, startTask);
+            var parameters = new Models.PoolUpdatePropertiesParameter(certRefs, applicationPackageReferences, metaData, startTask, targetNodeCommunicationMode);
             var request = new PoolUpdatePropertiesBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.UpdatePropertiesWithHttpMessagesAsync(
@@ -898,10 +903,11 @@
             Models.CertificateReference[] certificateReferences,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metadata,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata);
+            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata, targetNodeCommunicationMode);
             var request = new PoolPatchBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.PatchWithHttpMessagesAsync(
@@ -1161,10 +1167,13 @@
             string containerUrl,
             DateTime startTime,
             DateTime? endTime,
+            ComputeNodeIdentityReference identityReference,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.UploadBatchServiceLogsConfiguration(containerUrl, startTime, endTime);
+            var identityRefModel = identityReference != null ? new Models.ComputeNodeIdentityReference(identityReference.ResourceId) : null;
+
+            var parameters = new Models.UploadBatchServiceLogsConfiguration(containerUrl, startTime, endTime, identityRefModel);
             var request = new ComputeNodeUploadBatchServiceLogsBatchRequest(this._client, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.UploadBatchServiceLogsWithHttpMessagesAsync(
@@ -1329,6 +1338,60 @@
             return asyncTask;
         }
 
+        public Task<AzureOperationResponse<Models.NodeVMExtension, Models.ComputeNodeExtensionGetHeaders>> GetComputeNodeExtension(string poolId, string nodeId, string extensionName, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        {
+            var request = new ComputeNodeExtensionGetBatchRequest(_client, cancellationToken);
+
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNodeExtension.GetWithHttpMessagesAsync(
+                poolId,
+                nodeId,
+                extensionName,
+                request.Options,
+                request.CustomHeaders,
+                cancellationToken
+            );
+
+            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+
+            return asyncTask;
+        }
+
+        public Task<AzureOperationResponse<IPage<Models.NodeVMExtension>, Models.ComputeNodeExtensionListHeaders>> ListComputeNodeExtensions(
+            string poolId,
+            string computeNodeId,
+            string skipToken,
+            BehaviorManager bhMgr,
+            DetailLevel detailLevel,
+            CancellationToken cancellationToken)
+        {
+            Task<AzureOperationResponse<IPage<Models.NodeVMExtension>, Models.ComputeNodeExtensionListHeaders>> asyncTask;
+
+            if (string.IsNullOrEmpty(skipToken))
+            {
+                var request = new ComputeNodeExtensionListBatchRequest(this._client, cancellationToken);
+
+                bhMgr = bhMgr.CreateBehaviorManagerWithDetailLevel(detailLevel);
+
+                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNodeExtension.ListWithHttpMessagesAsync(
+                    poolId,
+                    computeNodeId,
+                    request.Options,
+                    request.CustomHeaders,
+                    lambdaCancelToken);
+
+                asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+            }
+            else
+            {
+                var request = new ComputeNodeExtensionListNextBatchRequest(_client, cancellationToken);
+
+                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNodeExtension.ListNextWithHttpMessagesAsync(skipToken, request.Options, request.CustomHeaders, lambdaCancelToken);
+                asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+            }
+
+            return asyncTask;
+        }
+
         public Task<AzureOperationHeaderResponse<Models.TaskUpdateHeaders>> UpdateTask(string jobId, string taskId, Models.TaskConstraints taskConstraints, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var parameters = taskConstraints;
@@ -1475,34 +1538,7 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> GetAllJobLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken)
-        {
-            var request = new JobGetAllJobsLifetimeStatisticsBatchRequest(this._client, cancellationToken);
-
-            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.GetAllLifetimeStatisticsWithHttpMessagesAsync(
-                request.Options,
-                request.CustomHeaders,
-                lambdaCancelToken);
-
-            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
-
-            return asyncTask;
-        }
-
-        public Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> GetAllPoolLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken)
-        {
-            var request = new PoolGetAllPoolsLifetimeStatisticsBatchRequest(this._client, cancellationToken);
-
-            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.GetAllLifetimeStatisticsWithHttpMessagesAsync(
-                request.Options,
-                request.CustomHeaders,
-                lambdaCancelToken);
-
-            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
-
-            return asyncTask;
-        }
-
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Task<AzureOperationResponse<Models.Certificate, Models.CertificateGetHeaders>> GetCertificate(string thumbprintAlgorithm, string thumbprint, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new CertificateGetBatchRequest(this._client, cancellationToken);
@@ -1595,6 +1631,7 @@
             return asyncTask;
         }
 
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Task<AzureOperationResponse<IPage<Models.Certificate>, Models.CertificateListHeaders>> ListCertificates(string skipToken, BehaviorManager bhMgr, DetailLevel detailLevel, CancellationToken cancellationToken)
         {
             Task<AzureOperationResponse<IPage<Models.Certificate>, Models.CertificateListHeaders>> asyncTask;
@@ -1623,6 +1660,7 @@
             return asyncTask;
         }
 
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Task<AzureOperationHeaderResponse<Models.CertificateAddHeaders>> AddCertificate(Models.CertificateAddParameter protoCert, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new CertificateAddBatchRequest(this._client, protoCert, cancellationToken);
@@ -1638,6 +1676,7 @@
             return asyncTask;
         }
 
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Task<AzureOperationHeaderResponse<Models.CertificateDeleteHeaders>> DeleteCertificate(string thumbprintAlgorithm, string thumbprint, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new CertificateDeleteBatchRequest(this._client, cancellationToken);
@@ -1654,6 +1693,7 @@
             return asyncTask;
         }
 
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Task<AzureOperationHeaderResponse<Models.CertificateCancelDeletionHeaders>> CancelDeleteCertificate(string thumbprintAlgorithm, string thumbprint, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new CertificateCancelDeletionBatchRequest(this._client, cancellationToken);
@@ -1809,7 +1849,7 @@
                         // enforce that the returned object is the required type
                         ValidateReturnObject(request, typeof(IBatchRequest<TResponse>));
 
-                        // any changes must be communcated back to the caller
+                        // any changes must be communicated back to the caller
                         request = (Protocol.IBatchRequest<TResponse>)proxyObj;
                     }
                 }
@@ -1854,7 +1894,7 @@
                     // enforce that the returned object is the required type
                     ValidateReturnObject(responseFromIntercept, typeof(TResponse));
 
-                    // promote the intercetor response to official response
+                    // promote the interceptor response to official response
                     response = (TResponse)responseFromIntercept;
                 }
             }

@@ -44,8 +44,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// replay</param>
         /// <param name="eventsReplayed">The number of oplog events replayed so
         /// far</param>
-        /// <param name="resultType">The type of progress object. Possible
-        /// values include: 'Migration', 'Database', 'Collection'</param>
         /// <param name="state">Possible values include: 'NotStarted',
         /// 'ValidatingInput', 'Initializing', 'Restarting', 'Copying',
         /// 'InitialReplay', 'Replaying', 'Finalizing', 'Complete', 'Canceled',
@@ -68,7 +66,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// object. For a collection, this is the database-qualified name. For
         /// a database, this is the database name. For the overall migration,
         /// this is null.</param>
-        public MongoDbProgress(long bytesCopied, long documentsCopied, string elapsedTime, IDictionary<string, MongoDbError> errors, long eventsPending, long eventsReplayed, string resultType, string state, long totalBytes, long totalDocuments, System.DateTimeOffset? lastEventTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastReplayTime = default(System.DateTimeOffset?), string name = default(string), string qualifiedName = default(string))
+        public MongoDbProgress(long bytesCopied, long documentsCopied, string elapsedTime, IDictionary<string, MongoDbError> errors, long eventsPending, long eventsReplayed, string state, long totalBytes, long totalDocuments, System.DateTimeOffset? lastEventTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastReplayTime = default(System.DateTimeOffset?), string name = default(string), string qualifiedName = default(string))
         {
             BytesCopied = bytesCopied;
             DocumentsCopied = documentsCopied;
@@ -80,7 +78,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             LastReplayTime = lastReplayTime;
             Name = name;
             QualifiedName = qualifiedName;
-            ResultType = resultType;
             State = state;
             TotalBytes = totalBytes;
             TotalDocuments = totalDocuments;
@@ -163,13 +160,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public string QualifiedName { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of progress object. Possible values include:
-        /// 'Migration', 'Database', 'Collection'
-        /// </summary>
-        [JsonProperty(PropertyName = "resultType")]
-        public string ResultType { get; set; }
-
-        /// <summary>
         /// Gets or sets possible values include: 'NotStarted',
         /// 'ValidatingInput', 'Initializing', 'Restarting', 'Copying',
         /// 'InitialReplay', 'Replaying', 'Finalizing', 'Complete', 'Canceled',
@@ -209,10 +199,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             if (Errors == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Errors");
-            }
-            if (ResultType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ResultType");
             }
             if (State == null)
             {

@@ -17,5 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     public static class AzureFirewallSkuTier
     {
         public const string Standard = "Standard";
+        public const string Premium = "Premium";
+        public const string Basic = "Basic";
     }
 }

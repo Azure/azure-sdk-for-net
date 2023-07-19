@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     using System.Linq;
 
     /// <summary>
-    /// The list of credential result response.
+    /// The list credential result response.
     /// </summary>
     public partial class CredentialResults
     {

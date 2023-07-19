@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets network mapping by name.
             /// </summary>
             /// <remarks>
-            /// Gets the details of an ASR network mapping
+            /// Gets the details of an ASR network mapping.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets network mapping by name.
             /// </summary>
             /// <remarks>
-            /// Gets the details of an ASR network mapping
+            /// Gets the details of an ASR network mapping.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

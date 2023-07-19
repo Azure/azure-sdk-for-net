@@ -24,6 +24,26 @@ namespace Microsoft.Azure.Management.AlertsManagement
     public partial interface IAlertsOperations
     {
         /// <summary>
+        /// List alerts meta data information based on value of identifier
+        /// parameter.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AlertsMetaData>> MetaDataWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List all existing alerts, where the results can be filtered on the
         /// basis of multiple parameters (e.g. time range). The results can
         /// then be sorted on the basis specific fields, with the default being
@@ -126,7 +146,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Alert>>> GetAllWithHttpMessagesAsync(string targetResource = default(string), string targetResourceType = default(string), string targetResourceGroup = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string alertState = default(string), string alertRule = default(string), string smartGroupId = default(string), bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), int? pageCount = default(int?), string sortBy = default(string), string sortOrder = default(string), string select = default(string), string timeRange = default(string), string customTimeRange = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Alert>>> GetAllWithHttpMessagesAsync(string targetResource = default(string), string targetResourceType = default(string), string targetResourceGroup = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string alertState = default(string), string alertRule = default(string), string smartGroupId = default(string), bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), long? pageCount = default(long?), string sortBy = default(string), string sortOrder = default(string), string select = default(string), string timeRange = default(string), string customTimeRange = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a specific alert.
         /// </summary>
@@ -162,6 +182,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// New state of the alert. Possible values include: 'New',
         /// 'Acknowledged', 'Closed'
         /// </param>
+        /// <param name='comment'>
+        /// reason of change alert state
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -177,7 +200,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Alert>> ChangeStateWithHttpMessagesAsync(string alertId, string newState, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Alert>> ChangeStateWithHttpMessagesAsync(string alertId, string newState, Comments comment = default(Comments), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the history of an alert, which captures any monitor condition
         /// changes (Fired/Resolved) and alert state changes

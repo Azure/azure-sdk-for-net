@@ -73,6 +73,14 @@ namespace Microsoft.Azure.Batch
             this.SshPrivateKey = sshPrivateKey;
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="LinuxUserConfiguration"/> class.
+        /// </summary>
+        protected LinuxUserConfiguration()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
         internal LinuxUserConfiguration(Models.LinuxUserConfiguration protocolObject)
         {
             this.propertyContainer = new PropertyContainer(protocolObject);

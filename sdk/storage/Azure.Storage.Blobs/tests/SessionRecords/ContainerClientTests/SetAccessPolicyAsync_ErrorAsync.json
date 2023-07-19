@@ -1,47 +1,48 @@
-{
+﻿{
   "Entries": [
     {
-      "RequestUri": "http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002ftest-container-2a5f4eac-63b1-ea63-275e-06da643b95ea?restype=container\u0026comp=acl",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-2a5f4eac-63b1-ea63-275e-06da643b95ea?restype=container&comp=acl",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "Content-Length": "249",
-        "Content-Type": "application\u002fxml",
-        "Request-Id": "|584d2a61-4110f39a1cab3ec1.",
+        "Content-Length": "252",
+        "Content-Type": "application/xml",
+        "traceparent": "00-dcc717e5fba00d448dc76a8d30798e56-5a11e9eb7669714d-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190816.1\u002b0b169fa1e334f0a6d9b7c68fcdece459ccf147ea",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210216.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "1c188e13b4acae7ba3bb6ff468c6f7cf",
-        "x-ms-date": "Fri, 16 Aug 2019 17:04:59 GMT",
+        "x-ms-client-request-id": "a801961c-ec12-6287-b4da-2cba0cbfe9e0",
+        "x-ms-date": "Wed, 17 Feb 2021 02:32:01 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2021-06-08"
       },
-      "RequestBody": "\u003cSignedIdentifiers\u003e\u003cSignedIdentifier\u003e\u003cId\u003epqbuvabtukbuiovjnght\u003c\u002fId\u003e\u003cAccessPolicy\u003e\u003cStart\u003e2019-08-16T16:04:59.5765169Z\u003c\u002fStart\u003e\u003cExpiry\u003e2019-08-16T18:04:59.5765169Z\u003c\u002fExpiry\u003e\u003cPermission\u003erw\u003c\u002fPermission\u003e\u003c\u002fAccessPolicy\u003e\u003c\u002fSignedIdentifier\u003e\u003c\u002fSignedIdentifiers\u003e",
+      "RequestBody": "﻿<SignedIdentifiers><SignedIdentifier><Id>pqbuvabtukbuiovjnght</Id><AccessPolicy><Start>2021-02-17T01:32:01.5063045Z</Start><Expiry>2021-02-17T03:32:01.5063045Z</Expiry><Permission>rw</Permission></AccessPolicy></SignedIdentifier></SignedIdentifiers>",
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "225",
-        "Content-Type": "application\u002fxml",
-        "Date": "Fri, 16 Aug 2019 17:04:59 GMT",
+        "Content-Type": "application/xml",
+        "Date": "Wed, 17 Feb 2021 02:32:01 GMT",
         "Server": [
-          "Windows-Azure-Blob\u002f1.0",
-          "Microsoft-HTTPAPI\u002f2.0"
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "1c188e13b4acae7ba3bb6ff468c6f7cf",
+        "x-ms-client-request-id": "a801961c-ec12-6287-b4da-2cba0cbfe9e0",
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "96422b3e-301e-0048-3454-545039000000",
-        "x-ms-version": "2019-02-02"
+        "x-ms-request-id": "704a77d3-901e-0054-6bd5-049595000000",
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eContainerNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified container does not exist.\n",
-        "RequestId:96422b3e-301e-0048-3454-545039000000\n",
-        "Time:2019-08-16T17:04:59.4851790Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ContainerNotFound</Code><Message>The specified container does not exist.\n",
+        "RequestId:704a77d3-901e-0054-6bd5-049595000000\n",
+        "Time:2021-02-17T02:32:01.8375150Z</Message></Error>"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-08-16T10:04:59.5765169-07:00",
+    "DateTimeOffsetNow": "2021-02-16T20:32:01.5063045-06:00",
     "RandomSeed": "1305605873",
-    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp:\u002f\u002fstorageteglazatesting.blob.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.file.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\n\nhttp:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\nhttp:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fstorageteglazatesting.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fstorageteglazatesting.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fstorageteglazatesting.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fstorageteglazatesting.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fstorageteglazatesting-secondary.table.core.windows.net\u002f;AccountName=storageteglazatesting;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

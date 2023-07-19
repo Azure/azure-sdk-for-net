@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to verify.
+        /// Gets the key identifier of the <see cref="KeyVaultKey"/> used to verify.
         /// </summary>
         public string KeyId { get; internal set; }
 

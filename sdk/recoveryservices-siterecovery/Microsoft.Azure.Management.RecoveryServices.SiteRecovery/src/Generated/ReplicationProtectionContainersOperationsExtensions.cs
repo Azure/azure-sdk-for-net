@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </summary>
             /// <remarks>
             /// The operation to a add a protectable item to a protection container(Add
-            /// physical server.)
+            /// physical server).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </summary>
             /// <remarks>
             /// The operation to a add a protectable item to a protection container(Add
-            /// physical server.)
+            /// physical server).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -403,7 +403,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </summary>
             /// <remarks>
             /// The operation to a add a protectable item to a protection container(Add
-            /// physical server.)
+            /// physical server).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -427,7 +427,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </summary>
             /// <remarks>
             /// The operation to a add a protectable item to a protection container(Add
-            /// physical server.)
+            /// physical server).
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

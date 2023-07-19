@@ -35,33 +35,32 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// therefore must be unique for each data disk attached to a
         /// VM.</param>
         /// <param name="createOption">Specifies how the virtual machine should
-        /// be created.&lt;br&gt;&lt;br&gt; Possible values
-        /// are:&lt;br&gt;&lt;br&gt; **Attach** \u2013 This value is used when
-        /// you are using a specialized disk to create the virtual
-        /// machine.&lt;br&gt;&lt;br&gt; **FromImage** \u2013 This value is
-        /// used when you are using an image to create the virtual machine. If
-        /// you are using a platform image, you also use the imageReference
-        /// element described above. If you are using a marketplace image, you
-        /// also use the plan element previously described. Possible values
-        /// include: 'FromImage', 'Empty', 'Attach'</param>
+        /// be created. Possible values are: **Attach.** This value is used
+        /// when you are using a specialized disk to create the virtual
+        /// machine. **FromImage.** This value is used when you are using an
+        /// image to create the virtual machine. If you are using a platform
+        /// image, you should also use the imageReference element described
+        /// above. If you are using a marketplace image, you should also use
+        /// the plan element previously described. Possible values include:
+        /// 'FromImage', 'Empty', 'Attach'</param>
         /// <param name="name">The disk name.</param>
         /// <param name="vhd">The virtual hard disk.</param>
         /// <param name="image">The source user image virtual hard disk. The
         /// virtual hard disk will be copied before being attached to the
         /// virtual machine. If SourceImage is provided, the destination
         /// virtual hard drive must not exist.</param>
-        /// <param name="caching">Specifies the caching requirements.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt;
-        /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
-        /// 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <param name="caching">Specifies the caching requirements. Possible
+        /// values are: **None,** **ReadOnly,** **ReadWrite.** The defaulting
+        /// behavior is: **None for Standard storage. ReadOnly for Premium
+        /// storage.**. Possible values include: 'None', 'ReadOnly',
+        /// 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
         /// <param name="diskSizeGB">Specifies the size of an empty data disk
         /// in gigabytes. This element can be used to overwrite the size of the
-        /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value
-        /// cannot be larger than 1023 GB</param>
+        /// disk in a virtual machine image. The property 'diskSizeGB' is the
+        /// number of bytes x 1024^3 for the disk and the value cannot be
+        /// larger than 1023.</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
         /// <param name="toBeDetached">Specifies whether the data disk is in
         /// process of detachment from the
@@ -75,7 +74,26 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// UltraSSD_LRS. Returned only for VirtualMachine ScaleSet VM disks.
         /// Can be updated only via updates to the VirtualMachine Scale
         /// Set.</param>
-        public DataDisk(int lun, string createOption, string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), bool? toBeDetached = default(bool?), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?))
+        /// <param name="detachOption">Specifies the detach behavior to be used
+        /// while detaching a disk or which is already in the process of
+        /// detachment from the virtual machine. Supported values:
+        /// **ForceDetach.** detachOption: **ForceDetach** is applicable only
+        /// for managed data disks. If a previous detachment attempt of the
+        /// data disk did not complete due to an unexpected failure from the
+        /// virtual machine and the disk is still not released then use
+        /// force-detach as a last resort option to detach the disk forcibly
+        /// from the VM. All writes might not have been flushed when using this
+        /// detach behavior. **This feature is still in preview** mode and is
+        /// not supported for VirtualMachineScaleSet. To force-detach a data
+        /// disk update toBeDetached to 'true' along with setting detachOption:
+        /// 'ForceDetach'. Possible values include: 'ForceDetach'</param>
+        /// <param name="deleteOption">Specifies whether data disk should be
+        /// deleted or detached upon VM deletion. Possible values are:
+        /// **Delete.** If this value is used, the data disk is deleted when VM
+        /// is deleted. **Detach.** If this value is used, the data disk is
+        /// retained after VM is deleted. The default value is set to
+        /// **Detach**. Possible values include: 'Delete', 'Detach'</param>
+        public DataDisk(int lun, string createOption, string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), bool? toBeDetached = default(bool?), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), string detachOption = default(string), string deleteOption = default(string))
         {
             Lun = lun;
             Name = name;
@@ -89,6 +107,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             ToBeDetached = toBeDetached;
             DiskIOPSReadWrite = diskIOPSReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
+            DetachOption = detachOption;
+            DeleteOption = deleteOption;
             CustomInit();
         }
 
@@ -127,14 +147,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualHardDisk Image { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the caching requirements.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **None**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadOnly**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadWrite**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
-        /// 'None', 'ReadOnly', 'ReadWrite'
+        /// Gets or sets specifies the caching requirements. Possible values
+        /// are: **None,** **ReadOnly,** **ReadWrite.** The defaulting behavior
+        /// is: **None for Standard storage. ReadOnly for Premium storage.**.
+        /// Possible values include: 'None', 'ReadOnly', 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
@@ -147,16 +163,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies how the virtual machine should be
-        /// created.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values
-        /// are:&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Attach** \u2013 This
-        /// value is used when you are using a specialized disk to create the
-        /// virtual machine.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **FromImage**
-        /// \u2013 This value is used when you are using an image to create the
-        /// virtual machine. If you are using a platform image, you also use
-        /// the imageReference element described above. If you are using a
-        /// marketplace image, you  also use the plan element previously
-        /// described. Possible values include: 'FromImage', 'Empty', 'Attach'
+        /// Gets or sets specifies how the virtual machine should be created.
+        /// Possible values are: **Attach.** This value is used when you are
+        /// using a specialized disk to create the virtual machine.
+        /// **FromImage.** This value is used when you are using an image to
+        /// create the virtual machine. If you are using a platform image, you
+        /// should also use the imageReference element described above. If you
+        /// are using a marketplace image, you should also use the plan element
+        /// previously described. Possible values include: 'FromImage',
+        /// 'Empty', 'Attach'
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
         public string CreateOption { get; set; }
@@ -164,8 +179,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the size of an empty data disk in gigabytes.
         /// This element can be used to overwrite the size of the disk in a
-        /// virtual machine image. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This
-        /// value cannot be larger than 1023 GB
+        /// virtual machine image. The property 'diskSizeGB' is the number of
+        /// bytes x 1024^3 for the disk and the value cannot be larger than
+        /// 1023.
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }
@@ -200,6 +216,35 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskMBpsReadWrite")]
         public long? DiskMBpsReadWrite { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies the detach behavior to be used while
+        /// detaching a disk or which is already in the process of detachment
+        /// from the virtual machine. Supported values: **ForceDetach.**
+        /// detachOption: **ForceDetach** is applicable only for managed data
+        /// disks. If a previous detachment attempt of the data disk did not
+        /// complete due to an unexpected failure from the virtual machine and
+        /// the disk is still not released then use force-detach as a last
+        /// resort option to detach the disk forcibly from the VM. All writes
+        /// might not have been flushed when using this detach behavior. **This
+        /// feature is still in preview** mode and is not supported for
+        /// VirtualMachineScaleSet. To force-detach a data disk update
+        /// toBeDetached to 'true' along with setting detachOption:
+        /// 'ForceDetach'. Possible values include: 'ForceDetach'
+        /// </summary>
+        [JsonProperty(PropertyName = "detachOption")]
+        public string DetachOption { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether data disk should be deleted or
+        /// detached upon VM deletion. Possible values are: **Delete.** If this
+        /// value is used, the data disk is deleted when VM is deleted.
+        /// **Detach.** If this value is used, the data disk is retained after
+        /// VM is deleted. The default value is set to **Detach**. Possible
+        /// values include: 'Delete', 'Detach'
+        /// </summary>
+        [JsonProperty(PropertyName = "deleteOption")]
+        public string DeleteOption { get; set; }
 
         /// <summary>
         /// Validate the object.

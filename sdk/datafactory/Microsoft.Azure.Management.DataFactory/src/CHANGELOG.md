@@ -1,5 +1,264 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 9.3.0
+###  Feature Additions
+- Added support customProperties in IntegrationRuntimeDataFlow
+
+## Version 9.2.0
+###  Feature Additions
+- Added AzureBlobFS sasUri and sasToken properties in ADF
+
+## Version 9.1.0
+###  Feature Additions
+- Added AzureBlobStorage containerUri and authenticationType properties in ADF
+- Added support copyComputeScale And pipelineExternalComputeScale in IntegrationRuntime
+
+## Version 9.0.0
+###  Feature Additions
+### Breaking Changes
+- Added support for credential operations in DataFactory
+- Added exportsettings required in Snowflake source
+- Added scan folder and spark config support in Sparkjob activity
+
+## Version 8.0.0
+###  Feature Additions
+### Breaking Changes
+- Added properties to spark job activity
+- Added disablePublish property into FactoryRepoConfiguration
+- Added scriptBlockExecutionTimeout property into Script Activity
+
+## Version 7.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Stored Procedure Parameters in ADF
+
+## Version 6.4.0
+###  Feature Additions
+- Added GoogleSheets connector in ADF
+- Added Synapse Spark activities in ADF
+
+## Version 6.3.0
+###  Feature Additions
+- Changed FactoryGitHubConfiguration url format for hostName description
+- Added SAP ODP connector in ADF
+- Added support OAuth2ClientCredential auth in RestSevice
+
+## Version 6.2.0
+###  Feature Additions
+- Added globalParameters apis into ADF
+- Added support for running staging on multiple sources in parallel
+- Added purview configuration into ADF
+- Added support rejected data linked service in dataflow sink
+
+## Version 6.1.0
+###  Feature Additions
+- Added Dataworld, AppFigures, Asana, Twilio connectors in ADF
+- Added PrivateEndpoint property Into PrivateLinkConnectionApprovalRequest
+
+## Version 6.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Expression mode for SqlServerStoredProcedureActivity
+- Added Policy property into ExecutePipelineActivity
+
+## Version 5.4.0
+###  Feature Additions
+- Added Web Activity disable cert validation
+
+## Version 5.3.0
+###  Feature Additions
+- Added ScriptActivity in ADF
+- Added TeamDesk, Quickbase, Smartsheet, Zendesk connectors in ADF
+
+## Version 5.2.0
+###  Feature Additions
+- Added FailActivity in ADF
+- Fixed update PublicNetworkAccess not work in Factory Update API
+
+## Version 5.1.0
+###  Feature Additions
+- Added support UAMI M2
+- Added connectionProperties in GoogleAdWordsLinkedService
+- Added servicePrincipalCredentialType and servicePrincipalCredential into AzureBlobFSLinkedService
+
+## Version 5.0.0
+###  Feature Additions
+### Breaking Changes
+- Removed unnecessary additional properties for data flow flowlet for bug fix
+- Added optional property disableChunking in FTP and SFTP read settings
+- Added parameters for dataflow activity
+- Added possible values to pipeline run status description
+
+## Version 4.28.0
+###  Feature Additions
+- Supported Dataset and LinkedService for Rest call transform
+- Change compressionType to type of object
+
+## Version 4.27.0
+###  Feature Additions
+- Supported Dataflow flowlets in ADF
+
+## Version 4.26.0
+###  Feature Additions
+- Supported Power Query model changes for multiple queries
+- Added locale support in Power Query activity
+- Added publicNetworkAccess into FactoryUpdateParameters
+
+## Version 4.25.0
+###  Feature Additions
+- Supported UAMI in sql always
+- Supported AmazonRdsForSqlServer Source
+- Supported subnet id for swift injection of azure-ssis IR
+
+## Version 4.24.0
+###  Feature Additions
+- Supported AmazonRdsForOracle Source
+
+## Version 4.23.0
+###  Feature Additions
+- Supported power query GA payload
+
+## Version 4.22.0
+###  Feature Additions
+- Added Sql table lock and upsert properties
+- Added isServerVersionAbove32 in CosmosDbMongoDbApi linked service
+- Changed additionalColumns/compressionType to type of object
+- Support cleanup property for integration runtime resource from DataFactory
+- Unify IR vNet injection experience
+
+## Version 4.21.0
+###  Feature Additions
+- Added properties pipelineName and pipelineRunId to PipelineRunInvokedBy definition
+- Updated avroCompressionCodec and orcCompressionCodec from string to object
+- Supported UAMI in ADF IR/LS/Activity
+- GitHub bring your own app swagger update for ADF/Synapse Dataplane only
+
+## Version 4.20.0
+###  Feature Additions
+- Added disableMetricsCollection in read/wirte properties
+
+## Version 4.19.0
+###  Feature Additions
+- Support sheetIndex in excel and set sheetName from required to optional
+- Set filePattern to object type to allow expressions
+- Support user-assigned managed identity in SSIS-IR
+
+## Version 4.18.0
+###  Feature Additions
+- Added MongoDB/MongoDBAtlas sink
+- Added Sql always encrypted settings 
+
+## Version 4.17.1
+###  Feature Additions
+- Fixed potential MI type missing issue by using system assigned MI as default
+
+## Version 4.17.0
+###  Feature Additions
+- Fixed FactoryIdentity property Type can not be null issue
+
+## Version 4.16.0
+###  Feature Additions
+- Added Amazon S3 Compatible and Oracle Cloud Storage connectors
+- Updated AzureDataExplorer LinkedService servicePrincipalId, servicePrincipalKey, tenant properties from required to optional
+- Added accountKind property to AzureBlobStorage LinkedService
+- Added AAD auth to CosmosDb LinkedService
+- Added authHeaders to HTTP/REST/OData LinkedService
+- Added MultiFactor auth to SFTP LinkedService
+- Added UAMI to Identity
+- Added privateEndpointConnection apis to DataFactory
+
+## Version 4.15.0
+###  Feature Additions
+- Added WebActivity support for Service Principal
+- Added PipelineEndpoint with version and DataPathAssignments fields in AzureMLExecutePipeline
+- Added pipeline policy and Elapsed Time Metric
+- Fixed WebActivity dynamic authentication
+
+## Version 4.14.0
+###  Feature Additions
+- Added encryption property for Customer Managed Key
+- Added custom events trigger definition
+- Added Policy property into Databricks linkedService
+- Added managed identity support for authentication in Databricks linkedService
+- Added admin property in Custom Activity typeProperties
+- Added dualStandbyPairName property in IntegrationRuntimeSsisCatalogInfo to support SSISDB failover
+- Added managedVirtualNetwork reference to IR
+
+## Version 4.13.0
+###  Feature Additions
+- Added publicNetworkAccess property to datafactory
+- Added logSettings property into CopyActivity
+- Added connectionProperties property into Concur linkedService
+- Added authenticationType and sessionToken properties into AmazonS3 linkedService
+- Added support for more frequency types for TumblingWindowTrigger
+- Set computeType, coreCount to object type to allow expressions
+- Change property PartitionOption type to object for NetezzaSource, OracleSource, SapHanaSource, SapTableSource, SqlDWSource, SqlMISource, SqlServerSource, SqlSource, TeradataSource. 
+
+## Version 4.12.0
+###  Feature Additions
+- Added logLevel/enableReliableLogging to LogStorageSettings
+- Support Tar GZip compression type in Data Factory
+- Added maxRowPerFile/fileNamePrefix to tabular format settings
+- Added support for AzureDatabricks delta lake
+- Update Rest Sink properties
+- Added support lzo in orc format
+- Added MongoDbAtlas Source Connector in DataFactory
+
+## Version 4.11.0
+###  Feature Additions
+- Added support for Trigger Run Cancel API
+- Added column delimiter for SAP Table/open hub
+- Added azureCloudType for Aad Auth
+- Added snapshot to Azure File Storage linked service
+- Support HDFS for delete activity and deleteFilesAfterCompletion feature in copy activity
+- Added support for managed Virtual Network and managed private endpoint CRUD APIs
+- Added Support for Query EC List API
+- Added more options on XML and CosmosDbSqlApi copy source
+- Fix bug: Added AzureFileStorageWriteSettings
+
+## Version 4.10.0
+###  Feature Additions
+- Added connectionProperties property to QuickBooks, Square, Xero, Zoho, SalesforceMarketingCloud linked service
+- Added support of Message server connecting from SAP Open Hub
+- Enable Sql Sources (AzureSqlDatabase, SqlSever, Synapse, SqlMI) read in parallel, support partition by dynamic range and sql built-in partitions.
+- Added Rest as Sink Type in Copy Sink
+- Added NewClusterLogDestination property to Azure Databricks linked service
+- Support expression (object) type for data flow staging folder path
+- Add new type "AzPowerShellSetup" to parameter "ExpressCustomSetup" for "AzureRmDataFactoryV2IntegrationRuntime" cmd to install Azure PowerShell
+
+## Version 4.9.0
+###  Feature Additions
+- Added support for specifying a linked service as a Data Flow source and sink type
+- Added support for providing a schema linked service reference within Data Flow sources and sinks
+- Added support for xml dataset in ADF
+- Added support for excel dataset in ADF
+- Added new type conversion support in Copy activity
+- Added support for copying data to and from Snowflake using copy activity
+- Added package store support for Azure-SSIS integration runtime
+- Added httpRequestTimeout for ODataSource, SapEccSource, SapCloudForCustomerSource, SapCloudForCustomerSink, DynamicsAXSource
+- Added SharePointOnlineListConnector
+- Added auth by accountKey/SASuri to azure file connector
+- Added prefix filter to azure file source
+- Added fileFilter to file server source
+- Added partitionRootPath to binary connector
+- Added an option to support unzip file directly to target folder
+
+## Version 4.8.0
+###  Feature Additions
+- Added new API to query on triggers with filters like type and parentTrigger
+- Fixed offset value validation in self dependency and trigger dependency for tumbling window trigger, now accepts negative offsets
+- Introduced a new rerunTumblingWindowTrigger which can rerun multiple windows of an existing tumblingWindowTrigger with independent concurrency
+- Added rerun from failed activity support for create pipeline run
+- Added apiVersion property and set SecurityToken from required to optional for Salesforce
+- Added connectionString property to DB2 linked service
+- Added useTempFileRename to SFTP sink
+- Added additionalColumns for copy source
+- Added validate data consistency for copy activity
+- Added support session log for copy activity
+- Added isolationLevel for sql source
+- Added expiryDateTime for ADLS Gen1 source
+- Added fileListPath for binary sources
+
 ## Version 4.7.0
 ###  Feature Additions
 - Added compute support in execute data flow activity
@@ -179,7 +438,7 @@ AzureBlobStorageWriteSettings, AzureBlobFSWriteSettings, AzureDataLakeStoreWrite
 
 ## Version 1.0.0
 ### Feature Additions
-* Azure Data Factory new capabilities now fall under General Availability SLA. ADF has made cloud data integration easier than ever before. Build, schedule and manage data integration at scale wherever your data lives, in cloud or on-premises, with enterprise-grade security. Accelerate your data integration projects with over 70 data source connectors available, please refer to https://docs.microsoft.com/en-us/azure/data-factory/copy-activity-overview. Transform raw data into finished, shaped data that is ready for consumption by BI tools or custom applications. Easily lift your SQL Server Integration Services (SSIS) packages to Azure and let ADF manage your resources for you so you can increase productivity and lower TCO, please refer to https://docs.microsoft.com/en-us/sql/integration-services/lift-shift/ssis-azure-lift-shift-ssis-packages-overview?view=sql-server-2017. Meet your security and compliance needs while taking advantage of extensive capabilities and paying only for what you use. The ADF GA SDK changes include the following:
+* Azure Data Factory new capabilities now fall under General Availability SLA. ADF has made cloud data integration easier than ever before. Build, schedule and manage data integration at scale wherever your data lives, in cloud or on-premises, with enterprise-grade security. Accelerate your data integration projects with over 70 data source connectors available, please refer to https://docs.microsoft.com/azure/data-factory/copy-activity-overview. Transform raw data into finished, shaped data that is ready for consumption by BI tools or custom applications. Easily lift your SQL Server Integration Services (SSIS) packages to Azure and let ADF manage your resources for you so you can increase productivity and lower TCO, please refer to https://docs.microsoft.com/sql/integration-services/lift-shift/ssis-azure-lift-shift-ssis-packages-overview?view=sql-server-2017. Meet your security and compliance needs while taking advantage of extensive capabilities and paying only for what you use. The ADF GA SDK changes include the following:
         -    The API 'removeNode’ on IR has been removed and replaced with DELETE API on IR node.
         -    The API 'POST pipelineRuns’ was renamed to 'POST queryPipelineRuns’ and 'PipelineRunFilterParameters’ was renamed to 'RunFilterParameters’.
         -    The API 'GET activityRuns’ using pipeline run id has been replaced with 'POST queryActivityRuns’. It also takes RunFilterParameters object in the body to provide more options to query and order the result.

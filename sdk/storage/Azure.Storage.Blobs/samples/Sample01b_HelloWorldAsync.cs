@@ -45,11 +45,8 @@ namespace Azure.Storage.Blobs.Samples
                 // Get a reference to a blob
                 BlobClient blob = container.GetBlobClient(Randomize("sample-file"));
 
-                // Open the file and upload its data
-                using (FileStream file = File.OpenRead(path))
-                {
-                    await blob.UploadAsync(file);
-                }
+                // Upload file data
+                await blob.UploadAsync(path);
 
                 // Verify we uploaded some content
                 BlobProperties properties = await blob.GetPropertiesAsync();
@@ -89,11 +86,7 @@ namespace Azure.Storage.Blobs.Samples
                 await blob.UploadAsync(File.OpenRead(originalPath));
 
                 // Download the blob's contents and save it to a file
-                BlobDownloadInfo download = await blob.DownloadAsync();
-                using (FileStream file = File.OpenWrite(downloadPath))
-                {
-                    await download.Content.CopyToAsync(file);
-                }
+                await blob.DownloadToAsync(downloadPath);
 
                 // Verify the contents
                 Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));

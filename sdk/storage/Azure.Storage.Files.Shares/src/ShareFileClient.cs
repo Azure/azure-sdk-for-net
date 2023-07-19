@@ -4,16 +4,22 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Shared;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Net.Http.Headers;
+using System.Linq;
+
+#pragma warning disable SA1402  // File may only contain a single type
 
 namespace Azure.Storage.Files.Shares
 {
@@ -33,38 +39,24 @@ namespace Azure.Storage.Files.Shares
         public virtual Uri Uri => _uri;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="ShareClientConfiguration"/>.
         /// </summary>
-        private readonly HttpPipeline _pipeline;
+        private readonly ShareClientConfiguration _clientConfiguration;
 
         /// <summary>
-        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="ShareClientConfiguration"/>.
         /// </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual ShareClientConfiguration ClientConfiguration => _clientConfiguration;
 
         /// <summary>
-        /// The version of the service to use when sending requests.
+        /// FileRestClient.
         /// </summary>
-        private readonly ShareClientOptions.ServiceVersion _version;
+        private readonly FileRestClient _fileRestClient;
 
         /// <summary>
-        /// The version of the service to use when sending requests.
+        /// FileRestClient.
         /// </summary>
-        internal virtual ShareClientOptions.ServiceVersion Version => _version;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        internal virtual FileRestClient FileRestClient => _fileRestClient;
 
         /// <summary>
         /// The Storage account name corresponding to the file client.
@@ -134,6 +126,12 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
+
         //const string fileType = "file";
 
         //// FileMaxUploadRangeBytes indicates the maximum number of bytes that can be sent in a call to UploadRange.
@@ -159,7 +157,9 @@ namespace Azure.Storage.Files.Shares
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="shareName">
         /// The name of the share in the storage account to reference.
@@ -180,7 +180,9 @@ namespace Azure.Storage.Files.Shares
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
         ///
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string">
+        /// Configure Azure Storage connection strings</see>
         /// </param>
         /// <param name="shareName">
         /// The name of the share in the storage account to reference.
@@ -193,20 +195,27 @@ namespace Azure.Storage.Files.Shares
         /// pipeline policies for authentication, retries, etc., that are
         /// applied to every request.
         /// </param>
-        public ShareFileClient(string connectionString, string shareName, string filePath, ShareClientOptions options)
+        public ShareFileClient(
+            string connectionString,
+            string shareName,
+            string filePath,
+            ShareClientOptions options)
         {
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder =
+            ShareUriBuilder uriBuilder =
                 new ShareUriBuilder(conn.FileEndpoint)
                 {
                     ShareName = shareName,
                     DirectoryOrFilePath = filePath
                 };
-            _uri = builder.ToUri();
-            _pipeline = options.Build(conn.Credentials);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _uri = uriBuilder.ToUri();
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(conn.Credentials),
+                sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                clientOptions: options);
+            _fileRestClient = BuildFileRestClient(_uri);
         }
 
         /// <summary>
@@ -222,8 +231,14 @@ namespace Azure.Storage.Files.Shares
         /// pipeline policies for authentication, retries, etc., that are
         /// applied to every request.
         /// </param>
-        public ShareFileClient(Uri fileUri, ShareClientOptions options = default)
-            : this(fileUri, (HttpPipelinePolicy)null, options)
+        public ShareFileClient(
+            Uri fileUri,
+            ShareClientOptions options = default)
+            : this(
+                  fileUri: fileUri,
+                  authentication: (HttpPipelinePolicy)null,
+                  options: options,
+                  storageSharedKeyCredential: null)
         {
         }
 
@@ -243,9 +258,76 @@ namespace Azure.Storage.Files.Shares
         /// pipeline policies for authentication, retries, etc., that are
         /// applied to every request.
         /// </param>
-        public ShareFileClient(Uri fileUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
-            : this(fileUri, credential.AsPolicy(), options)
+        public ShareFileClient(
+            Uri fileUri,
+            StorageSharedKeyCredential credential,
+            ShareClientOptions options = default)
+            : this(
+                  fileUri: fileUri,
+                  authentication: credential.AsPolicy(),
+                  options: options,
+                  storageSharedKeyCredential: credential)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="ShareClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public ShareFileClient(
+            Uri fileUri,
+            AzureSasCredential credential,
+            ShareClientOptions options = default)
+            : this(fileUri, credential.AsPolicy<ShareUriBuilder>(fileUri), options, credential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/>
+        /// class.
+        ///
+        /// Note that <see cref="ShareClientOptions.ShareTokenIntent"/> is currently required for token authentication.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public ShareFileClient(
+            Uri fileUri,
+            TokenCredential credential,
+            ShareClientOptions options = default)
+            : this(
+                  fileUri: fileUri,
+                  authentication: credential.AsPolicy(options),
+                  options: options ?? new ShareClientOptions(),
+                  storageSharedKeyCredential: null)
+        {
+            Errors.VerifyHttpsTokenAuth(fileUri);
         }
 
         /// <summary>
@@ -265,13 +347,100 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal ShareFileClient(Uri fileUri, HttpPipelinePolicy authentication, ShareClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal ShareFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
-            _pipeline = options.Build(authentication);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                sasCredential: null,
+                clientDiagnostics: new ClientDiagnostics(options),
+                clientOptions: options);
+            _fileRestClient = BuildFileRestClient(fileUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The shared access signature used to sign requests.
+        /// </param>
+        internal ShareFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            AzureSasCredential sasCredential)
+        {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
+            options ??= new ShareClientOptions();
+            _uri = fileUri;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sasCredential: sasCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                clientOptions: options);
+            _fileRestClient = BuildFileRestClient(fileUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/>
+        /// class.
+        ///
+        /// This will create an instance that uses the same diagnostics as another
+        /// client. This client will be used within another API call of the parent
+        /// client (namely Rename). This is in the case that the new child client
+        /// has different credentials than the parent client.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="diagnostics">
+        /// The diagnostics from the parent client.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal ShareFileClient(
+            Uri fileUri,
+            ClientDiagnostics diagnostics,
+            ShareClientOptions options)
+        {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
+            options ??= new ShareClientOptions();
+            _uri = fileUri;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(),
+                sharedKeyCredential: default,
+                clientDiagnostics: diagnostics,
+                clientOptions: options);
+            _fileRestClient = BuildFileRestClient(fileUri);
         }
 
         /// <summary>
@@ -281,22 +450,29 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Uri"/> referencing the file that includes the
         /// name of the account, the name of the share, and the path of the file.
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
+        /// <param name="clientConfiguration">
+        /// <see cref="ShareClientConfiguration"/>.
         /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
-        /// </param>
-        /// <param name="clientDiagnostics">
-        /// The <see cref="ClientDiagnostics"/> instance used to create
-        /// diagnostic scopes every request.
-        /// </param>
-        internal ShareFileClient(Uri fileUri, HttpPipeline pipeline, ShareClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        internal ShareFileClient(
+            Uri fileUri,
+            ShareClientConfiguration clientConfiguration)
         {
             _uri = fileUri;
-            _pipeline = pipeline;
-            _version = version;
-            _clientDiagnostics = clientDiagnostics;
+            _clientConfiguration = clientConfiguration;
+            _fileRestClient = BuildFileRestClient(fileUri);
+        }
+
+        private FileRestClient BuildFileRestClient(Uri uri)
+        {
+            return new FileRestClient(
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
+                pipeline: _clientConfiguration.Pipeline,
+                url: uri.AbsoluteUri,
+                version: _clientConfiguration.ClientOptions.Version.ToVersionString(),
+                fileRequestIntent: _clientConfiguration.ClientOptions.ShareTokenIntent,
+                allowTrailingDot: _clientConfiguration.ClientOptions.AllowTrailingDot,
+                fileRangeWriteFromUrl: "update",
+                allowSourceTrailingDot: _clientConfiguration.ClientOptions.AllowSourceTrailingDot);
         }
         #endregion ctors
 
@@ -305,7 +481,9 @@ namespace Azure.Storage.Files.Shares
         /// class with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="shareSnapshot"/> timestamp.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-share">
+        /// Snapshot Share</see>.
         /// </summary>
         /// <remarks>
         /// Pass null or empty string to remove the snapshot returning a URL to the base file.
@@ -319,7 +497,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareFileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new ShareUriBuilder(Uri) { Snapshot = shareSnapshot };
-            return new ShareFileClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics);
+            return new ShareFileClient(builder.ToUri(), ClientConfiguration);
         }
 
         /// <summary>
@@ -341,11 +519,13 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRange"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -361,6 +541,10 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -380,6 +564,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
                 maxSize,
@@ -387,18 +572,21 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
-                false, // async
+                conditions,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRangeAsync"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -414,6 +602,69 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileInfo> Create(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            long maxSize,
+            ShareFileHttpHeaders httpHeaders,
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
+            CreateInternal(
+                maxSize,
+                httpHeaders,
+                metadata,
+                smbProperties,
+                filePermission,
+                conditions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
+        /// </remarks>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -433,6 +684,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
                 maxSize,
@@ -440,18 +692,80 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
-                true, // async
+                conditions,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRangeAsync"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
+        /// </remarks>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileInfo>> CreateAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            long maxSize,
+            ShareFileHttpHeaders httpHeaders,
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
+            await CreateInternal(
+                maxSize,
+                httpHeaders,
+                metadata,
+                smbProperties,
+                filePermission,
+                conditions: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -468,12 +782,19 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermission">
         /// Optional file permission to set on the file.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
         /// </param>
         /// <returns>
         /// A <see cref="Response{StorageFileInfo}"/> describing the
@@ -489,19 +810,26 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
+            ShareFileRequestConditions conditions,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(maxSize)}: {maxSize}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(Create)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
+                    scope.Start();
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
@@ -511,55 +839,314 @@ namespace Azure.Storage.Files.Shares
                         filePermission = Constants.File.FilePermissionInherit;
                     }
 
-                    Response<RawStorageFileInfo> response = await FileRestClient.File.CreateAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        fileContentLength: maxSize,
-                        fileContentType: httpHeaders?.ContentType,
-                        fileContentEncoding: httpHeaders?.ContentEncoding,
-                        fileContentLanguage: httpHeaders?.ContentLanguage,
-                        fileCacheControl: httpHeaders?.CacheControl,
-                        fileContentHash: httpHeaders?.ContentHash,
-                        fileContentDisposition: httpHeaders?.ContentDisposition,
-                        metadata: metadata,
-                        fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
-                        filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
-                        filePermissionKey: smbProps.FilePermissionKey,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: Constants.File.CreateOperationName)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<FileCreateHeaders> response;
 
-                    return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
+                    if (async)
+                    {
+                        response = await FileRestClient.CreateAsync(
+                            fileContentLength: maxSize,
+                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            metadata: metadata,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProps.FilePermissionKey,
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.Create(
+                            fileContentLength: maxSize,
+                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            metadata: metadata,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProps.FilePermissionKey,
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
         #endregion Create
 
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="ShareFileClient"/> to see if the associated file
+        /// exists in the share on the storage account.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default) =>
+            ExistsInternal(
+                async: false,
+                cancellationToken: cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="ShareFileClient"/> to see if the associated file
+        /// exists in the share on the storage account.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await ExistsInternal(
+                async: true,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ExistsInternal"/> operation can be called on a
+        /// <see cref="ShareFileClient"/> to see if the associated file
+        /// exists in the share on the storage account.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> ExistsInternal(
+            bool async,
+            CancellationToken cancellationToken,
+            string operationName = default)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    Response<ShareFileProperties> response = await GetPropertiesInternal(
+                        conditions: default,
+                        async: async,
+                        cancellationToken: cancellationToken,
+                        operationName: operationName ?? $"{nameof(ShareFileClient)}.{nameof(Exists)}")
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(true, response.GetRawResponse());
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ParentNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                }
+            }
+        }
+        #endregion Exists
+
+        #region DeleteIfExists
+        /// <summary>
+        /// The <see cref="DeleteIfExists"/> operation immediately removes the file from the storage account,
+        /// if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// True if the file existed.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            DeleteIfExistsInternal(
+                conditions,
+                async: false,
+                cancellationToken: cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteIfExists"/> operation immediately removes the file from the storage account,
+        /// if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// True if the file existed.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await DeleteIfExistsInternal(
+                conditions,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsInternal"/> operation immediately removes the file from the storage account,
+        /// if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// True if the file existed.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> DeleteIfExistsInternal(
+            ShareFileRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    Response response = await DeleteInternal(
+                        conditions,
+                        async,
+                        cancellationToken,
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(DeleteIfExists)}")
+                        .ConfigureAwait(false);
+                    return Response.FromValue(true, response);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ParentNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                }
+            }
+        }
+        #endregion DeleteIfExists
+
         #region StartCopy
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">
+        /// Copy File</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file or blob.
         /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for the file.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -575,19 +1162,104 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareFileCopyInfo> StartCopy(
             Uri sourceUri,
-            Metadata metadata = default,
+            ShareFileCopyOptions options = default,
             CancellationToken cancellationToken = default) =>
+            StartCopyInternal(
+                sourceUri: sourceUri,
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission,
+                filePermissionCopyMode: options?.FilePermissionCopyMode,
+                ignoreReadOnly: options?.IgnoreReadOnly,
+                setArchiveAttribute: options?.Archive,
+                conditions: options?.Conditions,
+                copyableFileSmbProperties: options?.SmbPropertiesToCopy,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Copies a blob or file to a destination file within the storage account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">
+        /// Copy File</see>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file or blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB paramters to set on the target file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="filePermissionCopyMode">
+        /// Specifies the option to copy file security descriptor from source file or
+        /// to set it using the value which is defined by the header value of FilePermission
+        /// or FilePermissionKey.
+        /// </param>
+        /// <param name="ignoreReadOnly">
+        /// Optional boolean specifying to overwrite the target file if it already
+        /// exists and has read-only attribute set.
+        /// </param>
+        /// <param name="setArchiveAttribute">
+        /// Optional boolean Specifying to set archive attribute on a target file. True
+        /// means archive attribute will be set on a target file despite attribute
+        /// overrides or a source file state.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file copy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareFileCopyInfo> StartCopy(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Uri sourceUri,
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            PermissionCopyMode? filePermissionCopyMode,
+            bool? ignoreReadOnly,
+            bool? setArchiveAttribute,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             StartCopyInternal(
                 sourceUri,
                 metadata,
-                false, // async
+                smbProperties,
+                filePermission,
+                filePermissionCopyMode,
+                ignoreReadOnly,
+                setArchiveAttribute,
+                conditions,
+                copyableFileSmbProperties: default,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">
+        /// Copy File</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file or blob.
@@ -607,27 +1279,231 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ShareFileCopyInfo>> StartCopyAsync(
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileCopyInfo> StartCopy(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default) =>
-            await StartCopyInternal(
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
+            StartCopyInternal(
                 sourceUri,
                 metadata,
-                true, // async
-                cancellationToken).
+                smbProperties: default,
+                filePermission: default,
+                filePermissionCopyMode: default,
+                ignoreReadOnly: default,
+                setArchiveAttribute: default,
+                conditions: default,
+                copyableFileSmbProperties: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Copies a blob or file to a destination file within the storage account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">
+        /// Copy File</see>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file or blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file copy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileCopyInfo>> StartCopyAsync(
+            Uri sourceUri,
+            ShareFileCopyOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await StartCopyInternal(
+                sourceUri: sourceUri,
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission,
+                filePermissionCopyMode: options?.FilePermissionCopyMode,
+                ignoreReadOnly: options?.IgnoreReadOnly,
+                setArchiveAttribute: options?.Archive,
+                conditions: options?.Conditions,
+                copyableFileSmbProperties: options?.SmbPropertiesToCopy,
+                async: true,
+                cancellationToken: cancellationToken).
                 ConfigureAwait(false);
 
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">
+        /// Copy File</see>.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file or blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set on the target file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="filePermissionCopyMode">
+        /// Specifies the option to copy file security descriptor from source file or
+        /// to set it using the value which is defined by the header value of FilePermission
+        /// or FilePermissionKey.
+        /// </param>
+        /// <param name="ignoreReadOnly">
+        /// Optional boolean specifying to overwrite the target file if it already
+        /// exists and has read-only attribute set.
+        /// </param>
+        /// <param name="setArchiveAttribute">
+        /// Optional boolean Specifying to set archive attribute on a target file. True
+        /// means archive attribute will be set on a target file despite attribute
+        /// overrides or a source file state.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file copy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<ShareFileCopyInfo>> StartCopyAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Uri sourceUri,
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            PermissionCopyMode? filePermissionCopyMode,
+            bool? ignoreReadOnly,
+            bool? setArchiveAttribute,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
+            await StartCopyInternal(
+                sourceUri,
+                metadata,
+                smbProperties,
+                filePermission,
+                filePermissionCopyMode,
+                ignoreReadOnly,
+                setArchiveAttribute,
+                conditions,
+                copyableFileSmbProperties: default,
+                async: true,
+                cancellationToken).
+                ConfigureAwait(false);
+
+        /// <summary>
+        /// Copies a blob or file to a destination file within the storage account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">
+        /// Copy File</see>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file or blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file copy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileCopyInfo>> StartCopyAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Uri sourceUri,
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
+            await StartCopyInternal(
+                sourceUri,
+                metadata,
+                smbProperties: default,
+                filePermission: default,
+                filePermissionCopyMode: default,
+                ignoreReadOnly: default,
+                setArchiveAttribute: default,
+                conditions: default,
+                copyableFileSmbProperties: default,
+                async: true,
+                cancellationToken).
+                ConfigureAwait(false);
+
+        /// <summary>
+        /// Copies a blob or file to a destination file within the storage account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file">
+        /// Copy File</see>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file or blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set on the target file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="filePermissionCopyMode">
+        /// Specifies the option to copy file security descriptor from source file or
+        /// to set it using the value which is defined by the header value of FilePermission
+        /// or FilePermissionKey.
+        /// </param>
+        /// <param name="ignoreReadOnly">
+        /// Optional boolean specifying to overwrite the target file if it already
+        /// exists and has read-only attribute set.
+        /// </param>
+        /// <param name="setArchiveAttribute">
+        /// Optional boolean Specifying to set archive attribute on a target file. True
+        /// means archive attribute will be set on a target file despite attribute
+        /// overrides or a source file state.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="copyableFileSmbProperties">
+        /// SMB properties to copy from the source file.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -647,38 +1523,150 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response<ShareFileCopyInfo>> StartCopyInternal(
             Uri sourceUri,
             Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            PermissionCopyMode? filePermissionCopyMode,
+            bool? ignoreReadOnly,
+            bool? setArchiveAttribute,
+            ShareFileRequestConditions conditions,
+            CopyableFileSmbProperties? copyableFileSmbProperties,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(StartCopy)}");
+
                 try
                 {
-                    return await FileRestClient.File.StartCopyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        copySource: sourceUri,
-                        metadata: metadata,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: Constants.File.StartCopyOperationName)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileStartCopyHeaders> response;
+
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.FileAttributes) == CopyableFileSmbProperties.FileAttributes
+                        && smbProperties?.FileAttributes != null)
+                    {
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileAttributes)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.FileAttributes)} cannot both be set.");
+                    }
+
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.CreatedOn) == CopyableFileSmbProperties.CreatedOn
+                        && smbProperties?.FileCreatedOn != null)
+                    {
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileCreatedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.CreatedOn)} cannot both be set.");
+                    }
+
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.LastWrittenOn) == CopyableFileSmbProperties.LastWrittenOn
+                        && smbProperties?.FileLastWrittenOn != null)
+                    {
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileLastWrittenOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.LastWrittenOn)} cannot both be set.");
+                    }
+
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.ChangedOn) == CopyableFileSmbProperties.ChangedOn
+                        && smbProperties?.FileChangedOn != null)
+                    {
+                        throw new ArgumentException($"{nameof(ShareFileCopyOptions)}.{nameof(ShareFileCopyOptions.SmbProperties)}.{nameof(ShareFileCopyOptions.SmbProperties.FileChangedOn)} and {nameof(ShareFileCopyOptions)}.{nameof(CopyableFileSmbProperties)}.{nameof(CopyableFileSmbProperties.ChangedOn)} cannot both be set.");
+                    }
+
+                    string fileAttributes = null;
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.FileAttributes)
+                        == CopyableFileSmbProperties.FileAttributes)
+                    {
+                        fileAttributes = Constants.File.Source;
+                    }
+                    else
+                    {
+                        fileAttributes = smbProperties?.FileAttributes?.ToAttributesString();
+                    }
+
+                    string fileCreatedOn = null;
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.CreatedOn)
+                        == CopyableFileSmbProperties.CreatedOn)
+                    {
+                        fileCreatedOn = Constants.File.Source;
+                    }
+                    else
+                    {
+                        fileCreatedOn = smbProperties?.FileCreatedOn.ToFileDateTimeString();
+                    }
+
+                    string fileLastWrittenOn = null;
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.LastWrittenOn)
+                        == CopyableFileSmbProperties.LastWrittenOn)
+                    {
+                        fileLastWrittenOn = Constants.File.Source;
+                    }
+                    else
+                    {
+                        fileLastWrittenOn = smbProperties?.FileLastWrittenOn.ToFileDateTimeString();
+                    }
+
+                    string fileChangedOn = null;
+                    if ((copyableFileSmbProperties.GetValueOrDefault() & CopyableFileSmbProperties.ChangedOn)
+                        == CopyableFileSmbProperties.ChangedOn)
+                    {
+                        fileChangedOn = Constants.File.Source;
+                    }
+                    else
+                    {
+                        fileChangedOn = smbProperties?.FileChangedOn.ToFileDateTimeString();
+                    }
+
+                    CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
+                    {
+                        FilePermissionCopyMode = filePermissionCopyMode,
+                        IgnoreReadOnly = ignoreReadOnly,
+                        FileAttributes = fileAttributes,
+                        FileCreationTime = fileCreatedOn,
+                        FileLastWriteTime = fileLastWrittenOn,
+                        FileChangeTime = fileChangedOn,
+                        SetArchiveAttribute = setArchiveAttribute
+                    };
+
+                    ShareUriBuilder uriBuilder = new ShareUriBuilder(sourceUri);
+
+                    if (async)
+                    {
+                        response = await FileRestClient.StartCopyAsync(
+                            copySource: uriBuilder.ToString(),
+                            metadata: metadata,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProperties?.FilePermissionKey,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.StartCopy(
+                            copySource: uriBuilder.ToString(),
+                            metadata: metadata,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProperties?.FilePermissionKey,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileCopyInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -690,10 +1678,16 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file">
+        /// Abort Copy File</see>.
         /// </summary>
         /// <param name="copyId">
         /// String identifier for the copy operation.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -708,17 +1702,21 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response AbortCopy(
             string copyId,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             AbortCopyInternal(
                 copyId,
-                false, // async
+                conditions,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file">
+        /// Abort Copy File</see>.
         /// </summary>
         /// <param name="copyId">
         /// String identifier for the copy operation.
@@ -734,22 +1732,102 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response AbortCopy(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string copyId,
+            CancellationToken cancellationToken) =>
+            AbortCopyInternal(
+                copyId,
+                conditions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file">
+        /// Abort Copy File</see>.
+        /// </summary>
+        /// <param name="copyId">
+        /// String identifier for the copy operation.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully aborting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         public virtual async Task<Response> AbortCopyAsync(
             string copyId,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await AbortCopyInternal(
                 copyId,
-                true, // async
+                conditions,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file">
+        /// Abort Copy File</see>.
         /// </summary>
         /// <param name="copyId">
         /// String identifier for the copy operation.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully aborting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> AbortCopyAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string copyId,
+            CancellationToken cancellationToken) =>
+            await AbortCopyInternal(
+                copyId,
+                conditions: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file">
+        /// Abort Copy File</see>.
+        /// </summary>
+        /// <param name="copyId">
+        /// String identifier for the copy operation.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -767,37 +1845,53 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response> AbortCopyInternal(
             string copyId,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(copyId)}: {copyId}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(AbortCopy)}");
+
                 try
                 {
-                    return await FileRestClient.File.AbortCopyAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        copyId: copyId,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: Constants.File.AbortCopyOperationName)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileAbortCopyHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.AbortCopyAsync(
+                            copyId: copyId,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.AbortCopy(
+                            copyId: copyId,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -805,21 +1899,15 @@ namespace Azure.Storage.Files.Shares
 
         #region Download
         /// <summary>
-        /// The <see cref="Download"/> operation reads or downloads a file from the system, including its metadata and properties.
+        /// The <see cref="Download(ShareFileDownloadOptions, CancellationToken)"/>
+        /// operation reads or downloads a file from the system, including its metadata and properties.
         ///
-        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        /// Get File</see>.
         /// </summary>
-        /// <param name="range">
-        /// Optional. Only download the bytes of the file in the specified
-        /// range.  If not provided, download the entire file.
-        /// </param>
-        /// <param name="rangeGetContentHash">
-        /// When set to true and specified together with the <paramref name="range"/>,
-        /// the service returns the MD5 hash for the range, as long as the
-        /// range is less than or equal to 4 MB in size.  If this value is
-        /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
-        /// is thrown.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -835,20 +1923,113 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareFileDownloadInfo> Download(
-            HttpRange range = default,
-            bool rangeGetContentHash = default,
+            ShareFileDownloadOptions options = default,
             CancellationToken cancellationToken = default) =>
             DownloadInternal(
-                range,
-                rangeGetContentHash,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+                options?.Range ?? default,
+                options?.TransferValidation,
+                options?.Conditions,
+                async: false,
+                cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DownloadAsync"/> operation reads or downloads a file from the system, including its metadata and properties.
+        /// The <see cref="DownloadAsync(ShareFileDownloadOptions, CancellationToken)"/>
+        /// operation reads or downloads a file from the system, including its metadata and properties.
         ///
-        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        /// Get File</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
+        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
+            ShareFileDownloadOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await DownloadInternal(
+                options?.Range ?? default,
+                options?.TransferValidation,
+                options?.Conditions,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="Download(HttpRange, bool, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation reads or downloads a file from the system, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        /// Get File</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Only download the bytes of the file in the specified
+        /// range.  If not provided, download the entire file.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// When set to true and specified together with the <paramref name="range"/>,
+        /// the service returns the MD5 hash for the range, as long as the
+        /// range is less than or equal to 4 MB in size.  If this value is
+        /// specified without <paramref name="range"/> or set to true when the
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
+        /// is thrown.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
+        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareFileDownloadInfo> Download(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            bool rangeGetContentHash,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken)
+        {
+            return DownloadInternal(
+                range,
+                rangeGetContentHash
+                    ? new DownloadTransferValidationOptions { ChecksumAlgorithm = StorageChecksumAlgorithm.MD5 }
+                    : default,
+                conditions,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="Download(HttpRange, bool, CancellationToken)"/> operation reads
+        /// or downloads a file from the system, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        /// Get File</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Only download the bytes of the file in the specified
@@ -875,21 +2056,32 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
-            HttpRange range = default,
-            bool rangeGetContentHash = default,
-            CancellationToken cancellationToken = default) =>
-            await DownloadInternal(
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileDownloadInfo> Download(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            bool rangeGetContentHash,
+            CancellationToken cancellationToken)
+        {
+            return DownloadInternal(
                 range,
-                rangeGetContentHash,
-                true, // async
+                rangeGetContentHash
+                    ? new DownloadTransferValidationOptions { ChecksumAlgorithm = StorageChecksumAlgorithm.MD5 }
+                    : default,
+                conditions: default,
+                async: false,
                 cancellationToken)
-                .ConfigureAwait(false);
+                .EnsureCompleted();
+        }
 
         /// <summary>
-        /// The <see cref="DownloadInternal"/> operation reads or downloads a file from the system, including its metadata and properties.
+        /// The <see cref="DownloadAsync(HttpRange, bool, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation reads or downloads a file from the system, including its metadata and properties.
         ///
-        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        /// Get File</see>.
         /// </summary>
         /// <param name="range">
         /// Optional. Only download the bytes of the file in the specified
@@ -902,6 +2094,111 @@ namespace Azure.Storage.Files.Shares
         /// specified without <paramref name="range"/> or set to true when the
         /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
+        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            bool rangeGetContentHash,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken)
+        {
+            return await DownloadInternal(
+                range,
+                rangeGetContentHash
+                    ? new DownloadTransferValidationOptions { ChecksumAlgorithm = StorageChecksumAlgorithm.MD5 }
+                    : default,
+                conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadAsync(HttpRange, bool, CancellationToken)"/> operation reads
+        /// or downloads a file from the system, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        /// Get File</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Only download the bytes of the file in the specified
+        /// range.  If not provided, download the entire file.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// When set to true and specified together with the <paramref name="range"/>,
+        /// the service returns the MD5 hash for the range, as long as the
+        /// range is less than or equal to 4 MB in size.  If this value is
+        /// specified without <paramref name="range"/> or set to true when the
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
+        /// is thrown.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
+        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            bool rangeGetContentHash,
+            CancellationToken cancellationToken)
+        {
+            return await DownloadInternal(
+                range,
+                rangeGetContentHash
+                    ? new DownloadTransferValidationOptions { ChecksumAlgorithm = StorageChecksumAlgorithm.MD5 }
+                    : default,
+                conditions: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadInternal"/> operation reads or downloads a file from the system, including its metadata and properties.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        /// Get File</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Range to download.
+        /// </param>
+        /// <param name="transferValidationOverride">
+        /// Override for client-configured transfer validation options.
+        /// </param>
+        /// <param name="conditions">
+        /// Request conditions for download.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -921,65 +2218,125 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileDownloadInfo>> DownloadInternal(
             HttpRange range,
-            bool rangeGetContentHash,
+            DownloadTransferValidationOptions transferValidationOverride,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
+
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(rangeGetContentHash)}: {rangeGetContentHash}");
+                    $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(Download)}");
+
                 try
                 {
+                    scope.Start();
+
                     // Start downloading the file
-                    (Response<FlattenedStorageFileProperties> response, Stream stream) = await StartDownloadAsync(
+                    (Response<ShareFileDownloadInfo> initialResponse, Stream stream) = await StartDownloadAsync(
                         range,
-                        rangeGetContentHash,
+                        validationOptions,
+                        conditions,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
+                    ETag etag = initialResponse.GetRawResponse().Headers.ETag.GetValueOrDefault();
+
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    response.Value.Content = RetriableStream.Create(
+                    initialResponse.Value.Content = RetriableStream.Create(
                         stream,
                         startOffset =>
-                            StartDownloadAsync(
+                        {
+                            (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = StartDownloadAsync(
                                 range,
-                                rangeGetContentHash,
+                                validationOptions,
+                                conditions,
                                 startOffset,
                                 async,
                                 cancellationToken)
-                                .EnsureCompleted()
-                                .Item2,
+                                .EnsureCompleted();
+                            if (etag != Response.GetRawResponse().Headers.ETag)
+                            {
+                                throw new ShareFileModifiedException(
+                                    "File has been modified concurrently",
+                                    Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
+                            }
+                            return ContentStream;
+                        },
                         async startOffset =>
-                            (await StartDownloadAsync(
+                        {
+                            (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = await StartDownloadAsync(
                                 range,
-                                rangeGetContentHash,
+                                validationOptions,
+                                conditions,
                                 startOffset,
                                 async,
                                 cancellationToken)
-                                .ConfigureAwait(false))
-                                .Item2,
-                        Pipeline.ResponseClassifier,
+                                .ConfigureAwait(false);
+                            if (etag != Response.GetRawResponse().Headers.ETag)
+                            {
+                                throw new ShareFileModifiedException(
+                                    "File has been modified concurrently",
+                                    Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
+                            }
+                            return ContentStream;
+                        },
+                        ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
-                    // Wrap the FlattenedStorageFileProperties into a StorageFileDownloadInfo
-                    // to make the Content easier to find
-                    return Response.FromValue(new ShareFileDownloadInfo(response.Value), response.GetRawResponse());
+                    // buffer response stream and ensure it matches the transactional hash if any
+                    // Storage will not return a hash for payload >4MB, so this buffer is capped similarly
+                    // hashing is opt-in, so this buffer is part of that opt-in
+                    if (validationOptions != default && validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None && validationOptions.AutoValidateChecksum)
+                    {
+                        // safe-buffer; transactional hash download limit well below maxInt
+                        var readDestStream = new MemoryStream((int)initialResponse.Value.ContentLength);
+                        if (async)
+                        {
+#if NET6_0_OR_GREATER
+                            await initialResponse.Value.Content.CopyToAsync(readDestStream, cancellationToken).ConfigureAwait(false);
+#else
+                            await initialResponse.Value.Content.CopyToAsync(readDestStream).ConfigureAwait(false);
+#endif
+                        }
+                        else
+                        {
+                            initialResponse.Value.Content.CopyTo(readDestStream);
+                        }
+                        readDestStream.Position = 0;
+
+                        await ContentHasher.AssertResponseHashMatchInternal(
+                            readDestStream,
+                            validationOptions.ChecksumAlgorithm,
+                            initialResponse.GetRawResponse(),
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+
+                        // we've consumed the network stream to hash it; return buffered stream to the user
+                        initialResponse.Value.Content = readDestStream;
+                    }
+
+                    return initialResponse;
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -987,19 +2344,19 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// The <see cref="StartDownloadAsync"/> operation starts to read or downloads a file from the system, including its metadata and properties.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file">
+        /// Get File</see>.
         /// </summary>
         /// <param name="range">
-        /// Optional. Only download the bytes of the file in the specified
-        /// range.  If not provided, download the entire file.
+        /// Range to download.
         /// </param>
-        /// <param name="rangeGetContentHash">
-        /// When set to true and specified together with the <paramref name="range"/>,
-        /// the service returns the MD5 hash for the range, as long as the
-        /// range is less than or equal to 4 MB in size.  If this value is
-        /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
-        /// is thrown.
+        /// <param name="transferValidationOverride">
+        /// Transfer validation options to use. This method assumes defaults and overrides have already been checked
+        /// and will use exactly what is provided through this argument.
+        /// </param>
+        /// <param name="conditions">
+        /// Request conditions for download.
         /// </param>
         /// <param name="startOffset">
         /// Optional. Starting offset to request - in the event of a retry.
@@ -1012,46 +2369,427 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{FlattenedStorageFileProperties}"/> describing the
-        /// downloaded file.  <see cref="FlattenedStorageFileProperties.Content"/> contains
-        /// the file's data.
+        /// <see cref="Response{ShareFileDownloadInfo}"/> and a <see cref="Stream"/>.
         /// </returns>
-        private async Task<(Response<FlattenedStorageFileProperties>, Stream)> StartDownloadAsync(
-            HttpRange range = default,
-            bool rangeGetContentHash = default,
+        private async Task<(Response<ShareFileDownloadInfo> Response, Stream ContentStream)> StartDownloadAsync(
+            HttpRange range,
+            DownloadTransferValidationOptions transferValidationOverride,
+            ShareFileRequestConditions conditions,
             long startOffset = 0,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var pageRange = new HttpRange(
-                range.Offset + startOffset,
-                range.Length.HasValue ?
-                    range.Length.Value - startOffset :
+            ShareErrors.AssertAlgorithmSupport(transferValidationOverride?.ChecksumAlgorithm);
+
+            // calculation gets illegible with null coalesce; just pre-initialize
+            var pageRange = range;
+            pageRange = new HttpRange(
+                pageRange.Offset + startOffset,
+                pageRange.Length.HasValue ?
+                    pageRange.Length.Value - startOffset :
                     (long?)null);
-            Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
-            (Response<FlattenedStorageFileProperties> response, Stream stream) =
-                await FileRestClient.File.DownloadAsync(
-                    ClientDiagnostics,
-                    Pipeline,
-                    Uri,
-                    version: Version.ToVersionString(),
-                    range: pageRange.ToString(),
-                    rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
-                    async: async,
-                    cancellationToken: cancellationToken,
-                    operationName: Constants.File.DownloadOperationName)
+            ClientConfiguration.Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
+
+            ResponseWithHeaders<Stream, FileDownloadHeaders> response;
+
+            if (async)
+            {
+                response = await FileRestClient.DownloadAsync(
+                    range: pageRange == default ? null : pageRange.ToString(),
+                    rangeGetContentMD5: transferValidationOverride?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
+                    leaseAccessConditions: conditions,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
-            Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
-            return (response, stream);
+            }
+            else
+            {
+                response = FileRestClient.Download(
+                    range: pageRange == default ? null : pageRange.ToString(),
+                    rangeGetContentMD5: transferValidationOverride?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
+                    leaseAccessConditions: conditions,
+                    cancellationToken: cancellationToken);
+            }
+
+            return (
+                Response.FromValue(
+                    response.ToShareFileDownloadInfo(),
+                    response.GetRawResponse()),
+                response.Value);
         }
         #endregion Download
 
+        #region OpenRead
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
+        /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            ShareFileOpenReadOptions options,
+            CancellationToken cancellationToken = default)
+            => OpenReadInteral(
+                options?.Position ?? 0,
+                options?.BufferSize,
+                options?.Conditions,
+                allowModifications: options?.AllowModifications ?? false,
+                options?.TransferValidation,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
+        /// if the file is concurrently modified and <see cref="ShareFileOpenReadOptions"/> don't allow modification.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            ShareFileOpenReadOptions options,
+            CancellationToken cancellationToken = default)
+            => await OpenReadInteral(
+                options?.Position ?? 0,
+                options?.BufferSize,
+                options?.Conditions,
+                allowModifications: options?.AllowModifications ?? false,
+                options?.TransferValidation,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the download of this file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
+        /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            long position = 0,
+            int? bufferSize = default,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => OpenReadInteral(
+                position,
+                bufferSize,
+                conditions,
+                allowModifications: false,
+                transferValidationOverride: default,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="allowfileModifications">
+        /// If true, you can continue streaming a blob even if it has been modified.
+        /// </param>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
+        /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenRead(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool allowfileModifications,
+            long position = 0,
+            int? bufferSize = default,
+            CancellationToken cancellationToken = default)
+                => OpenRead(
+                    position,
+                    bufferSize,
+                    allowfileModifications ? new ShareFileRequestConditions() : null,
+                    cancellationToken);
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the download of the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
+        /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            long position = 0,
+            int? bufferSize = default,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => await OpenReadInteral(
+                position,
+                bufferSize,
+                conditions,
+                allowModifications: false,
+                transferValidationOverride: default,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="allowfileModifications">
+        /// If true, you can continue streaming a blob even if it has been modified.
+        /// </param>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
+        /// if the file is concurrently modified.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenReadAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool allowfileModifications,
+            long position = 0,
+            int? bufferSize = default,
+            CancellationToken cancellationToken = default)
+                => await OpenReadAsync(
+                    position,
+                    bufferSize,
+                    allowfileModifications ? new ShareFileRequestConditions() : null,
+                    cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for reading from the file.  The stream will only download
+        /// the file as the stream is read from.
+        /// </summary>
+        /// <param name="position">
+        /// The position within the file to begin the stream.
+        /// Defaults to the beginning of the file.
+        /// </param>
+        /// <param name="bufferSize">
+        /// The buffer size to use when the stream downloads parts
+        /// of the file.  Defaults to 1 MB.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the download of the file.
+        /// </param>
+        /// <param name="allowModifications">
+        /// Whether to allow modifications during the read.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="transferValidationOverride">
+        /// Optional override for client-configured transfer validation options.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns a stream that will download the file as the stream
+        /// is read from.
+        /// </returns>
+        /// <remarks>
+        /// The stream returned might throw <see cref="ShareFileModifiedException"/>
+        /// if the file is concurrently modified and allowModifications is false.
+        ///
+        /// A <see cref="RequestFailedException" /> will be thrown if other failures occur.
+        /// </remarks>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        internal async Task<Stream> OpenReadInteral(
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+            long position,
+            int? bufferSize,
+            ShareFileRequestConditions conditions,
+            bool allowModifications,
+            DownloadTransferValidationOptions transferValidationOverride,
+#pragma warning disable CA1801
+            bool async,
+            CancellationToken cancellationToken)
+#pragma warning restore CA1801
+        {
+            DownloadTransferValidationOptions validaitonOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
+
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
+            try
+            {
+                scope.Start();
+
+                // This also makes sure that we fail fast if file doesn't exist.
+                Response<ShareFileProperties> properties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
+
+                ETag etag = (ETag) properties.GetRawResponse().Headers.ETag;
+
+                return new LazyLoadingReadOnlyStream<ShareFileProperties>(
+                    async (HttpRange range,
+                    DownloadTransferValidationOptions downloadValidationOptions,
+                    bool async,
+                    CancellationToken cancellationToken) =>
+                    {
+                        Response<ShareFileDownloadInfo> response = await DownloadInternal(
+                            range,
+                            transferValidationOverride: downloadValidationOptions,
+                            conditions,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+
+                        if (!allowModifications && etag != response.GetRawResponse().Headers.ETag)
+                        {
+                            throw new ShareFileModifiedException(
+                                "File has been modified concurrently",
+                                Uri, etag, response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
+                        }
+
+                        return Response.FromValue(
+                            (IDownloadedContent)response.Value,
+                            response.GetRawResponse());
+                    },
+                    async (bool async, CancellationToken cancellationToken)
+                        => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                    validaitonOptions,
+                    allowModifications,
+                    properties.Value.ContentLength,
+                    position,
+                    bufferSize);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion OpenRead
+
         #region Delete
         /// <summary>
-        /// The <see cref="Delete"/> operation immediately removes the file from the storage account.
+        /// The <see cref="Delete(ShareFileRequestConditions, CancellationToken)"/>
+        /// operation immediately removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
         /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1064,17 +2802,56 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
-                false, // async
+                conditions,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DeleteAsync"/> operation immediately removes the file from the storage account.
+        /// The <see cref="Delete(CancellationToken)"/> operation immediately
+        /// removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
         /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Delete(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            CancellationToken cancellationToken) =>
+            DeleteInternal(
+                conditions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteAsync(ShareFileRequestConditions, CancellationToken)"/> operation
+        /// immediately removes the file from the storage account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1087,20 +2864,22 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
-                true, // async
+                conditions,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="DeleteInternal"/> operation immediately removes the file from the storage account.
+        /// The <see cref="DeleteAsync(CancellationToken)"/> operation
+        /// immediately removes the file from the storage account.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
         /// </summary>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1112,35 +2891,91 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> DeleteAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            CancellationToken cancellationToken) =>
+            await DeleteInternal(
+                conditions: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteInternal"/> operation immediately removes the file from the storage account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-file2">
+        /// Delete File</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         private async Task<Response> DeleteInternal(
+            ShareFileRequestConditions conditions,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(Delete)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
-                    return await FileRestClient.File.DeleteAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: Constants.File.DeleteOperationName)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileDeleteHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.DeleteAsync(
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.Delete(
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1148,13 +2983,19 @@ namespace Azure.Storage.Files.Shares
 
         #region GetProperties
         /// <summary>
-        /// The <see cref="GetProperties"/> operation returns all
-        /// user-defined metadata, standard HTTP properties, and system
-        /// properties for the file. It does not return the content of the
+        /// The <see cref="GetProperties(ShareFileRequestConditions, CancellationToken)"/>
+        /// operation returns all user-defined metadata, standard HTTP properties,
+        /// and system properties for the file. It does not return the content of the
         /// file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties">
+        /// Get File Properties</see>.
         /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1168,20 +3009,60 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareFileProperties> GetProperties(
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
-                false, // async
+                conditions,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation returns all
-        /// user-defined metadata, standard HTTP properties, and system
-        /// properties for the file. It does not return the content of the
-        /// file.
+        /// The <see cref="GetProperties(CancellationToken)"/> operation
+        /// returns all user-defined metadata, standard HTTP properties,
+        /// and system properties for the file. It does not return the
+        /// content of the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties">
+        /// Get File Properties</see>.
         /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileProperties}"/> describing the
+        /// file's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareFileProperties> GetProperties(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            CancellationToken cancellationToken) =>
+            GetPropertiesInternal(
+                conditions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetPropertiesAsync(ShareFileRequestConditions, CancellationToken)"/>
+        /// operation returns all user-defined metadata, standard HTTP properties, and system
+        /// properties for the file. It does not return the content of the file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties">
+        /// Get File Properties</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1195,23 +3076,24 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareFileProperties>> GetPropertiesAsync(
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
+                conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation returns all
+        /// The <see cref="GetPropertiesAsync(CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the file. It does not return the content of the
         /// file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties">
+        /// Get File Properties</see>.
         /// </summary>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1224,41 +3106,101 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileProperties>> GetPropertiesAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            CancellationToken cancellationToken) =>
+            await GetPropertiesInternal(
+                conditions: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetPropertiesInternal"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the file. It does not return the content of the
+        /// file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties">
+        /// Get File Properties</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileProperties}"/> describing the
+        /// file's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         private async Task<Response<ShareFileProperties>> GetPropertiesInternal(
+            ShareFileRequestConditions conditions,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(GetProperties)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
-                    Response<RawStorageFileProperties> response = await FileRestClient.File.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: Constants.File.GetPropertiesOperationName)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileGetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.GetPropertiesAsync(
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.GetProperties(
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
 
                     // Return an exploding Response on 304
-                    return response.IsUnavailable() ?
-                        response.GetRawResponse().AsNoBodyResponse<ShareFileProperties>() :
-                        Response.FromValue(new ShareFileProperties(response.Value), response.GetRawResponse());
+                    return response.GetRawResponse().Status == Constants.HttpStatusCode.NotModified
+                        ? response.GetRawResponse().AsNoBodyResponse<ShareFileProperties>()
+                        : Response.FromValue(
+                        response.ToShareFileProperties(),
+                            response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1266,10 +3208,12 @@ namespace Azure.Storage.Files.Shares
 
         #region SetHttpHeaders
         /// <summary>
-        /// The <see cref="SetHttpHeaders"/> operation sets system
-        /// properties on the file.
+        /// The <see cref="SetHttpHeaders(long?, ShareFileHttpHeaders, FileSmbProperties, string, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation sets system properties on the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties">
+        /// Set File Properties</see>.
         /// </summary>
         /// <param name="newSize">
         /// Optional. Resizes a file to the specified size.
@@ -1285,6 +3229,10 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1303,21 +3251,136 @@ namespace Azure.Storage.Files.Shares
             ShareFileHttpHeaders httpHeaders = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetHttpHeadersInternal(
                 newSize,
                 httpHeaders,
                 smbProperties,
                 filePermission,
-                false, // async
+                conditions,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetHttpHeadersAsync"/> operation sets system
+        /// The <see cref="SetHttpHeaders(long?, ShareFileHttpHeaders, FileSmbProperties, string, CancellationToken)"/>
+        /// operation sets system
         /// properties on the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties">
+        /// Set File Properties</see>.
+        /// </summary>
+        /// <param name="newSize">
+        /// Optional. Resizes a file to the specified size.
+        /// If the specified byte value is less than the current size
+        /// of the file, then all ranges above the specified byte value
+        /// are cleared.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>s
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileInfo> SetHttpHeaders(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            long? newSize,
+            ShareFileHttpHeaders httpHeaders,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
+            SetHttpHeadersInternal(
+                newSize,
+                httpHeaders,
+                smbProperties,
+                filePermission,
+                conditions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetHttpHeadersAsync(long?, ShareFileHttpHeaders, FileSmbProperties, string, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation sets system properties on the file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties">
+        /// Set File Properties</see>.
+        /// </summary>
+        /// <param name="newSize">
+        /// Optional. Resizes a file to the specified size.
+        /// If the specified byte value is less than the current size
+        /// of the file, then all ranges above the specified byte value
+        /// are cleared.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileInfo>> SetHttpHeadersAsync(
+            long? newSize = default,
+            ShareFileHttpHeaders httpHeaders = default,
+            FileSmbProperties smbProperties = default,
+            string filePermission = default,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await SetHttpHeadersInternal(
+                newSize,
+                httpHeaders,
+                smbProperties,
+                filePermission,
+                conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetHttpHeadersAsync(long?, ShareFileHttpHeaders, FileSmbProperties, string, CancellationToken)"/>
+        /// operation sets system properties on the file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties">
+        /// Set File Properties</see>.
         /// </summary>
         /// <param name="newSize">
         /// Optional. Resizes a file to the specified size.
@@ -1346,18 +3409,22 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileInfo>> SetHttpHeadersAsync(
-            long? newSize = default,
-            ShareFileHttpHeaders httpHeaders = default,
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            long? newSize,
+            ShareFileHttpHeaders httpHeaders,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
             await SetHttpHeadersInternal(
                 newSize,
                 httpHeaders,
                 smbProperties,
                 filePermission,
-                true, // async
+                conditions: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1365,7 +3432,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetHttpHeadersInternal"/> operation sets system
         /// properties on the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties">
+        /// Set File Properties</see>.
         /// </summary>
         /// <param name="newSize">
         /// Optional. Resizes a file to the specified size.
@@ -1381,6 +3450,10 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set ofr the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1402,19 +3475,24 @@ namespace Azure.Storage.Files.Shares
             ShareFileHttpHeaders httpHeaders,
             FileSmbProperties smbProperties,
             string filePermission,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(newSize)}: {newSize}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(SetHttpHeaders)}");
+
                 try
                 {
+                    scope.Start();
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
@@ -1423,38 +3501,52 @@ namespace Azure.Storage.Files.Shares
                         filePermission = Constants.File.Preserve;
                     }
 
-                    Response<RawStorageFileInfo> response = await FileRestClient.File.SetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        fileContentLength: newSize,
-                        fileContentType: httpHeaders?.ContentType,
-                        fileContentEncoding: httpHeaders?.ContentEncoding,
-                        fileContentLanguage: httpHeaders?.ContentLanguage,
-                        fileCacheControl: httpHeaders?.CacheControl,
-                        fileContentHash: httpHeaders?.ContentHash,
-                        fileContentDisposition: httpHeaders?.ContentDisposition,
-                        fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
-                        filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
-                        filePermissionKey: smbProps.FilePermissionKey,
-                        async: async,
-                        operationName: Constants.File.SetHttpHeadersOperationName,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    ResponseWithHeaders<FileSetHttpHeadersHeaders> response;
 
-                    return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
+                    if (async)
+                    {
+                        response = await FileRestClient.SetHttpHeadersAsync(
+                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileContentLength: newSize,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.SetHttpHeaders(
+                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileContentLength: newSize,
+                            filePermission: filePermission,
+                            filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1462,13 +3554,19 @@ namespace Azure.Storage.Files.Shares
 
         #region SetMetadata
         /// <summary>
-        /// The <see cref="SetMetadata"/> operation sets user-defined
+        /// The <see cref="SetMetadata(Metadata, ShareFileRequestConditions, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata">
+        /// Set File Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1484,18 +3582,22 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareFileInfo> SetMetadata(
             Metadata metadata,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetMetadataInternal(
                 metadata,
-                false, // async
+                conditions,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetMetadataAsync"/> operation sets user-defined
+        /// The <see cref="SetMetadata(Metadata, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata">
+        /// Set File Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this file.
@@ -1512,12 +3614,90 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileInfo> SetMetadata(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
+            SetMetadataInternal(
+                metadata,
+                conditions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetMetadataAsync(Metadata, ShareFileRequestConditions, CancellationToken)"/> operation sets user-defined
+        /// metadata for the specified file as one or more name-value pairs.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata">
+        /// Set File Metadata</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the updated
+        /// file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         public virtual async Task<Response<ShareFileInfo>> SetMetadataAsync(
             Metadata metadata,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await SetMetadataInternal(
                 metadata,
-                true, // async
+                conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetMetadata(Metadata, CancellationToken)"/> operation sets user-defined
+        /// metadata for the specified file as one or more name-value pairs.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata">
+        /// Set File Metadata</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the updated
+        /// file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileInfo>> SetMetadataAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
+            await SetMetadataInternal(
+                metadata,
+                conditions: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1525,10 +3705,16 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="SetMetadataInternal"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata">
+        /// Set File Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1547,76 +3733,252 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileInfo>> SetMetadataInternal(
             Metadata metadata,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(SetMetadata)}");
+
                 try
                 {
-                    Response<RawStorageFileInfo> response = await FileRestClient.File.SetMetadataAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        metadata: metadata,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: Constants.File.SetMetadataOperationName)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileSetMetadataHeaders> response;
 
-                    return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
+                    if (async)
+                    {
+                        response = await FileRestClient.SetMetadataAsync(
+                            metadata: metadata,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.SetMetadata(
+                            metadata: metadata,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
         #endregion SetMetadata
 
-        #region UploadRange
+        #region ClearRange
         /// <summary>
-        /// The <see cref="UploadRange"/> operation writes
-        /// <paramref name="content"/> to a <paramref name="range"/> of a file.
+        /// The <see cref="ClearRange"/>
+        /// operation clears the <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
         /// </summary>
-        /// <param name="writeType">Required. Specifies whether to update or clear the range.
-        /// </param>
         /// <param name="range">
-        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// Specifies the range of bytes to be cleared. Both the start and end of the range must be specified.
         /// </param>
-        /// <param name="content">
-        /// A <see cref="Stream"/> containing the content of the range to upload.
-        /// </param>
-        /// <param name="transactionalContentHash">
-        /// Optional MD5 hash of the range content.  Must not be used when <paramref name="writeType"/> is set to <see cref="ShareFileRangeWriteType.Clear"/>.
-        ///
-        /// This hash is used to verify the integrity of the range during transport. When this hash
-        /// is specified, the storage service compares the hash of the content
-        /// that has arrived with this value.  Note that this MD5 hash is not
-        /// stored with the file.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="RequestFailedException"/>.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileUploadInfo> ClearRange(
+            HttpRange range,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+                ClearRangeInternal(
+                    range: range,
+                    conditions: conditions,
+                    async: false,
+                    cancellationToken: cancellationToken)
+                    .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="ClearRangeAsync"/>
+        /// operation clears the <paramref name="range"/> of a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be cleared. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileUploadInfo>> ClearRangeAsync(
+            HttpRange range,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+                await ClearRangeInternal(
+                    range: range,
+                    conditions: conditions,
+                    async: true,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadRangeInternal"/> operation clears the
+        /// <paramref name="range"/> of a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be cleated. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileUploadInfo>> ClearRangeInternal(
+            HttpRange range,
+            ShareFileRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(ClearRange)}");
+
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    scope.Start();
+
+                    ResponseWithHeaders<FileUploadRangeHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.UploadRangeAsync(
+                            range: range.ToString(),
+                            fileRangeWrite: ShareFileRangeWriteType.Clear,
+                            contentLength: 0,
+                            // TODO remove this
+                            optionalbody: new MemoryStream(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.UploadRange(
+                            range: range.ToString(),
+                            fileRangeWrite: ShareFileRangeWriteType.Clear,
+                            contentLength: 0,
+                            // TODO remove this
+                            optionalbody: new MemoryStream(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileUploadInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    scope.Dispose();
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                }
+            }
+        }
+        #endregion ClearRange
+
+        #region UploadRange
+        /// <summary>
+        /// The <see cref="UploadRange(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
         /// state of the file.
         /// </returns>
         /// <remarks>
@@ -1624,27 +3986,217 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareFileUploadInfo> UploadRange(
-            ShareFileRangeWriteType writeType,
             HttpRange range,
             Stream content,
-            byte[] transactionalContentHash = null,
-            IProgress<long> progressHandler = default,
+            ShareFileUploadRangeOptions options = default,
             CancellationToken cancellationToken = default) =>
             UploadRangeInternal(
-                writeType,
-                range,
-                content,
-                transactionalContentHash,
-                progressHandler,
-                false, // async
-                cancellationToken)
+                range: range,
+                content: content,
+                transferValidationOverride: options?.TransferValidation,
+                progressHandler: options?.ProgressHandler,
+                conditions: options?.Conditions,
+                fileLastWrittenMode: options?.FileLastWrittenMode,
+                async: false,
+                cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadRangeAsync"/> operation writes
-        /// <paramref name="content"/> to a <paramref name="range"/> of a file.
+        /// The <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeAsync(
+            HttpRange range,
+            Stream content,
+            ShareFileUploadRangeOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await UploadRangeInternal(
+                range: range,
+                content: content,
+                transferValidationOverride: options?.TransferValidation,
+                progressHandler: options?.ProgressHandler,
+                conditions: options?.Conditions,
+                fileLastWrittenMode: options?.FileLastWrittenMode,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadRange(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="transactionalContentHash">
+        /// Optional MD5 hash of the range content.
+        ///
+        /// This hash is used to verify the integrity of the range during transport. When this hash
+        /// is specified, the storage service compares the hash of the content
+        /// that has arrived with this value.  Note that this MD5 hash is not
+        /// stored with the file.  If the two hashes do not match, the
+        /// operation will fail with a <see cref="RequestFailedException"/>.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareFileUploadInfo> UploadRange(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            Stream content,
+            byte[] transactionalContentHash,
+            IProgress<long> progressHandler,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken)
+        {
+            return UploadRangeInternal(
+                range,
+                content,
+                transferValidationOverride: transactionalContentHash != default
+                    ? new UploadTransferValidationOptions()
+                    {
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                        PrecalculatedChecksum = transactionalContentHash
+                    }
+                    : default,
+                progressHandler,
+                conditions,
+                fileLastWrittenMode: default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="transactionalContentHash">
+        /// Optional MD5 hash of the range content.
+        ///
+        /// This hash is used to verify the integrity of the range during transport. When this hash
+        /// is specified, the storage service compares the hash of the content
+        /// that has arrived with this value.  Note that this MD5 hash is not
+        /// stored with the file.  If the two hashes do not match, the
+        /// operation will fail with a <see cref="RequestFailedException"/>.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            Stream content,
+            byte[] transactionalContentHash,
+            IProgress<long> progressHandler,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken)
+        {
+            return await UploadRangeInternal(
+                range,
+                content,
+                transferValidationOverride: transactionalContentHash != default
+                    ? new UploadTransferValidationOptions()
+                    {
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                        PrecalculatedChecksum = transactionalContentHash
+                    }
+                    : default,
+                progressHandler,
+                conditions,
+                fileLastWrittenMode: default,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="UploadRange(ShareFileRangeWriteType, HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
         /// </summary>
         /// <param name="writeType">Required. Specifies whether to update or clear the range.
         /// </param>
@@ -1672,35 +4224,47 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
         /// state of the file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileUploadInfo> UploadRange(
             ShareFileRangeWriteType writeType,
             HttpRange range,
             Stream content,
-            byte[] transactionalContentHash = null,
+            byte[] transactionalContentHash = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            await UploadRangeInternal(
-                writeType,
+            CancellationToken cancellationToken = default)
+        {
+            return UploadRangeInternal(
                 range,
                 content,
-                transactionalContentHash,
+                transferValidationOverride: transactionalContentHash != default
+                    ? new UploadTransferValidationOptions()
+                    {
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                        PrecalculatedChecksum = transactionalContentHash
+                    }
+                    : default,
                 progressHandler,
-                true, // async
+                conditions: default,
+                fileLastWrittenMode: default,
+                false, // async
                 cancellationToken)
-                .ConfigureAwait(false);
+                .EnsureCompleted();
+        }
 
         /// <summary>
-        /// The <see cref="UploadRangeInternal"/> operation writes
-        /// <paramref name="content"/> to a <paramref name="range"/> of a file.
+        /// The <see cref="UploadRange(ShareFileRangeWriteType, HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
         /// </summary>
         /// <param name="writeType">Required. Specifies whether to update or clear the range.
         /// </param>
@@ -1722,6 +4286,72 @@ namespace Azure.Storage.Files.Shares
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeAsync(
+            ShareFileRangeWriteType writeType,
+            HttpRange range,
+            Stream content,
+            byte[] transactionalContentHash = default,
+            IProgress<long> progressHandler = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await UploadRangeInternal(
+                range,
+                content,
+                transferValidationOverride: transactionalContentHash != default
+                    ? new UploadTransferValidationOptions()
+                    {
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                        PrecalculatedChecksum = transactionalContentHash
+                    }
+                    : default,
+                progressHandler,
+                conditions: default,
+                fileLastWrittenMode: default,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="UploadRangeInternal"/> operation writes
+        /// <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="transferValidationOverride">
+        /// Optional override for transfer validation on upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Progress handler for upload operation.
+        /// </param>
+        /// <param name="conditions">
+        /// Request conditions for upload range.
+        /// </param>
+        /// <param name="fileLastWrittenMode">
+        /// Optional.  Specifies if the file last write time should be set to the current time,
+        /// or the last write time currently associated with the file should be preserved.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1738,49 +4368,84 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ShareFileUploadInfo>> UploadRangeInternal(
-            ShareFileRangeWriteType writeType,
+        internal async Task<Response<ShareFileUploadInfo>> UploadRangeInternal(
             HttpRange range,
             Stream content,
-            byte[] transactionalContentHash,
+            UploadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
+            ShareFileRequestConditions conditions,
+            FileLastWrittenMode? fileLastWrittenMode,
             bool async,
             CancellationToken cancellationToken)
         {
-            // TODO We should probably raise an exception if Stream is non-empty and writeType is Clear.
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
+            ShareErrors.AssertAlgorithmSupport(validationOptions?.ChecksumAlgorithm);
 
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(writeType)}: {writeType}");
+                    $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(UploadRange)}");
+
                 try
                 {
+                    scope.Start();
+                    Errors.VerifyStreamPosition(content, nameof(content));
+
+                    // compute hash BEFORE attaching progress handler
+                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                        content,
+                        validationOptions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
                     content = content.WithNoDispose().WithProgress(progressHandler);
-                    return await FileRestClient.File.UploadRangeAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        optionalbody: content,
-                        contentLength: content.Length,
-                        range: range.ToString(),
-                        fileRangeWrite: writeType,
-                        contentHash: transactionalContentHash,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: Constants.File.UploadRangeOperationName);
+
+                    ResponseWithHeaders<FileUploadRangeHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.UploadRangeAsync(
+                            range: range.ToString(),
+                            fileRangeWrite: ShareFileRangeWriteType.Update,
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            fileLastWrittenMode: fileLastWrittenMode,
+                            optionalbody: content,
+                            contentMD5: hashResult?.MD5AsArray,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.UploadRange(
+                            range: range.ToString(),
+                            fileRangeWrite: ShareFileRangeWriteType.Update,
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            fileLastWrittenMode: fileLastWrittenMode,
+                            optionalbody: content,
+                            contentMD5: hashResult?.MD5AsArray,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileUploadInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1788,8 +4453,8 @@ namespace Azure.Storage.Files.Shares
 
         #region UploadRangeFromUrl
         /// <summary>
-        /// The <see cref="UploadRangeFromUri"/> operation writes a range from an Azure File to another Azure file.
-        /// This API is supported only for version 2019-02-02 and higher.
+        /// The <see cref="UploadRangeFromUri(Uri, HttpRange, HttpRange, ShareFileUploadRangeFromUriOptions, CancellationToken)"/>
+        /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
@@ -1801,6 +4466,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="sourceRange">
         /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.  <see cref="ShareFileUploadRangeFromUriOptions"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1818,18 +4486,120 @@ namespace Azure.Storage.Files.Shares
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
+            ShareFileUploadRangeFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadRangeFromUriInternal(
-                sourceUri,
-                range,
-                sourceRange,
-                false, // async
+            UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
+                conditions: options?.Conditions,
+                sourceAuthentication: options?.SourceAuthentication,
+                fileLastWrittenMode: options?.FileLastWrittenMode,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadRangeFromUriAsync"/> operation writes a range from an Azure File to another Azure file.
-        /// This API is supported only for version 2019-02-02 and higher.
+        /// The <see cref="UploadRangeFromUriAsync(Uri, HttpRange, HttpRange, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file, up to 2 KB in length.
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
+        /// shared access signature. If the source is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="sourceRange">
+        /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.  <see cref="ShareFileUploadRangeFromUriOptions"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeFromUriAsync(
+            Uri sourceUri,
+            HttpRange range,
+            HttpRange sourceRange,
+            ShareFileUploadRangeFromUriOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
+                conditions: options?.Conditions,
+                sourceAuthentication: options?.SourceAuthentication,
+                fileLastWrittenMode: options?.FileLastWrittenMode,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadRangeFromUri(Uri, HttpRange, HttpRange, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file, up to 2 KB in length.
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
+        /// shared access signature. If the source is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="sourceRange">
+        /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareFileUploadInfo> UploadRangeFromUri(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Uri sourceUri,
+            HttpRange range,
+            HttpRange sourceRange,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
+            UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
+                conditions: conditions,
+                sourceAuthentication: default,
+                fileLastWrittenMode: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadRangeFromUri(Uri, HttpRange, HttpRange, CancellationToken)"/>
+        /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
         /// Required. Specifies the URL of the source file, up to 2 KB in length.
@@ -1854,16 +4624,121 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeFromUriAsync(
+        [ForwardsClientCalls]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileUploadInfo> UploadRangeFromUri(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-            CancellationToken cancellationToken = default) =>
-            await this.UploadRangeFromUriInternal(
-                sourceUri,
-                range,
-                sourceRange,
-                true, // async
+            CancellationToken cancellationToken) =>
+            UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
+                conditions: default,
+                sourceAuthentication: default,
+                fileLastWrittenMode: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadRangeFromUriAsync(Uri, HttpRange, HttpRange, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file, up to 2 KB in length.
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
+        /// shared access signature. If the source is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="sourceRange">
+        /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeFromUriAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Uri sourceUri,
+            HttpRange range,
+            HttpRange sourceRange,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
+            await UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
+                conditions: conditions,
+                sourceAuthentication: default,
+                fileLastWrittenMode: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadRangeFromUriAsync(Uri, HttpRange, HttpRange, CancellationToken)"/>
+        /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file, up to 2 KB in length.
+        /// If source is an Azure blob or Azure file, it must either be public or must be authenticated via a
+        /// shared access signature. If the source is public, no authentication is required to perform the operation.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="sourceRange">
+        /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeFromUriAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Uri sourceUri,
+            HttpRange range,
+            HttpRange sourceRange,
+            CancellationToken cancellationToken) =>
+            await UploadRangeFromUriInternal(
+                sourceUri: sourceUri,
+                range: range,
+                sourceRange: sourceRange,
+                conditions: default,
+                sourceAuthentication: default,
+                fileLastWrittenMode: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1881,6 +4756,17 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="sourceRange">
         /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="sourceAuthentication">
+        /// Optional. Source authentication used to access the source blob.
+        /// </param>
+        /// <param name="fileLastWrittenMode">
+        /// Optional.  Specifies if the file last write time should be set to the current time,
+        /// or the last write time currently associated with the file should be preserved.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1901,48 +4787,67 @@ namespace Azure.Storage.Files.Shares
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
+            ShareFileRequestConditions conditions,
+            HttpAuthorization sourceAuthentication,
+            FileLastWrittenMode? fileLastWrittenMode,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                this.Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(UploadRangeFromUri)}");
+
                 try
                 {
-                    var response = await FileRestClient.File.UploadRangeFromURLAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: Uri,
-                        range: range.ToString(),
-                        copySource: sourceUri,
-                        contentLength: default,
-                        version: Version.ToVersionString(),
-                        sourceRange: sourceRange.ToString(),
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileUploadRangeFromURLHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.UploadRangeFromURLAsync(
+                            range: range.ToString(),
+                            copySource: sourceUri.AbsoluteUri,
+                            contentLength: 0,
+                            sourceRange: sourceRange.ToString(),
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
+                            fileLastWrittenMode: fileLastWrittenMode,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.UploadRangeFromURL(
+                            range: range.ToString(),
+                            copySource: sourceUri.AbsoluteUri,
+                            contentLength: 0,
+                            sourceRange: sourceRange.ToString(),
+                            copySourceAuthorization: sourceAuthentication?.ToString(),
+                            fileLastWrittenMode: fileLastWrittenMode,
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return Response.FromValue(
-                        new ShareFileUploadInfo
-                        {
-                            ETag = response.Value.ETag,
-                            LastModified = response.Value.LastModified,
-                            ContentHash = response.Value.XMSContentCrc64,
-                            IsServerEncrypted = response.Value.IsServerEncrypted
-                        }, response.GetRawResponse());
+                        response.ToShareFileUploadInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    this.Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    this.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1950,17 +4855,18 @@ namespace Azure.Storage.Files.Shares
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload"/> operation writes <paramref name="content"/>
-        /// to a file.
+        /// The <see cref="Upload(Stream, ShareFileUploadOptions, CancellationToken)"/>
+        /// operation writes <paramref name="options.Stream"/> to a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
         /// </summary>
-        /// <param name="content">
-        /// A <see cref="Stream"/> containing the content of the file to upload.
+        /// <param name="stream">
+        /// Content stream to upload.
         /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
+        /// <param name="options">
+        /// Upload options.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
@@ -1976,22 +4882,117 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<ShareFileUploadInfo> Upload(
-            Stream content,
-            IProgress<long> progressHandler = default,
+            Stream stream,
+            ShareFileUploadOptions options = default,
             CancellationToken cancellationToken = default) =>
             UploadInternal(
-                content,
-                progressHandler,
-                Constants.File.MaxFileUpdateRange,
-                false, // async
+                stream,
+                options?.ProgressHandler,
+                options?.Conditions,
+                options?.TransferValidation,
+                options?.TransferOptions ?? default,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadAsync"/> operation writes
-        /// <paramref name="content"/> to a file.
+        /// The <see cref="UploadAsync(Stream, ShareFileUploadOptions, CancellationToken)"/> operation writes
+        /// <paramref name="options.Stream"/> to a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="stream">
+        /// Content stream to upload.
+        /// </param>
+        /// <param name="options">
+        /// Upload options.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
+            Stream stream,
+            ShareFileUploadOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await UploadInternal(
+                stream,
+                options?.ProgressHandler,
+                options?.Conditions,
+                options?.TransferValidation,
+                options?.TransferOptions ?? default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="Upload(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the file to upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareFileUploadInfo> Upload(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Stream content,
+            IProgress<long> progressHandler,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
+            UploadInternal(
+                content,
+                progressHandler,
+                conditions,
+                transferValidationOverride: default,
+                transferOptions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="Upload(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the file to upload.
@@ -2012,16 +5013,116 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         [ForwardsClientCalls]
-        public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileUploadInfo> Upload(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
-            IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken) =>
+            UploadInternal(
+                content,
+                progressHandler,
+                conditions: default,
+                transferValidationOverride: default,
+                transferOptions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/> operation writes
+        /// <paramref name="content"/> to a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the file to upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Stream content,
+            IProgress<long> progressHandler,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await UploadInternal(
                 content,
                 progressHandler,
-                Constants.File.MaxFileUpdateRange,
-                true, // async
+                conditions,
+                transferValidationOverride: default,
+                transferOptions: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, IProgress{long}, CancellationToken)"/> operation writes
+        /// <paramref name="content"/> to a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the file to upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Stream content,
+            IProgress<long> progressHandler,
+            CancellationToken cancellationToken) =>
+            await UploadInternal(
+                content,
+                progressHandler,
+                conditions: default,
+                transferValidationOverride: default,
+                transferOptions: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -2029,7 +5130,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="UploadInternal"/> operation writes
         /// <paramref name="content"/> to a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -2038,9 +5141,15 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
-        /// <param name="singleRangeThreshold">
-        /// The maximum size stream that we'll upload as a single range.  The
-        /// default value is 4MB.
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="transferValidationOverride">
+        /// Optional override for client-configured transfer validation options.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Partitioned transfer options for upload.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2060,94 +5169,126 @@ namespace Azure.Storage.Files.Shares
         internal async Task<Response<ShareFileUploadInfo>> UploadInternal(
             Stream content,
             IProgress<long> progressHandler,
-            int singleRangeThreshold,
+            ShareFileRequestConditions conditions,
+            UploadTransferValidationOptions transferValidationOverride,
+            StorageTransferOptions transferOptions,
             bool async,
             CancellationToken cancellationToken)
         {
-            // Try to upload the file as a single range
-            Debug.Assert(singleRangeThreshold <= Constants.File.MaxFileUpdateRange);
-            try
-            {
-                var length = content.Length;
-                if (length <= singleRangeThreshold)
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
+            transferOptions = StorageArgument.PopulateShareFileUploadTransferOptionDefaults(transferOptions);
+            StorageArgument.AssertShareFileUploadTransferOptionBounds(transferOptions, nameof(transferOptions));
+
+            var uploader = GetPartitionedUploader(
+                transferOptions,
+                validationOptions,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(Upload)}");
+
+            return await uploader.UploadInternal(
+                content,
+                expectedContentLength: default,
+                new ShareFileUploadData
                 {
-                    return await UploadRangeInternal(
-                        ShareFileRangeWriteType.Update,
-                        new HttpRange(0, length),
-                        content,
-                        null,
-                        progressHandler,
-                        async,
-                        cancellationToken)
-                        .ConfigureAwait(false);
-                }
-            }
-            catch
-            {
-            }
-
-            // Otherwise naively split the file into ranges and upload them individually
-            var response = default(Response<ShareFileUploadInfo>);
-            var pool = default(MemoryPool<byte>);
-            try
-            {
-                pool = (singleRangeThreshold < MemoryPool<byte>.Shared.MaxBufferSize) ?
-                    MemoryPool<byte>.Shared :
-                    new StorageMemoryPool(singleRangeThreshold, 1);
-                for (; ; )
-                {
-                    // Get the next chunk of content
-                    var parentPosition = content.Position;
-                    IMemoryOwner<byte> buffer = pool.Rent(singleRangeThreshold);
-                    if (!MemoryMarshal.TryGetArray<byte>(buffer.Memory, out ArraySegment<byte> segment))
-                    {
-                        throw Errors.UnableAccessArray();
-                    }
-                    var count = async ?
-                        await content.ReadAsync(segment.Array, 0, singleRangeThreshold, cancellationToken).ConfigureAwait(false) :
-                        content.Read(segment.Array, 0, singleRangeThreshold);
-
-                    // Stop when we've exhausted the content
-                    if (count <= 0) { break; }
-
-                    // Upload the chunk
-                    var partition = new StreamPartition(
-                        buffer.Memory,
-                        parentPosition,
-                        count,
-                        () => buffer.Dispose(),
-                        cancellationToken);
-                    response = await UploadRangeInternal(
-                        ShareFileRangeWriteType.Update,
-                        new HttpRange(partition.ParentPosition, partition.Length),
-                        partition,
-                        null,
-                        progressHandler,
-                        async,
-                        cancellationToken)
-                        .ConfigureAwait(false);
-
-                }
-            }
-            finally
-            {
-                if (pool is StorageMemoryPool)
-                {
-                    pool.Dispose();
-                }
-            }
-            return response;
+                    Conditions = conditions,
+                },
+                progressHandler,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
         #endregion Upload
+
+        #region PartitionedUploader
+        internal class ShareFileUploadData
+        {
+            public ShareFileRequestConditions Conditions { get; set; }
+            public Response<ShareFileUploadInfo> LastUploadRangeResponse { get; set; }
+        }
+
+        internal PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo> GetPartitionedUploader(
+            StorageTransferOptions transferOptions,
+            UploadTransferValidationOptions transferValidation,
+            ArrayPool<byte> arrayPool = null,
+            string operationName = null)
+            => new PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>(
+                GetPartitionedUploaderBehaviors(this),
+                transferOptions,
+                transferValidation,
+                arrayPool,
+                operationName);
+
+        // static because it makes mocking easier in tests
+        internal static PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>.Behaviors GetPartitionedUploaderBehaviors(ShareFileClient client)
+            => new PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>.Behaviors
+            {
+                SingleUploadStreaming = async (stream, data, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                {
+                    return await client.UploadRangeInternal(
+                        new HttpRange(offset: 0, length: stream.Length),
+                        stream,
+                        validationOptions,
+                        progressHandler,
+                        data.Conditions,
+                        fileLastWrittenMode: null,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                SingleUploadBinaryData = async (content, data, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                {
+                    return await client.UploadRangeInternal(
+                        new HttpRange(offset: 0, length: content.ToMemory().Length),
+                        content.ToStream(),
+                        validationOptions,
+                        progressHandler,
+                        data.Conditions,
+                        fileLastWrittenMode: null,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                UploadPartitionStreaming = async (stream, offset, data, progressHandler, validationOptions, async, cancellationToken) =>
+                {
+                    data.LastUploadRangeResponse = await client.UploadRangeInternal(
+                        new HttpRange(offset: offset, length: stream.Length),
+                        stream,
+                        validationOptions,
+                        progressHandler,
+                        data.Conditions,
+                        fileLastWrittenMode: null,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                UploadPartitionBinaryData = async (content, offset, data, progressHandler, validationOptions, async, cancellationToken) =>
+                {
+                    data.LastUploadRangeResponse = await client.UploadRangeInternal(
+                        new HttpRange(offset: offset, length: content.ToMemory().Length),
+                        content.ToStream(),
+                        validationOptions,
+                        progressHandler,
+                        data.Conditions,
+                        fileLastWrittenMode: null,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                CommitPartitionedUpload = (partitions, data, async, cancellationToken) => Task.FromResult(data.LastUploadRangeResponse),
+                Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName ??
+                    $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(Shares)}.{nameof(ShareFileClient)}.{nameof(ShareFileClient.Upload)}")
+            };
+        #endregion
 
         #region GetRangeList
         /// <summary>
         /// Returns the list of valid ranges for a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-ranges"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
         /// </summary>
-        /// <param name="range">
-        /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2162,21 +5303,27 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareFileRangeInfo> GetRangeList(
-            HttpRange range,
+            ShareFileGetRangeListOptions options = default,
             CancellationToken cancellationToken = default) =>
             GetRangeListInternal(
-                range,
-                false, // async
+                options?.Range,
+                options?.Snapshot,
+                previousSnapshot: default,
+                options?.Conditions,
+                operationName: default,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
         /// Returns the list of valid ranges for a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-ranges"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
         /// </summary>
-        /// <param name="range">
-        /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2191,21 +5338,210 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListAsync(
-            HttpRange range,
+            ShareFileGetRangeListOptions options = default,
             CancellationToken cancellationToken = default) =>
             await GetRangeListInternal(
-                range,
-                true, // async
+                options?.Range,
+                options?.Snapshot,
+                previousSnapshot: default,
+                options?.Conditions,
+                operationName: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Returns the list of valid ranges for a file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-ranges"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
         /// </summary>
         /// <param name="range">
-        /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
+        /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
+        /// If omitted, then all ranges for the file are returned.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileRangeInfo}"/> describing the
+        /// valid ranges for this file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileRangeInfo> GetRangeList(
+            HttpRange range,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            GetRangeListInternal(
+                range,
+                snapshot: default,
+                previousSnapshot: default,
+                conditions,
+                operationName: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Returns the list of valid ranges for a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
+        /// If omitted, then all ranges for the file are returned.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileRangeInfo}"/> describing the
+        /// valid ranges for this file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileRangeInfo> GetRangeList(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            CancellationToken cancellationToken) =>
+            GetRangeListInternal(
+                range,
+                snapshot: default,
+                previousSnapshot: default,
+                conditions: default,
+                operationName: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Returns the list of valid ranges for a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
+        /// If omitted, then all ranges for the file are returned.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileRangeInfo}"/> describing the
+        /// valid ranges for this file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListAsync(
+            HttpRange range,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await GetRangeListInternal(
+                range,
+                snapshot: default,
+                previousSnapshot: default,
+                conditions,
+                operationName: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Returns the list of valid ranges for a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
+        /// If omitted, then all ranges for the file are returned.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileRangeInfo}"/> describing the
+        /// valid ranges for this file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            CancellationToken cancellationToken) =>
+            await GetRangeListInternal(
+                range,
+                snapshot: default,
+                previousSnapshot: default,
+                conditions: default,
+                operationName: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Returns the list of valid ranges for a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Specifies the range of bytes over which to list ranges, inclusively.
+        /// If omitted, then all ranges for the file are returned.
+        /// </param>
+        /// <param name="snapshot">
+        /// Optionally specifies the share snapshot to retrieve ranges
+        /// information from. For more information on working with share snapshots,
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-share">
+        /// Create a snapshot of a share</see>.
+        /// </param>
+        /// <param name="previousSnapshot">
+        /// Specifies that the response will contain only ranges that were
+        /// changed between target file and previous snapshot.  Changed ranges
+        /// include both updated and cleared ranges. The target file may be a
+        /// snapshot, as long as the snapshot specified by
+        /// <paramref name="previousSnapshot"/> is the older of the two.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="operationName">
+        /// Name of the calling API
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2223,42 +5559,141 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareFileRangeInfo>> GetRangeListInternal(
-            HttpRange range,
+            HttpRange? range,
+            string snapshot,
+            string previousSnapshot,
+            ShareFileRequestConditions conditions,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
-                    Response<ShareFileRangeInfoInternal> response = await FileRestClient.File.GetRangeListAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        range: range.ToString(),
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: Constants.File.GetRangeListOperationName)
-                        .ConfigureAwait(false);
-                    return Response.FromValue(new ShareFileRangeInfo(response.Value), response.GetRawResponse());
+                    scope.Start();
+                    ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.GetRangeListAsync(
+                            sharesnapshot: snapshot,
+                            prevsharesnapshot: previousSnapshot,
+                            range: range?.ToString(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.GetRangeList(
+                            sharesnapshot: snapshot,
+                            prevsharesnapshot: previousSnapshot,
+                            range: range?.ToString(),
+                            leaseAccessConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileRangeInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
         #endregion GetRangeList
+
+        #region GetRangeListDiff
+        /// <summary>
+        /// Returns the list of ranges that have changed in the file since previousSnapshot
+        /// was taken.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileRangeInfo}"/> describing the
+        /// valid ranges for this file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileRangeInfo> GetRangeListDiff(
+            ShareFileGetRangeListDiffOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            GetRangeListInternal(
+                options?.Range,
+                options?.Snapshot,
+                options?.PreviousSnapshot,
+                options?.Conditions,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeListDiff)}",
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Returns the list of ranges that have changed in the file since previousSnapshot
+        /// was taken.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileRangeInfo}"/> describing the
+        /// valid ranges for this file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListDiffAsync(
+            ShareFileGetRangeListDiffOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await GetRangeListInternal(
+                options?.Range,
+                options?.Snapshot,
+                options?.PreviousSnapshot,
+                options?.Conditions,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeListDiff)}",
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        #endregion GetRangeListDiff
 
         #region GetHandles
         /// <summary>
@@ -2267,7 +5702,9 @@ namespace Azure.Storage.Files.Shares
         /// handles may make multiple requests to the service while fetching
         /// all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">
+        /// List Handles</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2291,7 +5728,9 @@ namespace Azure.Storage.Files.Shares
         /// Enumerating the handles may make multiple requests to the service
         /// while fetching all the values.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">
+        /// List Handles</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2313,7 +5752,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="GetHandlesInternal"/> operation returns a list of open
         /// handles on the file.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-handles">
+        /// List Handles</see>.
         /// </summary>
         /// <remarks>
         /// </remarks>
@@ -2350,35 +5791,52 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(maxResults)}: {maxResults}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(GetHandles)}");
+
                 try
                 {
-                    return await FileRestClient.File.ListHandlesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
-                        marker: marker,
-                        maxresults: maxResults,
-                        async: async,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<ListHandlesResponse, FileListHandlesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.ListHandlesAsync(
+                            marker: marker,
+                            maxresults: maxResults,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.ListHandles(
+                            marker: marker,
+                            maxresults: maxResults,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value.ToStorageHandlesSegment(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2395,7 +5853,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="handleId">
         /// Specifies the handle ID to be closed.
@@ -2421,14 +5881,11 @@ namespace Azure.Storage.Files.Shares
                 null,
                 false, // async,
                 cancellationToken,
-                Constants.File.ForceCloseHandleOperationName)
+                $"{nameof(ShareFileClient)}.{nameof(ForceCloseHandle)}")
                 .EnsureCompleted();
 
             return Response.FromValue(
-                new CloseHandlesResult()
-                {
-                    ClosedHandlesCount = response.Value.NumberOfHandlesClosed
-                },
+                response.ToCloseHandlesResult(),
                 response.GetRawResponse());
         }
 
@@ -2442,7 +5899,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="handleId">
         /// Specifies the handle ID to be closed.
@@ -2468,14 +5927,11 @@ namespace Azure.Storage.Files.Shares
                 null,
                 true, // async,
                 cancellationToken,
-                Constants.File.ForceCloseHandleOperationName)
+                $"{nameof(ShareFileClient)}.{nameof(ForceCloseHandle)}")
                 .ConfigureAwait(false);
 
             return Response.FromValue(
-                new CloseHandlesResult()
-                {
-                    ClosedHandlesCount = response.Value.NumberOfHandlesClosed
-                },
+                response.ToCloseHandlesResult(),
                 response.GetRawResponse());
         }
 
@@ -2489,7 +5945,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2520,7 +5978,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2551,7 +6011,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2573,6 +6035,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken)
         {
             int handlesClosed = 0;
+            int handlesFailed = 0;
             string marker = null;
             do
             {
@@ -2580,12 +6043,13 @@ namespace Azure.Storage.Files.Shares
                     await ForceCloseHandlesInternal(Constants.CloseAllHandles, marker, async, cancellationToken).ConfigureAwait(false);
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
-
+                handlesFailed += response.Value.NumberOfHandlesFailedToClose;
             } while (!string.IsNullOrEmpty(marker));
 
             return new CloseHandlesResult()
             {
-                ClosedHandlesCount = handlesClosed
+                ClosedHandlesCount = handlesClosed,
+                FailedHandlesCount = handlesFailed
             };
         }
 
@@ -2600,7 +6064,9 @@ namespace Azure.Storage.Files.Shares
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/force-close-handles">
+        /// Force Close Handles</see>.
         /// </summary>
         /// <param name="handleId">
         /// Optional. Specifies the handle ID to be closed. If not specified, or if equal to &quot;*&quot;, will close all handles.
@@ -2637,41 +6103,667 @@ namespace Azure.Storage.Files.Shares
             string marker,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.File.ForceCloseAllHandlesOperationName)
+            string operationName = null)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(handleId)}: {handleId}\n" +
                     $"{nameof(marker)}: {marker}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(ForceCloseAllHandles)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
                 try
                 {
-                    return await FileRestClient.File.ForceCloseHandlesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        marker: marker,
-                        handleId: handleId,
-                        version: Version.ToVersionString(),
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName: operationName)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<FileForceCloseHandlesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.ForceCloseHandlesAsync(
+                            handleId: handleId,
+                            marker: marker,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.ForceCloseHandles(
+                            handleId: handleId,
+                            marker: marker,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToStorageClosedHandlesSegment(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
                 }
             }
         }
         #endregion ForceCloseHandles
+
+        #region Rename
+        /// <summary>
+        /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the file to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileClient}"/> pointed at the newly renamed File.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileClient> Rename(
+            string destinationPath,
+            ShareFileRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+            => RenameInternal(
+                destinationPath: destinationPath,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the file to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileClient}"/> pointed at the newly renamed File.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileClient>> RenameAsync(
+            string destinationPath,
+            ShareFileRenameOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await RenameInternal(
+                destinationPath: destinationPath,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Renames a file.
+        /// This API does not support renaming a file from one share to another, or between storage accounts.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the file to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileClient}"/> pointed at the newly renamed File.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileClient>> RenameInternal(
+            string destinationPath,
+            ShareFileRenameOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(destinationPath)}: {destinationPath}\n" +
+                    $"{nameof(options)}: {options}\n");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(Rename)}");
+
+                try
+                {
+                    scope.Start();
+
+                    ShareExtensions.AssertValidFilePermissionAndKey(options?.FilePermission, options?.SmbProperties?.FilePermissionKey);
+
+                    // TODO: this seems weird to do, probably should build a way to append to the query.. without altering it somehow
+                    // in the case that the customer wants the query to be in a certain order
+                    ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
+                    UriBuilder sourceUriBuilder = new UriBuilder(Uri);
+                    // There's already a check in at the client constructor to prevent both SAS in Uri and AzureSasCredential
+                    if (shareUriBuilder.Sas == null && ClientConfiguration.SasCredential != null)
+                    {
+                        sourceUriBuilder.Query += ClientConfiguration.SasCredential.Signature;
+                    }
+
+                    // Build destination URI
+                    ShareUriBuilder destUriBuilder = new ShareUriBuilder(Uri)
+                    {
+                        Sas = null,
+                        Query = null
+                    };
+
+                    // ShareUriBuider will encode the DirectoryOrFilePath.
+                    // We don't want the query parameters, especially SAS, to be encoded.
+                    // We also have to build the destination client depending on if a SAS was passed with the destination.
+                    ShareFileClient destFileClient;
+                    string[] split = destinationPath.Split('?');
+                    if (split.Length == 2)
+                    {
+                        destUriBuilder.DirectoryOrFilePath = split[0];
+                        destUriBuilder.Query = split[1];
+                        // If the destination already has a SAS, then let's not further add to the Uri if it contains
+                        // AzureSasCredential on the source.
+                        var paramsMap = new UriQueryParamsCollection(split[1]);
+                        if (!paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
+                        {
+                            // No SAS in the destination, use the source credentials to build the destination path
+                            destFileClient = new ShareFileClient(destUriBuilder.ToUri(), ClientConfiguration);
+                        }
+                        else
+                        {
+                            // There's a SAS in the destination path
+                            // Create the destination path with the destination SAS
+                            destFileClient = new ShareFileClient(
+                                destUriBuilder.ToUri(),
+                                ClientConfiguration.ClientDiagnostics,
+                                ClientConfiguration.ClientOptions);
+                        }
+                    }
+                    else
+                    {
+                        // No SAS in the destination, use the source credentials to build the destination path
+                        destUriBuilder.DirectoryOrFilePath = destinationPath;
+                        destFileClient = new ShareFileClient(
+                            destUriBuilder.ToUri(),
+                            ClientConfiguration);
+                    }
+
+                    ResponseWithHeaders<FileRenameHeaders> response;
+
+                    CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
+                    {
+                        FileAttributes = options?.SmbProperties?.FileAttributes?.ToAttributesString(),
+                        FileCreationTime = options?.SmbProperties?.FileCreatedOn.ToFileDateTimeString(),
+                        FileChangeTime = options?.SmbProperties?.FileChangedOn.ToFileDateTimeString(),
+                        FileLastWriteTime = options?.SmbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
+                        IgnoreReadOnly = options?.IgnoreReadOnly
+                    };
+
+                    FileHttpHeaders fileHttpHeaders = new FileHttpHeaders
+                    {
+                        FileContentType = options?.ContentType
+                    };
+
+                    if (async)
+                    {
+                        response = await destFileClient.FileRestClient.RenameAsync(
+                            renameSource: sourceUriBuilder.Uri.AbsoluteUri,
+                            replaceIfExists: options?.ReplaceIfExists,
+                            ignoreReadOnly: options?.IgnoreReadOnly,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
+                            filePermission: options?.FilePermission,
+                            filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            fileHttpHeaders: fileHttpHeaders,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = destFileClient.FileRestClient.Rename(
+                            renameSource: sourceUriBuilder.Uri.AbsoluteUri,
+                            replaceIfExists: options?.ReplaceIfExists,
+                            ignoreReadOnly: options?.IgnoreReadOnly,
+                            sourceLeaseId: options?.SourceConditions?.LeaseId,
+                            destinationLeaseId: options?.DestinationConditions?.LeaseId,
+                            filePermission: options?.FilePermission,
+                            filePermissionKey: options?.SmbProperties?.FilePermissionKey,
+                            metadata: options?.Metadata,
+                            copyFileSmbInfo: copyFileSmbInfo,
+                            fileHttpHeaders: fileHttpHeaders,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        destFileClient,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion Rename
+
+        #region OpenWrite
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual Stream OpenWrite(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            long position,
+            ShareFileOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => OpenWriteInternal(
+                overwrite: overwrite,
+                position: position,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Stream> OpenWriteAsync(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            bool overwrite,
+            long position,
+            ShareFileOpenWriteOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await OpenWriteInternal(
+                overwrite: overwrite,
+                position: position,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Opens a stream for writing to the file.
+        /// </summary>
+        /// <param name="overwrite">
+        /// Whether an existing blob should be deleted and recreated.
+        /// </param>
+        /// <param name="position">
+        /// The offset within the blob to begin writing from.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A stream to write to the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Stream> OpenWriteInternal(
+            bool overwrite,
+            long position,
+            ShareFileOpenWriteOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenWrite)}");
+
+            try
+            {
+                scope.Start();
+
+                if (overwrite)
+                {
+                    if (options?.MaxSize == null)
+                    {
+                        throw new ArgumentException($"{nameof(options)}.{nameof(options.MaxSize)} must be set if {nameof(overwrite)} is set to true");
+                    }
+
+                    Response<ShareFileInfo> createResponse = await CreateInternal(
+                        maxSize: options.MaxSize.Value,
+                        httpHeaders: default,
+                        metadata: default,
+                        smbProperties: default,
+                        filePermission: default,
+                        conditions: options?.OpenConditions,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    try
+                    {
+                        Response<ShareFileProperties> propertiesResponse = await GetPropertiesInternal(
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    when(ex.ErrorCode == ShareErrorCode.ResourceNotFound)
+                    {
+                        if (options?.MaxSize == null)
+                        {
+                            throw new ArgumentException($"{nameof(options)}.{nameof(options.MaxSize)} must be set if the File is being created for the first time");
+                        }
+
+                        Response<ShareFileInfo> createResponse = await CreateInternal(
+                            maxSize: options.MaxSize.Value,
+                            httpHeaders: default,
+                            metadata: default,
+                            smbProperties: default,
+                            filePermission: default,
+                            conditions: options?.OpenConditions,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                }
+
+                return new ShareFileWriteStream(
+                    fileClient: this,
+                    bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
+                    position: position,
+                    conditions: options?.OpenConditions,
+                    progressHandler: options?.ProgressHandler,
+                    options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion OpenWrite
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateSasUri(ShareFileSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Share File Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties and
+        /// parameters passed. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="ShareFileSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn) =>
+            GenerateSasUri(new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = ShareName,
+                FilePath = Path
+            });
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a
+        /// <see cref="Uri"/> that generates a Share File Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and and builder. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="ShareSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(ShareSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
+            builder = ShareSasBuilder.DeepCopy(builder);
+
+            // Assign builder's ShareName and Path, if they are null.
+            builder.ShareName ??= ShareName;
+            builder.FilePath ??= Path;
+
+            if (!builder.ShareName.Equals(ShareName, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.ShareName),
+                    nameof(ShareSasBuilder),
+                    nameof(ShareName));
+            }
+            if (!builder.FilePath.Equals(Path, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.FilePath),
+                    nameof(ShareSasBuilder),
+                    nameof(Path));
+            }
+            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
+            {
+                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
+
+        #region GetParentClientCore
+
+        private ShareClient _parentShareClient;
+        private ShareDirectoryClient _parentShareDirectoryClient;
+
+        /// <summary>
+        /// Create a new <see cref="ShareClient"/> that pointing to this <see cref="ShareFileClient"/>'s parent container.
+        /// The new <see cref="ShareClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="ShareFileClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
+        protected internal virtual ShareClient GetParentShareClientCore()
+        {
+            if (_parentShareClient == null)
+            {
+                ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to container
+                    DirectoryOrFilePath = null,
+                    Snapshot = null,
+                };
+
+                _parentShareClient = new ShareClient(
+                    shareUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentShareClient;
+        }
+
+        /// <summary>
+        /// Create a new <see cref="ShareDirectoryClient"/> that pointing to this <see cref="ShareFileClient"/>'s parent container.
+        /// The new <see cref="ShareDirectoryClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="ShareFileClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
+        protected internal virtual ShareDirectoryClient GetParentShareDirectoryClientCore()
+        {
+            if (_parentShareDirectoryClient == null)
+            {
+                ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+                {
+                    Snapshot = null,
+                };
+
+                if (shareUriBuilder.DirectoryOrFilePath == null || shareUriBuilder.LastDirectoryOrFileName == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                shareUriBuilder.DirectoryOrFilePath = shareUriBuilder.DirectoryOrFilePath.GetParentPath();
+
+                _parentShareDirectoryClient = new ShareDirectoryClient(
+                    shareUriBuilder.ToUri(),
+                    ClientConfiguration);
+            }
+
+            return _parentShareDirectoryClient;
+        }
+        #endregion
+    }
+
+    namespace Specialized
+    {
+        /// <summary>
+        /// Add easy to discover methods to <see cref="ShareFileClient"/> for
+        /// creating <see cref="ShareClient"/> instances.
+        /// </summary>
+        public static partial class SpecializedShareExtensions
+        {
+            /// <summary>
+            /// Create a new <see cref="ShareClient"/> that pointing to this <see cref="ShareFileClient"/>'s parent container.
+            /// The new <see cref="ShareClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="ShareFileClient"/>.
+            /// </summary>
+            /// <param name="client">The <see cref="ShareFileClient"/>.</param>
+            /// <returns>A new <see cref="ShareClient"/> instance.</returns>
+            public static ShareClient GetParentShareClient(this ShareFileClient client)
+            {
+                return client.GetParentShareClientCore();
+            }
+
+            /// <summary>
+            /// Create a new <see cref="ShareDirectoryClient"/> that pointing to this <see cref="ShareFileClient"/>'s parent container.
+            /// The new <see cref="ShareDirectoryClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="ShareFileClient"/>.
+            /// </summary>
+            /// <param name="client">The <see cref="ShareFileClient"/>.</param>
+            /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
+            public static ShareDirectoryClient GetParentShareDirectoryClient(this ShareFileClient client)
+            {
+                return client.GetParentShareDirectoryClientCore();
+            }
+        }
     }
 }

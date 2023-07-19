@@ -34,12 +34,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="collaborationBranch">Collaboration branch.</param>
         /// <param name="rootFolder">Root folder.</param>
         /// <param name="lastCommitId">Last commit id.</param>
+        /// <param name="disablePublish">Disable manual publish operation in
+        /// ADF studio to favor automated publish.</param>
         /// <param name="hostName">GitHub Enterprise host name. For example:
-        /// https://github.mydomain.com</param>
-        public FactoryGitHubConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId = default(string), string hostName = default(string))
-            : base(accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
+        /// `https://github.mydomain.com`</param>
+        /// <param name="clientId">GitHub bring your own app client id.</param>
+        /// <param name="clientSecret">GitHub bring your own app client secret
+        /// information.</param>
+        public FactoryGitHubConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId = default(string), bool? disablePublish = default(bool?), string hostName = default(string), string clientId = default(string), GitHubClientSecret clientSecret = default(GitHubClientSecret))
+            : base(accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish)
         {
             HostName = hostName;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
             CustomInit();
         }
 
@@ -50,10 +57,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets gitHub Enterprise host name. For example:
-        /// https://github.mydomain.com
+        /// `https://github.mydomain.com`
         /// </summary>
         [JsonProperty(PropertyName = "hostName")]
         public string HostName { get; set; }
+
+        /// <summary>
+        /// Gets or sets gitHub bring your own app client id.
+        /// </summary>
+        [JsonProperty(PropertyName = "clientId")]
+        public string ClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets gitHub bring your own app client secret information.
+        /// </summary>
+        [JsonProperty(PropertyName = "clientSecret")]
+        public GitHubClientSecret ClientSecret { get; set; }
 
         /// <summary>
         /// Validate the object.

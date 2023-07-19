@@ -63,6 +63,12 @@ namespace Microsoft.Azure.Management.Security
         /// Name of the information protection policy. Possible values include:
         /// 'effective', 'custom'
         /// </param>
+        /// <param name='labels'>
+        /// Dictionary of sensitivity labels.
+        /// </param>
+        /// <param name='informationTypes'>
+        /// The sensitivity information types.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -78,7 +84,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<InformationProtectionPolicy>> CreateOrUpdateWithHttpMessagesAsync(string scope, string informationProtectionPolicyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<InformationProtectionPolicy>> CreateOrUpdateWithHttpMessagesAsync(string scope, string informationProtectionPolicyName, IDictionary<string, SensitivityLabel> labels = default(IDictionary<string, SensitivityLabel>), IDictionary<string, InformationType> informationTypes = default(IDictionary<string, InformationType>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Information protection policies of a specific management group.
         /// </summary>

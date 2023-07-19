@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using Azure.Core.Diagnostics;
-using Azure.Core.Testing;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -24,13 +24,34 @@ namespace Azure.Core.Tests
                     invocations.Add((args, s));
                 }, EventLevel.Verbose);
 
-            AzureCoreEventSource.Singleton.Request("id", "GET", "http", "header");
+            AzureCoreEventSource.Singleton.Request("id", "GET", "http", "header", "Test-SDK");
 
             Assert.AreEqual(1, invocations.Count);
             var singleInvocation = invocations.Single();
 
             Assert.AreEqual("Request", singleInvocation.Item1.EventName);
             Assert.NotNull(singleInvocation.Item2);
+        }
+
+        [Test]
+        public void FiltersMessagesUsingLevel()
+        {
+            var warningInvocations = new List<(EventWrittenEventArgs, string)>();
+            var verboseInvocations = new List<(EventWrittenEventArgs, string)>();
+            using var verboseListener = new AzureEventSourceListener((args, s) => verboseInvocations.Add((args, s)), EventLevel.Verbose);
+            using var warningListener = new AzureEventSourceListener((args, s) => warningInvocations.Add((args, s)), EventLevel.Warning);
+
+            AzureCoreEventSource.Singleton.ErrorResponse("id", 500, "GET", "http", 5);
+            AzureCoreEventSource.Singleton.Request("id", "GET", "http", "header", "Test-SDK");
+
+            Assert.AreEqual(1, warningInvocations.Count);
+            var warningInvocation = warningInvocations.Single();
+            Assert.AreEqual("ErrorResponse", warningInvocation.Item1.EventName);
+            Assert.NotNull(warningInvocation.Item2);
+
+            Assert.AreEqual(2, verboseInvocations.Count);
+            Assert.True(verboseInvocations.Any(c=>c.Item1.EventName == "ErrorResponse"));
+            Assert.True(verboseInvocations.Any(c=>c.Item1.EventName == "Request"));
         }
 
         [Test]
@@ -58,7 +79,7 @@ namespace Azure.Core.Tests
         [Test]
         public void FormatsByteArrays()
         {
-            (EventWrittenEventArgs e, string message) = ExpectSingleEvent(() => TestSource.Log.LogWithByteArray(new byte[] { 0, 1, 233}));
+            (EventWrittenEventArgs e, string message) = ExpectSingleEvent(() => TestSource.Log.LogWithByteArray(new byte[] { 0, 1, 233 }));
             Assert.AreEqual("Logging 0001E9", message);
         }
 
@@ -71,7 +92,16 @@ namespace Azure.Core.Tests
                             "other = 5", message);
         }
 
-        private static (EventWrittenEventArgs, string) ExpectSingleEvent(Action logDelegate)
+        [Test]
+        public void FormatsUnformattableMessageAsKeyValues()
+        {
+            (EventWrittenEventArgs e, string message) = ExpectSingleEvent(() => TestSource.Log.LogUnformattableMessage("a message"));
+            Assert.AreEqual("LogUnformattableMessage" + Environment.NewLine +
+                            nameof(e.Message) + " = Logging {1}" + Environment.NewLine +
+                            "payload = a message", message);
+        }
+
+        private static (EventWrittenEventArgs EventArgs, string Formatted) ExpectSingleEvent(Action logDelegate)
         {
             var invocations = new List<(EventWrittenEventArgs, string)>();
             using var _ = new AzureEventSourceListener(
@@ -108,6 +138,12 @@ namespace Azure.Core.Tests
             public void LogWithByteArray(byte[] b)
             {
                 WriteEvent(3, b);
+            }
+
+            [Event(4, Message = "Logging {1}", Level = EventLevel.Critical)]
+            public void LogUnformattableMessage(string payload)
+            {
+                WriteEvent(4, payload);
             }
         }
     }

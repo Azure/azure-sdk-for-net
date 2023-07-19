@@ -41,24 +41,40 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="type">Resource type</param>
         /// <param name="location">Resource location</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="sku">Properties of Sku</param>
+        /// <param name="sku">Properties of SKU</param>
         /// <param name="provisioningState">Provisioning state of the
         /// namespace.</param>
-        /// <param name="createdAt">The time the namespace was created.</param>
+        /// <param name="status">Status of the namespace.</param>
+        /// <param name="createdAt">The time the namespace was created</param>
         /// <param name="updatedAt">The time the namespace was updated.</param>
         /// <param name="serviceBusEndpoint">Endpoint you can use to perform
         /// Service Bus operations.</param>
         /// <param name="metricId">Identifier for Azure Insights
         /// metrics</param>
-        public SBNamespaceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string))
+        /// <param name="encryption">Properties of BYOK Encryption
+        /// description</param>
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections.</param>
+        /// <param name="disableLocalAuth">This property disables SAS
+        /// authentication for the Service Bus namespace.</param>
+        /// <param name="alternateName">Alternate name for namespace</param>
+        /// <param name="identity">Properties of BYOK Identity
+        /// description</param>
+        public SBNamespaceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), Encryption encryption = default(Encryption), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? disableLocalAuth = default(bool?), string alternateName = default(string), Identity identity = default(Identity))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
+            Status = status;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
             MetricId = metricId;
+            Encryption = encryption;
+            PrivateEndpointConnections = privateEndpointConnections;
+            DisableLocalAuth = disableLocalAuth;
+            AlternateName = alternateName;
+            Identity = identity;
             CustomInit();
         }
 
@@ -68,7 +84,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of Sku
+        /// Gets or sets properties of SKU
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public SBSku Sku { get; set; }
@@ -80,7 +96,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the time the namespace was created.
+        /// Gets status of the namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public string Status { get; private set; }
+
+        /// <summary>
+        /// Gets the time the namespace was created
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
         public System.DateTime? CreatedAt { get; private set; }
@@ -102,6 +124,37 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.metricId")]
         public string MetricId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets properties of BYOK Encryption description
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public Encryption Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of private endpoint connections.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets this property disables SAS authentication for the
+        /// Service Bus namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets alternate name for namespace
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.alternateName")]
+        public string AlternateName { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of BYOK Identity description
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

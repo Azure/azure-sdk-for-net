@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -19,10 +20,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// Describes a virtual machine scale set network profile's IP
-    /// configuration.
+    /// configuration. NOTE: The subnet of a scale set may be modified as long
+    /// as the original subnet and the new subnet are in the same virtual
+    /// network
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetUpdateIPConfiguration : SubResource
+    public partial class VirtualMachineScaleSetUpdateIPConfiguration : IResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -37,7 +40,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetUpdateIPConfiguration class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
         /// <param name="name">The IP configuration name.</param>
         /// <param name="subnet">The subnet.</param>
         /// <param name="primary">Specifies the primary IP Configuration in
@@ -58,8 +60,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// backend address pools.</param>
         /// <param name="loadBalancerInboundNatPools">The load balancer inbound
         /// nat pools.</param>
-        public VirtualMachineScaleSetUpdateIPConfiguration(string id = default(string), string name = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> applicationSecurityGroups = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
-            : base(id)
+        public VirtualMachineScaleSetUpdateIPConfiguration(string name = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> applicationSecurityGroups = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
         {
             Name = name;
             Subnet = subnet;

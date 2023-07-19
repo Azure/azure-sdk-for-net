@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to a add a protectable item to a protection
-        /// container(Add physical server.)
+        /// container(Add physical server).
         /// </remarks>
         /// <param name='fabricName'>
         /// The name of the fabric.
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         /// <remarks>
         /// The operation to a add a protectable item to a protection
-        /// container(Add physical server.)
+        /// container(Add physical server).
         /// </remarks>
         /// <param name='fabricName'>
         /// The name of the fabric.

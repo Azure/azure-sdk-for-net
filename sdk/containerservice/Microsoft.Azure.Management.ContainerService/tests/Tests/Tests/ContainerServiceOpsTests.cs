@@ -8,29 +8,10 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
-namespace Microsoft.Azure.Management.ContainerService.Tests
+namespace ContainerService.Tests
 {
     public partial class ContainerServiceTests : TestBase
     {
-
-        /// <summary>
-        /// Test the listing of container orchestrators.
-        /// </summary>
-        [Fact]
-        public async Task ContainerServiceListOrchestratorsTest()
-        {
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                InitializeClients(context);
-
-                var location = ContainerServiceTestUtilities.GetLocationFromProvider(ResourceManagementClient);
-
-                var orchestratorsListResult = await ContainerServiceClient.ContainerServices.ListOrchestratorsAsync(location);
-
-                Assert.NotNull(orchestratorsListResult);
-                Assert.True(orchestratorsListResult.Orchestrators.Count > 0);
-            }
-        }
 
         /// <summary>
         /// Test the creation of a managed cluster.

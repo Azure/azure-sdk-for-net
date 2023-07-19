@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <param name="type">The resource type.</param>
         /// <param name="location">The resource location.</param>
         /// <param name="tags">The resource tags.</param>
+        /// <param name="zones">The zones for the container group.</param>
         /// <param name="identity">The identity of the container group, if
         /// configured.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -64,12 +65,18 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// group. Only valid in response.</param>
         /// <param name="diagnostics">The diagnostic information for a
         /// container group.</param>
-        /// <param name="networkProfile">The network profile information for a
-        /// container group.</param>
+        /// <param name="subnetIds">The subnet resource IDs for a container
+        /// group.</param>
         /// <param name="dnsConfig">The DNS config information for a container
         /// group.</param>
-        public ContainerGroup(IList<Container> containers, string osType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ContainerGroupIdentity identity = default(ContainerGroupIdentity), string provisioningState = default(string), IList<ImageRegistryCredential> imageRegistryCredentials = default(IList<ImageRegistryCredential>), string restartPolicy = default(string), IpAddress ipAddress = default(IpAddress), IList<Volume> volumes = default(IList<Volume>), ContainerGroupPropertiesInstanceView instanceView = default(ContainerGroupPropertiesInstanceView), ContainerGroupDiagnostics diagnostics = default(ContainerGroupDiagnostics), ContainerGroupNetworkProfile networkProfile = default(ContainerGroupNetworkProfile), DnsConfiguration dnsConfig = default(DnsConfiguration))
-            : base(id, name, type, location, tags)
+        /// <param name="sku">The SKU for a container group. Possible values
+        /// include: 'Standard', 'Dedicated'</param>
+        /// <param name="encryptionProperties">The encryption properties for a
+        /// container group.</param>
+        /// <param name="initContainers">The init containers for a container
+        /// group.</param>
+        public ContainerGroup(IList<Container> containers, string osType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), ContainerGroupIdentity identity = default(ContainerGroupIdentity), string provisioningState = default(string), IList<ImageRegistryCredential> imageRegistryCredentials = default(IList<ImageRegistryCredential>), string restartPolicy = default(string), IpAddress ipAddress = default(IpAddress), IList<Volume> volumes = default(IList<Volume>), ContainerGroupPropertiesInstanceView instanceView = default(ContainerGroupPropertiesInstanceView), ContainerGroupDiagnostics diagnostics = default(ContainerGroupDiagnostics), IList<ContainerGroupSubnetId> subnetIds = default(IList<ContainerGroupSubnetId>), DnsConfiguration dnsConfig = default(DnsConfiguration), string sku = default(string), EncryptionProperties encryptionProperties = default(EncryptionProperties), IList<InitContainerDefinition> initContainers = default(IList<InitContainerDefinition>))
+            : base(id, name, type, location, tags, zones)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -81,8 +88,11 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
             Volumes = volumes;
             InstanceView = instanceView;
             Diagnostics = diagnostics;
-            NetworkProfile = networkProfile;
+            SubnetIds = subnetIds;
             DnsConfig = dnsConfig;
+            Sku = sku;
+            EncryptionProperties = encryptionProperties;
+            InitContainers = initContainers;
             CustomInit();
         }
 
@@ -162,16 +172,35 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         public ContainerGroupDiagnostics Diagnostics { get; set; }
 
         /// <summary>
-        /// Gets or sets the network profile information for a container group.
+        /// Gets or sets the subnet resource IDs for a container group.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.networkProfile")]
-        public ContainerGroupNetworkProfile NetworkProfile { get; set; }
+        [JsonProperty(PropertyName = "properties.subnetIds")]
+        public IList<ContainerGroupSubnetId> SubnetIds { get; set; }
 
         /// <summary>
         /// Gets or sets the DNS config information for a container group.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dnsConfig")]
         public DnsConfiguration DnsConfig { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SKU for a container group. Possible values
+        /// include: 'Standard', 'Dedicated'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sku")]
+        public string Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encryption properties for a container group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryptionProperties")]
+        public EncryptionProperties EncryptionProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the init containers for a container group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.initContainers")]
+        public IList<InitContainerDefinition> InitContainers { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -227,13 +256,33 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
             {
                 Diagnostics.Validate();
             }
-            if (NetworkProfile != null)
+            if (SubnetIds != null)
             {
-                NetworkProfile.Validate();
+                foreach (var element3 in SubnetIds)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
+                    }
+                }
             }
             if (DnsConfig != null)
             {
                 DnsConfig.Validate();
+            }
+            if (EncryptionProperties != null)
+            {
+                EncryptionProperties.Validate();
+            }
+            if (InitContainers != null)
+            {
+                foreach (var element4 in InitContainers)
+                {
+                    if (element4 != null)
+                    {
+                        element4.Validate();
+                    }
+                }
             }
         }
     }

@@ -1,0 +1,36 @@
+parameters:
+  ExclusionDataBaseFileName: ''
+  TargetDirectory: ''
+  PublishAnalysisLogs: false
+  PoliCheckBlobSAS: "$(azuresdk-policheck-blob-SAS)"
+  ExclusionFilePath: "$(Build.SourcesDirectory)/eng/guardian-tools/policheck/PolicheckExclusions.xml"
+
+steps:
+  - pwsh: |
+      azcopy copy "https://azuresdkartifacts.blob.core.windows.net/policheck/${{ parameters.ExclusionDataBaseFileName }}.mdb?${{ parameters.PoliCheckBlobSAS }}" `
+      "$(Build.BinariesDirectory)"
+    displayName: 'Download PoliCheck Exclusion Database'
+
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
+    displayName: 'Run PoliCheck'
+    inputs:
+      targetType: F
+      targetArgument: "$(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}"
+      result: PoliCheck.sarif
+      optionsFC: 0
+      optionsXS: 1
+      optionsPE: 1|2|3|4
+      optionsRulesDBPath: "$(Build.BinariesDirectory)/${{ parameters.ExclusionDataBaseFileName }}.mdb"
+      optionsUEPATH: ${{ parameters.ExclusionFilePath }}
+
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+    displayName: 'Post Analysis (PoliCheck)'
+    inputs:
+      GdnBreakAllTools: false
+      GdnBreakGdnToolPoliCheck: true
+      GdnBreakGdnToolPoliCheckSeverity: Warning
+    continueOnError: true
+
+  - ${{ if eq(parameters.PublishAnalysisLogs, 'true') }}:
+    - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+      displayName: 'Publish Security Analysis Logs'

@@ -34,11 +34,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DiskEncryptionSetUpdate class.
         /// </summary>
+        /// <param name="encryptionType">Possible values include:
+        /// 'EncryptionAtRestWithCustomerKey',
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys',
+        /// 'ConfidentialVmEncryptedWithCustomerKey'</param>
+        /// <param name="rotationToLatestKeyVersionEnabled">Set this flag to
+        /// true to enable auto-updating of this disk encryption set to the
+        /// latest key version.</param>
+        /// <param name="federatedClientId">Multi-tenant application client id
+        /// to access key vault in a different tenant. Setting the value to
+        /// 'None' will clear the property.</param>
         /// <param name="tags">Resource tags</param>
-        public DiskEncryptionSetUpdate(KeyVaultAndKeyReference activeKey = default(KeyVaultAndKeyReference), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), bool? rotationToLatestKeyVersionEnabled = default(bool?), string federatedClientId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionSetIdentity identity = default(EncryptionSetIdentity))
         {
+            EncryptionType = encryptionType;
             ActiveKey = activeKey;
+            RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
+            FederatedClientId = federatedClientId;
             Tags = tags;
+            Identity = identity;
             CustomInit();
         }
 
@@ -48,15 +62,44 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets possible values include:
+        /// 'EncryptionAtRestWithCustomerKey',
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys',
+        /// 'ConfidentialVmEncryptedWithCustomerKey'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryptionType")]
+        public string EncryptionType { get; set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.activeKey")]
-        public KeyVaultAndKeyReference ActiveKey { get; set; }
+        public KeyForDiskEncryptionSet ActiveKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets set this flag to true to enable auto-updating of this
+        /// disk encryption set to the latest key version.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rotationToLatestKeyVersionEnabled")]
+        public bool? RotationToLatestKeyVersionEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets multi-tenant application client id to access key vault
+        /// in a different tenant. Setting the value to 'None' will clear the
+        /// property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.federatedClientId")]
+        public string FederatedClientId { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public EncryptionSetIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

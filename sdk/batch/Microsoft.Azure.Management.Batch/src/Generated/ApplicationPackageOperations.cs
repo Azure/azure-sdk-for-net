@@ -51,7 +51,9 @@ namespace Microsoft.Azure.Management.Batch
         public BatchManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Activates the specified application package.
+        /// Activates the specified application package. This should be done after the
+        /// `ApplicationPackage` was created and uploaded. This needs to be done before
+        /// an `ApplicationPackage` can be used on Pools or Tasks.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
@@ -109,9 +111,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (applicationName == null)
@@ -329,7 +331,11 @@ namespace Microsoft.Azure.Management.Batch
         }
 
         /// <summary>
-        /// Creates an application package record.
+        /// Creates an application package record. The record contains a storageUrl
+        /// where the package should be uploaded to.  Once it is uploaded the
+        /// `ApplicationPackage` needs to be activated using `ApplicationPackageActive`
+        /// before it can be used. If the auto storage account was configured to use
+        /// storage keys, the URL returned will contain a SAS.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
@@ -384,9 +390,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (applicationName == null)
@@ -648,9 +654,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (applicationName == null)
@@ -889,9 +895,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (applicationName == null)
@@ -1148,9 +1154,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (applicationName == null)

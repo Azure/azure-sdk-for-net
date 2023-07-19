@@ -1,0 +1,10 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('Azure.WebJobs'))">
+    <IsClientLibrary>true</IsClientLibrary>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+</Project>

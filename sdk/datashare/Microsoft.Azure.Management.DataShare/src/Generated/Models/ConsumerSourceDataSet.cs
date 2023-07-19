@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
         /// <param name="dataSetId">DataSet Id</param>
         /// <param name="dataSetLocation">Location of the data set.</param>
@@ -42,9 +43,10 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="dataSetType">Type of data set. Possible values
         /// include: 'Blob', 'Container', 'BlobFolder', 'AdlsGen2FileSystem',
         /// 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File',
-        /// 'KustoCluster', 'KustoDatabase', 'SqlDBTable', 'SqlDWTable'</param>
-        public ConsumerSourceDataSet(string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string), string dataSetLocation = default(string), string dataSetName = default(string), string dataSetPath = default(string), string dataSetType = default(string))
-            : base(id, name, type)
+        /// 'KustoCluster', 'KustoDatabase', 'SqlDBTable', 'SqlDWTable',
+        /// 'SynapseWorkspaceSqlPoolTable'</param>
+        public ConsumerSourceDataSet(string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), string dataSetId = default(string), string dataSetLocation = default(string), string dataSetName = default(string), string dataSetPath = default(string), string dataSetType = default(string))
+            : base(id, name, systemData, type)
         {
             DataSetId = dataSetId;
             DataSetLocation = dataSetLocation;
@@ -87,7 +89,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// Gets type of data set. Possible values include: 'Blob',
         /// 'Container', 'BlobFolder', 'AdlsGen2FileSystem', 'AdlsGen2Folder',
         /// 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File', 'KustoCluster',
-        /// 'KustoDatabase', 'SqlDBTable', 'SqlDWTable'
+        /// 'KustoDatabase', 'SqlDBTable', 'SqlDWTable',
+        /// 'SynapseWorkspaceSqlPoolTable'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataSetType")]
         public string DataSetType { get; private set; }

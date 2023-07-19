@@ -77,6 +77,62 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
+            /// Gets the specified Subscription entity associated with a particular user.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='userId'>
+            /// User identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='sid'>
+            /// Subscription entity Identifier. The entity represents the association
+            /// between a user and a product in API Management.
+            /// </param>
+            public static SubscriptionContract Get(this IUserSubscriptionOperations operations, string resourceGroupName, string serviceName, string userId, string sid)
+            {
+                return operations.GetAsync(resourceGroupName, serviceName, userId, sid).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the specified Subscription entity associated with a particular user.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='userId'>
+            /// User identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='sid'>
+            /// Subscription entity Identifier. The entity represents the association
+            /// between a user and a product in API Management.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SubscriptionContract> GetAsync(this IUserSubscriptionOperations operations, string resourceGroupName, string serviceName, string userId, string sid, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, userId, sid, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the collection of subscriptions of the specified user.
             /// </summary>
             /// <param name='operations'>

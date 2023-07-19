@@ -51,13 +51,31 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// reference.</param>
         /// <param name="compute">Compute properties for data flow
         /// activity.</param>
-        public ExecuteDataFlowActivity(string name, DataFlowReference dataFlow, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), DataFlowStagingInfo staging = default(DataFlowStagingInfo), IntegrationRuntimeReference integrationRuntime = default(IntegrationRuntimeReference), ExecuteDataFlowActivityTypePropertiesCompute compute = default(ExecuteDataFlowActivityTypePropertiesCompute))
+        /// <param name="traceLevel">Trace level setting used for data flow
+        /// monitoring output. Supported values are: 'coarse', 'fine', and
+        /// 'none'. Type: string (or Expression with resultType string)</param>
+        /// <param name="continueOnError">Continue on error setting used for
+        /// data flow execution. Enables processing to continue if a sink
+        /// fails. Type: boolean (or Expression with resultType
+        /// boolean)</param>
+        /// <param name="runConcurrently">Concurrent run setting used for data
+        /// flow execution. Allows sinks with the same save order to be
+        /// processed concurrently. Type: boolean (or Expression with
+        /// resultType boolean)</param>
+        /// <param name="sourceStagingConcurrency">Specify number of parallel
+        /// staging for sources applicable to the sink. Type: integer (or
+        /// Expression with resultType integer)</param>
+        public ExecuteDataFlowActivity(string name, DataFlowReference dataFlow, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), DataFlowStagingInfo staging = default(DataFlowStagingInfo), IntegrationRuntimeReference integrationRuntime = default(IntegrationRuntimeReference), ExecuteDataFlowActivityTypePropertiesCompute compute = default(ExecuteDataFlowActivityTypePropertiesCompute), object traceLevel = default(object), object continueOnError = default(object), object runConcurrently = default(object), object sourceStagingConcurrency = default(object))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             DataFlow = dataFlow;
             Staging = staging;
             IntegrationRuntime = integrationRuntime;
             Compute = compute;
+            TraceLevel = traceLevel;
+            ContinueOnError = continueOnError;
+            RunConcurrently = runConcurrently;
+            SourceStagingConcurrency = sourceStagingConcurrency;
             CustomInit();
         }
 
@@ -89,6 +107,38 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.compute")]
         public ExecuteDataFlowActivityTypePropertiesCompute Compute { get; set; }
+
+        /// <summary>
+        /// Gets or sets trace level setting used for data flow monitoring
+        /// output. Supported values are: 'coarse', 'fine', and 'none'. Type:
+        /// string (or Expression with resultType string)
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.traceLevel")]
+        public object TraceLevel { get; set; }
+
+        /// <summary>
+        /// Gets or sets continue on error setting used for data flow
+        /// execution. Enables processing to continue if a sink fails. Type:
+        /// boolean (or Expression with resultType boolean)
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.continueOnError")]
+        public object ContinueOnError { get; set; }
+
+        /// <summary>
+        /// Gets or sets concurrent run setting used for data flow execution.
+        /// Allows sinks with the same save order to be processed concurrently.
+        /// Type: boolean (or Expression with resultType boolean)
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.runConcurrently")]
+        public object RunConcurrently { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify number of parallel staging for sources
+        /// applicable to the sink. Type: integer (or Expression with
+        /// resultType integer)
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.sourceStagingConcurrency")]
+        public object SourceStagingConcurrency { get; set; }
 
         /// <summary>
         /// Validate the object.

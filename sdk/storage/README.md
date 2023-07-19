@@ -6,8 +6,6 @@ Azure Storage is a Microsoft-managed service providing cloud storage that is hig
 
 - [Azure.Storage.Blobs.Batch][blobs_batch] allows you to batch multiple Azure Blob Storage operations in a single request.
 
-- [Azure.Storage.Blobs.Cryptography][blobs_cryptography] supports client-side encryption for Azure Storage block blobs.
-
 - [Azure.Storage.Queues][queues] is a service for storing large numbers of messages.  A queue message can be up to 64 KB in size and a queue may contain millions of messages, up to the total capacity limit of a storage account.
 
 - [Azure.Storage.Files.Shares][files] offers fully managed file shares in the cloud that are accessible via the industry standard Server Message Block (SMB) protocol.  Azure file shares can be mounted concurrently by cloud or on-premises deployments of Windows, Linux, and macOS.
@@ -16,7 +14,7 @@ Azure Storage is a Microsoft-managed service providing cloud storage that is hig
 
 - [Azure.Storage.Common][common] provides infrastructure shared by the other Azure Storage client libraries like shared key authentication and exceptions.
 
-- [Microsoft.Azure.Management.Storage][management] supports managing Azure Storage resources, including the creation of new storage accounts.
+- [Azure.ResourceManager.Storage][management] supports managing Azure Storage resources, including the creation of new storage accounts.
 
 ## Contributing
 
@@ -36,15 +34,14 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FREADME.png)
 
 <!-- LINKS -->
-[blobs]: ./Azure.Storage.Blobs/README.md
-[blobs_batch]: ./Azure.Storage.Blobs.Batch/README.md
-[blobs_cryptography]: ./Azure.Storage.Blobs.Cryptography/README.md
-[queues]: ./Azure.Storage.Queues/README.md
-[files]: ./Azure.Storage.Files.Shares/README.md
-[datalake]: ./Azure.Storage.Files.DataLake/README.md
-[common]: ./Azure.Storage.Common/README.md
-[management]: ./Microsoft.Azure.Management.Storage/
-[storage_contrib]: ./CONTRIBUTING.md
+[blobs]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/README.md
+[blobs_batch]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs.Batch/README.md
+[queues]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Queues/README.md
+[files]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.Shares/README.md
+[datalake]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.DataLake/README.md
+[common]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Common/README.md
+[management]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Microsoft.Azure.Management.Storage/
+[storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

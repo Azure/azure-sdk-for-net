@@ -9,6 +9,169 @@ namespace DataFactory.Tests.JsonSamples
     public class PipelineJsonSamples : JsonSampleCollection<PipelineJsonSamples>
     {
         [JsonSample]
+        public const string AzureDatabricksDeltaLakeCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""AzureDatabricksDeltaLakeSource"",
+            ""query"": ""abc"",
+            ""exportSettings"": {
+               ""type"": ""AzureDatabricksDeltaLakeExportCommand"",
+               ""dateFormat"": ""xxx"",
+               ""timestampFormat"": ""xxx""
+             }
+          },
+          ""sink"": {
+            ""type"": ""AzureDatabricksDeltaLakeSink"",
+            ""preCopyScript"": ""123"",
+            ""importSettings"": {
+               ""type"": ""AzureDatabricksDeltaLakeImportCommand"",
+               ""dateFormat"": ""xxx"",
+               ""timestampFormat"": ""xxx""
+             }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}
+";
+
+        [JsonSample]
+        public const string MongoDbAtlasCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""MongoDbAtlasSource"",
+            ""filter"": {
+                ""value"": ""@dataset().MyFilter""
+             },
+            ""cursorMethods"": {
+                ""project"": {
+                  ""value"": ""@dataset().MyProject"",
+                  ""type"": ""Expression""
+                },
+                ""sort"": ""{ age : 1 }"",
+                ""skip"": ""3"",
+                ""limit"": ""3""
+              },
+             ""batchSize"": ""5""
+          },
+          ""sink"": {
+            ""type"": ""CosmosDbMongoDbApiSink"",
+            ""writeBehavior"": ""upsert"",
+            ""writeBatchSize"": ""5000""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+       }
+    ],
+    ""parameters"": {
+        ""MyFilter"": {
+          ""type"": ""String""
+        },
+        ""MyProject"": {
+          ""type"": ""String""
+        }
+      }
+}
+}
+";
+
+        [JsonSample]
+        public const string MongoDbV2SinkCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""MongoDbAtlasSource"",
+            ""filter"": {
+                ""value"": ""@dataset().MyFilter""
+             },
+            ""cursorMethods"": {
+                ""project"": {
+                  ""value"": ""@dataset().MyProject"",
+                  ""type"": ""Expression""
+                },
+                ""sort"": ""{ age : 1 }"",
+                ""skip"": ""3"",
+                ""limit"": ""3""
+              },
+             ""batchSize"": ""5""
+          },
+          ""sink"": {
+            ""type"": ""MongoDbV2Sink"",
+            ""writeBehavior"": ""upsert"",
+            ""writeBatchSize"": ""5000""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+       }
+    ],
+    ""parameters"": {
+        ""MyFilter"": {
+          ""type"": ""String""
+        },
+        ""MyProject"": {
+          ""type"": ""String""
+        }
+      }
+}
+}
+";
+
+        [JsonSample]
         public const string CopyActivity = @"
 {
   ""name"": ""MyPipeline"",
@@ -476,6 +639,74 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample(version: "Copy")]
+        public const string CopySqlToBlobWithPartitionOption = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SQL to Blob"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""AzureSqlSource"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        partitionOption: {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
+                        partitionSettings: 
+                        {
+                            partitionColumnName: ""partitionColumnName"",
+                            partitionUpperBound: ""10"",
+                            partitionLowerBound: ""1""
+                        }
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        blobWriterAddHeader: true,
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        columnMappings: ""PartitionKey:PartitionKey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSqlDA"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputBlobDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
+
+        [JsonSample(version: "Copy")]
         public const string CopySqlToBlobWithTabularTranslator = @"
 {
     name: ""MyPipelineName"",
@@ -500,7 +731,8 @@ namespace DataFactory.Tests.JsonSamples
                         storedProcedureParameters: {
                             ""stringData"": { value: ""test"", type: ""String""},
                             ""id"": { value: ""3"", type: ""Int""}
-                        }
+                        },
+                        isolationLevel: ""ReadCommitted""
                     },
                     sink:
                     {
@@ -519,6 +751,71 @@ namespace DataFactory.Tests.JsonSamples
                 [ 
                     {
                         referenceName: ""InputSqlDA"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputBlobDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyAmazonRdsForSqlServerToBlobWithTabularTranslator = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from AmazonRdsForSqlServer to Blob"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""AmazonRdsForSqlServerSource"",
+                        sourceRetryCount: 2,
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""CopyTestSrcStoredProcedureWithParameters"",
+                        storedProcedureParameters: {
+                            ""stringData"": { value: ""test"", type: ""String""},
+                            ""id"": { value: ""3"", type: ""Int""}
+                        },
+                        isolationLevel: ""ReadCommitted""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        blobWriterAddHeader: true,
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        columnMappings: ""PartitionKey:PartitionKey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputAmazonRdsForSqlServerDA"", type: ""DatasetReference""
                     }
                 ],
                 outputs: 
@@ -1943,7 +2240,8 @@ namespace DataFactory.Tests.JsonSamples
                         ""propertyBagPropertyName2"": ""PropertyBagValue2"",
                         ""dateTime1"": ""2015-04-12T12:13:14Z"",
                     },
-                    ""retentionTimeInDays"": 35
+                    ""retentionTimeInDays"": 35,
+                    ""autoUserSpecification"" : ""pooladmin""
                 }
             }
         ]
@@ -2191,10 +2489,13 @@ namespace DataFactory.Tests.JsonSamples
                 ""type"": ""AzureMLExecutePipeline"",
                 ""typeProperties"": {
                     ""mlPipelineId"": ""93b9ccc4-0000-0000-8968-43a0a0fe0c44"",
+                    ""mlPipelineEndpointId"": ""mymlPipelineEndpointId"",
+                    ""version"": ""myversion"",
                     ""experimentName"": ""myExperimentName"",
                     ""mlPipelineParameters"": {
                         ""param_name"": ""param_value""
-                    }
+                    },
+                    ""dataPathAssignments"": ""mydataPathAssignments""
                 },
                 ""linkedServiceName"": {
                     ""referenceName"": ""MyAzureMLServiceLinkedService"",
@@ -2435,7 +2736,8 @@ namespace DataFactory.Tests.JsonSamples
                     source:
                     {
                         type: ""SapCloudForCustomerSource"",
-                        query: ""$select=Column0""
+                        query: ""$select=Column0"",
+                        httpRequestTimeout: ""00:05:00""
                     },
                     sink:
                     {
@@ -3401,7 +3703,8 @@ namespace DataFactory.Tests.JsonSamples
                   sink: {
                     type: ""SapCloudForCustomerSink"",
                     writeBehavior: ""Insert"",
-                    writeBatchSize: 50
+                    writeBatchSize: 50,
+                    httpRequestTimeout: ""00:05:00""
                   },
                   enableSkipIncompatibleRow: true,
                   parallelCopies: 32,
@@ -3450,7 +3753,8 @@ namespace DataFactory.Tests.JsonSamples
                     source:
                     {
                         type: ""SapEccSource"",
-                        query: ""$top=1""
+                        query: ""$top=1"",
+                        httpRequestTimeout: ""00:05:00""
                     },
                     sink:
                     {
@@ -3481,6 +3785,58 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyDynamicsAXToAdls = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from DynamicsAX to Azure Data Lake Store"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""DynamicsAXSource"",
+                        query: ""$top=1"",
+                        httpRequestTimeout: ""00:05:00""
+                    },
+                    sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputDynamicsAX"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
         [JsonSample(version: "Copy")]
         public const string CopyNetezzaToBlob = @"
 {
@@ -3694,7 +4050,9 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         type: ""SapOpenHubSource"",
                         excludeLastRequest: false,
-                        baseRequestId: ""123""
+                        baseRequestId: ""123"",
+                        customRfcReadTableFunctionModule: ""fakecustomRfcReadTableFunctionModule"",
+                        sapDataColumnDelimiter: ""|""
                     },
                     sink:
                     {
@@ -4126,6 +4484,53 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CopyActivity_Excel_Adls = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""ExcelSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            }
+          },
+          ""sink"": {
+            ""type"": ""AvroSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""AvroWriteSettings"",
+              ""recordName"": ""testavro"",
+              ""recordNamespace"": ""microsoft.datatransfer.test""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string CopyActivity_Orc_Adls = @"{
   ""properties"": {
     ""activities"": [
@@ -4186,7 +4591,13 @@ namespace DataFactory.Tests.JsonSamples
               ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
-}
+            },
+            ""additionalColumns"": [
+              {
+                ""name"": ""clmn"",
+                ""value"": ""$$FILEPATH""
+              }
+            ]
           },
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
@@ -4198,8 +4609,103 @@ namespace DataFactory.Tests.JsonSamples
             ""formatSettings"": {
               ""type"": ""DelimitedTextWriteSettings"",
               ""quoteAllText"": true,
-              ""fileExtension"": "".csv""
+              ""fileExtension"": "".csv"",
+              ""maxRowsPerFile"": 10,
+              ""fileNamePrefix"": ""orcSinkFile""
             }
+          },
+          ""validateDataConsistency"": true,
+          ""skipErrorFile"": {
+            ""fileMissing"": true,
+            ""dataInconsistency"": true
+          },
+          ""logStorageSettings"": {
+            ""linkedServiceName"": {
+              ""referenceName"": ""exampleLinkedService"",
+              ""type"": ""LinkedServiceReference""
+            },
+            ""path"": ""test"",
+            ""logLevel"": ""exampleLogLevel"",
+            ""enableReliableLogging"": true
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string CopyActivity_DelimitedText_AdlsWithlogSettings = @"{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""skipLineCount"": 10,
+              ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
+            },
+            ""additionalColumns"": [
+              {
+                ""name"": ""clmn"",
+                ""value"": ""$$FILEPATH""
+              }
+            ]
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""quoteAllText"": true,
+              ""fileExtension"": "".csv"",
+              ""maxRowsPerFile"": 10,
+              ""fileNamePrefix"": ""orcSinkFile""
+            }
+          },
+          ""validateDataConsistency"": true,
+          ""skipErrorFile"": {
+            ""fileMissing"": true,
+            ""dataInconsistency"": true
+          },
+          ""logSettings"": {
+             ""enableCopyActivityLog"": true,
+             ""copyActivityLogSettings"": {
+                 ""logLevel"": ""Info"",
+                 ""enableReliableLogging"": true
+              },
+             ""logLocationSettings"": {
+                 ""linkedServiceName"": {
+                    ""referenceName"": ""exampleLinkedService"",
+                    ""type"": ""LinkedServiceReference""
+                  },
+                ""path"": ""test"" 
+              }
           }
         },
         ""inputs"": [
@@ -4232,6 +4738,7 @@ namespace DataFactory.Tests.JsonSamples
               ""type"": ""AzureBlobStorageReadSettings"",
               ""recursive"": true,
               ""enablePartitionDiscovery"": true,
+              ""partitionRootPath"": ""abc/"",
               ""wildcardFolderPath"":  ""abc/efg"",
               ""wildcardFileName"":  ""a.csv""
             },
@@ -4239,7 +4746,7 @@ namespace DataFactory.Tests.JsonSamples
               ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
-}
+            }
           },
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
@@ -4268,6 +4775,143 @@ namespace DataFactory.Tests.JsonSamples
           }
         ],
         ""name"": ""ExampleCopyActivity""
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+            ""source"": {
+                ""type"": ""DelimitedTextSource"",
+                ""storeSettings"": {
+                    ""type"": ""AzureBlobStorageReadSettings"",
+                    ""recursive"": true
+                },
+                ""formatSettings"": {
+                    ""type"": ""DelimitedTextReadSettings"",
+                    ""compressionProperties"": {
+                        ""type"": ""ZipDeflateReadSettings"",
+                        ""preserveZipFileNameAsFolder"": false
+                    }
+                }
+            },
+            ""sink"": {
+                ""type"": ""DelimitedTextSink"",
+                ""storeSettings"": {
+                    ""type"": ""AzureBlobStorageWriteSettings"",
+                    ""recursive"": true
+                },
+                ""formatSettings"": {
+                ""type"": ""DelimitedTextWriteSettings"",
+                ""fileExtension"": "".txt""
+                }
+            }
+        },
+        ""name"": ""DelimitedTextToBlob_Unzip"",
+        ""inputs"": [
+            {
+                ""referenceName"": ""SourceBlobDataset"",
+                ""type"": ""DatasetReference""
+            }
+        ],
+        ""outputs"": [
+            {
+                ""referenceName"": ""SinkBlobDataset"",
+                ""type"": ""DatasetReference""
+            }
+        ]
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string CopyActivity_DelimitedText_AzureBlob_UntarGZip = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""compressionProperties"": {
+                   ""type"": ""TarGZipReadSettings"",
+                   ""preserveCompressionFileNameAsFolder"": false
+                 }
+             }
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+               ""type"": ""AzureDataLakeStoreWriteSettings"",
+               ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""fileExtension"": "".txt""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""DelimitedTextToBlob_UntarGZip""
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+            ""source"": {
+                ""type"": ""DelimitedTextSource"",
+                ""storeSettings"": {
+                    ""type"": ""AzureBlobStorageReadSettings"",
+                    ""recursive"": true
+                },
+                ""formatSettings"": {
+                    ""type"": ""DelimitedTextReadSettings"",
+                    ""compressionProperties"": {
+                        ""type"": ""ZipDeflateReadSettings"",
+                        ""preserveZipFileNameAsFolder"": false
+                    }
+                }
+            },
+            ""sink"": {
+                ""type"": ""DelimitedTextSink"",
+                ""storeSettings"": {
+                    ""type"": ""AzureBlobStorageWriteSettings"",
+                    ""recursive"": true
+                },
+                ""formatSettings"": {
+                    ""type"": ""DelimitedTextWriteSettings"",
+                    ""fileExtension"": "".txt""
+                }
+            }
+        },
+        ""name"": ""DelimitedTextToBlob_Unzip"",
+        ""inputs"": [
+            {
+                ""referenceName"": ""SourceBlobDataset"",
+                ""type"": ""DatasetReference""
+            }
+        ],
+        ""outputs"": [
+            {
+                ""referenceName"": ""SinkBlobDataset"",
+                ""type"": ""DatasetReference""
+            }
+        ]
       }
     ]
   }
@@ -4343,7 +4987,8 @@ namespace DataFactory.Tests.JsonSamples
               ""enablePartitionDiscovery"": true,
               ""wildcardFolderPath"": ""A*"",
               ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
-              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z"",
+              ""fileFilter"":  ""*.log""
             },
             ""formatSettings"": {
               ""type"": ""DelimitedTextReadSettings"",
@@ -4397,7 +5042,8 @@ namespace DataFactory.Tests.JsonSamples
               ""recursive"": true,
               ""wildcardFolderPath"": ""A*"",
               ""wildcardFileName"":  ""*.csv"",
-              ""useBinaryTransfer"":  true
+              ""useBinaryTransfer"":  true,
+              ""disableChunking"":  true
             },
             ""formatSettings"": {
               ""type"": ""DelimitedTextReadSettings"",
@@ -4452,7 +5098,8 @@ namespace DataFactory.Tests.JsonSamples
               ""enablePartitionDiscovery"": true,
               ""wildcardFolderPath"": ""A*"",
               ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
-              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z"",
+              ""deleteFilesAfterCompletion"": true
             },
             ""formatSettings"": {
               ""type"": ""DelimitedTextReadSettings"",
@@ -4739,6 +5386,156 @@ namespace DataFactory.Tests.JsonSamples
           }
         ],
         ""name"": ""ExampleCopyActivity""
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""JsonSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""JsonReadSettings"",
+              ""compressionProperties"": {
+                ""type"": ""ZipDeflateReadSettings"",
+                ""preserveZipFileNameAsFolder"": false
+              }
+            },
+            ""additionalColumns"": [
+              {
+                ""name"": ""clmn"",
+                ""value"": ""$$FILEPATH""
+              }
+            ]
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageWriteSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""fileExtension"": "".txt""
+            }
+          }
+        },
+        ""name"": ""JsonBlobToBlob_Unzip"",
+        ""inputs"": [
+          {
+            ""referenceName"": ""SourceBlobDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SinkBlobDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string CopyActivity_Xml_AzureBlob = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""XmlSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true,
+              ""wildcardFolderPath"":  ""abc*d"",
+              ""wildcardFileName"":  ""*.xml""
+            },
+            ""formatSettings"": {
+              ""type"": ""XmlReadSettings"",
+              ""validationMode"": ""xsd""
+            }
+          },
+          ""sink"": {
+            ""type"": ""JsonSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""JsonWriteSettings"",
+              ""filePattern"": ""arrayOfObjects""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""sourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""sinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""XmlSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""XmlReadSettings"",
+              ""compressionProperties"": {
+                ""type"": ""ZipDeflateReadSettings"",
+                ""preserveZipFileNameAsFolder"": false
+              }
+            },
+            ""additionalColumns"": [
+              {
+                ""name"": ""clmn"",
+                ""value"": ""$$FILEPATH""
+              }
+            ]
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageWriteSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""fileExtension"": "".txt""
+            }
+          }
+        },
+        ""name"": ""XmlBlobToBlob_Unzip"",
+        ""inputs"": [
+          {
+            ""referenceName"": ""SourceBlobDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""SinkBlobDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
       }
     ]
   }
@@ -4757,7 +5554,8 @@ namespace DataFactory.Tests.JsonSamples
             ""storeSettings"": {
               ""type"": ""AzureDataLakeStoreReadSettings"",
               ""recursive"": true,
-              ""enablePartitionDiscovery"": true
+              ""enablePartitionDiscovery"": true,
+              ""fileListPath"": ""test.txt""
             }
           },
           ""sink"": {
@@ -4765,7 +5563,8 @@ namespace DataFactory.Tests.JsonSamples
             ""storeSettings"": {
               ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
-              ""copyBehavior"": ""PreserveHierarchy""
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""expiryDateTime"": ""2018-12-01T05:00:00Z""
             }
           }
         },
@@ -4884,6 +5683,49 @@ namespace DataFactory.Tests.JsonSamples
             ""type"": ""DatasetReference""
           }
         ]
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""BinarySource"",
+            ""storeSettings"": {
+              ""type"": ""FileServerReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""BinaryReadSettings"",
+              ""compressionProperties"": {
+                ""type"": ""ZipDeflateReadSettings"",
+                ""preserveZipFileNameAsFolder"": false
+              }
+            }
+          },
+          ""sink"": {
+            ""type"": ""BinarySink"",
+            ""storeSettings"": {
+              ""type"": ""SftpWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""operationTimeout"": ""01:00:00"",
+              ""useTempFileRename"": false
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
       }
     ]
   }
@@ -4899,13 +5741,11 @@ namespace DataFactory.Tests.JsonSamples
         ""typeProperties"": {
           ""source"": {
             ""type"": ""TeradataSource"",
-            ""partitionOption"": ""DynamicRange"",
-                        ""partitionSettings"": {
-                            ""partitionColumnName"": ""EmployeeKey"",
-                            ""partitionUpperBound"": ""1"",
-                            ""partitionLowerBound"": ""500""
-                        }
-          },
+            ""partitionOption"": {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+               }
+           },
           ""sink"": {
             ""type"": ""BinarySink"",
             ""storeSettings"": {
@@ -5161,7 +6001,11 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         type: ""SapTableSource"",
                         rowCount: 3,
-                        partitionOption: ""PartitionOnCalendarDate"",
+                        sapDataColumnDelimiter: ""|"",
+                        partitionOption: {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                         partitionSettings: 
                         {
                              ""partitionColumnName"": ""fakeColumn"",
@@ -5276,6 +6120,43 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample(version: "Copy")]
+        public const string AmazonRdsForOracleSourcePipeline = @"
+{
+    name: ""DataPipeline_PostgreSqlSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""AmazonRdsForOracleToPostgreSqlCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""AmazonRdsForOracleSource"",
+                        query: ""select * from faketable""
+                    },
+                    sink:
+                    {
+                        type: ""AzurePostgreSqlSink"",
+                        preCopyScript: ""fake script""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
         public const string OraclePartitionSourcePipeline = @"
 {
     name: ""DataPipeline_OraclePartitionSample"",
@@ -5330,7 +6211,10 @@ namespace DataFactory.Tests.JsonSamples
                     source:
                     {                               
                         type: ""NetezzaSource"",
-                        partitionOption: ""DataSlice""
+                        partitionOption: {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                     },
                     sink:
                     {
@@ -5367,7 +6251,8 @@ namespace DataFactory.Tests.JsonSamples
                     source:
                     {                               
                         type: ""ODataSource"",
-                        query: ""$top=1""
+                        query: ""$top=1"",
+                        httpRequestTimeout: ""00:05:00""
                     },
                     sink:
                     {
@@ -5731,6 +6616,51 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string ExecuteDataFlowActivityPipelineWithExpression = @"
+{
+    name: ""My Execute Data Flow Activity pipeline"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteDataFlow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType:  {
+                            value: ""@parameters('MemoryOptimized')"",
+                            type: ""Expression""
+                        },
+                        coreCount: {
+                           value: ""@parameters('8')"",
+                           type: ""Expression""
+                        },                       
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
         public const string CopyActivity_DelimitedText_GoogleCloudStorage = @"{
   ""properties"": {
     ""activities"": [
@@ -5787,6 +6717,126 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CopyActivity_DelimitedText_AmazonS3Compatible = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AmazonS3CompatibleReadSettings"",
+              ""recursive"": true,
+              ""wildcardFolderPath"": ""A*"",
+              ""wildcardFileName"": ""*.csv"",
+              ""prefix"": ""fakeprefix"",
+              ""fileListPath"": ""fileListPath"",
+              ""enablePartitionDiscovery"": true,
+              ""partitionRootPath"": ""partitionRootPath"",
+              ""deleteFilesAfterCompletion"": true,
+              ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""skipLineCount"": 10,
+              ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
+            }
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""quoteAllText"": true,
+              ""fileExtension"": "".csv""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string CopyActivity_DelimitedText_OracleCloudStorage = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""OracleCloudStorageReadSettings"",
+              ""recursive"": true,
+              ""wildcardFolderPath"": ""A*"",
+              ""wildcardFileName"": ""*.csv"",
+              ""prefix"": ""fakeprefix"",
+              ""fileListPath"": ""fileListPath"",
+              ""enablePartitionDiscovery"": true,
+              ""partitionRootPath"": ""partitionRootPath"",
+              ""deleteFilesAfterCompletion"": true,
+              ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""skipLineCount"": 10,
+              ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
+            }
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""quoteAllText"": true,
+              ""fileExtension"": "".csv""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string CopyActivity_DelimitedText_AzureFileStorage = @"{
   ""properties"": {
     ""activities"": [
@@ -5800,6 +6850,53 @@ namespace DataFactory.Tests.JsonSamples
               ""recursive"": true,
               ""wildcardFileName"": ""*.csv"",
               ""wildcardFolderPath"": ""A*"",
+              ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z"",
+              ""enablePartitionDiscovery"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""skipLineCount"": 10,
+              ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
+            }
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""quoteAllText"": true,
+              ""fileExtension"": "".csv""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureFileStorageReadSettings"",
+              ""recursive"": true,
+              ""prefix"": ""prefix"",
               ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
               ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z"",
               ""enablePartitionDiscovery"": true
@@ -5980,7 +7077,10 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         ""type"": ""SapHanaSource"",
                         ""query"": ""$select=Column0"",
-                        ""partitionOption"": ""SapHanaDynamicRange"",
+                        ""partitionOption"": {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                         ""partitionSettings"": {
                             ""partitionColumnName"": ""INTEGERTYPE""
                         }                        
@@ -6043,7 +7143,8 @@ namespace DataFactory.Tests.JsonSamples
                         ""type"": ""SftpWriteSettings"",
                         ""maxConcurrentConnections"": 3,
                         ""copyBehavior"": ""PreserveHierarchy"",
-                        ""operationTimeout"": ""01:00:00""
+                        ""operationTimeout"": ""01:00:00"",
+                        ""useTempFileRename"": true
                       }
                     }
                   },
@@ -6063,6 +7164,462 @@ namespace DataFactory.Tests.JsonSamples
                 }
         ]
     }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string SharePointOnlineListPipeline = @"
+{
+    name: ""DataPipeline_SharePointOnlineListSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""SharePointOnlineListToblobCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""SharePointOnlineListSource"",
+                        query: ""$top=1"",
+                        httpRequestTimeout: ""00:05:00""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyWithTypeConversion = @"
+{
+  ""name"": ""MyPipelineName"",
+  ""properties"": {
+    ""description"" : ""Copy from CSV to SQL DW with Copy Command"",
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""name"": ""TestActivity"",
+        ""description"": ""Test activity description"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""rowDelimiter"": ""\n"",
+              ""quoteChar"": ""\"""",
+              ""escapeChar"": ""\""""
+            }
+          },
+          ""sink"": {
+            ""type"": ""SqlSink""
+          },
+          ""translator"": {
+            ""type"": ""TabularTranslator"",
+            ""mappings"": [
+              {
+                ""source"": {
+                  ""ordinal"": 3
+                },
+                ""sink"": {
+                  ""name"": ""CustomerName""
+                }
+              },
+              {
+                ""source"": {
+                  ""ordinal"": 2
+                },
+                ""sink"": {
+                  ""name"": ""CustomerAddress""
+                }
+              },
+              {
+                ""source"": {
+                  ""ordinal"": 1
+                },
+                ""sink"": {
+                  ""name"": ""CustomerDate""
+                }
+              }
+            ],
+            ""typeConversion"": true,
+            ""typeConversionSettings"": {
+              ""allowDataTruncation"": false,
+              ""dateTimeFormat"": ""MM/dd/yyyy HH:mm""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      }
+    ]
+  }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySqlToRest = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SQL to Rest"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlSource"",
+                        sourceRetryCount: 2,
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""CopyTestSrcStoredProcedureWithParameters"",
+                        storedProcedureParameters: {
+                            ""stringData"": { value: ""test"", type: ""String""},
+                            ""id"": { value: ""3"", type: ""Int""}
+                        },
+                        isolationLevel: ""ReadCommitted""
+                    },
+                    sink:
+                    {
+                        type: ""RestSink"",
+                        requestMethod: ""POST"",
+                        requestInterval: ""00:01:40"",
+                        httpRequestTimeout: ""00:01:40"",
+                        additionalHeaders:{
+                            ""Key"":""Value""
+                        },
+                        writeBatchSize: 1000,
+                        writeBatchTimeout: ""01:00:00"",
+                        httpCompressionType: ""gzip""
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        columnMappings: ""PartitionKey:PartitionKey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSqlDA"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputRestDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+        [JsonSample(version: "Copy")]
+        public const string CopySqlToRestWithDisableMetricsCollection = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SQL to Rest"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlSource"",
+                        sourceRetryCount: 2,
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
+                        sqlReaderStoredProcedureName: ""CopyTestSrcStoredProcedureWithParameters"",
+                        storedProcedureParameters: {
+                            ""stringData"": { value: ""test"", type: ""String""},
+                            ""id"": { value: ""3"", type: ""Int""}
+                        },
+                        isolationLevel: ""ReadCommitted"",
+                        disableMetricsCollection: true
+                    },
+                    sink:
+                    {
+                        type: ""RestSink"",
+                        requestMethod: ""POST"",
+                        requestInterval: ""00:01:40"",
+                        httpRequestTimeout: ""00:01:40"",
+                        additionalHeaders:{
+                            ""Key"":""Value""
+                        },
+                        writeBatchSize: 1000,
+                        writeBatchTimeout: ""01:00:00"",
+                        httpCompressionType: ""gzip"",
+                        disableMetricsCollection: true
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        columnMappings: ""PartitionKey:PartitionKey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSqlDA"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputRestDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySqlMIToSqlMIWithTableLockUpsert = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SqlMI to SqlMI"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlMISource"",
+                        sqlReaderQuery: ""select * from my_table"",
+                        queryTimeout: ""00:00:01"",
+                        partitionOption: ""DynamicRange"",
+                        partitionSettings: {
+                           partitionColumnName: ""column"",
+                           partitionUpperBound: 1,
+                           partitionLowerBound: 100
+                        }
+                    },
+                    sink:
+                    {
+                        type: ""SqlMISink"",
+                        sqlWriterTableType: ""MarketingType"",
+                        sqlWriterUseTableLock: true,
+                        writeBehavior: ""Upsert"",
+                        upsertSettings:{
+                           useTempDB: true,
+                           keys: [""key1""]
+                        }
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        columnMappings: ""PartitionKey:PartitionKey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""exampleDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""exampleDataset"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string ExecuteWranglingDataFlowActivityPipeline = @"
+{
+    name: ""My Power Query Activity pipeline"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteWranglingDataflow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType: ""MemoryOptimized"",
+                        coreCount: 8                         
+                    },
+                    sinks: {
+                        userquery: {
+                            name: ""sink1"",
+                            dataset: {
+                                referenceName: ""dataset1"",
+                                type: ""DatasetReference""
+                            },
+                            script: ""sink() ~> sink1""
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string ExecuteWranglingDataFlowActivityPipelineNew = @"
+{
+    name: ""My Power Query Activity pipeline"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteWranglingDataflow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType: ""MemoryOptimized"",
+                        coreCount: 8                         
+                    },
+                    queries:[
+                      {
+                         queryName: """",
+                         dataflowSinks: []
+                      }
+                    ]
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string ExecuteScriptActivityPipeline = @"
+{
+  ""name"": ""##PipelineName##"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyScriptActivity"",
+        ""type"": ""Script"",
+        ""linkedServiceName"": {
+          ""referenceName"": ""myLinkedService"",
+          ""type"": ""LinkedServiceReference""
+        },
+        ""typeProperties"": {
+          ""scriptBlockExecutionTimeout"": ""12:00:00"",
+          ""scripts"": [
+            {
+              ""text"": ""@pipeline().parameters.query"",
+              ""type"": ""Query""
+            }
+          ]
+        }
+      }
+    ],
+    ""parameters"": {
+      ""query"": {
+          ""type"": ""String""
+        }
+      }
+   }
 }
 ";
     }

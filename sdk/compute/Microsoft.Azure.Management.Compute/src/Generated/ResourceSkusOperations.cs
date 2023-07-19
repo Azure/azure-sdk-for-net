@@ -54,7 +54,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the list of Microsoft.Compute SKUs available for your Subscription.
         /// </summary>
         /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// The filter to apply on the operation. Only **location** filter is supported
+        /// currently.
+        /// </param>
+        /// <param name='includeExtendedLocations'>
+        /// To Include Extended Locations information or not in the response.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -77,13 +81,13 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ResourceSku>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ResourceSku>>> ListWithHttpMessagesAsync(string filter = default(string), string includeExtendedLocations = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2021-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -93,6 +97,7 @@ namespace Microsoft.Azure.Management.Compute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("filter", filter);
+                tracingParameters.Add("includeExtendedLocations", includeExtendedLocations);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -108,6 +113,10 @@ namespace Microsoft.Azure.Management.Compute
             if (filter != null)
             {
                 _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
+            if (includeExtendedLocations != null)
+            {
+                _queryParameters.Add(string.Format("includeExtendedLocations={0}", System.Uri.EscapeDataString(includeExtendedLocations)));
             }
             if (_queryParameters.Count > 0)
             {

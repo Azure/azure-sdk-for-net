@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="dataDiskImages">A list of data disk images.</param>
-        public GalleryImageVersionStorageProfile(GalleryArtifactVersionSource source = default(GalleryArtifactVersionSource), GalleryOSDiskImage osDiskImage = default(GalleryOSDiskImage), IList<GalleryDataDiskImage> dataDiskImages = default(IList<GalleryDataDiskImage>))
+        public GalleryImageVersionStorageProfile(GalleryArtifactVersionFullSource source = default(GalleryArtifactVersionFullSource), GalleryOSDiskImage osDiskImage = default(GalleryOSDiskImage), IList<GalleryDataDiskImage> dataDiskImages = default(IList<GalleryDataDiskImage>))
         {
             Source = source;
             OsDiskImage = osDiskImage;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "source")]
-        public GalleryArtifactVersionSource Source { get; set; }
+        public GalleryArtifactVersionFullSource Source { get; set; }
 
         /// <summary>
         /// </summary>
@@ -63,32 +63,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "dataDiskImages")]
         public IList<GalleryDataDiskImage> DataDiskImages { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Source != null)
-            {
-                Source.Validate();
-            }
-            if (OsDiskImage != null)
-            {
-                OsDiskImage.Validate();
-            }
-            if (DataDiskImages != null)
-            {
-                foreach (var element in DataDiskImages)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
     }
 }

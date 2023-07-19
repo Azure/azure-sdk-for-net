@@ -21,5 +21,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string DockerFile = "DockerFile";
         public const string ONNX = "ONNX";
         public const string VAIDK = "VAIDK";
+        public const string OpenVino = "OpenVino";
     }
 }

@@ -37,10 +37,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='instanceId'>
         /// The instance ID of the virtual machine.
         /// </param>
-        /// <param name='tempDisk'>
-        /// Specifies whether to reimage temp disk. Default value: false. Note:
-        /// This temp disk reimage parameter is only supported for VM/VMSS with
-        /// Ephemeral OS disk.
+        /// <param name='vmScaleSetVMReimageInput'>
+        /// Parameters for the Reimaging Virtual machine in ScaleSet.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,7 +52,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, bool? tempDisk = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = default(VirtualMachineScaleSetVMReimageParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Allows you to re-image all the disks ( including data disks ) in
         /// the a VM scale set instance. This operation is only supported for
@@ -155,6 +153,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='instanceId'>
         /// The instance ID of the virtual machine.
         /// </param>
+        /// <param name='forceDeletion'>
+        /// Optional parameter to force delete a virtual machine from a VM
+        /// scale set. (Feature in Preview)
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -167,7 +169,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a virtual machine from a VM scale set.
         /// </summary>
@@ -181,8 +183,10 @@ namespace Microsoft.Azure.Management.Compute
         /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation. Possible values
-        /// include: 'instanceView'
+        /// The expand expression to apply on the operation. 'InstanceView'
+        /// will retrieve the instance view of the virtual machine. 'UserData'
+        /// will retrieve the UserData of the virtual machine. Possible values
+        /// include: 'instanceView', 'userData'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -241,7 +245,8 @@ namespace Microsoft.Azure.Management.Compute
         /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='select'>
-        /// The list parameters.
+        /// The list parameters. Allowed values are 'instanceView',
+        /// 'instanceView/statuses'.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -369,6 +374,41 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse> RedeployWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// The operation to retrieve SAS URIs of boot diagnostic logs for a
+        /// virtual machine in a VM scale set.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
+        /// </param>
+        /// <param name='sasUriExpirationTimeInMinutes'>
+        /// Expiration duration in minutes for the SAS URIs with a value
+        /// between 1 to 1440 minutes. **Note:** If not specified, SAS URIs
+        /// will be generated with a default expiration duration of 120
+        /// minutes.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RetrieveBootDiagnosticsDataResult>> RetrieveBootDiagnosticsDataWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, int? sasUriExpirationTimeInMinutes = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Performs maintenance on a virtual machine in a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -393,6 +433,32 @@ namespace Microsoft.Azure.Management.Compute
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> PerformMaintenanceWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The operation to simulate the eviction of spot virtual machine in a
+        /// VM scale set.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmScaleSetName'>
+        /// The name of the VM scale set.
+        /// </param>
+        /// <param name='instanceId'>
+        /// The instance ID of the virtual machine.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> SimulateEvictionWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Run command on a virtual machine in a VM scale set.
         /// </summary>
@@ -437,10 +503,8 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='instanceId'>
         /// The instance ID of the virtual machine.
         /// </param>
-        /// <param name='tempDisk'>
-        /// Specifies whether to reimage temp disk. Default value: false. Note:
-        /// This temp disk reimage parameter is only supported for VM/VMSS with
-        /// Ephemeral OS disk.
+        /// <param name='vmScaleSetVMReimageInput'>
+        /// Parameters for the Reimaging Virtual machine in ScaleSet.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -454,7 +518,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, bool? tempDisk = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = default(VirtualMachineScaleSetVMReimageParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Allows you to re-image all the disks ( including data disks ) in
         /// the a VM scale set instance. This operation is only supported for
@@ -555,6 +619,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='instanceId'>
         /// The instance ID of the virtual machine.
         /// </param>
+        /// <param name='forceDeletion'>
+        /// Optional parameter to force delete a virtual machine from a VM
+        /// scale set. (Feature in Preview)
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -567,7 +635,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Power off (stop) a virtual machine in a VM scale set. Note that
         /// resources are still attached and you are getting charged for the

@@ -42,18 +42,23 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="description">the description of the alert rule that
         /// will be included in the alert email.</param>
+        /// <param name="provisioningState">the provisioning state.</param>
+        /// <param name="action">action that is performed when the alert rule
+        /// becomes active, and when an alert condition is resolved.</param>
         /// <param name="actions">the array of actions that are performed when
         /// the alert rule becomes active, and when an alert condition is
         /// resolved.</param>
         /// <param name="lastUpdatedTime">Last time the rule was updated in
         /// ISO8601 format.</param>
-        public AlertRuleResourcePatch(string name, bool isEnabled, RuleCondition condition, IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), IList<RuleAction> actions = default(IList<RuleAction>), System.DateTime? lastUpdatedTime = default(System.DateTime?))
+        public AlertRuleResourcePatch(string name, bool isEnabled, RuleCondition condition, IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string provisioningState = default(string), RuleAction action = default(RuleAction), IList<RuleAction> actions = default(IList<RuleAction>), System.DateTime? lastUpdatedTime = default(System.DateTime?))
         {
             Tags = tags;
             Name = name;
             Description = description;
+            ProvisioningState = provisioningState;
             IsEnabled = isEnabled;
             Condition = condition;
+            Action = action;
             Actions = actions;
             LastUpdatedTime = lastUpdatedTime;
             CustomInit();
@@ -84,6 +89,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets the provisioning state.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
         /// Gets or sets the flag that indicates whether the alert rule is
         /// enabled.
         /// </summary>
@@ -96,6 +107,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.condition")]
         public RuleCondition Condition { get; set; }
+
+        /// <summary>
+        /// Gets or sets action that is performed when the alert rule becomes
+        /// active, and when an alert condition is resolved.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.action")]
+        public RuleAction Action { get; set; }
 
         /// <summary>
         /// Gets or sets the array of actions that are performed when the alert

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <summary>
         /// Initializes a new instance of the ErrorDetails class.
         /// </summary>
-        /// <param name="error">Object containing error details.</param>
+        /// <param name="error">Error details</param>
         public ErrorDetails(ErrorDetailsInternal error = default(ErrorDetailsInternal))
         {
             Error = error;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets object containing error details.
+        /// Gets or sets error details
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public ErrorDetailsInternal Error { get; set; }

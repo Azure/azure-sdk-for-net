@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
         }
 
         /// <summary>
-        /// Resources basic query test.
+        /// Resources basic query test using default ObjectArray response format.
         /// </summary>
         [Fact]
         public void ResourcesBasicQueryTest()
@@ -58,10 +58,51 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
             {
                 var resourceGraphClient = GetResourceGraphClient(context);
                 var query = new QueryRequest
+                {
+                    Subscriptions = new List<string> { "eaab1166-1e13-4370-a951-6ed345a48c15" },
+                    Query = "project id, tags, properties | limit 2"
+                };
+
+                var queryResponse = resourceGraphClient.Resources(query);
+
+                // Top-level response fields
+                Assert.Equal(2, queryResponse.Count);
+                Assert.Equal(2, queryResponse.TotalRecords);
+                Assert.Null(queryResponse.SkipToken);
+                Assert.Equal(ResultTruncated.False, queryResponse.ResultTruncated);
+                Assert.NotNull(queryResponse.Data);
+                Assert.NotNull(queryResponse.Facets);
+                Assert.Empty(queryResponse.Facets);
+
+                // Data
+                var array = (queryResponse.Data as JArray).ToObject<IList<IDictionary<string, object>>>();
+                Assert.NotNull(array);
+                Assert.Equal(2, array.Count);
+                Assert.Equal(3, array[0].Count);
+                Assert.IsType<string>(array[0]["id"]);
+                Assert.IsType<JObject>(array[0]["tags"]);
+                Assert.IsType<JObject>(array[0]["properties"]);
+            }
+        }
+
+        /// <summary>
+        /// Resources basic query test using Table response format.
+        /// </summary>
+        [Fact]
+        public void ResourcesBasicQueryTableTest()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var resourceGraphClient = GetResourceGraphClient(context);
+                var query = new QueryRequest
                     {
-                        Subscriptions = new List<string> { "00000000-0000-0000-0000-000000000000" },
-                        Query = "project id, tags, properties | limit 2"
-                    };
+                        Subscriptions = new List<string> { "eaab1166-1e13-4370-a951-6ed345a48c15" },
+                        Query = "project id, tags, properties | limit 2",
+                        Options = new QueryRequestOptions
+                        {
+                            ResultFormat = ResultFormat.Table
+                        }
+                };
 
                 var queryResponse = resourceGraphClient.Resources(query);
                 
@@ -104,40 +145,33 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 var resourceGraphClient = GetResourceGraphClient(context);
                 var query = new QueryRequest
                 {
-                    Subscriptions = new List<string> { "00000000-0000-0000-0000-000000000000" },
+                    Subscriptions = new List<string> { "eaab1166-1e13-4370-a951-6ed345a48c15" },
                     Query = "project id",
                     Options = new QueryRequestOptions
                     {
-                        SkipToken = "82aw3vQlArEastJ24LABY8oPgQLesIyAyzYs2g6/aOOOmJHSYFj39fODurJV5e2tTFFebWcfxn7n5edicA8u6HgSJe1GCEk5HjxwLkeJiye2LVZDC7TaValkJbsk9JqY4yv5c7iRiLqgO34RbHEeVfLJpa56u4RZu0K+GpQvnBRPyAhy3KbwhZWpU5Nnqnud2whGb5WKdlL8xF7wnQaUnUN2lns8WwqwM4rc0VK4BbQt/WfWWcYJivSAyB3m4Z5g73df1KiU4C+K8auvUMpLPYVxxnKC/YZz42YslVAWXXUmuGOaM2SfLHRO6o4O9DgXlUgYjeFWqIbAkmMiVEqU",
-                        Top = 4,
-                        Skip = 8
+                        SkipToken = "ew0KICAiJGlkIjogIjEiLA0KICAiTWF4Um93cyI6IDQsDQogICJSb3dzVG9Ta2lwIjogNCwNCiAgIkt1c3RvQ2x1c3RlclVybCI6ICJodHRwczovL2FybXRvcG9sb2d5Lmt1c3RvLndpbmRvd3MubmV0Ig0KfQ==",
+                        Top = 6,
+                        Skip = 4
                     }
                 };
 
                 var queryResponse = resourceGraphClient.Resources(query);
                 
                 // Top-level response fields
-                Assert.Equal(4, queryResponse.Count);
-                Assert.Equal(743, queryResponse.TotalRecords);
+                Assert.Equal(6, queryResponse.Count);
+                Assert.Equal(43, queryResponse.TotalRecords);
                 Assert.NotNull(queryResponse.SkipToken);
                 Assert.Equal(ResultTruncated.False, queryResponse.ResultTruncated);
                 Assert.NotNull(queryResponse.Data);
                 Assert.NotNull(queryResponse.Facets);
                 Assert.Empty(queryResponse.Facets);
 
-                var table = (queryResponse.Data as JObject).ToObject<Table>();
-
-                // Data columns
-                Assert.NotNull(table.Columns);
-                Assert.Single(table.Columns);
-                Assert.NotNull(table.Columns[0].Name);
-                Assert.Equal(ColumnDataType.String, table.Columns[0].Type);
-
-                // Data rows
-                Assert.NotNull(table.Rows);
-                Assert.Equal(4, table.Rows.Count);
-                Assert.Single(table.Rows[0]);
-                Assert.IsType<string>(table.Rows[0][0]);
+                // Data
+                var array = (queryResponse.Data as JArray).ToObject<IList<IDictionary<string, object>>>();
+                Assert.NotNull(array);
+                Assert.Equal(6, array.Count);
+                Assert.Equal(1, array[0].Count);
+                Assert.IsType<string>(array[0]["id"]);
             }
         }
         
@@ -152,8 +186,8 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 var invalidExpression = "nonExistingColumn";
                 var query = new QueryRequest
                 {
-                    Subscriptions = new List<string> { "00000000-0000-0000-0000-000000000000" },
-                    Query = "project id, location | limit 10",
+                    Subscriptions = new List<string> { "eaab1166-1e13-4370-a951-6ed345a48c15" },
+                    Query = "project id, location | limit 8",
                     Facets = new List<FacetRequest>
                     {
                         new FacetRequest
@@ -162,7 +196,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                             Options = new FacetRequestOptions
                             {
                                 SortOrder = FacetSortOrder.Desc,
-                                Top = 4
+                                Top = 2
                             }
                         },
                         new FacetRequest
@@ -171,7 +205,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                             Options = new FacetRequestOptions
                             {
                                 SortOrder = FacetSortOrder.Desc,
-                                Top = 4
+                                Top = 2
                             }
                         }
                     }
@@ -180,8 +214,8 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 var queryResponse = resourceGraphClient.Resources(query);
                 
                 // Top-level response fields
-                Assert.Equal(10, queryResponse.Count);
-                Assert.Equal(10, queryResponse.TotalRecords);
+                Assert.Equal(8, queryResponse.Count);
+                Assert.Equal(8, queryResponse.TotalRecords);
                 Assert.Null(queryResponse.SkipToken);
                 Assert.Equal(ResultTruncated.False, queryResponse.ResultTruncated);
                 Assert.NotNull(queryResponse.Data);
@@ -192,25 +226,16 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 var validFacet = queryResponse.Facets[0] as FacetResult;
                 Assert.NotNull(validFacet);
                 Assert.Equal(validExpression, validFacet.Expression);
-                Assert.Equal(4, validFacet.TotalRecords);
-                Assert.Equal(4, validFacet.Count);
+                Assert.Equal(2, validFacet.TotalRecords);
+                Assert.Equal(2, validFacet.Count);
 
-                var facetData = (validFacet.Data as JObject).ToObject<Table>();
+                // Valid facet data
+                var facetData = (validFacet.Data as JArray).ToObject<IList<IDictionary<string, object>>>();
 
-                // Valid facet columns
-                Assert.NotNull(facetData.Columns);
-                Assert.Equal(2, facetData.Columns.Count);
-                Assert.NotNull(facetData.Columns[0].Name);
-                Assert.NotNull(facetData.Columns[1].Name);
-                Assert.Equal(ColumnDataType.String, facetData.Columns[0].Type);
-                Assert.Equal(ColumnDataType.Integer, facetData.Columns[1].Type);
-
-                // Valid facet rows
-                Assert.NotNull(facetData.Rows);
-                Assert.Equal(4, facetData.Rows.Count);
-                Assert.Equal(2, facetData.Rows[0].Count);
-                Assert.IsType<string>(facetData.Rows[0][0]);
-                Assert.IsType<long>(facetData.Rows[0][1]);
+                Assert.Equal(2, facetData.Count);
+                Assert.Equal(2, facetData[0].Count);
+                Assert.IsType<string>(facetData[0]["location"]);
+                Assert.IsType<Int64>(facetData[1]["count"]);
 
                 // Invalid facet
                 var invalidFacet = queryResponse.Facets[1] as FacetError;
@@ -231,7 +256,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 var resourceGraphClient = GetResourceGraphClient(context);
                 var query = new QueryRequest
                 {
-                    Subscriptions = new List<string> { "00000000-0000-0000-0000-000000000000" },
+                    Subscriptions = new List<string> { "eaab1166-1e13-4370-a951-6ed345a48c15" },
                     Query = "project id, location | where where"
                 };
 
@@ -246,28 +271,97 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 Assert.InRange(error.Details.Count, 1, int.MaxValue);
                 Assert.NotNull(error.Details[0].Code);
                 Assert.NotNull(error.Details[0].Message);
-                Assert.NotNull(error.Details[0].AdditionalProperties);
-                Assert.Equal(4, error.Details[0].AdditionalProperties.Count);
+                Assert.NotNull(error.Details[1].AdditionalProperties);
+                Assert.Equal(4, error.Details[1].AdditionalProperties.Count);
             }
         }
 
         /// <summary>
-        /// Resources basic query test using ObjectArray response format.
+        /// Resources tenant scoped query test using default ObjectArray response format.
         /// </summary>
         [Fact]
-        public void ResourcesBasicQueryObjectArrayFormatTest()
+        public void ResourcesTenantLevelQueryTest()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceGraphClient = GetResourceGraphClient(context);
                 var query = new QueryRequest
                 {
-                    Subscriptions = new List<string> { "00000000-0000-0000-0000-000000000000" },
-                    Query = "project id, tags, properties | limit 2", 
-                    Options = new QueryRequestOptions
-                    {
-                        ResultFormat = ResultFormat.ObjectArray
-                    }
+                    Query = "project id, tags, properties | limit 2"
+                };
+
+                var queryResponse = resourceGraphClient.Resources(query);
+
+                // Top-level response fields
+                Assert.Equal(2, queryResponse.Count);
+                Assert.Equal(2, queryResponse.TotalRecords);
+                Assert.Null(queryResponse.SkipToken);
+                Assert.Equal(ResultTruncated.False, queryResponse.ResultTruncated);
+                Assert.NotNull(queryResponse.Data);
+                Assert.NotNull(queryResponse.Facets);
+                Assert.Empty(queryResponse.Facets);
+
+                // Data
+                var array = (queryResponse.Data as JArray).ToObject<IList<IDictionary<string, object>>>();
+                Assert.NotNull(array);
+                Assert.Equal(2, array.Count);
+                Assert.Equal(3, array[0].Count);
+                Assert.IsType<string>(array[0]["id"]);
+                Assert.IsType<JObject>(array[0]["tags"]);
+                Assert.IsType<JObject>(array[0]["properties"]);
+            }
+        }
+
+        /// <summary>
+        /// Resources MG scoped query test using default ObjectArray response format.
+        /// </summary>
+        [Fact]
+        public void ResourcesManagementGroupLevelQueryTest()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var resourceGraphClient = GetResourceGraphClient(context);
+                var query = new QueryRequest
+                {
+                    Query = "project id, tags, properties | limit 2",
+                    ManagementGroups = new string[] { "f686d426-8d16-42db-81b7-ab578e110ccd" }
+                };
+
+                var queryResponse = resourceGraphClient.Resources(query);
+
+                // Top-level response fields
+                Assert.Equal(2, queryResponse.Count);
+                Assert.Equal(2, queryResponse.TotalRecords);
+                Assert.Null(queryResponse.SkipToken);
+                Assert.Equal(ResultTruncated.False, queryResponse.ResultTruncated);
+                Assert.NotNull(queryResponse.Data);
+                Assert.NotNull(queryResponse.Facets);
+                Assert.Empty(queryResponse.Facets);
+
+                // Data
+                var array = (queryResponse.Data as JArray).ToObject<IList<IDictionary<string, object>>>();
+                Assert.NotNull(array);
+                Assert.Equal(2, array.Count);
+                Assert.Equal(3, array[0].Count);
+                Assert.IsType<string>(array[0]["id"]);
+                Assert.IsType<JObject>(array[0]["tags"]);
+                Assert.IsType<JObject>(array[0]["properties"]);
+            }
+        }
+
+        /// <summary>
+        /// Resources multi MGs scoped query test using default ObjectArray response format.
+        /// </summary>
+        [Fact]
+        public void ResourcesMultiManagementGroupsLevelQueryTest()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var resourceGraphClient = GetResourceGraphClient(context);
+                var query = new QueryRequest
+                {
+                    Query = "project id, tags, properties | limit 2",
+                    ManagementGroups = new string[] { "f686d426-8d16-42db-81b7-ab578e110ccd", "makharchMg" }
                 };
 
                 var queryResponse = resourceGraphClient.Resources(query);

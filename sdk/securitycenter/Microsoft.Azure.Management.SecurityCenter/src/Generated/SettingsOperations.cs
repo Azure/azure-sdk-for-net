@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Security
         public SecurityCenterClient Client { get; private set; }
 
         /// <summary>
-        /// Settings about different configurations in security center
+        /// Settings about different configurations in Microsoft Defender for Cloud
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            string apiVersion = "2019-01-01";
+            string apiVersion = "2022-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -234,10 +234,11 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Settings of different configurations in security center
+        /// Settings of different configurations in Microsoft Defender for Cloud
         /// </summary>
         /// <param name='settingName'>
-        /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+        /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+        /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'WDATP_UNIFIED_SOLUTION', 'Sentinel'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -277,7 +278,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "settingName");
             }
-            string apiVersion = "2019-01-01";
+            string apiVersion = "2022-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -294,7 +295,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{settingName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(settingName, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{settingName}", System.Uri.EscapeDataString(settingName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -426,14 +427,15 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// updating settings about different configurations in security center
+        /// updating settings about different configurations in Microsoft Defender for
+        /// Cloud
         /// </summary>
         /// <param name='settingName'>
-        /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+        /// The name of the setting. Possible values include: 'MCAS', 'WDATP',
+        /// 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'WDATP_UNIFIED_SOLUTION', 'Sentinel'
         /// </param>
-        /// <param name='kind'>
-        /// the kind of the settings string (DataExportSetting). Possible values
-        /// include: 'DataExportSetting', 'AlertSuppressionSetting'
+        /// <param name='setting'>
+        /// Setting object
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -456,7 +458,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Setting>> UpdateWithHttpMessagesAsync(string settingName, string kind, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Setting>> UpdateWithHttpMessagesAsync(string settingName, Setting setting, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -473,16 +475,11 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "settingName");
             }
-            if (kind == null)
+            if (setting == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "kind");
+                throw new ValidationException(ValidationRules.CannotBeNull, "setting");
             }
-            string apiVersion = "2019-01-01";
-            Setting setting = new Setting();
-            if (kind != null)
-            {
-                setting.Kind = kind;
-            }
+            string apiVersion = "2022-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -500,7 +497,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{settingName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(settingName, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{settingName}", System.Uri.EscapeDataString(settingName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -638,7 +635,7 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Settings about different configurations in security center
+        /// Settings about different configurations in Microsoft Defender for Cloud
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

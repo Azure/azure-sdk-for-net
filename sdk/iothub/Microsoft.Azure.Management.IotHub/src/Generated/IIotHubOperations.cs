@@ -24,19 +24,21 @@ namespace Microsoft.Azure.Management.IotHub
     public partial interface IIotHubOperations
     {
         /// <summary>
-        /// Manual Failover Fail over
+        /// Manually initiate a failover for the IoT Hub to its secondary
+        /// region
         /// </summary>
         /// <remarks>
-        /// Perform manual fail over of given hub
+        /// Manually initiate a failover for the IoT Hub to its secondary
+        /// region. To learn more, see https://aka.ms/manualfailover
         /// </remarks>
         /// <param name='iotHubName'>
-        /// IotHub to fail over
-        /// </param>
-        /// <param name='failoverInput'>
-        /// Region to failover to. Must be a azure DR pair
+        /// Name of the IoT hub to failover
         /// </param>
         /// <param name='resourceGroupName'>
-        /// resource group which Iot Hub belongs to
+        /// Name of the resource group containing the IoT hub resource
+        /// </param>
+        /// <param name='failoverRegion'>
+        /// Region the hub will be failed over to
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,21 +52,23 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ManualFailoverWithHttpMessagesAsync(string iotHubName, string resourceGroupName, string failoverRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Manual Failover Fail over
+        /// Manually initiate a failover for the IoT Hub to its secondary
+        /// region
         /// </summary>
         /// <remarks>
-        /// Perform manual fail over of given hub
+        /// Manually initiate a failover for the IoT Hub to its secondary
+        /// region. To learn more, see https://aka.ms/manualfailover
         /// </remarks>
         /// <param name='iotHubName'>
-        /// IotHub to fail over
-        /// </param>
-        /// <param name='failoverInput'>
-        /// Region to failover to. Must be a azure DR pair
+        /// Name of the IoT hub to failover
         /// </param>
         /// <param name='resourceGroupName'>
-        /// resource group which Iot Hub belongs to
+        /// Name of the resource group containing the IoT hub resource
+        /// </param>
+        /// <param name='failoverRegion'>
+        /// Region the hub will be failed over to
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,6 +82,6 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginManualFailoverWithHttpMessagesAsync(string iotHubName, string resourceGroupName, string failoverRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

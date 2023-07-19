@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -46,8 +47,17 @@ namespace Azure.Storage.Blobs.Specialized
         public static InvalidOperationException InvalidHttpHeaderLine(string headerLine) =>
             new InvalidOperationException($"Expected an HTTP header line, not {headerLine}");
 
-        public static RequestFailedException InvalidResponse(Response response, Exception innerException) =>
-            StorageExceptionExtensions.CreateException(response, "Invalid response", innerException);
+        public static RequestFailedException InvalidResponse(ClientDiagnostics clientDiagnostics, Response response, Exception innerException) =>
+            new RequestFailedException(response, innerException, new BatchRequestFailedDetailsParser());
 
+        private class BatchRequestFailedDetailsParser : RequestFailedDetailsParser
+        {
+            public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
+            {
+                error = new ResponseError(null, "Invalid response");
+                data = null;
+                return true;
+            }
+        }
     }
 }

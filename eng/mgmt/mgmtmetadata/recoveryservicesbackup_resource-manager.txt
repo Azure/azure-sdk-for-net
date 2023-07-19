@@ -1,14 +1,30 @@
-﻿Installing AutoRest version: latest
+﻿Installing AutoRest version: v2
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\Users\prupadhy\Desktop\b\azure-sdk-for-net\sdk
-2019-12-26 09:09:20 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.RecoveryServices.Backup --tag=package-preview-2022-09 --csharp.output-folder=D:\code\azure-sdk-for-net\sdk\recoveryservices-backup\Microsoft.Azure.Management.RecoveryServices.Backup\src\recoveryservicesbackup\Generated
+Autorest CSharp Version: 2.3.82
+2022-10-04 11:37:36 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
-Branch:      master
-Commit:      85d6e58c37868ca84f8f6eec5650dc4ab2d9a19a
+Branch:      main
+Commit:      339675bcbc8172eacbe283470405e1e578632afc
 AutoRest information
-Requested version: latest
-Bootstrapper version:    autorest@2.0.4407
+Requested version: 2.0.4421
+Bootstrapper version:    autorest@2.0.4413
+Installing AutoRest version: v2
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.RecoveryServices.Backup.CrossRegionRestore --tag=package-passivestamp-2021-11-15 --csharp.output-folder=D:\code\azure-sdk-for-net\sdk\recoveryservices-backup\Microsoft.Azure.Management.RecoveryServices.Backup\src\recoveryservicesbackupCrossregionRestore\Generated
+Autorest CSharp Version: 2.3.82
+2022-10-04 11:38:13 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      main
+Commit:      339675bcbc8172eacbe283470405e1e578632afc
+AutoRest information
+Requested version: 2.0.4421
+Bootstrapper version:    autorest@2.0.4413

@@ -12,6 +12,7 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.KeyVault.Models;
 using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace KeyVault.Management.Tests
@@ -39,6 +40,7 @@ namespace KeyVault.Management.Tests
         public Guid tenantIdGuid { get; internal set; }
         public string vaultName { get; internal set; }
         public VaultProperties vaultProperties { get; internal set; }
+        public SystemData systemData { get; internal set; }
 
         public KeyVaultTestBase(MockContext context)
         {
@@ -98,15 +100,15 @@ namespace KeyVault.Management.Tests
                 ObjectId = objectIdGuid,
                 Permissions = new Permissions
                 {
-                    Keys = new string[] { "all" },
-                    Secrets = new string[] { "all" },
-                    Certificates = new string[] { "all" },
-                    Storage = new string[] { "all" },
+                    Keys = new string[] { KeyPermissions.All },
+                    Secrets = new string[] { SecretPermissions.All },
+                    Certificates = new string[] { CertificatePermissions.All },
+                    Storage = new string[] { StoragePermissions.All },
                 }
             };
 
             IList < IPRule > ipRules = new List<IPRule>();
-            ipRules.Add(new IPRule() { Value = "10.0.0.0/24" });
+            ipRules.Add(new IPRule() { Value = "1.2.3.4/32" });
             ipRules.Add(new IPRule() { Value = "1.0.0.0/25" });
 
             vaultProperties = new VaultProperties
@@ -120,6 +122,16 @@ namespace KeyVault.Management.Tests
                 VaultUri = "",
                 NetworkAcls = new NetworkRuleSet() { Bypass = "AzureServices", DefaultAction = "Allow", IpRules = ipRules, VirtualNetworkRules = null },
                 AccessPolicies = new[] { accPol }
+            };
+
+            systemData = new SystemData
+            {
+                CreatedBy = "vaultuser",
+                CreatedByType = "user",
+                CreatedAt = DateTime.Parse("2020-02-27T07:41:03Z", CultureInfo.InvariantCulture).ToUniversalTime(),
+                LastModifiedBy = "vaultuser",
+                LastModifiedByType = "user",
+                LastModifiedAt = DateTime.Parse("2020-02-27T07:41:03Z", CultureInfo.InvariantCulture).ToUniversalTime()
             };
         }
     }

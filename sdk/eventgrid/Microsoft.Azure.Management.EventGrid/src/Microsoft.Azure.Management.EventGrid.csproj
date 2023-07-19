@@ -6,10 +6,26 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.EventGrid</PackageId>
     <Description>Provides developers with a library to create and manage all Azure EventGrid resources. </Description>
-    <Version>5.1.0-preview</Version>
+    <Version>9.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
     <PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
-    <PackageReleaseNotes>This corresponds to the 2020-01-01-Preview API version which includes the following new functionalities: CloudEvent 1.0, new destination types (Azure Functions and Service bus topic), Securing webhooks with Azure Active Directory, and batching for webhook destinations. "</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      <![CDATA[
+        This release corresponds to api-version 2022-06-15 which includes the following new features:
+            * Partner Events support with the related resources:
+              ** Partner Registrations,
+              ** Partner Namespaces,
+              ** Channels,
+              ** Partner Topics,
+              ** Partner Configurations,
+              ** Verified Partners.
+            * Nested Event Subscriptions for Domains, Domain Topics, and Topics.
+            * Data residency for Topics and Domains.
+            * Management group support.
+
+       For a complete list of changes for all various release versions, please refer to: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Microsoft.Azure.Management.EventGrid/CHANGELOG.md
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

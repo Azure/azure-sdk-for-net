@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='deploymentResource'>
             /// Parameters for the create or update operation
             /// </param>
-            public static DeploymentResource CreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource))
+            public static DeploymentResource CreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource).GetAwaiter().GetResult();
             }
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentResource> CreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentResource> CreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='deploymentResource'>
             /// Parameters for the update operation
             /// </param>
-            public static DeploymentResource Update(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource))
+            public static DeploymentResource Update(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource)
             {
                 return operations.UpdateAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource).GetAwaiter().GetResult();
             }
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentResource> UpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentResource> UpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -318,9 +318,9 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='version'>
             /// Version of the deployments to be listed
             /// </param>
-            public static IPage<DeploymentResource> ListClusterAllDeployments(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, IList<string> version = default(IList<string>))
+            public static IPage<DeploymentResource> ListForCluster(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, IList<string> version = default(IList<string>))
             {
-                return operations.ListClusterAllDeploymentsAsync(resourceGroupName, serviceName, version).GetAwaiter().GetResult();
+                return operations.ListForClusterAsync(resourceGroupName, serviceName, version).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -342,9 +342,9 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DeploymentResource>> ListClusterAllDeploymentsAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, IList<string> version = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DeploymentResource>> ListForClusterAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, IList<string> version = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListClusterAllDeploymentsWithHttpMessagesAsync(resourceGroupName, serviceName, version, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListForClusterWithHttpMessagesAsync(resourceGroupName, serviceName, version, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -558,6 +558,177 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
+            /// Generate Heap Dump
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            public static void GenerateHeapDump(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
+            {
+                operations.GenerateHeapDumpAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generate Heap Dump
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task GenerateHeapDumpAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.GenerateHeapDumpWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Generate Thread Dump
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            public static void GenerateThreadDump(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
+            {
+                operations.GenerateThreadDumpAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generate Thread Dump
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task GenerateThreadDumpAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.GenerateThreadDumpWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Start JFR
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            public static void StartJFR(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
+            {
+                operations.StartJFRAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start JFR
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StartJFRAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StartJFRWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Create a new Deployment or update an exiting Deployment.
             /// </summary>
             /// <param name='operations'>
@@ -579,7 +750,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='deploymentResource'>
             /// Parameters for the create or update operation
             /// </param>
-            public static DeploymentResource BeginCreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource))
+            public static DeploymentResource BeginCreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource).GetAwaiter().GetResult();
             }
@@ -609,12 +780,63 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentResource> BeginCreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentResource> BeginCreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Operation to delete a Deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            public static void BeginDelete(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, serviceName, appName, deploymentName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Operation to delete a Deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -639,7 +861,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='deploymentResource'>
             /// Parameters for the update operation
             /// </param>
-            public static DeploymentResource BeginUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource))
+            public static DeploymentResource BeginUpdate(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource).GetAwaiter().GetResult();
             }
@@ -669,7 +891,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentResource> BeginUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource = default(DeploymentResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentResource> BeginUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DeploymentResource deploymentResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, deploymentResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -831,6 +1053,177 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
+            /// Generate Heap Dump
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            public static void BeginGenerateHeapDump(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
+            {
+                operations.BeginGenerateHeapDumpAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generate Heap Dump
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginGenerateHeapDumpAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginGenerateHeapDumpWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Generate Thread Dump
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            public static void BeginGenerateThreadDump(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
+            {
+                operations.BeginGenerateThreadDumpAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generate Thread Dump
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginGenerateThreadDumpAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginGenerateThreadDumpWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Start JFR
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            public static void BeginStartJFR(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
+            {
+                operations.BeginStartJFRAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start JFR
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='appName'>
+            /// The name of the App resource.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the Deployment resource.
+            /// </param>
+            /// <param name='diagnosticParameters'>
+            /// Parameters for the diagnostic operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStartJFRAsync(this IDeploymentsOperations operations, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStartJFRWithHttpMessagesAsync(resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Handles requests to list all resources in an App.
             /// </summary>
             /// <param name='operations'>
@@ -873,9 +1266,9 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<DeploymentResource> ListClusterAllDeploymentsNext(this IDeploymentsOperations operations, string nextPageLink)
+            public static IPage<DeploymentResource> ListForClusterNext(this IDeploymentsOperations operations, string nextPageLink)
             {
-                return operations.ListClusterAllDeploymentsNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListForClusterNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -890,9 +1283,9 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DeploymentResource>> ListClusterAllDeploymentsNextAsync(this IDeploymentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DeploymentResource>> ListForClusterNextAsync(this IDeploymentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListClusterAllDeploymentsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListForClusterNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "kubernetesconfiguration/resource-manager" -AutoRestVersion "latest"

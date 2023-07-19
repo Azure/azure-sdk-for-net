@@ -33,14 +33,21 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// AzureFilesIdentityBasedAuthentication class.
         /// </summary>
         /// <param name="directoryServiceOptions">Indicates the directory
-        /// service used. Possible values include: 'None', 'AADDS',
-        /// 'AD'</param>
-        /// <param name="activeDirectoryProperties">Required if choose
-        /// AD.</param>
-        public AzureFilesIdentityBasedAuthentication(string directoryServiceOptions, ActiveDirectoryProperties activeDirectoryProperties = default(ActiveDirectoryProperties))
+        /// service used. Note that this enum may be extended in the future.
+        /// Possible values include: 'None', 'AADDS', 'AD', 'AADKERB'</param>
+        /// <param name="activeDirectoryProperties">Required if
+        /// directoryServiceOptions are AD, optional if they are
+        /// AADKERB.</param>
+        /// <param name="defaultSharePermission">Default share permission for
+        /// users using Kerberos authentication if RBAC role is not assigned.
+        /// Possible values include: 'None', 'StorageFileDataSmbShareReader',
+        /// 'StorageFileDataSmbShareContributor',
+        /// 'StorageFileDataSmbShareElevatedContributor'</param>
+        public AzureFilesIdentityBasedAuthentication(string directoryServiceOptions, ActiveDirectoryProperties activeDirectoryProperties = default(ActiveDirectoryProperties), string defaultSharePermission = default(string))
         {
             DirectoryServiceOptions = directoryServiceOptions;
             ActiveDirectoryProperties = activeDirectoryProperties;
+            DefaultSharePermission = defaultSharePermission;
             CustomInit();
         }
 
@@ -50,17 +57,29 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets indicates the directory service used. Possible values
-        /// include: 'None', 'AADDS', 'AD'
+        /// Gets or sets indicates the directory service used. Note that this
+        /// enum may be extended in the future. Possible values include:
+        /// 'None', 'AADDS', 'AD', 'AADKERB'
         /// </summary>
         [JsonProperty(PropertyName = "directoryServiceOptions")]
         public string DirectoryServiceOptions { get; set; }
 
         /// <summary>
-        /// Gets or sets required if choose AD.
+        /// Gets or sets required if directoryServiceOptions are AD, optional
+        /// if they are AADKERB.
         /// </summary>
         [JsonProperty(PropertyName = "activeDirectoryProperties")]
         public ActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets default share permission for users using Kerberos
+        /// authentication if RBAC role is not assigned. Possible values
+        /// include: 'None', 'StorageFileDataSmbShareReader',
+        /// 'StorageFileDataSmbShareContributor',
+        /// 'StorageFileDataSmbShareElevatedContributor'
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultSharePermission")]
+        public string DefaultSharePermission { get; set; }
 
         /// <summary>
         /// Validate the object.

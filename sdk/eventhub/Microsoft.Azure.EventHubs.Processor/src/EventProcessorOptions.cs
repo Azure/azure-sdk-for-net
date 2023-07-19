@@ -82,12 +82,12 @@ namespace Microsoft.Azure.EventHubs.Processor
         /// <summary>
         /// Gets or sets a delegate which is used to get the initial position for a given partition to create <see cref="PartitionReceiver"/>.
         /// Delegate is invoked by passing in PartitionId and then user can return <see cref="PartitionReceiver"/> for receiving messages.
-        /// This is only used when <see cref="Lease.Offset"/> is not provided and receiver is being created for the very first time.
+        /// This is only used when a checkpoint cannot be found for the associated partition.
         /// </summary>
         public Func<string, EventPosition> InitialOffsetProvider { get; set; }
 
         /// <summary>
-        /// Returns whether the EventProcessorHost will call IEventProcessor.OnEvents(null) when a receive
+        /// Returns whether the EventProcessorHost will call <c>IEventProcessor.ProcessEventsAsync(PartitionContext context, Enumerable.Empty&lt;EventData&gt;())</c>when a receive
         /// timeout occurs (true) or not (false).
         /// </summary>
         public bool InvokeProcessorAfterReceiveTimeout { get; set; }

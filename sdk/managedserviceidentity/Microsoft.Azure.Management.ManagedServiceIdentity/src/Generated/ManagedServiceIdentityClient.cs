@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the ISystemAssignedIdentitiesOperations.
+        /// </summary>
+        public virtual ISystemAssignedIdentitiesOperations SystemAssignedIdentities { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -83,6 +88,11 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         /// Gets the IUserAssignedIdentitiesOperations.
         /// </summary>
         public virtual IUserAssignedIdentitiesOperations UserAssignedIdentities { get; private set; }
+
+        /// <summary>
+        /// Gets the IFederatedIdentityCredentialsOperations.
+        /// </summary>
+        public virtual IFederatedIdentityCredentialsOperations FederatedIdentityCredentials { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ManagedServiceIdentityClient class.
@@ -325,10 +335,12 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         /// </summary>
         private void Initialize()
         {
+            SystemAssignedIdentities = new SystemAssignedIdentitiesOperations(this);
             Operations = new Operations(this);
             UserAssignedIdentities = new UserAssignedIdentitiesOperations(this);
+            FederatedIdentityCredentials = new FederatedIdentityCredentialsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-11-30";
+            ApiVersion = "2022-01-31-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

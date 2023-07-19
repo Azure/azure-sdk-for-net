@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Initializes a new instance of the CIFSMountConfiguration class.
         /// </summary>
-        /// <param name="username">The user to use for authentication against
+        /// <param name="userName">The user to use for authentication against
         /// the CIFS file system.</param>
         /// <param name="source">The URI of the file system to mount.</param>
         /// <param name="relativeMountPath">The relative path on the compute
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// against the CIFS file system.</param>
         /// <param name="mountOptions">Additional command line options to pass
         /// to the mount command.</param>
-        public CIFSMountConfiguration(string username, string source, string relativeMountPath, string password, string mountOptions = default(string))
+        public CIFSMountConfiguration(string userName, string source, string relativeMountPath, string password, string mountOptions = default(string))
         {
-            Username = username;
+            UserName = userName;
             Source = source;
             RelativeMountPath = relativeMountPath;
             MountOptions = mountOptions;
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets or sets the user to use for authentication against the CIFS
         /// file system.
         /// </summary>
-        [JsonProperty(PropertyName = "username")]
-        public string Username { get; set; }
+        [JsonProperty(PropertyName = "userName")]
+        public string UserName { get; set; }
 
         /// <summary>
         /// Gets or sets the URI of the file system to mount.
@@ -105,9 +105,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Username == null)
+            if (UserName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Username");
+                throw new ValidationException(ValidationRules.CannotBeNull, "UserName");
             }
             if (Source == null)
             {

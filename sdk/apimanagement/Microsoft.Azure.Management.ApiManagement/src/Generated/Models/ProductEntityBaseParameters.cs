@@ -151,9 +151,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "Description", 1000);
                 }
-                if (Description.Length < 1)
+                if (Description.Length < 0)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "Description", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "Description", 0);
                 }
             }
         }

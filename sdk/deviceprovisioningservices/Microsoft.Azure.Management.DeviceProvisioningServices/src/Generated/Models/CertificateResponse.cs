@@ -36,13 +36,14 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// <param name="name">The name of the certificate.</param>
         /// <param name="etag">The entity tag.</param>
         /// <param name="type">The resource type.</param>
-        public CertificateResponse(CertificateProperties properties = default(CertificateProperties), string id = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public CertificateResponse(CertificateProperties properties = default(CertificateProperties), string id = default(string), string name = default(string), string etag = default(string), string type = default(string), SystemData systemData = default(SystemData))
         {
             Properties = properties;
             Id = id;
             Name = name;
             Etag = etag;
             Type = type;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -80,6 +81,11 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

@@ -57,6 +57,11 @@ namespace Microsoft.Azure.Management.HealthcareApis
         public string ApiVersion { get; private set; }
 
         /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        public string ApiVersion1 { get; set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -78,6 +83,56 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// Gets the IServicesOperations.
         /// </summary>
         public virtual IServicesOperations Services { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspacesOperations.
+        /// </summary>
+        public virtual IWorkspacesOperations Workspaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IDicomServicesOperations.
+        /// </summary>
+        public virtual IDicomServicesOperations DicomServices { get; private set; }
+
+        /// <summary>
+        /// Gets the IIotConnectorsOperations.
+        /// </summary>
+        public virtual IIotConnectorsOperations IotConnectors { get; private set; }
+
+        /// <summary>
+        /// Gets the IFhirDestinationsOperations.
+        /// </summary>
+        public virtual IFhirDestinationsOperations FhirDestinations { get; private set; }
+
+        /// <summary>
+        /// Gets the IIotConnectorFhirDestinationOperations.
+        /// </summary>
+        public virtual IIotConnectorFhirDestinationOperations IotConnectorFhirDestination { get; private set; }
+
+        /// <summary>
+        /// Gets the IFhirServicesOperations.
+        /// </summary>
+        public virtual IFhirServicesOperations FhirServices { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspacePrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IWorkspacePrivateEndpointConnectionsOperations WorkspacePrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkspacePrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IWorkspacePrivateLinkResourcesOperations WorkspacePrivateLinkResources { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -331,10 +386,20 @@ namespace Microsoft.Azure.Management.HealthcareApis
         private void Initialize()
         {
             Services = new ServicesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            Workspaces = new WorkspacesOperations(this);
+            DicomServices = new DicomServicesOperations(this);
+            IotConnectors = new IotConnectorsOperations(this);
+            FhirDestinations = new FhirDestinationsOperations(this);
+            IotConnectorFhirDestination = new IotConnectorFhirDestinationOperations(this);
+            FhirServices = new FhirServicesOperations(this);
+            WorkspacePrivateEndpointConnections = new WorkspacePrivateEndpointConnectionsOperations(this);
+            WorkspacePrivateLinkResources = new WorkspacePrivateLinkResourcesOperations(this);
             Operations = new Operations(this);
             OperationResults = new OperationResultsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-09-16";
+            ApiVersion = "2021-11-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -351,6 +416,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -364,6 +430,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }

@@ -1,0 +1,109 @@
+
+> LUIS application information
+> !# @app.name = Json 600 App
+> !# @app.desc = Json 600 App
+> !# @app.versionId = 0.1
+> !# @app.culture = en-us
+> !# @app.luis_schema_version = 6.0.0
+
+
+> # Intent definitions
+
+> !# @intent.inherits = name : Calendar.AcceptEventEntry; domain_name : Calendar; model_name : AcceptEventEntry
+
+## Calendar.AcceptEventEntry
+- save the date may 17 {@Calendar.Subject=pictures party}
+- schedule {@Calendar.Subject=appointment} for tomorrow please
+- {@Calendar.Subject=Meeting My Manager}
+- The meeting will last for one hour
+- Add an event to visit 209 Nashville Gym
+- Add {@Calendar.Subject=imax theater} to my upcoming events
+- dunmore pa sonic sounds Friday morning please
+- Add a new task {@Calendar.Subject=finish assignment}
+- Add a new event on 27 - Apr
+- calendar i ' ll be at the garage from 8 till 3 this saturday
+- Add an event to {@Calendar.Subject=read about adam lambert news}
+
+
+> !# @intent.inherits = name : Communication.AddContact; domain_name : Communication; model_name : AddContact
+
+## Communication.AddContact
+
+
+@ intent Communication.AddContact usesFeatures simpleentity1,phraselist1
+
+> !# @intent.inherits = name : Communication.AddMore; domain_name : Communication; model_name : AddMore
+
+## Communication.AddMore
+
+
+> !# @intent.inherits = name : Communication.Confirm; domain_name : Communication; model_name : Confirm
+
+## Communication.Confirm
+
+
+## intent1
+
+
+## None
+- a
+- hi {@simpleentity1=guys}
+- Please just delete {@Calendar.Subject=my meeting}
+- Extend {@Calendar.Subject=lunch meeting} 30 minutes extra
+- {@Calendar.Subject=Marketing meetings} on Tuesdays will now be every Wednesday please change on my calendar
+- {@Calendar.Subject=Appointment with Johnson} needs to be next week
+- Search for {@Calendar.Subject=meetings with Chris}
+- I want to reschedule the {@Calendar.Subject=meeting at the air force club}
+- Move the {@Calendar.Subject=BBQ party} to Friday
+- Am i free to {@Calendar.Subject=be with friends} saturday ?
+- Delete {@Calendar.Subject=Helen Fred ' s birthday}
+- {@Calendar.Subject=Call dad Mike}
+- {@Calendar.Subject=The workshop} will last for 10 hours
+- {@Calendar.Subject=email cloney John}
+- Change {@Calendar.Subject=the meeting with Chris} to 9 : 00 am
+
+
+> # Entity definitions
+
+> !# @entity.inherits = name : Calendar.Subject; domain_name : Calendar; model_name : Subject
+
+@ ml Calendar.Subject usesFeatures simpleentity1
+
+@ ml simpleentity1
+
+@ ml a1 hasRole role_a1
+    - @ datetimeV2 b1
+    - @ ml c1
+        - @ ml d1 usesFeatures phraselist1
+            - @ datetimeV2 e1 usesFeatures phraselist1
+
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt age
+
+@ prebuilt datetimeV2
+
+
+> # Phrase list definitions
+
+@ phraselist phraselist1(interchangeable) = 
+	- why,where,when,what,how,who
+
+
+> # List entities
+
+@ list closedlist = 
+	- a :
+		- b
+		- c
+		- d
+
+
+> # RegEx entities
+
+
+> # Composite entities
+
+@ composite compositeentity1 usesFeatures simpleentity1,Calendar.Subject = [simpleentity1, datetimeV2]

@@ -1,66 +1,68 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiP2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxP2FwaS12ZXJzaW9uPTIwMjEtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7db32a66-e5a8-407b-8a9f-38558bdbc84c"
+          "d59b55d1-e7a8-49dd-9555-b2dd914f4b08"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/1.7.0.0"
+          "FxVersion/4.700.21.56803",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.17.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b\",\r\n  \"subscriptionId\": \"fb3a3d6b-44c8-44f5-88c9-b20917c9b96b\",\r\n  \"displayName\": \"My Visual Studio Enterprise\",\r\n  \"state\": \"Enabled\",\r\n  \"subscriptionPolicies\": {\r\n    \"locationPlacementId\": \"Public_2014-09-01\",\r\n    \"quotaId\": \"MSDN_2014-09-01\",\r\n    \"spendingLimit\": \"On\"\r\n  },\r\n  \"authorizationSource\": \"RoleBased\"\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Thu, 07 Jun 2018 01:01:08 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "11999"
         ],
         "x-ms-request-id": [
-          "b37729e3-0afe-4075-b136-83922f14ac4d"
+          "fa9b23ce-1611-4651-94d0-465f8090c124"
         ],
         "x-ms-correlation-request-id": [
-          "b37729e3-0afe-4075-b136-83922f14ac4d"
+          "fa9b23ce-1611-4651-94d0-465f8090c124"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180607T010108Z:b37729e3-0afe-4075-b136-83922f14ac4d"
+          "WESTUS2:20220207T195113Z:fa9b23ce-1611-4651-94d0-465f8090c124"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Mon, 07 Feb 2022 19:51:12 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "460"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321\",\r\n  \"authorizationSource\": \"RoleBased\",\r\n  \"managedByTenants\": [],\r\n  \"tags\": {\r\n    \"tagKey1\": \"tagValue1\",\r\n    \"tagKey2\": \"tagValue2\"\r\n  },\r\n  \"subscriptionId\": \"a1bfa635-f2bf-42f1-86b5-848c674fc321\",\r\n  \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n  \"displayName\": \"Blueprint Assignment Test 4\",\r\n  \"state\": \"Enabled\",\r\n  \"subscriptionPolicies\": {\r\n    \"locationPlacementId\": \"Internal_2014-09-01\",\r\n    \"quotaId\": \"Internal_2014-09-01\",\r\n    \"spendingLimit\": \"Off\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
+    "SubscriptionId": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
   }
 }

@@ -25,15 +25,17 @@ namespace Microsoft.Azure.Batch
         private class PropertyContainer : PropertyCollection
         {
             public readonly PropertyAccessor<Common.DynamicVNetAssignmentScope?> DynamicVNetAssignmentScopeProperty;
+            public readonly PropertyAccessor<bool?> EnableAcceleratedNetworkingProperty;
             public readonly PropertyAccessor<PoolEndpointConfiguration> EndpointConfigurationProperty;
-            public readonly PropertyAccessor<IList<string>> PublicIPsProperty;
+            public readonly PropertyAccessor<PublicIPAddressConfiguration> PublicIPAddressConfigurationProperty;
             public readonly PropertyAccessor<string> SubnetIdProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.DynamicVNetAssignmentScopeProperty = this.CreatePropertyAccessor<Common.DynamicVNetAssignmentScope?>(nameof(DynamicVNetAssignmentScope), BindingAccess.Read | BindingAccess.Write);
+                this.EnableAcceleratedNetworkingProperty = this.CreatePropertyAccessor<bool?>(nameof(EnableAcceleratedNetworking), BindingAccess.Read | BindingAccess.Write);
                 this.EndpointConfigurationProperty = this.CreatePropertyAccessor<PoolEndpointConfiguration>(nameof(EndpointConfiguration), BindingAccess.Read | BindingAccess.Write);
-                this.PublicIPsProperty = this.CreatePropertyAccessor<IList<string>>(nameof(PublicIPs), BindingAccess.Read | BindingAccess.Write);
+                this.PublicIPAddressConfigurationProperty = this.CreatePropertyAccessor<PublicIPAddressConfiguration>(nameof(PublicIPAddressConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.SubnetIdProperty = this.CreatePropertyAccessor<string>(nameof(SubnetId), BindingAccess.Read | BindingAccess.Write);
             }
 
@@ -43,13 +45,17 @@ namespace Microsoft.Azure.Batch
                     UtilitiesInternal.MapNullableEnum<Models.DynamicVNetAssignmentScope, Common.DynamicVNetAssignmentScope>(protocolObject.DynamicVNetAssignmentScope),
                     nameof(DynamicVNetAssignmentScope),
                     BindingAccess.Read);
+                this.EnableAcceleratedNetworkingProperty = this.CreatePropertyAccessor(
+                    protocolObject.EnableAcceleratedNetworking,
+                    nameof(EnableAcceleratedNetworking),
+                    BindingAccess.Read);
                 this.EndpointConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.EndpointConfiguration, o => new PoolEndpointConfiguration(o).Freeze()),
                     nameof(EndpointConfiguration),
                     BindingAccess.Read);
-                this.PublicIPsProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CollectionToThreadSafeCollection(protocolObject.PublicIPs, o => o),
-                    nameof(PublicIPs),
+                this.PublicIPAddressConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.PublicIPAddressConfiguration, o => new PublicIPAddressConfiguration(o).Freeze()),
+                    nameof(PublicIPAddressConfiguration),
                     BindingAccess.Read);
                 this.SubnetIdProperty = this.CreatePropertyAccessor(
                     protocolObject.SubnetId,
@@ -92,6 +98,18 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets whether this pool should enable accelerated networking.
+        /// </summary>
+        /// <remarks>
+        /// This property can only be specified for pools created with a <see cref="CloudPool.VirtualMachineConfiguration"/>.
+        /// </remarks>
+        public bool? EnableAcceleratedNetworking
+        {
+            get { return this.propertyContainer.EnableAcceleratedNetworkingProperty.Value; }
+            set { this.propertyContainer.EnableAcceleratedNetworkingProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the configuration for endpoints on compute nodes in the Batch pool.
         /// </summary>
         /// <remarks>
@@ -104,20 +122,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the list of public IPs which the Batch service will use when provisioning Compute Nodes.
+        /// Gets or sets the Public IPAddress configuration for Compute Nodes in the Batch Pool.
         /// </summary>
         /// <remarks>
-        /// The number of IPs specified here limits the maximum size of the Pool - 50 dedicated nodes or 20 low-priority 
-        /// nodes can be allocated for each public IP. For example, a pool needing 150 dedicated VMs would need at least 
-        /// 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}.
+        /// Public IP configuration property is only supported on Pools created with a <see cref="CloudPool.VirtualMachineConfiguration"/>.
         /// </remarks>
-        public IList<string> PublicIPs
+        public PublicIPAddressConfiguration PublicIPAddressConfiguration
         {
-            get { return this.propertyContainer.PublicIPsProperty.Value; }
-            set
-            {
-                this.propertyContainer.PublicIPsProperty.Value = ConcurrentChangeTrackedList<string>.TransformEnumerableToConcurrentList(value);
-            }
+            get { return this.propertyContainer.PublicIPAddressConfigurationProperty.Value; }
+            set { this.propertyContainer.PublicIPAddressConfigurationProperty.Value = value; }
         }
 
         /// <summary>
@@ -174,8 +187,9 @@ namespace Microsoft.Azure.Batch
             Models.NetworkConfiguration result = new Models.NetworkConfiguration()
             {
                 DynamicVNetAssignmentScope = UtilitiesInternal.MapNullableEnum<Common.DynamicVNetAssignmentScope, Models.DynamicVNetAssignmentScope>(this.DynamicVNetAssignmentScope),
+                EnableAcceleratedNetworking = this.EnableAcceleratedNetworking,
                 EndpointConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.EndpointConfiguration, (o) => o.GetTransportObject()),
-                PublicIPs = this.PublicIPs,
+                PublicIPAddressConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.PublicIPAddressConfiguration, (o) => o.GetTransportObject()),
                 SubnetId = this.SubnetId,
             };
 

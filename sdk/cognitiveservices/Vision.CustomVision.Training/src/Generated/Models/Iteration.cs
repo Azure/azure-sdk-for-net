@@ -56,10 +56,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// Possible values include: 'Regular', 'Advanced'</param>
         /// <param name="reservedBudgetInHours">Gets the reserved advanced
         /// training budget for the iteration.</param>
+        /// <param name="trainingTimeInMinutes">Gets the training time for the
+        /// iteration.</param>
         /// <param name="publishName">Name of the published model.</param>
         /// <param name="originalPublishResourceId">Resource Provider Id this
         /// iteration was originally published to.</param>
-        public Iteration(string name, System.Guid id = default(System.Guid), string status = default(string), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), System.DateTime? trainedAt = default(System.DateTime?), System.Guid projectId = default(System.Guid), bool exportable = default(bool), IList<string> exportableTo = default(IList<string>), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), string trainingType = default(string), int reservedBudgetInHours = default(int), string publishName = default(string), string originalPublishResourceId = default(string))
+        /// <param name="customBaseModelInfo">Information of the previously
+        /// trained iteration which provides the base model for current
+        /// iteration's training.
+        /// Default value of null specifies that no previously trained
+        /// iteration will be used for incremental learning.</param>
+        /// <param name="trainingErrorDetails">Training error details, when
+        /// training fails.
+        /// Value is null when training succeeds.</param>
+        public Iteration(string name, System.Guid id = default(System.Guid), string status = default(string), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), System.DateTime? trainedAt = default(System.DateTime?), System.Guid projectId = default(System.Guid), bool exportable = default(bool), IList<string> exportableTo = default(IList<string>), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), string trainingType = default(string), int reservedBudgetInHours = default(int), int trainingTimeInMinutes = default(int), string publishName = default(string), string originalPublishResourceId = default(string), CustomBaseModelInfo customBaseModelInfo = default(CustomBaseModelInfo), string trainingErrorDetails = default(string))
         {
             Id = id;
             Name = name;
@@ -74,8 +84,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             ClassificationType = classificationType;
             TrainingType = trainingType;
             ReservedBudgetInHours = reservedBudgetInHours;
+            TrainingTimeInMinutes = trainingTimeInMinutes;
             PublishName = publishName;
             OriginalPublishResourceId = originalPublishResourceId;
+            CustomBaseModelInfo = customBaseModelInfo;
+            TrainingErrorDetails = trainingErrorDetails;
             CustomInit();
         }
 
@@ -167,6 +180,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public int ReservedBudgetInHours { get; private set; }
 
         /// <summary>
+        /// Gets the training time for the iteration.
+        /// </summary>
+        [JsonProperty(PropertyName = "trainingTimeInMinutes")]
+        public int TrainingTimeInMinutes { get; private set; }
+
+        /// <summary>
         /// Gets name of the published model.
         /// </summary>
         [JsonProperty(PropertyName = "publishName")]
@@ -180,6 +199,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public string OriginalPublishResourceId { get; private set; }
 
         /// <summary>
+        /// Gets information of the previously trained iteration which provides
+        /// the base model for current iteration's training.
+        /// Default value of null specifies that no previously trained
+        /// iteration will be used for incremental learning.
+        /// </summary>
+        [JsonProperty(PropertyName = "customBaseModelInfo")]
+        public CustomBaseModelInfo CustomBaseModelInfo { get; private set; }
+
+        /// <summary>
+        /// Gets training error details, when training fails.
+        /// Value is null when training succeeds.
+        /// </summary>
+        [JsonProperty(PropertyName = "trainingErrorDetails")]
+        public string TrainingErrorDetails { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -190,6 +225,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (CustomBaseModelInfo != null)
+            {
+                CustomBaseModelInfo.Validate();
             }
         }
     }

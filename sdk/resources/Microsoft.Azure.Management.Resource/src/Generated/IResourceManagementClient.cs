@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The ID of the target subscription.
+        /// The Microsoft Azure subscription ID.
         /// </summary>
         string SubscriptionId { get; set; }
 
@@ -83,6 +83,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets the IProvidersOperations.
         /// </summary>
         IProvidersOperations Providers { get; }
+
+        /// <summary>
+        /// Gets the IProviderResourceTypesOperations.
+        /// </summary>
+        IProviderResourceTypesOperations ProviderResourceTypes { get; }
 
         /// <summary>
         /// Gets the IResourcesOperations.

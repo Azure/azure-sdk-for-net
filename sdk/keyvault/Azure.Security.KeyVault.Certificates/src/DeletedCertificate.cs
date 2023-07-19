@@ -26,8 +26,8 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public Uri RecoveryId
         {
-            get => new Uri(_recoveryId);
-            internal set => _recoveryId = value?.ToString();
+            get => _recoveryId is null ? null : new Uri(_recoveryId);
+            internal set => _recoveryId = value?.AbsoluteUri;
         }
 
         /// <summary>

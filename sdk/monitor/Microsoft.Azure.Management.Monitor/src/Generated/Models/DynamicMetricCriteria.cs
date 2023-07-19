@@ -35,13 +35,16 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="name">Name of the criteria.</param>
         /// <param name="metricName">Name of the metric.</param>
-        /// <param name="timeAggregation">the criteria time aggregation
-        /// types.</param>
+        /// <param name="timeAggregation">the criteria time aggregation types.
+        /// Possible values include: 'Average', 'Count', 'Minimum', 'Maximum',
+        /// 'Total'</param>
         /// <param name="operatorProperty">The operator used to compare the
-        /// metric value against the threshold.</param>
+        /// metric value against the threshold. Possible values include:
+        /// 'GreaterThan', 'LessThan', 'GreaterOrLessThan'</param>
         /// <param name="alertSensitivity">The extent of deviation required to
         /// trigger an alert. This will affect how tight the threshold is to
-        /// the metric series pattern.</param>
+        /// the metric series pattern. Possible values include: 'Low',
+        /// 'Medium', 'High'</param>
         /// <param name="failingPeriods">The minimum number of violations
         /// required within the selected lookback time window required to raise
         /// an alert.</param>
@@ -49,11 +52,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// message are deserialized this collection</param>
         /// <param name="metricNamespace">Namespace of the metric.</param>
         /// <param name="dimensions">List of dimension conditions.</param>
+        /// <param name="skipMetricValidation">Allows creating an alert rule on
+        /// a custom metric that isn't yet emitted, by causing the metric
+        /// validation to be skipped.</param>
         /// <param name="ignoreDataBefore">Use this option to set the date from
         /// which to start learning the metric historical data and calculate
         /// the dynamic thresholds (in ISO8601 format)</param>
-        public DynamicMetricCriteria(string name, string metricName, object timeAggregation, object operatorProperty, object alertSensitivity, DynamicThresholdFailingPeriods failingPeriods, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), System.DateTime? ignoreDataBefore = default(System.DateTime?))
-            : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions)
+        public DynamicMetricCriteria(string name, string metricName, string timeAggregation, string operatorProperty, string alertSensitivity, DynamicThresholdFailingPeriods failingPeriods, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?), System.DateTime? ignoreDataBefore = default(System.DateTime?))
+            : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions, skipMetricValidation)
         {
             OperatorProperty = operatorProperty;
             AlertSensitivity = alertSensitivity;
@@ -69,18 +75,19 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
         /// <summary>
         /// Gets or sets the operator used to compare the metric value against
-        /// the threshold.
+        /// the threshold. Possible values include: 'GreaterThan', 'LessThan',
+        /// 'GreaterOrLessThan'
         /// </summary>
         [JsonProperty(PropertyName = "operator")]
-        public object OperatorProperty { get; set; }
+        public string OperatorProperty { get; set; }
 
         /// <summary>
         /// Gets or sets the extent of deviation required to trigger an alert.
         /// This will affect how tight the threshold is to the metric series
-        /// pattern.
+        /// pattern. Possible values include: 'Low', 'Medium', 'High'
         /// </summary>
         [JsonProperty(PropertyName = "alertSensitivity")]
-        public object AlertSensitivity { get; set; }
+        public string AlertSensitivity { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum number of violations required within the

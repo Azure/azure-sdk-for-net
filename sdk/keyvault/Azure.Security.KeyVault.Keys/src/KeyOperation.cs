@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Threading;
 using Azure.Security.KeyVault.Keys.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys
@@ -24,12 +25,12 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Gets a value that indicates the key can be used to encrypt with the <see cref="CryptographyClient.EncryptAsync"/> or <see cref="CryptographyClient.Encrypt"/> methods.
+        /// Gets a value that indicates the key can be used to encrypt with the <see cref="CryptographyClient.EncryptAsync(EncryptionAlgorithm, byte[], CancellationToken)"/> or <see cref="CryptographyClient.Encrypt(EncryptionAlgorithm, byte[], CancellationToken)"/> methods.
         /// </summary>
         public static KeyOperation Encrypt { get; } = new KeyOperation("encrypt");
 
         /// <summary>
-        /// Gets a value that indicates the key can be used to decrypt with the <see cref="CryptographyClient.DecryptAsync"/> or <see cref="CryptographyClient.Decrypt"/> methods.
+        /// Gets a value that indicates the key can be used to decrypt with the <see cref="CryptographyClient.DecryptAsync(EncryptionAlgorithm, byte[], CancellationToken)"/> or <see cref="CryptographyClient.Decrypt(EncryptionAlgorithm, byte[], CancellationToken)"/> methods.
         /// </summary>
         public static KeyOperation Decrypt { get; } = new KeyOperation("decrypt");
 
@@ -52,6 +53,11 @@ namespace Azure.Security.KeyVault.Keys
         /// Gets a value that indicates the key can be used to unwrap another key with the <see cref="CryptographyClient.UnwrapKeyAsync"/> or <see cref="CryptographyClient.UnwrapKey"/> methods.
         /// </summary>
         public static KeyOperation UnwrapKey { get; } = new KeyOperation("unwrapKey");
+
+        /// <summary>
+        /// Gets a value that indicates the key can be imported during creation using the <see cref="KeyClient.ImportKeyAsync(ImportKeyOptions, CancellationToken)"/> or <see cref="KeyClient.ImportKey(ImportKeyOptions, CancellationToken)"/> methods.
+        /// </summary>
+        public static KeyOperation Import { get; } = new KeyOperation("import");
 
         /// <summary>
         /// Determines if two <see cref="KeyOperation"/> values are the same.

@@ -85,6 +85,14 @@ namespace Microsoft.Azure.Batch
             InheritUtil.InheritClientBehaviorsAndSetPublicProperty(this, baseBehaviors);
         }
 
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="ComputeNodeUser"/> class.
+        /// </summary>
+        protected ComputeNodeUser()
+        {
+            this.propertyContainer = new PropertyContainer();
+        }
+
 
         #endregion Constructors
 

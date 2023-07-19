@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using Azure.Core;
 using NUnit.Framework;
 
@@ -14,6 +15,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     public class JsonWebKeyTests
     {
+        [Test]
+        public void EmptyKeyOps()
+        {
+            JsonWebKey jwk = new JsonWebKey(null);
+            Assert.IsEmpty(jwk.KeyOps);
+        }
+
         [Test]
         public void AesDefaultsKeyOps()
         {
@@ -35,7 +43,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Shared));
         }
 
         [Test]
@@ -70,24 +78,28 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.Throws<InvalidOperationException>(() => jwk.ToAes());
         }
 
-        [Test]
-        public void ToAesInvalidKey()
+        [TestCase(KeyType.OctValue)]
+        [TestCase(KeyType.OctHsmValue)]
+        public void ToAesInvalidKey(string keyType)
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyType = KeyType.Oct,
+                KeyType = new KeyType(keyType),
                 K = null,
             };
 
-            Assert.Throws<InvalidOperationException>(() => jwk.ToAes());
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => jwk.ToAes());
+
+            // This should always be expected for oct-HSM because the HSM won't release the key.
+            Assert.AreEqual("key does not contain a value", ex.Message);
         }
 
         [TestCase(false)]
         [TestCase(true)]
         public void ECDsaDefaultsKeyOps(bool includePrivateParameters)
         {
-#if NET461
-            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net462.");
 #else
             using ECDsa ecdsa = ECDsa.Create();
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
@@ -106,8 +118,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetECDSaTestData))]
         public void SerializeECDsa(string oid, string friendlyName, bool includePrivateParameters)
         {
-#if NET461
-            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net462.");
 #else
             using ECDsa ecdsa = ECDsa.Create();
             try
@@ -129,29 +141,29 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Shared));
 #endif
         }
 
         [Test]
         public void FromECDsaNoPrivateKey()
         {
-#if NET461
-            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net462.");
 #else
             using ECDsa ecdsa = ECDsa.Create();
             ECParameters ecParameters = ecdsa.ExportParameters(false);
             ecdsa.ImportParameters(ecParameters);
 
-            Assert.That(() => new JsonWebKey(ecdsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+            Assert.That<JsonWebKey>(() => new JsonWebKey(ecdsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
 #endif
         }
 
         [Test]
         public void ToECDsaNoPrivateKey()
         {
-#if NET461
-            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net462.");
 #else
             JsonWebKey jwk;
             using (ECDsa ecdsa = ECDsa.Create())
@@ -161,7 +173,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (ECDsa ecdsa = jwk.ToECDsa(includePrivateParameters: true))
             {
-                Assert.That(() => ecdsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+                Assert.That<ECParameters>(() => ecdsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
             }
 #endif
         }
@@ -169,8 +181,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetECDSaTestData))]
         public void ToECDsa(string oid, string friendlyName, bool includePrivateParameters)
         {
-#if NET461
-            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net462.");
 #else
             byte[] plaintext = Encoding.UTF8.GetBytes("test");
             byte[] signature = null;
@@ -217,8 +229,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetECDSaInvalidTestData))]
         public void ToECDsaInvalidKey(string curveName, byte[] x, byte[] y, string name, bool nullOnError)
         {
-#if NET461
-            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#if NET462
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net462.");
 #else
             JsonWebKey jwk = new JsonWebKey
             {
@@ -270,7 +282,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Shared));
         }
 
         [Test]
@@ -280,7 +292,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RSAParameters rsaParameters = rsa.ExportParameters(false);
             rsa.ImportParameters(rsaParameters);
 
-            Assert.That(() => new JsonWebKey(rsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+            Assert.That<JsonWebKey>(() => new JsonWebKey(rsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
         }
 
         [Test]
@@ -294,7 +306,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (RSA rsa = jwk.ToRSA(includePrivateParameters: true))
             {
-                Assert.That(() => rsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+                Assert.That<RSAParameters>(() => rsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
             }
         }
 
@@ -344,6 +356,33 @@ namespace Azure.Security.KeyVault.Keys.Tests
             };
 
             Assert.Throws<InvalidOperationException>(() => jwk.ToRSA(), "Expected exception not thrown for data named '{0}'", name);
+        }
+
+        [Test]
+        public void SerializesJwt()
+        {
+            using RSA rsa = RSA.Create();
+            JsonWebKey jwk = new(rsa, true)
+            {
+                Id = "https://test.vault.azure.net/keys/test/abcd1234",
+            };
+
+            // Serialize
+            using MemoryStream ms = new();
+            using (Utf8JsonWriter writer = new(ms))
+            {
+                JsonSerializer.Serialize(writer, jwk);
+            }
+
+            string content = Encoding.UTF8.GetString(ms.ToArray());
+            StringAssert.Contains(@"""key_ops""", content);
+            StringAssert.Contains(@"""kid"":""https://test.vault.azure.net/keys/test/abcd1234""", content);
+            StringAssert.Contains(@"""kty"":""RSA""", content);
+
+            // Deserialize
+            JsonWebKey deserialized = JsonSerializer.Deserialize<JsonWebKey>(content);
+
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Shared));
         }
 
         private static IEnumerable<object> GetECDSaTestData()
@@ -424,7 +463,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private static bool HasPrivateKey(JsonWebKey jwk)
         {
-            if (jwk.KeyType == KeyType.Oct)
+            if (jwk.KeyType == KeyType.Oct || jwk.KeyType == KeyType.OctHsm)
             {
                 return jwk.K != null;
             }
@@ -444,7 +483,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private class JsonWebKeyComparer : IEqualityComparer<JsonWebKey>
         {
-            internal static readonly IEqualityComparer<JsonWebKey> s_instance = new JsonWebKeyComparer();
+            public static IEqualityComparer<JsonWebKey> Shared { get; } = new JsonWebKeyComparer();
 
             public bool Equals(JsonWebKey x, JsonWebKey y)
             {

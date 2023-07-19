@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Security
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -82,9 +84,15 @@ namespace Microsoft.Azure.Management.Security
             /// Name of the information protection policy. Possible values include:
             /// 'effective', 'custom'
             /// </param>
-            public static InformationProtectionPolicy CreateOrUpdate(this IInformationProtectionPoliciesOperations operations, string scope, string informationProtectionPolicyName)
+            /// <param name='labels'>
+            /// Dictionary of sensitivity labels.
+            /// </param>
+            /// <param name='informationTypes'>
+            /// The sensitivity information types.
+            /// </param>
+            public static InformationProtectionPolicy CreateOrUpdate(this IInformationProtectionPoliciesOperations operations, string scope, string informationProtectionPolicyName, IDictionary<string, SensitivityLabel> labels = default(IDictionary<string, SensitivityLabel>), IDictionary<string, InformationType> informationTypes = default(IDictionary<string, InformationType>))
             {
-                return operations.CreateOrUpdateAsync(scope, informationProtectionPolicyName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(scope, informationProtectionPolicyName, labels, informationTypes).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -102,12 +110,18 @@ namespace Microsoft.Azure.Management.Security
             /// Name of the information protection policy. Possible values include:
             /// 'effective', 'custom'
             /// </param>
+            /// <param name='labels'>
+            /// Dictionary of sensitivity labels.
+            /// </param>
+            /// <param name='informationTypes'>
+            /// The sensitivity information types.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<InformationProtectionPolicy> CreateOrUpdateAsync(this IInformationProtectionPoliciesOperations operations, string scope, string informationProtectionPolicyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<InformationProtectionPolicy> CreateOrUpdateAsync(this IInformationProtectionPoliciesOperations operations, string scope, string informationProtectionPolicyName, IDictionary<string, SensitivityLabel> labels = default(IDictionary<string, SensitivityLabel>), IDictionary<string, InformationType> informationTypes = default(IDictionary<string, InformationType>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, informationProtectionPolicyName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, informationProtectionPolicyName, labels, informationTypes, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

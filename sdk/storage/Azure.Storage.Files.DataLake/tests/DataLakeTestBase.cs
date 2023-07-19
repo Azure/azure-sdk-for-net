@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -16,8 +18,15 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
-    public abstract class DataLakeTestBase : StorageTestBase
+    [DataLakeClientTestFixture]
+    public abstract class DataLakeTestBase : StorageTestBase<DataLakeTestEnvironment>
     {
+        /// <summary>
+        /// Source of clients.
+        /// </summary>
+        protected ClientBuilder<DataLakeServiceClient, DataLakeClientOptions> DataLakeClientBuilder { get; }
+
+        protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
         public readonly string GarbageETag = "\"garbage\"";
         public readonly string ReceivedLeaseId = "received";
@@ -29,104 +38,72 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly IList<PathAccessControlItem> AccessControlList
             = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
         public readonly PathPermissions PathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
-
-        public DataLakeTestBase(bool async) : this(async, null) { }
-
-        public DataLakeTestBase(bool async, RecordedTestMode? mode = null)
+        public readonly IList<PathAccessControlItem> ExecuteOnlyAccessControlList
+            = PathAccessControlExtensions.ParseAccessControlList("user::--x,group::--x,other::--x");
+        public readonly IList<RemovePathAccessControlItem> RemoveAccessControlList
+            = RemovePathAccessControlItem.ParseAccessControlList(
+                "mask," +
+                "default:user,default:group," +
+                "user:ec3595d6-2c17-4696-8caa-7e139758d24a,group:ec3595d6-2c17-4696-8caa-7e139758d24a," +
+                "default:user:ec3595d6-2c17-4696-8caa-7e139758d24a,default:group:ec3595d6-2c17-4696-8caa-7e139758d24a");
+        public DataLakeTestBase(bool async, DataLakeClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
+            DataLakeClientBuilder = ClientBuilderExtensions.GetNewDataLakeClientBuilder(Tenants, _serviceVersion);
         }
+
+        public TenantConfiguration TestConfigHierarchicalNamespace
+            => Tenants.TestConfigHierarchicalNamespace;
 
         public DateTimeOffset OldDate => Recording.Now.AddDays(-1);
         public DateTimeOffset NewDate => Recording.Now.AddDays(1);
-        public string GetGarbageLeaseId() => Recording.Random.NewGuid().ToString();
-        public string GetNewFileSystemName() => $"test-filesystem-{Recording.Random.NewGuid()}";
-        public string GetNewDirectoryName() => $"test-directory-{Recording.Random.NewGuid()}";
-        public string GetNewFileName() => $"test-file-{Recording.Random.NewGuid()}";
-
-        public DataLakeClientOptions GetOptions(bool parallelRange = false)
-        {
-            var options = new DataLakeClientOptions
-            {
-                Diagnostics = { IsLoggingEnabled = true },
-                Retry =
-                {
-                    Mode = RetryMode.Exponential,
-                    MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                },
-                Transport = GetTransport()
-            };
-            if (Mode != RecordedTestMode.Live)
-            {
-                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording, parallelRange), HttpPipelinePosition.PerCall);
-            }
-
-            return Recording.InstrumentClientOptions(options);
-        }
-
-        public DataLakeServiceClient GetServiceClientFromSharedKeyConfig(TenantConfiguration config)
-            => InstrumentClient(
-                new DataLakeServiceClient(
-                    new Uri(config.BlobServiceEndpoint),
-                    new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
-                    GetOptions()));
-
-        public DataLakeServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config)
-            => InstrumentClient(
-                new DataLakeServiceClient(
-                    (new Uri(config.BlobServiceEndpoint)).ToHttps(),
-                    GetOAuthCredential(config),
-                    GetOptions()));
-
-        public DataLakeServiceClient GetServiceClient_SharedKey()
-            => GetServiceClientFromSharedKeyConfig(TestConfigHierarchicalNamespace);
-
-        public DataLakeServiceClient GetServiceClient_OAuth()
-            => GetServiceClientFromOauthConfig(TestConfigHierarchicalNamespace);
-
+        public string GetGarbageLeaseId() => DataLakeClientBuilder.GetGarbageLeaseId();
+        public string GetNewFileSystemName() => DataLakeClientBuilder.GetNewFileSystemName();
+        public string GetNewDirectoryName() => DataLakeClientBuilder.GetNewDirectoryName();
+        public string GetNewNonAsciiDirectoryName() => DataLakeClientBuilder.GetNewNonAsciiDirectoryName();
+        public string GetNewFileName() => DataLakeClientBuilder.GetNewFileName();
+        public string GetNewNonAsciiFileName() => DataLakeClientBuilder.GetNewNonAsciiFileName();
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(DataLakeClientBuilder.Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint);
 
         public async Task<DisposingFileSystem> GetNewFileSystem(
             DataLakeServiceClient service = default,
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType publicAccessType = PublicAccessType.None,
-            bool premium = default)
+            PublicAccessType? publicAccessType = default,
+            bool premium = default,
+            bool hnsEnabled = true,
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = default)
+            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium, hnsEnabled, encryptionScopeOptions);
+
+        public DataLakeClientOptions GetOptions(bool parallelRange = false)
+            => DataLakeClientBuilder.GetOptions(parallelRange);
+
+        public DataLakeClientOptions GetFaultyDataLakeConnectionOptions(
+            int raiseAt = default,
+            Exception raise = default,
+            Action onFault = default)
         {
-            fileSystemName ??= GetNewFileSystemName();
-            service ??= GetServiceClient_SharedKey();
-
-            if (publicAccessType == PublicAccessType.None)
-            {
-                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.FileSystem;
-            }
-
-            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(fileSystemName));
-
-            // due to a service issue, if the initial container creation request times out, subsequent requests
-            // can return a ContainerAlreadyExists code even though the container doesn't really exist.
-            // we delay until after the service cache timeout and then attempt to create the container one more time.
-            // If this attempt fails, we let the exception propagate.
-            // TODO Note this issue will be fixed in the 72 rollout. After that time, this try/catch can be removed.
-            try
-            {
-                await RetryAsync(
-                    async () => await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType),
-                    ex => ex.ErrorCode == Constants.Blob.Container.AlreadyExists,
-                    retryDelay: TestConstants.DataLakeRetryDelay,
-                    retryAttempts: 1);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.AlreadyExists)
-            {
-                // if we get this error after retrying once, that means the container really does
-                // exist, since the retry attempt occurred after the cache timeout.
-                // so we just swallow this error and continue on in the test.
-            }
-
-            return new DisposingFileSystem(fileSystem);
+            raise = raise ?? new IOException("Simulated connection fault");
+            DataLakeClientOptions options = GetOptions();
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise, onFault), HttpPipelinePosition.PerCall);
+            return options;
         }
+
+        public DataLakeServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config)
+            => InstrumentClient(
+                new DataLakeServiceClient(
+                    (new Uri(config.BlobServiceEndpoint)).ToHttps(),
+                    Tenants.GetOAuthCredential(config),
+                    GetOptions()));
+
+        public DataLakeServiceClient GetServiceClient_OAuth()
+            => GetServiceClientFromOauthConfig(Tenants.TestConfigHierarchicalNamespace);
+
+        public StorageSharedKeyCredential GetStorageSharedKeyCredentials()
+            => new StorageSharedKeyCredential(
+                TestConfigHierarchicalNamespace.AccountName,
+                TestConfigHierarchicalNamespace.AccountKey);
 
         public static void AssertValidStoragePathInfo(PathInfo pathInfo)
         {
@@ -151,7 +128,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.AreEqual(expected.Count, actual.Count, "Metadata counts are not equal");
             }
 
-
             foreach (KeyValuePair<string, string> kvp in expected)
             {
                 if (!actual.TryGetValue(kvp.Key, out var value) ||
@@ -160,6 +136,38 @@ namespace Azure.Storage.Files.DataLake.Tests
                     Assert.Fail($"Expected key <{kvp.Key}> with value <{kvp.Value}> not found");
                 }
             }
+        }
+
+        public void AssertAccessControlListEquality(
+            IList<PathAccessControlItem> expected,
+             IList<PathAccessControlItem> actual)
+        {
+            Assert.AreEqual(expected.Count, actual.Count);
+            foreach (PathAccessControlItem expectedItem in expected)
+            {
+                PathAccessControlItem actualItem = actual.Where(
+                    r => r.AccessControlType == expectedItem.AccessControlType).FirstOrDefault();
+                if (actualItem == null)
+                {
+                    Assert.Fail("AccessControlItem not found");
+                }
+                AssertPathAccessControlItemEquality(expectedItem, actualItem);
+            }
+        }
+
+        public void AssertPathAccessControlItemEquality(PathAccessControlItem expected, PathAccessControlItem actual)
+        {
+            Assert.AreEqual(expected.DefaultScope, actual.DefaultScope);
+            Assert.AreEqual(expected.AccessControlType, actual.AccessControlType);
+            Assert.AreEqual(expected.EntityId, actual.EntityId);
+            Assert.AreEqual(expected.Permissions, actual.Permissions);
+        }
+
+        public DataLakeCustomerProvidedKey GetCustomerProvidedKey()
+        {
+            var bytes = new byte[32];
+            Recording.Random.NextBytes(bytes);
+            return new DataLakeCustomerProvidedKey(bytes);
         }
 
         public void AssertPathPermissionsEquality(PathPermissions expected, PathPermissions actual)
@@ -176,7 +184,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new DataLakeServiceClient(
-                    new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewAccountSasCredentials(sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials())}"),
                     GetOptions()));
 
         public DataLakeServiceClient GetServiceClient_DataLakeServiceSas_FileSystem(
@@ -185,7 +193,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new DataLakeServiceClient(
-                    new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceSasCredentialsFileSystem(fileSystemName: fileSystemName, sharedKeyCredentials: sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceSasCredentialsFileSystem(fileSystemName: fileSystemName, sharedKeyCredentials: sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials())}"),
                     GetOptions()));
 
         public DataLakeServiceClient GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
@@ -194,7 +202,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new DataLakeServiceClient(
-                    (new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceIdentitySasCredentialsFileSystem(fileSystemName: fileSystemName, userDelegationKey, TestConfigHierarchicalNamespace.AccountName)}")).ToHttps(),
+                    (new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceIdentitySasCredentialsFileSystem(fileSystemName: fileSystemName, userDelegationKey, Tenants.TestConfigHierarchicalNamespace.AccountName)}")).ToHttps(),
                     GetOptions()));
 
         public DataLakeServiceClient GetServiceClient_DataLakeServiceSas_Path(
@@ -204,7 +212,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new DataLakeServiceClient(
-                    new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceSasCredentialsPath(fileSystemName: fileSystemName, path: path, sharedKeyCredentials: sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
+                    new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceSasCredentialsPath(fileSystemName: fileSystemName, path: path, sharedKeyCredentials: sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials())}"),
                     GetOptions()));
 
         public DataLakeServiceClient GetServiceClient_DataLakeServiceIdentitySas_Path(
@@ -214,14 +222,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new DataLakeServiceClient(
-                    (new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceIdentitySasCredentialsPath(fileSystemName: fileSystemName, path: path, userDelegationKey: userDelegationKey, accountName: TestConfigHierarchicalNamespace.AccountName)}")).ToHttps(),
+                    (new Uri($"{Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint}?{sasCredentials ?? GetNewDataLakeServiceIdentitySasCredentialsPath(fileSystemName: fileSystemName, path: path, userDelegationKey: userDelegationKey, accountName: Tenants.TestConfigHierarchicalNamespace.AccountName)}")).ToHttps(),
                     GetOptions()));
-
-
-        public StorageSharedKeyCredential GetNewSharedKeyCredentials()
-            => new StorageSharedKeyCredential(
-                    TestConfigHierarchicalNamespace.AccountName,
-                    TestConfigHierarchicalNamespace.AccountKey);
 
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
         {
@@ -241,7 +243,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 AccountSasPermissions.Write |
                 AccountSasPermissions.Delete |
                 AccountSasPermissions.List);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials());
         }
 
         public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsFileSystem(string fileSystemName, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -255,7 +257,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
             builder.SetPermissions(DataLakeFileSystemSasPermissions.All);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials());
         }
 
         public DataLakeSasQueryParameters GetNewDataLakeServiceIdentitySasCredentialsFileSystem(string fileSystemName, UserDelegationKey userDelegationKey, string accountName)
@@ -272,11 +274,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 
-        public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsPath(string fileSystemName, string path, StorageSharedKeyCredential sharedKeyCredentials = default)
+        public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsPath(string fileSystemName, string path, bool isDirectory = false, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
             var builder = new DataLakeSasBuilder
             {
                 FileSystemName = fileSystemName,
+                IsDirectory = isDirectory,
                 Path = path,
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
@@ -289,7 +292,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeSasPermissions.Create |
                 DataLakeSasPermissions.Delete |
                 DataLakeSasPermissions.Write);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials());
         }
 
         public DataLakeSasQueryParameters GetNewDataLakeServiceIdentitySasCredentialsPath(string fileSystemName, string path, UserDelegationKey userDelegationKey, string accountName)
@@ -312,13 +315,42 @@ namespace Azure.Storage.Files.DataLake.Tests
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 
+        public DataLakeSasQueryParameters GetNewDataLakeSasCredentialsOwner(string fileSystemName, string ownerName, UserDelegationKey userDelegationKey, string accountName)
+        {
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                FileSystemName = fileSystemName,
+                AgentObjectId = ownerName
+            };
+            dataLakeSasBuilder.SetPermissions(DataLakeSasPermissions.All);
+            return dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
+        public string BlobEndpointToDfsEndpoint(string blobEndpoint = default)
+        {
+            if (String.IsNullOrEmpty(blobEndpoint))
+            {
+                blobEndpoint = TestConfigDefault.BlobServiceEndpoint;
+            }
+
+            int pos = blobEndpoint.IndexOf(Constants.DataLake.BlobUriSuffix);
+            if (pos < 0)
+            {
+                return blobEndpoint;
+            }
+            return blobEndpoint.Substring(0, pos) + Constants.DataLake.DfsUriSuffix +
+                blobEndpoint.Substring(pos + Constants.DataLake.BlobUriSuffix.Length);
+        }
+
         //TODO consider removing this.
         public async Task<string> SetupPathMatchCondition(DataLakePathClient path, string match)
         {
             if (match == ReceivedETag)
             {
                 Response<PathProperties> headers = await path.GetPropertiesAsync();
-                return headers.Value.ETag.ToString();
+                return headers.GetRawResponse().Headers.ETag.ToString();
             }
             else
             {
@@ -348,6 +380,26 @@ namespace Azure.Storage.Files.DataLake.Tests
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
+        /// <summary>
+        /// Gets a custom account SAS where the permissions, services and resourceType
+        /// comes back in the string character order that the user inputs it as.
+        /// </summary>
+        /// <param name="permissions"></param>
+        /// <param name="services"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="sharedKeyCredential"></param>
+        /// <returns></returns>
+        public override string GetCustomAccountSas(
+            string permissions = default,
+            string services = default,
+            string resourceType = default,
+            StorageSharedKeyCredential sharedKeyCredential = default)
+        {
+            // Default to the HNS credentials instead of the primary credentials in the base method
+            sharedKeyCredential ??= Tenants.GetNewHnsSharedKeyCredentials();
+            return base.GetCustomAccountSas(permissions, services, resourceType, sharedKeyCredential);
+        }
+
         public DataLakeSignedIdentifier[] BuildSignedIdentifiers() =>
             new[]
             {
@@ -357,37 +409,25 @@ namespace Azure.Storage.Files.DataLake.Tests
                     AccessPolicy =
                         new DataLakeAccessPolicy
                         {
-                            StartsOn = Recording.UtcNow.AddHours(-1),
-                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            PolicyStartsOn = Recording.UtcNow.AddHours(-1),
+                            PolicyExpiresOn =  Recording.UtcNow.AddHours(1),
                             Permissions = "rcw"
                         }
                 }
             };
 
-        public class DisposingFileSystem : IAsyncDisposable
-        {
-            public DataLakeFileSystemClient FileSystem;
-
-            public DisposingFileSystem(DataLakeFileSystemClient fileSystem)
+        public string[] PathNames
+        => new[]
             {
-                FileSystem = fileSystem;
-            }
-
-            public async ValueTask DisposeAsync()
-            {
-                if (FileSystem != null)
-                {
-                    try
-                    {
-                        await FileSystem.DeleteAsync();
-                        FileSystem = null;
-                    }
-                    catch
-                    {
-                        // swallow the exception to avoid hiding another test failure
-                    }
-                }
-            }
+                "foo",
+                "bar",
+                "baz",
+                "baz/bar",
+                "foo/foo",
+                "foo/bar",
+                "baz/foo",
+                "baz/foo/bar",
+                "baz/bar/foo"
+            };
         }
-    }
 }

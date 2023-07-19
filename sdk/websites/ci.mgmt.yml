@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/websites/ci.mgmt.yml
+    - sdk/websites/Azure.ResourceManager.AppService/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: websites
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.AppService
+      safeName: AzureResourceManagerAppService

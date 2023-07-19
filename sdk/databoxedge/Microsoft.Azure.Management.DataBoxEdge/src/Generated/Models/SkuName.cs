@@ -25,5 +25,21 @@ namespace Microsoft.Azure.Management.DataBoxEdge.Models
         public const string TEA4NodeHeater = "TEA_4Node_Heater";
         public const string TEA4NodeUPSHeater = "TEA_4Node_UPS_Heater";
         public const string TMA = "TMA";
+        public const string TDC = "TDC";
+        public const string TCASmall = "TCA_Small";
+        public const string GPU = "GPU";
+        public const string TCALarge = "TCA_Large";
+        public const string EdgePBase = "EdgeP_Base";
+        public const string EdgePHigh = "EdgeP_High";
+        public const string EdgePRBase = "EdgePR_Base";
+        public const string EdgePRBaseUPS = "EdgePR_Base_UPS";
+        public const string EP2641VPUW = "EP2_64_1VPU_W";
+        public const string EP21281T4Mx1W = "EP2_128_1T4_Mx1_W";
+        public const string EP22562T4W = "EP2_256_2T4_W";
+        public const string EdgeMRMini = "EdgeMR_Mini";
+        public const string RCASmall = "RCA_Small";
+        public const string RCALarge = "RCA_Large";
+        public const string RDC = "RDC";
+        public const string Management = "Management";
     }
 }

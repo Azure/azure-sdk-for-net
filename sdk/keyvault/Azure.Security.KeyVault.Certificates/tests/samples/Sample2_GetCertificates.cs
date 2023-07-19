@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -15,18 +14,16 @@ namespace Azure.Security.KeyVault.Certificates.Samples
     /// and list deleted certificates in a soft delete-enabled key vault
     /// using the synchronous methods of the CertificateClient.
     /// </summary>
-    [LiveOnly]
-    [NonParallelizable]
     public partial class GetCertificates
     {
         [Test]
         public void GetCertificatesSync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CertificatesSample2CertificateClient
-            var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CertificatesSample2CreateCertificate
@@ -54,7 +51,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #region Snippet:CertificatesSample2ListCertificates
             foreach (CertificateProperties cert in client.GetPropertiesOfCertificates())
             {
-                Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {BitConverter.ToString(cert.X509Thumbprint)}");
+                Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {cert.X509ThumbprintString}");
             }
             #endregion
 

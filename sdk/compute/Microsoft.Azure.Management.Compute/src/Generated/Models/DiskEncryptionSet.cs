@@ -39,6 +39,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
+        /// <param name="encryptionType">Possible values include:
+        /// 'EncryptionAtRestWithCustomerKey',
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys',
+        /// 'ConfidentialVmEncryptedWithCustomerKey'</param>
         /// <param name="activeKey">The key vault key which is currently used
         /// by this disk encryption set.</param>
         /// <param name="previousKeys">A readonly collection of key vault keys
@@ -47,13 +51,30 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// rotation.</param>
         /// <param name="provisioningState">The disk encryption set
         /// provisioning state.</param>
-        public DiskEncryptionSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionSetIdentity identity = default(EncryptionSetIdentity), KeyVaultAndKeyReference activeKey = default(KeyVaultAndKeyReference), IList<KeyVaultAndKeyReference> previousKeys = default(IList<KeyVaultAndKeyReference>), string provisioningState = default(string))
+        /// <param name="rotationToLatestKeyVersionEnabled">Set this flag to
+        /// true to enable auto-updating of this disk encryption set to the
+        /// latest key version.</param>
+        /// <param name="lastKeyRotationTimestamp">The time when the active key
+        /// of this disk encryption set was updated.</param>
+        /// <param name="autoKeyRotationError">The error that was encountered
+        /// during auto-key rotation. If an error is present, then auto-key
+        /// rotation will not be attempted until the error on this disk
+        /// encryption set is fixed.</param>
+        /// <param name="federatedClientId">Multi-tenant application client id
+        /// to access key vault in a different tenant. Setting the value to
+        /// 'None' will clear the property.</param>
+        public DiskEncryptionSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionSetIdentity identity = default(EncryptionSetIdentity), string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), IList<KeyForDiskEncryptionSet> previousKeys = default(IList<KeyForDiskEncryptionSet>), string provisioningState = default(string), bool? rotationToLatestKeyVersionEnabled = default(bool?), System.DateTime? lastKeyRotationTimestamp = default(System.DateTime?), ApiError autoKeyRotationError = default(ApiError), string federatedClientId = default(string))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
+            EncryptionType = encryptionType;
             ActiveKey = activeKey;
             PreviousKeys = previousKeys;
             ProvisioningState = provisioningState;
+            RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
+            LastKeyRotationTimestamp = lastKeyRotationTimestamp;
+            AutoKeyRotationError = autoKeyRotationError;
+            FederatedClientId = federatedClientId;
             CustomInit();
         }
 
@@ -68,11 +89,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         public EncryptionSetIdentity Identity { get; set; }
 
         /// <summary>
+        /// Gets or sets possible values include:
+        /// 'EncryptionAtRestWithCustomerKey',
+        /// 'EncryptionAtRestWithPlatformAndCustomerKeys',
+        /// 'ConfidentialVmEncryptedWithCustomerKey'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryptionType")]
+        public string EncryptionType { get; set; }
+
+        /// <summary>
         /// Gets or sets the key vault key which is currently used by this disk
         /// encryption set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.activeKey")]
-        public KeyVaultAndKeyReference ActiveKey { get; set; }
+        public KeyForDiskEncryptionSet ActiveKey { get; set; }
 
         /// <summary>
         /// Gets a readonly collection of key vault keys previously used by
@@ -80,13 +110,43 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// will be empty if there is no ongoing key rotation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.previousKeys")]
-        public IList<KeyVaultAndKeyReference> PreviousKeys { get; private set; }
+        public IList<KeyForDiskEncryptionSet> PreviousKeys { get; private set; }
 
         /// <summary>
         /// Gets the disk encryption set provisioning state.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets set this flag to true to enable auto-updating of this
+        /// disk encryption set to the latest key version.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rotationToLatestKeyVersionEnabled")]
+        public bool? RotationToLatestKeyVersionEnabled { get; set; }
+
+        /// <summary>
+        /// Gets the time when the active key of this disk encryption set was
+        /// updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastKeyRotationTimestamp")]
+        public System.DateTime? LastKeyRotationTimestamp { get; private set; }
+
+        /// <summary>
+        /// Gets the error that was encountered during auto-key rotation. If an
+        /// error is present, then auto-key rotation will not be attempted
+        /// until the error on this disk encryption set is fixed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoKeyRotationError")]
+        public ApiError AutoKeyRotationError { get; private set; }
+
+        /// <summary>
+        /// Gets or sets multi-tenant application client id to access key vault
+        /// in a different tenant. Setting the value to 'None' will clear the
+        /// property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.federatedClientId")]
+        public string FederatedClientId { get; set; }
 
         /// <summary>
         /// Validate the object.

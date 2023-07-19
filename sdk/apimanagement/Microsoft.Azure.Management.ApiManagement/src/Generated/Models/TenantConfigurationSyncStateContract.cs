@@ -10,13 +10,16 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Tenant Configuration Synchronization State.
+    /// Result of Tenant Configuration Sync State.
     /// </summary>
-    public partial class TenantConfigurationSyncStateContract
+    [Rest.Serialization.JsonTransformation]
+    public partial class TenantConfigurationSyncStateContract : Resource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -31,6 +34,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the
         /// TenantConfigurationSyncStateContract class.
         /// </summary>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="branch">The name of Git branch.</param>
         /// <param name="commitId">The latest commit Id.</param>
         /// <param name="isExport">value indicating if last sync was save
@@ -47,7 +56,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// configuration change. The date conforms to the following format:
         /// `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// </param>
-        public TenantConfigurationSyncStateContract(string branch = default(string), string commitId = default(string), bool? isExport = default(bool?), bool? isSynced = default(bool?), bool? isGitEnabled = default(bool?), System.DateTime? syncDate = default(System.DateTime?), System.DateTime? configurationChangeDate = default(System.DateTime?))
+        /// <param name="lastOperationId">Most recent tenant configuration
+        /// operation identifier</param>
+        public TenantConfigurationSyncStateContract(string id = default(string), string name = default(string), string type = default(string), string branch = default(string), string commitId = default(string), bool? isExport = default(bool?), bool? isSynced = default(bool?), bool? isGitEnabled = default(bool?), System.DateTime? syncDate = default(System.DateTime?), System.DateTime? configurationChangeDate = default(System.DateTime?), string lastOperationId = default(string))
+            : base(id, name, type)
         {
             Branch = branch;
             CommitId = commitId;
@@ -56,6 +68,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             IsGitEnabled = isGitEnabled;
             SyncDate = syncDate;
             ConfigurationChangeDate = configurationChangeDate;
+            LastOperationId = lastOperationId;
             CustomInit();
         }
 
@@ -67,34 +80,34 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Gets or sets the name of Git branch.
         /// </summary>
-        [JsonProperty(PropertyName = "branch")]
+        [JsonProperty(PropertyName = "properties.branch")]
         public string Branch { get; set; }
 
         /// <summary>
         /// Gets or sets the latest commit Id.
         /// </summary>
-        [JsonProperty(PropertyName = "commitId")]
+        [JsonProperty(PropertyName = "properties.commitId")]
         public string CommitId { get; set; }
 
         /// <summary>
         /// Gets or sets value indicating if last sync was save (true) or
         /// deploy (false) operation.
         /// </summary>
-        [JsonProperty(PropertyName = "isExport")]
+        [JsonProperty(PropertyName = "properties.isExport")]
         public bool? IsExport { get; set; }
 
         /// <summary>
         /// Gets or sets value indicating if last synchronization was later
         /// than the configuration change.
         /// </summary>
-        [JsonProperty(PropertyName = "isSynced")]
+        [JsonProperty(PropertyName = "properties.isSynced")]
         public bool? IsSynced { get; set; }
 
         /// <summary>
         /// Gets or sets value indicating whether Git configuration access is
         /// enabled.
         /// </summary>
-        [JsonProperty(PropertyName = "isGitEnabled")]
+        [JsonProperty(PropertyName = "properties.isGitEnabled")]
         public bool? IsGitEnabled { get; set; }
 
         /// <summary>
@@ -103,7 +116,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// specified by the ISO 8601 standard.
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "syncDate")]
+        [JsonProperty(PropertyName = "properties.syncDate")]
         public System.DateTime? SyncDate { get; set; }
 
         /// <summary>
@@ -112,8 +125,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// specified by the ISO 8601 standard.
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "configurationChangeDate")]
+        [JsonProperty(PropertyName = "properties.configurationChangeDate")]
         public System.DateTime? ConfigurationChangeDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets most recent tenant configuration operation identifier
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastOperationId")]
+        public string LastOperationId { get; set; }
 
     }
 }

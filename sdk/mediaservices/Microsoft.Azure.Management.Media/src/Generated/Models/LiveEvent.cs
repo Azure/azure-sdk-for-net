@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// The Live Event.
+    /// The live event.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class LiveEvent : TrackedResource
@@ -34,47 +34,71 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the LiveEvent class.
         /// </summary>
-        /// <param name="input">The Live Event input.</param>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="input">Live event input settings. It defines how the
+        /// live event receives input from a contribution encoder.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="location">The Azure Region of the resource.</param>
-        /// <param name="description">The Live Event description.</param>
-        /// <param name="preview">The Live Event preview.</param>
-        /// <param name="encoding">The Live Event encoding.</param>
-        /// <param name="provisioningState">The provisioning state of the Live
-        /// Event.</param>
-        /// <param name="resourceState">The resource state of the Live Event.
-        /// Possible values include: 'Stopped', 'Starting', 'Running',
-        /// 'Stopping', 'Deleting'</param>
-        /// <param name="crossSiteAccessPolicies">The Live Event access
+        /// <param name="description">A description for the live event.</param>
+        /// <param name="preview">Live event preview settings. Preview allows
+        /// live event producers to preview the live streaming content without
+        /// creating any live output.</param>
+        /// <param name="encoding">Encoding settings for the live event. It
+        /// configures whether a live encoder is used for the live event and
+        /// settings for the live encoder if it is used.</param>
+        /// <param name="transcriptions">Live transcription settings for the
+        /// live event. See https://go.microsoft.com/fwlink/?linkid=2133742 for
+        /// more information about the live transcription feature.</param>
+        /// <param name="provisioningState">The provisioning state of the live
+        /// event.</param>
+        /// <param name="resourceState">The resource state of the live event.
+        /// See https://go.microsoft.com/fwlink/?linkid=2139012 for more
+        /// information. Possible values include: 'Stopped', 'Allocating',
+        /// 'StandBy', 'Starting', 'Running', 'Stopping', 'Deleting'</param>
+        /// <param name="crossSiteAccessPolicies">Live event cross site access
         /// policies.</param>
-        /// <param name="vanityUrl">Specifies whether to use a vanity url with
-        /// the Live Event.  This value is specified at creation time and
-        /// cannot be updated.</param>
+        /// <param name="useStaticHostname">Specifies whether a static hostname
+        /// would be assigned to the live event preview and ingest endpoints.
+        /// This value can only be updated if the live event is in Standby
+        /// state</param>
+        /// <param name="hostnamePrefix">When useStaticHostname is set to true,
+        /// the hostnamePrefix specifies the first part of the hostname
+        /// assigned to the live event preview and ingest endpoints. The final
+        /// hostname would be a combination of this prefix, the media service
+        /// account name and a short code for the Azure Media Services data
+        /// center.</param>
         /// <param name="streamOptions">The options to use for the LiveEvent.
-        /// This value is specified at creation time and cannot be
-        /// updated.</param>
-        /// <param name="created">The exact time the Live Event was
-        /// created.</param>
-        /// <param name="lastModified">The exact time the Live Event was last
-        /// modified.</param>
-        public LiveEvent(LiveEventInput input, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), LiveEventPreview preview = default(LiveEventPreview), LiveEventEncoding encoding = default(LiveEventEncoding), string provisioningState = default(string), LiveEventResourceState? resourceState = default(LiveEventResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), bool? vanityUrl = default(bool?), IList<StreamOptionsFlag?> streamOptions = default(IList<StreamOptionsFlag?>), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
-            : base(id, name, type, tags, location)
+        /// This value is specified at creation time and cannot be updated. The
+        /// valid values for the array entry values are 'Default' and
+        /// 'LowLatency'.</param>
+        /// <param name="created">The creation time for the live event</param>
+        /// <param name="lastModified">The last modified time of the live
+        /// event.</param>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public LiveEvent(string location, LiveEventInput input, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), LiveEventPreview preview = default(LiveEventPreview), LiveEventEncoding encoding = default(LiveEventEncoding), IList<LiveEventTranscription> transcriptions = default(IList<LiveEventTranscription>), string provisioningState = default(string), LiveEventResourceState? resourceState = default(LiveEventResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), bool? useStaticHostname = default(bool?), string hostnamePrefix = default(string), IList<StreamOptionsFlag?> streamOptions = default(IList<StreamOptionsFlag?>), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), SystemData systemData = default(SystemData))
+            : base(location, id, name, type, tags)
         {
             Description = description;
             Input = input;
             Preview = preview;
             Encoding = encoding;
+            Transcriptions = transcriptions;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             CrossSiteAccessPolicies = crossSiteAccessPolicies;
-            VanityUrl = vanityUrl;
+            UseStaticHostname = useStaticHostname;
+            HostnamePrefix = hostnamePrefix;
             StreamOptions = streamOptions;
             Created = created;
             LastModified = lastModified;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -84,74 +108,106 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Live Event description.
+        /// Gets or sets a description for the live event.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the Live Event input.
+        /// Gets or sets live event input settings. It defines how the live
+        /// event receives input from a contribution encoder.
         /// </summary>
         [JsonProperty(PropertyName = "properties.input")]
         public LiveEventInput Input { get; set; }
 
         /// <summary>
-        /// Gets or sets the Live Event preview.
+        /// Gets or sets live event preview settings. Preview allows live event
+        /// producers to preview the live streaming content without creating
+        /// any live output.
         /// </summary>
         [JsonProperty(PropertyName = "properties.preview")]
         public LiveEventPreview Preview { get; set; }
 
         /// <summary>
-        /// Gets or sets the Live Event encoding.
+        /// Gets or sets encoding settings for the live event. It configures
+        /// whether a live encoder is used for the live event and settings for
+        /// the live encoder if it is used.
         /// </summary>
         [JsonProperty(PropertyName = "properties.encoding")]
         public LiveEventEncoding Encoding { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the Live Event.
+        /// Gets or sets live transcription settings for the live event. See
+        /// https://go.microsoft.com/fwlink/?linkid=2133742 for more
+        /// information about the live transcription feature.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.transcriptions")]
+        public IList<LiveEventTranscription> Transcriptions { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning state of the live event.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the resource state of the Live Event. Possible values include:
-        /// 'Stopped', 'Starting', 'Running', 'Stopping', 'Deleting'
+        /// Gets the resource state of the live event. See
+        /// https://go.microsoft.com/fwlink/?linkid=2139012 for more
+        /// information. Possible values include: 'Stopped', 'Allocating',
+        /// 'StandBy', 'Starting', 'Running', 'Stopping', 'Deleting'
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceState")]
         public LiveEventResourceState? ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Live Event access policies.
+        /// Gets or sets live event cross site access policies.
         /// </summary>
         [JsonProperty(PropertyName = "properties.crossSiteAccessPolicies")]
         public CrossSiteAccessPolicies CrossSiteAccessPolicies { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies whether to use a vanity url with the Live
-        /// Event.  This value is specified at creation time and cannot be
-        /// updated.
+        /// Gets or sets specifies whether a static hostname would be assigned
+        /// to the live event preview and ingest endpoints. This value can only
+        /// be updated if the live event is in Standby state
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vanityUrl")]
-        public bool? VanityUrl { get; set; }
+        [JsonProperty(PropertyName = "properties.useStaticHostname")]
+        public bool? UseStaticHostname { get; set; }
 
         /// <summary>
-        /// Gets or sets the options to use for the LiveEvent.  This value is
-        /// specified at creation time and cannot be updated.
+        /// Gets or sets when useStaticHostname is set to true, the
+        /// hostnamePrefix specifies the first part of the hostname assigned to
+        /// the live event preview and ingest endpoints. The final hostname
+        /// would be a combination of this prefix, the media service account
+        /// name and a short code for the Azure Media Services data center.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hostnamePrefix")]
+        public string HostnamePrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the options to use for the LiveEvent. This value is
+        /// specified at creation time and cannot be updated. The valid values
+        /// for the array entry values are 'Default' and 'LowLatency'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.streamOptions")]
         public IList<StreamOptionsFlag?> StreamOptions { get; set; }
 
         /// <summary>
-        /// Gets the exact time the Live Event was created.
+        /// Gets the creation time for the live event
         /// </summary>
         [JsonProperty(PropertyName = "properties.created")]
         public System.DateTime? Created { get; private set; }
 
         /// <summary>
-        /// Gets the exact time the Live Event was last modified.
+        /// Gets the last modified time of the live event.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModified")]
         public System.DateTime? LastModified { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -159,8 +215,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (Input == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Input");
@@ -168,6 +225,16 @@ namespace Microsoft.Azure.Management.Media.Models
             if (Input != null)
             {
                 Input.Validate();
+            }
+            if (Transcriptions != null)
+            {
+                foreach (var element in Transcriptions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

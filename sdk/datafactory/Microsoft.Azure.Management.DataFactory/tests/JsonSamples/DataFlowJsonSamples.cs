@@ -48,7 +48,77 @@ namespace DataFactory.Tests.JsonSamples
                 ""name"": ""CADSink""
               }
             ],
+            ""script"": ""some script"",
+            ""scriptLines"": [""some script1"", ""some script2""]
+          }
+        }
+      }
+";
+        [JsonSample]
+        public const string MappingDataFlowWithLinkedServices = @"
+      {
+        ""name"": ""exampleDataFlow"",
+        ""properties"": {
+          ""description"": ""Sample demo data flow to convert currencies showing usage of union, derive and conditional split transformation."",
+          ""type"": ""MappingDataFlow"",
+          ""typeProperties"": {
+            ""sources"": [
+              {
+                ""linkedService"": {
+                  ""referenceName"": ""SourceLinkedService"",
+                  ""type"": ""LinkedServiceReference""
+                },
+                ""schemaLinkedService"": {
+                  ""referenceName"": ""SourceSchemaLinkedService"",
+                  ""type"": ""LinkedServiceReference""
+                },
+                ""name"": ""USDCurrency""
+              }
+            ],
+            ""sinks"": [
+              {
+                ""linkedService"": {
+                  ""referenceName"": ""SinkLinkedService"",
+                  ""type"": ""LinkedServiceReference""
+                },
+                ""schemaLinkedService"": {
+                  ""referenceName"": ""SinkSchemaLinkedService"",
+                  ""type"": ""LinkedServiceReference""
+                },
+                ""name"": ""USDSink""
+              }
+            ],
             ""script"": ""some script""
+          }
+        }
+      }
+";
+        [JsonSample]
+        public const string WranglingDataFlow = @"
+      {
+        ""name"": ""examplePowerQuery"",
+        ""properties"": {
+          ""description"": ""Sample demo power query data flow to merge currencies of US and Canada."",
+          ""type"": ""WranglingDataFlow"",
+          ""typeProperties"": {
+            ""sources"": [
+              {
+                ""dataset"": {
+                  ""referenceName"": ""CurrencyDatasetUSD"",
+                  ""type"": ""DatasetReference""
+                },
+                ""name"": ""USDCurrency""
+              },
+              {
+                ""dataset"": {
+                  ""referenceName"": ""CurrencyDatasetCAD"",
+                  ""type"": ""DatasetReference""
+                },
+                ""name"": ""CADSource""
+              }
+            ],
+            ""script"": ""some script"",
+            ""documentLocale"": ""de-DE""
           }
         }
       }

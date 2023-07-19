@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Core
     ///   configuration specified as a set of <see cref="EventHubsRetryOptions" />.
     /// </summary>
     ///
-    /// <seealso cref="EventHubsRetryOptions"/>
+    /// <seealso cref="EventHubsRetryOptions" />
     ///
     internal class BasicRetryPolicy : EventHubsRetryPolicy
     {
@@ -24,6 +25,9 @@ namespace Azure.Messaging.EventHubs.Core
 
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
+        /// <summary>The maximum number of seconds allowed for a <see cref="TimeSpan" />.</summary>
+        private static readonly double MaximumTimeSpanSeconds = TimeSpan.MaxValue.TotalSeconds;
 
         /// <summary>
         ///   The set of options responsible for configuring the retry
@@ -41,7 +45,21 @@ namespace Azure.Messaging.EventHubs.Core
         public double JitterFactor { get; } = 0.08;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BasicRetryPolicy"/> class.
+        ///   The minimum number of seconds to increase the calculated retry duration when a
+        ///   service signals a request to throttle.
+        /// </summary>
+        ///
+        public int MinimumThrottleSeconds { get; } = 4;
+
+        /// <summary>
+        ///   The maximum number of seconds to increase the calculated retry duration when a
+        ///   service signals a request to throttle.
+        /// </summary>
+        ///
+        public int MaximumThrottleSeconds { get; } = 8;
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BasicRetryPolicy" /> class.
         /// </summary>
         ///
         /// <param name="retryOptions">The options which control the retry approach.</param>
@@ -93,6 +111,14 @@ namespace Azure.Messaging.EventHubs.Core
                 _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString())),
             };
 
+            // If the exception indicates a service throttle, adjust the delay for an
+            // additional throttle factor.
+
+            if (IsThrottleException(lastException))
+            {
+                retryDelay = retryDelay.Add(TimeSpan.FromSeconds(RandomNumberGenerator.Value.Next(MinimumThrottleSeconds, (MaximumThrottleSeconds + 1))));
+            }
+
             // Adjust the delay, if needed, to keep within the maximum
             // duration.
 
@@ -133,12 +159,29 @@ namespace Azure.Messaging.EventHubs.Core
 
                 case TimeoutException _:
                 case SocketException _:
+                case IOException _:
+                case UnauthorizedAccessException _:
                     return true;
 
                 default:
                     return false;
             }
         }
+
+        /// <summary>
+        ///   Determines if an exception represents a request to throttle.
+        /// </summary>
+        ///
+        /// <param name="exception">The exception to consider.</param>
+        ///
+        /// <returns><c>true</c> to consider the exception as a throttle request; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool IsThrottleException(Exception exception) =>
+            exception switch
+            {
+                EventHubsException ex when (ex.Reason == EventHubsException.FailureReason.ServiceBusy) => true,
+                _ => false
+            };
 
         /// <summary>
         ///   Calculates the delay for an exponential back-off.
@@ -154,8 +197,11 @@ namespace Azure.Messaging.EventHubs.Core
         private static TimeSpan CalculateExponentialDelay(int attemptCount,
                                                           double baseDelaySeconds,
                                                           double baseJitterSeconds,
-                                                          Random random) =>
-            TimeSpan.FromSeconds((Math.Pow(2, attemptCount) * baseDelaySeconds) + (random.NextDouble() * baseJitterSeconds));
+                                                          Random random)
+        {
+            var delay = (Math.Pow(2, attemptCount) * baseDelaySeconds) + (random.NextDouble() * baseJitterSeconds);
+            return delay > MaximumTimeSpanSeconds ? TimeSpan.MaxValue : TimeSpan.FromSeconds(delay);
+        }
 
         /// <summary>
         ///   Calculates the delay for a fixed back-off.
@@ -169,7 +215,10 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         private static TimeSpan CalculateFixedDelay(double baseDelaySeconds,
                                                     double baseJitterSeconds,
-                                                    Random random) =>
-            TimeSpan.FromSeconds(baseDelaySeconds + (random.NextDouble() * baseJitterSeconds));
+                                                    Random random)
+        {
+            var delay = baseDelaySeconds + (random.NextDouble() * baseJitterSeconds);
+            return delay > MaximumTimeSpanSeconds ? TimeSpan.MaxValue : TimeSpan.FromSeconds(delay);
+        }
     }
 }

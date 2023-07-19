@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// cluster.</param>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
         /// <param name="dataSetMappingStatus">Gets the status of the data set
         /// mapping. Possible values include: 'Ok', 'Broken'</param>
@@ -45,8 +46,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="provisioningState">Provisioning state of the data set
         /// mapping. Possible values include: 'Succeeded', 'Creating',
         /// 'Deleting', 'Moving', 'Failed'</param>
-        public KustoClusterDataSetMapping(string dataSetId, string kustoClusterResourceId, string id = default(string), string name = default(string), string type = default(string), string dataSetMappingStatus = default(string), string location = default(string), string provisioningState = default(string))
-            : base(id, name, type)
+        public KustoClusterDataSetMapping(string dataSetId, string kustoClusterResourceId, string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), string dataSetMappingStatus = default(string), string location = default(string), string provisioningState = default(string))
+            : base(id, name, systemData, type)
         {
             DataSetId = dataSetId;
             DataSetMappingStatus = dataSetMappingStatus;

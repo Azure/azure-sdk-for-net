@@ -2,40 +2,50 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
     /// A long-running operation for <see cref="CertificateClient.StartDeleteCertificate(string, CancellationToken)"/> or <see cref="CertificateClient.StartDeleteCertificateAsync(string, CancellationToken)"/>.
     /// </summary>
-    public class DeleteCertificateOperation : Operation<DeletedCertificate>
+    public class DeleteCertificateOperation : Operation<DeletedCertificate>, IOperation
     {
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(2);
 
         private readonly KeyVaultPipeline _pipeline;
+        private readonly OperationInternal _operationInternal;
         private readonly DeletedCertificate _value;
-        private Response _response;
-        private bool _completed;
 
         internal DeleteCertificateOperation(KeyVaultPipeline pipeline, Response<DeletedCertificate> response)
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _response = response.GetRawResponse();
 
-            // The recoveryId is only returned if soft-delete is enabled.
+            // The recoveryId is only returned if soft delete is enabled.
             if (_value.RecoveryId is null)
             {
-                _completed = true;
+                // If soft delete is not enabled, deleting is immediate so set success accordingly.
+                _operationInternal = OperationInternal.Succeeded(response.GetRawResponse());
+            }
+            else
+            {
+                _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(DeleteCertificateOperation), new[]
+                {
+                    new KeyValuePair<string, string>("secret", _value.Name), // Retained for backward compatibility.
+                    new KeyValuePair<string, string>("certificate", _value.Name),
+                });
             }
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeleteCertificateOperation" /> for mocking. </summary>
+        protected DeleteCertificateOperation() {}
+
         /// <inheritdoc/>
-        public override string Id => _value.Id.ToString();
+        public override string Id => _value.Id.AbsoluteUri;
 
         /// <summary>
         /// Gets the <see cref="DeletedCertificate"/>.
@@ -47,33 +57,20 @@ namespace Azure.Security.KeyVault.Certificates
         public override DeletedCertificate Value => _value;
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _completed;
+        public override bool HasCompleted => _operationInternal.HasCompleted;
 
         /// <inheritdoc/>
         public override bool HasValue => true;
 
         /// <inheritdoc/>
-        public override Response GetRawResponse() => _response;
+        public override Response GetRawResponse() => _operationInternal.RawResponse;
 
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
-            if (!_completed)
+            if (!HasCompleted)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.DeleteCertificateOperation.UpdateStatus");
-                scope.AddAttribute("secret", _value.Name);
-                scope.Start();
-
-                try
-                {
-                    _response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.DeletedCertificatesPath, _value.Name);
-                    _completed = CheckCompleted(_response);
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return _operationInternal.UpdateStatus(cancellationToken);
             }
 
             return GetRawResponse();
@@ -82,22 +79,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <inheritdoc/>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
-            if (!_completed)
+            if (!HasCompleted)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.DeleteCertificateOperation.UpdateStatus");
-                scope.AddAttribute("secret", _value.Name);
-                scope.Start();
-
-                try
-                {
-                    _response = await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.DeletedCertificatesPath, _value.Name).ConfigureAwait(false);
-                    _completed = await CheckCompletedAsync(_response).ConfigureAwait(false);
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                return await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
             }
 
             return GetRawResponse();
@@ -111,34 +95,23 @@ namespace Azure.Security.KeyVault.Certificates
         public override ValueTask<Response<DeletedCertificate>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        private static async ValueTask<bool> CheckCompletedAsync(Response response)
+        async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
+            Response response = async
+                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, CertificateClient.DeletedCertificatesPath, _value.Name).ConfigureAwait(false)
+                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, CertificateClient.DeletedCertificatesPath, _value.Name);
+
             switch (response.Status)
             {
                 case 200:
                 case 403: // Access denied but proof the certificate was deleted.
-                    return true;
+                    return OperationState.Success(response);
 
                 case 404:
-                    return false;
+                    return OperationState.Pending(response);
 
                 default:
-                    throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-            }
-        }
-        private static bool CheckCompleted(Response response)
-        {
-            switch (response.Status)
-            {
-                case 200:
-                case 403: // Access denied but proof the certificate was deleted.
-                    return true;
-
-                case 404:
-                    return false;
-
-                default:
-                    throw response.CreateRequestFailedException();
+                    return OperationState.Failure(response, new RequestFailedException(response));
             }
         }
     }

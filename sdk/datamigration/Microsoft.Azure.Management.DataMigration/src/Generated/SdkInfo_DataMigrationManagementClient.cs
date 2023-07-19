@@ -19,27 +19,17 @@ namespace Microsoft.Azure.Management.DataMigration
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DataMigration", "Files", "2018-07-15-preview"),
-                new Tuple<string, string, string>("DataMigration", "Operations", "2018-07-15-preview"),
-                new Tuple<string, string, string>("DataMigration", "Projects", "2018-07-15-preview"),
-                new Tuple<string, string, string>("DataMigration", "ResourceSkus", "2018-07-15-preview"),
-                new Tuple<string, string, string>("DataMigration", "ServiceTasks", "2018-07-15-preview"),
-                new Tuple<string, string, string>("DataMigration", "Services", "2018-07-15-preview"),
-                new Tuple<string, string, string>("DataMigration", "Tasks", "2018-07-15-preview"),
-                new Tuple<string, string, string>("DataMigration", "Usages", "2018-07-15-preview"),
+                new Tuple<string, string, string>("DataMigration", "Files", "2021-06-30"),
+                new Tuple<string, string, string>("DataMigration", "Operations", "2021-06-30"),
+                new Tuple<string, string, string>("DataMigration", "Projects", "2021-06-30"),
+                new Tuple<string, string, string>("DataMigration", "ResourceSkus", "2021-06-30"),
+                new Tuple<string, string, string>("DataMigration", "ServiceTasks", "2021-06-30"),
+                new Tuple<string, string, string>("DataMigration", "Services", "2021-06-30"),
+                new Tuple<string, string, string>("DataMigration", "Tasks", "2021-06-30"),
+                new Tuple<string, string, string>("DataMigration", "Usages", "2021-06-30"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datamigration/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Dev\\Git\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "411d4cf447639289e4ee1efa4d066df2773ebccd";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
 

@@ -2,7 +2,7 @@
       "Name": "ErrorMessage",
       "ProtocolName": "Models.ErrorMessage",
       "SummaryComment": "An error message received in an Azure Batch error response.",
-      "IsConstructorPublic": false,
+      "ConstructorAccess": "internal",
       "Properties": [
         {
           "Key": {

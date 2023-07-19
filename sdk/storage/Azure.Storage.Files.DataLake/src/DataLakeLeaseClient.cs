@@ -73,7 +73,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeLeaseClient(DataLakePathClient client, string leaseId = null)
         {
             _blobLeaseClient = new BlobLeaseClient(client.BlobClient, leaseId);
-            _clientDiagnostics = client.ClientDiagnostics;
+            _clientDiagnostics = client.ClientConfiguration.ClientDiagnostics;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeLeaseClient(DataLakeFileSystemClient client, string leaseId = null)
         {
             _blobLeaseClient = new BlobLeaseClient(client.ContainerClient, leaseId);
-            _clientDiagnostics = client.ClientDiagnostics;
+            _clientDiagnostics = client.ClientConfiguration.ClientDiagnostics;
         }
         #endregion ctors
 
@@ -106,7 +106,9 @@ namespace Azure.Storage.Files.DataLake
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify
@@ -134,7 +136,7 @@ namespace Azure.Storage.Files.DataLake
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Acquire)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Acquire)}");
 
             try
             {
@@ -171,7 +173,9 @@ namespace Azure.Storage.Files.DataLake
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify
@@ -199,7 +203,7 @@ namespace Azure.Storage.Files.DataLake
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Acquire)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Acquire)}");
 
             try
             {
@@ -233,12 +237,14 @@ namespace Azure.Storage.Files.DataLake
         /// file system's previously-acquired lease.
         ///
         /// The lease can be renewed if the leaseId
-        /// matches that associated with the path or file system.  Note that the]
+        /// matches that associated with the path or file system.  Note that the
         /// lease may be renewed even if it has expired as long as the path or
         /// file system has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="RequestConditions"/> to add
@@ -259,7 +265,7 @@ namespace Azure.Storage.Files.DataLake
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Renew)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Renew)}");
 
             try
             {
@@ -294,7 +300,9 @@ namespace Azure.Storage.Files.DataLake
         /// file system has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="RequestConditions"/> to add
@@ -315,7 +323,7 @@ namespace Azure.Storage.Files.DataLake
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Renew)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Renew)}");
 
             try
             {
@@ -351,7 +359,9 @@ namespace Azure.Storage.Files.DataLake
         /// lease allows another client to immediately acquire the lease for the
         /// file system or path as soon as the release is complete.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="RequestConditions"/> to add
@@ -373,7 +383,7 @@ namespace Azure.Storage.Files.DataLake
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Release)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Release)}");
 
             try
             {
@@ -407,7 +417,9 @@ namespace Azure.Storage.Files.DataLake
         /// lease allows another client to immediately acquire the lease for the
         /// file system or path as soon as the release is complete.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="RequestConditions"/> to add
@@ -429,7 +441,7 @@ namespace Azure.Storage.Files.DataLake
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Release)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Release)}");
 
             try
             {
@@ -462,7 +474,9 @@ namespace Azure.Storage.Files.DataLake
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
@@ -489,7 +503,7 @@ namespace Azure.Storage.Files.DataLake
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Change)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Change)}");
 
             try
             {
@@ -520,7 +534,9 @@ namespace Azure.Storage.Files.DataLake
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
@@ -547,7 +563,7 @@ namespace Azure.Storage.Files.DataLake
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Change)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Change)}");
 
             try
             {
@@ -594,7 +610,9 @@ namespace Azure.Storage.Files.DataLake
         /// immediately acquire a path or file system lease that has been
         /// released.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before
@@ -626,7 +644,7 @@ namespace Azure.Storage.Files.DataLake
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Break)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Break)}");
 
             try
             {
@@ -670,7 +688,9 @@ namespace Azure.Storage.Files.DataLake
         /// immediately acquire a path or file system lease that has been
         /// released.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before
@@ -702,7 +722,7 @@ namespace Azure.Storage.Files.DataLake
            RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeLeaseClient)}.{nameof(Break)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Break)}");
 
             try
             {

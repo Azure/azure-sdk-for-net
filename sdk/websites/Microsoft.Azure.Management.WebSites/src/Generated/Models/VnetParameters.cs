@@ -41,12 +41,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="vnetName">The name of the VNET to be validated</param>
         /// <param name="vnetSubnetName">The subnet name to be
         /// validated</param>
-        public VnetParameters(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string vnetResourceGroup = default(string), string vnetName = default(string), string vnetSubnetName = default(string))
+        /// <param name="subnetResourceId">The ARM Resource ID of the subnet to
+        /// validate</param>
+        public VnetParameters(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string vnetResourceGroup = default(string), string vnetName = default(string), string vnetSubnetName = default(string), string subnetResourceId = default(string))
             : base(id, name, kind, type)
         {
             VnetResourceGroup = vnetResourceGroup;
             VnetName = vnetName;
             VnetSubnetName = vnetSubnetName;
+            SubnetResourceId = subnetResourceId;
             CustomInit();
         }
 
@@ -72,6 +75,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vnetSubnetName")]
         public string VnetSubnetName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ARM Resource ID of the subnet to validate
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subnetResourceId")]
+        public string SubnetResourceId { get; set; }
 
     }
 }

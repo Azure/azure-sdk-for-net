@@ -73,14 +73,49 @@ namespace Microsoft.Azure.Management.KeyVault
 
 
         /// <summary>
+        /// Gets the IKeysOperations.
+        /// </summary>
+        IKeysOperations Keys { get; }
+
+        /// <summary>
         /// Gets the IVaultsOperations.
         /// </summary>
         IVaultsOperations Vaults { get; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IManagedHsmsOperations.
+        /// </summary>
+        IManagedHsmsOperations ManagedHsms { get; }
+
+        /// <summary>
+        /// Gets the IMHSMPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IMHSMPrivateEndpointConnectionsOperations MHSMPrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IMHSMPrivateLinkResourcesOperations.
+        /// </summary>
+        IMHSMPrivateLinkResourcesOperations MHSMPrivateLinkResources { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the ISecretsOperations.
+        /// </summary>
+        ISecretsOperations Secrets { get; }
 
     }
 }

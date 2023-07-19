@@ -44,12 +44,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// administrator, * expired – the subscription reached its expiration
         /// date and was deactivated. Possible values include: 'suspended',
         /// 'active', 'expired', 'submitted', 'rejected', 'cancelled'</param>
-        /// <param name="primaryKey">Subscription primary key.</param>
-        /// <param name="secondaryKey">Subscription secondary key.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="ownerId">The user resource identifier of the
         /// subscription owner. The value is a valid relative URL in the format
         /// of /users/{userId} where {userId} is a user identifier.</param>
@@ -84,11 +84,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// notification date. The date conforms to the following format:
         /// `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// </param>
+        /// <param name="primaryKey">Subscription primary key. This property
+        /// will not be filled on 'GET' operations! Use '/listSecrets' POST
+        /// request to get the value.</param>
+        /// <param name="secondaryKey">Subscription secondary key. This
+        /// property will not be filled on 'GET' operations! Use '/listSecrets'
+        /// POST request to get the value.</param>
         /// <param name="stateComment">Optional subscription comment added by
-        /// an administrator.</param>
+        /// an administrator when the state is changed to the
+        /// 'rejected'.</param>
         /// <param name="allowTracing">Determines whether tracing is
         /// enabled</param>
-        public SubscriptionContract(string scope, SubscriptionState state, string primaryKey, string secondaryKey, string id = default(string), string name = default(string), string type = default(string), string ownerId = default(string), string displayName = default(string), System.DateTime? createdDate = default(System.DateTime?), System.DateTime? startDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), System.DateTime? notificationDate = default(System.DateTime?), string stateComment = default(string), bool? allowTracing = default(bool?))
+        public SubscriptionContract(string scope, SubscriptionState state, string id = default(string), string name = default(string), string type = default(string), string ownerId = default(string), string displayName = default(string), System.DateTime? createdDate = default(System.DateTime?), System.DateTime? startDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), System.DateTime? notificationDate = default(System.DateTime?), string primaryKey = default(string), string secondaryKey = default(string), string stateComment = default(string), bool? allowTracing = default(bool?))
             : base(id, name, type)
         {
             OwnerId = ownerId;
@@ -202,20 +209,24 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public System.DateTime? NotificationDate { get; set; }
 
         /// <summary>
-        /// Gets or sets subscription primary key.
+        /// Gets or sets subscription primary key. This property will not be
+        /// filled on 'GET' operations! Use '/listSecrets' POST request to get
+        /// the value.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primaryKey")]
         public string PrimaryKey { get; set; }
 
         /// <summary>
-        /// Gets or sets subscription secondary key.
+        /// Gets or sets subscription secondary key. This property will not be
+        /// filled on 'GET' operations! Use '/listSecrets' POST request to get
+        /// the value.
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryKey")]
         public string SecondaryKey { get; set; }
 
         /// <summary>
         /// Gets or sets optional subscription comment added by an
-        /// administrator.
+        /// administrator when the state is changed to the 'rejected'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.stateComment")]
         public string StateComment { get; set; }
@@ -237,14 +248,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (Scope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Scope");
-            }
-            if (PrimaryKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PrimaryKey");
-            }
-            if (SecondaryKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SecondaryKey");
             }
             if (DisplayName != null)
             {

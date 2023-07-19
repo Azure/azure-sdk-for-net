@@ -66,7 +66,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,13 +78,10 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<object>> DeleteWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns a Cache.
         /// </summary>
@@ -91,7 +89,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -116,7 +115,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='cache'>
         /// Object containing the user-selectable properties of the new Cache.
@@ -146,7 +146,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='cache'>
         /// Object containing the user-selectable properties of the Cache. If
@@ -170,6 +171,29 @@ namespace Microsoft.Azure.Management.StorageCache
         /// </exception>
         Task<HttpOperationResponse<Cache>> UpdateWithHttpMessagesAsync(string resourceGroupName, string cacheName, Cache cache = default(Cache), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Tells a Cache to write generate debug info for support to process.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Target resource group.
+        /// </param>
+        /// <param name='cacheName'>
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse> DebugInfoWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Tells a Cache to write all dirty data to the Storage Target(s).
         /// During the flush, clients will see errors returned until the flush
         /// is complete.
@@ -178,7 +202,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -189,13 +214,10 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<object>> FlushWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> FlushWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Tells a Stopped state Cache to transition to Active state.
         /// </summary>
@@ -203,7 +225,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -214,13 +237,10 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<object>> StartWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Tells an Active Cache to transition to Stopped state.
         /// </summary>
@@ -228,7 +248,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -239,13 +260,10 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<object>> StopWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> StopWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Upgrade a Cache's firmware if a new version is available.
         /// Otherwise, this operation has no effect.
@@ -254,7 +272,8 @@ namespace Microsoft.Azure.Management.StorageCache
         /// Target resource group.
         /// </param>
         /// <param name='cacheName'>
-        /// Name of Cache.
+        /// Name of Cache. Length of name must not be greater than 80 and chars
+        /// must be from the [-0-9a-zA-Z_] char class.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -265,12 +284,9 @@ namespace Microsoft.Azure.Management.StorageCache
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<object>> UpgradeFirmwareWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UpgradeFirmwareWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

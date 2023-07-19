@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -24,8 +24,8 @@ namespace Azure.Core.Tests
         [Test]
         public async Task MaintainsGlobalLengthAndPosition()
         {
-            var stream1 = new MockReadStream(100, throwAfter: 50);
-            var stream2 = new MockReadStream(50, offset: 50, throwIOException: false);
+            var stream1 = new MockReadStream(100, throwAfter: 50, canSeek: true);
+            var stream2 = new MockReadStream(50, offset: 50);
 
             MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
@@ -36,7 +36,7 @@ namespace Azure.Core.Tests
             Stream reliableStream = await CreateAsync(
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(), maxRetries: 5);
+                ResponseClassifier.Shared, maxRetries: 5);
 
             Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
             Assert.AreEqual(100, reliableStream.Length);
@@ -55,10 +55,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task DoesntRetryNonRetryableExceptions()
+        public async Task DisposesStreams()
         {
             var stream1 = new MockReadStream(100, throwAfter: 50);
-            var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, throwIOException: false);
+            var stream2 = new MockReadStream(50, offset: 50);
 
             MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
@@ -69,7 +69,38 @@ namespace Azure.Core.Tests
             Stream reliableStream = await CreateAsync(
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(),
+                ResponseClassifier.Shared, maxRetries: 5);
+
+            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
+            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
+            Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 50, 50));
+            Assert.True(stream1.IsDisposed);
+
+            Assert.AreEqual(0, await ReadAsync(reliableStream, _buffer, 0, 50));
+            Assert.False(stream2.IsDisposed);
+
+            reliableStream.Dispose();
+            Assert.True(stream2.IsDisposed);
+
+            AssertReads(_buffer, 100);
+        }
+
+        [Test]
+        public async Task DoesntRetryNonRetryableExceptions()
+        {
+            var stream1 = new MockReadStream(100, throwAfter: 50, canSeek: true);
+            var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, exceptionType: typeof(InvalidOperationException));
+
+            MockTransport mockTransport = CreateMockTransport(
+                new MockResponse(200) { ContentStream = stream1 },
+                new MockResponse(200) { ContentStream = stream2 }
+            );
+            var pipeline = new HttpPipeline(mockTransport);
+
+            Stream reliableStream = await CreateAsync(
+                offset => SendTestRequest(pipeline, offset),
+                offset => SendTestRequestAsync(pipeline, offset),
+                ResponseClassifier.Shared,
                 maxRetries: 5);
 
             Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
@@ -83,6 +114,74 @@ namespace Azure.Core.Tests
             Assert.ThrowsAsync<InvalidOperationException>(() => reliableStream.ReadAsync(_buffer, 50, 50));
 
             AssertReads(_buffer, 50);
+        }
+
+        [Test]
+        [TestCase(typeof(TaskCanceledException), typeof(TaskCanceledException))]
+        [TestCase(typeof(ObjectDisposedException), typeof(TaskCanceledException))]
+        [TestCase(typeof(UnauthorizedAccessException), typeof(UnauthorizedAccessException))]
+        public async Task ThrowsCorrectExceptionOnCustomerCancellationTokens(Type initial, Type translated)
+        {
+            // not supported on sync
+            if (!IsAsync)
+            {
+                Assert.Ignore();
+            }
+
+            var stream1 = new MockReadStream(100, throwAfter: 25, canSeek: true, exceptionType: initial);
+
+            MockTransport mockTransport = CreateMockTransport(
+                new MockResponse(200) { ContentStream = stream1 });
+            var pipeline = new HttpPipeline(mockTransport);
+
+            Stream reliableStream = await CreateAsync(
+                offset => SendTestRequest(pipeline, offset),
+                offset => SendTestRequestAsync(pipeline, offset),
+                ResponseClassifier.Shared,
+                maxRetries: 5);
+
+            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
+            Assert.AreEqual(100, reliableStream.Length);
+            Assert.AreEqual(25, reliableStream.Position);
+
+            var exception = await AsyncAssert.ThrowsAsync<Exception>(
+                async () => await ReadAsync(reliableStream, _buffer, 25, 25, new CancellationToken(true)));
+            Assert.IsInstanceOf(translated, exception);
+
+            AssertReads(_buffer, 25);
+        }
+
+        [Test]
+        public async Task RetriesOnNonCustomerCancellationToken()
+        {
+            var stream1 = new MockReadStream(100, throwAfter: 50, exceptionType: typeof(OperationCanceledException), canSeek: true);
+            var stream2 = new MockReadStream(50, offset: 50);
+
+            MockTransport mockTransport = CreateMockTransport(
+                new MockResponse(200) { ContentStream = stream1 },
+                new MockResponse(200) { ContentStream = stream2 }
+            );
+            var pipeline = new HttpPipeline(mockTransport);
+
+            Stream reliableStream = await CreateAsync(
+                offset => SendTestRequest(pipeline, offset),
+                offset => SendTestRequestAsync(pipeline, offset),
+                ResponseClassifier.Shared,
+                maxRetries: 5);
+
+            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
+            Assert.AreEqual(100, reliableStream.Length);
+            Assert.AreEqual(25, reliableStream.Position);
+
+            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
+            Assert.AreEqual(100, reliableStream.Length);
+            Assert.AreEqual(50, reliableStream.Position);
+
+            Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 50, 50));
+            Assert.AreEqual(100, reliableStream.Length);
+            Assert.AreEqual(100, reliableStream.Position);
+
+            AssertReads(_buffer, 100);
         }
 
         [Test]
@@ -101,7 +200,7 @@ namespace Azure.Core.Tests
                 IsAsync ? await SendTestRequestAsync(pipeline, 0) : SendTestRequest(pipeline, 0),
                 offset => SendTestRequest(pipeline, offset),
                 offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 maxRetries: 5);
 
             Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 0, 50));
@@ -144,7 +243,7 @@ namespace Azure.Core.Tests
                     {
                         throw new InvalidOperationException();
                     }
-                }, new ResponseClassifier(), maxRetries: 5);
+                }, ResponseClassifier.Shared, maxRetries: 5);
 
             await ReadAsync(reliableStream, _buffer, 0, 25);
             await ReadAsync(reliableStream, _buffer, 25, 25);
@@ -182,7 +281,7 @@ namespace Azure.Core.Tests
                     }
 
                     throw new InvalidOperationException();
-                }, new ResponseClassifier(), maxRetries: 3);
+                }, ResponseClassifier.Shared, maxRetries: 3);
 
             AggregateException aggregateException = Assert.ThrowsAsync<AggregateException>(() => ReadAsync(reliableStream, _buffer, 0, 4));
             StringAssert.StartsWith("Retry failed after 4 tries", aggregateException.Message);
@@ -195,12 +294,32 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ThrowsForLengthOnNonSeekableStream()
+        {
+            Assert.Throws<NotSupportedException>(() => _ = RetriableStream.Create(
+                _ => new MockReadStream(100, canSeek: false),
+                _ => default,
+                ResponseClassifier.Shared,
+                5).Length);
+        }
+
+        [Test]
+        public void IgnoresMisbehavingStreams()
+        {
+            Assert.Throws<NotSupportedException>(() => _ = RetriableStream.Create(
+                _ => new NoLengthStream(canSeek: true),
+                _ => default,
+                ResponseClassifier.Shared,
+                5).Length);
+        }
+
+        [Test]
         public void ThrowsIfInitialRequestThrow()
         {
             Assert.Throws<InvalidOperationException>(() => RetriableStream.Create(
                 _ => throw new InvalidOperationException(),
                 _ => default,
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 5));
         }
 
@@ -210,8 +329,19 @@ namespace Azure.Core.Tests
             Assert.ThrowsAsync<InvalidOperationException>(() => RetriableStream.CreateAsync(
                 _ => null,
                 _ => throw new InvalidOperationException(),
-                new ResponseClassifier(),
+                ResponseClassifier.Shared,
                 5));
+        }
+
+        [Test]
+        public async Task FlushDoesntThrow()
+        {
+            Stream reliableStream = await CreateAsync(
+                offset => new MemoryStream(),
+                offset => new ValueTask<Stream>(new MemoryStream()),
+                ResponseClassifier.Shared, maxRetries: 5);
+
+            await reliableStream.FlushAsync();
         }
 
         private void AssertReads(byte[] buffer, int length)
@@ -233,9 +363,9 @@ namespace Azure.Core.Tests
                 Task.FromResult(RetriableStream.Create(streamFactory, asyncStreamFactory, responseClassifier, maxRetries));
         }
 
-        private Task<int> ReadAsync(Stream stream, byte[] buffer, int offset, int length)
+        private Task<int> ReadAsync(Stream stream, byte[] buffer, int offset, int length, CancellationToken cancellationToken = default)
         {
-            return IsAsync ? stream.ReadAsync(buffer, offset, length) : Task.FromResult(stream.Read(buffer, offset, length));
+            return IsAsync ? stream.ReadAsync(buffer, offset, length, cancellationToken) : Task.FromResult(stream.Read(buffer, offset, length));
         }
 
         private static Stream SendTestRequest(HttpPipeline pipeline, long offset)
@@ -265,6 +395,11 @@ namespace Azure.Core.Tests
 
         private class NoLengthStream : ReadOnlyStream
         {
+            public NoLengthStream(bool canSeek = false)
+            {
+                CanSeek = canSeek;
+            }
+
             public override int Read(byte[] buffer, int offset, int count)
             {
                 throw new IOException();
@@ -276,7 +411,7 @@ namespace Azure.Core.Tests
             }
 
             public override bool CanRead { get; } = true;
-            public override bool CanSeek { get; } = false;
+            public override bool CanSeek { get; }
             public override long Length => throw new NotSupportedException();
             public override long Position { get; set; }
         }
@@ -286,15 +421,15 @@ namespace Azure.Core.Tests
             private readonly long _throwAfter;
 
             private byte _offset;
+            private readonly Type _exceptionType;
 
-            private readonly bool _throwIOException;
-
-            public MockReadStream(long length, long throwAfter = int.MaxValue, byte offset = 0, bool throwIOException = true)
+            public MockReadStream(long length, long throwAfter = int.MaxValue, byte offset = 0, Type exceptionType = null, bool canSeek = false)
             {
                 _throwAfter = throwAfter;
                 _offset = offset;
-                _throwIOException = throwIOException;
+                _exceptionType = exceptionType ?? typeof(IOException);
                 Length = length;
+                CanSeek = canSeek;
             }
 
             public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
@@ -305,11 +440,7 @@ namespace Azure.Core.Tests
 
                 if (Position > _throwAfter)
                 {
-                    if (_throwIOException)
-                    {
-                        throw new IOException($"Failed at {_offset}");
-                    }
-                    throw new InvalidOperationException();
+                    throw (Exception) Activator.CreateInstance(_exceptionType, $"Failed at {_offset}");
                 }
 
                 for (int i = 0; i < left; i++)
@@ -331,9 +462,16 @@ namespace Azure.Core.Tests
             }
 
             public override bool CanRead { get; } = true;
-            public override bool CanSeek { get; } = false;
+            public override bool CanSeek { get; }
             public override long Length { get; }
             public override long Position { get; set; }
+            public bool IsDisposed { get; set; }
+
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                IsDisposed = true;
+            }
         }
     }
 }

@@ -37,12 +37,13 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<DateTime?> CreationTimeProperty;
             public readonly PropertyAccessor<int?> CurrentDedicatedComputeNodesProperty;
             public readonly PropertyAccessor<int?> CurrentLowPriorityComputeNodesProperty;
+            public readonly PropertyAccessor<Common.NodeCommunicationMode?> CurrentNodeCommunicationModeProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
             public readonly PropertyAccessor<string> ETagProperty;
             public readonly PropertyAccessor<string> IdProperty;
+            public readonly PropertyAccessor<BatchPoolIdentity> IdentityProperty;
             public readonly PropertyAccessor<bool?> InterComputeNodeCommunicationEnabledProperty;
             public readonly PropertyAccessor<DateTime?> LastModifiedProperty;
-            public readonly PropertyAccessor<int?> MaxTasksPerComputeNodeProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
             public readonly PropertyAccessor<IList<MountConfiguration>> MountConfigurationProperty;
             public readonly PropertyAccessor<NetworkConfiguration> NetworkConfigurationProperty;
@@ -54,7 +55,9 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<PoolStatistics> StatisticsProperty;
             public readonly PropertyAccessor<int?> TargetDedicatedComputeNodesProperty;
             public readonly PropertyAccessor<int?> TargetLowPriorityComputeNodesProperty;
+            public readonly PropertyAccessor<Common.NodeCommunicationMode?> TargetNodeCommunicationModeProperty;
             public readonly PropertyAccessor<TaskSchedulingPolicy> TaskSchedulingPolicyProperty;
+            public readonly PropertyAccessor<int?> TaskSlotsPerNodeProperty;
             public readonly PropertyAccessor<string> UrlProperty;
             public readonly PropertyAccessor<IList<UserAccount>> UserAccountsProperty;
             public readonly PropertyAccessor<VirtualMachineConfiguration> VirtualMachineConfigurationProperty;
@@ -75,12 +78,13 @@ namespace Microsoft.Azure.Batch
                 this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(CreationTime), BindingAccess.None);
                 this.CurrentDedicatedComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(CurrentDedicatedComputeNodes), BindingAccess.None);
                 this.CurrentLowPriorityComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(CurrentLowPriorityComputeNodes), BindingAccess.None);
+                this.CurrentNodeCommunicationModeProperty = this.CreatePropertyAccessor<Common.NodeCommunicationMode?>(nameof(CurrentNodeCommunicationMode), BindingAccess.None);
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
                 this.ETagProperty = this.CreatePropertyAccessor<string>(nameof(ETag), BindingAccess.None);
                 this.IdProperty = this.CreatePropertyAccessor<string>(nameof(Id), BindingAccess.Read | BindingAccess.Write);
+                this.IdentityProperty = this.CreatePropertyAccessor<BatchPoolIdentity>(nameof(Identity), BindingAccess.Read | BindingAccess.Write);
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(InterComputeNodeCommunicationEnabled), BindingAccess.Read | BindingAccess.Write);
                 this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>(nameof(LastModified), BindingAccess.None);
-                this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor<int?>(nameof(MaxTasksPerComputeNode), BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
                 this.MountConfigurationProperty = this.CreatePropertyAccessor<IList<MountConfiguration>>(nameof(MountConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor<NetworkConfiguration>(nameof(NetworkConfiguration), BindingAccess.Read | BindingAccess.Write);
@@ -92,7 +96,9 @@ namespace Microsoft.Azure.Batch
                 this.StatisticsProperty = this.CreatePropertyAccessor<PoolStatistics>(nameof(Statistics), BindingAccess.None);
                 this.TargetDedicatedComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(TargetDedicatedComputeNodes), BindingAccess.Read | BindingAccess.Write);
                 this.TargetLowPriorityComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(TargetLowPriorityComputeNodes), BindingAccess.Read | BindingAccess.Write);
+                this.TargetNodeCommunicationModeProperty = this.CreatePropertyAccessor<Common.NodeCommunicationMode?>(nameof(TargetNodeCommunicationMode), BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor<TaskSchedulingPolicy>(nameof(TaskSchedulingPolicy), BindingAccess.Read | BindingAccess.Write);
+                this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor<int?>(nameof(TaskSlotsPerNode), BindingAccess.Read | BindingAccess.Write);
                 this.UrlProperty = this.CreatePropertyAccessor<string>(nameof(Url), BindingAccess.None);
                 this.UserAccountsProperty = this.CreatePropertyAccessor<IList<UserAccount>>(nameof(UserAccounts), BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor<VirtualMachineConfiguration>(nameof(VirtualMachineConfiguration), BindingAccess.Read | BindingAccess.Write);
@@ -153,6 +159,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.CurrentLowPriorityNodes,
                     nameof(CurrentLowPriorityComputeNodes),
                     BindingAccess.Read);
+                this.CurrentNodeCommunicationModeProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Models.NodeCommunicationMode, Common.NodeCommunicationMode>(protocolObject.CurrentNodeCommunicationMode),
+                    nameof(CurrentNodeCommunicationMode),
+                    BindingAccess.Read);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
                     nameof(DisplayName),
@@ -165,6 +175,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.Id,
                     nameof(Id),
                     BindingAccess.Read);
+                this.IdentityProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Identity, o => new BatchPoolIdentity(o)),
+                    nameof(Identity),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor(
                     protocolObject.EnableInterNodeCommunication,
                     nameof(InterComputeNodeCommunicationEnabled),
@@ -172,10 +186,6 @@ namespace Microsoft.Azure.Batch
                 this.LastModifiedProperty = this.CreatePropertyAccessor(
                     protocolObject.LastModified,
                     nameof(LastModified),
-                    BindingAccess.Read);
-                this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor(
-                    protocolObject.MaxTasksPerNode,
-                    nameof(MaxTasksPerComputeNode),
                     BindingAccess.Read);
                 this.MetadataProperty = this.CreatePropertyAccessor(
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
@@ -221,9 +231,17 @@ namespace Microsoft.Azure.Batch
                     protocolObject.TargetLowPriorityNodes,
                     nameof(TargetLowPriorityComputeNodes),
                     BindingAccess.Read);
+                this.TargetNodeCommunicationModeProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Models.NodeCommunicationMode, Common.NodeCommunicationMode>(protocolObject.TargetNodeCommunicationMode),
+                    nameof(TargetNodeCommunicationMode),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskSchedulingPolicy, o => new TaskSchedulingPolicy(o).Freeze()),
                     nameof(TaskSchedulingPolicy),
+                    BindingAccess.Read);
+                this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor(
+                    protocolObject.TaskSlotsPerNode,
+                    nameof(TaskSlotsPerNode),
                     BindingAccess.Read);
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
@@ -262,6 +280,14 @@ namespace Microsoft.Azure.Batch
             this.propertyContainer = new PropertyContainer();
             this.parentBatchClient = parentBatchClient;
             InheritUtil.InheritClientBehaviorsAndSetPublicProperty(this, baseBehaviors);
+        }
+
+        /// <summary>
+        /// Default constructor to support mocking the <see cref="CloudPool"/> class.
+        /// </summary>
+        protected CloudPool()
+        {
+            this.propertyContainer = new PropertyContainer();
         }
 
         internal CloudPool(
@@ -443,6 +469,14 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets the current state of the pool communication mode.
+        /// </summary>
+        public Common.NodeCommunicationMode? CurrentNodeCommunicationMode
+        {
+            get { return this.propertyContainer.CurrentNodeCommunicationModeProperty.Value; }
+        }
+
+        /// <summary>
         /// Gets or sets the display name of the pool.
         /// </summary>
         public string DisplayName
@@ -469,6 +503,19 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the identity of the Batch pool, if configured.
+        /// </summary>
+        /// <remarks>
+        /// The list of user identities associated with the Batch pool. The user identity dictionary key references will 
+        /// be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+        /// </remarks>
+        public BatchPoolIdentity Identity
+        {
+            get { return this.propertyContainer.IdentityProperty.Value; }
+            set { this.propertyContainer.IdentityProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets whether the pool permits direct communication between its compute nodes.
         /// </summary>
         /// <remarks>
@@ -487,19 +534,6 @@ namespace Microsoft.Azure.Batch
         public DateTime? LastModified
         {
             get { return this.propertyContainer.LastModifiedProperty.Value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the maximum number of tasks that can run concurrently on a single compute node in the pool.
-        /// </summary>
-        /// <remarks>
-        /// The default value is 1. The maximum value is the smaller of 4 times the number of cores of the <see cref="VirtualMachineSize"/> 
-        /// of the pool or 256.
-        /// </remarks>
-        public int? MaxTasksPerComputeNode
-        {
-            get { return this.propertyContainer.MaxTasksPerComputeNodeProperty.Value; }
-            set { this.propertyContainer.MaxTasksPerComputeNodeProperty.Value = value; }
         }
 
         /// <summary>
@@ -625,12 +659,38 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the desired node communication mode for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the default value is default.
+        /// </remarks>
+        public Common.NodeCommunicationMode? TargetNodeCommunicationMode
+        {
+            get { return this.propertyContainer.TargetNodeCommunicationModeProperty.Value; }
+            set { this.propertyContainer.TargetNodeCommunicationModeProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets how tasks are distributed among compute nodes in the pool.
         /// </summary>
         public TaskSchedulingPolicy TaskSchedulingPolicy
         {
             get { return this.propertyContainer.TaskSchedulingPolicyProperty.Value; }
             set { this.propertyContainer.TaskSchedulingPolicyProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the number of task slots that can be used to run concurrent tasks on a single compute node in the 
+        /// pool.
+        /// </summary>
+        /// <remarks>
+        /// The default value is 1. The maximum value is the smaller of 4 times the number of cores of the <see cref="VirtualMachineSize"/> 
+        /// of the pool or 256.
+        /// </remarks>
+        public int? TaskSlotsPerNode
+        {
+            get { return this.propertyContainer.TaskSlotsPerNodeProperty.Value; }
+            set { this.propertyContainer.TaskSlotsPerNodeProperty.Value = value; }
         }
 
         /// <summary>
@@ -711,7 +771,6 @@ namespace Microsoft.Azure.Batch
                 DisplayName = this.DisplayName,
                 Id = this.Id,
                 EnableInterNodeCommunication = this.InterComputeNodeCommunicationEnabled,
-                MaxTasksPerNode = this.MaxTasksPerComputeNode,
                 Metadata = UtilitiesInternal.ConvertToProtocolCollection(this.Metadata),
                 MountConfiguration = UtilitiesInternal.ConvertToProtocolCollection(this.MountConfiguration),
                 NetworkConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NetworkConfiguration, (o) => o.GetTransportObject()),
@@ -719,7 +778,9 @@ namespace Microsoft.Azure.Batch
                 StartTask = UtilitiesInternal.CreateObjectWithNullCheck(this.StartTask, (o) => o.GetTransportObject()),
                 TargetDedicatedNodes = this.TargetDedicatedComputeNodes,
                 TargetLowPriorityNodes = this.TargetLowPriorityComputeNodes,
+                TargetNodeCommunicationMode = UtilitiesInternal.MapNullableEnum<Common.NodeCommunicationMode, Models.NodeCommunicationMode>(this.TargetNodeCommunicationMode),
                 TaskSchedulingPolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.TaskSchedulingPolicy, (o) => o.GetTransportObject()),
+                TaskSlotsPerNode = this.TaskSlotsPerNode,
                 UserAccounts = UtilitiesInternal.ConvertToProtocolCollection(this.UserAccounts),
                 VirtualMachineConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.VirtualMachineConfiguration, (o) => o.GetTransportObject()),
                 VmSize = this.VirtualMachineSize,

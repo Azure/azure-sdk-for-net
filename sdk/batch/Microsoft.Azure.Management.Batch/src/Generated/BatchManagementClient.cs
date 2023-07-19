@@ -21,6 +21,9 @@ namespace Microsoft.Azure.Management.Batch
     using System.Net;
     using System.Net.Http;
 
+    /// <summary>
+    /// Batch Client
+    /// </summary>
     public partial class BatchManagementClient : ServiceClient<BatchManagementClient>, IBatchManagementClient, IAzureClient
     {
         /// <summary>
@@ -101,6 +104,16 @@ namespace Microsoft.Azure.Management.Batch
         /// Gets the ICertificateOperations.
         /// </summary>
         public virtual ICertificateOperations Certificate { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourceOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourceOperations PrivateLinkResource { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; private set; }
 
         /// <summary>
         /// Gets the IPoolOperations.
@@ -354,9 +367,11 @@ namespace Microsoft.Azure.Management.Batch
             Location = new LocationOperations(this);
             Operations = new Operations(this);
             Certificate = new CertificateOperations(this);
+            PrivateLinkResource = new PrivateLinkResourceOperations(this);
+            PrivateEndpointConnection = new PrivateEndpointConnectionOperations(this);
             Pool = new PoolOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-08-01";
+            ApiVersion = "2022-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

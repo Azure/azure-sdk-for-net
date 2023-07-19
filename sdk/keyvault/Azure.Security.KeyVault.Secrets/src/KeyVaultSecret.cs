@@ -51,6 +51,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Gets the value of the secret.
         /// </summary>
+        /// <value>This property is always null for <see cref="DeletedSecret"/>.</value>
         public string Value { get; internal set; }
 
         internal virtual void ReadProperty(JsonProperty prop)

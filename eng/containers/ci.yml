@@ -1,0 +1,39 @@
+pr: none
+
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - eng/containers/
+
+pool:
+  vmImage: 'ubuntu-20.04'
+
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+  - name: dockerfile
+    value: ./eng/containers/UbuntuNetCoreKeyring/Dockerfile
+  - name: containerRegistry
+    value: 'azsdkengsys'
+  - name: imageRepository
+    value: 'dotnet/ubuntu_netcore_keyring'
+  - name: imageTag
+    value: $(build.buildid)
+
+steps:
+- task: Docker@2
+  displayName: Build Docker Image
+  inputs:
+    command: build
+    Dockerfile: $(dockerfile)
+    tags: $(imageTag)
+    arguments: '-t $(containerRegistry).azurecr.io/$(imageRepository):$(imageTag)'
+- task: Docker@2
+  displayName: Push Docker Image
+  inputs:
+    containerRegistry: $(containerRegistry)
+    repository: $(imageRepository)
+    command: push
+    tags: $(imageTag)

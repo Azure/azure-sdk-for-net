@@ -87,6 +87,7 @@ namespace Compute.Tests
         {
             InitializeCommon(context);
             instanceId = "0";
+            const string expectedOSName = "Windows Server 2012 R2 Datacenter", expectedOSVersion = "Microsoft Windows NT 6.3.9600.0", expectedComputerName = "test000000", expectedHyperVGeneration = "V1";
 
             bool passed = false;
             try
@@ -99,13 +100,18 @@ namespace Compute.Tests
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmScaleSet.Name, instanceId);
 
+                var imageReference = getResponse.StorageProfile.ImageReference;
+                Assert.NotNull(imageReference?.ExactVersion);
+                Assert.Equal(imageReference.Version, imageReference.ExactVersion);
+
                 VirtualMachineScaleSetVM vmScaleSetVMModel = GenerateVMScaleSetVMModel(vmScaleSet, instanceId, hasManagedDisks);
                 ValidateVMScaleSetVM(vmScaleSetVMModel, vmScaleSet.Sku.Name, getResponse, hasManagedDisks);
 
                 var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName,
                     vmScaleSet.Name, instanceId);
                 Assert.True(getInstanceViewResponse != null, "VMScaleSetVM not returned.");
-                ValidateVMScaleSetVMInstanceView(getInstanceViewResponse, hasManagedDisks);
+                ValidateVMScaleSetVMInstanceView(getInstanceViewResponse, hasManagedDisks, expectedComputerName, expectedOSName, expectedOSVersion, expectedHyperVGeneration);
+
 
                 var query = new Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineScaleSetVM>();
                 query.SetFilter(vm => vm.LatestModelApplied == true);
@@ -120,7 +126,7 @@ namespace Compute.Tests
                 Assert.True(listResponse.Count() == inputVMScaleSet.Sku.Capacity);
 
                 m_CrpClient.VirtualMachineScaleSetVMs.Start(rgName, vmScaleSet.Name, instanceId);
-                m_CrpClient.VirtualMachineScaleSetVMs.Reimage(rgName, vmScaleSet.Name, instanceId, tempDisk: null);
+                m_CrpClient.VirtualMachineScaleSetVMs.Reimage(rgName, vmScaleSet.Name, instanceId);
 
                 if (hasManagedDisks)
                 {
@@ -202,18 +208,18 @@ namespace Compute.Tests
         /// Update VirtualMachineScaleVM to Attach Disk
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Resources no longer exist")]
         public void TestVMScaleSetVMOperations_Put()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
                 bool passed = false;
+                InitializeCommon(context);
 
                 try
                 {
                     Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus2");
-                    InitializeCommon(context);
                     instanceId = "0";
 
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
@@ -324,6 +330,110 @@ namespace Compute.Tests
                         $"Operation 'performMaintenance' is not allowed on VM '{vmScaleSet.Name}_0' " +
                         "since the Subscription of this VM is not eligible.";
                     Assert.Equal(expectedMessage, cex.Message);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+        
+        /// <summary>
+        /// Covers following operations:
+        /// 1. Create VM Scale Set with UserData
+        /// 2. Validate UserData is returned when calling GET VMSS $expand=UserData and GET VMSS VM $expand=userData
+        /// 3. Modify existing UserData on VM scaleSet
+        /// 4. Modify existing UserData on VMSS instance
+        /// 5. Validate UserData was successfully updated by calling GET VMSS $expand=UserData and GET VMSS VM $expand=userData
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetVMOperations_UserData()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                instanceId = "0";
+                try
+                {
+                    InitializeCommon(context);
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    // Create VMSS with UserData
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true,
+                        faultDomainCount: 1, bootDiagnosticsProfile: GetManagedDiagnosticsProfile(), userData: DummyUserData1);
+
+                    // Validate Get VMSS with $expand=UserData returns the UserData
+                    var getVmssResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmScaleSet.Name, expand: "userData");
+                    Assert.Equal(DummyUserData1, getVmssResponse.VirtualMachineProfile.UserData);
+
+                    // Validate Get VMSS VM with $expand=UserData returns the UserData
+                    var getVmssVMResponse = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmScaleSet.Name, instanceId,
+                        expand: InstanceViewTypes.UserData);
+                    Assert.Equal(DummyUserData1, getVmssVMResponse.UserData);
+
+                    // Update VMSS with new UserData
+                    inputVMScaleSet.VirtualMachineProfile.UserData = DummyUserData2;
+                    UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
+
+                    // Validate Get VMSS with $expand=UserData returns the new UserData
+                    getVmssResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmScaleSet.Name, expand: "userData");
+                    Assert.Equal(DummyUserData2, getVmssResponse.VirtualMachineProfile.UserData);
+
+                    // Update VMSS VM with new UserData
+                    getVmssVMResponse.UserData = DummyUserData2;
+                    VirtualMachineScaleSetVM vmssVMReturned = m_CrpClient.VirtualMachineScaleSetVMs.Update(rgName, vmScaleSet.Name, instanceId, getVmssVMResponse);
+
+                    // Validate Get VMSS VM with $expand=UserData returns the new UserData
+                    getVmssVMResponse = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmScaleSet.Name,
+                        instanceId, InstanceViewTypes.UserData);
+                    Assert.Equal(DummyUserData2, getVmssResponse.VirtualMachineProfile.UserData);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Covers following operations:
+        /// Create RG
+        /// Create VM Scale Set with managed boot diagnostics enabled
+        /// RetrieveBootDiagnosticsData for a VM instance
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetVMOperations_ManagedBootDiagnostics()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                instanceId = "0";
+                bool passed = false;
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                    InitializeCommon(context);
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true,
+                        faultDomainCount: 1, bootDiagnosticsProfile: GetManagedDiagnosticsProfile());
+                    var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSetVMs.GetInstanceView(rgName, vmScaleSet.Name, instanceId);
+                    ValidateBootDiagnosticsInstanceView(getInstanceViewResponse.BootDiagnostics, hasError: false,
+                        enabledWithManagedBootDiagnostics: true);
+                    RetrieveBootDiagnosticsDataResult bootDiagnosticsData =
+                        m_CrpClient.VirtualMachineScaleSetVMs.RetrieveBootDiagnosticsData(rgName, vmScaleSet.Name, instanceId);
+                    ValidateBootDiagnosticsData(bootDiagnosticsData);
+
+                    passed = true;
                 }
                 finally
                 {

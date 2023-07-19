@@ -28,7 +28,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Subscription.
         /// </summary>
         /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// The filter to apply on the operation. Only **location** filter is
+        /// supported currently.
+        /// </param>
+        /// <param name='includeExtendedLocations'>
+        /// To Include Extended Locations information or not in the response.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -45,7 +49,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceSku>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ResourceSku>>> ListWithHttpMessagesAsync(string filter = default(string), string includeExtendedLocations = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of Microsoft.Compute SKUs available for your
         /// Subscription.
