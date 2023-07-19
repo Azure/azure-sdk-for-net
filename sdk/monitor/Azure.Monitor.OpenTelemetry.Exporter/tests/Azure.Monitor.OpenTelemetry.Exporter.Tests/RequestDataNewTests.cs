@@ -45,7 +45,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
-            Assert.Equal("GET /search", requestData.Name);
+            // Name is set later via operation name on TelemetryItem
+            Assert.Null(requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
             Assert.Equal(httpUrl, requestData.Url);
             Assert.Equal("0", requestData.ResponseCode);
@@ -245,7 +246,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
-            Assert.Equal("RequestDataNewActivity", requestData.Name);
+            // Name is set later via operation name on TelemetryItem
+            Assert.Null(requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
             Assert.Equal("my.servicebus.windows.net/queueName", requestData.Url);
             Assert.Equal("0", requestData.ResponseCode);

@@ -10,6 +10,7 @@ using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Models.JobPlan;
 using Moq;
 using NUnit.Framework;
+using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -122,7 +123,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
             {
-                JobPartPlanHeader header = CreateDefaultJobPartHeader(
+                JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: currentPart,
                     sourcePath: sourcePaths[currentPart],

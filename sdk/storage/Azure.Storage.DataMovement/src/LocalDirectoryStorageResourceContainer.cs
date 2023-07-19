@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override bool CanProduceUri => false;
+        protected internal override bool CanProduceUri => false;
 
         /// <summary>
         /// Cannot get Uri. Will throw NotSupportedException();
@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="childPath"></param>
         /// <returns></returns>
-        public override StorageResourceSingle GetChildStorageResource(string childPath)
+        protected internal override StorageResourceSingle GetChildStorageResource(string childPath)
         {
             string concatPath = System.IO.Path.Combine(Path, childPath);
             return new LocalFileStorageResource(concatPath);
@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+        protected internal override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
