@@ -29,7 +29,7 @@
 		
 		<PackageReference Include="nunit" />
 		<PackageReference Include="Moq" />
-		<PackageReference Include="NUnit3TestAdapter"/>
+		<PackageReference Include="NUnit3TestAdapter" />
 		
 		<PackageReference Include="xunit.runner.visualstudio">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
