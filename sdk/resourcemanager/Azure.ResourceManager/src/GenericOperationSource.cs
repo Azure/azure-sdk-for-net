@@ -3,10 +3,13 @@
 
 #nullable disable
 
+using System.IO;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace Azure.ResourceManager
 {
@@ -20,7 +23,12 @@ namespace Azure.ResourceManager
 
         private static T CreateResult(Response response)
         {
-            return ModelSerializer.Deserialize<T>(response.Content);
+            MemoryStream memoryStream = response.ContentStream as MemoryStream;
+            if (memoryStream == null)
+            {
+                return ModelSerializer.Deserialize<T>(BinaryData.FromStream(response.ContentStream));
+            }
+            return ModelSerializer.Deserialize<T>(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)));
         }
     }
 }
