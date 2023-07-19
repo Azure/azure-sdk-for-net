@@ -188,10 +188,10 @@ namespace Azure.Core.Samples
                 return base.IsRetriableException(exception);
             }
         }
+        #endregion
 
         public class SomeCustomException : Exception
         {
         }
-        #endregion
     }
 }
