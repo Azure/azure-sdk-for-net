@@ -11,7 +11,7 @@ using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class AzureMonitorLogExporter : BaseExporter<LogRecord>
+    internal sealed class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
