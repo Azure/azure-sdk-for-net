@@ -10,12 +10,12 @@ using System.ComponentModel.DataAnnotations;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators
 {
     /// <summary>Validator to ensure that a type value is enumerable and contains no null items.</summary>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property)]
     internal class EnumberableItemsNotNullAttribute : ValidationAttribute
     {
         /// <summary>Initializes a new instance of the <see cref="EnumberableItemsNotNullAttribute" /> class.</summary>
         public EnumberableItemsNotNullAttribute()
-            : base(AuthenticationEventResource.Ex_No_Action)
+            : base(AuthenticationEventResource.Ex_Null_Action_Items)
         {
         }
 

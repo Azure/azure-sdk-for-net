@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelpers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,8 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
     {
         [Test]
         [TestCaseSource(nameof(TestScenarios))]
-        [Description("Tests the cases for IsValid enumerables of objects")]
-        public void OneOrMoreRequiredIsValidWithTestCase(object testObject, string message, bool success)
+       public void OneOrMoreRequiredIsValidWithTestCase(object testObject, string message, bool success)
         {
             DummyClass dummyObj = new() { Obj = testObject };
 
@@ -40,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
         private static IEnumerable<object[]> TestScenarios()
         {
-            #region Invalid
+#region Invalid
             yield return new TestCaseStructure()
             {
                 Test = null,
@@ -61,9 +59,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
                 Test = new object[0],
                 Message = "Testing empty array",
             }.ToArray;
-            #endregion
+#endregion
 
-            #region Valid
+#region Valid
             yield return new TestCaseStructure()
             {
                 Test = new List<object>() { new(), new() },
@@ -76,7 +74,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
                 Message = "Testing single item array",
                 Success = true,
             }.ToArray;
-            #endregion
+#endregion
         }
     }
 }
