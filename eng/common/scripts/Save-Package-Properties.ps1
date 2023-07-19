@@ -88,13 +88,17 @@ function GetRelativePath($path) {
 }
 
 $allPackageProperties = Get-AllPkgProperties $serviceDirectory
-if ($allPackageProperties)
+
+# Only export package info JSON files for track 2 packages
+$targetPackages = $allPackageProperties.Where({ $_.IsNewSdk })
+
+if ($targetPackages)
 {
     if (-not (Test-Path -Path $outDirectory))
     {
       New-Item -ItemType Directory -Force -Path $outDirectory
     }
-    foreach($pkg in $allPackageProperties)
+    foreach($pkg in $targetPackages)
     {
         Write-Host "Package Name: $($pkg.Name)"
         Write-Host "Package Version: $($pkg.Version)"
