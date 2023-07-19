@@ -629,7 +629,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 var isBatch = (EventBatchMaximumCount > 1);
 
-                if (isBatch && ActivityExtensions.SupportsActivitySource())
+                if (isBatch && ActivityExtensions.SupportsActivitySource)
                     diagnosticScope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventBatch.Count);
 
                 foreach (var eventData in eventBatch)

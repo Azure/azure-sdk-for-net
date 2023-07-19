@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests.Mock
         public List<IAccount> Accounts { get; set; }
         public Func<string[], string, AuthenticationResult> AuthFactory { get; set; }
         public Func<string[], string, AuthenticationResult> UserPassAuthFactory { get; set; }
-        public Func<string[], string, Prompt, string, string, bool, CancellationToken, AuthenticationResult> InteractiveAuthFactory { get; set; }
+        public Func<string[], string, Prompt, string, string, bool, BrowserCustomizationOptions, CancellationToken, AuthenticationResult> InteractiveAuthFactory { get; set; }
         public Func<string[], string, AuthenticationResult> SilentAuthFactory { get; set; }
         public Func<string[], string, IAccount, string, bool, CancellationToken, AuthenticationResult> ExtendedSilentAuthFactory { get; set; }
         public Func<DeviceCodeInfo, CancellationToken, AuthenticationResult> DeviceCodeAuthFactory { get; set; }
@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests.Mock
         {
             AuthFactory = (_, _) => result;
             UserPassAuthFactory = (_, _) => result;
-            InteractiveAuthFactory = (_, _, _, _, _, _, _) => result;
+            InteractiveAuthFactory = (_, _, _, _, _, _, _, _) => result;
             SilentAuthFactory = (_, _) => result;
             ExtendedSilentAuthFactory = (_, _, _, _, _, _) => result;
             DeviceCodeAuthFactory = (_, _) => result;
@@ -72,6 +72,7 @@ namespace Azure.Identity.Tests.Mock
             string loginHint,
             string tenantId,
             bool enableCae,
+            BrowserCustomizationOptions browserOptions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -80,7 +81,7 @@ namespace Azure.Identity.Tests.Mock
 
             if (interactiveAuthFactory != null)
             {
-                return new ValueTask<AuthenticationResult>(interactiveAuthFactory(scopes, claims, prompt, loginHint, tenantId, async, cancellationToken));
+                return new ValueTask<AuthenticationResult>(interactiveAuthFactory(scopes, claims, prompt, loginHint, tenantId, async, browserOptions, cancellationToken));
             }
             if (authFactory != null)
             {

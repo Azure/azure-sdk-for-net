@@ -88,7 +88,11 @@ namespace Azure.Core.Pipeline
         private static ActivitySource? GetActivitySource(string ns, string name)
 #endif
         {
+#if NETCOREAPP2_1
             if (!ActivityExtensions.SupportsActivitySource())
+#else
+            if (!ActivityExtensions.SupportsActivitySource)
+#endif
             {
                 return null;
             }
