@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourcegroups/sdktestrg590?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzU5MD9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourcegroups/sdktestrg4836?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzQ4MzY/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "HEAD",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "57709f2f-2c4a-4199-85d3-7a99560a3f39"
+          "df5b4ec9-3943-4c56-ab95-0385df0585c9"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
@@ -33,13 +33,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "b5b285da-7fdf-4589-a93e-80a39aee5aff"
+          "02b25c58-c282-420b-8005-3c1cd513fa3e"
         ],
         "x-ms-correlation-request-id": [
-          "b5b285da-7fdf-4589-a93e-80a39aee5aff"
+          "02b25c58-c282-420b-8005-3c1cd513fa3e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T080826Z:b5b285da-7fdf-4589-a93e-80a39aee5aff"
+          "WESTCENTRALUS:20230719T174834Z:02b25c58-c282-420b-8005-3c1cd513fa3e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,7 +48,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:08:26 GMT"
+          "Wed, 19 Jul 2023 17:48:33 GMT"
         ],
         "Content-Length": [
           "0"
@@ -61,19 +61,19 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourcegroups/sdktestrg590?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzU5MD9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourcegroups/sdktestrg4836?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzQ4MzY/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"4/25/2023 8:08:26 AM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 5:48:34 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5d5a8d4c-b8db-4bac-8972-82ecbf90da7a"
+          "176346de-a88c-4a7b-b631-1105a7a471eb"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
@@ -96,13 +96,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "a78edf05-e0ff-4ecc-9624-0551751b7f55"
+          "e59ae744-6949-447f-991d-2738503090c6"
         ],
         "x-ms-correlation-request-id": [
-          "a78edf05-e0ff-4ecc-9624-0551751b7f55"
+          "e59ae744-6949-447f-991d-2738503090c6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T080827Z:a78edf05-e0ff-4ecc-9624-0551751b7f55"
+          "WESTCENTRALUS:20230719T174835Z:e59ae744-6949-447f-991d-2738503090c6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,10 +111,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:08:27 GMT"
+          "Wed, 19 Jul 2023 17:48:34 GMT"
         ],
         "Content-Length": [
-          "256"
+          "258"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -123,23 +123,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590\",\r\n  \"name\": \"sdktestrg590\",\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"4/25/2023 8:08:26 AM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836\",\r\n  \"name\": \"sdktestrg4836\",\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 5:48:34 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDM/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwP2FwaS12ZXJzaW9uPTIwMjItMDgtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"eastus2euap\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        }\r\n      }\r\n    ],\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"4/25/2023 8:08:26 AM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"eastus2euap\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        }\r\n      }\r\n    ],\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 5:48:34 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "86efe0bc-bc7d-443b-a726-54355526f3e6"
+          "161e3b4f-cafb-49a3-bbf5-81795df7fa68"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -159,10 +159,10 @@
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAsEtU=\""
+          "\"AAAAAAAwV1w=\""
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -171,32 +171,32 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "0923551d-d55a-45a1-ada7-d3c03d4540b0",
-          "0923551d-d55a-45a1-ada7-d3c03d4540b0"
+          "83754b94-1d1f-4632-998a-eb7d0b765a09",
+          "83754b94-1d1f-4632-998a-eb7d0b765a09"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "23999"
         ],
         "x-ms-correlation-request-id": [
-          "0923551d-d55a-45a1-ada7-d3c03d4540b0"
+          "83754b94-1d1f-4632-998a-eb7d0b765a09"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T080833Z:0923551d-d55a-45a1-ada7-d3c03d4540b0"
+          "WESTCENTRALUS:20230719T174839Z:83754b94-1d1f-4632-998a-eb7d0b765a09"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:08:33 GMT"
+          "Wed, 19 Jul 2023 17:48:39 GMT"
         ],
         "Content-Length": [
-          "2290"
+          "2294"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -205,23 +205,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843\",\r\n  \"name\": \"sdktestapim7843\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"4/25/2023 8:08:26 AM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAsEtU=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Created\",\r\n    \"targetProvisioningState\": \"Activating\",\r\n    \"createdAtUtc\": \"2023-04-25T08:08:30.7153219Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim7843.azure-api.net\",\r\n    \"gatewayRegionalUrl\": null,\r\n    \"portalUrl\": null,\r\n    \"developerPortalUrl\": null,\r\n    \"managementApiUrl\": null,\r\n    \"scmUrl\": null,\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim7843.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": null,\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": null,\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": null,\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": null,\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"undetermined\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": null,\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": false,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": null,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"undetermined\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"56306bdb-bb6e-485c-8d76-561254288ed4\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-04-25T08:08:29.3860243Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-04-25T08:08:29.3860243Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340\",\r\n  \"name\": \"sdktestapim5340\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 5:48:34 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAwV1w=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Activating\",\r\n    \"targetProvisioningState\": \"Activating\",\r\n    \"createdAtUtc\": \"2023-07-19T17:48:36.7540812Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim5340.azure-api.net\",\r\n    \"gatewayRegionalUrl\": null,\r\n    \"portalUrl\": null,\r\n    \"developerPortalUrl\": null,\r\n    \"managementApiUrl\": null,\r\n    \"scmUrl\": null,\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim5340.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": null,\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": null,\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": null,\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": null,\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"undetermined\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": null,\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": false,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": null,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"undetermined\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"f06ecf11-3a04-400c-8e08-4fdd4a06f912\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-07-19T17:48:35.7732154Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-07-19T17:48:35.7732154Z\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDM/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwP2FwaS12ZXJzaW9uPTIwMjItMDgtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"eastus2euap\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        }\r\n      }\r\n    ],\r\n    \"disableGateway\": true,\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"4/25/2023 8:08:26 AM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"eastus2euap\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        }\r\n      }\r\n    ],\r\n    \"disableGateway\": true,\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 5:48:34 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "21339c2e-531d-42b2-b5f7-d86ff1d8cdc1"
+          "b8d70263-c5c4-4789-9b33-aeab946f6462"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -241,10 +241,10 @@
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAsEu8=\""
+          "\"AAAAAAAwV5A=\""
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfVXBkYXRlXzE1ODhkOGI3?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfVXBkYXRlXzRlMzYwNTQ2?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -253,32 +253,32 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfVXBkYXRlXzE1ODhkOGI3?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfVXBkYXRlXzRlMzYwNTQ2?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "6c407d27-fa62-4e13-960d-9b4760de1832",
-          "6c407d27-fa62-4e13-960d-9b4760de1832"
+          "30b54fb8-1821-4019-b9f2-5c25d71769fd",
+          "30b54fb8-1821-4019-b9f2-5c25d71769fd"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "23999"
         ],
         "x-ms-correlation-request-id": [
-          "6c407d27-fa62-4e13-960d-9b4760de1832"
+          "30b54fb8-1821-4019-b9f2-5c25d71769fd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T082540Z:6c407d27-fa62-4e13-960d-9b4760de1832"
+          "WESTCENTRALUS:20230719T180745Z:30b54fb8-1821-4019-b9f2-5c25d71769fd"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:25:40 GMT"
+          "Wed, 19 Jul 2023 18:07:44 GMT"
         ],
         "Content-Length": [
-          "3275"
+          "3274"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -287,17 +287,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843\",\r\n  \"name\": \"sdktestapim7843\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"4/25/2023 8:08:26 AM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAsEu8=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"Updating\",\r\n    \"createdAtUtc\": \"2023-04-25T08:08:30.7153219Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim7843.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim7843-centraluseuap-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim7843.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestapim7843.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim7843.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim7843.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim7843.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"20.46.24.145\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": [\r\n          \"20.1.10.189\"\r\n        ],\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": [\r\n          \"20.1.10.189\"\r\n        ],\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": \"https://sdktestapim7843-eastus2euap-01.regional.azure-api.net\",\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"stv2\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": false,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": [\r\n      \"20.1.10.189\"\r\n    ],\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"56306bdb-bb6e-485c-8d76-561254288ed4\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-04-25T08:08:29.3860243Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-04-25T08:08:29.3860243Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340\",\r\n  \"name\": \"sdktestapim5340\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 5:48:34 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAwV5A=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Updating\",\r\n    \"targetProvisioningState\": \"Updating\",\r\n    \"createdAtUtc\": \"2023-07-19T17:48:36.7540812Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim5340.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim5340-centraluseuap-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim5340.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestapim5340.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim5340.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim5340.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim5340.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"20.112.132.215\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": [\r\n          \"20.39.1.41\"\r\n        ],\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": [\r\n          \"20.39.1.41\"\r\n        ],\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": \"https://sdktestapim5340-eastus2euap-01.regional.azure-api.net\",\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"stv2\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": false,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": [\r\n      \"20.39.1.41\"\r\n    ],\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"f06ecf11-3a04-400c-8e08-4fdd4a06f912\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-07-19T17:48:35.7732154Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-07-19T17:48:35.7732154Z\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -311,7 +311,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -320,10 +320,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "22fb2dd6-4e4c-4b58-bf64-4c50c3db114f"
+          "5a0a4577-988e-4023-8c82-dac89aef6f66"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -332,16 +332,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "22fb2dd6-4e4c-4b58-bf64-4c50c3db114f"
+          "5a0a4577-988e-4023-8c82-dac89aef6f66"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T080934Z:22fb2dd6-4e4c-4b58-bf64-4c50c3db114f"
+          "WESTCENTRALUS:20230719T174939Z:5a0a4577-988e-4023-8c82-dac89aef6f66"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:09:34 GMT"
+          "Wed, 19 Jul 2023 17:49:39 GMT"
         ],
         "Content-Length": [
           "23"
@@ -357,13 +357,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -377,7 +377,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -386,10 +386,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "e48cc7ed-85b3-46bb-948b-42fd86086d03"
+          "641ac352-e783-46fb-ae0f-bf7bf722ba15"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -398,16 +398,16 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "e48cc7ed-85b3-46bb-948b-42fd86086d03"
+          "641ac352-e783-46fb-ae0f-bf7bf722ba15"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T081034Z:e48cc7ed-85b3-46bb-948b-42fd86086d03"
+          "WESTCENTRALUS:20230719T175040Z:641ac352-e783-46fb-ae0f-bf7bf722ba15"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:10:33 GMT"
+          "Wed, 19 Jul 2023 17:50:39 GMT"
         ],
         "Content-Length": [
           "23"
@@ -423,13 +423,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -443,7 +443,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -452,10 +452,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "a541803f-af24-4ad4-ab85-409cc48d0eac"
+          "44b21424-6ee3-4096-94ee-fcb91cfb8938"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -464,16 +464,16 @@
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "a541803f-af24-4ad4-ab85-409cc48d0eac"
+          "44b21424-6ee3-4096-94ee-fcb91cfb8938"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T081134Z:a541803f-af24-4ad4-ab85-409cc48d0eac"
+          "WESTCENTRALUS:20230719T175140Z:44b21424-6ee3-4096-94ee-fcb91cfb8938"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:11:34 GMT"
+          "Wed, 19 Jul 2023 17:51:39 GMT"
         ],
         "Content-Length": [
           "23"
@@ -489,13 +489,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -509,7 +509,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -518,10 +518,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "631e615d-cf89-485c-a95f-8202c67cb253"
+          "923b650e-0d74-4ea1-9157-e26d3ff0a72c"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -530,16 +530,16 @@
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "631e615d-cf89-485c-a95f-8202c67cb253"
+          "923b650e-0d74-4ea1-9157-e26d3ff0a72c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T081235Z:631e615d-cf89-485c-a95f-8202c67cb253"
+          "WESTCENTRALUS:20230719T175240Z:923b650e-0d74-4ea1-9157-e26d3ff0a72c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:12:34 GMT"
+          "Wed, 19 Jul 2023 17:52:39 GMT"
         ],
         "Content-Length": [
           "23"
@@ -555,13 +555,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -575,7 +575,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -584,10 +584,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "c4f6dc8f-2450-4f83-83cc-44d9d18a8bfe"
+          "285f3b4f-04d4-409a-a96c-b8b1c0efc755"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -596,16 +596,16 @@
           "11995"
         ],
         "x-ms-correlation-request-id": [
-          "c4f6dc8f-2450-4f83-83cc-44d9d18a8bfe"
+          "285f3b4f-04d4-409a-a96c-b8b1c0efc755"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T081335Z:c4f6dc8f-2450-4f83-83cc-44d9d18a8bfe"
+          "WESTCENTRALUS:20230719T175340Z:285f3b4f-04d4-409a-a96c-b8b1c0efc755"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:13:35 GMT"
+          "Wed, 19 Jul 2023 17:53:40 GMT"
         ],
         "Content-Length": [
           "23"
@@ -621,13 +621,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -641,7 +641,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -650,10 +650,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "da3f180e-7b11-472c-aba2-482be666b13e"
+          "f18b9119-a901-43ed-9764-fa0ed30923d0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -662,16 +662,16 @@
           "11994"
         ],
         "x-ms-correlation-request-id": [
-          "da3f180e-7b11-472c-aba2-482be666b13e"
+          "f18b9119-a901-43ed-9764-fa0ed30923d0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T081435Z:da3f180e-7b11-472c-aba2-482be666b13e"
+          "WESTCENTRALUS:20230719T175441Z:f18b9119-a901-43ed-9764-fa0ed30923d0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:14:34 GMT"
+          "Wed, 19 Jul 2023 17:54:40 GMT"
         ],
         "Content-Length": [
           "23"
@@ -687,13 +687,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -707,7 +707,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -716,10 +716,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "c670a6b9-1d58-45c7-a04f-91104e917dca"
+          "661e37f9-eb28-4f63-bc85-93732b2e7d12"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -728,16 +728,16 @@
           "11993"
         ],
         "x-ms-correlation-request-id": [
-          "c670a6b9-1d58-45c7-a04f-91104e917dca"
+          "661e37f9-eb28-4f63-bc85-93732b2e7d12"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T081535Z:c670a6b9-1d58-45c7-a04f-91104e917dca"
+          "WESTCENTRALUS:20230719T175541Z:661e37f9-eb28-4f63-bc85-93732b2e7d12"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:15:35 GMT"
+          "Wed, 19 Jul 2023 17:55:40 GMT"
         ],
         "Content-Length": [
           "23"
@@ -753,13 +753,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -773,7 +773,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -782,10 +782,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "d1b5a36e-b0f3-4729-8d96-9b97c59687c5"
+          "4c38a52a-5dc3-44c5-909b-909918054abd"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -794,16 +794,16 @@
           "11992"
         ],
         "x-ms-correlation-request-id": [
-          "d1b5a36e-b0f3-4729-8d96-9b97c59687c5"
+          "4c38a52a-5dc3-44c5-909b-909918054abd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T081636Z:d1b5a36e-b0f3-4729-8d96-9b97c59687c5"
+          "WESTCENTRALUS:20230719T175641Z:4c38a52a-5dc3-44c5-909b-909918054abd"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:16:35 GMT"
+          "Wed, 19 Jul 2023 17:56:40 GMT"
         ],
         "Content-Length": [
           "23"
@@ -819,13 +819,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -839,7 +839,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -848,10 +848,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "41d4ce85-7cec-4bb5-840c-1d91faf84c42"
+          "8f896b0b-97a1-43e0-973e-25f4f2d0f857"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -860,16 +860,16 @@
           "11991"
         ],
         "x-ms-correlation-request-id": [
-          "41d4ce85-7cec-4bb5-840c-1d91faf84c42"
+          "8f896b0b-97a1-43e0-973e-25f4f2d0f857"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T081736Z:41d4ce85-7cec-4bb5-840c-1d91faf84c42"
+          "WESTCENTRALUS:20230719T175741Z:8f896b0b-97a1-43e0-973e-25f4f2d0f857"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:17:36 GMT"
+          "Wed, 19 Jul 2023 17:57:41 GMT"
         ],
         "Content-Length": [
           "23"
@@ -885,13 +885,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -905,7 +905,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -914,10 +914,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "4a170888-7ae2-4e70-a168-317fd81efe72"
+          "d93e2388-8611-4bf1-b960-62a1dfb93820"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -926,16 +926,16 @@
           "11990"
         ],
         "x-ms-correlation-request-id": [
-          "4a170888-7ae2-4e70-a168-317fd81efe72"
+          "d93e2388-8611-4bf1-b960-62a1dfb93820"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T081836Z:4a170888-7ae2-4e70-a168-317fd81efe72"
+          "WESTCENTRALUS:20230719T175841Z:d93e2388-8611-4bf1-b960-62a1dfb93820"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:18:36 GMT"
+          "Wed, 19 Jul 2023 17:58:41 GMT"
         ],
         "Content-Length": [
           "23"
@@ -951,13 +951,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -971,7 +971,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -980,10 +980,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "5f3c3a85-83b8-4ea1-b76d-e1c07d04cfe0"
+          "d31554af-7a48-492a-ac60-d9d9d1dd38b8"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -992,16 +992,16 @@
           "11989"
         ],
         "x-ms-correlation-request-id": [
-          "5f3c3a85-83b8-4ea1-b76d-e1c07d04cfe0"
+          "d31554af-7a48-492a-ac60-d9d9d1dd38b8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T081936Z:5f3c3a85-83b8-4ea1-b76d-e1c07d04cfe0"
+          "WESTCENTRALUS:20230719T175942Z:d31554af-7a48-492a-ac60-d9d9d1dd38b8"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:19:36 GMT"
+          "Wed, 19 Jul 2023 17:59:41 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1017,13 +1017,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1037,7 +1037,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -1046,10 +1046,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "73a2230b-1f7e-41d6-a270-49538555fb18"
+          "23ef1347-39f8-4bec-8b6e-016c90884ee1"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1058,16 +1058,16 @@
           "11988"
         ],
         "x-ms-correlation-request-id": [
-          "73a2230b-1f7e-41d6-a270-49538555fb18"
+          "23ef1347-39f8-4bec-8b6e-016c90884ee1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T082037Z:73a2230b-1f7e-41d6-a270-49538555fb18"
+          "WESTCENTRALUS:20230719T180042Z:23ef1347-39f8-4bec-8b6e-016c90884ee1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:20:36 GMT"
+          "Wed, 19 Jul 2023 18:00:42 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1083,13 +1083,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1103,7 +1103,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -1112,10 +1112,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "c0959f88-1436-4b96-b9f9-b38ed4225bd3"
+          "d188cae5-d0ad-4a4e-bfa0-e56a36b4b92e"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1124,16 +1124,16 @@
           "11987"
         ],
         "x-ms-correlation-request-id": [
-          "c0959f88-1436-4b96-b9f9-b38ed4225bd3"
+          "d188cae5-d0ad-4a4e-bfa0-e56a36b4b92e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T082137Z:c0959f88-1436-4b96-b9f9-b38ed4225bd3"
+          "WESTCENTRALUS:20230719T180142Z:d188cae5-d0ad-4a4e-bfa0-e56a36b4b92e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:21:36 GMT"
+          "Wed, 19 Jul 2023 18:01:42 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1149,13 +1149,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1169,7 +1169,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -1178,10 +1178,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "c8a85072-debc-4181-b8fd-cc9005548d41"
+          "4eae5a26-4c6b-45e2-a5e2-549768f443e5"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1190,16 +1190,16 @@
           "11986"
         ],
         "x-ms-correlation-request-id": [
-          "c8a85072-debc-4181-b8fd-cc9005548d41"
+          "4eae5a26-4c6b-45e2-a5e2-549768f443e5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T082237Z:c8a85072-debc-4181-b8fd-cc9005548d41"
+          "WESTCENTRALUS:20230719T180243Z:4eae5a26-4c6b-45e2-a5e2-549768f443e5"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:22:37 GMT"
+          "Wed, 19 Jul 2023 18:02:42 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1215,13 +1215,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1235,7 +1235,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -1244,10 +1244,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "54064a44-bf68-4590-9aba-98bcf3b7a084"
+          "f30f2d2d-e6c5-420b-90a1-1822a6321429"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1256,16 +1256,16 @@
           "11985"
         ],
         "x-ms-correlation-request-id": [
-          "54064a44-bf68-4590-9aba-98bcf3b7a084"
+          "f30f2d2d-e6c5-420b-90a1-1822a6321429"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T082338Z:54064a44-bf68-4590-9aba-98bcf3b7a084"
+          "WESTCENTRALUS:20230719T180343Z:f30f2d2d-e6c5-420b-90a1-1822a6321429"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:23:37 GMT"
+          "Wed, 19 Jul 2023 18:03:42 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1281,13 +1281,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1301,7 +1301,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "Retry-After": [
           "60"
@@ -1310,10 +1310,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
         ],
         "x-ms-request-id": [
-          "55608e44-2401-4122-89c6-690eed43e128"
+          "63ed7365-0e9f-4cf7-96d5-20cd8a9207ed"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1322,16 +1322,16 @@
           "11984"
         ],
         "x-ms-correlation-request-id": [
-          "55608e44-2401-4122-89c6-690eed43e128"
+          "63ed7365-0e9f-4cf7-96d5-20cd8a9207ed"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T082438Z:55608e44-2401-4122-89c6-690eed43e128"
+          "WESTCENTRALUS:20230719T180443Z:63ed7365-0e9f-4cf7-96d5-20cd8a9207ed"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:24:37 GMT"
+          "Wed, 19 Jul 2023 18:04:43 GMT"
         ],
         "Content-Length": [
           "23"
@@ -1347,13 +1347,145 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfQWN0X2FiYzgzNTJh?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mUVdOMFgyRmlZemd6TlRKaD9hcGktdmVyc2lvbj0yMDIyLTA4LTAxJmFzeW5jUmVzcG9uc2U=",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
+        ],
+        "x-ms-request-id": [
+          "48823d03-22a8-423c-a35b-32dc09f71dca"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11983"
+        ],
+        "x-ms-correlation-request-id": [
+          "48823d03-22a8-423c-a35b-32dc09f71dca"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20230719T180543Z:48823d03-22a8-423c-a35b-32dc09f71dca"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 19 Jul 2023 18:05:42 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/6.0.2023.32017",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse"
+        ],
+        "x-ms-request-id": [
+          "0142a8e9-8710-447e-b200-c0d296d6b288"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11982"
+        ],
+        "x-ms-correlation-request-id": [
+          "0142a8e9-8710-447e-b200-c0d296d6b288"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20230719T180643Z:0142a8e9-8710-447e-b200-c0d296d6b288"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 19 Jul 2023 18:06:43 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfQWN0X2Y3ZGU3NzFk?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlFXTjBYMlkzWkdVM056Rms/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1370,25 +1502,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c62175d7-9af5-49d4-8300-4afae3d9a40d"
+          "9e9d96d8-ca5c-4718-8947-3130d25e93d2"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11983"
+          "11981"
         ],
         "x-ms-correlation-request-id": [
-          "c62175d7-9af5-49d4-8300-4afae3d9a40d"
+          "9e9d96d8-ca5c-4718-8947-3130d25e93d2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T082538Z:c62175d7-9af5-49d4-8300-4afae3d9a40d"
+          "WESTCENTRALUS:20230719T180744Z:9e9d96d8-ca5c-4718-8947-3130d25e93d2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:25:38 GMT"
+          "Wed, 19 Jul 2023 18:07:43 GMT"
         ],
         "Content-Length": [
           "22"
@@ -1404,13 +1536,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDM/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwP2FwaS12ZXJzaW9uPTIwMjItMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1424,31 +1556,31 @@
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAsEu4=\""
+          "\"AAAAAAAwV48=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "b3afef34-a3dc-4884-9b86-742a297783f7"
+          "2cc27fa6-b14e-4c58-a0f5-a8445f714fb4"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11982"
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "23999"
         ],
         "x-ms-correlation-request-id": [
-          "b3afef34-a3dc-4884-9b86-742a297783f7"
+          "2cc27fa6-b14e-4c58-a0f5-a8445f714fb4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T082538Z:b3afef34-a3dc-4884-9b86-742a297783f7"
+          "WESTCENTRALUS:20230719T180744Z:2cc27fa6-b14e-4c58-a0f5-a8445f714fb4"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:25:38 GMT"
+          "Wed, 19 Jul 2023 18:07:43 GMT"
         ],
         "Content-Length": [
           "3267"
@@ -1460,17 +1592,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843\",\r\n  \"name\": \"sdktestapim7843\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"4/25/2023 8:08:26 AM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAsEu4=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2023-04-25T08:08:30.7153219Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim7843.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim7843-centraluseuap-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim7843.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestapim7843.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim7843.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim7843.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim7843.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"20.46.24.145\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": [\r\n          \"20.1.10.189\"\r\n        ],\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": [\r\n          \"20.1.10.189\"\r\n        ],\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": \"https://sdktestapim7843-eastus2euap-01.regional.azure-api.net\",\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"stv2\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": false,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": [\r\n      \"20.1.10.189\"\r\n    ],\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"56306bdb-bb6e-485c-8d76-561254288ed4\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-04-25T08:08:29.3860243Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-04-25T08:08:29.3860243Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340\",\r\n  \"name\": \"sdktestapim5340\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 5:48:34 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAwV48=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2023-07-19T17:48:36.7540812Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim5340.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim5340-centraluseuap-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim5340.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestapim5340.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim5340.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim5340.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim5340.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"20.112.132.215\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": [\r\n          \"20.39.1.41\"\r\n        ],\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": [\r\n          \"20.39.1.41\"\r\n        ],\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": \"https://sdktestapim5340-eastus2euap-01.regional.azure-api.net\",\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"stv2\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": false,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": [\r\n      \"20.39.1.41\"\r\n    ],\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"f06ecf11-3a04-400c-8e08-4fdd4a06f912\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-07-19T17:48:35.7732154Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-07-19T17:48:35.7732154Z\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDM/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwP2FwaS12ZXJzaW9uPTIwMjItMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1484,97 +1616,31 @@
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAsEvE=\""
+          "\"AAAAAAAwV5Q=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c6fb7b11-9186-4a22-9d03-ac7b0df9d9de"
+          "2136bdfa-4bfb-4507-89ea-4ef0d3da07a4"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11981"
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "23998"
         ],
         "x-ms-correlation-request-id": [
-          "c6fb7b11-9186-4a22-9d03-ac7b0df9d9de"
+          "2136bdfa-4bfb-4507-89ea-4ef0d3da07a4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230425T082540Z:c6fb7b11-9186-4a22-9d03-ac7b0df9d9de"
+          "WESTCENTRALUS:20230719T180845Z:2136bdfa-4bfb-4507-89ea-4ef0d3da07a4"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:25:40 GMT"
-        ],
-        "Content-Length": [
-          "3274"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843\",\r\n  \"name\": \"sdktestapim7843\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"4/25/2023 8:08:26 AM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAsEvE=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Updating\",\r\n    \"targetProvisioningState\": \"Updating\",\r\n    \"createdAtUtc\": \"2023-04-25T08:08:30.7153219Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim7843.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim7843-centraluseuap-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim7843.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestapim7843.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim7843.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim7843.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim7843.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"20.46.24.145\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": [\r\n          \"20.1.10.189\"\r\n        ],\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": [\r\n          \"20.1.10.189\"\r\n        ],\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": \"https://sdktestapim7843-eastus2euap-01.regional.azure-api.net\",\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"stv2\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": false,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": [\r\n      \"20.1.10.189\"\r\n    ],\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"56306bdb-bb6e-485c-8d76-561254288ed4\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-04-25T08:08:29.3860243Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-04-25T08:08:29.3860243Z\"\r\n  }\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDM/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "3645607b-08fd-4698-bd4d-744f4bf4288d"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/6.0.1623.17311",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19045",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"AAAAAAAsEvM=\""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "a8cb7b64-ba26-4f81-bf7c-77c1a1ec1772"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
-        ],
-        "x-ms-correlation-request-id": [
-          "a8cb7b64-ba26-4f81-bf7c-77c1a1ec1772"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20230425T083041Z:a8cb7b64-ba26-4f81-bf7c-77c1a1ec1772"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 Apr 2023 08:30:40 GMT"
+          "Wed, 19 Jul 2023 18:08:44 GMT"
         ],
         "Content-Length": [
           "3266"
@@ -1586,23 +1652,89 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843\",\r\n  \"name\": \"sdktestapim7843\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"4/25/2023 8:08:26 AM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAsEvM=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2023-04-25T08:08:30.7153219Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim7843.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim7843-centraluseuap-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim7843.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestapim7843.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim7843.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim7843.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim7843.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"20.46.24.145\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": [\r\n          \"20.1.10.189\"\r\n        ],\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": [\r\n          \"20.1.10.189\"\r\n        ],\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": \"https://sdktestapim7843-eastus2euap-01.regional.azure-api.net\",\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"stv2\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": true,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": [\r\n      \"20.1.10.189\"\r\n    ],\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"56306bdb-bb6e-485c-8d76-561254288ed4\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-04-25T08:08:29.3860243Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-04-25T08:25:39.1599086Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340\",\r\n  \"name\": \"sdktestapim5340\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 5:48:34 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAwV5Q=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2023-07-19T17:48:36.7540812Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim5340.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim5340-centraluseuap-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim5340.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestapim5340.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim5340.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim5340.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim5340.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"20.112.132.215\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": [\r\n          \"20.39.1.41\"\r\n        ],\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": [\r\n          \"20.39.1.41\"\r\n        ],\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": \"https://sdktestapim5340-eastus2euap-01.regional.azure-api.net\",\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"stv2\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": true,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": [\r\n      \"20.39.1.41\"\r\n    ],\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"f06ecf11-3a04-400c-8e08-4fdd4a06f912\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-07-19T17:48:35.7732154Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-07-19T18:07:44.5376085Z\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDM/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwP2FwaS12ZXJzaW9uPTIwMjItMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b60b2685-d858-4b5a-a733-ceb0e28ae866"
+          "03f097a1-8e26-4cb1-b56b-8bd3a895423a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"AAAAAAAwV5Q=\""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a64facd9-373d-40bd-829f-d55d3a6db764"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "23997"
+        ],
+        "x-ms-correlation-request-id": [
+          "a64facd9-373d-40bd-829f-d55d3a6db764"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20230719T180845Z:a64facd9-373d-40bd-829f-d55d3a6db764"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 19 Jul 2023 18:08:44 GMT"
+        ],
+        "Content-Length": [
+          "3266"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340\",\r\n  \"name\": \"sdktestapim5340\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 5:48:34 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAwV5Q=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2023-07-19T17:48:36.7540812Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim5340.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim5340-centraluseuap-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim5340.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestapim5340.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim5340.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim5340.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim5340.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"20.112.132.215\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": [\r\n          \"20.39.1.41\"\r\n        ],\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": [\r\n          \"20.39.1.41\"\r\n        ],\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": \"https://sdktestapim5340-eastus2euap-01.regional.azure-api.net\",\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"stv2\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": true,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": [\r\n      \"20.39.1.41\"\r\n    ],\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"f06ecf11-3a04-400c-8e08-4fdd4a06f912\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-07-19T17:48:35.7732154Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-07-19T18:07:44.5376085Z\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwP2FwaS12ZXJzaW9uPTIwMjItMDgtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "beedf67f-ea61-4561-b451-6c96674272d7"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1621,23 +1753,23 @@
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "23996"
         ],
         "x-ms-request-id": [
-          "f56f026a-6e77-4ad7-8ddc-208066964b82"
+          "a60b841e-21cc-4bcb-af9a-1b15b60986df"
         ],
         "x-ms-correlation-request-id": [
-          "f56f026a-6e77-4ad7-8ddc-208066964b82"
+          "a60b841e-21cc-4bcb-af9a-1b15b60986df"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20230425T083242Z:f56f026a-6e77-4ad7-8ddc-208066964b82"
+          "WESTCENTRALUS:20230719T181046Z:a60b841e-21cc-4bcb-af9a-1b15b60986df"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:32:42 GMT"
+          "Wed, 19 Jul 2023 18:10:45 GMT"
         ],
         "Content-Length": [
           "125"
@@ -1649,89 +1781,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ServiceNotFound\",\r\n    \"message\": \"Api service does not exist: sdktestapim7843\",\r\n    \"details\": null,\r\n    \"innerError\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ServiceNotFound\",\r\n    \"message\": \"Api service does not exist: sdktestapim5340\",\r\n    \"details\": null,\r\n    \"innerError\": null\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDM/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "698be705-870b-4f1b-ac95-5075a5d2781e"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/6.0.1623.17311",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19045",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfVGVybV9kNzZjNGY1MQ==?api-version=2022-08-01&asyncResponse"
-        ],
-        "Retry-After": [
-          "60"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfVGVybV9kNzZjNGY1MQ==?api-version=2022-08-01&asyncResponse"
-        ],
-        "x-ms-request-id": [
-          "2ecfcfd8-a581-434b-955f-59882e3fbf85"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
-        ],
-        "x-ms-correlation-request-id": [
-          "2ecfcfd8-a581-434b-955f-59882e3fbf85"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20230425T083041Z:2ecfcfd8-a581-434b-955f-59882e3fbf85"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 Apr 2023 08:30:41 GMT"
-        ],
-        "Content-Length": [
-          "3274"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843\",\r\n  \"name\": \"sdktestapim7843\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"4/25/2023 8:08:26 AM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAsEvo=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"Deleting\",\r\n    \"createdAtUtc\": \"2023-04-25T08:08:30.7153219Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim7843.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim7843-centraluseuap-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim7843.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestapim7843.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim7843.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim7843.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim7843.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"20.46.24.145\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": [\r\n          \"20.1.10.189\"\r\n        ],\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": [\r\n          \"20.1.10.189\"\r\n        ],\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": \"https://sdktestapim7843-eastus2euap-01.regional.azure-api.net\",\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"stv2\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": true,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": [\r\n      \"20.1.10.189\"\r\n    ],\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"56306bdb-bb6e-485c-8d76-561254288ed4\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-04-25T08:08:29.3860243Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-04-25T08:25:39.1599086Z\"\r\n  }\r\n}",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfVGVybV9kNzZjNGY1MQ==?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mVkdWeWJWOWtOelpqTkdZMU1RPT0/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfVXBkYXRlXzRlMzYwNTQ2?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlZYQmtZWFJsWHpSbE16WXdOVFEyP2FwaS12ZXJzaW9uPTIwMjItMDgtMDEmYXN5bmNSZXNwb25zZQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1744,95 +1804,29 @@
         "Pragma": [
           "no-cache"
         ],
-        "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfVGVybV9kNzZjNGY1MQ==?api-version=2022-08-01&asyncResponse"
-        ],
-        "Retry-After": [
-          "60"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfVGVybV9kNzZjNGY1MQ==?api-version=2022-08-01&asyncResponse"
-        ],
         "x-ms-request-id": [
-          "b13230c4-c8b8-415f-9deb-e27649296ed9"
+          "bf6bcb01-a518-4aa1-b5d2-27f30a4d74c3"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11980"
         ],
         "x-ms-correlation-request-id": [
-          "b13230c4-c8b8-415f-9deb-e27649296ed9"
+          "bf6bcb01-a518-4aa1-b5d2-27f30a4d74c3"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20230425T083141Z:b13230c4-c8b8-415f-9deb-e27649296ed9"
+          "WESTCENTRALUS:20230719T180845Z:bf6bcb01-a518-4aa1-b5d2-27f30a4d74c3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:31:40 GMT"
-        ],
-        "Content-Length": [
-          "23"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfVGVybV9kNzZjNGY1MQ==?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mVkdWeWJWOWtOelpqTkdZMU1RPT0/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/6.0.1623.17311",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19045",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "8403b56c-13ac-463d-bbbe-e31db905968c"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
-        ],
-        "x-ms-correlation-request-id": [
-          "8403b56c-13ac-463d-bbbe-e31db905968c"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20230425T083242Z:8403b56c-13ac-463d-bbbe-e31db905968c"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 25 Apr 2023 08:32:41 GMT"
+          "Wed, 19 Jul 2023 18:08:44 GMT"
         ],
         "Content-Length": [
           "22"
@@ -1848,13 +1842,151 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg590/providers/Microsoft.ApiManagement/service/sdktestapim7843/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTc4NDNfVGVybV9kNzZjNGY1MQ==?api-version=2022-08-01&asyncResponse",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzU5MC9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0YXBpbTc4NDMvb3BlcmF0aW9ucmVzdWx0cy9ZMlZ1ZEhKaGJIVnpaWFZoY0RwelpHdDBaWE4wWVhCcGJUYzRORE5mVkdWeWJWOWtOelpqTkdZMU1RPT0/YXBpLXZlcnNpb249MjAyMi0wOC0wMSZhc3luY1Jlc3BvbnNl",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwP2FwaS12ZXJzaW9uPTIwMjItMDgtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "72c9f956-bd7a-4d74-94b6-c3ead3aed2b7"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/6.0.2023.32017",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfVGVybV8zODc3YmY0Mw==?api-version=2022-08-01&asyncResponse"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfVGVybV8zODc3YmY0Mw==?api-version=2022-08-01&asyncResponse"
+        ],
+        "x-ms-request-id": [
+          "0bf27713-bae1-4511-8d95-ae801bbdae4e"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "23999"
+        ],
+        "x-ms-correlation-request-id": [
+          "0bf27713-bae1-4511-8d95-ae801bbdae4e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20230719T180845Z:0bf27713-bae1-4511-8d95-ae801bbdae4e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 19 Jul 2023 18:08:45 GMT"
+        ],
+        "Content-Length": [
+          "3273"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340\",\r\n  \"name\": \"sdktestapim5340\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 5:48:34 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"location\": \"Central US EUAP\",\r\n  \"etag\": \"AAAAAAAwV5U=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Deleting\",\r\n    \"targetProvisioningState\": \"Deleting\",\r\n    \"createdAtUtc\": \"2023-07-19T17:48:36.7540812Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim5340.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim5340-centraluseuap-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim5340.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestapim5340.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim5340.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim5340.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestapim5340.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"20.112.132.215\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": [\r\n      {\r\n        \"location\": \"East US 2 EUAP\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"capacity\": 1\r\n        },\r\n        \"zones\": null,\r\n        \"publicIPAddresses\": [\r\n          \"20.39.1.41\"\r\n        ],\r\n        \"privateIPAddresses\": null,\r\n        \"outboundPublicIPAddresses\": [\r\n          \"20.39.1.41\"\r\n        ],\r\n        \"virtualNetworkConfiguration\": null,\r\n        \"gatewayRegionalUrl\": \"https://sdktestapim5340-eastus2euap-01.regional.azure-api.net\",\r\n        \"disableGateway\": false,\r\n        \"publicIpAddressId\": null,\r\n        \"platformVersion\": \"stv2\"\r\n      }\r\n    ],\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null,\r\n    \"disableGateway\": true,\r\n    \"natGatewayState\": \"Disabled\",\r\n    \"outboundPublicIPAddresses\": [\r\n      \"20.39.1.41\"\r\n    ],\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"f06ecf11-3a04-400c-8e08-4fdd4a06f912\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": {\r\n    \"createdBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-07-19T17:48:35.7732154Z\",\r\n    \"lastModifiedBy\": \"c01e8df8-1cb8-47a9-9931-887b594b1332\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-07-19T18:07:44.5376085Z\"\r\n  }\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfVGVybV8zODc3YmY0Mw==?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlZHVnliVjh6T0RjM1ltWTBNdz09P2FwaS12ZXJzaW9uPTIwMjItMDgtMDEmYXN5bmNSZXNwb25zZQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1623.17311",
+          "FxVersion/6.0.2023.32017",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfVGVybV8zODc3YmY0Mw==?api-version=2022-08-01&asyncResponse"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfVGVybV8zODc3YmY0Mw==?api-version=2022-08-01&asyncResponse"
+        ],
+        "x-ms-request-id": [
+          "5148e154-296e-4bf6-bb4a-c30a0bc119d4"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11979"
+        ],
+        "x-ms-correlation-request-id": [
+          "5148e154-296e-4bf6-bb4a-c30a0bc119d4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20230719T180946Z:5148e154-296e-4bf6-bb4a-c30a0bc119d4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 19 Jul 2023 18:09:46 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfVGVybV8zODc3YmY0Mw==?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlZHVnliVjh6T0RjM1ltWTBNdz09P2FwaS12ZXJzaW9uPTIwMjItMDgtMDEmYXN5bmNSZXNwb25zZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
@@ -1871,25 +2003,82 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "68080d7f-b65c-473b-b15a-7c39c126721d"
+          "b4bb2121-e72e-448a-ad92-ebae5a205468"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11978"
         ],
         "x-ms-correlation-request-id": [
-          "68080d7f-b65c-473b-b15a-7c39c126721d"
+          "b4bb2121-e72e-448a-ad92-ebae5a205468"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20230425T083242Z:68080d7f-b65c-473b-b15a-7c39c126721d"
+          "WESTCENTRALUS:20230719T181046Z:b4bb2121-e72e-448a-ad92-ebae5a205468"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 25 Apr 2023 08:32:41 GMT"
+          "Wed, 19 Jul 2023 18:10:45 GMT"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340/operationresults/Y2VudHJhbHVzZXVhcDpzZGt0ZXN0YXBpbTUzNDBfVGVybV8zODc3YmY0Mw==?api-version=2022-08-01&asyncResponse",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzQ4MzYvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW01MzQwL29wZXJhdGlvbnJlc3VsdHMvWTJWdWRISmhiSFZ6WlhWaGNEcHpaR3QwWlhOMFlYQnBiVFV6TkRCZlZHVnliVjh6T0RjM1ltWTBNdz09P2FwaS12ZXJzaW9uPTIwMjItMDgtMDEmYXN5bmNSZXNwb25zZQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/6.0.2023.32017",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "63836ef3-a44d-4932-8dfe-25e48096302e"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11977"
+        ],
+        "x-ms-correlation-request-id": [
+          "63836ef3-a44d-4932-8dfe-25e48096302e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20230719T181046Z:63836ef3-a44d-4932-8dfe-25e48096302e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 19 Jul 2023 18:10:45 GMT"
         ],
         "Content-Length": [
           "22"
@@ -1907,8 +2096,8 @@
   ],
   "Names": {
     "Initialize": [
-      "sdktestapim7843",
-      "sdktestrg590"
+      "sdktestapim5340",
+      "sdktestrg4836"
     ]
   },
   "Variables": {
@@ -1920,8 +2109,8 @@
     "TestBackupUserMsiResourceId": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/net-sdk-backup-restore/providers/Microsoft.ManagedIdentity/userAssignedIdentities/apim-backup-restore-msi",
     "Environment": "Prod",
     "SubId": "4f5285a3-9fd7-40ad-91b1-d8fc3823983d",
-    "ServiceName": "sdktestapim7843",
+    "ServiceName": "sdktestapim5340",
     "Location": "centraluseuap",
-    "ResourceGroup": "sdktestrg590"
+    "ResourceGroup": "sdktestrg4836"
   }
 }

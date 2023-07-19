@@ -1,28 +1,88 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourcegroups/sdktestrg2373?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzIzNzM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourcegroups/sdktestrg4237?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzQyMzc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "HEAD",
+      "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b495d543-5003-4521-a138-58bf53f4502f"
+          "a818afde-b1b4-4033-9272-b850a05ee7f1"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/6.0.1523.11507",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "aa022882-bcb9-4454-b2a4-7b054dc4ef77"
+        ],
+        "x-ms-correlation-request-id": [
+          "aa022882-bcb9-4454-b2a4-7b054dc4ef77"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20230719T214719Z:aa022882-bcb9-4454-b2a4-7b054dc4ef77"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 19 Jul 2023 21:47:19 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourcegroups/sdktestrg4237?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlZ3JvdXBzL3Nka3Rlc3RyZzQyMzc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 9:47:19 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "76ff911b-1621-459c-ad91-4be363ee6cae"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/6.0.2023.32017",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "29"
+          "130"
         ]
       },
       "ResponseHeaders": {
@@ -36,13 +96,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "c9771037-8fe5-40a0-b7ba-6ede67f31182"
+          "d23b3ed4-e987-4e59-959b-4a5b88e025c9"
         ],
         "x-ms-correlation-request-id": [
-          "c9771037-8fe5-40a0-b7ba-6ede67f31182"
+          "d23b3ed4-e987-4e59-959b-4a5b88e025c9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230324T233459Z:c9771037-8fe5-40a0-b7ba-6ede67f31182"
+          "WESTUS:20230719T214720Z:d23b3ed4-e987-4e59-959b-4a5b88e025c9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,10 +111,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 24 Mar 2023 23:34:59 GMT"
+          "Wed, 19 Jul 2023 21:47:20 GMT"
         ],
         "Content-Length": [
-          "180"
+          "258"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,7 +123,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg2373\",\r\n  \"name\": \"sdktestrg2373\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4237\",\r\n  \"name\": \"sdktestrg4237\",\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"DateCreated\": \"7/19/2023 9:47:19 PM\",\r\n    \"apiversion\": \"2022-08-01\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -73,15 +133,15 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "48a80870-8189-43ac-843f-fdfa2a40e89c"
+          "3c9bdd37-fa82-40be-b1ea-f89ef069a120"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/6.0.1523.11507",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22621",
+          "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
         ]
       },
@@ -93,59 +153,60 @@
           "no-cache"
         ],
         "x-ms-original-request-ids": [
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
           "",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0",
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0"
+          "",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842",
+          "2487e765-d7e1-41c9-9959-7d57ab05a842"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-request-id": [
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0"
+          "2487e765-d7e1-41c9-9959-7d57ab05a842"
         ],
         "x-ms-correlation-request-id": [
-          "cea551ee-881d-4de3-9030-73e2ee2d46d0"
+          "2487e765-d7e1-41c9-9959-7d57ab05a842"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230324T233501Z:cea551ee-881d-4de3-9030-73e2ee2d46d0"
+          "WESTUS:20230719T214722Z:2487e765-d7e1-41c9-9959-7d57ab05a842"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -154,7 +215,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 24 Mar 2023 23:35:00 GMT"
+          "Wed, 19 Jul 2023 21:47:22 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -163,28 +224,28 @@
           "-1"
         ],
         "Content-Length": [
-          "1457"
+          "5657"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/westus/deletedservices/sdktestapim5039\",\r\n      \"name\": \"sdktestapim5039\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg6725/providers/Microsoft.ApiManagement/service/sdktestapim5039\",\r\n        \"scheduledPurgeDate\": \"2023-03-26T23:17:14.8264076Z\",\r\n        \"deletionDate\": \"2023-03-24T23:17:50.0078689Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/westus2/deletedservices/sdktestapim4719\",\r\n      \"name\": \"sdktestapim4719\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"West US 2\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4885/providers/Microsoft.ApiManagement/service/sdktestapim4719\",\r\n        \"scheduledPurgeDate\": \"2023-03-26T23:18:14.300397Z\",\r\n        \"deletionDate\": \"2023-03-24T23:20:07.7589407Z\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/deletedservices?api-version=2022-08-01&%24skiptoken=PY5BDoIwFAXv0rWlUCAWEmO6cCeJET1AbT%2fYKG3TX4jReHdZuX8z8z7EwSsdrXsgaT%2fkIPvLteeHqzyRltxTCtgyNimnRpjApUy95wiZ9hPD%2bYY62pCsd8iqoeaiViVtBrOlVa4MbYpbQY0YdCl42YjSsBD9Yg1EZJ3V0aMfUiaD7f56ZuAJCQxCXKwG3Ktg6bICa2PHc85pLmhekO%2bGqDjJcYwwqnV%2f8Q9w62F57sj3Bw%3d%3d\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/westus/deletedservices/sdktestapim1486\",\r\n      \"name\": \"sdktestapim1486\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg9682/providers/Microsoft.ApiManagement/service/sdktestapim1486\",\r\n        \"scheduledPurgeDate\": \"2023-07-21T07:28:34.8294043Z\",\r\n        \"deletionDate\": \"2023-07-19T07:29:12.527149Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim1302\",\r\n      \"name\": \"sdktestapim1302\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg922/providers/Microsoft.ApiManagement/service/sdktestapim1302\",\r\n        \"scheduledPurgeDate\": \"2023-07-21T17:48:41.472832Z\",\r\n        \"deletionDate\": \"2023-07-19T17:50:32.3276983Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim8408\",\r\n      \"name\": \"sdktestapim8408\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg3249/providers/Microsoft.ApiManagement/service/sdktestapim8408\",\r\n        \"scheduledPurgeDate\": \"2023-07-21T09:03:57.2309709Z\",\r\n        \"deletionDate\": \"2023-07-19T09:05:48.4701866Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim2337\",\r\n      \"name\": \"sdktestapim2337\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg9900/providers/Microsoft.ApiManagement/service/sdktestapim2337\",\r\n        \"scheduledPurgeDate\": \"2023-07-20T21:23:37.0345713Z\",\r\n        \"deletionDate\": \"2023-07-18T21:28:43.9917581Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim4189\",\r\n      \"name\": \"sdktestapim4189\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4864/providers/Microsoft.ApiManagement/service/sdktestapim4189\",\r\n        \"scheduledPurgeDate\": \"2023-07-21T08:14:06.1708335Z\",\r\n        \"deletionDate\": \"2023-07-19T08:15:56.2448841Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim6631\",\r\n      \"name\": \"sdktestapim6631\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg5346/providers/Microsoft.ApiManagement/service/sdktestapim6631\",\r\n        \"scheduledPurgeDate\": \"2023-07-21T08:39:41.8686771Z\",\r\n        \"deletionDate\": \"2023-07-19T08:41:33.8327294Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim9669\",\r\n      \"name\": \"sdktestapim9669\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg496/providers/Microsoft.ApiManagement/service/sdktestapim9669\",\r\n        \"scheduledPurgeDate\": \"2023-07-21T20:43:09.095806Z\",\r\n        \"deletionDate\": \"2023-07-19T20:44:59.4254247Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim5340\",\r\n      \"name\": \"sdktestapim5340\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg4836/providers/Microsoft.ApiManagement/service/sdktestapim5340\",\r\n        \"scheduledPurgeDate\": \"2023-07-21T18:08:45.9003288Z\",\r\n        \"deletionDate\": \"2023-07-19T18:10:36.8606096Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim4992\",\r\n      \"name\": \"sdktestapim4992\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg5057/providers/Microsoft.ApiManagement/service/sdktestapim4992\",\r\n        \"scheduledPurgeDate\": \"2023-07-21T06:33:58.8526812Z\",\r\n        \"deletionDate\": \"2023-07-19T06:35:50.6966726Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/centraluseuap/deletedservices/sdktestapim5242\",\r\n      \"name\": \"sdktestapim5242\",\r\n      \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n      \"location\": \"Central US EUAP\",\r\n      \"properties\": {\r\n        \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg2493/providers/Microsoft.ApiManagement/service/sdktestapim5242\",\r\n        \"scheduledPurgeDate\": \"2023-07-21T06:12:53.6971804Z\",\r\n        \"deletionDate\": \"2023-07-19T06:14:43.9456231Z\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/deletedservices?api-version=2022-08-01&%24skiptoken=zY9RjsIgFEX38r6ltFQjbWImZKZ%2frRqtC0B47RCnQACbyRj3Pv1yDS7gnnPuAyz%2bptbYW4T6AcdDK%2fZfn82%2bP4kWavhOycea0klaOeKENmXy7x4wU26i8X6NKhifjLORrocN4xtZkmrQW7LOpSZVcS2I5oMqOSsrXmrqg5uNxhBpZ1Rw0Q0pE950LzzV%2bIMJdcQwG4XxQ3pD5mWwOHYsZ4zknOQFrKAR5%2f5yZs1FHN859LkCGSYxjgFHuRzr3Q3tEixOHTz%2fAQ%3d%3d\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim5039?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvV2VzdCUyMFVTL2RlbGV0ZWRzZXJ2aWNlcy9zZGt0ZXN0YXBpbTUwMzk/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim1486?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvV2VzdCUyMFVTL2RlbGV0ZWRzZXJ2aWNlcy9zZGt0ZXN0YXBpbTE0ODY/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e14027e2-a935-4a8c-9362-c40ed2df0a8c"
+          "2faee8c0-7ae3-49a0-8033-24d39d1edd7a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/6.0.1523.11507",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22621",
+          "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
         ]
       },
@@ -199,7 +260,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "6b5d6525-6377-416b-a90c-d6af19777810"
+          "49891686-4078-463c-9f6f-ad400c61f5ac"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -208,19 +269,19 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "6b5d6525-6377-416b-a90c-d6af19777810"
+          "49891686-4078-463c-9f6f-ad400c61f5ac"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230324T233501Z:6b5d6525-6377-416b-a90c-d6af19777810"
+          "WESTUS:20230719T214752Z:49891686-4078-463c-9f6f-ad400c61f5ac"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 24 Mar 2023 23:35:00 GMT"
+          "Wed, 19 Jul 2023 21:47:51 GMT"
         ],
         "Content-Length": [
-          "504"
+          "503"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -229,25 +290,25 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/westus/deletedservices/sdktestapim5039\",\r\n  \"name\": \"sdktestapim5039\",\r\n  \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg6725/providers/Microsoft.ApiManagement/service/sdktestapim5039\",\r\n    \"scheduledPurgeDate\": \"2023-03-26T23:17:14.8264076Z\",\r\n    \"deletionDate\": \"2023-03-24T23:17:50.0078689Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/westus/deletedservices/sdktestapim1486\",\r\n  \"name\": \"sdktestapim1486\",\r\n  \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg9682/providers/Microsoft.ApiManagement/service/sdktestapim1486\",\r\n    \"scheduledPurgeDate\": \"2023-07-21T07:28:34.8294043Z\",\r\n    \"deletionDate\": \"2023-07-19T07:29:12.527149Z\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim5039?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvV2VzdCUyMFVTL2RlbGV0ZWRzZXJ2aWNlcy9zZGt0ZXN0YXBpbTUwMzk/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim1486?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvV2VzdCUyMFVTL2RlbGV0ZWRzZXJ2aWNlcy9zZGt0ZXN0YXBpbTE0ODY/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6c232ae2-bfee-4898-9ca1-b049b9f00da4"
+          "2608d3d3-1942-4db1-bb90-81a572f2cca6"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/6.0.1523.11507",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22621",
+          "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
         ]
       },
@@ -268,19 +329,19 @@
           "11995"
         ],
         "x-ms-request-id": [
-          "43df7ba3-8c8e-42f4-939b-ecafb4ff21c4"
+          "98cf833a-6b25-4517-b1d4-4f0b26fcbb94"
         ],
         "x-ms-correlation-request-id": [
-          "43df7ba3-8c8e-42f4-939b-ecafb4ff21c4"
+          "98cf833a-6b25-4517-b1d4-4f0b26fcbb94"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230324T233623Z:43df7ba3-8c8e-42f4-939b-ecafb4ff21c4"
+          "WESTUS:20230719T214924Z:98cf833a-6b25-4517-b1d4-4f0b26fcbb94"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 24 Mar 2023 23:36:22 GMT"
+          "Wed, 19 Jul 2023 21:49:24 GMT"
         ],
         "Content-Length": [
           "125"
@@ -292,25 +353,25 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ServiceNotFound\",\r\n    \"message\": \"Api service does not exist: sdktestapim5039\",\r\n    \"details\": null,\r\n    \"innerError\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ServiceNotFound\",\r\n    \"message\": \"Api service does not exist: sdktestapim1486\",\r\n    \"details\": null,\r\n    \"innerError\": null\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim5039?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvV2VzdCUyMFVTL2RlbGV0ZWRzZXJ2aWNlcy9zZGt0ZXN0YXBpbTUwMzk/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim1486?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvV2VzdCUyMFVTL2RlbGV0ZWRzZXJ2aWNlcy9zZGt0ZXN0YXBpbTE0ODY/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e11f049b-a544-48b1-b7c5-5707a9f2e563"
+          "78557a8b-0b23-45a7-8127-b08b93c6701e"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/6.0.1523.11507",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22621",
+          "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
         ]
       },
@@ -322,7 +383,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim5039/operationresults/d2VzdHVzOnNka3Rlc3RhcGltNTAzOV9UZXJtXzVmMmM5NmI4?api-version=2022-08-01"
+          "https://management.azure.com/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim1486/operationresults/d2VzdHVzOnNka3Rlc3RhcGltMTQ4Nl9UZXJtX2I0YTViMDhi?api-version=2022-08-01"
         ],
         "Retry-After": [
           "60"
@@ -331,7 +392,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f67bbaaa-ae00-416a-91c9-34c0a56b45e8"
+          "2ca9d958-316e-4db5-8b1f-5d018cc45c9b"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -340,19 +401,19 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "f67bbaaa-ae00-416a-91c9-34c0a56b45e8"
+          "2ca9d958-316e-4db5-8b1f-5d018cc45c9b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230324T233523Z:f67bbaaa-ae00-416a-91c9-34c0a56b45e8"
+          "WESTUS:20230719T214820Z:2ca9d958-316e-4db5-8b1f-5d018cc45c9b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 24 Mar 2023 23:35:22 GMT"
+          "Wed, 19 Jul 2023 21:48:19 GMT"
         ],
         "Content-Length": [
-          "504"
+          "503"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -361,19 +422,19 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/westus/deletedservices/sdktestapim5039\",\r\n  \"name\": \"sdktestapim5039\",\r\n  \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg6725/providers/Microsoft.ApiManagement/service/sdktestapim5039\",\r\n    \"scheduledPurgeDate\": \"2023-03-24T23:35:01.3287304Z\",\r\n    \"deletionDate\": \"2023-03-24T23:17:50.0078689Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/westus/deletedservices/sdktestapim1486\",\r\n  \"name\": \"sdktestapim1486\",\r\n  \"type\": \"Microsoft.ApiManagement/deletedservices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"serviceId\": \"/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg9682/providers/Microsoft.ApiManagement/service/sdktestapim1486\",\r\n    \"scheduledPurgeDate\": \"2023-07-19T21:47:58.6581565Z\",\r\n    \"deletionDate\": \"2023-07-19T07:29:12.527149Z\"\r\n  }\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim5039/operationresults/d2VzdHVzOnNka3Rlc3RhcGltNTAzOV9UZXJtXzVmMmM5NmI4?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvV2VzdCUyMFVTL2RlbGV0ZWRzZXJ2aWNlcy9zZGt0ZXN0YXBpbTUwMzkvb3BlcmF0aW9ucmVzdWx0cy9kMlZ6ZEhWek9uTmthM1JsYzNSaGNHbHROVEF6T1Y5VVpYSnRYelZtTW1NNU5tSTQ/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim1486/operationresults/d2VzdHVzOnNka3Rlc3RhcGltMTQ4Nl9UZXJtX2I0YTViMDhi?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvV2VzdCUyMFVTL2RlbGV0ZWRzZXJ2aWNlcy9zZGt0ZXN0YXBpbTE0ODYvb3BlcmF0aW9ucmVzdWx0cy9kMlZ6ZEhWek9uTmthM1JsYzNSaGNHbHRNVFE0Tmw5VVpYSnRYMkkwWVRWaU1EaGk/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1523.11507",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22621",
+          "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
         ]
       },
@@ -388,7 +449,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "94aafadb-b537-4504-a920-4da76f1b07a0"
+          "87b82900-ef11-4d04-898e-6ae264fd4d1c"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -397,16 +458,16 @@
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "94aafadb-b537-4504-a920-4da76f1b07a0"
+          "87b82900-ef11-4d04-898e-6ae264fd4d1c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230324T233623Z:94aafadb-b537-4504-a920-4da76f1b07a0"
+          "WESTUS:20230719T214920Z:87b82900-ef11-4d04-898e-6ae264fd4d1c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 24 Mar 2023 23:36:22 GMT"
+          "Wed, 19 Jul 2023 21:49:20 GMT"
         ],
         "Expires": [
           "-1"
@@ -419,15 +480,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim5039/operationresults/d2VzdHVzOnNka3Rlc3RhcGltNTAzOV9UZXJtXzVmMmM5NmI4?api-version=2022-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvV2VzdCUyMFVTL2RlbGV0ZWRzZXJ2aWNlcy9zZGt0ZXN0YXBpbTUwMzkvb3BlcmF0aW9ucmVzdWx0cy9kMlZ6ZEhWek9uTmthM1JsYzNSaGNHbHROVEF6T1Y5VVpYSnRYelZtTW1NNU5tSTQ/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/providers/Microsoft.ApiManagement/locations/West%20US/deletedservices/sdktestapim1486/operationresults/d2VzdHVzOnNka3Rlc3RhcGltMTQ4Nl9UZXJtX2I0YTViMDhi?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpTWFuYWdlbWVudC9sb2NhdGlvbnMvV2VzdCUyMFVTL2RlbGV0ZWRzZXJ2aWNlcy9zZGt0ZXN0YXBpbTE0ODYvb3BlcmF0aW9ucmVzdWx0cy9kMlZ6ZEhWek9uTmthM1JsYzNSaGNHbHRNVFE0Tmw5VVpYSnRYMkkwWVRWaU1EaGk/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/6.0.1523.11507",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22621",
+          "OSVersion/Microsoft.Windows.10.0.19045",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/9.0.0.0"
         ]
       },
@@ -442,7 +503,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "afe18e6d-373b-4b98-8e16-fc04bc68331f"
+          "ab72fd39-c4f0-4f0a-a29c-ec6ae7536f39"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -451,16 +512,16 @@
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "afe18e6d-373b-4b98-8e16-fc04bc68331f"
+          "ab72fd39-c4f0-4f0a-a29c-ec6ae7536f39"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20230324T233623Z:afe18e6d-373b-4b98-8e16-fc04bc68331f"
+          "WESTUS:20230719T214921Z:ab72fd39-c4f0-4f0a-a29c-ec6ae7536f39"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 24 Mar 2023 23:36:22 GMT"
+          "Wed, 19 Jul 2023 21:49:20 GMT"
         ],
         "Expires": [
           "-1"
@@ -475,8 +536,8 @@
   ],
   "Names": {
     "Initialize": [
-      "sdktestapim3585",
-      "sdktestrg2373"
+      "sdktestapim8287",
+      "sdktestrg4237"
     ]
   },
   "Variables": {
@@ -486,9 +547,10 @@
     "TestBackupStorageAccount": "apimbackupmsi",
     "TestBackupUserMsiClientId": "a6270d0c-7d86-478b-8cbe-dc9047ba54f7",
     "TestBackupUserMsiResourceId": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/net-sdk-backup-restore/providers/Microsoft.ManagedIdentity/userAssignedIdentities/apim-backup-restore-msi",
+    "Environment": "Prod",
     "SubId": "4f5285a3-9fd7-40ad-91b1-d8fc3823983d",
-    "ServiceName": "sdktestapim3585",
-    "Location": "westus2",
-    "ResourceGroup": "sdktestrg2373"
+    "ServiceName": "sdktestapim8287",
+    "Location": "centraluseuap",
+    "ResourceGroup": "sdktestrg4237"
   }
 }
