@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators
 {
     /// <summary>Validator to ensure that a type value is enumerable and contains at least one item.</summary>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property)]
     internal class OneOrMoreRequiredAttribute : ValidationAttribute
     {
         /// <summary>Initializes a new instance of the <see cref="OneOrMoreRequiredAttribute" /> class.</summary>

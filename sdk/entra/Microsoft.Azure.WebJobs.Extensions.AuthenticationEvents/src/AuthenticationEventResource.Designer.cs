@@ -269,6 +269,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actions can not contain null items.
+        /// </summary>
+        internal static string Ex_Null_Action_Items {
+            get {
+                return ResourceManager.GetString("Ex_Null_Action_Items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No associated open api document found for version..
         /// </summary>
         internal static string Ex_OpenApi_Missing {
