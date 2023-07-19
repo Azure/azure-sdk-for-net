@@ -7,13 +7,11 @@
 
 using System;
 using System.Globalization;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetTenantResource method.
     /// </summary>
-    public partial class TenantResource : ArmResource, ResourceManager.IResource, IJsonModelSerializable
+    public partial class TenantResource : ArmResource, ResourceManager.IResource
     {
         private readonly ClientDiagnostics _tenantClientDiagnostics;
         private readonly TenantsRestOperations _tenantRestClient;
@@ -461,10 +459,5 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => ModelSerializer.Deserialize<TenantData>(data, options);
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => throw new NotImplementedException();
     }
 }

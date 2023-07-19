@@ -9,11 +9,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Serialization;
-using System.Runtime.CompilerServices;
 
 namespace Azure.ResourceManager
 {
-    internal class GenericOperationSource<T> : IOperationSource<T> where T: class, IModelSerializable
+    internal class GenericOperationSource<T> : IOperationSource<T>
     {
         T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
             => CreateResult(response);
@@ -24,11 +23,12 @@ namespace Azure.ResourceManager
         private static T CreateResult(Response response)
         {
             MemoryStream memoryStream = response.ContentStream as MemoryStream;
+            var model = Activator.CreateInstance(typeof(T), true) as IModelSerializable;
             if (memoryStream == null)
             {
-                return ModelSerializer.Deserialize<T>(BinaryData.FromStream(response.ContentStream));
+                return (T)model!.Deserialize(BinaryData.FromStream(response.ContentStream), new ModelSerializerOptions());
             }
-            return ModelSerializer.Deserialize<T>(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)));
+            return (T)model!.Deserialize(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)), new ModelSerializerOptions());
         }
     }
 }

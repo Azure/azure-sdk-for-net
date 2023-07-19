@@ -6,7 +6,6 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,7 +13,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager
 {
-    internal class GenericResourceOperationSource<T> : IOperationSource<T> where T: class, IModelSerializable
+    internal class GenericResourceOperationSource<T> : IOperationSource<T>
     {
         private readonly ArmClient _client;
 
@@ -33,14 +32,15 @@ namespace Azure.ResourceManager
         {
             object data;
             Type dataType = typeof(T).GetProperty("Data").PropertyType;
+            var model = Activator.CreateInstance(dataType, true) as IModelSerializable;
             MemoryStream memoryStream = response.ContentStream as MemoryStream;
             if (memoryStream == null)
             {
-                data = ModelSerializer.Deserialize(BinaryData.FromStream(memoryStream), dataType, new ModelSerializerOptions());
+                data = model!.Deserialize(BinaryData.FromStream(memoryStream), new ModelSerializerOptions());
             }
             else
             {
-                data = ModelSerializer.Deserialize(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)), dataType, new ModelSerializerOptions());
+                data = model!.Deserialize(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)), new ModelSerializerOptions());
             }
             return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null);
         }

@@ -7,13 +7,11 @@
 
 using System;
 using System.Globalization;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetManagementLockResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetManagementLock method.
     /// </summary>
-    public partial class ManagementLockResource : ArmResource, ResourceManager.IResource, IJsonModelSerializable
+    public partial class ManagementLockResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementLockResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string lockName)
@@ -303,10 +301,5 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => ModelSerializer.Deserialize<ManagementLockData>(data, options);
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => throw new NotImplementedException();
     }
 }
