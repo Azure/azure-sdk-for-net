@@ -8,19 +8,18 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    internal partial class ElasticSanVolumeList
+    internal partial class ElasticSanPrivateLinkResourceListResult
     {
-        internal static ElasticSanVolumeList DeserializeElasticSanVolumeList(JsonElement element)
+        internal static ElasticSanPrivateLinkResourceListResult DeserializeElasticSanPrivateLinkResourceListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ElasticSanVolumeData>> value = default;
+            Optional<IReadOnlyList<ElasticSanPrivateLinkResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    List<ElasticSanVolumeData> array = new List<ElasticSanVolumeData>();
+                    List<ElasticSanPrivateLinkResource> array = new List<ElasticSanPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanVolumeData.DeserializeElasticSanVolumeData(item));
+                        array.Add(ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new ElasticSanVolumeList(Optional.ToList(value), nextLink.Value);
+            return new ElasticSanPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

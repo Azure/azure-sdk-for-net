@@ -12,15 +12,15 @@ using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    internal partial class ElasticSanVolumeList
+    internal partial class ElasticSanPrivateEndpointConnectionListResult
     {
-        internal static ElasticSanVolumeList DeserializeElasticSanVolumeList(JsonElement element)
+        internal static ElasticSanPrivateEndpointConnectionListResult DeserializeElasticSanPrivateEndpointConnectionListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ElasticSanVolumeData>> value = default;
+            Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    List<ElasticSanVolumeData> array = new List<ElasticSanVolumeData>();
+                    List<ElasticSanPrivateEndpointConnectionData> array = new List<ElasticSanPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanVolumeData.DeserializeElasticSanVolumeData(item));
+                        array.Add(ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new ElasticSanVolumeList(Optional.ToList(value), nextLink.Value);
+            return new ElasticSanPrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

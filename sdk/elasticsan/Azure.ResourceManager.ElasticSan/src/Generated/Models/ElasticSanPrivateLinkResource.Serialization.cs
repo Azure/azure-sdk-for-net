@@ -5,33 +5,35 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ElasticSan
+namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanVolumeData : IUtf8JsonSerializable
+    public partial class ElasticSanPrivateLinkResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreationData))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
-                writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                writer.WritePropertyName("requiredZoneNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in RequiredZoneNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WritePropertyName("sizeGiB"u8);
-            writer.WriteNumberValue(SizeGiB);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static ElasticSanVolumeData DeserializeElasticSanVolumeData(JsonElement element)
+        internal static ElasticSanPrivateLinkResource DeserializeElasticSanPrivateLinkResource(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -41,10 +43,9 @@ namespace Azure.ResourceManager.ElasticSan
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<Guid> volumeId = default;
-            Optional<ElasticSanVolumeDataSourceInfo> creationData = default;
-            long sizeGiB = default;
-            Optional<IscsiTargetInfo> storageTarget = default;
+            Optional<string> groupId = default;
+            Optional<IReadOnlyList<string>> requiredMembers = default;
+            Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -80,43 +81,44 @@ namespace Azure.ResourceManager.ElasticSan
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("volumeId"u8))
+                        if (property0.NameEquals("groupId"u8))
+                        {
+                            groupId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("requiredMembers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            volumeId = property0.Value.GetGuid();
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            requiredMembers = array;
                             continue;
                         }
-                        if (property0.NameEquals("creationData"u8))
+                        if (property0.NameEquals("requiredZoneNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("sizeGiB"u8))
-                        {
-                            sizeGiB = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageTarget"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
                             {
-                                continue;
+                                array.Add(item.GetString());
                             }
-                            storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value);
+                            requiredZoneNames = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToNullable(volumeId), creationData.Value, sizeGiB, storageTarget.Value);
+            return new ElasticSanPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }
