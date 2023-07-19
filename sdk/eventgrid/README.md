@@ -18,8 +18,6 @@ Use the following packages to publish and consume events from Event Grid:
 
 ### `Microsoft.Azure.EventGrid`
 
-The source code for the previous generation client library, `Microsoft.Azure.EventGrid` is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Microsoft.Azure.EventGrid).
-
 Use the following legacy packages to publish and consume events from Event Grid:
 
 | Nuget Package | Reference | Samples |

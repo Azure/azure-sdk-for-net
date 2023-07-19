@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview",
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-4-0613/chat/completions?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
-        "Content-Length": "276",
+        "Content-Length": "259",
         "Content-Type": "application/json",
-        "traceparent": "00-42823de3a2c644e45be266b4d0464609-f6e513a38ea30ef1-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "af29fa1dbc0870df50c26e7cd3828e3e",
+        "traceparent": "00-480348b66406b3f134cf6cc0a2f39f6c-1800028c5666d5ee-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230713.1 (.NET 6.0.20; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "aa4c3cd354b87ace949bd62d89c24410",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,56 +31,98 @@
             "role": "user",
             "content": "What temperature should I bake pizza at?"
           }
-        ],
-        "max_tokens": 512
+        ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "2a3932b4-1c98-4422-9ead-5b4f662c926f",
+        "apim-request-id": "1158b315-e815-438f-a309-e0d43215be10",
+        "azureml-model-group": "online",
+        "azureml-model-session": "dep-1",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "571",
+        "Content-Length": "1040",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:43:25 GMT",
-        "openai-model": "gpt-35-turbo",
-        "openai-processing-ms": "1459.2519",
+        "Date": "Thu, 13 Jul 2023 17:11:18 GMT",
+        "openai-model": "gpt-4",
+        "openai-processing-ms": "2857.5047",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "af29fa1dbc0870df50c26e7cd3828e3e",
+        "x-ms-client-request-id": "aa4c3cd354b87ace949bd62d89c24410",
         "x-ms-region": "East US",
-        "X-Request-ID": "afedf869-55e2-49de-be14-2e43021e6d4b"
+        "X-Request-ID": "401d337a-2638-46df-9698-9b6d2bb8b2ca"
       },
       "ResponseBody": {
-        "id": "chatcmpl-6wKNvHTG53UWMPwJDQaxTru3yfYNy",
+        "id": "chatcmpl-7bu8SiMtpWe05qgmuzlO6KvNMc8Vl",
         "object": "chat.completion",
-        "created": 1679359403,
-        "model": "gpt-35-turbo",
-        "usage": {
-          "prompt_tokens": 51,
-          "completion_tokens": 58,
-          "total_tokens": 109
-        },
+        "created": 1689268276,
+        "model": "gpt-4",
+        "prompt_annotations": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
         "choices": [
           {
+            "index": 0,
+            "finish_reason": "stop",
             "message": {
               "role": "assistant",
-              "content": "The recommended temperature for baking pizza is 425-450 degrees Fahrenheit (218-232 degrees Celsius). However, the exact temperature and baking time may vary depending on the type of pizza and the thickness of the crust. Be sure to follow the instructions on your pizza recipe or packaging."
+              "content": "The ideal temperature for baking pizza is usually around 475-500 degrees Fahrenheit (245-260 degrees Celsius). However, the exact temperature may vary based on your exact recipe specifics and personal preferences. Be sure to closely monitor your pizza while it\u0027s baking to ensure optimal results."
             },
-            "finish_reason": "stop",
-            "index": 0
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
           }
-        ]
+        ],
+        "usage": {
+          "completion_tokens": 55,
+          "prompt_tokens": 48,
+          "total_tokens": 103
+        }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
-    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
-    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "CHAT_COMPLETIONS_DEPLOYMENT_NAME": "gpt-4",
+    "COMPLETIONS_DEPLOYMENT_NAME": "text-davinci-002",
+    "EMBEDDINGS_DEPLOYMENT_NAME": "text-embedding-ada-002",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1825443454",
+    "RandomSeed": "555312488",
     "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

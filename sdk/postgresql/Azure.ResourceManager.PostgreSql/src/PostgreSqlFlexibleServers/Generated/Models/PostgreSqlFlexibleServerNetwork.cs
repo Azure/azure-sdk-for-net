@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNetwork. </summary>
         /// <param name="publicNetworkAccess"> public network access is enabled or not. </param>
-        /// <param name="delegatedSubnetResourceId"> delegated subnet arm resource id. </param>
-        /// <param name="privateDnsZoneArmResourceId"> private dns zone arm resource id. </param>
+        /// <param name="delegatedSubnetResourceId"> Delegated subnet arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </param>
+        /// <param name="privateDnsZoneArmResourceId"> Private dns zone arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </param>
         internal PostgreSqlFlexibleServerNetwork(PostgreSqlFlexibleServerPublicNetworkAccessState? publicNetworkAccess, ResourceIdentifier delegatedSubnetResourceId, ResourceIdentifier privateDnsZoneArmResourceId)
         {
             PublicNetworkAccess = publicNetworkAccess;
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> public network access is enabled or not. </summary>
         public PostgreSqlFlexibleServerPublicNetworkAccessState? PublicNetworkAccess { get; }
-        /// <summary> delegated subnet arm resource id. </summary>
+        /// <summary> Delegated subnet arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </summary>
         public ResourceIdentifier DelegatedSubnetResourceId { get; set; }
-        /// <summary> private dns zone arm resource id. </summary>
+        /// <summary> Private dns zone arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </summary>
         public ResourceIdentifier PrivateDnsZoneArmResourceId { get; set; }
     }
 }

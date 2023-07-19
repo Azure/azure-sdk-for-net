@@ -24,7 +24,11 @@ namespace Azure.Core.Pipeline
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
 
+#if NETCOREAPP2_1
         internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
+#else
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, ActivitySource? activitySource, System.Diagnostics.ActivityKind kind, bool suppressNestedClientActivities)
+#endif
         {
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
             _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
@@ -127,6 +131,7 @@ namespace Azure.Core.Pipeline
             _activityAdapter?.MarkFailed(exception);
         }
 
+#if NETCOREAPP2_1
         /// <summary>
         /// Kind describes the relationship between the Activity, its parents, and its children in a Trace.
         /// </summary>
@@ -158,6 +163,7 @@ namespace Azure.Core.Pipeline
             /// </summary>
             Consumer = 4,
         }
+#endif
 
         private class DiagnosticActivity : Activity
         {

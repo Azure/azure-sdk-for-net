@@ -18,11 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of OracleServiceCloudLinkedService. </summary>
         /// <param name="host"> The URL of the Oracle Service Cloud instance. </param>
         /// <param name="username"> The user name that you use to access Oracle Service Cloud server. </param>
-        /// <param name="password">
-        /// The password corresponding to the user name that you provided in the username key.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> The password corresponding to the user name that you provided in the username key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public OracleServiceCloudLinkedService(BinaryData host, BinaryData username, DataFactorySecretBaseDefinition password)
         {
@@ -45,11 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> The URL of the Oracle Service Cloud instance. </param>
         /// <param name="username"> The user name that you use to access Oracle Service Cloud server. </param>
-        /// <param name="password">
-        /// The password corresponding to the user name that you provided in the username key.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> The password corresponding to the user name that you provided in the username key. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
@@ -128,11 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData Username { get; set; }
-        /// <summary>
-        /// The password corresponding to the user name that you provided in the username key.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The password corresponding to the user name that you provided in the username key. </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
