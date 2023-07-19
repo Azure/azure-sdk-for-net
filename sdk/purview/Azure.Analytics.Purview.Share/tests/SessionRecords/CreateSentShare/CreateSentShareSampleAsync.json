@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/sentShares/sample-Share?api-version=2021-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "136",
+        "Content-Type": "application/json",
+        "traceparent": "00-dbbcec84d43ffe2fc9a6e58358bb0daa-f62eee3e301cf9b6-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "57a73508da7af5f78416e619a1a4d71a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "shareKind": "InPlace",
+        "properties": {
+          "description": "demo share",
+          "collection": {
+            "referenceName": "w95gh9ze",
+            "type": "CollectionReference"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "388",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:20:37 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "4d08ade3-42a3-4a3e-b3f2-8b48d47d2eee"
+      },
+      "ResponseBody": {
+        "properties": {
+          "createdAt": "2022-07-28T23:47:46.4738307Z",
+          "description": "demo share",
+          "provisioningState": "Succeeded",
+          "senderName": "Yaman Wahsheh",
+          "senderEmail": "yamanwahsheh@microsoft.com",
+          "senderTenantName": "Microsoft",
+          "collection": {
+            "type": "CollectionReference",
+            "referenceName": "w95gh9ze"
+          }
+        },
+        "shareKind": "InPlace",
+        "id": "/sentShares/sample-Share",
+        "name": "sample-Share",
+        "type": "sentShares"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "1934254059"
+  }
+}

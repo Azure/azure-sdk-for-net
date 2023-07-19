@@ -18,24 +18,10 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
-            }
-            else
-            {
-                writer.WriteNull("content");
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(FunctionCall))
-            {
-                writer.WritePropertyName("function_call"u8);
-                writer.WriteObjectValue(FunctionCall);
             }
             writer.WriteEndObject();
         }
@@ -47,9 +33,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             ChatRole role = default;
-            string content = default;
-            Optional<string> name = default;
-            Optional<FunctionCall> functionCall = default;
+            Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("role"u8))
@@ -59,30 +43,11 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        content = null;
-                        continue;
-                    }
                     content = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("function_call"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    functionCall = FunctionCall.DeserializeFunctionCall(property.Value);
-                    continue;
-                }
             }
-            return new ChatMessage(role, content, name.Value, functionCall.Value);
+            return new ChatMessage(role, content.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

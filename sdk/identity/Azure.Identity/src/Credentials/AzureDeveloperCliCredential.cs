@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -42,7 +44,6 @@ namespace Azure.Identity
         private readonly bool _logAccountDetails;
         internal string TenantId { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
-        internal bool _isChainedCredential;
 
         /// <summary>
         /// Create an instance of the <see cref="AzureDeveloperCliCredential"/> class.
@@ -68,7 +69,6 @@ namespace Azure.Identity
             TenantId = options?.TenantId;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
-            _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <summary>
@@ -123,14 +123,7 @@ namespace Azure.Identity
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
-                if (_isChainedCredential)
-                {
-                    throw new CredentialUnavailableException(AzdCliTimeoutError);
-                }
-                else
-                {
-                    throw new AuthenticationFailedException(AzdCliTimeoutError);
-                }
+                throw new CredentialUnavailableException(AzdCliTimeoutError);
             }
             catch (InvalidOperationException exception)
             {
@@ -160,14 +153,7 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(InteractiveLoginRequired);
                 }
 
-                if (_isChainedCredential)
-                {
-                    throw new CredentialUnavailableException($"{AzdCliFailedError} {Troubleshoot} {exception.Message}");
-                }
-                else
-                {
-                    throw new AuthenticationFailedException($"{AzdCliFailedError} {Troubleshoot} {exception.Message}");
-                }
+                throw new CredentialUnavailableException($"{AzdCliFailedError} {Troubleshoot} {exception.Message}");
             }
 
             AccessToken token = DeserializeOutput(output);

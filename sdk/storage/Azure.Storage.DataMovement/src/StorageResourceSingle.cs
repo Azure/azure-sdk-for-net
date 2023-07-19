@@ -22,29 +22,29 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The identifier for the type of storage resource.
         /// </summary>
-        protected internal abstract string ResourceId { get; }
+        public abstract string ResourceId { get; }
 
         /// <summary>
         /// Defines the transfer type of the storage resource.
         /// </summary>
-        protected internal abstract TransferType TransferType { get; }
+        public abstract TransferType TransferType { get; }
 
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        protected internal abstract long MaxChunkSize { get; }
+        public abstract long MaxChunkSize { get; }
 
         /// <summary>
         /// Storage Resource is a container.
         /// </summary>
-        protected internal override bool IsContainer => false;
+        public override bool IsContainer => false;
 
         /// <summary>
         /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
-        protected internal abstract long? Length { get; }
+        public abstract long? Length { get; }
 
         /// <summary>
         /// Consumes the readable stream to upload
@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        protected internal abstract Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        public abstract Task<ReadStreamStorageResourceResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default);
@@ -87,7 +87,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        protected internal abstract Task WriteFromStreamAsync(
+        public abstract Task WriteFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
@@ -112,7 +112,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        protected internal abstract Task CopyFromUriAsync(
+        public abstract Task CopyFromUriAsync(
             StorageResourceSingle sourceResource,
             bool overwrite,
             long completeLength,
@@ -136,7 +136,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        protected internal abstract Task CopyBlockFromUriAsync(
+        public abstract Task CopyBlockFromUriAsync(
             StorageResourceSingle sourceResource,
             HttpRange range,
             bool overwrite,
@@ -150,7 +150,7 @@ namespace Azure.Storage.DataMovement
         /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
         /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/></returns>
-        protected internal abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default);
+        public abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default);
 
         /// <summary>
         /// Gets the Authorization Header for the storage resource if available.
@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement
         /// Gets the HTTP Authorization header for the storage resource if available. If not available
         /// will return default.
         /// </returns>
-        protected internal abstract Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default);
+        public abstract Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// If the operation requires any ending transfers (e.g. Committing a block list, flushing crypto streams)
@@ -176,7 +176,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The Task which Commits the list of ids</returns>
-        protected internal abstract Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default);
+        public abstract Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the respective storage resource.
@@ -189,6 +189,6 @@ namespace Azure.Storage.DataMovement
         /// If the storage resource exists and is deleted, true will be returned.
         /// Otherwise if the storage resource does not exist, false will be returned.
         /// </returns>
-        protected internal abstract Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default);
+        public abstract Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 /// Sample configurable for OpenTelemetry exporters for compatibility
 /// with Application Insight SDKs.
 /// </summary>
-internal sealed class ApplicationInsightsSampler : Sampler
+internal class ApplicationInsightsSampler : Sampler
 {
     private static readonly SamplingResult RecordOnlySamplingResult = new(SamplingDecision.RecordOnly);
     private readonly SamplingResult recordAndSampleSamplingResult;

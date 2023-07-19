@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Storage edition capability. </summary>
-    public partial class PostgreSqlFlexibleServerStorageEditionCapability : PostgreSqlBaseCapability
+    /// <summary> storage edition capability. </summary>
+    public partial class PostgreSqlFlexibleServerStorageEditionCapability
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageEditionCapability. </summary>
         internal PostgreSqlFlexibleServerStorageEditionCapability()
@@ -20,23 +20,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageEditionCapability. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="name"> Storage edition name. </param>
-        /// <param name="defaultStorageSizeMb"> Default storage size in MB for storage edition. </param>
-        /// <param name="supportedStorageCapabilities"> Flexible server supported storage range in MB. </param>
-        internal PostgreSqlFlexibleServerStorageEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, long? defaultStorageSizeMb, IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities) : base(capabilityStatus, reason)
+        /// <param name="name"> storage edition name. </param>
+        /// <param name="supportedStorageCapabilities"></param>
+        /// <param name="status"> The status. </param>
+        internal PostgreSqlFlexibleServerStorageEditionCapability(string name, IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities, string status)
         {
             Name = name;
-            DefaultStorageSizeMb = defaultStorageSizeMb;
             SupportedStorageCapabilities = supportedStorageCapabilities;
+            Status = status;
         }
 
-        /// <summary> Storage edition name. </summary>
+        /// <summary> storage edition name. </summary>
         public string Name { get; }
-        /// <summary> Default storage size in MB for storage edition. </summary>
-        public long? DefaultStorageSizeMb { get; }
-        /// <summary> Flexible server supported storage range in MB. </summary>
+        /// <summary> Gets the supported storage capabilities. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> SupportedStorageCapabilities { get; }
+        /// <summary> The status. </summary>
+        public string Status { get; }
     }
 }

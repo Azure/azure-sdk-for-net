@@ -138,7 +138,6 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(30), cred.ProcessTimeout);
                 Assert.AreEqual(expVisualStudioTenantId ?? expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
-                Assert.True(cred._isChainedCredential);
             }
         }
 
@@ -222,14 +221,12 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.ProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
-                Assert.True(cred._isChainedCredential);
 
                 AzureDeveloperCliCredential credAzd = (AzureDeveloperCliCredential)factory.CreateAzureDeveloperCliCredential();
 
                 Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), credAzd.ProcessTimeout);
                 Assert.AreEqual(expTenantId, credAzd.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, credAzd.AdditionallyAllowedTenantIds);
-                Assert.True(credAzd._isChainedCredential);
             }
         }
 
@@ -266,7 +263,6 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(10), cred.ProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
-                Assert.True(cred._isChainedCredential);
             }
         }
 

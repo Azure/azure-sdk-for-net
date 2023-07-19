@@ -107,11 +107,26 @@ namespace Azure.Storage.Test.Shared
         public byte[] GetRandomBuffer(long size)
             => TestHelper.GetRandomBuffer(size, Recording.Random);
 
-        public string GetNewString(int length = 20) => DataProvider.GetNewString(length, Recording.Random);
+        public string GetNewString(int length = 20)
+        {
+            var buffer = new char[length];
+            for (var i = 0; i < length; i++)
+            {
+                buffer[i] = (char)('a' + Recording.Random.Next(0, 25));
+            }
+            return new string(buffer);
+        }
 
         public string GetNewMetadataName() => $"test_metadata_{Recording.Random.NewGuid().ToString().Replace("-", "_")}";
 
-        public IDictionary<string, string> BuildMetadata() => DataProvider.BuildMetadata();
+        public IDictionary<string, string> BuildMetadata()
+            => new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    { "foo", "bar" },
+                    { "meta", "data" },
+                    { "Capital", "letter" },
+                    { "UPPER", "case" }
+                };
 
         public IPAddress GetIPAddress()
         {

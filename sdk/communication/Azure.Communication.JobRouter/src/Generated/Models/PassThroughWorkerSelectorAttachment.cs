@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter
         {
             Key = key;
             LabelOperator = labelOperator;
-            _expiresAfterSeconds = expiresAfterSeconds;
+            ExpiresAfterSeconds = expiresAfterSeconds;
             Kind = kind ?? "pass-through";
         }
 
@@ -43,5 +43,7 @@ namespace Azure.Communication.JobRouter
         public string Key { get; set; }
         /// <summary> Describes how the value of the label is compared to the value pass through. </summary>
         public LabelOperator LabelOperator { get; set; }
+        /// <summary> Describes how long the attached label selector is valid in seconds. </summary>
+        public double? ExpiresAfterSeconds { get; set; }
     }
 }

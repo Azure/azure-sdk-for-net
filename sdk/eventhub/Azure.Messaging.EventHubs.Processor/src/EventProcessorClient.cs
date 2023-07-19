@@ -5,7 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -891,7 +890,7 @@ namespace Azure.Messaging.EventHubs
 
             Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
 
-            using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
+            using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, DiagnosticScope.ActivityKind.Internal);
             scope.Start();
 
             try

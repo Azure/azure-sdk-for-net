@@ -111,21 +111,12 @@ var client = new OpenAIClient("<openAIApiKey>");
 
 var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[] 
 {
-    new ChatMessage(ChatRole.System, "<content>")
+    new ChatMessage(ChatRole.System)
 {
-        Name = "<Name>",
-        FunctionCall = new FunctionCall("<name>", "<arguments>"),
+        Content = "<Content>",
     }
 })
 {
-    Functions = 
-{
-        new FunctionDefinition("<name>")
-{
-            Description = "<Description>",
-            Parameters = BinaryData.FromString("<your binary data content>"),
-        }
-    },
     MaxTokens = 1234,
     Temperature = 3.14f,
     NucleusSamplingFactor = 3.14f,
@@ -150,21 +141,12 @@ var client = new OpenAIClient("<openAIApiKey>");
 
 var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[] 
 {
-    new ChatMessage(ChatRole.System, "<content>")
+    new ChatMessage(ChatRole.System)
 {
-        Name = "<Name>",
-        FunctionCall = new FunctionCall("<name>", "<arguments>"),
+        Content = "<Content>",
     }
 })
 {
-    Functions = 
-{
-        new FunctionDefinition("<name>")
-{
-            Description = "<Description>",
-            Parameters = BinaryData.FromString("<your binary data content>"),
-        }
-    },
     MaxTokens = 1234,
     Temperature = 3.14f,
     NucleusSamplingFactor = 3.14f,
@@ -184,14 +166,6 @@ var result = client.GetChatCompletions("<deploymentId>", chatCompletionsOptions)
     <member name="GetChatCompletionsAsync(string,RequestContent,RequestContext)">
     </member>
     <member name="GetChatCompletions(string,RequestContent,RequestContext)">
-    </member>
-    <member name="BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)">
-    </member>
-    <member name="BeginAzureBatchImageGeneration(WaitUntil,ImageGenerationOptions,CancellationToken)">
-    </member>
-    <member name="BeginAzureBatchImageGenerationAsync(WaitUntil,RequestContent,RequestContext)">
-    </member>
-    <member name="BeginAzureBatchImageGeneration(WaitUntil,RequestContent,RequestContext)">
     </member>
   </members>
 </doc>

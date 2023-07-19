@@ -18,7 +18,7 @@ using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal static class LogsHelper
+    internal class LogsHelper
     {
         private const int Version = 2;
         private static readonly ConcurrentDictionary<int, string> s_depthCache = new ConcurrentDictionary<int, string>();

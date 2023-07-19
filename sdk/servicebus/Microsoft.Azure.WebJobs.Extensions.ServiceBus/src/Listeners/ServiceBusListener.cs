@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
@@ -632,7 +631,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         {
             using DiagnosticScope scope = _clientDiagnostics.Value.CreateScope(
                             _isSessionsEnabled ? Constants.ProcessSessionMessagesActivityName : Constants.ProcessMessagesActivityName,
-                            ActivityKind.Consumer,
+                            DiagnosticScope.ActivityKind.Consumer,
                             MessagingDiagnosticOperation.Process);
 
             scope.SetMessageData(messagesArray);

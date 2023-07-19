@@ -135,8 +135,8 @@ namespace Azure.Core.TestFramework.Tests
                     "Azure.Core.Http.Request",
                     new DiagnosticListener("Azure.Core"),
                     null,
-                    new ActivitySource("Azure.Core.Http"),
-                    ActivityKind.Client,
+                    ActivityExtensions.CreateActivitySource("Azure.Core.Http"),
+                    DiagnosticScope.ActivityKind.Client,
                     false);
                 coreScope.Start();
             }

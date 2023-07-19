@@ -20,21 +20,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<string> defaultSkuName = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability>> supportedStorageEditions = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerSkuCapability>> supportedServerSkus = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability>> supportedServerVersions = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("defaultSkuName"u8))
-                {
-                    defaultSkuName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("supportedStorageEditions"u8))
@@ -51,36 +44,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedStorageEditions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedServerSkus"u8))
+                if (property.NameEquals("supportedServerVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<PostgreSqlFlexibleServerSkuCapability> array = new List<PostgreSqlFlexibleServerSkuCapability>();
+                    List<PostgreSqlFlexibleServerServerVersionCapability> array = new List<PostgreSqlFlexibleServerServerVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerSkuCapability.DeserializePostgreSqlFlexibleServerSkuCapability(item));
+                        array.Add(PostgreSqlFlexibleServerServerVersionCapability.DeserializePostgreSqlFlexibleServerServerVersionCapability(item));
                     }
-                    supportedServerSkus = array;
+                    supportedServerVersions = array;
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
-                    continue;
-                }
-                if (property.NameEquals("reason"u8))
-                {
-                    reason = property.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerEditionCapability(Optional.ToNullable(status), reason.Value, name.Value, defaultSkuName.Value, Optional.ToList(supportedStorageEditions), Optional.ToList(supportedServerSkus));
+            return new PostgreSqlFlexibleServerEditionCapability(name.Value, Optional.ToList(supportedStorageEditions), Optional.ToList(supportedServerVersions), status.Value);
         }
     }
 }

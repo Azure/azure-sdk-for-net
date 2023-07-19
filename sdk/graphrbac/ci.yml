@@ -1,7 +1,25 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
-pr: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/graphrbac/
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/graphrbac/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -9,3 +27,5 @@ extends:
     ServiceDirectory: graphrbac
     ArtifactName: packages
     Artifacts:
+    - name: Microsoft.Azure.Graph.RBAC
+      safeName: MicrosoftAzureGraphRBAC

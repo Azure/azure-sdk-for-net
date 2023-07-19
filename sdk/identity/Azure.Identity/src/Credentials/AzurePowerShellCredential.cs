@@ -38,7 +38,6 @@ namespace Azure.Identity
         internal string[] AdditionallyAllowedTenantIds { get; }
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
-        internal readonly bool _isChainedCredential;
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
         internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
         internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
@@ -68,7 +67,6 @@ namespace Azure.Identity
             _processService = processService ?? ProcessService.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(10);
-            _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <summary>
@@ -126,12 +124,12 @@ namespace Azure.Identity
                 }
                 catch (Exception e)
                 {
-                    throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
+                    throw scope.FailWrapAndThrow(e, isCredentialUnavailable: true);
                 }
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: true);
             }
         }
 
@@ -164,14 +162,7 @@ namespace Azure.Identity
             catch (InvalidOperationException exception)
             {
                 CheckForErrors(exception.Message);
-                if (_isChainedCredential)
-                {
-                    throw new CredentialUnavailableException($"{AzurePowerShellFailedError} {exception.Message}");
-                }
-                else
-                {
-                    throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
-                }
+                throw new CredentialUnavailableException($"{AzurePowerShellFailedError} {exception.Message}");
             }
             return DeserializeOutput(output);
         }

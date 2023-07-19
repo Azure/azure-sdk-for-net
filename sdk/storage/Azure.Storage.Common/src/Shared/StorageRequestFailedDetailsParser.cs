@@ -54,8 +54,7 @@ namespace Azure.Core.Pipeline
                         using JsonDocument json = JsonDocument.Parse(contentStream);
                         JsonElement errorElement = json.RootElement.GetProperty(Constants.ErrorPropertyKey);
 
-                        if (errorElement.TryGetProperty(Constants.DetailPropertyKey, out JsonElement detail)
-                            && detail.ValueKind == JsonValueKind.Object)
+                        if (errorElement.TryGetProperty(Constants.DetailPropertyKey, out JsonElement detail))
                         {
                             data = new Dictionary<string, string>();
                             foreach (JsonProperty property in detail.EnumerateObject())

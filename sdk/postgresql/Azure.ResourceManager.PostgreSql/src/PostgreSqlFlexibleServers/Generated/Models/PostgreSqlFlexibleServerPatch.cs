@@ -32,7 +32,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> PostgreSQL Server version. </summary>
         public PostgreSqlFlexibleServerVersion? Version { get; set; }
         /// <summary> Storage properties of a server. </summary>
-        public PostgreSqlFlexibleServerStorage Storage { get; set; }
+        internal PostgreSqlFlexibleServerStorage Storage { get; set; }
+        /// <summary> Max storage allowed for a server. </summary>
+        public int? StorageSizeInGB
+        {
+            get => Storage is null ? default : Storage.StorageSizeInGB;
+            set
+            {
+                if (Storage is null)
+                    Storage = new PostgreSqlFlexibleServerStorage();
+                Storage.StorageSizeInGB = value;
+            }
+        }
+
         /// <summary> Backup properties of a server. </summary>
         public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
         /// <summary> High availability properties of a server. </summary>
@@ -47,7 +59,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public PostgreSqlFlexibleServerCreateModeForUpdate? CreateMode { get; set; }
         /// <summary> Replication role of the server. </summary>
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
-        /// <summary> Network properties of a server. These are required to be passed only in case if server is a private access server. </summary>
-        public PostgreSqlFlexibleServerNetwork Network { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        protected internal abstract bool CanProduceUri { get; }
+        public abstract bool CanProduceUri { get; }
 
         /// <summary>
         /// Gets the Uri.
@@ -35,6 +35,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines whether the storage resource is a container.
         /// </summary>
-        protected internal abstract bool IsContainer { get; }
+        public abstract bool IsContainer { get; }
     }
 }

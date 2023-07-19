@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal sealed class NDJsonWriter : IDisposable
+    internal class NDJsonWriter : IDisposable
     {
         private static readonly byte[] s_separator = { (byte)'\n' };
 

@@ -17,7 +17,6 @@ namespace Azure.Communication.CallAutomation
     public partial class AddParticipantOptions
     {
         public AddParticipantOptions(Azure.Communication.CallAutomation.CallInvite participantToAdd) { }
-        public string CallbackUriOverride { get { throw null; } set { } }
         public int? InvitationTimeoutInSeconds { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CallInvite ParticipantToAdd { get { throw null; } }
@@ -1128,7 +1127,6 @@ namespace Azure.Communication.CallAutomation
     public partial class RemoveParticipantOptions
     {
         public RemoveParticipantOptions(Azure.Communication.CommunicationIdentifier participantToRemove) { }
-        public string CallbackUriOverride { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier ParticipantToRemove { get { throw null; } }
     }
@@ -1277,7 +1275,6 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(Azure.Communication.CommunicationUserIdentifier targetIdentity) { }
         public TransferToParticipantOptions(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
         public TransferToParticipantOptions(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity) { }
-        public string CallbackUriOverride { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CustomContext CustomContext { get { throw null; } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Target { get { throw null; } }

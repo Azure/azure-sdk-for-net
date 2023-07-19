@@ -5,22 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
-- [BREAKING CHANGE] Made the following members `public` to `protected` members (including all derived classes):
-    - `BlobStorageResourceContainer.CanProduceUri`
-    - `BlobStorageResourceContainer.GetStorageResourcesAsync`
-    - `*BlobStorageResource.CanProduceUri`
-    - `*BlobStorageResource.Length`
-    - `*BlobStorageResource.MaxChunkSize`
-    - `*BlobStorageResource.ResourceId`
-    - `*BlobStorageResource.TransferType`
-    - `*BlobStorageResource.CompleteTransferAsync`
-    - `*BlobStorageResource.CopyBlockFromUriAsync`
-    - `*BlobStorageResource.CopyFromUriAsync`
-    - `*BlobStorageResource.DeleteIfExistsAsync`
-    - `*BlobStorageResource.GetCopyAuthorizationHeaderAsync`
-    - `*BlobStorageResource.GetPropertiesAsync`
-    - `*BlobStorageResource.ReadStreamAsync`
-    - `*BlobStorageResource.WriteFromStreamAsync`
+
 ### Bugs Fixed
 
 ### Other Changes

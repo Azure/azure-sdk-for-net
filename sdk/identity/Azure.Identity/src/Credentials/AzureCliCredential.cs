@@ -49,7 +49,6 @@ namespace Azure.Identity
         private readonly bool _logAccountDetails;
         internal string TenantId { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
-        internal bool _isChainedCredential;
 
         /// <summary>
         /// Create an instance of CliCredential class.
@@ -76,7 +75,6 @@ namespace Azure.Identity
             TenantId = options?.TenantId;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
-            _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <summary>
@@ -134,14 +132,7 @@ namespace Azure.Identity
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
-                if (_isChainedCredential)
-                {
-                    throw new CredentialUnavailableException(AzureCliTimeoutError);
-                }
-                else
-                {
-                    throw new AuthenticationFailedException(AzureCliTimeoutError);
-                }
+                throw new CredentialUnavailableException(AzureCliTimeoutError);
             }
             catch (InvalidOperationException exception)
             {
@@ -172,14 +163,7 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(InteractiveLoginRequired);
                 }
 
-                if (_isChainedCredential)
-                {
-                    throw new CredentialUnavailableException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
-                }
-                else
-                {
-                    throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
-                }
+                throw new CredentialUnavailableException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
             }
 
             AccessToken token = DeserializeOutput(output);

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> supportedVersionsToUpgrade = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerVCoreCapability>> supportedVcores = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -44,22 +44,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedVersionsToUpgrade = array;
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (property.NameEquals("supportedVcores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
+                    List<PostgreSqlFlexibleServerVCoreCapability> array = new List<PostgreSqlFlexibleServerVCoreCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PostgreSqlFlexibleServerVCoreCapability.DeserializePostgreSqlFlexibleServerVCoreCapability(item));
+                    }
+                    supportedVcores = array;
                     continue;
                 }
-                if (property.NameEquals("reason"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    reason = property.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerServerVersionCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToList(supportedVersionsToUpgrade));
+            return new PostgreSqlFlexibleServerServerVersionCapability(name.Value, Optional.ToList(supportedVersionsToUpgrade), Optional.ToList(supportedVcores), status.Value);
         }
     }
 }

@@ -5,22 +5,6 @@
 ### Features Added
 
 ### Breaking Changes
-- [BREAKING CHANGE] Made the following members `public` to `protected internal` members (including all derived classes):
-    - `StorageResource.CanProduceUri`
-    - `StorageResource.IsContainer`
-    - `StorageResourceContainer.GetStorageResourcesAsync`
-    - `StorageResourceSingle.Length`
-    - `StorageResourceSingle.MaxChunkSize`
-    - `StorageResourceSingle.ResourceId`
-    - `StorageResourceSingle.TransferType`
-    - `StorageResourceSingle.CompleteTransferAsync`
-    - `StorageResourceSingle.CopyBlockFromUriAsync`
-    - `StorageResourceSingle.CopyFromUriAsync`
-    - `StorageResourceSingle.DeleteIfExistsAsync`
-    - `StorageResourceSingle.GetCopyAuthorizationHeaderAsync`
-    - `StorageResourceSingle.GetPropertiesAsync`
-    - `StorageResourceSingle.ReadStreamAsync`
-    - `StorageResourceSingle.WriteFromStreamAsync`
 
 ### Bugs Fixed
 

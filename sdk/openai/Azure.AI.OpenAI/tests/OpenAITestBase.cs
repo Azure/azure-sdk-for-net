@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.CognitiveServices.Models;
@@ -18,49 +17,56 @@ namespace Azure.AI.OpenAI.Tests
     {
         private static class Constants
         {
+            public const string CompletionsDeploymentIdVariable = "OPENAI_DEPLOYMENT_ID";
+            public const string ChatCompletionsDeploymentIdVariable = "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID";
+            public const string EmbeddingsDeploymentIdVariable = "OPENAI_EMBEDDINGS_DEPLOYMENT_ID";
+            public const string OpenAIAuthTokenVariable = "OPENAI_AUTH_TOKEN";
             public const string EndpointVariable = "OPENAI_ENDPOINT";
             public const string ResourceGroupName = "openai-test-rg";
             public const string CognitiveServicesAccountName = "openai-sdk-test-automation-account-eastus";
+            public const string CompletionsModelName = "text-davinci-002";
+            public const string ChatCompletionsModelName = "gpt-35-turbo";
+            public const string EmbeddingsModelName = "text-similarity-curie-001";
+            public const string NonAzureCompletionsModelName = "text-davinci-002";
+            public const string NonAzureChatCompletionsModelName = "gpt-3.5-turbo";
+            public const string NonAzureEmbeddingsModelName = "text-embedding-ada-002";
             public const string SubDomainPrefix = "sdk";
             public static AzureLocation Location = AzureLocation.EastUS;
         }
 
-        private static readonly object s_deploymentIdLock = new();
+        private static readonly object _deploymentIdLock = new object();
+
+        public string CompletionsDeploymentId { get => _completionsDeploymentId; }
+        public string ChatCompletionsDeploymentId { get => _chatCompletionsDeploymentId; }
+        public string EmbeddingsDeploymentId { get => _embeddingsDeploymentId; }
+
+        public string NonAzureCompletionsModelName => Constants.NonAzureCompletionsModelName;
+        public string NonAzureChatCompletionsModelName => Constants.NonAzureChatCompletionsModelName;
+        public string NonAzureEmbeddingsModelName => Constants.NonAzureEmbeddingsModelName;
 
         private Uri _endpoint;
-        private AzureKeyCredential _azureApiKey;
+        private AzureKeyCredential _apiKey;
         private string _completionsDeploymentId;
         private string _chatCompletionsDeploymentId;
         private string _embeddingsDeploymentId;
-        private string _nonAzureApiKey;
+        private string _openAIAuthToken;
 
         protected OpenAITestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
-            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
-            SanitizedQueryParameters.Add("sig");
+            HeaderRegexSanitizers.Add(new Core.TestFramework.Models.HeaderRegexSanitizer("api-key", "***********"));
         }
 
-        protected OpenAIClient GetAzureClientWithKey(
-            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
-            => InstrumentClient(new OpenAIClient(
-                _endpoint,
-                GetAzureApiKey(),
-                GetInstrumentedClientOptions(azureServiceVersionOverride)));
+        protected OpenAIClient GetAzureClientWithKey() => InstrumentClient(
+            new OpenAIClient(_endpoint, GetAzureApiKey(), GetInstrumentedClientOptions()));
 
-        protected OpenAIClient GetAzureClientWithToken(
-            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
-            => InstrumentClient(new OpenAIClient(
-                _endpoint,
-                TestEnvironment.Credential,
-                GetInstrumentedClientOptions(azureServiceVersionOverride)));
+        protected OpenAIClient GetAzureClientWithToken() => InstrumentClient(
+            new OpenAIClient(_endpoint, TestEnvironment.Credential, GetInstrumentedClientOptions(_completionsDeploymentId)));
 
         protected OpenAIClient GetNonAzureClientWithKey() => InstrumentClient(
             new OpenAIClient(GetNonAzureApiKey(), GetInstrumentedClientOptions()));
 
-        protected AzureKeyCredential GetAzureApiKey() => _azureApiKey ?? new AzureKeyCredential("placeholder");
-        protected string GetNonAzureApiKey() => string.IsNullOrEmpty(_nonAzureApiKey) ? "placeholder" : _nonAzureApiKey;
+        protected AzureKeyCredential GetAzureApiKey() => _apiKey ?? new AzureKeyCredential("placeholder");
+        protected string GetNonAzureApiKey() => string.IsNullOrEmpty(_openAIAuthToken) ? "placeholder" : _openAIAuthToken;
 
         [SetUp]
         public void CreateDeployment()
@@ -69,23 +75,20 @@ namespace Azure.AI.OpenAI.Tests
             {
                 // For playback, setup details are populated directly from the test recordings
                 _endpoint = new Uri(Recording.GetVariable(Constants.EndpointVariable, null));
-                _completionsDeploymentId
-                    = Recording.GetVariable(ModelDeploymentEntry.LegacyCompletions.EnvironmentVariableName, null);
-                _embeddingsDeploymentId
-                    = Recording.GetVariable(ModelDeploymentEntry.ChatCompletions.EnvironmentVariableName, null);
-                _chatCompletionsDeploymentId
-                    = Recording.GetVariable(ModelDeploymentEntry.Embeddings.EnvironmentVariableName, null);
+                _completionsDeploymentId = Recording.GetVariable(Constants.CompletionsDeploymentIdVariable, null);
+                _embeddingsDeploymentId = Recording.GetVariable(Constants.EmbeddingsDeploymentIdVariable, null);
+                _chatCompletionsDeploymentId = Recording.GetVariable(Constants.ChatCompletionsDeploymentIdVariable, null);
             }
-            else if (_azureApiKey is not null)
+            else if (_apiKey is not null)
             {
                 // Non-recording modes don't need to initialize again if we've already initialized the deployment
             }
             else
             {
                 // Non-recording modes that haven't yet initialized need to go initialize the deployment
-                lock (s_deploymentIdLock)
+                lock (_deploymentIdLock)
                 {
-                    if (_azureApiKey is not null)
+                    if (_apiKey is not null)
                     {
                         // The lock may have taken a while to acquire if deployment was already underway in parallel; check here one more time
                         // and carry on if we're already good to go.
@@ -93,7 +96,7 @@ namespace Azure.AI.OpenAI.Tests
                     else
                     {
                         TestEnvironment.ThrowIfCannotDeploy();
-                        ArmClient armClient = new(TestEnvironment.Credential);
+                        ArmClient armClient = new ArmClient(TestEnvironment.Credential);
 
                         ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
                         SubscriptionResource subscription = armClient.GetSubscriptionResource(subscriptionResourceId);
@@ -119,9 +122,18 @@ namespace Azure.AI.OpenAI.Tests
                             }
                         }).Invoke();
 
-                        CognitiveServicesAccountDeploymentResource completionsModelResource = GetEnsureDeployedModelResource(openAIResource, ModelDeploymentEntry.LegacyCompletions);
-                        CognitiveServicesAccountDeploymentResource chatCompletionsModelResource = GetEnsureDeployedModelResource(openAIResource, ModelDeploymentEntry.ChatCompletions);
-                        CognitiveServicesAccountDeploymentResource embeddingsModelResource = GetEnsureDeployedModelResource(openAIResource, ModelDeploymentEntry.Embeddings);
+                        CognitiveServicesAccountDeploymentResource completionsModelResource = GetEnsureDeployedModelResource(
+                            openAIResource,
+                            Constants.CompletionsModelName,
+                            CognitiveServicesAccountDeploymentScaleType.Standard);
+                        CognitiveServicesAccountDeploymentResource chatCompletionsModelResource = GetEnsureDeployedModelResource(
+                            openAIResource,
+                            Constants.ChatCompletionsModelName,
+                            CognitiveServicesAccountDeploymentScaleType.Standard);
+                        CognitiveServicesAccountDeploymentResource embeddingsModelResource = GetEnsureDeployedModelResource(
+                            openAIResource,
+                            Constants.EmbeddingsModelName,
+                            CognitiveServicesAccountDeploymentScaleType.Standard);
 
                         _endpoint = new Uri(openAIResource.Data.Properties.Endpoint);
                         _completionsDeploymentId = completionsModelResource.Id.Name;
@@ -129,8 +141,8 @@ namespace Azure.AI.OpenAI.Tests
                         _embeddingsDeploymentId = embeddingsModelResource.Id.Name;
 
                         ServiceAccountApiKeys keys = openAIResource.GetKeys();
-                        _azureApiKey = new AzureKeyCredential(keys.Key1);
-                        _nonAzureApiKey = TestEnvironment.PublicOpenAiApiKey;
+                        _apiKey = new AzureKeyCredential(keys.Key1);
+                        _openAIAuthToken = TestEnvironment.PublicOpenAiApiKey;
                     }
                 }
             }
@@ -138,21 +150,15 @@ namespace Azure.AI.OpenAI.Tests
             if (Mode == RecordedTestMode.Record)
             {
                 Recording.SetVariable(Constants.EndpointVariable, _endpoint.ToString());
-                Recording.SetVariable(
-                    ModelDeploymentEntry.LegacyCompletions.EnvironmentVariableName,
-                    _completionsDeploymentId);
-                Recording.SetVariable(
-                    ModelDeploymentEntry.ChatCompletions.EnvironmentVariableName,
-                    _chatCompletionsDeploymentId);
-                Recording.SetVariable(
-                    ModelDeploymentEntry.Embeddings.EnvironmentVariableName,
-                    _embeddingsDeploymentId);
+                Recording.SetVariable(Constants.CompletionsDeploymentIdVariable, _completionsDeploymentId);
+                Recording.SetVariable(Constants.ChatCompletionsDeploymentIdVariable, _chatCompletionsDeploymentId);
+                Recording.SetVariable(Constants.EmbeddingsDeploymentIdVariable, _embeddingsDeploymentId);
             }
         }
 
         private static ResourceGroupResource GetEnsureTestResourceGroup(SubscriptionResource subscription)
         {
-            ResourceGroupData rgData = new(Constants.Location);
+            ResourceGroupData rgData = new ResourceGroupData(Constants.Location);
             rgData.Tags.Add("DeleteAfter", DateTime.Now.AddDays(2).ToString("MM/dd/yyyy hh:mm:sszzz"));
             ResourceGroupResource resourceGroup = subscription.GetResourceGroups().Exists(Constants.ResourceGroupName)
                 ? subscription.GetResourceGroup(Constants.ResourceGroupName)
@@ -162,7 +168,7 @@ namespace Azure.AI.OpenAI.Tests
 
         private static CognitiveServicesAccountResource GetEnsureTestOpenAIResource(ResourceGroupResource resourceGroup, string subdomain)
         {
-            CognitiveServicesAccountData csaData = new(Constants.Location)
+            CognitiveServicesAccountData csaData = new CognitiveServicesAccountData(Constants.Location)
             {
                 Kind = "OpenAI",
                 Sku = new CognitiveServicesSku("S0"),
@@ -179,109 +185,47 @@ namespace Azure.AI.OpenAI.Tests
 
         private static CognitiveServicesAccountDeploymentResource GetEnsureDeployedModelResource(
             CognitiveServicesAccountResource openAIResource,
-            ModelDeploymentEntry modelEntry)
+            string modelName,
+            CognitiveServicesAccountDeploymentScaleType modelScaleType)
         {
-            // Special case: "legacy" models can't be re-deployed and so we'll just make a best effort to retrieve
-            // it. By design, we cannot automatically regenerate the test resource programmatically if it's deleted.
-            if (modelEntry.IsLegacyAzureModel)
+            Pageable<CognitiveServicesAccountModel> availableModels = openAIResource.GetModels();
+            CognitiveServicesAccountModel matchingModel = availableModels.FirstOrDefault(m => m.Name == modelName);
+            if (matchingModel == null)
             {
-                return openAIResource.GetCognitiveServicesAccountDeployment(modelEntry.AzureDeploymentName).Value;
+                throw new Exception($"No available models match 'modelName' for Azure OpenAI resource: {openAIResource.Id}"
+                    + $"Available models:\n  {string.Join("\n  ", availableModels.Select(model => model.Name))}");
             }
 
-            Pageable<CognitiveServicesAccountModel> availableModels = openAIResource.GetModels();
-            CognitiveServicesAccountModel matchingModel = availableModels
-                .FirstOrDefault(m => m.Name == modelEntry.AzureModelName)
-                ?? throw new Exception(
-                    $"No available models match 'modelName' for Azure OpenAI resource: {openAIResource.Id}"
-                    + $"Available models:\n  {string.Join("\n  ", availableModels.Select(model => model.Name))}");
+            var deploymentData = new CognitiveServicesAccountDeploymentData()
+            {
+                Properties = new CognitiveServicesAccountDeploymentProperties()
+                {
+                    Model = new CognitiveServicesAccountDeploymentModel()
+                    {
+                        Format = matchingModel.Format,
+                        Name = matchingModel.Name,
+                        Version = matchingModel.Version,
+                    },
+                    ScaleSettings = new CognitiveServicesAccountDeploymentScaleSettings()
+                    {
+                        ScaleType = modelScaleType,
+                    },
+                },
+            };
 
             CognitiveServicesAccountDeploymentCollection existingModelDeployments = openAIResource.GetCognitiveServicesAccountDeployments();
-
             if (existingModelDeployments.Exists(matchingModel.Name))
             {
                 return openAIResource.GetCognitiveServicesAccountDeployment(matchingModel.Name).Value;
             }
             else
             {
-                var deploymentData = new CognitiveServicesAccountDeploymentData()
-                {
-                    Properties = new CognitiveServicesAccountDeploymentProperties()
-                    {
-                        Model = new CognitiveServicesAccountDeploymentModel()
-                        {
-                            Format = matchingModel.Format,
-                            Name = matchingModel.Name,
-                            Version = matchingModel.Version,
-                        },
-                        ScaleSettings = new CognitiveServicesAccountDeploymentScaleSettings()
-                        {
-                            ScaleType = CognitiveServicesAccountDeploymentScaleType.Standard,
-                        },
-                    },
-                };
-
                 return openAIResource.GetCognitiveServicesAccountDeployments().CreateOrUpdate(WaitUntil.Completed, matchingModel.Name, deploymentData).Value;
             }
         }
 
-        private OpenAIClientOptions GetInstrumentedClientOptions(
-            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
-        {
-            OpenAIClientOptions uninstrumentedClientOptions = azureServiceVersionOverride.HasValue
-                ? new OpenAIClientOptions(azureServiceVersionOverride.Value)
-                : new OpenAIClientOptions();
-            return InstrumentClientOptions(uninstrumentedClientOptions);
-        }
-
-        public class ModelDeploymentEntry
-        {
-            /// <summary>
-            /// Model/deployment information to use for /completions that include old features like echo
-            /// and logprobs. Azure OpenAI added new Completions support for gpt-35-turbo but did not carry
-            /// these forward.
-            /// </summary>
-            public static readonly ModelDeploymentEntry LegacyCompletions = new()
-            {
-                AzureDeploymentName = "text-davinci-002",
-                AzureModelName = "text-davinci-002",
-                NonAzureModelName = "text-davinci-002",
-                EnvironmentVariableName = "COMPLETIONS_DEPLOYMENT_NAME",
-                IsLegacyAzureModel = true,
-            };
-
-            /// <summary>
-            /// Model/deployment information to use for latest /completions features. Azure OpenAI has a different
-            /// capability set exposed via gpt-35-turbo than legacy models like text-davinci-002.
-            /// </summary>
-            public static readonly ModelDeploymentEntry Completions = new()
-            {
-                AzureDeploymentName = "gpt-35-turbo",
-                AzureModelName = "gpt-35-turbo",
-                NonAzureModelName = "text-davinci-002",
-            };
-
-            public static readonly ModelDeploymentEntry ChatCompletions = new()
-            {
-                AzureDeploymentName = "gpt-4-0613",
-                AzureModelName = "gpt-35-turbo",
-                NonAzureModelName = "gpt-3.5-turbo",
-                EnvironmentVariableName = "CHAT_COMPLETIONS_DEPLOYMENT_NAME",
-            };
-
-            public static readonly ModelDeploymentEntry Embeddings = new()
-            {
-                AzureDeploymentName = "text-embedding-ada-002",
-                AzureModelName = "text-embedding-ada-002",
-                NonAzureModelName = "text-embedding-ada-002",
-                EnvironmentVariableName = "EMBEDDINGS_DEPLOYMENT_NAME",
-            };
-
-            public string AzureDeploymentName { get; set; }
-            public string AzureModelName { get; set; }
-            public string NonAzureModelName { get; set; }
-            public string EnvironmentVariableName { get; set; }
-            public bool IsLegacyAzureModel { get; set; } = false;
-        }
+        private OpenAIClientOptions GetInstrumentedClientOptions(string defaultDeploymentOrModelName = null)
+            => InstrumentClientOptions(new OpenAIClientOptions());
 
         public enum OpenAIClientServiceTarget
         {
@@ -299,15 +243,14 @@ namespace Azure.AI.OpenAI.Tests
 
         public OpenAIClient GetTestClient(
             OpenAIClientServiceTarget serviceTarget,
-            OpenAIClientAuthenticationType authenticationType = OpenAIClientAuthenticationType.ApiKey,
-            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
+            OpenAIClientAuthenticationType authenticationType = OpenAIClientAuthenticationType.ApiKey)
         {
             return (serviceTarget, authenticationType) switch
             {
                 (OpenAIClientServiceTarget.Azure, OpenAIClientAuthenticationType.ApiKey)
-                    => GetAzureClientWithKey(azureServiceVersionOverride),
+                    => GetAzureClientWithKey(),
                 (OpenAIClientServiceTarget.Azure, OpenAIClientAuthenticationType.Token)
-                    => GetAzureClientWithToken(azureServiceVersionOverride),
+                    => GetAzureClientWithToken(),
                 (OpenAIClientServiceTarget.Azure, OpenAIClientAuthenticationType.ActiveDirectory)
                     => throw new NotImplementedException(),
                 (OpenAIClientServiceTarget.NonAzure, OpenAIClientAuthenticationType.ApiKey)
@@ -319,34 +262,24 @@ namespace Azure.AI.OpenAI.Tests
         public enum OpenAIClientScenario
         {
             None,
-            LegacyCompletions,
             Completions,
             ChatCompletions,
             Embeddings,
         }
 
-        protected static string GetDeploymentOrModelName(
+        protected string GetDeploymentOrModelName(
             OpenAIClientServiceTarget serviceTarget,
             OpenAIClientScenario defaultScenario)
         {
             return (serviceTarget, defaultScenario) switch
             {
-                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.LegacyCompletions)
-                    => ModelDeploymentEntry.LegacyCompletions.AzureDeploymentName,
-                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.ChatCompletions)
-                    => ModelDeploymentEntry.ChatCompletions.AzureDeploymentName,
-                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.Completions)
-                    => ModelDeploymentEntry.Completions.AzureDeploymentName,
-                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.Embeddings)
-                    => ModelDeploymentEntry.Embeddings.AzureDeploymentName,
-                (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.LegacyCompletions)
-                    => ModelDeploymentEntry.LegacyCompletions.NonAzureModelName,
-                (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.Completions)
-                    => ModelDeploymentEntry.Completions.NonAzureModelName,
+                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.Completions) => _completionsDeploymentId,
+                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.ChatCompletions) => _chatCompletionsDeploymentId,
+                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.Embeddings) => _embeddingsDeploymentId,
+                (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.Completions) => NonAzureCompletionsModelName,
                 (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.ChatCompletions)
-                    => ModelDeploymentEntry.ChatCompletions.NonAzureModelName,
-                (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.Embeddings)
-                    => ModelDeploymentEntry.Embeddings.NonAzureModelName,
+                    => NonAzureChatCompletionsModelName,
+                (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.Embeddings) => NonAzureEmbeddingsModelName,
                 _ => throw new ArgumentException("Unsupported service target / scenario combination")
             };
         }

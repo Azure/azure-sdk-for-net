@@ -20,10 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<long> defaultStorageSizeMb = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageCapability>> supportedStorageMb = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageCapability>> supportedStorageMB = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -31,16 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultStorageSizeMb"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    defaultStorageSizeMb = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("supportedStorageMb"u8))
+                if (property.NameEquals("supportedStorageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,25 +40,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         array.Add(PostgreSqlFlexibleServerStorageCapability.DeserializePostgreSqlFlexibleServerStorageCapability(item));
                     }
-                    supportedStorageMb = array;
+                    supportedStorageMB = array;
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
-                    continue;
-                }
-                if (property.NameEquals("reason"u8))
-                {
-                    reason = property.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerStorageEditionCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToNullable(defaultStorageSizeMb), Optional.ToList(supportedStorageMb));
+            return new PostgreSqlFlexibleServerStorageEditionCapability(name.Value, Optional.ToList(supportedStorageMB), status.Value);
         }
     }
 }

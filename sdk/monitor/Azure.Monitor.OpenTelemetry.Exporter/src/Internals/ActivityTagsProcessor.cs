@@ -23,6 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeHttpHostPort,
             SemanticConventions.AttributeHttpTarget,
             SemanticConventions.AttributeHttpUserAgent,
+            SemanticConventions.AttributeHttpClientIP,
             SemanticConventions.AttributeHttpRoute,
 
             // required - HTTP V2
@@ -36,7 +37,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeUrlScheme,
             SemanticConventions.AttributeUrlQuery,
             SemanticConventions.AttributeUserAgentOriginal,
-            SemanticConventions.AttributeClientAddress,
 
             // required - Azure
             SemanticConventions.AttributeAzureNameSpace,

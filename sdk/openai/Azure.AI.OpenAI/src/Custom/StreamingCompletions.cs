@@ -18,9 +18,9 @@ namespace Azure.AI.OpenAI
         private readonly Response _baseResponse;
         private readonly SseReader _baseResponseReader;
         private readonly IList<Completions> _baseCompletions;
-        private readonly object _baseCompletionsLock = new();
+        private readonly object _baseCompletionsLock = new object();
         private readonly IList<StreamingChoice> _streamingChoices;
-        private readonly object _streamingChoicesLock = new();
+        private readonly object _streamingChoicesLock = new object();
         private readonly AsyncAutoResetEvent _updateAvailableEvent;
         private bool _streamingTaskComplete;
         private bool _disposedValue;
@@ -29,12 +29,12 @@ namespace Azure.AI.OpenAI
         /// <summary>
         /// Gets the earliest Completion creation timestamp associated with this streamed response.
         /// </summary>
-        public DateTimeOffset Created => GetLocked(() => _baseCompletions.Last().Created);
+        public DateTimeOffset Created => GetLocked(() => _baseCompletions.First().Created);
 
         /// <summary>
         /// Gets the unique identifier associated with this streaming Completions response.
         /// </summary>
-        public string Id => GetLocked(() => _baseCompletions.Last().Id);
+        public string Id => GetLocked(() => _baseCompletions.First().Id);
 
         internal StreamingCompletions(Response response)
         {
@@ -84,7 +84,7 @@ namespace Azure.AI.OpenAI
                                     .FirstOrDefault(choice => choice.Index == choiceFromSse.Index);
                                 if (existingStreamingChoice == null)
                                 {
-                                    StreamingChoice newStreamingChoice = new(choiceFromSse);
+                                    StreamingChoice newStreamingChoice = new StreamingChoice(choiceFromSse);
                                     _streamingChoices.Add(newStreamingChoice);
                                     _updateAvailableEvent.Set();
                                 }
@@ -158,15 +158,6 @@ namespace Azure.AI.OpenAI
                     yield return newChoice;
                 }
             }
-        }
-
-        internal StreamingCompletions(
-            Completions baseCompletions = null,
-            IList<StreamingChoice> streamingChoices = null)
-        {
-            _baseCompletions.Add(baseCompletions);
-            _streamingChoices = streamingChoices;
-            _streamingTaskComplete = true;
         }
 
         public void Dispose()

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerUserAssignedIdentity. </summary>
-        /// <param name="identityType"> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </param>
+        /// <param name="identityType"> the types of identities associated with this resource; currently restricted to 'SystemAssigned and UserAssigned'. </param>
         public PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType identityType)
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
@@ -25,20 +24,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerUserAssignedIdentity. </summary>
         /// <param name="userAssignedIdentities"> represents user assigned identities map. </param>
-        /// <param name="identityType"> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </param>
-        /// <param name="tenantId"> Tenant id of the server. </param>
-        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId)
+        /// <param name="identityType"> the types of identities associated with this resource; currently restricted to 'SystemAssigned and UserAssigned'. </param>
+        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, PostgreSqlFlexibleServerIdentityType identityType)
         {
             UserAssignedIdentities = userAssignedIdentities;
             IdentityType = identityType;
-            TenantId = tenantId;
         }
 
         /// <summary> represents user assigned identities map. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
-        /// <summary> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </summary>
+        /// <summary> the types of identities associated with this resource; currently restricted to 'SystemAssigned and UserAssigned'. </summary>
         public PostgreSqlFlexibleServerIdentityType IdentityType { get; set; }
-        /// <summary> Tenant id of the server. </summary>
-        public Guid? TenantId { get; }
     }
 }

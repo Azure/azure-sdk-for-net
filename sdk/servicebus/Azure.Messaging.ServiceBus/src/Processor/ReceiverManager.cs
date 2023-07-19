@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -139,7 +138,7 @@ namespace Azure.Messaging.ServiceBus
 
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(activityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
             scope.SetMessageAsParent(message);
             scope.Start();
 

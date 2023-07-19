@@ -12,7 +12,6 @@ using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
-using Azure.Storage.Shared;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -23,19 +22,19 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         internal BlockBlobClient BlobClient { get; set; }
         internal BlockBlobStorageResourceOptions _options;
-        internal long? _length;
-        internal ETag? _etagDownloadLock = default;
 
         /// <summary>
         /// In order to ensure the block list is sent in the correct order
         /// we will order them by the offset (i.e. {offset, block_id}).
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
+        private long? _length;
+        private ETag? _etagDownloadLock = default;
 
         /// <summary>
         /// The identifier for the type of storage resource.
         /// </summary>
-        protected override string ResourceId => "BlockBlob";
+        public override string ResourceId => "BlockBlob";
 
         /// <summary>
         /// Gets the URL of the storage resource.
@@ -50,12 +49,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        protected override bool CanProduceUri => true;
+        public override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.
         /// </summary>
-        protected override TransferType TransferType => TransferType.Concurrent;
+        public override TransferType TransferType => TransferType.Concurrent;
 
         /// <summary>
         /// Store Max Initial Size that a Put Blob can get to.
@@ -65,14 +64,14 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        protected override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
+        public override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
-        protected override long? Length => _length;
+        public override long? Length => _length;
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
@@ -121,7 +120,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.</param>
         /// <returns>The <see cref="ReadStreamStorageResourceResult"/> resulting from the upload operation.</returns>
-        protected override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default)
@@ -154,7 +153,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        protected override async Task WriteFromStreamAsync(
+        public override async Task WriteFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
@@ -175,7 +174,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 return;
             }
 
-            string id = Azure.Storage.Shared.StorageExtensions.GenerateBlockId(position);
+            string id = Shared.StorageExtensions.GenerateBlockId(position);
             if (!_blocks.TryAdd(position, id))
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the block list.");
@@ -204,7 +203,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        protected override async Task CopyFromUriAsync(
+        public override async Task CopyFromUriAsync(
             StorageResourceSingle sourceResource,
             bool overwrite,
             long completeLength,
@@ -239,7 +238,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        protected override async Task CopyBlockFromUriAsync(
+        public override async Task CopyBlockFromUriAsync(
             StorageResourceSingle sourceResource,
             HttpRange range,
             bool overwrite,
@@ -271,7 +270,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
-        protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -290,7 +289,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Gets the HTTP Authorization header for the storage resource if available. If not available
         /// will return default.
         /// </returns>
-        protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        public override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
             return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
         }
@@ -306,7 +305,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The Task which Commits the list of ids</returns>
-        protected override async Task CompleteTransferAsync(
+        public override async Task CompleteTransferAsync(
             bool overwrite,
             CancellationToken cancellationToken = default)
         {
@@ -333,7 +332,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// If the storage resource exists and is deleted, true will be returned.
         /// Otherwise if the storage resource does not exist, false will be returned.
         /// </returns>
-        protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }

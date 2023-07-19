@@ -753,7 +753,7 @@ function GeneratePackage()
     } else {
         # Build
         Write-Host "Start to build sdk: $projectFolder"
-        dotnet build $projectFolder /p:RunApiCompat=$false
+        dotnet build $projectFolder
         if ( !$? ) {
             Write-Error "Failed to build sdk. exit code: $?"
             $result = "failed"

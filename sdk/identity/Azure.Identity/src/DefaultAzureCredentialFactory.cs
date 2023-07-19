@@ -162,9 +162,10 @@ namespace Azure.Identity
         public virtual TokenCredential CreateAzureDeveloperCliCredential()
         {
             var options = Options.Clone<AzureDeveloperCliCredentialOptions>();
+
             options.TenantId = Options.TenantId;
+
             options.ProcessTimeout = Options.CredentialProcessTimeout;
-            options.IsChainedCredential = true;
 
             return new AzureDeveloperCliCredential(Pipeline, default, options);
         }
@@ -172,9 +173,10 @@ namespace Azure.Identity
         public virtual TokenCredential CreateAzureCliCredential()
         {
             var options = Options.Clone<AzureCliCredentialOptions>();
+
             options.TenantId = Options.TenantId;
+
             options.ProcessTimeout = Options.CredentialProcessTimeout;
-            options.IsChainedCredential = true;
 
             return new AzureCliCredential(Pipeline, default, options);
         }
@@ -182,9 +184,10 @@ namespace Azure.Identity
         public virtual TokenCredential CreateVisualStudioCredential()
         {
             var options = Options.Clone<VisualStudioCredentialOptions>();
+
             options.TenantId = Options.VisualStudioTenantId;
+
             options.ProcessTimeout = Options.CredentialProcessTimeout;
-            options.IsChainedCredential = true;
 
             return new VisualStudioCredential(Options.VisualStudioTenantId, Pipeline, default, default, options);
         }
@@ -192,8 +195,8 @@ namespace Azure.Identity
         public virtual TokenCredential CreateVisualStudioCodeCredential()
         {
             var options = Options.Clone<VisualStudioCodeCredentialOptions>();
+
             options.TenantId = Options.VisualStudioCodeTenantId;
-            options.IsChainedCredential = true;
 
             return new VisualStudioCodeCredential(options, Pipeline, default, default, default);
         }
@@ -201,9 +204,10 @@ namespace Azure.Identity
         public virtual TokenCredential CreateAzurePowerShellCredential()
         {
             var options = Options.Clone<AzurePowerShellCredentialOptions>();
+
             options.TenantId = Options.TenantId;
+
             options.ProcessTimeout = Options.CredentialProcessTimeout;
-            options.IsChainedCredential = true;
 
             return new AzurePowerShellCredential(options, Pipeline, default);
         }

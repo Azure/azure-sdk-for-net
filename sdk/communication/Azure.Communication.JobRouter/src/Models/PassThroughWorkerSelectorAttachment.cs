@@ -15,26 +15,26 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of PassThroughWorkerSelectorAttachment. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
-        /// <param name="expiresAfter"> Describes how long the attached label selector is valid. </param>
+        /// <param name="ttl"> Describes how long the attached label selector is valid. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator, TimeSpan? expiresAfter = default)
-            : this(null, key, labelOperator, expiresAfter?.TotalSeconds)
+        public PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator, TimeSpan? ttl = default)
+            : this(null, key, labelOperator, ttl?.TotalSeconds)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
         }
 
         /// <summary> Describes how long the attached label selector is valid in seconds. </summary>
-        internal TimeSpan? ExpiresAfter { get; set; }
+        internal TimeSpan? Ttl { get; set; }
 
-        [CodeGenMember("ExpiresAfterSeconds")]
-        internal double? _expiresAfterSeconds {
+        [CodeGenMember("TtlSeconds")]
+        internal double? _ttlSeconds {
             get
             {
-                return ExpiresAfter?.TotalSeconds is null or 0 ? null : ExpiresAfter?.TotalSeconds;
+                return Ttl?.TotalSeconds is null or 0 ? null : Ttl?.TotalSeconds;
             }
             set
             {
-                ExpiresAfter = value != null ? TimeSpan.FromSeconds(value.Value) : null;
+                Ttl = value != null ? TimeSpan.FromSeconds(value.Value) : null;
             }
         }
     }

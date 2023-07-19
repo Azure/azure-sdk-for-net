@@ -72,21 +72,12 @@ namespace Azure.AI.OpenAI.Samples
 
             var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[]
             {
-    new ChatMessage(ChatRole.System, "<content>")
+    new ChatMessage(ChatRole.System)
 {
-        Name = "<Name>",
-        FunctionCall = new FunctionCall("<name>", "<arguments>"),
+        Content = "<Content>",
     }
             })
             {
-                Functions =
-{
-        new FunctionDefinition("<name>")
-{
-            Description = "<Description>",
-            Parameters = BinaryData.FromString("<your binary data content>"),
-        }
-    },
                 MaxTokens = 1234,
                 Temperature = 3.14f,
                 NucleusSamplingFactor = 3.14f,

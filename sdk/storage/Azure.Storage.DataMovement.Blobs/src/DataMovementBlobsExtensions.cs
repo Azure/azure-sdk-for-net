@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.Storage.Blobs.Models;
