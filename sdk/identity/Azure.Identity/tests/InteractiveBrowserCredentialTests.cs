@@ -26,14 +26,8 @@ namespace Azure.Identity.Tests
             string resolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
             var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken");
             var tokenCacheOptions = new MockTokenCache(
-                () =>
-                {
-                    return Task.FromResult<ReadOnlyMemory<byte>>(mockBytes);
-                },
-                args =>
-                {
-                    return Task.FromResult<ReadOnlyMemory<byte>>(mockBytes);
-                });
+                () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
+                args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
 
             var options = new InteractiveBrowserCredentialOptions
             {
@@ -45,7 +39,7 @@ namespace Azure.Identity.Tests
                 IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
-            return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, null));
+            return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, null) { _isCaeDisabledRequestCached = true, _isCaeEnabledRequestCached = true });
         }
 
         [Test]
