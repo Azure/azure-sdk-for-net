@@ -75,7 +75,14 @@ namespace Azure.Core.Tests
             };
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(options);
             MockTransport mockTransport = CreateMockTransport();
-            Task<Response> task = SendGetRequest(mockTransport, policy);
+
+            var testOptions = new TestClientOptions()
+            {
+                RetryPolicy = policy,
+                Transport = mockTransport
+            };
+            var pipeline = HttpPipelineBuilder.Build(testOptions);
+            Task<Response> task = SendGetRequest(pipeline);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(404));
 
@@ -83,7 +90,7 @@ namespace Azure.Core.Tests
 
             await mockTransport.RequestGate.Cycle(new MockResponse(501));
 
-            Response response = await task.TimeoutAfterDefault();
+            var response = await task.TimeoutAfterDefault();
             Assert.AreEqual(501, response.Status);
         }
 
