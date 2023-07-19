@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_InternalNetworksCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/InternalNetworks_Create_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternalNetworks_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "InternalNetworks_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this L3IsolationDomainResource created on azure
             // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
@@ -44,47 +44,51 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string internalNetworkName = "example-internalnetwork";
-            InternalNetworkData data = new InternalNetworkData(501)
+            InternalNetworkData data = new InternalNetworkData(755)
             {
+                Annotation = "annotation",
                 Mtu = 1500,
                 ConnectedIPv4Subnets =
 {
-new ConnectedSubnet()
+new ConnectedSubnet("10.0.0.0/24")
 {
-Prefix = "10.0.0.0/24",
+Annotation = "annotation",
 }
 },
                 ConnectedIPv6Subnets =
 {
-new ConnectedSubnet()
+new ConnectedSubnet("3FFE:FFFF:0:CD30::a0/29")
 {
-Prefix = "3FFE:FFFF:0:CD30::a0/29",
+Annotation = "annotation",
 }
 },
-                StaticRouteConfiguration = new StaticRouteConfiguration()
+                ImportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                ExportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                ImportRoutePolicy = new ImportRoutePolicy()
                 {
-                    BfdConfiguration = new BfdConfiguration(),
-                    IPv4Routes =
-{
-new StaticRouteProperties("10.1.0.0/24",new string[]
-{
-"10.0.0.1"
-})
-},
-                    IPv6Routes =
-{
-new StaticRouteProperties("2fff::/64",new string[]
-{
-"2ffe::1"
-})
-},
+                    ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                    ImportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
                 },
-                BgpConfiguration = new BgpConfiguration(6)
+                ExportRoutePolicy = new ExportRoutePolicy()
                 {
-                    BfdConfiguration = new BfdConfiguration(),
+                    ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                    ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                },
+                IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+                EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+                IsMonitoringEnabled = IsMonitoringEnabled.True,
+                Extension = Extension.NoExtension,
+                BgpConfiguration = new InternalNetworkPropertiesBgpConfiguration()
+                {
+                    BfdConfiguration = new BfdConfiguration()
+                    {
+                        IntervalInMilliSeconds = 300,
+                        Multiplier = 5,
+                    },
                     DefaultRouteOriginate = BooleanEnumProperty.True,
-                    AllowAS = 1,
+                    AllowAS = 10,
                     AllowASOverride = AllowASOverride.Enable,
+                    PeerASN = 61234,
                     IPv4ListenRangePrefixes =
 {
 "10.1.0.0/25"
@@ -107,9 +111,31 @@ new NeighborAddress()
 Address = "2fff::",
 }
 },
+                    Annotation = "annotation",
                 },
-                ImportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName1",
-                ExportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
+                StaticRouteConfiguration = new InternalNetworkPropertiesStaticRouteConfiguration()
+                {
+                    Extension = Extension.NoExtension,
+                    BfdConfiguration = new BfdConfiguration()
+                    {
+                        IntervalInMilliSeconds = 300,
+                        Multiplier = 15,
+                    },
+                    IPv4Routes =
+{
+new StaticRouteProperties("jffgck",new string[]
+{
+"10.0.0.1"
+})
+},
+                    IPv6Routes =
+{
+new StaticRouteProperties("2fff::/64",new string[]
+{
+"3ffe::1"
+})
+},
+                },
             };
             ArmOperation<InternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, internalNetworkName, data);
             InternalNetworkResource result = lro.Value;
@@ -126,7 +152,7 @@ Address = "2fff::",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_InternalNetworksGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/InternalNetworks_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternalNetworks_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "InternalNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,8 +162,8 @@ Address = "2fff::",
 
             // this example assumes you already have this L3IsolationDomainResource created on azure
             // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
@@ -161,7 +187,7 @@ Address = "2fff::",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_InternalNetworksGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/InternalNetworks_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternalNetworks_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "InternalNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,8 +197,8 @@ Address = "2fff::",
 
             // this example assumes you already have this L3IsolationDomainResource created on azure
             // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
@@ -187,13 +213,13 @@ Address = "2fff::",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // InternalNetworks_List_MaximumSet_Gen
+        // InternalNetworks_ListByL3IsolationDomain_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_InternalNetworksListMaximumSetGen()
+        public async Task GetAll_InternalNetworksListByL3IsolationDomainMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/InternalNetworks_List_MaximumSet_Gen.json
-            // this example is just showing the usage of "InternalNetworks_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternalNetworks_ListByL3IsolationDomain_MaximumSet_Gen.json
+            // this example is just showing the usage of "InternalNetworks_ListByL3IsolationDomain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -202,8 +228,8 @@ Address = "2fff::",
 
             // this example assumes you already have this L3IsolationDomainResource created on azure
             // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);

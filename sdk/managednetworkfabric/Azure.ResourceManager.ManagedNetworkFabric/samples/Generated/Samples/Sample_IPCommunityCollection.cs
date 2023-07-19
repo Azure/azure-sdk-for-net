@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_IpCommunitiesCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpCommunities_Create_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpCommunities_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "IpCommunities_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "rgIpCommunityLists";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -43,22 +43,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             IPCommunityCollection collection = resourceGroupResource.GetIPCommunities();
 
             // invoke the operation
-            string ipCommunityName = "example-ipCommunity";
-            IPCommunityData data = new IPCommunityData(new AzureLocation("EastUS"))
+            string ipCommunityName = "example-ipcommunity";
+            IPCommunityData data = new IPCommunityData(new AzureLocation("eastus"))
             {
-                Annotation = "annotationValue",
-                Action = CommunityActionType.Permit,
-                WellKnownCommunities =
+                Annotation = "annotation",
+                IPCommunityRules =
 {
-WellKnownCommunity.Internet,WellKnownCommunity.LocalAS,WellKnownCommunity.NoExport,WellKnownCommunity.GShut
+new IPCommunityRule(CommunityActionType.Permit,4155123341,new string[]
+{
+"1:1"
+})
+{
+WellKnownCommunities =
+{
+WellKnownCommunity.Internet
 },
-                CommunityMembers =
-{
-"1234:5678"
+}
 },
                 Tags =
 {
-["key2814"] = "",
+["keyId"] = "KeyValue",
 },
             };
             ArmOperation<IPCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ipCommunityName, data);
@@ -76,7 +80,7 @@ WellKnownCommunity.Internet,WellKnownCommunity.LocalAS,WellKnownCommunity.NoExpo
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_IpCommunitiesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpCommunities_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpCommunities_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "IpCommunities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,8 +90,8 @@ WellKnownCommunity.Internet,WellKnownCommunity.LocalAS,WellKnownCommunity.NoExpo
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -95,7 +99,7 @@ WellKnownCommunity.Internet,WellKnownCommunity.LocalAS,WellKnownCommunity.NoExpo
             IPCommunityCollection collection = resourceGroupResource.GetIPCommunities();
 
             // invoke the operation
-            string ipCommunityName = "example-ipCommunity";
+            string ipCommunityName = "example-ipcommunity";
             IPCommunityResource result = await collection.GetAsync(ipCommunityName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -110,7 +114,7 @@ WellKnownCommunity.Internet,WellKnownCommunity.LocalAS,WellKnownCommunity.NoExpo
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_IpCommunitiesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpCommunities_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpCommunities_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "IpCommunities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,8 +124,8 @@ WellKnownCommunity.Internet,WellKnownCommunity.LocalAS,WellKnownCommunity.NoExpo
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -129,7 +133,7 @@ WellKnownCommunity.Internet,WellKnownCommunity.LocalAS,WellKnownCommunity.NoExpo
             IPCommunityCollection collection = resourceGroupResource.GetIPCommunities();
 
             // invoke the operation
-            string ipCommunityName = "example-ipCommunity";
+            string ipCommunityName = "example-ipcommunity";
             bool result = await collection.ExistsAsync(ipCommunityName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -140,7 +144,7 @@ WellKnownCommunity.Internet,WellKnownCommunity.LocalAS,WellKnownCommunity.NoExpo
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_IpCommunitiesListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpCommunities_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpCommunities_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "IpCommunities_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,8 +154,8 @@ WellKnownCommunity.Internet,WellKnownCommunity.LocalAS,WellKnownCommunity.NoExpo
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 

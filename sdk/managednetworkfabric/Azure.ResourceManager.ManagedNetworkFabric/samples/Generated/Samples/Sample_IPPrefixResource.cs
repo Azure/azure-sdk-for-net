@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_IpPrefixesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpPrefixes_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "IpPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this IPPrefixResource created on azure
             // for more information of creating IPPrefixResource, please refer to the document of IPPrefixResource
-            string subscriptionId = "xxxxxx";
-            string resourceGroupName = "resourcegroupname";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string ipPrefixName = "example-ipPrefix";
             ResourceIdentifier ipPrefixResourceId = IPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
             IPPrefixResource ipPrefix = client.GetIPPrefixResource(ipPrefixResourceId);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_IpPrefixesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpPrefixes_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "IpPrefixes_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this IPPrefixResource created on azure
             // for more information of creating IPPrefixResource, please refer to the document of IPPrefixResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourcegroupname";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string ipPrefixName = "example-ipPrefix";
             ResourceIdentifier ipPrefixResourceId = IPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
             IPPrefixResource ipPrefix = client.GetIPPrefixResource(ipPrefixResourceId);
@@ -74,9 +74,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             IPPrefixPatch patch = new IPPrefixPatch()
             {
+                Annotation = "annotation",
+                IPPrefixRules =
+{
+new IPPrefixRule(CommunityActionType.Permit,4155123341,"10.10.10.10/30")
+{
+Condition = Condition.GreaterThanOrEqualTo,
+SubnetMaskLength = "10",
+}
+},
                 Tags =
 {
-["key3127"] = "key",
+["keyID"] = "KeyValue",
 },
             };
             ArmOperation<IPPrefixResource> lro = await ipPrefix.UpdateAsync(WaitUntil.Completed, patch);
@@ -94,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_IpPrefixesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpPrefixes_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "IpPrefixes_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,8 +113,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this IPPrefixResource created on azure
             // for more information of creating IPPrefixResource, please refer to the document of IPPrefixResource
-            string subscriptionId = "xxxxxx";
-            string resourceGroupName = "rgIpPrefixLists";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string ipPrefixName = "example-ipPrefix";
             ResourceIdentifier ipPrefixResourceId = IPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
             IPPrefixResource ipPrefix = client.GetIPPrefixResource(ipPrefixResourceId);
@@ -121,7 +130,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIPPrefixes_IpPrefixesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpPrefixes_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "IpPrefixes_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

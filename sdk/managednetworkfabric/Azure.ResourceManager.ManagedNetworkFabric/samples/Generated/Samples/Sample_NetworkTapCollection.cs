@@ -17,15 +17,15 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
-    public partial class Sample_RoutePolicyCollection
+    public partial class Sample_NetworkTapCollection
     {
-        // RoutePolicies_Create_MaximumSet_Gen
+        // NetworkTaps_Create_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_RoutePoliciesCreateMaximumSetGen()
+        public async Task CreateOrUpdate_NetworkTapsCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_Create_MaximumSet_Gen.json
-            // this example is just showing the usage of "RoutePolicies_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Create_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkTaps_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,89 +39,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this RoutePolicyResource
-            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            // get the collection of this NetworkTapResource
+            NetworkTapCollection collection = resourceGroupResource.GetNetworkTaps();
 
             // invoke the operation
-            string routePolicyName = "example-routePolicy";
-            RoutePolicyData data = new RoutePolicyData(new AzureLocation("eastus"), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
+            string networkTapName = "example-networkTap";
+            NetworkTapData data = new NetworkTapData(new AzureLocation("eastuseuap"), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkPacketBrokers/example-networkPacketBroker"), new NetworkTapPropertiesDestinationsItem[]
+            {
+new NetworkTapPropertiesDestinationsItem()
+{
+Name = "example-destinaionName",
+DestinationType = DestinationType.IsolationDomain,
+DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsloationDomains/example-l3Domain/internalNetworks/example-internalNetwork"),
+IsolationDomainProperties = new IsolationDomainProperties()
+{
+Encapsulation = Encapsulation.None,
+NeighborGroupIds =
+{
+new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup")
+},
+},
+DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxxx/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkTapRules/example-destinationTapRule"),
+}
+            })
             {
                 Annotation = "annotation",
-                Statements =
-{
-new RoutePolicyStatementProperties(7,new StatementConditionProperties()
-{
-RoutePolicyConditionType = RoutePolicyConditionType.Or,
-IPPrefixId = "/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/example-ipPrefix",
-IPExtendedCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
-},
-IPCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
-},
-},new StatementActionProperties(RoutePolicyActionType.Permit)
-{
-LocalPreference = 20,
-IPCommunityProperties = new ActionIPCommunityProperties()
-{
-DeleteIPCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
-},
-SetIPCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
-},
-AddIPCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
-},
-},
-IPExtendedCommunityProperties = new ActionIPExtendedCommunityProperties()
-{
-DeleteIPExtendedCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
-},
-SetIPExtendedCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
-},
-AddIPExtendedCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
-},
-},
-})
-{
-Annotation = "annotation",
-}
-},
-                AddressFamilyType = AddressFamilyType.IPv4,
+                PollingType = PollingType.Pull,
                 Tags =
 {
-["keyID"] = "keyValue",
+["key6024"] = "1234",
 },
             };
-            ArmOperation<RoutePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routePolicyName, data);
-            RoutePolicyResource result = lro.Value;
+            ArmOperation<NetworkTapResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkTapName, data);
+            NetworkTapResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RoutePolicyData resourceData = result.Data;
+            NetworkTapData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoutePolicies_Get_MaximumSet_Gen
+        // NetworkTaps_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_RoutePoliciesGetMaximumSetGen()
+        public async Task Get_NetworkTapsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "RoutePolicies_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkTaps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -135,27 +100,27 @@ Annotation = "annotation",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this RoutePolicyResource
-            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            // get the collection of this NetworkTapResource
+            NetworkTapCollection collection = resourceGroupResource.GetNetworkTaps();
 
             // invoke the operation
-            string routePolicyName = "example-routePolicy";
-            RoutePolicyResource result = await collection.GetAsync(routePolicyName);
+            string networkTapName = "example-networkTap";
+            NetworkTapResource result = await collection.GetAsync(networkTapName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RoutePolicyData resourceData = result.Data;
+            NetworkTapData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoutePolicies_Get_MaximumSet_Gen
+        // NetworkTaps_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_RoutePoliciesGetMaximumSetGen()
+        public async Task Exists_NetworkTapsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "RoutePolicies_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkTaps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -169,23 +134,23 @@ Annotation = "annotation",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this RoutePolicyResource
-            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            // get the collection of this NetworkTapResource
+            NetworkTapCollection collection = resourceGroupResource.GetNetworkTaps();
 
             // invoke the operation
-            string routePolicyName = "example-routePolicy";
-            bool result = await collection.ExistsAsync(routePolicyName);
+            string networkTapName = "example-networkTap";
+            bool result = await collection.ExistsAsync(networkTapName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RoutePolicies_ListByResourceGroup_MaximumSet_Gen
+        // NetworkTaps_ListByResourceGroup_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_RoutePoliciesListByResourceGroupMaximumSetGen()
+        public async Task GetAll_NetworkTapsListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "RoutePolicies_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkTaps_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -199,15 +164,15 @@ Annotation = "annotation",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this RoutePolicyResource
-            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            // get the collection of this NetworkTapResource
+            NetworkTapCollection collection = resourceGroupResource.GetNetworkTaps();
 
             // invoke the operation and iterate over the result
-            await foreach (RoutePolicyResource item in collection.GetAllAsync())
+            await foreach (NetworkTapResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RoutePolicyData resourceData = item.Data;
+                NetworkTapData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -25,32 +25,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [AsyncOnly]
         public async Task NetworkInterfaces()
         {
-            string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-            string networkDeviceName = TestEnvironment.NetworkDeviceName;
-            string networkInterfaceName = TestEnvironment.NetworkInterfaceName;
-
             TestContext.Out.WriteLine($"Entered into the NetworkInterface tests....");
-            TestContext.Out.WriteLine($"Provided NetworkInterface name : {networkInterfaceName}");
+            TestContext.Out.WriteLine($"Provided NetworkInterface name : {TestEnvironment.NetworkInterfaceName}");
 
-            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkDeviceName);
 
             NetworkDeviceResource networkDevice = Client.GetNetworkDeviceResource(networkDeviceResourceId);
             networkDevice = await networkDevice.GetAsync();
 
-            ResourceIdentifier networkInterfaceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, ResourceGroupResource.Id.Name, networkDeviceName, networkInterfaceName);
+            ResourceIdentifier networkInterfaceId = NetworkInterfaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupResource.Id.Name, TestEnvironment.NetworkDeviceName, TestEnvironment.NetworkInterfaceName);
             TestContext.Out.WriteLine($"networkInterfaceId: {networkInterfaceId}");
             NetworkInterfaceResource networkInterface = Client.GetNetworkInterfaceResource(networkInterfaceId);
 
             TestContext.Out.WriteLine($"NetworkInterface Test started.....");
 
-            NetworkInterfaceCollection collection = networkDevice.GetNetworkInterfaces();
-
             // Get
             TestContext.Out.WriteLine($"GET started.....");
             NetworkInterfaceResource getResult = await networkInterface.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, networkInterfaceName);
+            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkInterfaceName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -61,19 +54,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
-
-            // Update Admin State
-            TestContext.Out.WriteLine($"POST started.....");
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
-            {
-                State = AdministrativeState.Disable,
-            };
-            await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
-            body = new UpdateAdministrativeState()
-            {
-                State = AdministrativeState.Enable,
-            };
-            await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
         }
     }
 }

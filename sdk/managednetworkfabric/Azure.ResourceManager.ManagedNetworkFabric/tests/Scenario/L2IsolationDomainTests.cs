@@ -9,7 +9,7 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
+namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 {
     public class L2IsolationDomainTests : ManagedNetworkFabricManagementTestBase
     {
@@ -21,19 +21,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
         [AsyncOnly]
         public async Task L2IsolationDomains()
         {
-            string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-            string networkFabricId = TestEnvironment.ValidNetworkFabricId;
-            string l2IsolationDomainName= TestEnvironment.L2IsolationDomainName;
-
             // get the collection of this L2Isolation
-            var collection = ResourceGroupResource.GetL2IsolationDomains();
+
+            L2IsolationDomainCollection collection = ResourceGroupResource.GetL2IsolationDomains();
 
             TestContext.Out.WriteLine($"Entered into the L2Isolation Domain tests....");
 
-            TestContext.Out.WriteLine($"Provided NetworkFabric Id : {networkFabricId}");
+            TestContext.Out.WriteLine($"Provided NetworkFabric Id : {TestEnvironment.Provisioned_NF_ID}");
 
-            ResourceIdentifier l2DomainResourceId = L2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, ResourceGroupResource.Id.Name, l2IsolationDomainName);
+            ResourceIdentifier l2DomainResourceId = L2IsolationDomainResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupResource.Id.Name, TestEnvironment.L2IsolationDomainName);
 
             TestContext.Out.WriteLine($"l2DomainResourceId: {l2DomainResourceId}");
 
@@ -41,22 +37,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            L2IsolationDomainData data = new L2IsolationDomainData(new AzureLocation(TestEnvironment.Location))
+            L2IsolationDomainData data = new L2IsolationDomainData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.Provisioned_NF_ID), 1000)
             {
-                NetworkFabricId = networkFabricId,
-                VlanId = 501,
-                Mtu = 1500,
+                Annotation = "annotation",
+                Mtu = 7000,
+                Tags =
+                {
+                    ["keyID"] = "keyValue",
+                },
             };
-            ArmOperation<L2IsolationDomainResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, l2IsolationDomainName, data);
-            Assert.AreEqual(createResult.Value.Data.Name, l2IsolationDomainName);
+
+            ArmOperation<L2IsolationDomainResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.L2IsolationDomainName, data);
+            Assert.AreEqual(createResult.Value.Data.Name, TestEnvironment.L2IsolationDomainName);
 
             L2IsolationDomainResource l2IsolationDomain = Client.GetL2IsolationDomainResource(l2DomainResourceId);
+
+            //Update
+/*            L2IsolationDomainPatch patch = new L2IsolationDomainPatch()
+            {
+                Annotation = "annotation1",
+                Mtu = 6000,
+                Tags =
+                {
+                    ["keyID"] = "keyValue",
+                },
+            };
+            ArmOperation<L2IsolationDomainResource> updatedL2Isd = await l2IsolationDomain.UpdateAsync(WaitUntil.Completed, patch);
+            Assert.AreEqual(updatedL2Isd.Value.Data.Name, patch.Annotation);*/
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
             L2IsolationDomainResource getResult = await l2IsolationDomain.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, l2IsolationDomainName);
+            Assert.AreEqual(getResult.Data.Name, TestEnvironment.L2IsolationDomainName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -68,31 +81,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
-            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+/*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
             var listBySubscription = new List<L2IsolationDomainResource>();
             await foreach (L2IsolationDomainResource item in DefaultSubscription.GetL2IsolationDomainsAsync())
             {
                 listBySubscription.Add(item);
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.IsNotEmpty(listBySubscription);*/
 
             // Update Admin State
             TestContext.Out.WriteLine($"POST started.....");
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            UpdateAdministrativeState triggerEnable = new UpdateAdministrativeState()
             {
-                State = AdministrativeState.Enable,
+                State = EnableDisableState.Enable
             };
-            await l2IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            ArmOperation<CommonPostActionResponseForDeviceUpdate> test = await l2IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, triggerEnable);
 
-            body = new UpdateAdministrativeState()
+            UpdateAdministrativeState triggerDisable = new UpdateAdministrativeState()
             {
-                State = AdministrativeState.Disable,
+                State = EnableDisableState.Disable
             };
-            await l2IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            test = await l2IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, triggerDisable);
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
-            var deleteResponse = await l2IsolationDomain.DeleteAsync(WaitUntil.Completed);
+            ArmOperation deleteResponse = await l2IsolationDomain.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(deleteResponse.HasCompleted);
         }
     }

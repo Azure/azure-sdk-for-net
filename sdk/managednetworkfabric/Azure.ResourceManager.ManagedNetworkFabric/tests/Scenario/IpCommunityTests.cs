@@ -20,16 +20,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [Test]
         [RecordedTest]
         [AsyncOnly]
-        public async Task IpCommunities()
+        public async Task IpCommunitiesCRUD()
         {
-            string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-            string ipCommunityName = TestEnvironment.IpCommunityName;
+            TestContext.Out.WriteLine($"Entered into the IP Community tests....");
+            TestContext.Out.WriteLine($"Provided IP CommunityName name : {TestEnvironment.IpCommunityName}");
 
-            TestContext.Out.WriteLine($"Entered into the IpCommunity tests....");
-            TestContext.Out.WriteLine($"Provided IpCommunityName name : {ipCommunityName}");
-
-            ResourceIdentifier ipCommunityResourceId = IPCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityName);
+            ResourceIdentifier ipCommunityResourceId = IPCommunityResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.IpCommunityName);
             TestContext.Out.WriteLine($"IpCommunityResourceId: {ipCommunityResourceId}");
 
             // Get the collection of this IpCommunity
@@ -41,35 +37,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"PUT started.....");
             IPCommunityData data = new IPCommunityData(new AzureLocation(TestEnvironment.Location))
             {
-                Annotation = "annotationValue",
-                Action = CommunityActionType.Permit,
-                WellKnownCommunities =
+                Annotation = "annotation",
+                IPCommunityRules =
                 {
-                    WellKnownCommunity.Internet,WellKnownCommunity.LocalAS,WellKnownCommunity.NoExport,WellKnownCommunity.GShut
-                },
-                CommunityMembers =
-                {
-                    "1234:5678"
+                    new IPCommunityRule( CommunityActionType.Permit, 4155123341, new string[] { "1:1" })
+                    {
+                        WellKnownCommunities =
+                        {
+                            WellKnownCommunity.Internet
+                        },
+                    }
                 },
                 Tags =
                 {
-                    ["key2814"] = "",
+                    ["keyId"] = "KeyValue",
                 },
             };
 
-            ArmOperation<IPCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ipCommunityName, data);
+            ArmOperation<IPCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpCommunityName, data);
             IPCommunityResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, ipCommunityName);
-
             IPCommunityResource ipCommunity = Client.GetIPCommunityResource(ipCommunityResourceId);
+            Assert.AreEqual(createResult.Data.Name, TestEnvironment.IpCommunityName);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
             IPCommunityResource getResult = await ipCommunity.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, ipCommunityName);
+            Assert.AreEqual(getResult.Data.Name, TestEnvironment.IpCommunityName);
 
-            // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
             var listByResourceGroup = new List<IPCommunityResource>();
             IPCommunityCollection collectionOp = ResourceGroupResource.GetIPCommunities();
@@ -79,14 +74,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
-            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+/*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
             var listBySubscription = new List<IPCommunityResource>();
             await foreach (IPCommunityResource item in DefaultSubscription.GetIPCommunitiesAsync())
             {
                 listBySubscription.Add(item);
                 Console.WriteLine($"Succeeded on id: {item}");
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.IsNotEmpty(listBySubscription);*/
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");

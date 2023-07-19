@@ -9,7 +9,7 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
+namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 {
     public class NetworkToNetworkInterconnectTests : ManagedNetworkFabricManagementTestBase
     {
@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
         public async Task NetworkToNetworkInterconnects()
         {
             string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-            ResourceIdentifier validNetworkFabricId = TestEnvironment.ValidNetworkFabricIdForNNI;
-            string networkFabricName = TestEnvironment.ValidNetworkFabricNameForNNI;
-            string networkToNetworkInterconnectName= TestEnvironment.NetworkToNetworkInterConnectName;
+            ResourceIdentifier networkFabricId = new ResourceIdentifier("/subscriptions/9531faa8-8c39-4165-b033-48697fe943db/resourceGroups/nfa-tool-ts-clisdktest-GA-nfrg071323/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-GA-nf071823-postTest");//TestEnvironment.Provisioned_NF_ID);
+
+            string networkFabricName = networkFabricId.Name;
+            string networkToNetworkInterconnectName = TestEnvironment.NetworkToNetworkInterConnectName;
 
             TestContext.Out.WriteLine($"Entered into the NetworkToNetworkInterConnects tests....");
             TestContext.Out.WriteLine($"Provided NetworkFabric name : {networkFabricName}");
 
-            NetworkFabricResource networkFabric = Client.GetNetworkFabricResource(validNetworkFabricId);
+            NetworkFabricResource networkFabric = Client.GetNetworkFabricResource(networkFabricId);
             networkFabric = await networkFabric.GetAsync();
 
             ResourceIdentifier networkToNetworkInterconnectId = NetworkToNetworkInterconnectResource.CreateResourceIdentifier(subscriptionId, ResourceGroupResource.Id.Name, networkFabricName, networkToNetworkInterconnectName);
@@ -41,30 +41,99 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
 
             NetworkToNetworkInterconnectCollection collection = networkFabric.GetNetworkToNetworkInterconnects();
 
+            #region NNI create Test
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData()
+
+            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData(BooleanEnumProperty.True)
             {
-                IsManagementType = BooleanEnumProperty.True,
-                UseOptionB = BooleanEnumProperty.False,
-                Layer2Configuration = new Layer2Configuration(1500)
+                NniType = NniType.CE,
+                IsManagementType = IsManagementType.True,
+                Layer2Configuration = new Layer2Configuration()
                 {
-                    PortCount = 10,
+                    Mtu = 1500
                 },
-                Layer3Configuration = new Layer3Configuration()
+                OptionBLayer3Configuration = new NetworkToNetworkInterconnectPropertiesOptionBLayer3Configuration()
                 {
-                    ImportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName1",
-                    ExportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
-                    PeerASN = 50272,
-                    VlanId = 2064,
-                    PrimaryIPv4Prefix = "172.31.0.0/31",
-                    PrimaryIPv6Prefix = "3FFE:FFFF:0:CD30::a0/126",
-                    SecondaryIPv4Prefix = "172.31.0.20/31",
-                    SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::a4/126",
+                    PeerASN = 61234,
+                    VlanId = 1234,
+                    PrimaryIPv4Prefix = "10.0.0.12/30",
+                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                    SecondaryIPv4Prefix = "40.0.0.14/30",
+                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                 },
+                ImportRoutePolicy = new ImportRoutePolicyInformation()
+                {
+                    ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/9531faa8-8c39-4165-b033-48697fe943db/resourceGroups/nfa-tool-ts-clisdktest-GA-nfrg071323/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-GA-routePolicy071423"),
+                },
+                ExportRoutePolicy = new ExportRoutePolicyInformation()
+                {
+                    ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/9531faa8-8c39-4165-b033-48697fe943db/resourceGroups/nfa-tool-ts-clisdktest-GA-nfrg071323/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-GA-routePolicy071423"),
+                }
             };
             ArmOperation<NetworkToNetworkInterconnectResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkToNetworkInterconnectName, data);
             Assert.AreEqual(createResult.Value.Data.Name, networkToNetworkInterconnectName);
+
+            #endregion
+
+/*            #region NNI update
+            // invoke the operation
+            NetworkToNetworkInterconnectPatch nniPatch = new NetworkToNetworkInterconnectPatch()
+            {
+                Layer2Configuration = new Layer2Configuration()
+                {
+                    Mtu = 1500,
+                    Interfaces = //To-Do need to add the valid interface
+                    {
+                        new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkDevices/example-networkDevice/networkInterfaces/example-networkInterface")
+                    },
+                },
+                OptionBLayer3Configuration = new OptionBLayer3Configuration()
+                {
+                    PeerASN = 2345,
+                    VlanId = 1235,
+                    PrimaryIPv4Prefix = "20.0.0.12/29",
+                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                    SecondaryIPv4Prefix = "20.0.0.14/29",
+                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
+                },
+                NpbStaticRouteConfiguration = new NpbStaticRouteConfiguration()
+                {
+                    BfdConfiguration = new BfdConfiguration()
+                    {
+                        IntervalInMilliSeconds = 310,
+                        Multiplier = 15,
+                    },
+                    IPv4Routes =
+                    {
+                        new StaticRouteProperties("20.0.0.11/30",new string[]
+                        {
+                            "21.20.20.10"
+                        })
+                    },
+                    IPv6Routes =
+                    {
+                        new StaticRouteProperties("4FFE:FFFF:0:CD30::ac/127",new string[]
+                        {
+                            "5FFE:FFFF:0:CD30::ac"
+                        })
+                    },
+                },
+                ImportRoutePolicy = new ImportRoutePolicyInformation()
+                {
+                    ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy1"),
+                    ImportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy1"),
+                },
+                ExportRoutePolicy = new ExportRoutePolicyInformation()
+                {
+                    ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy1"),
+                    ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy1"),
+                },
+                EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+                IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+            };
+            ArmOperation<NetworkToNetworkInterconnectResource> lro = await nni.UpdateAsync(WaitUntil.Completed, nniPatch);
+            #endregion*/
 
             NetworkToNetworkInterconnectResource networkToNetworkInterconnect = Client.GetNetworkToNetworkInterconnectResource(networkToNetworkInterconnectId);
 
@@ -75,7 +144,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
             Assert.AreEqual(getResult.Data.Name, networkToNetworkInterconnectName);
 
             // List
-            TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
+            TestContext.Out.WriteLine($"GET - List by Fabric started.....");
             var listByResourceGroup = new List<NetworkToNetworkInterconnectResource>();
             NetworkToNetworkInterconnectCollection collectionOp = networkFabric.GetNetworkToNetworkInterconnects();
             await foreach (NetworkToNetworkInterconnectResource item in collectionOp.GetAllAsync())
@@ -83,6 +152,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
+
+/*            // Post Action: Update Administrative State //TO-Do Not yet supported
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            {
+                State = EnableDisableState.Enable
+            };
+            ArmOperation<CommonPostActionResponseForStateUpdate> updateAdministrativeStateResponse = await networkToNetworkInterconnect.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            CommonPostActionResponseForStateUpdate result = updateAdministrativeStateResponse.Value;
+
+            //Post Action: Update NpbStaticRouteBFD Administrative state
+            ArmOperation<CommonPostActionResponseForStateUpdate> updateBFDState = await networkToNetworkInterconnect.UpdateNpbStaticRouteBfdAdministrativeStateAsync(WaitUntil.Completed, body);*/
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");

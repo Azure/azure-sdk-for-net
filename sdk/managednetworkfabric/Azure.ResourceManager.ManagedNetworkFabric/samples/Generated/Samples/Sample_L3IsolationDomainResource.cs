@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_L3IsolationDomainsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/L3IsolationDomains_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L3IsolationDomains_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "L3IsolationDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this L3IsolationDomainResource created on azure
             // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_L3IsolationDomainsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/L3IsolationDomains_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L3IsolationDomains_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "L3IsolationDomains_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this L3IsolationDomainResource created on azure
             // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
@@ -74,30 +74,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             L3IsolationDomainPatch patch = new L3IsolationDomainPatch()
             {
+                Annotation = "annotation1",
                 RedistributeConnectedSubnets = RedistributeConnectedSubnet.True,
                 RedistributeStaticRoutes = RedistributeStaticRoute.False,
                 AggregateRouteConfiguration = new AggregateRouteConfiguration()
                 {
                     IPv4Routes =
 {
-new AggregateRoute()
-{
-Prefix = "10.0.0.0/24",
-}
+new AggregateRoute("10.0.0.0/24")
 },
                     IPv6Routes =
 {
-new AggregateRoute()
-{
-Prefix = "3FFE:FFFF:0:CD30::a0/29",
-}
+new AggregateRoute("3FFE:FFFF:0:CD30::a0/29")
 },
                 },
-                Description = "creating L3 isolation domain",
-                ConnectedSubnetRoutePolicy = new L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy()
+                ConnectedSubnetRoutePolicy = new ConnectedSubnetRoutePolicy()
                 {
-                    ExportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName",
+                    ExportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                    ExportRoutePolicy = new L3ExportRoutePolicy()
+                    {
+                        ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy1"),
+                        ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy1"),
+                    },
                 },
+                Tags =
+{
+["key4953"] = "1234",
+},
             };
             ArmOperation<L3IsolationDomainResource> lro = await l3IsolationDomain.UpdateAsync(WaitUntil.Completed, patch);
             L3IsolationDomainResource result = lro.Value;
@@ -114,7 +117,7 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_L3IsolationDomainsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/L3IsolationDomains_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L3IsolationDomains_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "L3IsolationDomains_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,8 +127,8 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
 
             // this example assumes you already have this L3IsolationDomainResource created on azure
             // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
@@ -141,7 +144,7 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetL3IsolationDomains_L3IsolationDomainsListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/L3IsolationDomains_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L3IsolationDomains_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "L3IsolationDomains_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +154,7 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -173,7 +176,7 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateAdministrativeState_L3IsolationDomainsUpdateAdministrativeStateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/L3IsolationDomains_updateAdministrativeState_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L3IsolationDomains_updateAdministrativeState_MaximumSet_Gen.json
             // this example is just showing the usage of "L3IsolationDomains_updateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,8 +186,8 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
 
             // this example assumes you already have this L3IsolationDomainResource created on azure
             // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
@@ -192,24 +195,25 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
             // invoke the operation
             UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
-                State = AdministrativeState.Enable,
+                State = EnableDisableState.Enable,
                 ResourceIds =
 {
-"/subscriptions/xxxxxx/resourceGroups/resourcegroupname/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/example-l3domain"
+""
 },
             };
-            await l3IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            ArmOperation<CommonPostActionResponseForDeviceUpdate> lro = await l3IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            CommonPostActionResponseForDeviceUpdate result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
-        // L3IsolationDomains_updateOptionBAdministrativeState_MaximumSet_Gen
+        // L3IsolationDomains_ValidateConfiguration_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateOptionBAdministrativeState_L3IsolationDomainsUpdateOptionBAdministrativeStateMaximumSetGen()
+        public async Task ValidateConfiguration_L3IsolationDomainsValidateConfigurationMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/L3IsolationDomains_updateOptionBAdministrativeState_MaximumSet_Gen.json
-            // this example is just showing the usage of "L3IsolationDomains_updateOptionBAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L3IsolationDomains_ValidateConfiguration_MaximumSet_Gen.json
+            // this example is just showing the usage of "L3IsolationDomains_ValidateConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -218,33 +222,26 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
 
             // this example assumes you already have this L3IsolationDomainResource created on azure
             // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // invoke the operation
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
-            {
-                State = AdministrativeState.Enable,
-                ResourceIds =
-{
-"/subscriptions/xxxxxx/resourceGroups/resourcegroupname/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/example-l3domain"
-},
-            };
-            await l3IsolationDomain.UpdateOptionBAdministrativeStateAsync(WaitUntil.Completed, body);
+            ArmOperation<ValidateConfigurationResponse> lro = await l3IsolationDomain.ValidateConfigurationAsync(WaitUntil.Completed);
+            ValidateConfigurationResponse result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
-        // L3IsolationDomains_clearArpTable_MaximumSet_Gen
+        // L3IsolationDomains_CommitConfiguration_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ClearArpTable_L3IsolationDomainsClearArpTableMaximumSetGen()
+        public async Task CommitConfiguration_L3IsolationDomainsCommitConfigurationMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/L3IsolationDomains_clearArpTable_MaximumSet_Gen.json
-            // this example is just showing the usage of "L3IsolationDomains_clearArpTable" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L3IsolationDomains_CommitConfiguration_MaximumSet_Gen.json
+            // this example is just showing the usage of "L3IsolationDomains_CommitConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -253,57 +250,17 @@ Prefix = "3FFE:FFFF:0:CD30::a0/29",
 
             // this example assumes you already have this L3IsolationDomainResource created on azure
             // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string l3IsolationDomainName = "l3IsolationDomainName";
-            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
-
-            // invoke the operation
-            EnableDisableOnResources body = new EnableDisableOnResources()
-            {
-                ResourceIds =
-{
-"/subscriptions/xxxxxx/resourceGroups/resourcegroupname/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/example-l3domain"
-},
-            };
-            await l3IsolationDomain.ClearArpTableAsync(WaitUntil.Completed, body);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // L3IsolationDomains_clearNeighborTable_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ClearNeighborTable_L3IsolationDomainsClearNeighborTableMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/L3IsolationDomains_clearNeighborTable_MaximumSet_Gen.json
-            // this example is just showing the usage of "L3IsolationDomains_clearNeighborTable" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this L3IsolationDomainResource created on azure
-            // for more information of creating L3IsolationDomainResource, please refer to the document of L3IsolationDomainResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             L3IsolationDomainResource l3IsolationDomain = client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // invoke the operation
-            EnableDisableOnResources body = new EnableDisableOnResources()
-            {
-                ResourceIds =
-{
-"wnaxqikneofcni"
-},
-            };
-            await l3IsolationDomain.ClearNeighborTableAsync(WaitUntil.Completed, body);
+            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await l3IsolationDomain.CommitConfigurationAsync(WaitUntil.Completed);
+            CommonPostActionResponseForStateUpdate result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

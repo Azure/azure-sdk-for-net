@@ -17,15 +17,15 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
-    public partial class Sample_RoutePolicyCollection
+    public partial class Sample_InternetGatewayRuleCollection
     {
-        // RoutePolicies_Create_MaximumSet_Gen
+        // InternetGatewayRules_Create_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_RoutePoliciesCreateMaximumSetGen()
+        public async Task CreateOrUpdate_InternetGatewayRulesCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_Create_MaximumSet_Gen.json
-            // this example is just showing the usage of "RoutePolicies_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGatewayRules_Create_MaximumSet_Gen.json
+            // this example is just showing the usage of "InternetGatewayRules_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,89 +39,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this RoutePolicyResource
-            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            // get the collection of this InternetGatewayRuleResource
+            InternetGatewayRuleCollection collection = resourceGroupResource.GetInternetGatewayRules();
 
             // invoke the operation
-            string routePolicyName = "example-routePolicy";
-            RoutePolicyData data = new RoutePolicyData(new AzureLocation("eastus"), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
+            string internetGatewayRuleName = "example-internetGatewayRule";
+            InternetGatewayRuleData data = new InternetGatewayRuleData(new AzureLocation("eastus"), new RuleProperties(InternetGatewayRuleAction.Allow, new string[]
             {
-                Annotation = "annotation",
-                Statements =
-{
-new RoutePolicyStatementProperties(7,new StatementConditionProperties()
-{
-RoutePolicyConditionType = RoutePolicyConditionType.Or,
-IPPrefixId = "/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/example-ipPrefix",
-IPExtendedCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
-},
-IPCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
-},
-},new StatementActionProperties(RoutePolicyActionType.Permit)
-{
-LocalPreference = 20,
-IPCommunityProperties = new ActionIPCommunityProperties()
-{
-DeleteIPCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
-},
-SetIPCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
-},
-AddIPCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
-},
-},
-IPExtendedCommunityProperties = new ActionIPExtendedCommunityProperties()
-{
-DeleteIPExtendedCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
-},
-SetIPExtendedCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
-},
-AddIPExtendedCommunityIds =
-{
-"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
-},
-},
-})
-{
-Annotation = "annotation",
-}
-},
-                AddressFamilyType = AddressFamilyType.IPv4,
+"10.10.10.10"
+            }))
+            {
+                Annotation = "annotationValue",
                 Tags =
 {
 ["keyID"] = "keyValue",
 },
             };
-            ArmOperation<RoutePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routePolicyName, data);
-            RoutePolicyResource result = lro.Value;
+            ArmOperation<InternetGatewayRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, internetGatewayRuleName, data);
+            InternetGatewayRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RoutePolicyData resourceData = result.Data;
+            InternetGatewayRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoutePolicies_Get_MaximumSet_Gen
+        // InternetGatewayRules_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_RoutePoliciesGetMaximumSetGen()
+        public async Task Get_InternetGatewayRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "RoutePolicies_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGatewayRules_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "InternetGatewayRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -135,27 +85,27 @@ Annotation = "annotation",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this RoutePolicyResource
-            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            // get the collection of this InternetGatewayRuleResource
+            InternetGatewayRuleCollection collection = resourceGroupResource.GetInternetGatewayRules();
 
             // invoke the operation
-            string routePolicyName = "example-routePolicy";
-            RoutePolicyResource result = await collection.GetAsync(routePolicyName);
+            string internetGatewayRuleName = "example-internetGatewayRule";
+            InternetGatewayRuleResource result = await collection.GetAsync(internetGatewayRuleName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RoutePolicyData resourceData = result.Data;
+            InternetGatewayRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoutePolicies_Get_MaximumSet_Gen
+        // InternetGatewayRules_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_RoutePoliciesGetMaximumSetGen()
+        public async Task Exists_InternetGatewayRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "RoutePolicies_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGatewayRules_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "InternetGatewayRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -169,23 +119,23 @@ Annotation = "annotation",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this RoutePolicyResource
-            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            // get the collection of this InternetGatewayRuleResource
+            InternetGatewayRuleCollection collection = resourceGroupResource.GetInternetGatewayRules();
 
             // invoke the operation
-            string routePolicyName = "example-routePolicy";
-            bool result = await collection.ExistsAsync(routePolicyName);
+            string internetGatewayRuleName = "example-internetGatewayRule";
+            bool result = await collection.ExistsAsync(internetGatewayRuleName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RoutePolicies_ListByResourceGroup_MaximumSet_Gen
+        // InternetGatewayRules_ListByResourceGroup_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_RoutePoliciesListByResourceGroupMaximumSetGen()
+        public async Task GetAll_InternetGatewayRulesListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "RoutePolicies_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGatewayRules_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "InternetGatewayRules_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -195,19 +145,19 @@ Annotation = "annotation",
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            string resourceGroupName = "example-rg";
+            string resourceGroupName = "example-internetGatewayRule";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this RoutePolicyResource
-            RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
+            // get the collection of this InternetGatewayRuleResource
+            InternetGatewayRuleCollection collection = resourceGroupResource.GetInternetGatewayRules();
 
             // invoke the operation and iterate over the result
-            await foreach (RoutePolicyResource item in collection.GetAllAsync())
+            await foreach (InternetGatewayRuleResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                RoutePolicyData resourceData = item.Data;
+                InternetGatewayRuleData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_RoutePoliciesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/RoutePolicies_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "RoutePolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this RoutePolicyResource created on azure
             // for more information of creating RoutePolicyResource, please refer to the document of RoutePolicyResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "rgRoutePolicies";
-            string routePolicyName = "routePolicyName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string routePolicyName = "example-routePolicy";
             ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
             RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_RoutePoliciesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/RoutePolicies_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "RoutePolicies_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,18 +65,70 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this RoutePolicyResource created on azure
             // for more information of creating RoutePolicyResource, please refer to the document of RoutePolicyResource
-            string subscriptionId = "97D66995-95BA-464A-A250-FB6E25E499A8";
-            string resourceGroupName = "resourceGroupName";
-            string routePolicyName = "routePolicyName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string routePolicyName = "example-routePolicy";
             ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
             RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
 
             // invoke the operation
             RoutePolicyPatch patch = new RoutePolicyPatch()
             {
+                Statements =
+{
+new RoutePolicyStatementProperties(7,new StatementConditionProperties()
+{
+RoutePolicyConditionType = RoutePolicyConditionType.Or,
+IPPrefixId = "/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/example-ipPrefix",
+IPExtendedCommunityIds =
+{
+"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
+},
+IPCommunityIds =
+{
+"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
+},
+},new StatementActionProperties(RoutePolicyActionType.Permit)
+{
+LocalPreference = 20,
+IPCommunityProperties = new ActionIPCommunityProperties()
+{
+DeleteIPCommunityIds =
+{
+"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
+},
+SetIPCommunityIds =
+{
+"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
+},
+AddIPCommunityIds =
+{
+"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipCommunities/example-ipCommunity"
+},
+},
+IPExtendedCommunityProperties = new ActionIPExtendedCommunityProperties()
+{
+DeleteIPExtendedCommunityIds =
+{
+"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
+},
+SetIPExtendedCommunityIds =
+{
+"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
+},
+AddIPExtendedCommunityIds =
+{
+"/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity"
+},
+},
+})
+{
+Annotation = "annotation",
+}
+},
                 Tags =
 {
-["key8254"] = "",
+["keyID"] = "keyValue",
 },
             };
             ArmOperation<RoutePolicyResource> lro = await routePolicy.UpdateAsync(WaitUntil.Completed, patch);
@@ -94,7 +146,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_RoutePoliciesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/RoutePolicies_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "RoutePolicies_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,9 +156,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this RoutePolicyResource created on azure
             // for more information of creating RoutePolicyResource, please refer to the document of RoutePolicyResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "rgRoutePolicies";
-            string routePolicyName = "routePolicyName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string routePolicyName = "example-routePolicy";
             ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
             RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
 
@@ -121,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetRoutePolicies_RoutePoliciesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/RoutePolicies_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "RoutePolicies_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +183,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -146,6 +198,98 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             }
 
             Console.WriteLine($"Succeeded");
+        }
+
+        // RoutePolicies_UpdateAdministrativeState_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task UpdateAdministrativeState_RoutePoliciesUpdateAdministrativeStateMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_UpdateAdministrativeState_MaximumSet_Gen.json
+            // this example is just showing the usage of "RoutePolicies_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RoutePolicyResource created on azure
+            // for more information of creating RoutePolicyResource, please refer to the document of RoutePolicyResource
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string routePolicyName = "example-routePolicy";
+            ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
+            RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
+
+            // invoke the operation
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            {
+                State = EnableDisableState.Enable,
+                ResourceIds =
+{
+""
+},
+            };
+            ArmOperation<CommonPostActionResponseForDeviceUpdate> lro = await routePolicy.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            CommonPostActionResponseForDeviceUpdate result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // RoutePolicies_ValidateConfiguration_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task ValidateConfiguration_RoutePoliciesValidateConfigurationMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_ValidateConfiguration_MaximumSet_Gen.json
+            // this example is just showing the usage of "RoutePolicies_ValidateConfiguration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RoutePolicyResource created on azure
+            // for more information of creating RoutePolicyResource, please refer to the document of RoutePolicyResource
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string routePolicyName = "example-routePolicy";
+            ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
+            RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
+
+            // invoke the operation
+            ArmOperation<ValidateConfigurationResponse> lro = await routePolicy.ValidateConfigurationAsync(WaitUntil.Completed);
+            ValidateConfigurationResponse result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // RoutePolicies_CommitConfiguration_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CommitConfiguration_RoutePoliciesCommitConfigurationMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_CommitConfiguration_MaximumSet_Gen.json
+            // this example is just showing the usage of "RoutePolicies_CommitConfiguration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RoutePolicyResource created on azure
+            // for more information of creating RoutePolicyResource, please refer to the document of RoutePolicyResource
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string routePolicyName = "example-routePolicy";
+            ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routePolicyName);
+            RoutePolicyResource routePolicy = client.GetRoutePolicyResource(routePolicyResourceId);
+
+            // invoke the operation
+            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await routePolicy.CommitConfigurationAsync(WaitUntil.Completed);
+            CommonPostActionResponseForStateUpdate result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

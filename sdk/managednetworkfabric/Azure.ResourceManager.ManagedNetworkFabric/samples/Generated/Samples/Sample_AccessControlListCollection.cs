@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_AccessControlListCollection
     {
-        // AccessControlLists_Create_MinimumSet_Gen
+        // AccessControlLists_Create_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_AccessControlListsCreateMinimumSetGen()
+        public async Task CreateOrUpdate_AccessControlListsCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/AccessControlLists_Create_MinimumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "AccessControlLists_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -43,11 +43,148 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
 
             // invoke the operation
-            string accessControlListName = "aclOne";
-            AccessControlListData data = new AccessControlListData(new AzureLocation("EastUs"), AddressFamily.IPv4, new AccessControlListConditionProperties[]
+            string accessControlListName = "example-acl";
+            AccessControlListData data = new AccessControlListData(new AzureLocation("eastUs"))
             {
-new AccessControlListConditionProperties(3,ConditionActionType.Allow,"1.1.1.1","21","2.2.2.2","65000",6)
-            });
+                Annotation = "annotation",
+                ConfigurationType = ConfigurationType.File,
+                AclsUri = new Uri("https://ACL-Storage-URL"),
+                MatchConfigurations =
+{
+new AccessControlListMatchConfiguration()
+{
+MatchConfigurationName = "example-match",
+SequenceNumber = 123,
+IPAddressType = IPAddressType.IPv4,
+MatchConditions =
+{
+new AccessControlListMatchCondition()
+{
+EtherTypes =
+{
+"0x1"
+},
+Fragments =
+{
+"0xff00-0xffff"
+},
+IPLengths =
+{
+"4094-9214"
+},
+TtlValues =
+{
+"23"
+},
+DscpMarkings =
+{
+"32"
+},
+PortCondition = new AccessControlListPortCondition(Layer4Protocol.TCP)
+{
+Flags =
+{
+"established"
+},
+PortType = PortType.SourcePort,
+Ports =
+{
+"1-20"
+},
+PortGroupNames =
+{
+"example-portGroup"
+},
+},
+ProtocolTypes =
+{
+"TCP"
+},
+VlanMatchCondition = new VlanMatchCondition()
+{
+Vlans =
+{
+"20-30"
+},
+InnerVlans =
+{
+"30"
+},
+VlanGroupNames =
+{
+"example-vlanGroup"
+},
+},
+IPCondition = new IPMatchCondition()
+{
+SourceDestinationType = SourceDestinationType.SourceIP,
+PrefixType = PrefixType.Prefix,
+IPPrefixValues =
+{
+"10.20.20.20/12"
+},
+IPGroupNames =
+{
+"example-ipGroup"
+},
+},
+}
+},
+Actions =
+{
+new AccessControlListAction()
+{
+AclActionType = AclActionType.Count,
+CounterName = "example-counter",
+}
+},
+}
+},
+                DynamicMatchConfigurations =
+{
+new CommonDynamicMatchConfiguration()
+{
+IPGroups =
+{
+new IPGroupProperties()
+{
+Name = "example-ipGroup",
+IPAddressType = IPAddressType.IPv4,
+IPPrefixes =
+{
+"10.20.3.1/20"
+},
+}
+},
+VlanGroups =
+{
+new VlanGroupProperties()
+{
+Name = "example-vlanGroup",
+Vlans =
+{
+"20-30"
+},
+}
+},
+PortGroups =
+{
+new PortGroupProperties()
+{
+Name = "example-portGroup",
+Ports =
+{
+"100-200"
+},
+}
+},
+}
+},
+                Tags =
+{
+["keyID"] = "KeyValue",
+},
+            };
             ArmOperation<AccessControlListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accessControlListName, data);
             AccessControlListResource result = lro.Value;
 
@@ -58,12 +195,12 @@ new AccessControlListConditionProperties(3,ConditionActionType.Allow,"1.1.1.1","
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AccessControlLists_Get_MinimumSet_Gen
+        // AccessControlLists_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_AccessControlListsGetMinimumSetGen()
+        public async Task Get_AccessControlListsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/AccessControlLists_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "AccessControlLists_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,8 +210,8 @@ new AccessControlListConditionProperties(3,ConditionActionType.Allow,"1.1.1.1","
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -82,7 +219,7 @@ new AccessControlListConditionProperties(3,ConditionActionType.Allow,"1.1.1.1","
             AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
 
             // invoke the operation
-            string accessControlListName = "aclOne";
+            string accessControlListName = "example-acl";
             AccessControlListResource result = await collection.GetAsync(accessControlListName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -92,12 +229,12 @@ new AccessControlListConditionProperties(3,ConditionActionType.Allow,"1.1.1.1","
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AccessControlLists_Get_MinimumSet_Gen
+        // AccessControlLists_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_AccessControlListsGetMinimumSetGen()
+        public async Task Exists_AccessControlListsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/AccessControlLists_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "AccessControlLists_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,8 +244,8 @@ new AccessControlListConditionProperties(3,ConditionActionType.Allow,"1.1.1.1","
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -116,18 +253,18 @@ new AccessControlListConditionProperties(3,ConditionActionType.Allow,"1.1.1.1","
             AccessControlListCollection collection = resourceGroupResource.GetAccessControlLists();
 
             // invoke the operation
-            string accessControlListName = "aclOne";
+            string accessControlListName = "example-acl";
             bool result = await collection.ExistsAsync(accessControlListName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AccessControlLists_ListByResourceGroup_MinimumSet_Gen
+        // AccessControlLists_ListByResourceGroup_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_AccessControlListsListByResourceGroupMinimumSetGen()
+        public async Task GetAll_AccessControlListsListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/AccessControlLists_ListByResourceGroup_MinimumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "AccessControlLists_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,8 +274,8 @@ new AccessControlListConditionProperties(3,ConditionActionType.Allow,"1.1.1.1","
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 

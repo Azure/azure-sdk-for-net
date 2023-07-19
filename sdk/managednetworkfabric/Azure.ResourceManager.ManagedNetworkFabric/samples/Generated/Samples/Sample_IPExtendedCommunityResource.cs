@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_IpExtendedCommunitiesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpExtendedCommunities_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "IpExtendedCommunities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this IPExtendedCommunityResource created on azure
             // for more information of creating IPExtendedCommunityResource, please refer to the document of IPExtendedCommunityResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "rgIpExtendedCommunityLists";
-            string ipExtendedCommunityName = "example_ipExtendedCommunity";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string ipExtendedCommunityName = "example-ipExtendedCommunity";
             ResourceIdentifier ipExtendedCommunityResourceId = IPExtendedCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipExtendedCommunityName);
             IPExtendedCommunityResource ipExtendedCommunity = client.GetIPExtendedCommunityResource(ipExtendedCommunityResourceId);
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_IpExtendedCommunitiesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpExtendedCommunities_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "IpExtendedCommunities_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,18 +65,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this IPExtendedCommunityResource created on azure
             // for more information of creating IPExtendedCommunityResource, please refer to the document of IPExtendedCommunityResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "rgIpExtendedCommunityLists";
-            string ipExtendedCommunityName = "example_ipExtendedCommunity";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string ipExtendedCommunityName = "example-ipExtendedCommunity";
             ResourceIdentifier ipExtendedCommunityResourceId = IPExtendedCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipExtendedCommunityName);
             IPExtendedCommunityResource ipExtendedCommunity = client.GetIPExtendedCommunityResource(ipExtendedCommunityResourceId);
 
             // invoke the operation
             IPExtendedCommunityPatch patch = new IPExtendedCommunityPatch()
             {
+                IPExtendedCommunityRules =
+{
+new IPExtendedCommunityRule(CommunityActionType.Permit,4155123341,new string[]
+{
+"1234:2345"
+})
+},
                 Tags =
 {
-["key5054"] = "key1",
+["keyID"] = "KeyValue",
 },
             };
             ArmOperation<IPExtendedCommunityResource> lro = await ipExtendedCommunity.UpdateAsync(WaitUntil.Completed, patch);
@@ -94,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_IpExtendedCommunitiesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpExtendedCommunities_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "IpExtendedCommunities_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,9 +111,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this IPExtendedCommunityResource created on azure
             // for more information of creating IPExtendedCommunityResource, please refer to the document of IPExtendedCommunityResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "rgIpExtendedCommunityLists";
-            string ipExtendedCommunityName = "example_ipExtendedCommunity";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string ipExtendedCommunityName = "example-ipExtendedCommunity";
             ResourceIdentifier ipExtendedCommunityResourceId = IPExtendedCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipExtendedCommunityName);
             IPExtendedCommunityResource ipExtendedCommunity = client.GetIPExtendedCommunityResource(ipExtendedCommunityResourceId);
 
@@ -121,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIPExtendedCommunities_IpExtendedCommunitiesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpExtendedCommunities_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "IpExtendedCommunities_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

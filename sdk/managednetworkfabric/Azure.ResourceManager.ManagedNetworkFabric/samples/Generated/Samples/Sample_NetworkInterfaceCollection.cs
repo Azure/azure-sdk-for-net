@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_NetworkInterfacesCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkInterfaces_Create_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkInterfaces_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceResource created on azure
             // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkInterfaceCollection collection = networkDevice.GetNetworkInterfaces();
 
             // invoke the operation
-            string networkInterfaceName = "networkInterfaceName";
+            string networkInterfaceName = "example-interface";
             NetworkInterfaceData data = new NetworkInterfaceData()
             {
-                Annotation = "null",
+                Annotation = "annotation",
             };
             ArmOperation<NetworkInterfaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, data);
             NetworkInterfaceResource result = lro.Value;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NetworkInterfacesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkInterfaces_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkInterfaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceResource created on azure
             // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkInterfaceCollection collection = networkDevice.GetNetworkInterfaces();
 
             // invoke the operation
-            string networkInterfaceName = "networkInterfaceName";
+            string networkInterfaceName = "example-interface";
             NetworkInterfaceResource result = await collection.GetAsync(networkInterfaceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_NetworkInterfacesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkInterfaces_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkInterfaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceResource created on azure
             // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
@@ -117,19 +117,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkInterfaceCollection collection = networkDevice.GetNetworkInterfaces();
 
             // invoke the operation
-            string networkInterfaceName = "networkInterfaceName";
+            string networkInterfaceName = "example-interface";
             bool result = await collection.ExistsAsync(networkInterfaceName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkInterfaces_List_MaximumSet_Gen
+        // NetworkInterfaces_ListByNetworkDevice_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_NetworkInterfacesListMaximumSetGen()
+        public async Task GetAll_NetworkInterfacesListByNetworkDeviceMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkInterfaces_List_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkInterfaces_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_ListByNetworkDevice_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkInterfaces_ListByNetworkDevice" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceResource created on azure
             // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 

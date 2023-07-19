@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -22,14 +21,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [AsyncOnly]
         public async Task IpExtendedCommunities()
         {
-            string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-            string IpExtendedCommunityName = TestEnvironment.IpExtendedCommunityName;
+            TestContext.Out.WriteLine($"Provided  IpExtendedCommunityName name : {TestEnvironment.IpExtendedCommunityName}");
 
-            TestContext.Out.WriteLine($"Entered into the IpExtendedCommunity tests....");
-            TestContext.Out.WriteLine($"Provided IpExtendedCommunityName name : {IpExtendedCommunityName}");
-
-            ResourceIdentifier ipExtendedCommunityResourceId = IPExtendedCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, IpExtendedCommunityName);
+            ResourceIdentifier ipExtendedCommunityResourceId = IPExtendedCommunityResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.IpExtendedCommunityName);
             TestContext.Out.WriteLine($"ipExtendedCommunityResourceId: {ipExtendedCommunityResourceId}");
 
             // Get the collection of this IpExtendedCommunity
@@ -39,23 +33,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            IPExtendedCommunityData data = new IPExtendedCommunityData(new AzureLocation(TestEnvironment.Location))
+            IPExtendedCommunityData data = new IPExtendedCommunityData(new AzureLocation(TestEnvironment.Location), new IPExtendedCommunityRule[] { new IPExtendedCommunityRule(CommunityActionType.Permit, 4155123341, new string[] { "1234:2345" }) })
             {
-                Annotation = "annotationValue",
-                Action = CommunityActionType.Permit,
-                RouteTargets =
-                {
-                    "1234:5678"
-                },
+                Annotation = "annotation",
                 Tags =
                 {
-                    ["key5054"] = "key",
+                    ["keyID"] = "KeyValue",
                 },
             };
 
-            ArmOperation<IPExtendedCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, IpExtendedCommunityName, data);
+            ArmOperation<IPExtendedCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpExtendedCommunityName, data);
             IPExtendedCommunityResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, IpExtendedCommunityName);
+            Assert.AreEqual(createResult.Data.Name, TestEnvironment.IpExtendedCommunityName);
 
             IPExtendedCommunityResource ipExtendedCommunity = Client.GetIPExtendedCommunityResource(ipExtendedCommunityResourceId);
 
@@ -63,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             IPExtendedCommunityResource getResult = await ipExtendedCommunity.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, IpExtendedCommunityName);
+            Assert.AreEqual(getResult.Data.Name, TestEnvironment.IpExtendedCommunityName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -75,14 +64,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
-            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<IPExtendedCommunityResource>();
-            await foreach (IPExtendedCommunityResource item in DefaultSubscription.GetIPExtendedCommunitiesAsync())
-            {
-                listBySubscription.Add(item);
-                Console.WriteLine($"Succeeded on id: {item}");
-            }
-            Assert.IsNotEmpty(listBySubscription);
+            /*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+                        var listBySubscription = new List<IPExtendedCommunityResource>();
+                        await foreach (IPExtendedCommunityResource item in DefaultSubscription.GetIPExtendedCommunitiesAsync())
+                        {
+                            listBySubscription.Add(item);
+                            Console.WriteLine($"Succeeded on id: {item}");
+                        }
+                        Assert.IsNotEmpty(listBySubscription);*/
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");

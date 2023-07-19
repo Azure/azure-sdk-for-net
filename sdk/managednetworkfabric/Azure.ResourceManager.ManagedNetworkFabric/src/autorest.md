@@ -58,10 +58,16 @@ directive:
     where: $.definitions
     transform: >
       delete $.Resource.properties.id.format;
+
   - from: v5/types.json
     where: $.parameters
     transform: >
       delete $.SubscriptionIdParameter.format;
+
+  - from: InternetGatewayRules.json
+    where: $.definitions.RuleProperties.properties.action
+    transform: >
+      $['x-ms-enum']['name'] = 'InternetGatewayRuleAction';
 
   # Removing the operations that are not allowed for the end users.
   - remove-operation: InternetGateways_Delete

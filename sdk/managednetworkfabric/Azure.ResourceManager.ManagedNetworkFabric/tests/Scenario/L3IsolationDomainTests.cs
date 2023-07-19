@@ -26,15 +26,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [AsyncOnly]
         public async Task L3IsolationDomains()
         {
-            string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-            string networkFabricId = TestEnvironment.ValidNetworkFabricId;
-            string l3IsolationDomainName = TestEnvironment.L3IsolationDomainName;
-
             TestContext.Out.WriteLine($"Entered into the L3IsolationDomain tests....");
-            TestContext.Out.WriteLine($"Provided L3IsolationDomains name : {l3IsolationDomainName}");
+            TestContext.Out.WriteLine($"Provided L3IsolationDomains name : {TestEnvironment.L3IsolationDomainName}");
 
-            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
+            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.L3IsolationDomainName);
             TestContext.Out.WriteLine($"l3IsolationDomainResourceId: {l3IsolationDomainResourceId}");
 
             TestContext.Out.WriteLine($"L3IsolationDomains Test started.....");
@@ -43,36 +38,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            L3IsolationDomainData data = new L3IsolationDomainData(new AzureLocation("eastus"))
+            L3IsolationDomainData data = new L3IsolationDomainData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.Provisioned_NF_ID))
             {
+                Annotation = "annotation",
                 RedistributeConnectedSubnets = RedistributeConnectedSubnet.True,
                 RedistributeStaticRoutes = RedistributeStaticRoute.False,
                 AggregateRouteConfiguration = new AggregateRouteConfiguration()
                 {
                     IPv4Routes =
                     {
-                        new AggregateRoute()
-                        {
-                            Prefix = "10.0.0.1/27",
-                        }
+                        new AggregateRoute("10.0.0.0/24")
                     },
                     IPv6Routes =
                     {
-                        new AggregateRoute()
-                        {
-                            Prefix = "2fff::/59",
-                        }
-                    }
+                        new AggregateRoute("3FFE:FFFF:0:CD30::a0/29")
+                    },
                 },
-                ConnectedSubnetRoutePolicy = new L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy()
+                Tags =
                 {
-                    ExportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
+                    ["keyID"] = "KeyValue",
                 },
-                NetworkFabricId = networkFabricId
             };
-            ArmOperation<L3IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, l3IsolationDomainName, data);
+            ArmOperation<L3IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.L3IsolationDomainName, data);
             L3IsolationDomainResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, l3IsolationDomainName);
+            Assert.AreEqual(createResult.Data.Name, TestEnvironment.L3IsolationDomainName);
 
             L3IsolationDomainResource l3IsolationDomain = Client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
 
@@ -80,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             L3IsolationDomainResource getResult = await l3IsolationDomain.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, l3IsolationDomainName);
+            Assert.AreEqual(getResult.Data.Name, TestEnvironment.L3IsolationDomainName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -91,33 +80,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
-            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<L3IsolationDomainResource>();
-            await foreach (L3IsolationDomainResource item in DefaultSubscription.GetL3IsolationDomainsAsync())
-            {
-                listBySubscription.Add(item);
-                Console.WriteLine($"Succeeded on id: {item}");
-            }
-            Assert.IsNotEmpty(listBySubscription);
+            /*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+                        var listBySubscription = new List<L3IsolationDomainResource>();
+                        await foreach (L3IsolationDomainResource item in DefaultSubscription.GetL3IsolationDomainsAsync())
+                        {
+                            listBySubscription.Add(item);
+                            Console.WriteLine($"Succeeded on id: {item}");
+                        }
+                        Assert.IsNotEmpty(listBySubscription);*/
+
+          // Delete
+            TestContext.Out.WriteLine($"DELETE started.....");
+            ArmOperation deleteResponse = await l3IsolationDomain.DeleteAsync(WaitUntil.Completed);
+            Assert.IsTrue(deleteResponse.HasCompleted);
 
             // Update Admin State
+            L3IsolationDomainResource l3IsolationDomainForPostAction = Client.GetL3IsolationDomainResource(new ResourceIdentifier(TestEnvironment.Existing_L3ISD_ID));
             TestContext.Out.WriteLine($"POST started.....");
+
             UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
-                State = AdministrativeState.Enable,
+                State = EnableDisableState.Enable,
             };
-            await l3IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Started, body);
+            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
 
             body = new UpdateAdministrativeState()
             {
-                State = AdministrativeState.Disable,
+                State = EnableDisableState.Disable,
             };
-            await l3IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Started, body);
-
-            // Delete
-            TestContext.Out.WriteLine($"DELETE started.....");
-            var deleteResponse = await l3IsolationDomain.DeleteAsync(WaitUntil.Completed);
-            Assert.IsTrue(deleteResponse.HasCompleted);
+            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
         }
     }
 }

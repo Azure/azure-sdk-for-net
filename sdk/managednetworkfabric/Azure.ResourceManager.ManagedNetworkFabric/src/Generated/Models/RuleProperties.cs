@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="action"> Specify action. </param>
         /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressList"/> is null. </exception>
-        public RuleProperties(Action action, IEnumerable<string> addressList)
+        public RuleProperties(InternetGatewayRuleAction action, IEnumerable<string> addressList)
         {
             Argument.AssertNotNull(addressList, nameof(addressList));
 
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of RuleProperties. </summary>
         /// <param name="action"> Specify action. </param>
         /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
-        internal RuleProperties(Action action, IList<string> addressList)
+        internal RuleProperties(InternetGatewayRuleAction action, IList<string> addressList)
         {
             Action = action;
             AddressList = addressList;
         }
 
         /// <summary> Specify action. </summary>
-        public Action Action { get; set; }
+        public InternetGatewayRuleAction Action { get; set; }
         /// <summary> List of Addresses to be allowed or denied. </summary>
         public IList<string> AddressList { get; }
     }

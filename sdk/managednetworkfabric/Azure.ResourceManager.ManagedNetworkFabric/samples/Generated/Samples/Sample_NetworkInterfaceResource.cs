@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NetworkInterfacesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkInterfaces_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkInterfaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
-            string networkInterfaceName = "networkInterfaceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
+            string networkInterfaceName = "example-interface";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_NetworkInterfacesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkInterfaces_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkInterfaces_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
-            string networkInterfaceName = "networkInterfaceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
+            string networkInterfaceName = "example-interface";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
             NetworkInterfacePatch patch = new NetworkInterfacePatch()
             {
-                Annotation = "null",
+                Annotation = "annotation",
             };
             ArmOperation<NetworkInterfaceResource> lro = await networkInterface.UpdateAsync(WaitUntil.Completed, patch);
             NetworkInterfaceResource result = lro.Value;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_NetworkInterfacesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkInterfaces_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkInterfaces_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
-            string networkInterfaceName = "networkInterfaceName";
+            string subscriptionId = "94D0FD57-C08B-4CA3-A926-6B76D8B7B956";
+            string resourceGroupName = "rgNetworkDevices";
+            string networkDeviceName = "sjzd";
+            string networkInterfaceName = "emrgu";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
@@ -115,42 +115,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // NetworkInterfaces_getStatus_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetStatus_NetworkInterfacesGetStatusMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkInterfaces_getStatus_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkInterfaces_getStatus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkInterfaceResource created on azure
-            // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
-            string networkInterfaceName = "networkInterfaceName";
-            ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
-            NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
-
-            // invoke the operation
-            ArmOperation<InterfaceStatus> lro = await networkInterface.GetStatusAsync(WaitUntil.Completed);
-            InterfaceStatus result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // NetworkInterfaces_updateAdministrativeState_MaximumSet_Gen
+        // NetworkInterfaces_UpdateAdministrativeState_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateAdministrativeState_NetworkInterfacesUpdateAdministrativeStateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkInterfaces_updateAdministrativeState_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkInterfaces_updateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_UpdateAdministrativeState_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkInterfaces_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -159,21 +130,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
-            string networkInterfaceName = "networkInterfaceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
+            string networkInterfaceName = "example-interface";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
             UpdateAdministrativeState body = new UpdateAdministrativeState()
             {
-                State = AdministrativeState.Enable,
+                State = EnableDisableState.Enable,
+                ResourceIds =
+{
+""
+},
             };
-            await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            CommonPostActionResponseForStateUpdate result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

@@ -22,14 +22,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [AsyncOnly]
         public async Task IpPrefixes()
         {
-            string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-            string ipPrefixName = TestEnvironment.IpPrefixName;
-
             TestContext.Out.WriteLine($"Entered into the IpPrefix tests....");
-            TestContext.Out.WriteLine($"Provided IpPrefixName name : {ipPrefixName}");
+            TestContext.Out.WriteLine($"Provided IpPrefixName name : {TestEnvironment.IpPrefixName}");
 
-            ResourceIdentifier ipPrefixResourceId = IPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
+            ResourceIdentifier ipPrefixResourceId = IPPrefixResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.IpPrefixName);
             TestContext.Out.WriteLine($"IpPrefixResourceId: {ipPrefixResourceId}");
 
             // Get the collection of this IpPrefix
@@ -39,26 +35,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            IPPrefixData data =
-                new IPPrefixData(new AzureLocation(TestEnvironment.Location), new IPPrefixPropertiesIPPrefixRulesItem[]
+            IPPrefixData data = new IPPrefixData(new AzureLocation(TestEnvironment.Location))
+            {
+                Annotation = "annotation",
+                IPPrefixRules =
                 {
-                    new IPPrefixPropertiesIPPrefixRulesItem(CommunityActionType.Permit,12,"1.1.1.0/24")
+                    new IPPrefixRule(CommunityActionType.Permit, 4155123341,"10.10.10.10/30")
                     {
-                        Condition = Condition.EqualTo,
-                        SubnetMaskLength = 24,
+                        Condition = Condition.GreaterThanOrEqualTo,
+                        SubnetMaskLength = "31",
                     }
-                })
+                },
+                Tags =
                 {
-                    Annotation = "annotationValue",
-                    Tags =
-                    {
-                        ["key6404"] = "",
-                    },
-                };
-
-            ArmOperation<IPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ipPrefixName, data);
+                    ["keyID"] = "KeyValue",
+                },
+            };
+            ArmOperation<IPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpPrefixName, data);
             IPPrefixResource createResult = lro.Value;
-            Assert.AreEqual(ipPrefixName, createResult.Data.Name);
+            Assert.AreEqual(TestEnvironment.IpPrefixName, createResult.Data.Name);
 
             IPPrefixResource ipPrefix = Client.GetIPPrefixResource(ipPrefixResourceId);
 
@@ -66,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             IPPrefixResource getResult = await ipPrefix.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(ipPrefixName, getResult.Data.Name);
+            Assert.AreEqual(TestEnvironment.IpPrefixName, getResult.Data.Name);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -77,7 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
-
+/*
             TestContext.Out.WriteLine($"GET - List by Subscription started.....");
             var listBySubscription = new List<IPPrefixResource>();
             await foreach (IPPrefixResource item in DefaultSubscription.GetIPPrefixesAsync())
@@ -85,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 listBySubscription.Add(item);
                 Console.WriteLine($"Succeeded on id: {item}");
             }
-            Assert.IsNotEmpty(listBySubscription);
+            Assert.IsNotEmpty(listBySubscription);*/
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");

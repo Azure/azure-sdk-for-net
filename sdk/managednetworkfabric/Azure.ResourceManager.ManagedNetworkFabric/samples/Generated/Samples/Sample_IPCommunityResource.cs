@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_IpCommunitiesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpCommunities_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpCommunities_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "IpCommunities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this IPCommunityResource created on azure
             // for more information of creating IPCommunityResource, please refer to the document of IPCommunityResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string ipCommunityName = "example-ipCommunity";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string ipCommunityName = "example-ipcommunity";
             ResourceIdentifier ipCommunityResourceId = IPCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityName);
             IPCommunityResource ipCommunity = client.GetIPCommunityResource(ipCommunityResourceId);
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_IpCommunitiesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpCommunities_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpCommunities_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "IpCommunities_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,18 +65,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this IPCommunityResource created on azure
             // for more information of creating IPCommunityResource, please refer to the document of IPCommunityResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string ipCommunityName = "example-ipCommunity";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string ipCommunityName = "example-ipcommunity";
             ResourceIdentifier ipCommunityResourceId = IPCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityName);
             IPCommunityResource ipCommunity = client.GetIPCommunityResource(ipCommunityResourceId);
 
             // invoke the operation
             IPCommunityPatch patch = new IPCommunityPatch()
             {
-                Tags =
+                IPCommunityRules =
 {
-["key2814"] = "",
+new IPCommunityRule(CommunityActionType.Permit,4155123341,new string[]
+{
+"1:1"
+})
+{
+WellKnownCommunities =
+{
+WellKnownCommunity.Internet
+},
+}
 },
             };
             ArmOperation<IPCommunityResource> lro = await ipCommunity.UpdateAsync(WaitUntil.Completed, patch);
@@ -94,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_IpCommunitiesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpCommunities_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpCommunities_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "IpCommunities_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,9 +113,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this IPCommunityResource created on azure
             // for more information of creating IPCommunityResource, please refer to the document of IPCommunityResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string ipCommunityName = "IpCommunityList1";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string ipCommunityName = "example-ipcommunity";
             ResourceIdentifier ipCommunityResourceId = IPCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityName);
             IPCommunityResource ipCommunity = client.GetIPCommunityResource(ipCommunityResourceId);
 
@@ -121,7 +130,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIPCommunities_IpCommunitiesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/IpCommunities_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpCommunities_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "IpCommunities_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

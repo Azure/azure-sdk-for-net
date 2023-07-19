@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Action action = default;
+            InternetGatewayRuleAction action = default;
             IList<string> addressList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
                 {
-                    action = new Action(property.Value.GetString());
+                    action = new InternetGatewayRuleAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("addressList"u8))
