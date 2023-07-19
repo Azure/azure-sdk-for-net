@@ -124,6 +124,22 @@ namespace Azure.Core.Samples
             #endregion
         }
 
+        [Test]
+        public void CustomizedResponseClassifier()
+        {
+            #region Snippet:CustomizedResponseClassifier
+            var retryPolicyOptions = new RetryPolicyOptions()
+            {
+                ResponseClassifier = new CustomResponseClassifier()
+            };
+            var retryPolicy = new RetryPolicy(retryPolicyOptions);
+            SecretClientOptions options = new SecretClientOptions()
+            {
+                RetryPolicy = retryPolicy
+            };
+            #endregion
+        }
+
         #region Snippet:SequentialDelayStrategy
         public class SequentialDelayStrategy : DelayStrategy
         {
@@ -145,6 +161,36 @@ namespace Azure.Core.Samples
                 int index = retryNumber - 1;
                 return index >= PollingSequence.Length ? MaxDelay : PollingSequence[index];
             }
+        }
+        #endregion
+
+        #region Snippet:CustomResponseClassifier
+        public class CustomResponseClassifier : ResponseClassifier
+        {
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                switch (message.Response.Status)
+                {
+                    case 404:
+                        return true;
+                    default:
+                        return base.IsRetriableResponse(message);
+                }
+            }
+
+            public override bool IsRetriableException(Exception exception)
+            {
+                if (exception is SomeCustomException)
+                {
+                    return true;
+                }
+
+                return base.IsRetriableException(exception);
+            }
+        }
+
+        public class SomeCustomException : Exception
+        {
         }
         #endregion
     }
