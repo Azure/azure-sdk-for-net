@@ -200,7 +200,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='GetPurviewRelationshipAsync(string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo = null, RequestContext context = null)
+        public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -236,7 +236,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='GetPurviewRelationship(string,bool?,RequestContext)']/*" />
-        public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo = null, RequestContext context = null)
+        public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 

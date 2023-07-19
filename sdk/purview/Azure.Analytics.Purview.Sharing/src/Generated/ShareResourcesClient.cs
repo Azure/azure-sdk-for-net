@@ -75,7 +75,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ShareResourcesClient.xml" path="doc/members/member[@name='GetAllShareResourcesAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllShareResourcesAsync(string filter = null, string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllShareResourcesAsync(string filter, string orderby, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllShareResourcesRequest(filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllShareResourcesNextPageRequest(nextLink, filter, orderby, context);
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ShareResourcesClient.xml" path="doc/members/member[@name='GetAllShareResources(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllShareResources(string filter = null, string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllShareResources(string filter, string orderby, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllShareResourcesRequest(filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllShareResourcesNextPageRequest(nextLink, filter, orderby, context);

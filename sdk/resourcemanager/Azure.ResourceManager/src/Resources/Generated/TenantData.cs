@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of TenantData. </summary>
-        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000. </param>
-        /// <param name="tenantId"> The tenant ID. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </param>
+        /// <param name="tenantId"> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="tenantCategory"> Category of the tenant. </param>
         /// <param name="country"> Country/region name of the address for the tenant. </param>
         /// <param name="countryCode"> Country/region abbreviation for the tenant. </param>
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Resources
             TenantBrandingLogoUri = tenantBrandingLogoUri;
         }
 
-        /// <summary> The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000. </summary>
+        /// <summary> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </summary>
         public string Id { get; }
-        /// <summary> The tenant ID. For example, 00000000-0000-0000-0000-000000000000. </summary>
+        /// <summary> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </summary>
         public Guid? TenantId { get; }
         /// <summary> Category of the tenant. </summary>
         public TenantCategory? TenantCategory { get; }

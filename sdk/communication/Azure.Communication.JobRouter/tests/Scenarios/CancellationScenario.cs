@@ -6,11 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
 {
-    [Ignore("enable after deployment with matching changes")]
     public class CancellationScenario : RouterLiveTestBase
     {
         public CancellationScenario(bool isAsync)

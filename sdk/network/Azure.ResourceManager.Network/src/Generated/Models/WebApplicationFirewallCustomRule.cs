@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             Priority = priority;
             RuleType = ruleType;
             MatchConditions = matchConditions.ToList();
+            GroupByUserSession = new ChangeTrackingList<GroupByUserSession>();
             Action = action;
         }
 
@@ -37,17 +38,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="state"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
+        /// <param name="rateLimitDuration"> Duration over which Rate Limit policy will be applied. Applies only when ruleType is RateLimitRule. </param>
+        /// <param name="rateLimitThreshold"> Rate Limit threshold to apply in case ruleType is RateLimitRule. Must be greater than or equal to 1. </param>
         /// <param name="ruleType"> The rule type. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
+        /// <param name="groupByUserSession"> List of user session identifier group by clauses. </param>
         /// <param name="action"> Type of Actions. </param>
-        internal WebApplicationFirewallCustomRule(string name, ETag? etag, int priority, WebApplicationFirewallState? state, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, WebApplicationFirewallAction action)
+        internal WebApplicationFirewallCustomRule(string name, ETag? etag, int priority, WebApplicationFirewallState? state, ApplicationGatewayFirewallRateLimitDuration? rateLimitDuration, int? rateLimitThreshold, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, IList<GroupByUserSession> groupByUserSession, WebApplicationFirewallAction action)
         {
             Name = name;
             ETag = etag;
             Priority = priority;
             State = state;
+            RateLimitDuration = rateLimitDuration;
+            RateLimitThreshold = rateLimitThreshold;
             RuleType = ruleType;
             MatchConditions = matchConditions;
+            GroupByUserSession = groupByUserSession;
             Action = action;
         }
 
@@ -59,10 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         public int Priority { get; set; }
         /// <summary> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
         public WebApplicationFirewallState? State { get; set; }
+        /// <summary> Duration over which Rate Limit policy will be applied. Applies only when ruleType is RateLimitRule. </summary>
+        public ApplicationGatewayFirewallRateLimitDuration? RateLimitDuration { get; set; }
+        /// <summary> Rate Limit threshold to apply in case ruleType is RateLimitRule. Must be greater than or equal to 1. </summary>
+        public int? RateLimitThreshold { get; set; }
         /// <summary> The rule type. </summary>
         public WebApplicationFirewallRuleType RuleType { get; set; }
         /// <summary> List of match conditions. </summary>
         public IList<MatchCondition> MatchConditions { get; }
+        /// <summary> List of user session identifier group by clauses. </summary>
+        public IList<GroupByUserSession> GroupByUserSession { get; }
         /// <summary> Type of Actions. </summary>
         public WebApplicationFirewallAction Action { get; set; }
     }

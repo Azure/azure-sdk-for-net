@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class CommunicationError
+    internal partial class CommunicationError
     {
         internal static CommunicationError DeserializeCommunicationError(JsonElement element)
         {

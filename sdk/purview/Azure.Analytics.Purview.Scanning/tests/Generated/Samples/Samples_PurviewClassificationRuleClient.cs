@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = client.GetProperties();
+            Response response = client.GetProperties(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = client.GetProperties();
+            Response response = client.GetProperties(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = await client.GetPropertiesAsync();
+            Response response = await client.GetPropertiesAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = await client.GetPropertiesAsync();
+            Response response = await client.GetPropertiesAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "System",
             };
 
-            Response response = client.CreateOrUpdate(RequestContent.Create(data));
+            Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "System",
             };
 
-            Response response = client.CreateOrUpdate(RequestContent.Create(data));
+            Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -141,7 +141,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "System",
             };
 
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -167,7 +167,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "System",
             };
 
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = client.Delete();
+            Response response = client.Delete(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -198,7 +198,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = client.Delete();
+            Response response = client.Delete(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -214,7 +214,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = await client.DeleteAsync();
+            Response response = await client.DeleteAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -229,7 +229,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = await client.DeleteAsync();
+            Response response = await client.DeleteAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -245,7 +245,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = client.TagVersion(1234, "<action>");
+            Response response = client.TagVersion(1234, "<action>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -259,7 +259,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = client.TagVersion(1234, "<action>");
+            Response response = client.TagVersion(1234, "<action>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -282,7 +282,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = await client.TagVersionAsync(1234, "<action>");
+            Response response = await client.TagVersionAsync(1234, "<action>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -296,7 +296,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            Response response = await client.TagVersionAsync(1234, "<action>");
+            Response response = await client.TagVersionAsync(1234, "<action>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -319,7 +319,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            foreach (var item in client.GetVersions())
+            foreach (var item in client.GetVersions(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -335,7 +335,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            foreach (var item in client.GetVersions())
+            foreach (var item in client.GetVersions(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -352,7 +352,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            await foreach (var item in client.GetVersionsAsync())
+            await foreach (var item in client.GetVersionsAsync(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -368,7 +368,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
 
-            await foreach (var item in client.GetVersionsAsync())
+            await foreach (var item in client.GetVersionsAsync(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());

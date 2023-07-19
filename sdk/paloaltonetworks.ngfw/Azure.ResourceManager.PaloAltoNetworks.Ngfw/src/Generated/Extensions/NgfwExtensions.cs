@@ -84,115 +84,115 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
         #endregion
 
-        #region CertificateObjectGlobalRulestackResource
+        #region GlobalRulestackCertificateObjectResource
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateObjectGlobalRulestackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateObjectGlobalRulestackResource.CreateResourceIdentifier" /> to create a <see cref="CertificateObjectGlobalRulestackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GlobalRulestackCertificateObjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalRulestackCertificateObjectResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackCertificateObjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateObjectGlobalRulestackResource" /> object. </returns>
-        public static CertificateObjectGlobalRulestackResource GetCertificateObjectGlobalRulestackResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GlobalRulestackCertificateObjectResource" /> object. </returns>
+        public static GlobalRulestackCertificateObjectResource GetGlobalRulestackCertificateObjectResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CertificateObjectGlobalRulestackResource.ValidateResourceId(id);
-                return new CertificateObjectGlobalRulestackResource(client, id);
+                GlobalRulestackCertificateObjectResource.ValidateResourceId(id);
+                return new GlobalRulestackCertificateObjectResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FqdnListGlobalRulestackResource
+        #region GlobalRulestackFqdnResource
         /// <summary>
-        /// Gets an object representing a <see cref="FqdnListGlobalRulestackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FqdnListGlobalRulestackResource.CreateResourceIdentifier" /> to create a <see cref="FqdnListGlobalRulestackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GlobalRulestackFqdnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalRulestackFqdnResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackFqdnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FqdnListGlobalRulestackResource" /> object. </returns>
-        public static FqdnListGlobalRulestackResource GetFqdnListGlobalRulestackResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GlobalRulestackFqdnResource" /> object. </returns>
+        public static GlobalRulestackFqdnResource GetGlobalRulestackFqdnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FqdnListGlobalRulestackResource.ValidateResourceId(id);
-                return new FqdnListGlobalRulestackResource(client, id);
+                GlobalRulestackFqdnResource.ValidateResourceId(id);
+                return new GlobalRulestackFqdnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PostRulesResource
+        #region PostRulestackRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="PostRulesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostRulesResource.CreateResourceIdentifier" /> to create a <see cref="PostRulesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostRulestackRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostRulestackRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostRulestackRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostRulesResource" /> object. </returns>
-        public static PostRulesResource GetPostRulesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostRulestackRuleResource" /> object. </returns>
+        public static PostRulestackRuleResource GetPostRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PostRulesResource.ValidateResourceId(id);
-                return new PostRulesResource(client, id);
+                PostRulestackRuleResource.ValidateResourceId(id);
+                return new PostRulestackRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrefixListGlobalRulestackResource
+        #region GlobalRulestackPrefixResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrefixListGlobalRulestackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrefixListGlobalRulestackResource.CreateResourceIdentifier" /> to create a <see cref="PrefixListGlobalRulestackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GlobalRulestackPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalRulestackPrefixResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrefixListGlobalRulestackResource" /> object. </returns>
-        public static PrefixListGlobalRulestackResource GetPrefixListGlobalRulestackResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GlobalRulestackPrefixResource" /> object. </returns>
+        public static GlobalRulestackPrefixResource GetGlobalRulestackPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrefixListGlobalRulestackResource.ValidateResourceId(id);
-                return new PrefixListGlobalRulestackResource(client, id);
+                GlobalRulestackPrefixResource.ValidateResourceId(id);
+                return new GlobalRulestackPrefixResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PreRulesResource
+        #region PreRulestackRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="PreRulesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PreRulesResource.CreateResourceIdentifier" /> to create a <see cref="PreRulesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PreRulestackRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PreRulestackRuleResource.CreateResourceIdentifier" /> to create a <see cref="PreRulestackRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PreRulesResource" /> object. </returns>
-        public static PreRulesResource GetPreRulesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PreRulestackRuleResource" /> object. </returns>
+        public static PreRulestackRuleResource GetPreRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PreRulesResource.ValidateResourceId(id);
-                return new PreRulesResource(client, id);
+                PreRulestackRuleResource.ValidateResourceId(id);
+                return new PreRulestackRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FirewallResource
+        #region PaloAltoNetworksFirewallResource
         /// <summary>
-        /// Gets an object representing a <see cref="FirewallResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirewallResource.CreateResourceIdentifier" /> to create a <see cref="FirewallResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PaloAltoNetworksFirewallResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PaloAltoNetworksFirewallResource.CreateResourceIdentifier" /> to create a <see cref="PaloAltoNetworksFirewallResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirewallResource" /> object. </returns>
-        public static FirewallResource GetFirewallResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PaloAltoNetworksFirewallResource" /> object. </returns>
+        public static PaloAltoNetworksFirewallResource GetPaloAltoNetworksFirewallResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FirewallResource.ValidateResourceId(id);
-                return new FirewallResource(client, id);
+                PaloAltoNetworksFirewallResource.ValidateResourceId(id);
+                return new PaloAltoNetworksFirewallResource(client, id);
             }
             );
         }
@@ -217,88 +217,107 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
         #endregion
 
-        #region CertificateObjectLocalRulestackResource
+        #region PaloAltoNetworksFirewallStatusResource
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateObjectLocalRulestackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateObjectLocalRulestackResource.CreateResourceIdentifier" /> to create a <see cref="CertificateObjectLocalRulestackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PaloAltoNetworksFirewallStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PaloAltoNetworksFirewallStatusResource.CreateResourceIdentifier" /> to create a <see cref="PaloAltoNetworksFirewallStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateObjectLocalRulestackResource" /> object. </returns>
-        public static CertificateObjectLocalRulestackResource GetCertificateObjectLocalRulestackResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource" /> object. </returns>
+        public static PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CertificateObjectLocalRulestackResource.ValidateResourceId(id);
-                return new CertificateObjectLocalRulestackResource(client, id);
+                PaloAltoNetworksFirewallStatusResource.ValidateResourceId(id);
+                return new PaloAltoNetworksFirewallStatusResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FqdnListLocalRulestackResource
+        #region LocalRulestackCertificateObjectResource
         /// <summary>
-        /// Gets an object representing a <see cref="FqdnListLocalRulestackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FqdnListLocalRulestackResource.CreateResourceIdentifier" /> to create a <see cref="FqdnListLocalRulestackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LocalRulestackCertificateObjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackCertificateObjectResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackCertificateObjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FqdnListLocalRulestackResource" /> object. </returns>
-        public static FqdnListLocalRulestackResource GetFqdnListLocalRulestackResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LocalRulestackCertificateObjectResource" /> object. </returns>
+        public static LocalRulestackCertificateObjectResource GetLocalRulestackCertificateObjectResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FqdnListLocalRulestackResource.ValidateResourceId(id);
-                return new FqdnListLocalRulestackResource(client, id);
+                LocalRulestackCertificateObjectResource.ValidateResourceId(id);
+                return new LocalRulestackCertificateObjectResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LocalRulesResource
+        #region LocalRulestackFqdnResource
         /// <summary>
-        /// Gets an object representing a <see cref="LocalRulesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocalRulesResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LocalRulestackFqdnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackFqdnResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackFqdnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocalRulesResource" /> object. </returns>
-        public static LocalRulesResource GetLocalRulesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LocalRulestackFqdnResource" /> object. </returns>
+        public static LocalRulestackFqdnResource GetLocalRulestackFqdnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LocalRulesResource.ValidateResourceId(id);
-                return new LocalRulesResource(client, id);
+                LocalRulestackFqdnResource.ValidateResourceId(id);
+                return new LocalRulestackFqdnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrefixListResource
+        #region LocalRulestackRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrefixListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrefixListResource.CreateResourceIdentifier" /> to create a <see cref="PrefixListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LocalRulestackRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackRuleResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrefixListResource" /> object. </returns>
-        public static PrefixListResource GetPrefixListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LocalRulestackRuleResource" /> object. </returns>
+        public static LocalRulestackRuleResource GetLocalRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrefixListResource.ValidateResourceId(id);
-                return new PrefixListResource(client, id);
+                LocalRulestackRuleResource.ValidateResourceId(id);
+                return new LocalRulestackRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets a collection of FirewallResources in the ResourceGroupResource. </summary>
+        #region LocalRulestackPrefixResource
+        /// <summary>
+        /// Gets an object representing a <see cref="LocalRulestackPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackPrefixResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LocalRulestackPrefixResource" /> object. </returns>
+        public static LocalRulestackPrefixResource GetLocalRulestackPrefixResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                LocalRulestackPrefixResource.ValidateResourceId(id);
+                return new LocalRulestackPrefixResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        /// <summary> Gets a collection of PaloAltoNetworksFirewallResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of FirewallResources and their operations over a FirewallResource. </returns>
-        public static FirewallResourceCollection GetFirewallResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of PaloAltoNetworksFirewallResources and their operations over a PaloAltoNetworksFirewallResource. </returns>
+        public static PaloAltoNetworksFirewallCollection GetPaloAltoNetworksFirewalls(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFirewallResources();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPaloAltoNetworksFirewalls();
         }
 
         /// <summary>
@@ -320,9 +339,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<FirewallResource>> GetFirewallResourceAsync(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
+        public static async Task<Response<PaloAltoNetworksFirewallResource>> GetPaloAltoNetworksFirewallAsync(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFirewallResources().GetAsync(firewallName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetPaloAltoNetworksFirewalls().GetAsync(firewallName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -344,17 +363,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<FirewallResource> GetFirewallResource(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
+        public static Response<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewall(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFirewallResources().Get(firewallName, cancellationToken);
+            return resourceGroupResource.GetPaloAltoNetworksFirewalls().Get(firewallName, cancellationToken);
         }
 
         /// <summary> Gets a collection of LocalRulestackResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LocalRulestackResources and their operations over a LocalRulestackResource. </returns>
-        public static LocalRulestackResourceCollection GetLocalRulestackResources(this ResourceGroupResource resourceGroupResource)
+        public static LocalRulestackCollection GetLocalRulestacks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLocalRulestackResources();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLocalRulestacks();
         }
 
         /// <summary>
@@ -376,9 +395,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LocalRulestackResource>> GetLocalRulestackResourceAsync(this ResourceGroupResource resourceGroupResource, string localRulestackName, CancellationToken cancellationToken = default)
+        public static async Task<Response<LocalRulestackResource>> GetLocalRulestackAsync(this ResourceGroupResource resourceGroupResource, string localRulestackName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLocalRulestackResources().GetAsync(localRulestackName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetLocalRulestacks().GetAsync(localRulestackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -400,9 +419,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LocalRulestackResource> GetLocalRulestackResource(this ResourceGroupResource resourceGroupResource, string localRulestackName, CancellationToken cancellationToken = default)
+        public static Response<LocalRulestackResource> GetLocalRulestack(this ResourceGroupResource resourceGroupResource, string localRulestackName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLocalRulestackResources().Get(localRulestackName, cancellationToken);
+            return resourceGroupResource.GetLocalRulestacks().Get(localRulestackName, cancellationToken);
         }
 
         /// <summary>
@@ -420,10 +439,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirewallResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FirewallResource> GetFirewallResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PaloAltoNetworksFirewallResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewallsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFirewallResourcesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPaloAltoNetworksFirewallsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -441,10 +460,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirewallResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FirewallResource> GetFirewallResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewalls(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFirewallResources(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPaloAltoNetworksFirewalls(cancellationToken);
         }
 
         /// <summary>
@@ -463,9 +482,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LocalRulestackResource> GetLocalRulestackResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LocalRulestackResource> GetLocalRulestacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocalRulestackResourcesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocalRulestacksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -484,17 +503,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LocalRulestackResource> GetLocalRulestackResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<LocalRulestackResource> GetLocalRulestacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocalRulestackResources(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocalRulestacks(cancellationToken);
         }
 
         /// <summary> Gets a collection of GlobalRulestackResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of GlobalRulestackResources and their operations over a GlobalRulestackResource. </returns>
-        public static GlobalRulestackResourceCollection GetGlobalRulestackResources(this TenantResource tenantResource)
+        public static GlobalRulestackCollection GetGlobalRulestacks(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetGlobalRulestackResources();
+            return GetTenantResourceExtensionClient(tenantResource).GetGlobalRulestacks();
         }
 
         /// <summary>
@@ -516,9 +535,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<GlobalRulestackResource>> GetGlobalRulestackResourceAsync(this TenantResource tenantResource, string globalRulestackName, CancellationToken cancellationToken = default)
+        public static async Task<Response<GlobalRulestackResource>> GetGlobalRulestackAsync(this TenantResource tenantResource, string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetGlobalRulestackResources().GetAsync(globalRulestackName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetGlobalRulestacks().GetAsync(globalRulestackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -540,9 +559,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<GlobalRulestackResource> GetGlobalRulestackResource(this TenantResource tenantResource, string globalRulestackName, CancellationToken cancellationToken = default)
+        public static Response<GlobalRulestackResource> GetGlobalRulestack(this TenantResource tenantResource, string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetGlobalRulestackResources().Get(globalRulestackName, cancellationToken);
+            return tenantResource.GetGlobalRulestacks().Get(globalRulestackName, cancellationToken);
         }
     }
 }

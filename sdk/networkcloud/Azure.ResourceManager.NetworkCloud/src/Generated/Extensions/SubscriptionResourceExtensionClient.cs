@@ -24,10 +24,8 @@ namespace Azure.ResourceManager.NetworkCloud
         private ClusterManagersRestOperations _clusterManagerRestClient;
         private ClientDiagnostics _clusterClientDiagnostics;
         private ClustersRestOperations _clusterRestClient;
-        private ClientDiagnostics _defaultCniNetworkClientDiagnostics;
-        private DefaultCniNetworksRestOperations _defaultCniNetworkRestClient;
-        private ClientDiagnostics _hybridAksClusterClientDiagnostics;
-        private HybridAksClustersRestOperations _hybridAksClusterRestClient;
+        private ClientDiagnostics _kubernetesClusterClientDiagnostics;
+        private KubernetesClustersRestOperations _kubernetesClusterRestClient;
         private ClientDiagnostics _l2NetworkClientDiagnostics;
         private L2NetworksRestOperations _l2NetworkRestClient;
         private ClientDiagnostics _l3NetworkClientDiagnostics;
@@ -63,10 +61,8 @@ namespace Azure.ResourceManager.NetworkCloud
         private ClusterManagersRestOperations ClusterManagerRestClient => _clusterManagerRestClient ??= new ClusterManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterManagerResource.ResourceType));
         private ClientDiagnostics ClusterClientDiagnostics => _clusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ClusterResource.ResourceType.Namespace, Diagnostics);
         private ClustersRestOperations ClusterRestClient => _clusterRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterResource.ResourceType));
-        private ClientDiagnostics DefaultCniNetworkClientDiagnostics => _defaultCniNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", DefaultCniNetworkResource.ResourceType.Namespace, Diagnostics);
-        private DefaultCniNetworksRestOperations DefaultCniNetworkRestClient => _defaultCniNetworkRestClient ??= new DefaultCniNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DefaultCniNetworkResource.ResourceType));
-        private ClientDiagnostics HybridAksClusterClientDiagnostics => _hybridAksClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", HybridAksClusterResource.ResourceType.Namespace, Diagnostics);
-        private HybridAksClustersRestOperations HybridAksClusterRestClient => _hybridAksClusterRestClient ??= new HybridAksClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridAksClusterResource.ResourceType));
+        private ClientDiagnostics KubernetesClusterClientDiagnostics => _kubernetesClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", KubernetesClusterResource.ResourceType.Namespace, Diagnostics);
+        private KubernetesClustersRestOperations KubernetesClusterRestClient => _kubernetesClusterRestClient ??= new KubernetesClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(KubernetesClusterResource.ResourceType));
         private ClientDiagnostics L2NetworkClientDiagnostics => _l2NetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", L2NetworkResource.ResourceType.Namespace, Diagnostics);
         private L2NetworksRestOperations L2NetworkRestClient => _l2NetworkRestClient ??= new L2NetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(L2NetworkResource.ResourceType));
         private ClientDiagnostics L3NetworkClientDiagnostics => _l3NetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", L3NetworkResource.ResourceType.Namespace, Diagnostics);
@@ -272,91 +268,47 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Get a list of default CNI networks in the provided subscription.
+        /// Get a list of Kubernetes clusters in the provided subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/defaultCniNetworks</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/kubernetesClusters</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DefaultCniNetworks_ListBySubscription</description>
+        /// <description>KubernetesClusters_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DefaultCniNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DefaultCniNetworkResource> GetDefaultCniNetworksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KubernetesClusterResource> GetKubernetesClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultCniNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultCniNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DefaultCniNetworkResource(Client, DefaultCniNetworkData.DeserializeDefaultCniNetworkData(e)), DefaultCniNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDefaultCniNetworks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => KubernetesClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => KubernetesClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesClusterResource(Client, KubernetesClusterData.DeserializeKubernetesClusterData(e)), KubernetesClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKubernetesClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of default CNI networks in the provided subscription.
+        /// Get a list of Kubernetes clusters in the provided subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/defaultCniNetworks</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/kubernetesClusters</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DefaultCniNetworks_ListBySubscription</description>
+        /// <description>KubernetesClusters_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DefaultCniNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DefaultCniNetworkResource> GetDefaultCniNetworks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KubernetesClusterResource> GetKubernetesClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultCniNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultCniNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DefaultCniNetworkResource(Client, DefaultCniNetworkData.DeserializeDefaultCniNetworkData(e)), DefaultCniNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDefaultCniNetworks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of additional details related to Hybrid AKS provisioned clusters in the provided subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/hybridAksClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridAksClusters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridAksClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridAksClusterResource> GetHybridAksClustersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridAksClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridAksClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridAksClusterResource(Client, HybridAksClusterData.DeserializeHybridAksClusterData(e)), HybridAksClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridAksClusters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of additional details related to Hybrid AKS provisioned clusters in the provided subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/hybridAksClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridAksClusters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridAksClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridAksClusterResource> GetHybridAksClusters(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridAksClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridAksClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridAksClusterResource(Client, HybridAksClusterData.DeserializeHybridAksClusterData(e)), HybridAksClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridAksClusters", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => KubernetesClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => KubernetesClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesClusterResource(Client, KubernetesClusterData.DeserializeKubernetesClusterData(e)), KubernetesClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKubernetesClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

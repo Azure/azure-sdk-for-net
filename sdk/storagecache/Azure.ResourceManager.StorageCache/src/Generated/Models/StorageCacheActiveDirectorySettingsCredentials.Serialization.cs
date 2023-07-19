@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
-            writer.WritePropertyName("password"u8);
-            writer.WriteStringValue(Password);
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteStringValue(Password);
+            }
             writer.WriteEndObject();
         }
 
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             string username = default;
-            string password = default;
+            Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheActiveDirectorySettingsCredentials(username, password);
+            return new StorageCacheActiveDirectorySettingsCredentials(username, password.Value);
         }
     }
 }
