@@ -67,17 +67,6 @@ namespace Azure.Core.TestFramework
             }, policy, responseClassifier, bufferResponse, cancellationToken);
         }
 
-        protected async Task<Response> SendGetRequest(HttpPipeline pipeline, bool bufferResponse = true, Uri uri = null, CancellationToken cancellationToken = default)
-        {
-            await Task.Yield();
-
-            return await SendRequestAsync(pipeline, message =>
-            {
-                message.Request.Method = RequestMethod.Get;
-                message.Request.Uri.Reset(uri ?? new Uri("http://example.com"));
-            }, bufferResponse, cancellationToken);
-        }
-
         protected async Task<HttpMessage> SendMessageGetRequest(HttpPipeline pipeline, HttpMessage message, ResponseClassifier responseClassifier = null, bool bufferResponse = true, Uri uri = null, CancellationToken cancellationToken = default)
         {
             await Task.Yield();

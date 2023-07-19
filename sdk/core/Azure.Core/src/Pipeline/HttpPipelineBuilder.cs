@@ -153,13 +153,13 @@ namespace Azure.Core.Pipeline
             }
 
             var retryOptions = buildOptions.ClientOptions.Retry;
-            var retryPolicy = buildOptions.ClientOptions.RetryPolicy ??
-                              new RetryPolicy(
-                                  retryOptions.MaxRetries,
-                                  retryOptions.Mode == RetryMode.Exponential ?
-                                      DelayStrategy.CreateExponentialDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay) :
-                                      DelayStrategy.CreateFixedDelayStrategy(retryOptions.Delay));
-            policies.Add(retryPolicy);
+            policies.Add(
+                buildOptions.ClientOptions.RetryPolicy ??
+                new RetryPolicy(
+                    retryOptions.MaxRetries,
+                    retryOptions.Mode == RetryMode.Exponential ?
+                        DelayStrategy.CreateExponentialDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay) :
+                        DelayStrategy.CreateFixedDelayStrategy(retryOptions.Delay)));
 
             var redirectPolicy = defaultTransportOptions?.IsClientRedirectEnabled switch
             {
@@ -207,17 +207,9 @@ namespace Azure.Core.Pipeline
 
             policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer, buildOptions.RequestFailedDetailsParser));
 
-            // Assign the response classifier based on the following precedence order:
-            // 1. Customer provided response classifier in RetryPolicy
-            // 2. Library provided response classifier in HttpPipelineOptions
-            // 3. Default ResponseClassifier
-            // Any classifiers specified as part of the RequestContext API has highest precedence and will override the above.
+            buildOptions.ResponseClassifier ??= ResponseClassifier.Shared;
 
-            var responseClassifier = (retryPolicy as RetryPolicy)?.ResponseClassifier;
-            responseClassifier ??= buildOptions.ResponseClassifier;
-            responseClassifier ??= ResponseClassifier.Shared;
-
-            return (responseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray(), isTransportInternallyCreated);
+            return (buildOptions.ResponseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray(), isTransportInternallyCreated);
         }
 
         // internal for testing
