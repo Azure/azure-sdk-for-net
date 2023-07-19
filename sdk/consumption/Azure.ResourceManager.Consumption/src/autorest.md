@@ -86,7 +86,11 @@ rename-rules:
   Etag: ETag|etag
 
 models-to-treat-empty-string-as-null:
+  - ConsumptionLegacyReservationRecommendation
+  - ConsumptionLegacyUsageDetail
   - ConsumptionMarketplace
+  - ConsumptionModernReservationRecommendation
+  - ConsumptionModernUsageDetail
 
 rename-mapping:
   Budget: ConsumptionBudget
