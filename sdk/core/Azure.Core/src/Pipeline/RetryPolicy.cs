@@ -16,6 +16,10 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class RetryPolicy : HttpPipelinePolicy
     {
+        // The default max retries to use if no value is specified.
+        private const int DefaultMaxRetries = 3;
+
+        // The max retries for this policy.
         private readonly int _maxRetries;
 
         /// <summary>
@@ -23,14 +27,17 @@ namespace Azure.Core.Pipeline
         /// </summary>
         private readonly DelayStrategy _delayStrategy;
 
-        private readonly ResponseClassifier? _responseClassifier;
+        /// <summary>
+        /// The response classifier, if any, associated with this policy.
+        /// </summary>
+        internal ResponseClassifier? ResponseClassifier { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
         /// <param name="maxRetries">The maximum number of retries to attempt.</param>
         /// <param name="delayStrategy">The delay to use for computing the interval between retry attempts.</param>
-        public RetryPolicy(int maxRetries = 3, DelayStrategy? delayStrategy = default)
+        public RetryPolicy(int maxRetries = DefaultMaxRetries, DelayStrategy? delayStrategy = default)
         {
             _maxRetries = maxRetries;
             _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
@@ -43,9 +50,9 @@ namespace Azure.Core.Pipeline
         public RetryPolicy(RetryPolicyOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
-            _maxRetries = options.MaxRetries;
+            _maxRetries = options.MaxRetries ?? DefaultMaxRetries;
             _delayStrategy = options.DelayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
-            _responseClassifier = options.ResponseClassifier;
+            ResponseClassifier = options.ResponseClassifier;
         }
 
         /// <summary>
@@ -211,16 +218,15 @@ namespace Azure.Core.Pipeline
 
         private bool ShouldRetryInternal(HttpMessage message, Exception? exception)
         {
-            var classifier = _responseClassifier ?? message.ResponseClassifier;
             if (message.RetryNumber < _maxRetries)
             {
                 if (exception != null)
                 {
-                    return classifier.IsRetriable(message, exception);
+                    return message.ResponseClassifier.IsRetriable(message, exception);
                 }
 
                 // Response.IsError is true if we get here
-                return classifier.IsRetriableResponse(message);
+                return message.ResponseClassifier.IsRetriableResponse(message);
             }
 
             // out of retries

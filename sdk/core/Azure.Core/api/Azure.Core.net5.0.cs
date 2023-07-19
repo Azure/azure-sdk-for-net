@@ -1069,7 +1069,7 @@ namespace Azure.Core.Pipeline
     {
         public RetryPolicyOptions() { }
         public Azure.Core.DelayStrategy? DelayStrategy { get { throw null; } set { } }
-        public int MaxRetries { get { throw null; } set { } }
+        public int? MaxRetries { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier? ResponseClassifier { get { throw null; } set { } }
     }
     public partial class ServerCertificateCustomValidationArgs

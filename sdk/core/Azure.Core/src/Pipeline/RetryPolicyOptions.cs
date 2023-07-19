@@ -12,7 +12,7 @@ namespace Azure.Core.Pipeline
         /// The maximum number of retries to attempt for a request.
         /// Defaults to 3.
         /// </summary>
-        public int MaxRetries { get; set; } = 3;
+        public int? MaxRetries { get; set; }
 
         /// <summary>
         /// The delay strategy to use for calculating the delay between retry attempts.
