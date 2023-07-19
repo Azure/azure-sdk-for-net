@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [TestCase(ActionTestTypes.EmptyValueArray)]
         [TestCase(ActionTestTypes.EmptyValueStringArray)]
         [TestCase(ActionTestTypes.EmptyMixedArray)]
-        [TestCase(ActionTestTypes.NullAction)]
+        [TestCase(ActionTestTypes.NullActionItems)]
         public async Task TokenIssuanceStartActionTest(ActionTestTypes actionTestTypes)
         {
             (TokenIssuanceAction action, HttpStatusCode expectReturnCode, string expectedResponse) = GetActionTestExepected(actionTestTypes);
