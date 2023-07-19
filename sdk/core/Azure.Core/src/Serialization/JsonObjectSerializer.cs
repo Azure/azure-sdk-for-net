@@ -67,6 +67,9 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
         public override object? Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
             using var memoryStream = new MemoryStream();

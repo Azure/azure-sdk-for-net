@@ -46,7 +46,16 @@ namespace Azure.Core.Json
 
         public MutableJsonChangeKind ChangeKind { get; }
 
-        public JsonValueKind ValueKind => GetSerializedValue().ValueKind;
+        public JsonValueKind ValueKind
+        {
+#if NET6_0_OR_GREATER
+           [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
+            get
+            {
+                return GetSerializedValue().ValueKind;
+            }
+        }
 
 #if NET6_0_OR_GREATER
         [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]

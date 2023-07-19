@@ -72,6 +72,9 @@ namespace Azure.Core.Json
             element.WriteTo(writer);
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
         private void WriteObject(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
@@ -99,6 +102,9 @@ namespace Azure.Core.Json
             writer.WriteEndObject();
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
         private void WriteArray(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             writer.WriteStartArray();
