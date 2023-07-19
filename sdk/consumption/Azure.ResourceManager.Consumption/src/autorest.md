@@ -88,6 +88,9 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+models-to-treat-empty-string-as-null:
+  - ConsumptionMarketplace
+
 rename-mapping:
   Budget: ConsumptionBudget
   CategoryType: BudgetCategory
