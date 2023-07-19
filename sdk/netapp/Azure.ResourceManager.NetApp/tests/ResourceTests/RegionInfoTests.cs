@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = await CreateResourceGroupAsync();
         }
 
-        [Ignore("Ignore for now due to manifest issue, re-enable when manifest is fixed")]
+        //[Ignore("Ignore for now due to manifest issue, re-enable when manifest is fixed")]
         [RecordedTest]
         public async Task QueryRegionInfoTest()
         {
