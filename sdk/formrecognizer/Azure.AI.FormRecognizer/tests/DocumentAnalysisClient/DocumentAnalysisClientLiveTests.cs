@@ -617,7 +617,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.True(style.IsHandwritten);
 
-            Assert.AreEqual(38, result.Paragraphs.Count);
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            {
+                Assert.AreEqual(52, result.Paragraphs.Count);
+            }
+            else
+            {
+                Assert.AreEqual(38, result.Paragraphs.Count);
+            }
 
             DocumentParagraph sampleParagraph = result.Paragraphs[1];
 
@@ -918,9 +925,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var expectedItems = new List<(double Amount, DateTimeOffset Date, string Description, string ProductCode, double Quantity, string Unit, double UnitPrice)>()
             {
-                (60f, DateTimeOffset.Parse("2021-04-03 00:00:00+00:00"), "Consulting Services", "A123", 2, "hours", 30),
-                (30f, DateTimeOffset.Parse("2021-05-03 00:00:00+00:00"), "Document Fee", "B456", 3, null, 10),
-                (10f, DateTimeOffset.Parse("2021-06-03 00:00:00+00:00"), "Printing Fee", "C789", 10, "pages", 1)
+                (60f, DateTimeOffset.Parse("2021-03-04 00:00:00+00:00"), "Consulting Services", "A123", 2, "hours", 30),
+                (30f, DateTimeOffset.Parse("2021-03-05 00:00:00+00:00"), "Document Fee", "B456", 3, null, 10),
+                (10f, DateTimeOffset.Parse("2021-03-06 00:00:00+00:00"), "Printing Fee", "C789", 10, "pages", 1)
             };
 
             // Include a bit of tolerance when comparing double types.
@@ -1432,7 +1439,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 if (documentIndex == 0)
                 {
-                    Assert.AreEqual("$14,50", sampleField.Content);
+                    Assert.AreEqual("$14.50", sampleField.Content);
                 }
                 else if (documentIndex == 1)
                 {
@@ -1474,7 +1481,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 if (pageIndex == 0 || pageIndex == 2)
                 {
-                    var expectedContent = pageIndex == 0 ? "$14,50" : "1203.39";
+                    var expectedContent = pageIndex == 0 ? "$14.50" : "1203.39";
 
                     Assert.True(page.Words.Any(w => w.Content == expectedContent));
                 }

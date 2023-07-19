@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "88",
         "Content-Type": "application/json",
-        "traceparent": "00-c25a6ad4c253fa4123f60e0adae8a8fc-4043fb1e4c41dde2-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "eae29f8abe863cb7ce6aeed5884291be",
+        "traceparent": "00-9b6ea5fe997a063b72f5258fb6e08bf7-f69809109283c584-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230710.1 (.NET 6.0.18; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "c499a7c51f74ca0b7fbccfdc5180aea3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,38 +23,113 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
         "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7e52312e2a78c388-SEA",
         "Connection": "keep-alive",
-        "Content-Length": "437",
+        "Content-Length": "548",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:35:23 GMT",
-        "Openai-Model": "text-davinci-002",
-        "Openai-Organization": "msft-finetuning-2",
-        "Openai-Processing-Ms": "505",
-        "Openai-Version": "2020-10-01",
+        "Date": "Tue, 11 Jul 2023 15:48:41 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "481",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "X-Ratelimit-Limit-Requests": "3000",
-        "X-Ratelimit-Limit-Tokens": "250000",
-        "X-Ratelimit-Remaining-Requests": "2999",
-        "X-Ratelimit-Remaining-Tokens": "249968",
-        "X-Ratelimit-Reset-Requests": "20ms",
-        "X-Ratelimit-Reset-Tokens": "7ms",
-        "X-Request-ID": "7505a3275279b2f872f7d487ea029ff0"
+        "x-ratelimit-limit-requests": "3000",
+        "x-ratelimit-limit-tokens": "250000",
+        "x-ratelimit-remaining-requests": "2999",
+        "x-ratelimit-remaining-tokens": "249968",
+        "x-ratelimit-reset-requests": "20ms",
+        "x-ratelimit-reset-tokens": "7ms",
+        "X-Request-ID": "94e06fb76e31039d6dbc308f26744403"
       },
       "ResponseBody": {
-        "id": "cmpl-6wKGBRU98z38fppG9F75xeYBTBfUe",
+        "id": "cmpl-7b9tRqK6xXTnMWhzihmRpsgEhs38b",
         "object": "text_completion",
-        "created": 1679358923,
+        "created": 1689090521,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "\u0027, \u0027medium\u0027));\nvar_dump(check_fermat($one",
+            "text": "\n\nHello world, my name is John.",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop"
+          },
+          {
+            "text": "\u0022],\n[\u0022run someone off [rack] [run someone up (the walls",
+            "index": 1,
+            "logprobs": null,
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 8,
+          "completion_tokens": 26,
+          "total_tokens": 34
+        }
+      }
+    },
+    {
+      "RequestUri": "https://api.openai.com/v1/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "88",
+        "Content-Type": "application/json",
+        "traceparent": "00-9b6ea5fe997a063b72f5258fb6e08bf7-f69809109283c584-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230710.1 (.NET 6.0.18; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "c499a7c51f74ca0b7fbccfdc5180aea3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ],
+        "model": "text-davinci-002"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
+        "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7e5231328df9c388-SEA",
+        "Connection": "keep-alive",
+        "Content-Length": "578",
+        "Content-Type": "application/json",
+        "Date": "Tue, 11 Jul 2023 15:48:42 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "322",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ratelimit-limit-requests": "3000",
+        "x-ratelimit-limit-tokens": "250000",
+        "x-ratelimit-remaining-requests": "2999",
+        "x-ratelimit-remaining-tokens": "249968",
+        "x-ratelimit-reset-requests": "20ms",
+        "x-ratelimit-reset-tokens": "7ms",
+        "X-Request-ID": "4c92c50cfc287d06c0109717d3767851"
+      },
+      "ResponseBody": {
+        "id": "cmpl-7b9tSHxyw3LfocLK3kXEDVK1xRmGl",
+        "object": "text_completion",
+        "created": 1689090522,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "\u0022 according to go spec\npackage main\n\nimport \u0022fmt\u0022\n",
             "index": 0,
             "logprobs": null,
             "finish_reason": "length"
           },
           {
-            "text": ". We\u0027ve been over this before. I think we should move on to something",
+            "text": "\n\non this track without a plan\n\nwashed away real easy llev",
             "index": 1,
             "logprobs": null,
             "finish_reason": "length"
@@ -69,9 +144,10 @@
     }
   ],
   "Variables": {
-    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
-    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "CHAT_COMPLETIONS_DEPLOYMENT_NAME": "gpt-35-turbo",
+    "COMPLETIONS_DEPLOYMENT_NAME": "gpt-35-turbo",
+    "EMBEDDINGS_DEPLOYMENT_NAME": "text-embedding-ada-002",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "369186293"
+    "RandomSeed": "782204795"
   }
 }

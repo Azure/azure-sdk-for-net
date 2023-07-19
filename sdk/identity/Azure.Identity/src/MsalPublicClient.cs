@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -43,7 +44,7 @@ namespace Azure.Identity
                 .Create(ClientId)
                 .WithAuthority(authorityUri)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
-                .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
+                .WithLogging(LogMsal, enablePiiLogging: IsSupportLoggingEnabled);
 
             if (!string.IsNullOrEmpty(RedirectUrl))
             {
@@ -123,7 +124,7 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, bool async, CancellationToken cancellationToken)
         {
             if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
             {
@@ -137,7 +138,7 @@ namespace Azure.Identity
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 return Task.Run(async () =>
                 {
-                    var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, true, cancellationToken).ConfigureAwait(false);
+                    var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, true, cancellationToken).ConfigureAwait(false);
                     LogAccountDetails(result);
                     return result;
                 }).GetAwaiter().GetResult();
@@ -146,12 +147,12 @@ namespace Azure.Identity
 
             AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingInline();
 
-            var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
@@ -167,6 +168,17 @@ namespace Azure.Identity
             if (tenantId != null)
             {
                 builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
+            }
+            if (browserOptions != null)
+            {
+                if (browserOptions.UseEmbeddedWebView.HasValue)
+                {
+                    builder.WithUseEmbeddedWebView(browserOptions.UseEmbeddedWebView.Value);
+                }
+                if (browserOptions.SystemBrowserOptions != null)
+                {
+                    builder.WithSystemWebViewOptions(browserOptions.SystemBrowserOptions);
+                }
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)

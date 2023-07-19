@@ -3,7 +3,7 @@
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class ResponseStatusCodes
+    internal static class ResponseStatusCodes
     {
         public const int Success = 200;
         public const int PartialSuccess = 206;

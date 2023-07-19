@@ -132,6 +132,22 @@ internal static class AzMonNewListExtensions
         return null;
     }
 
+    ///<summary>
+    /// Gets dependency target from activity tag objects.
+    ///</summary>
+    internal static string? GetNewSchemaDependencyTarget(this AzMonList tagObjects, OperationType type)
+    {
+        switch (type)
+        {
+            case OperationType.Http:
+                return tagObjects.GetNewSchemaHttpDependencyTarget();
+            case OperationType.Db:
+                return tagObjects.GetDbDependencyTargetAndName().DbTarget;
+            default:
+                return null;
+        }
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsDefaultPort(int port)
     {
