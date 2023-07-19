@@ -334,7 +334,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             EmptyValueArray,
             EmptyValueStringArray,
             EmptyMixedArray,
-            NullAction
+            NullActionItems
         }
 
         public static (TokenIssuanceAction action, HttpStatusCode expectReturnCode, string expectedResponse) GetActionTestExepected(ActionTestTypes actionTestTypes)
@@ -377,10 +377,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                     return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { String.Empty, null, " " }) }),
                     HttpStatusCode.OK,
                     "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",null,\" \"]}}]}}");
-                case ActionTestTypes.NullAction:
+                case ActionTestTypes.NullActionItems:
                     return (null,
                     HttpStatusCode.BadRequest,
-                    "{\"errors\":[\"TokenIssuanceStartResponse: No Actions Found. Please supply atleast one action.\"]}");
+					"{\"errors\":[\"TokenIssuanceStartResponse: Actions can not contain null items\"]}");
                 default:
                     return (null,
                     HttpStatusCode.InternalServerError,

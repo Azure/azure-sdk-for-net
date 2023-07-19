@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelpers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,14 +13,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
     {
         [Test]
         [TestCaseSource(nameof(TestScenarios))]
-        [Description("Tests the cases for IsValid enumerables of objects")]
         public void EnumberableItemsNotNullIsValidWithTestCase(object testObject, string message, bool success)
         {
             DummyClass dummyObj = new() { Obj = testObject };
 
             if (success == false)
             {
-                Assert.Throws<ValidationException>(() => Validator.ValidateObject(dummyObj, new ValidationContext(dummyObj), true), AuthenticationEventResource.Ex_No_Action);
+                Assert.Throws<ValidationException>(() => Validator.ValidateObject(dummyObj, new ValidationContext(dummyObj), true), AuthenticationEventResource.Ex_Null_Action_Items);
             }
             else
             {
@@ -66,9 +64,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
                 Test = new object[1],
                 Message = "Testing single null item array",
             }.ToArray;
-            #endregion
+#endregion
 
-            #region Valid
+#region Valid
             yield return new TestCaseStructure()
             {
                 Test = new List<object>() { new(), new() },
