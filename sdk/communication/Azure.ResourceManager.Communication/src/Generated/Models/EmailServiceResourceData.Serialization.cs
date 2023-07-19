@@ -8,11 +8,12 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication.Models
+namespace Azure.ResourceManager.Communication
 {
-    public partial class EmailServiceResource : IUtf8JsonSerializable
+    public partial class EmailServiceResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Communication.Models
             writer.WriteEndObject();
         }
 
-        internal static EmailServiceResource DeserializeEmailServiceResource(JsonElement element)
+        internal static EmailServiceResourceData DeserializeEmailServiceResourceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new EmailServiceResource(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value);
+            return new EmailServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value);
         }
     }
 }

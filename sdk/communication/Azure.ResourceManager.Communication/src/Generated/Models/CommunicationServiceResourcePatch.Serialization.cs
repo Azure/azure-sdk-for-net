@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class CommunicationServiceResourceUpdate : IUtf8JsonSerializable
+    public partial class CommunicationServiceResourcePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

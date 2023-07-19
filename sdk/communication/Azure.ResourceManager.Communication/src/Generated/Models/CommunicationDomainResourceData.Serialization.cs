@@ -5,25 +5,19 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication.Models
+namespace Azure.ResourceManager.Communication
 {
-    public partial class CommunicationServiceResource : IUtf8JsonSerializable
+    public partial class CommunicationDomainResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -39,57 +33,42 @@ namespace Azure.ResourceManager.Communication.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataLocation))
+            if (Optional.IsDefined(DomainManagement))
             {
-                writer.WritePropertyName("dataLocation"u8);
-                writer.WriteStringValue(DataLocation);
+                writer.WritePropertyName("domainManagement"u8);
+                writer.WriteStringValue(DomainManagement.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(LinkedDomains))
+            if (Optional.IsDefined(UserEngagementTracking))
             {
-                writer.WritePropertyName("linkedDomains"u8);
-                writer.WriteStartArray();
-                foreach (var item in LinkedDomains)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("userEngagementTracking"u8);
+                writer.WriteStringValue(UserEngagementTracking.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static CommunicationServiceResource DeserializeCommunicationServiceResource(JsonElement element)
+        internal static CommunicationDomainResourceData DeserializeCommunicationDomainResourceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CommunicationServicesProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
+            Optional<DomainProvisioningState> provisioningState = default;
             Optional<string> dataLocation = default;
-            Optional<ResourceIdentifier> notificationHubId = default;
-            Optional<string> version = default;
-            Optional<Guid> immutableResourceId = default;
-            Optional<IList<string>> linkedDomains = default;
+            Optional<string> fromSenderDomain = default;
+            Optional<string> mailFromSenderDomain = default;
+            Optional<DomainManagement> domainManagement = default;
+            Optional<DomainPropertiesVerificationStates> verificationStates = default;
+            Optional<DomainPropertiesVerificationRecords> verificationRecords = default;
+            Optional<UserEngagementTracking> userEngagementTracking = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -148,12 +127,7 @@ namespace Azure.ResourceManager.Communication.Models
                             {
                                 continue;
                             }
-                            provisioningState = new CommunicationServicesProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("hostName"u8))
-                        {
-                            hostName = property0.Value.GetString();
+                            provisioningState = new DomainProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dataLocation"u8))
@@ -161,48 +135,57 @@ namespace Azure.ResourceManager.Communication.Models
                             dataLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("notificationHubId"u8))
+                        if (property0.NameEquals("fromSenderDomain"u8))
+                        {
+                            fromSenderDomain = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("mailFromSenderDomain"u8))
+                        {
+                            mailFromSenderDomain = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("domainManagement"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            notificationHubId = new ResourceIdentifier(property0.Value.GetString());
+                            domainManagement = new DomainManagement(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("immutableResourceId"u8))
+                        if (property0.NameEquals("verificationStates"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            immutableResourceId = property0.Value.GetGuid();
+                            verificationStates = DomainPropertiesVerificationStates.DeserializeDomainPropertiesVerificationStates(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("linkedDomains"u8))
+                        if (property0.NameEquals("verificationRecords"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            verificationRecords = DomainPropertiesVerificationRecords.DeserializeDomainPropertiesVerificationRecords(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("userEngagementTracking"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                array.Add(item.GetString());
+                                continue;
                             }
-                            linkedDomains = array;
+                            userEngagementTracking = new UserEngagementTracking(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new CommunicationServiceResource(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Optional.ToNullable(immutableResourceId), Optional.ToList(linkedDomains));
+            return new CommunicationDomainResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Optional.ToNullable(userEngagementTracking));
         }
     }
 }

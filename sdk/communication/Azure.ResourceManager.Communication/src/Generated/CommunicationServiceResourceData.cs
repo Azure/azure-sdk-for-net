@@ -8,21 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication.Models
+namespace Azure.ResourceManager.Communication
 {
-    /// <summary> A class representing a CommunicationService resource. </summary>
-    public partial class CommunicationServiceResource : TrackedResourceData
+    /// <summary>
+    /// A class representing the CommunicationServiceResource data model.
+    /// A class representing a CommunicationService resource.
+    /// </summary>
+    public partial class CommunicationServiceResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CommunicationServiceResource. </summary>
+        /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
         /// <param name="location"> The location. </param>
-        public CommunicationServiceResource(AzureLocation location) : base(location)
+        public CommunicationServiceResourceData(AzureLocation location) : base(location)
         {
             LinkedDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceResource. </summary>
+        /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
-        internal CommunicationServiceResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IList<string> linkedDomains) : base(id, name, resourceType, systemData, tags, location)
+        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IList<string> linkedDomains) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;

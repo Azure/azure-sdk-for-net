@@ -7,20 +7,24 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication.Models
+namespace Azure.ResourceManager.Communication
 {
-    /// <summary> A class representing an EmailService resource. </summary>
-    public partial class EmailServiceResource : TrackedResourceData
+    /// <summary>
+    /// A class representing the EmailServiceResource data model.
+    /// A class representing an EmailService resource.
+    /// </summary>
+    public partial class EmailServiceResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EmailServiceResource. </summary>
+        /// <summary> Initializes a new instance of EmailServiceResourceData. </summary>
         /// <param name="location"> The location. </param>
-        public EmailServiceResource(AzureLocation location) : base(location)
+        public EmailServiceResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of EmailServiceResource. </summary>
+        /// <summary> Initializes a new instance of EmailServiceResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="dataLocation"> The location where the email service stores its data at rest. </param>
-        internal EmailServiceResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EmailServicesProvisioningState? provisioningState, string dataLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal EmailServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EmailServicesProvisioningState? provisioningState, string dataLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             DataLocation = dataLocation;

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SenderUsernameResource>> value = default;
+            Optional<IReadOnlyList<SenderUsernameResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    List<SenderUsernameResource> array = new List<SenderUsernameResource>();
+                    List<SenderUsernameResourceData> array = new List<SenderUsernameResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SenderUsernameResource.DeserializeSenderUsernameResource(item));
+                        array.Add(SenderUsernameResourceData.DeserializeSenderUsernameResourceData(item));
                     }
                     value = array;
                     continue;

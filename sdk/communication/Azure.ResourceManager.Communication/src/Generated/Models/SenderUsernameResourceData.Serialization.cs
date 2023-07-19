@@ -7,11 +7,12 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Communication.Models
+namespace Azure.ResourceManager.Communication
 {
-    public partial class SenderUsernameResource : IUtf8JsonSerializable
+    public partial class SenderUsernameResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Communication.Models
             writer.WriteEndObject();
         }
 
-        internal static SenderUsernameResource DeserializeSenderUsernameResource(JsonElement element)
+        internal static SenderUsernameResourceData DeserializeSenderUsernameResourceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new SenderUsernameResource(id, name, type, systemData.Value, dataLocation.Value, username.Value, displayName.Value, Optional.ToNullable(provisioningState));
+            return new SenderUsernameResourceData(id, name, type, systemData.Value, dataLocation.Value, username.Value, displayName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

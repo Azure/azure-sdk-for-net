@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of SenderUsernameResourceCollection. </summary>
         internal SenderUsernameResourceCollection()
         {
-            Value = new ChangeTrackingList<SenderUsernameResource>();
+            Value = new ChangeTrackingList<SenderUsernameResourceData>();
         }
 
         /// <summary> Initializes a new instance of SenderUsernameResourceCollection. </summary>
         /// <param name="value"> List of SenderUsernames. </param>
         /// <param name="nextLink"> The URL the client should use to fetch the next page (per server side paging). </param>
-        internal SenderUsernameResourceCollection(IReadOnlyList<SenderUsernameResource> value, string nextLink)
+        internal SenderUsernameResourceCollection(IReadOnlyList<SenderUsernameResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of SenderUsernames. </summary>
-        public IReadOnlyList<SenderUsernameResource> Value { get; }
+        public IReadOnlyList<SenderUsernameResourceData> Value { get; }
         /// <summary> The URL the client should use to fetch the next page (per server side paging). </summary>
         public string NextLink { get; }
     }
