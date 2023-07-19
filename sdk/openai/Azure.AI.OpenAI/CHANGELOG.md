@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.6 (2023-07-19)
 
 ### Features Added
 
@@ -16,10 +16,6 @@
 ### Breaking Changes
 
 - `ChatMessage`'s one-parameter constructor has been replaced with a no-parameter constructor. Please replace any hybrid construction with one of these two options that either completely rely on property setting or completely rely on constructor parameters.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.5 (2023-03-22)
 
