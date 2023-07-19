@@ -1,5 +1,16 @@
 # Release History
 
+## 1.10.0-beta.2 (Unreleased)
+
+### Features Added
+- Add `BrowserCustomizedOptions` to `InteractiveBrowserCredential` to enable web view customization for interactive authentication.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.10.0-beta.1 (2023-07-11)
 
 ### Features Added
