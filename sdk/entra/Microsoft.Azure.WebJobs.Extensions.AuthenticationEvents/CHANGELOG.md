@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2023-07-18)
+
+### Bugs Fixed
+
+- Updated ODataType signature - 2433332
+- Empty or null response actions will throw a bad response - 2161553
 
 ## 1.0.0-beta.3 (2022-12-13)
 
