@@ -6,15 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="OTEL_DIAGNOSTICS.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <PackageReference Include="Azure.Identity" VersionOverride="1.8.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="6.0.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" VersionOverride="1.5.0" />
+    <PackageReference Include="OpenTelemetry.Exporter.Prometheus.HttpListener" VersionOverride="1.5.0-rc.1" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
   </ItemGroup>
 
