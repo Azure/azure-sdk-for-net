@@ -22,7 +22,7 @@ SecretClientOptions options = new SecretClientOptions()
 
 ## Setting a custom retry policy
 
-Using `RetryOptions` to configure retry behavior is sufficient for the vast majority of scenarios. For more advanced scenarios, it's possible to use a custom retry policy by setting the `RetryPolicy` property of client options class. This can be accomplished by implementing a retry policy that derives from the `RetryPolicy` class, or by passing in a `DelayStrategy` into the existing `RetryPolicy` constructor. The `RetryPolicy` class contains hooks to determine if a request should be retried and how long to wait before retrying. 
+Using `RetryOptions` to configure retry behavior is sufficient for the vast majority of scenarios. For more advanced scenarios, it's possible to use a custom retry policy by setting the `RetryPolicy` property of client options class. This can be accomplished by implementing a retry policy that derives from the `RetryPolicy` class, or by passing in a `DelayStrategy` into the existing `RetryPolicy` constructor. The `RetryPolicy` class contains hooks to determine if a request should be retried and how long to wait before retrying.
 
 In the following example, we implement a policy that will prevent retries from taking place if the overall processing time has exceeded a configured threshold. Notice that the policy takes in `RetryOptions` as one of the constructor parameters and passes it to the base constructor. By doing this, we are able to delegate to the base `RetryPolicy` as needed (either by explicitly invoking the base methods, or by not overriding methods that we do not need to customize) which will respect the `RetryOptions`.
 
@@ -68,7 +68,7 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
-Another scenario where it may be helpful to use a custom retry policy is when you need to customize the delay behavior, but don't need to adjust the logic used to determine whether a request should be retried or not. In this case, it isn't necessary to create a custom `RetryPolicy` class - instead, you can pass in a `DelayStrategy` into the `RetryPolicy` constructor.  
+Another scenario where it may be helpful to use a custom retry policy is when you need to customize the delay behavior, but don't need to adjust the logic used to determine whether a request should be retried or not. In this case, it isn't necessary to create a custom `RetryPolicy` class - instead, you can pass in a `DelayStrategy` into the `RetryPolicy` constructor.
 
 In the below example, we create a customized delay strategy that uses a fixed sequence of delays that are iterated through as the number of retries increases. We then pass the strategy into the `RetryPolicy` constructor and set the constructed policy in our options.
 ```C# Snippet:SequentialDelayStrategy
@@ -103,10 +103,9 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
-Another customization that is possible is to easily configure what exceptions or status codes 
-are retried. By default, this is configured in the `ResponseClassifier` type, but it can be 
-overridden by setting the `ResponseClassifier` property on the `RetryPolicyOptions` when 
-constructing a `RetryPolicy`. In the example below, we create a custom response classifier that 
+If you only need to configure which exceptions or status codes are retried, this is also supported. By default, this is
+configured in the `ResponseClassifier` type, but it can be overridden by setting the `ResponseClassifier` property
+on the `RetryPolicyOptions` when constructing a `RetryPolicy`. In the example below, we create a custom response classifier that
 we use in our custom `RetryPolicy`.
 ```C# Snippet:CustomResponseClassifier
 public class CustomResponseClassifier : ResponseClassifier
@@ -132,10 +131,6 @@ public class CustomResponseClassifier : ResponseClassifier
         return base.IsRetriableException(exception);
     }
 }
-
-public class SomeCustomException : Exception
-{
-}
 ```
 
 Here is how the custom response classifier would be used in the client options.
@@ -151,6 +146,10 @@ SecretClientOptions options = new SecretClientOptions()
     RetryPolicy = retryPolicy
 };
 ```
+
+***When overriding the `ResponseClassifer` as above it is important to keep in mind that any `ResponseClassifier`
+customizations that are made via the `RequestContext` API in methods that take a `RequestContext` will take
+precedence.***
 
 It's also possible to have full control over the retry logic by setting the `RetryPolicy` property to an implementation of `HttpPipelinePolicy` where you would need to implement the retry loop yourself. One use case for this is if you want to implement your own retry policy with Polly. Note that if you replace the `RetryPolicy` with a `HttpPipelinePolicy`, you will need to make sure to update the `HttpMessage.ProcessingContext` that other pipeline policies may be relying on.
 
@@ -202,7 +201,10 @@ SecretClientOptions options = new SecretClientOptions()
 ```
 
 > **_A note to library authors:_**
-Library-specific response classifiers _will_ be respected if a user sets a custom policy deriving from `RetryPolicy` as long as they call into the base `ShouldRetry` method. If a user doesn't call the base method, or sets a `HttpPipelinePolicy` in the `RetryPolicy` property, then the library-specific response classifiers _will not_ be respected. 
+> Library-specific response classifiers _will_ be respected if a user sets a custom policy deriving from `RetryPolicy`
+> as long as they call into the base `ShouldRetry` method, and don't specify a custom `ResponseClassifier` when
+> constructing their `RetryPolicy`. If a user doesn't call the base method, or sets a
+> `HttpPipelinePolicy` in the `RetryPolicy` property, then the library-specific response classifiers _will not_ be respected.
 
 ## User provided HttpClient instance
 
