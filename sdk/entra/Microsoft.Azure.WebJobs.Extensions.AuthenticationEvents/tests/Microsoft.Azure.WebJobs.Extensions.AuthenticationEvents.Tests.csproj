@@ -19,7 +19,6 @@
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ConversionPayload.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NoActionResponse.json" />
-		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NullResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ExpectedPayload.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\QueryParameters.json" />
 	</ItemGroup>
@@ -31,6 +30,15 @@
 		<PackageReference Include="nunit" />
 		<PackageReference Include="Moq" />
 		<PackageReference Include="NUnit3TestAdapter" />
+		
+		<PackageReference Include="xunit.runner.visualstudio">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.collector">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
 
 		<ProjectReference Include="$(AzureCoreTestFramework)" />
 
