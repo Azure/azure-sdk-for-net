@@ -25,21 +25,6 @@ namespace Microsoft.Azure.KeyVault.Samples
                 new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback));
             #endregion Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_Create
 
-            #region Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateWithOptions
-            using (HttpClient httpClient = new HttpClient())
-            {
-#if SNIPPET
-                AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
-                KeyVaultClient client = new KeyVaultClient(
-#else
-                provider = new AzureServiceTokenProvider();
-                client = new KeyVaultClient(
-#endif
-                    new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
-                    httpClient);
-            }
-            #endregion Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateWithOptions
-
             #region Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateCustomPolicy
             CertificatePolicy policy = new CertificatePolicy
             {
@@ -144,17 +129,6 @@ namespace Microsoft.Azure.KeyVault.Samples
                 #endregion Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_ImportCertificate
             }
 
-            #region Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
-#if SNIPPET
-            CertificatePolicy policy = new CertificatePolicy
-#else
-            policy = new CertificatePolicy
-#endif
-            {
-                IssuerParameters = new IssuerParameters("Self"),
-                X509CertificateProperties = new X509CertificateProperties("CN=DefaultPolicy")
-            };
-            #endregion Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
             {
                 #region Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_ListCertificates
                 IPage<CertificateItem> page = await client.GetCertificatesAsync("https://myvault.vault.azure.net");
@@ -209,6 +183,32 @@ namespace Microsoft.Azure.KeyVault.Samples
                 }
                 #endregion Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_DeleteCertificate
             }
+        }
+
+        [Ignore("Used only for the migration guide")]
+        private static void CreateWithOptions()
+        {
+            #region Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateWithOptions
+            using (HttpClient httpClient = new HttpClient())
+            {
+                AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
+                KeyVaultClient client = new KeyVaultClient(
+                    new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
+                    httpClient);
+            }
+            #endregion Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateWithOptions
+        }
+
+        [Ignore("Used only for the migration guide")]
+        private static void CreateSelfSignedPolicy()
+        {
+            #region Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerParameters = new IssuerParameters("Self"),
+                X509CertificateProperties = new X509CertificateProperties("CN=DefaultPolicy")
+            };
+            #endregion Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
         }
     }
 }

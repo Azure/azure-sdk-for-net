@@ -28,22 +28,6 @@ namespace Microsoft.Azure.KeyVault.Samples
             KeyVaultClient client = new KeyVaultClient(
                 new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback));
             #endregion Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_Create
-
-            #region Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_CreateWithOptions
-            using (HttpClient httpClient = new HttpClient())
-            {
-#if SNIPPET
-                AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
-                KeyVaultClient client = new KeyVaultClient(
-#else
-                provider = new AzureServiceTokenProvider();
-                client = new KeyVaultClient(
-#endif
-                    new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
-                    httpClient);
-            }
-            #endregion Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_CreateWithOptions
-
             {
                 #region Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_SetSecret
                 SecretBundle secret = await client.SetSecretAsync("https://myvault.vault.azure.net", "secret-name", "secret-value");
@@ -114,6 +98,20 @@ namespace Microsoft.Azure.KeyVault.Samples
                 }
                 #endregion Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_DeleteSecret
             }
+        }
+
+        [Ignore("Used only for the migration guide")]
+        private static void CreateWithOptions()
+        {
+            #region Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_CreateWithOptions
+            using (HttpClient httpClient = new HttpClient())
+            {
+                AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
+                KeyVaultClient client = new KeyVaultClient(
+                    new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
+                    httpClient);
+            }
+            #endregion Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_CreateWithOptions
         }
     }
 }

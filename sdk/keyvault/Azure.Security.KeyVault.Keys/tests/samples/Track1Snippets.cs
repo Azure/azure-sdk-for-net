@@ -22,29 +22,13 @@ namespace Microsoft.Azure.KeyVault.Samples
     {
         [Ignore("Used only for the migration guide")]
         private static async Task Track1MigrationGuide()
-{
+        {
             #region Snippet:Microsoft_Azure_KeyVault_Keys_Snippets_MigrationGuide_Create
             AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
             KeyVaultClient client = new KeyVaultClient(
                 new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback));
             #endregion Snippet:Microsoft_Azure_KeyVault_Keys_Snippets_MigrationGuide_Create
-
-            #region Snippet:Microsoft_Azure_KeyVault_Keys_Snippets_MigrationGuide_CreateWithOptions
-            using (HttpClient httpClient = new HttpClient())
-            {
-#if SNIPPET
-                AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
-                KeyVaultClient client = new KeyVaultClient(
-#else
-                provider = new AzureServiceTokenProvider();
-                client = new KeyVaultClient(
-#endif
-                    new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
-                    httpClient);
-            }
-            #endregion Snippet:Microsoft_Azure_KeyVault_Keys_Snippets_MigrationGuide_CreateWithOptions
-
-            {
+           {
                 #region Snippet:Microsoft_Azure_KeyVault_Keys_Snippets_MigrationGuide_CreateKey
                 // Create RSA key.
                 NewKeyParameters createRsaParameters = new NewKeyParameters
@@ -161,6 +145,20 @@ namespace Microsoft.Azure.KeyVault.Samples
                 }
                 #endregion Snippet:Microsoft_Azure_KeyVault_Keys_Snippets_MigrationGuide_Wrap
             }
+        }
+
+        [Ignore("Used only for the migration guide")]
+        private static void CreateWithOptions()
+        {
+            #region Snippet:Microsoft_Azure_KeyVault_Keys_Snippets_MigrationGuide_CreateWithOptions
+            using (HttpClient httpClient = new HttpClient())
+            {
+                AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
+                KeyVaultClient client = new KeyVaultClient(
+                    new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
+                    httpClient);
+            }
+            #endregion Snippet:Microsoft_Azure_KeyVault_Keys_Snippets_MigrationGuide_CreateWithOptions
         }
     }
 }
