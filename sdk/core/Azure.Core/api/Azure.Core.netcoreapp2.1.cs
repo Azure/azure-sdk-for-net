@@ -1054,6 +1054,7 @@ namespace Azure.Core.Pipeline
     }
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
+        public RetryPolicy(Azure.Core.Pipeline.RetryPolicyOptions options) { }
         public RetryPolicy(int maxRetries = 3, Azure.Core.DelayStrategy? delayStrategy = null) { }
         protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
         protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
@@ -1063,6 +1064,13 @@ namespace Azure.Core.Pipeline
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
         protected internal virtual bool ShouldRetry(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
         protected internal virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
+    }
+    public partial class RetryPolicyOptions
+    {
+        public RetryPolicyOptions() { }
+        public Azure.Core.DelayStrategy? DelayStrategy { get { throw null; } set { } }
+        public int? MaxRetries { get { throw null; } set { } }
+        public Azure.Core.ResponseClassifier? ResponseClassifier { get { throw null; } set { } }
     }
     public partial class ServerCertificateCustomValidationArgs
     {

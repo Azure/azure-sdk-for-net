@@ -16,6 +16,10 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class RetryPolicy : HttpPipelinePolicy
     {
+        // The default max retries to use if no value is specified.
+        private const int DefaultMaxRetries = 3;
+
+        // The max retries for this policy.
         private readonly int _maxRetries;
 
         /// <summary>
@@ -24,14 +28,31 @@ namespace Azure.Core.Pipeline
         private readonly DelayStrategy _delayStrategy;
 
         /// <summary>
+        /// The response classifier, if any, associated with this policy.
+        /// </summary>
+        internal ResponseClassifier? ResponseClassifier { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
         /// <param name="maxRetries">The maximum number of retries to attempt.</param>
         /// <param name="delayStrategy">The delay to use for computing the interval between retry attempts.</param>
-        public RetryPolicy(int maxRetries = 3, DelayStrategy? delayStrategy = default)
+        public RetryPolicy(int maxRetries = DefaultMaxRetries, DelayStrategy? delayStrategy = default)
         {
             _maxRetries = maxRetries;
             _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
+        /// </summary>
+        /// <param name="options">The set of options to use for configuring the retry policy.</param>
+        public RetryPolicy(RetryPolicyOptions options)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            _maxRetries = options.MaxRetries ?? DefaultMaxRetries;
+            _delayStrategy = options.DelayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
+            ResponseClassifier = options.ResponseClassifier;
         }
 
         /// <summary>
