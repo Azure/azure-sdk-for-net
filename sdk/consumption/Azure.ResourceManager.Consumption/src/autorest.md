@@ -55,9 +55,6 @@ override-operation-name:
   Tags_Get: GetConsumptionTags
   UsageDetails_List: GetConsumptionUsageDetails
 
-mgmt-debug:
-  show-serialized-names: true
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
