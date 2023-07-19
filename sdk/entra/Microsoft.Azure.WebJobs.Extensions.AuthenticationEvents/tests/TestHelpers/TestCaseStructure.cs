@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelpers
+﻿namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
     public class TestCaseStructure
     {
