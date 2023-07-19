@@ -8,5 +8,3 @@ extends:
     ServiceDirectory: applicationinsights
     ArtifactName: packages
     Artifacts:
-    - name: Microsoft.Azure.ApplicationInsights.Query
-      safeName: MicrosoftAzureApplicationInsightsQuery
