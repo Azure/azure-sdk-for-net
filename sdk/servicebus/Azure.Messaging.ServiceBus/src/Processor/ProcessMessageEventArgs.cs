@@ -28,7 +28,8 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
-        /// An event that is raised when the message lock is lost. This event is only raised for the scope of the Process Message handler.
+        /// An event that is raised when the message lock is lost. This event is only raised for the scope of the Process Message handler,
+        /// and only for the message that is delivered to the handler - it is not raised for any additional messages received via the ProcessorReceiveActions.
         /// Once the handler returns, the event will not be raised. There are two cases in which this event can be raised:
         /// <list type="numbered">
         ///     <item>
