@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -1295,7 +1296,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<(string TraceParent, string TraceState)> traceContexts, int eventCount)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName, DiagnosticScope.ActivityKind.Client, MessagingDiagnosticOperation.Publish);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName, ActivityKind.Client, MessagingDiagnosticOperation.Publish);
 
             if (scope.IsEnabled)
             {

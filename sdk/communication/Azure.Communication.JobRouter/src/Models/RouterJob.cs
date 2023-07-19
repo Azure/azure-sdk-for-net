@@ -108,7 +108,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Notes != null && Notes.Count != 0
-                    ? Notes?.ToDictionary(x => (x.AddedAtUtc ?? DateTimeOffset.UtcNow)
+                    ? Notes?.ToDictionary(x => (x.AddedAt ?? DateTimeOffset.UtcNow)
                         .ToUniversalTime().ToString("O", CultureInfo.InvariantCulture), x => x.Message)
                     : new ChangeTrackingDictionary<string, string>();
             }
@@ -118,7 +118,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     Notes.Add(new RouterJobNote
                     {
-                        AddedAtUtc = DateTimeOffsetParser.ParseAndGetDateTimeOffset(note.Key),
+                        AddedAt = DateTimeOffsetParser.ParseAndGetDateTimeOffset(note.Key),
                         Message = note.Value
                     });
                 }

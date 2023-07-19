@@ -10,12 +10,14 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
+using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class RehydrateBlobResourceTests : DataMovementTestBase
+    public class RehydrateBlobResourceTests
     {
         public enum RehydrateApi
         {
@@ -36,8 +38,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
         public static IEnumerable<RehydrateApi> GetRehydrateApis() => Enum.GetValues(typeof(RehydrateApi)).Cast<RehydrateApi>();
 
-        public RehydrateBlobResourceTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public RehydrateBlobResourceTests()
         { }
 
         private enum StorageResourceType
@@ -132,7 +133,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
             {
-                header ??= CreateDefaultJobPartHeader(
+                header ??= CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: currentPart,
                     sourcePath: sourcePaths[currentPart],
@@ -236,10 +237,10 @@ namespace Azure.Storage.DataMovement.Tests
                 ToResourceId(destinationType),
                 isContainer: false).Object;
 
-            IDictionary<string, string> metadata = BuildMetadata();
-            IDictionary<string, string> blobTags = BuildTags();
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> blobTags = DataProvider.BuildTags();
 
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 0,
                     sourcePath: sourcePath,
@@ -343,10 +344,10 @@ namespace Azure.Storage.DataMovement.Tests
                 ToResourceId(destinationType),
                 isContainer: false).Object;
 
-            IDictionary<string, string> metadata = BuildMetadata();
-            IDictionary<string, string> blobTags = BuildTags();
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> blobTags = DataProvider.BuildTags();
 
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 0,
                     sourcePath: sourcePath,
@@ -450,10 +451,10 @@ namespace Azure.Storage.DataMovement.Tests
                 ToResourceId(destinationType),
                 isContainer: false).Object;
 
-            IDictionary<string, string> metadata = BuildMetadata();
-            IDictionary<string, string> blobTags = BuildTags();
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> blobTags = DataProvider.BuildTags();
 
-            JobPartPlanHeader header = CreateDefaultJobPartHeader(
+            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 0,
                     sourcePath: sourcePath,
@@ -502,7 +503,7 @@ namespace Azure.Storage.DataMovement.Tests
             int jobPartCount = 10;
             for (int i = 0; i < jobPartCount; i++)
             {
-                string childPath = GetNewString(5);
+                string childPath = DataProvider.GetNewString(5);
                 sourcePaths.Add(string.Join("/", sourceParentPath, childPath));
                 destinationPaths.Add(string.Join("/", destinationParentPath, childPath));
             }

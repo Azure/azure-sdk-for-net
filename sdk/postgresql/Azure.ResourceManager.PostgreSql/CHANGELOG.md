@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,32 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.2 (2023-07-18)
+
+This release uses api version 2023-03-01-preview for PostgreSQL flexible server.
+
+### Features Added
+
+- Data Encryption support for Geo-backup enabled servers.
+- ReviveDropped. This allows you to revive the dropped servers.
+- Migration
+- Performance tier scaling for Storage
+- Long Term Retention Backup
+- LogFiles
+
+### Breaking Changes
+
+- Updated response object for ExecuteLocationBasedCapabilities.
+- New properties added for Storage object under PostgreSqlFlexibleServerData to support features like IOPS scaling and Storage AutoGrow. StorageSizeInGB property available under Storage.
+
+### Bugs Fixed
+
+- ReplicaCapacity under PostgreSqlFlexibleServerData is now marked as read-only as this cannot be updated.
+- Removed unsupported IdentityType "SystemAssigned".
+- Renamed KeyType for Data encryption feature from unsupported SystemAssigned to supported SystemManaged.
+- Support Network object to be updated as part of PostgreSqlFlexibleServerPatch call.
+- Remove unsupported ReplicationRoles GeoSyncReplica, Secondary, SyncReplica, WalReplica.
 
 ## 1.2.0-beta.1 (2023-05-31)
 

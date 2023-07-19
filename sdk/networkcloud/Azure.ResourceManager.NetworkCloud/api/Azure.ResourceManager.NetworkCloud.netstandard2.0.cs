@@ -188,8 +188,6 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UncordonAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.BareMetalMachineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.BareMetalMachineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ValidateHardware(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineValidateHardwareContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ValidateHardwareAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineValidateHardwareContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BmcKeySetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.BmcKeySetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.BmcKeySetResource>, System.Collections.IEnumerable
     {
@@ -889,8 +887,6 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.StorageApplianceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.StorageApplianceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.StorageApplianceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation RunReadCommands(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RunReadCommandsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.StorageApplianceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.StorageApplianceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.StorageApplianceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.StorageAppliancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -999,13 +995,9 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.VirtualMachineResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.VirtualMachineResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation AttachVolume(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVolumeParameters virtualMachineAttachVolumeParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AttachVolumeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVolumeParameters virtualMachineAttachVolumeParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation DetachVolume(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVolumeParameters virtualMachineDetachVolumeParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DetachVolumeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVolumeParameters virtualMachineDetachVolumeParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.VirtualMachineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.VirtualMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.ConsoleResource> GetConsole(string consoleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1331,23 +1323,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BareMetalMachineHardwareValidationCategory : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationCategory>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BareMetalMachineHardwareValidationCategory(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationCategory BasicValidation { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationCategory left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationCategory right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationCategory (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationCategory left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationCategory right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BareMetalMachineHardwareValidationResult : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult>
     {
         private readonly object _dummy;
@@ -1563,11 +1538,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class BareMetalMachineValidateHardwareContent
-    {
-        public BareMetalMachineValidateHardwareContent(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationCategory validationCategory) { }
-        public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationCategory ValidationCategory { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BfdEnabled : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.BfdEnabled>
@@ -2960,12 +2930,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public SshPublicKey(string keyData) { }
         public string KeyData { get { throw null; } set { } }
     }
-    public partial class StorageApplianceCommandSpecification
-    {
-        public StorageApplianceCommandSpecification(string command) { }
-        public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
-        public string Command { get { throw null; } }
-    }
     public partial class StorageApplianceConfigurationData
     {
         public StorageApplianceConfigurationData(Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials adminCredentials, long rackSlot, string serialNumber) { }
@@ -3024,12 +2988,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class StorageApplianceRunReadCommandsContent
-    {
-        public StorageApplianceRunReadCommandsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification> commands, long limitTimeSeconds) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification> Commands { get { throw null; } }
-        public long LimitTimeSeconds { get { throw null; } }
     }
     public partial class StorageApplianceSkuSlot
     {
@@ -3365,11 +3323,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class VirtualMachineVolumeParameters
-    {
-        public VirtualMachineVolumeParameters(string volumeId) { }
-        public string VolumeId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VolumeDetailedStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus>

@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
                             ""targetUnprocessedEventThreshold"": 1
                         }
                     }
-                }   
+                }
             }";
 
             // Function1Name uses connection string

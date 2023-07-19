@@ -36,32 +36,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uri"> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the OData service. </param>
         /// <param name="userName"> User name of the OData service. Type: string (or Expression with resultType string). </param>
-        /// <param name="password">
-        /// Password of the OData service.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> Password of the OData service. </param>
         /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </param>
         /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> Specify the application id of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string). </param>
         /// <param name="aadServicePrincipalCredentialType"> Specify the credential type (key or cert) is used for service principal. </param>
-        /// <param name="servicePrincipalKey">
-        /// Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
-        /// <param name="servicePrincipalEmbeddedCert">
-        /// Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
-        /// <param name="servicePrincipalEmbeddedCertPassword">
-        /// Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string).
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="servicePrincipalKey"> Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCert"> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCertPassword"> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         internal ODataLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, ODataAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, DataFactoryElement<BinaryData> authHeaders, DataFactoryElement<string> tenant, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> aadResourceId, ODataAadServicePrincipalCredentialType? aadServicePrincipalCredentialType, DataFactorySecretBaseDefinition servicePrincipalKey, DataFactorySecretBaseDefinition servicePrincipalEmbeddedCert, DataFactorySecretBaseDefinition servicePrincipalEmbeddedCertPassword, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -88,11 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public ODataAuthenticationType? AuthenticationType { get; set; }
         /// <summary> User name of the OData service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
-        /// <summary>
-        /// Password of the OData service.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> Password of the OData service. </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </summary>
         public DataFactoryElement<BinaryData> AuthHeaders { get; set; }
@@ -106,23 +86,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> AadResourceId { get; set; }
         /// <summary> Specify the credential type (key or cert) is used for service principal. </summary>
         public ODataAadServicePrincipalCredentialType? AadServicePrincipalCredentialType { get; set; }
-        /// <summary>
-        /// Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
         public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
-        /// <summary>
-        /// Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
         public DataFactorySecretBaseDefinition ServicePrincipalEmbeddedCert { get; set; }
-        /// <summary>
-        /// Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string).
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactorySecretBaseDefinition ServicePrincipalEmbeddedCertPassword { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.

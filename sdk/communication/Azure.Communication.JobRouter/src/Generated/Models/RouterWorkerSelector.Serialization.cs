@@ -26,10 +26,10 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(_value);
             }
-            if (Optional.IsDefined(ExpiresAfterSeconds))
+            if (Optional.IsDefined(_expiresAfterSeconds))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
-                writer.WriteNumberValue(ExpiresAfterSeconds.Value);
+                writer.WriteNumberValue(_expiresAfterSeconds.Value);
             }
             if (Optional.IsDefined(Expedite))
             {

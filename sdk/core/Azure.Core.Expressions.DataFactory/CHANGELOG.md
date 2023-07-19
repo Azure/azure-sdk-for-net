@@ -1,10 +1,21 @@
 # Release History
 
-## 1.0.0-beta.4 (2023-07-10)
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
 
-- Added `TypeReferenceTypeAttribute` to Data Factory types to support code generation.
+## 1.0.0-beta.4 (2023-07-13)
+
+### Other Changes
+
+- Added `PropertyReferenceTypeAttribute` to Data Factory types to support code generation.
+- Added `DataFactoryModelFactory` to support mocking.
 
 ## 1.0.0-beta.3 (2023-06-27)
 

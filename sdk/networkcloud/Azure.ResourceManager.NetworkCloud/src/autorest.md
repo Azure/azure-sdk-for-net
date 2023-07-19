@@ -48,12 +48,6 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
-  # temporary workaround for https://github.com/Azure/autorest.csharp/issues/3546
-  # remove new POST direction 'final-state-schema' until autorest core is upgraded
-  - from: networkcloud.json
-    where: $.paths.*.post['x-ms-long-running-operation-options']
-    transform: >
-      delete $['final-state-schema'];
   # The core library Azure.ResourceManager has been generated when the subscriptionId was not marked as an uuid.
   # v5 of common-types defines `subscriptionId` as `guid` format and needs to be removed in order to generate valid code.
   - from: types.json
