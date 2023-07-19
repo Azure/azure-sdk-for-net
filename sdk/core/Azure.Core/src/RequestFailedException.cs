@@ -243,6 +243,9 @@ namespace Azure
             response.ContentStream = bufferedStream;
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Deserialize which requires unreferenced code.")]
+#endif
         internal static bool TryExtractErrorContent(Response response, out ResponseError? error, out IDictionary<string, string>? data)
         {
             error = null;

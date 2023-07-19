@@ -48,6 +48,9 @@ namespace Azure.Core.Json
 
         public JsonValueKind ValueKind => GetSerializedValue().ValueKind;
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
         internal JsonElement GetSerializedValue()
         {
             if (_serializedValue != null)
@@ -85,6 +88,9 @@ namespace Azure.Core.Json
             return ancestorPathLength == (descendantPathLength - 1);
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
         internal string AsString()
         {
             return GetSerializedValue().ToString() ?? "null";

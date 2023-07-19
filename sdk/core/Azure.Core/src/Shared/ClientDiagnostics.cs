@@ -62,13 +62,15 @@ namespace Azure.Core.Pipeline
 
         internal static string? GetResourceProviderNamespace(Assembly assembly)
         {
-            foreach (var customAttribute in assembly.GetCustomAttributes(true))
+            foreach (var customAttribute in assembly.GetCustomAttributesData())
             {
                 // Weak bind internal shared type
-                var attributeType = customAttribute.GetType();
-                if (attributeType.Name == "AzureResourceProviderNamespaceAttribute")
+                var attributeType = customAttribute.AttributeType!;
+                if (attributeType.FullName == ("Azure.Core.AzureResourceProviderNamespaceAttribute"))
                 {
-                    return attributeType.GetProperty("ResourceProviderNamespace")?.GetValue(customAttribute) as string;
+                    var namedArguments = customAttribute.ConstructorArguments;
+                    return namedArguments.Single().Value as string;
+                    //return attributeType.GetProperty("ResourceProviderNamespace")?.GetValue(customAttribute.) as string;
                 }
             }
 

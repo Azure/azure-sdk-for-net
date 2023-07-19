@@ -15,6 +15,9 @@ namespace Azure.Core.Json
             WriteElement(_path, _highWaterMark, _element, writer);
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
         private void WriteElement(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             if (Changes.TryGetChange(path, highWaterMark, out MutableJsonChange change))
