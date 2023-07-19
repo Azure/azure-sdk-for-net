@@ -31,10 +31,20 @@ namespace Azure.Core.Pipeline
 #endif
         {
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
+#if NETCOREAPP2_1
             _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
+#else
+            _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == System.Diagnostics.ActivityKind.Internal) ? suppressNestedClientActivities : false;
+#endif
 
             // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
-            IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
+            bool hasListeners;
+#if NETCOREAPP2_1
+            hasListeners = ActivityExtensions.ActivitySourceHasListeners(activitySource);
+#else
+            hasListeners = activitySource?.HasListeners() ?? false;
+#endif
+            IsEnabled = source.IsEnabled() || hasListeners;
 
             if (_suppressNestedClientActivities)
             {
@@ -178,23 +188,39 @@ namespace Azure.Core.Pipeline
 
         private class ActivityAdapter : IDisposable
         {
+#if NETCOREAPP2_1
             private readonly object? _activitySource;
+#else
+            private readonly ActivitySource? _activitySource;
+#endif
             private readonly DiagnosticSource _diagnosticSource;
             private readonly string _activityName;
+#if NETCOREAPP2_1
             private readonly ActivityKind _kind;
+#else
+            private readonly System.Diagnostics.ActivityKind _kind;
+#endif
             private readonly object? _diagnosticSourceArgs;
 
             private Activity? _currentActivity;
             private Activity? _sampleOutActivity;
 
+#if NETCOREAPP2_1
             private ICollection<KeyValuePair<string,object>>? _tagCollection;
+#else
+            private ActivityTagsCollection? _tagCollection;
+#endif
             private DateTimeOffset _startTime;
             private List<Activity>? _links;
             private string? _traceparent;
             private string? _tracestate;
             private string? _displayName;
 
+#if NETCOREAPP2_1
             public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
+#else
+            public ActivityAdapter(ActivitySource? activitySource, DiagnosticSource diagnosticSource, string activityName, System.Diagnostics.ActivityKind kind, object? diagnosticSourceArgs)
+#endif
             {
                 _activitySource = activitySource;
                 _diagnosticSource = diagnosticSource;
@@ -209,30 +235,48 @@ namespace Azure.Core.Pipeline
                 {
                     // Activity is not started yet, add the value to the collection
                     // that is going to be passed to StartActivity
+#if NETCOREAPP2_1
                     _tagCollection ??= ActivityExtensions.CreateTagsCollection() ?? new List<KeyValuePair<string, object>>();
                     _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
+#else
+                    _tagCollection ??= new ActivityTagsCollection();
+                    _tagCollection.Add(name, value!);
+#endif
                 }
                 else
                 {
+#if NETCOREAPP2_1
                     _currentActivity?.AddObjectTag(name, value);
+#else
+                    _currentActivity?.AddTag(name, value);
+#endif
                 }
             }
 
+#if NETCOREAPP2_1
             private IList? GetActivitySourceLinkCollection()
+#else
+            private List<ActivityLink>? GetActivitySourceLinkCollection()
+#endif
             {
                 if (_links == null)
                 {
                     return null;
                 }
 
+#if NETCOREAPP2_1
                 var linkCollection = ActivityExtensions.CreateLinkCollection();
                 if (linkCollection == null)
                 {
                     return null;
                 }
+#else
+                var linkCollection = new List<ActivityLink>();
+#endif
 
                 foreach (var activity in _links)
                 {
+#if NETCOREAPP2_1
                     ICollection<KeyValuePair<string,object>>? linkTagsCollection =  ActivityExtensions.CreateTagsCollection();
                     if (linkTagsCollection != null)
                     {
@@ -247,7 +291,21 @@ namespace Azure.Core.Pipeline
                     {
                         linkCollection.Add(link);
                     }
-                }
+#else
+                    ActivityTagsCollection linkTagsCollection = new();
+                    foreach (var tag in activity.Tags)
+                    {
+                        linkTagsCollection.Add(tag.Key, tag.Value!);
+                    }
+
+                    var contextWasParsed = ActivityContext.TryParse(activity.ParentId!, activity.TraceStateString, out var context);
+                    if (contextWasParsed)
+                    {
+                        var link = new ActivityLink(context, linkTagsCollection);
+                        linkCollection.Add(link);
+                    }
+#endif
+            }
 
                 return linkCollection;
             }
@@ -255,9 +313,14 @@ namespace Azure.Core.Pipeline
             public void AddLink(string traceparent, string? tracestate, IDictionary<string, string>? attributes)
             {
                 var linkedActivity = new Activity("LinkedActivity");
-                linkedActivity.SetW3CFormat();
                 linkedActivity.SetParentId(traceparent);
+#if NETCOREAPP2_1
+                linkedActivity.SetW3CFormat();
                 linkedActivity.SetTraceState(tracestate);
+#else
+                linkedActivity.SetIdFormat(ActivityIdFormat.W3C);
+                linkedActivity.TraceStateString = tracestate;
+#endif
 
                 if (attributes != null)
                 {
@@ -276,7 +339,11 @@ namespace Azure.Core.Pipeline
                 _currentActivity = StartActivitySourceActivity();
                 if (_currentActivity != null)
                 {
+#if NETCOREAPP2_1
                     if (!_currentActivity.GetIsAllDataRequested())
+#else
+                    if (!_currentActivity.IsAllDataRequested)
+#endif
                     {
                         _sampleOutActivity = _currentActivity;
                         _currentActivity = null;
@@ -316,7 +383,11 @@ namespace Azure.Core.Pipeline
                     {
                         Links = (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>(),
                     };
+#if NETCOREAPP2_1
                     _currentActivity.SetW3CFormat();
+#else
+                    _currentActivity.SetIdFormat(ActivityIdFormat.W3C);
+#endif
 
                     if (_startTime != default)
                     {
@@ -327,7 +398,11 @@ namespace Azure.Core.Pipeline
                     {
                         foreach (var tag in _tagCollection)
                         {
+#if NETCOREAPP2_1
                             _currentActivity.AddObjectTag(tag.Key, tag.Value);
+#else
+                            _currentActivity.AddTag(tag.Key, tag.Value);
+#endif
                         }
                     }
 
@@ -338,7 +413,11 @@ namespace Azure.Core.Pipeline
 
                     if (_tracestate != null)
                     {
+#if NETCOREAPP2_1
                         _currentActivity.SetTraceState(_tracestate);
+#else
+                        _currentActivity.TraceStateString = _tracestate;
+#endif
                     }
 
                     _currentActivity.Start();
@@ -348,7 +427,11 @@ namespace Azure.Core.Pipeline
 
                 if (_displayName != null)
                 {
+#if NETCOREAPP2_1
                     _currentActivity?.SetDisplayName(_displayName);
+#else
+                    _currentActivity.DisplayName = _displayName;
+#endif
                 }
 
                 return _currentActivity;
@@ -357,11 +440,19 @@ namespace Azure.Core.Pipeline
             public void SetDisplayName(string displayName)
             {
                 _displayName = displayName;
-                _currentActivity?.SetDisplayName(displayName);
+                if (_currentActivity != null)
+                {
+#if NETCOREAPP2_1
+                    _currentActivity.SetDisplayName(_displayName);
+#else
+                    _currentActivity.DisplayName = _displayName;
+#endif
+                }
             }
 
             private Activity? StartActivitySourceActivity()
             {
+#if NETCOREAPP2_1
                 return ActivityExtensions.ActivitySourceStartActivity(
                     _activitySource,
                     _activityName,
@@ -371,6 +462,23 @@ namespace Azure.Core.Pipeline
                     links: GetActivitySourceLinkCollection(),
                     traceparent: _traceparent,
                     tracestate: _tracestate);
+#else
+                if (_activitySource == null)
+                {
+                    return null;
+                }
+                ActivityContext context;
+                if (_traceparent != null)
+                {
+                    context = ActivityContext.Parse(_traceparent, _tracestate);
+                }
+                else
+                {
+                    context = new ActivityContext();
+                }
+                var activity = _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
+                return activity;
+#endif
             }
 
             public void SetStartTime(DateTime startTime)
@@ -386,10 +494,15 @@ namespace Azure.Core.Pipeline
                     _diagnosticSource?.Write(_activityName + ".Exception", exception);
                 }
 
+#if NETCOREAPP2_1
                 if (ActivityExtensions.SupportsActivitySource())
                 {
                     _currentActivity?.SetErrorStatus(exception?.ToString());
                 }
+#endif
+#if NET6_0_OR_GREATER
+                _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
+#endif
             }
 
             public void SetTraceContext(string traceparent, string? tracestate)
@@ -415,14 +528,19 @@ namespace Azure.Core.Pipeline
 
                 _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
 
+#if NETCOREAPP2_1
                 if (!activity.TryDispose())
                 {
                     activity.Stop();
                 }
+#else
+                activity.Dispose();
+#endif
             }
         }
     }
 
+#if NETCOREAPP2_1
 #pragma warning disable SA1507 // File can not contain multiple types
     /// <summary>
     /// Until we can reference the 5.0 of System.Diagnostics.DiagnosticSource
@@ -918,4 +1036,21 @@ namespace Azure.Core.Pipeline
                 "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE");
         }
     }
+#else
+#pragma warning disable SA1507 // File can not contain multiple types
+    /// <summary>
+    /// Until Activity Source is no longer considered experimental.
+    /// </summary>
+    internal static class ActivityExtensions
+    {
+        public static bool SupportsActivitySource { get; private set; }
+
+        public static void ResetFeatureSwitch()
+        {
+            SupportsActivitySource = AppContextSwitchHelper.GetConfigValue(
+                "Azure.Experimental.EnableActivitySource",
+                "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE");
+        }
+    }
+#endif
 }
