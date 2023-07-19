@@ -24,13 +24,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
         /// <returns>true if the specified value is valid; otherwise, false.</returns>
         public override bool IsValid(object value)
         {
-            if (value is null
-                || value is not IEnumerable
-                || (value as IEnumerable<object>).Where(x => x == null).Any())
-            {
-                return false;
-            }
-            return true;
+            return value is not null
+                && value is IEnumerable<object> obj
+                && !obj.Where(x => x == null).Any();
         }
     }
 }
