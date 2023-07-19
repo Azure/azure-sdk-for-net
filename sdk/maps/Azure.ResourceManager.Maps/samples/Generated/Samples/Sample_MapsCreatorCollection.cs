@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListCreatorResourcesByAccount()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/ListMapsCreatorsByAccount.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/ListMapsCreatorsByAccount.json
             // this example is just showing the usage of "Creators_ListByAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateCreatorResource()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/CreateMapsCreator.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/CreateMapsCreator.json
             // this example is just showing the usage of "Creators_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCreatorResource()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/GetMapsCreator.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/GetMapsCreator.json
             // this example is just showing the usage of "Creators_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetCreatorResource()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/GetMapsCreator.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/GetMapsCreator.json
             // this example is just showing the usage of "Creators_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

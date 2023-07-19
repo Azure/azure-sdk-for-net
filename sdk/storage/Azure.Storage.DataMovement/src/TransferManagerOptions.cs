@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
@@ -11,10 +12,18 @@ namespace Azure.Storage.DataMovement
     public class TransferManagerOptions
     {
         /// <summary>
-        /// Optional. Sets the way errors during a transfer will be handled.
-        /// Default is <see cref="ErrorHandlingOptions.StopOnAllFailures"/>.
+        /// Define an implementation of ClientOptions such that DiagnosticOptions can be used.
+        /// Don't want to expose full ClientOptions.
         /// </summary>
-        public ErrorHandlingOptions ErrorHandling { get; set; }
+        internal class TransferManagerClientOptions : ClientOptions
+        {
+        }
+
+        /// <summary>
+        /// Optional. Sets the way errors during a transfer will be handled.
+        /// Default is <see cref="ErrorHandlingBehavior.StopOnAllFailures"/>.
+        /// </summary>
+        public ErrorHandlingBehavior ErrorHandling { get; set; }
 
         /// <summary>
         /// The maximum number of workers that may be used in a parallel transfer.
@@ -26,5 +35,12 @@ namespace Azure.Storage.DataMovement
         /// transfer state so transfers can be resumed.
         /// </summary>
         public TransferCheckpointerOptions CheckpointerOptions { get; set; }
+
+        internal TransferManagerClientOptions ClientOptions { get; } = new();
+
+        /// <summary>
+        /// Gets the transfer manager diagnostic options.
+        /// </summary>
+        public DiagnosticsOptions Diagnostics => ClientOptions.Diagnostics;
     }
 }

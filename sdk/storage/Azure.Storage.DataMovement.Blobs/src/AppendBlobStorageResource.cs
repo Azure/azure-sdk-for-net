@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
@@ -15,55 +15,60 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// The AppendBlobStorageResource class.
     /// </summary>
-    public class AppendBlobStorageResource : StorageResource
+    public class AppendBlobStorageResource : StorageResourceSingle
     {
-        private AppendBlobClient _blobClient;
-        private AppendBlobStorageResourceOptions _options;
-        private long? _length;
-        private ETag? _etagDownloadLock = default;
+        internal AppendBlobClient BlobClient { get; set; }
+        internal AppendBlobStorageResourceOptions _options;
+        internal long? _length;
+        internal ETag? _etagDownloadLock = default;
+
+        /// <summary>
+        /// The identifier for the type of storage resource.
+        /// </summary>
+        protected override string ResourceId => "AppendBlob";
 
         /// <summary>
         /// Gets the URL of the storage resource.
         /// </summary>
-        public override Uri Uri => _blobClient.Uri;
+        public override Uri Uri => BlobClient.Uri;
 
         /// <summary>
         /// Gets the path of the storage resource.
         /// </summary>
-        public override string Path => _blobClient.Name;
+        public override string Path => BlobClient.Name;
 
         /// <summary>
-        /// Defines whether the storage resource type can produce a URL.
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
+        protected override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
         /// </summary>
-        public override TransferType TransferType => TransferType.Sequential;
+        protected override TransferType TransferType => TransferType.Sequential;
 
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        public override long MaxChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
+        protected override long MaxChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is obtained during a GetStorageResources API call.
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
-        public override long? Length => _length;
+        protected override long? Length => _length;
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
         /// class.
         /// </summary>
-        /// <param name="blobClient">The blob client <see cref="BlobClient"/>
+        /// <param name="blobClient">The blob client <see cref="Storage.Blobs.BlobClient"/>
         /// which will service the storage resource operations.</param>
         /// <param name="options">Options for the storage resource. See <see cref="AppendBlobStorageResourceOptions"/>.</param>
         public AppendBlobStorageResource(AppendBlobClient blobClient, AppendBlobStorageResourceOptions options = default)
         {
-            _blobClient = blobClient;
+            BlobClient = blobClient;
             _options = options;
         }
 
@@ -72,14 +77,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
         /// <param name="length">The content length of the blob.</param>
+        /// <param name="etagLock">Preset etag to lock on for reads.</param>
         /// <param name="options">Options for the storage resource. See <see cref="AppendBlobStorageResourceOptions"/>.</param>
         internal AppendBlobStorageResource(
             AppendBlobClient blobClient,
             long? length,
+            ETag? etagLock,
             AppendBlobStorageResourceOptions options = default)
             : this(blobClient, options)
         {
             _length = length;
+            _etagDownloadLock = etagLock;
         }
 
         /// <summary>
@@ -96,12 +104,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The <see cref="ReadStreamStorageResourceResult"/> resulting from the upload operation.</returns>
-        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        protected override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default)
         {
-            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
+            Response<BlobDownloadStreamingResult> response = await BlobClient.DownloadStreamingAsync(
                 _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
@@ -127,7 +135,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task WriteFromStreamAsync(
+        protected override async Task WriteFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
@@ -138,13 +146,13 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             if (position == 0)
             {
-                await _blobClient.CreateAsync(
+                await BlobClient.CreateAsync(
                     _options.ToCreateOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
             {
-                await _blobClient.AppendBlockAsync(
+                await BlobClient.AppendBlockAsync(
                     content: stream,
                     options: _options.ToAppendBlockOptions(overwrite),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -154,7 +162,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResource"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceSingle"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it currently exists.
@@ -168,15 +176,15 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task CopyFromUriAsync(
-            StorageResource sourceResource,
+        protected override async Task CopyFromUriAsync(
+            StorageResourceSingle sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
             // Create Append blob beforehand
-            await _blobClient.CreateAsync(
+            await BlobClient.CreateAsync(
                 options: _options.ToCreateOptions(overwrite),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -185,7 +193,7 @@ namespace Azure.Storage.DataMovement.Blobs
             if (completeLength > 0)
             {
                 HttpRange range = new HttpRange(0, completeLength);
-                await _blobClient.AppendBlockFromUriAsync(
+                await BlobClient.AppendBlockFromUriAsync(
                     sourceResource.Uri,
                     options: _options.ToAppendBlockFromUriOptions(overwrite, range, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -195,7 +203,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL. Supports ranged operations.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResource"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceSingle"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it already exists.
@@ -210,8 +218,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task CopyBlockFromUriAsync(
-            StorageResource sourceResource,
+        protected override async Task CopyBlockFromUriAsync(
+            StorageResourceSingle sourceResource,
             HttpRange range,
             bool overwrite,
             long completeLength = 0,
@@ -220,11 +228,11 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             if (range.Offset == 0)
             {
-                await _blobClient.CreateAsync(
+                await BlobClient.CreateAsync(
                     _options.ToCreateOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
             }
-            await _blobClient.AppendBlockFromUriAsync(
+            await BlobClient.AppendBlockFromUriAsync(
             sourceResource.Uri,
             options: _options.ToAppendBlockFromUriOptions(
                 overwrite,
@@ -239,17 +247,33 @@ namespace Azure.Storage.DataMovement.Blobs
         /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
         /// <returns>Returns the properties of the Append Blob Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
-        public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<BlobProperties> response = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             GrabEtag(response.GetRawResponse());
             return response.Value.ToStorageResourceProperties();
         }
 
         /// <summary>
+        /// Gets the Authorization Header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        {
+            return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;
@@ -266,9 +290,169 @@ namespace Azure.Storage.DataMovement.Blobs
         /// If the storage resource exists and is deleted, true will be returned.
         /// Otherwise if the storage resource does not exist, false will be returned.
         /// </returns>
-        public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<AppendBlobStorageResource> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferProperties.TransferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            AppendBlobStorageResourceOptions options = new(baseOptions);
+
+            return new AppendBlobStorageResource(
+                new AppendBlobClient(new Uri(storedPath)),
+                options);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="sharedKeyCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<AppendBlobStorageResource> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            StorageSharedKeyCredential sharedKeyCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferProperties.TransferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            AppendBlobStorageResourceOptions options = new(baseOptions);
+
+            return new AppendBlobStorageResource(
+                new AppendBlobClient(new Uri(storedPath), sharedKeyCredential),
+                options);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<AppendBlobStorageResource> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            TokenCredential tokenCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferProperties.TransferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            AppendBlobStorageResourceOptions options = new(baseOptions);
+
+            return new AppendBlobStorageResource(
+                new AppendBlobClient(new Uri(storedPath), tokenCredential),
+                options);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="sasCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<AppendBlobStorageResource> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            AzureSasCredential sasCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferProperties.TransferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            AppendBlobStorageResourceOptions options = new(baseOptions);
+
+            return new AppendBlobStorageResource(
+                new AppendBlobClient(new Uri(storedPath), sasCredential),
+                options);
         }
 
         private void GrabEtag(Response response)

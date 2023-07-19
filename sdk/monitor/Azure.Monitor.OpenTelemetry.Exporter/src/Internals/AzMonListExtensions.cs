@@ -239,6 +239,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return target;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string? GetTargetUsingServerAttributes(this AzMonList tagObjects, string defaultPort)
+        {
+            var values = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerSocketAddress, SemanticConventions.AttributeServerPort);
+            string? target = values[0]?.ToString() ?? values[1]?.ToString();
+            var port = values[2]?.ToString();
+            if (!string.IsNullOrWhiteSpace(target) &&  port != null && port != defaultPort)
+            {
+                target = target + ":" + port;
+            }
+
+            return target;
+        }
+
         ///<summary>
         /// Gets Http dependency target from activity tag objects.
         ///</summary>
@@ -291,16 +305,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         ///</summary>
         internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects)
         {
-            string? target = null;
-            string defaultPort = GetDefaultDbPort(AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString());
-            var peerService = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributePeerService)?.ToString();
-            if (!string.IsNullOrWhiteSpace(peerService))
-            {
-                target = peerService;
-            }
+            var peerServiceAndDbSystem = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributePeerService, SemanticConventions.AttributeDbSystem);
+            string? target = peerServiceAndDbSystem[0]?.ToString();
+            var defaultPort = GetDefaultDbPort(peerServiceAndDbSystem[1]?.ToString());
+
             if (string.IsNullOrWhiteSpace(target))
             {
-                target = tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
+                target = tagObjects.GetTargetUsingServerAttributes(defaultPort) ?? tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
             }
 
             var dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();

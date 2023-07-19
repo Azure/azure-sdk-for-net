@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                JsonSerializer.Serialize(writer, LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
@@ -35,6 +36,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
@@ -64,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageLinkedServices)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -93,21 +104,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
             writer.WritePropertyName("className"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ClassName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ClassName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, ClassName);
             writer.WritePropertyName("jarFilePath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(JarFilePath);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(JarFilePath.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, JarFilePath);
             if (Optional.IsDefined(JarLinkedService))
             {
                 writer.WritePropertyName("jarLinkedService"u8);
-                writer.WriteObjectValue(JarLinkedService);
+                JsonSerializer.Serialize(writer, JarLinkedService);
             }
             if (Optional.IsCollectionDefined(JarLibs))
             {
@@ -167,19 +170,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
+            Optional<ActivityState> state = default;
+            Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
-            Optional<IList<FactoryLinkedServiceReference>> storageLinkedServices = default;
+            Optional<IList<DataFactoryLinkedServiceReference>> storageLinkedServices = default;
             Optional<IList<BinaryData>> arguments = default;
             Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
-            BinaryData className = default;
-            BinaryData jarFilePath = default;
-            Optional<FactoryLinkedServiceReference> jarLinkedService = default;
+            DataFactoryElement<string> className = default;
+            DataFactoryElement<string> jarFilePath = default;
+            Optional<DataFactoryLinkedServiceReference> jarLinkedService = default;
             Optional<IList<BinaryData>> jarLibs = default;
             Optional<IDictionary<string, BinaryData>> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -192,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -217,6 +222,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new ActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkA(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -262,10 +285,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
+                            List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
+                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
                             }
                             storageLinkedServices = array;
                             continue;
@@ -302,12 +325,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("className"u8))
                         {
-                            className = BinaryData.FromString(property0.Value.GetRawText());
+                            className = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("jarFilePath"u8))
                         {
-                            jarFilePath = BinaryData.FromString(property0.Value.GetRawText());
+                            jarFilePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("jarLinkedService"u8))
@@ -316,7 +339,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            jarLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
+                            jarLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("jarLibs"u8))
@@ -367,7 +390,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightMapReduceActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), className, jarFilePath, jarLinkedService.Value, Optional.ToList(jarLibs), Optional.ToDictionary(defines));
+            return new HDInsightMapReduceActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), className, jarFilePath, jarLinkedService, Optional.ToList(jarLibs), Optional.ToDictionary(defines));
         }
     }
 }

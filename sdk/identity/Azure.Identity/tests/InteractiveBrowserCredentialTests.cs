@@ -26,8 +26,14 @@ namespace Azure.Identity.Tests
             string resolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
             var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken");
             var tokenCacheOptions = new MockTokenCache(
-                () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
-                args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
+                () =>
+                {
+                    return Task.FromResult<ReadOnlyMemory<byte>>(mockBytes);
+                },
+                args =>
+                {
+                    return Task.FromResult<ReadOnlyMemory<byte>>(mockBytes);
+                });
 
             var options = new InteractiveBrowserCredentialOptions
             {
@@ -36,6 +42,7 @@ namespace Azure.Identity.Tests
                 TokenCachePersistenceOptions = tokenCacheOptions,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
+                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, null));
@@ -59,15 +66,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expInnerExMessage, ex.InnerException.Message);
 
             await Task.CompletedTask;
-        }
-
-        [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
-        {
-            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled });
-
-            Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
         }
 
         [Test]

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="containerName"> The container name of the Storage Blob. </param>
         /// <param name="storageAccountResourceId"> The resource ID of the storage account. </param>
         /// <param name="name">
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
         internal DataCollectionRuleStorageBlobDestination(string containerName, ResourceIdentifier storageAccountResourceId, string name)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The resource ID of the storage account. </summary>
         public ResourceIdentifier StorageAccountResourceId { get; set; }
         /// <summary>
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

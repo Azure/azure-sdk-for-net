@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Kusto
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Azure location (region) name. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoClusterNameAvailabilityAsync(AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Kusto
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Azure location (region) name. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<KustoNameAvailabilityResult> CheckKustoClusterNameAvailability(AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Kusto
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Azure location (region) name. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoSkuDescription> GetSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Kusto
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Azure location (region) name. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoSkuDescription> GetSkus(AzureLocation location, CancellationToken cancellationToken = default)

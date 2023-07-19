@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime. 
+        /// List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime. 
+        /// List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

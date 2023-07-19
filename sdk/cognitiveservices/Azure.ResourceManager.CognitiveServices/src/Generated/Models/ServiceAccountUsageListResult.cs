@@ -20,12 +20,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of ServiceAccountUsageListResult. </summary>
+        /// <param name="nextLink"> The link used to get the next page of Usages. </param>
         /// <param name="value"> The list of usages for Cognitive Service account. </param>
-        internal ServiceAccountUsageListResult(IReadOnlyList<ServiceAccountUsage> value)
+        internal ServiceAccountUsageListResult(string nextLink, IReadOnlyList<ServiceAccountUsage> value)
         {
+            NextLink = nextLink;
             Value = value;
         }
 
+        /// <summary> The link used to get the next page of Usages. </summary>
+        public string NextLink { get; }
         /// <summary> The list of usages for Cognitive Service account. </summary>
         public IReadOnlyList<ServiceAccountUsage> Value { get; }
     }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachines_ListVirtualMachinesForSubscription()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/VirtualMachines_ListBySubscription.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/VirtualMachines_ListBySubscription.json
             // this example is just showing the usage of "VirtualMachines_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/VirtualMachines_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/VirtualMachines_Get.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/VirtualMachines_Delete.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/VirtualMachines_Delete.json
             // this example is just showing the usage of "VirtualMachines_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/VirtualMachines_Patch.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/VirtualMachines_Patch.json
             // this example is just showing the usage of "VirtualMachines_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task AttachVolume_AttachVolumeToVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/VirtualMachines_AttachVolume.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/VirtualMachines_AttachVolume.json
             // this example is just showing the usage of "VirtualMachines_AttachVolume" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,14 +168,14 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            VirtualMachineVolumeParameters virtualMachineAttachVolumeParameters = new VirtualMachineVolumeParameters("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/volumes/volumeName");
+            VirtualMachineVolumeParameters virtualMachineAttachVolumeParameters = new VirtualMachineVolumeParameters("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/volumes/volumeName");
             await virtualMachine.AttachVolumeAsync(WaitUntil.Completed, virtualMachineAttachVolumeParameters);
 
             Console.WriteLine($"Succeeded");
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DetachVolume_DetachVolumeFromVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/VirtualMachines_DetachVolume.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/VirtualMachines_DetachVolume.json
             // this example is just showing the usage of "VirtualMachines_DetachVolume" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -196,14 +196,14 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            VirtualMachineVolumeParameters virtualMachineDetachVolumeParameters = new VirtualMachineVolumeParameters("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/volumes/volumeName");
+            VirtualMachineVolumeParameters virtualMachineDetachVolumeParameters = new VirtualMachineVolumeParameters("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/volumes/volumeName");
             await virtualMachine.DetachVolumeAsync(WaitUntil.Completed, virtualMachineDetachVolumeParameters);
 
             Console.WriteLine($"Succeeded");
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PowerOff_PowerOffVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/VirtualMachines_PowerOff.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/VirtualMachines_PowerOff.json
             // this example is just showing the usage of "VirtualMachines_PowerOff" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Reimage_ReimageVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/VirtualMachines_Reimage.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/VirtualMachines_Reimage.json
             // this example is just showing the usage of "VirtualMachines_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Restart_RestartVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/VirtualMachines_Restart.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/VirtualMachines_Restart.json
             // this example is just showing the usage of "VirtualMachines_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Start_StartVirtualMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/VirtualMachines_Start.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/VirtualMachines_Start.json
             // this example is just showing the usage of "VirtualMachines_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);

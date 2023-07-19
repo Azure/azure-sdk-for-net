@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(l3IsolationDomainId, nameof(l3IsolationDomainId));
 
             ExtendedLocation = extendedLocation;
+            AssociatedResourceIds = new ChangeTrackingList<string>();
             HybridAksClustersAssociatedIds = new ChangeTrackingList<string>();
             L3IsolationDomainId = l3IsolationDomainId;
             VirtualMachinesAssociatedIds = new ChangeTrackingList<string>();
@@ -45,12 +46,13 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
         /// <param name="clusterId"> The resource ID of the Network Cloud cluster this L3 network is associated with. </param>
         /// <param name="detailedStatus"> The more detailed status of the L3 network. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="hybridAksClustersAssociatedIds"> The list of Hybrid AKS cluster resource IDs that are associated with this L3 network. </param>
-        /// <param name="hybridAksIpamEnabled"> The indicator of whether or not to disable IPAM allocation on the network attachment definition injected into the Hybrid AKS Cluster. </param>
-        /// <param name="hybridAksPluginType"> The network plugin type for Hybrid AKS. </param>
+        /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource IDs that are associated with this L3 network. </param>
+        /// <param name="hybridAksIpamEnabled"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The indicator of whether or not to disable IPAM allocation on the network attachment definition injected into the Hybrid AKS Cluster. </param>
+        /// <param name="hybridAksPluginType"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </param>
         /// <param name="interfaceName"> The default interface name for this L3 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </param>
         /// <param name="ipAllocationType"> The type of the IP address allocation, defaulted to "DualStack". </param>
         /// <param name="ipv4ConnectedPrefix">
@@ -63,11 +65,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </param>
         /// <param name="l3IsolationDomainId"> The resource ID of the Network Fabric l3IsolationDomain. </param>
         /// <param name="provisioningState"> The provisioning state of the L3 network. </param>
-        /// <param name="virtualMachinesAssociatedIds"> The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this L3 network. </param>
+        /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this L3 network. </param>
         /// <param name="vlan"> The VLAN from the l3IsolationDomain that is used for this network. </param>
-        internal L3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> hybridAksClustersAssociatedIds, HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, string l3IsolationDomainId, L3NetworkProvisioningState? provisioningState, IReadOnlyList<string> virtualMachinesAssociatedIds, long vlan) : base(id, name, resourceType, systemData, tags, location)
+        internal L3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<string> associatedResourceIds, string clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> hybridAksClustersAssociatedIds, HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, string l3IsolationDomainId, L3NetworkProvisioningState? provisioningState, IReadOnlyList<string> virtualMachinesAssociatedIds, long vlan) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
+            AssociatedResourceIds = associatedResourceIds;
             ClusterId = clusterId;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
@@ -86,17 +89,19 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
+        public IReadOnlyList<string> AssociatedResourceIds { get; }
         /// <summary> The resource ID of the Network Cloud cluster this L3 network is associated with. </summary>
         public string ClusterId { get; }
         /// <summary> The more detailed status of the L3 network. </summary>
         public L3NetworkDetailedStatus? DetailedStatus { get; }
         /// <summary> The descriptive message about the current detailed status. </summary>
         public string DetailedStatusMessage { get; }
-        /// <summary> The list of Hybrid AKS cluster resource IDs that are associated with this L3 network. </summary>
+        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource IDs that are associated with this L3 network. </summary>
         public IReadOnlyList<string> HybridAksClustersAssociatedIds { get; }
-        /// <summary> The indicator of whether or not to disable IPAM allocation on the network attachment definition injected into the Hybrid AKS Cluster. </summary>
+        /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The indicator of whether or not to disable IPAM allocation on the network attachment definition injected into the Hybrid AKS Cluster. </summary>
         public HybridAksIpamEnabled? HybridAksIpamEnabled { get; set; }
-        /// <summary> The network plugin type for Hybrid AKS. </summary>
+        /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </summary>
         public HybridAksPluginType? HybridAksPluginType { get; set; }
         /// <summary> The default interface name for this L3 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </summary>
         public string InterfaceName { get; set; }
@@ -116,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public string L3IsolationDomainId { get; set; }
         /// <summary> The provisioning state of the L3 network. </summary>
         public L3NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this L3 network. </summary>
+        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this L3 network. </summary>
         public IReadOnlyList<string> VirtualMachinesAssociatedIds { get; }
         /// <summary> The VLAN from the l3IsolationDomain that is used for this network. </summary>
         public long Vlan { get; set; }

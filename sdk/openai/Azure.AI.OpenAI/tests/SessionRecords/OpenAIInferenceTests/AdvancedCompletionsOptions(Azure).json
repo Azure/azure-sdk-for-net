@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-03-15-preview",
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-07-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "219",
         "Content-Type": "application/json",
-        "traceparent": "00-abe28deba9eaa3970206bd181a711728-a9e15d85ff3c2268-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.25324)",
-        "x-ms-client-request-id": "0e3a8bba47a19b49284eff3b8f63aacb",
+        "traceparent": "00-92665ff9d6981545f29bc692c2384e66-10d2b89f47dd3fd8-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230710.1 (.NET 6.0.18; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "a6ee4cdaa80b8e611465a133b1a138d5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -33,29 +33,28 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "Aicon-Correlation-Id": "9287d06a-5c61-4c13-ad38-ffa0ccb0ea90",
-        "apim-request-id": "9a2186e9-0ac4-47be-bc36-64e7acf6f0db",
+        "apim-request-id": "7b720983-515c-4790-b6ab-32b108f99739",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "1801",
+        "Content-Length": "1923",
         "Content-Type": "application/json",
-        "Date": "Tue, 04 Apr 2023 17:26:02 GMT",
+        "Date": "Tue, 11 Jul 2023 15:53:20 GMT",
         "Openai-Model": "text-davinci-002",
-        "Openai-Processing-Ms": "506.8795",
+        "Openai-Processing-Ms": "626.3438",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Accel-Buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "0e3a8bba47a19b49284eff3b8f63aacb",
+        "X-Ms-Client-Request-Id": "a6ee4cdaa80b8e611465a133b1a138d5",
         "x-ms-region": "East US",
-        "X-Request-ID": "8e7dd52e-e61b-41a5-9056-0e38453f4667"
+        "X-Request-ID": "6ca6712d-a704-4c8a-985b-d3989bf47806"
       },
       "ResponseBody": {
-        "id": "cmpl-71ehuStyO6mNmyxJILVTJPiiDOcYk",
+        "id": "cmpl-7b9xwhvIPujE8aIODYzqpEk9xPinc",
         "object": "text_completion",
-        "created": 1680629162,
+        "created": 1689090800,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "Are bananas especially radioactive?\n\nThere is no scientific evidence to suggest that any fruit, including Banan, is especially radioactive.",
+            "text": "Are bananas especially radioactive?\n\nBanana\u0027s are not especially radioactive, but they are slightly radioactive due to the presence of potassium-40 in the fruit.",
             "index": 0,
             "finish_reason": "stop",
             "logprobs": {
@@ -67,28 +66,31 @@
                 "?",
                 "\n",
                 "\n",
-                "There",
-                " is",
-                " no",
-                " scientific",
-                " evidence",
-                " to",
-                " suggest",
-                " that",
-                " any",
-                " fruit",
-                ",",
-                " including",
-                " Ban",
-                "an",
-                ",",
-                " is",
+                "Ban",
+                "ana",
+                "\u0027s",
+                " are",
+                " not",
                 " especially",
                 " radioactive",
-                ".",
-                "\u003C|endoftext|\u003E",
-                "#",
-                "!/"
+                ",",
+                " but",
+                " they",
+                " are",
+                " slightly",
+                " radioactive",
+                " due",
+                " to",
+                " the",
+                " presence",
+                " of",
+                " potassium",
+                "-",
+                "40",
+                " in",
+                " the",
+                " fruit",
+                "."
               ],
               "token_logprobs": [
                 0,
@@ -97,29 +99,32 @@
                 -6.384836,
                 -0.06387941,
                 -0.00041852458,
-                -0.000008296486,
-                -0.784469,
-                -0.0007318678,
-                -0.00069768965,
-                -0.5142955,
-                -0.0021184618,
-                -0.07509355,
-                -0.43065444,
-                -0.000015448071,
-                -0.21392082,
-                -0.3245847,
-                -0.06323942,
-                -0.00025515142,
-                -0.19753182,
-                -0.47348908,
-                -0.3303705,
-                -0.5555053,
-                -0.7293866,
-                -0.0006156178,
-                -0.000009251094,
-                -0.4963012,
-                -3.4308224,
-                -3.0869672
+                -0.000008176345,
+                -1.751504,
+                -0.0007328186,
+                -1.484819,
+                -0.057690803,
+                -0.009252685,
+                -0.6540854,
+                -0.0025278258,
+                -0.17643341,
+                -0.09486528,
+                -0.03795749,
+                -0.098639384,
+                -0.41718915,
+                -0.07362128,
+                -1.3489747,
+                -0.00008376217,
+                -0.00156001,
+                -0.11480478,
+                0,
+                -0.42169106,
+                -0.0022801077,
+                -0.000025225998,
+                -1.823331,
+                -0.0027252198,
+                -0.00064275606,
+                -6.827632e-8
               ],
               "top_logprobs": [
                 null,
@@ -139,73 +144,82 @@
                   "\n": -0.00041852458
                 },
                 {
-                  "\n": -0.000008296486
+                  "\n": -0.000008176345
                 },
                 {
-                  "There": -0.784469
+                  "There": -0.7852421
                 },
                 {
-                  " is": -0.0007318678
+                  "ana": -0.0007328186
                 },
                 {
-                  " no": -0.00069768965
+                  " equivalent": -0.93395877
                 },
                 {
-                  " scientific": -0.5142955
+                  " are": -0.057690803
                 },
                 {
-                  " evidence": -0.0021184618
+                  " not": -0.009252685
                 },
                 {
-                  " to": -0.07509355
+                  " especially": -0.6540854
                 },
                 {
-                  " suggest": -0.43065444
+                  " radioactive": -0.0025278258
                 },
                 {
-                  " that": -0.000015448071
+                  ",": -0.17643341
                 },
                 {
-                  " any": -0.21392082
+                  " but": -0.09486528
                 },
                 {
-                  " fruit": -0.3245847
+                  " they": -0.03795749
                 },
                 {
-                  ",": -0.06323942
+                  " are": -0.098639384
                 },
                 {
-                  " including": -0.00025515142
+                  " slightly": -0.41718915
                 },
                 {
-                  " Ban": -0.19753182
+                  " radioactive": -0.07362128
                 },
                 {
-                  "an": -0.47348908
+                  ".": -0.9208207
                 },
                 {
-                  ",": -0.3303705
+                  " to": -0.00008376217
                 },
                 {
-                  " is": -0.5555053
+                  " the": -0.00156001
                 },
                 {
-                  " especially": -0.7293866
+                  " presence": -0.11480478
                 },
                 {
-                  " radioactive": -0.0006156178
+                  " of": 0
                 },
                 {
-                  ".": -0.000009251094
+                  " potassium": -0.42169106
                 },
                 {
-                  "\u003C|endoftext|\u003E": -0.4963012
+                  "-": -0.0022801077
                 },
                 {
-                  "Q": -1.896491
+                  "40": -0.000025225998
                 },
                 {
-                  "1": -2.4138541
+                  ".": -0.17690587
+                },
+                {
+                  " the": -0.0027252198
+                },
+                {
+                  " fruit": -0.00064275606
+                },
+                {
+                  ".": -6.827632e-8
                 }
               ],
               "text_offset": [
@@ -217,46 +231,49 @@
                 35,
                 36,
                 37,
-                42,
+                40,
+                43,
                 45,
-                48,
-                59,
-                68,
-                71,
-                79,
-                84,
-                88,
-                94,
-                95,
-                105,
-                109,
+                49,
+                53,
+                64,
+                76,
+                77,
+                81,
+                86,
+                90,
+                99,
                 111,
-                112,
                 115,
-                126,
-                138,
-                139,
-                139,
-                139
+                118,
+                122,
+                131,
+                134,
+                144,
+                145,
+                147,
+                150,
+                154,
+                160
               ]
             }
           }
         ],
         "usage": {
-          "completion_tokens": 63,
+          "completion_tokens": 67,
           "prompt_tokens": 5,
-          "total_tokens": 68
+          "total_tokens": 72
         }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
-    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
-    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "CHAT_COMPLETIONS_DEPLOYMENT_NAME": "gpt-35-turbo",
+    "COMPLETIONS_DEPLOYMENT_NAME": "text-davinci-002",
+    "EMBEDDINGS_DEPLOYMENT_NAME": "text-embedding-ada-002",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1915057045",
+    "RandomSeed": "798451049",
     "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Attaches labels to a worker when a RouterRule is resolved. </summary>
+    /// <summary> Attaches worker selectors to a job when a RouterRule is resolved. </summary>
     public partial class RuleEngineWorkerSelectorAttachment : WorkerSelectorAttachment
     {
         /// <summary> Initializes a new instance of RuleEngineWorkerSelectorAttachment. </summary>
         /// <param name="rule">
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
         /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
+        /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rule"/> is null. </exception>
         public RuleEngineWorkerSelectorAttachment(RouterRule rule)
@@ -35,17 +35,17 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of RuleEngineWorkerSelectorAttachment. </summary>
-        /// <param name="kind"> The type discriminator describing the type of label selector attachment. </param>
+        /// <param name="kind"> The type discriminator describing the type of worker selector attachment. </param>
         /// <param name="rule">
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
         /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
+        /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </param>
         internal RuleEngineWorkerSelectorAttachment(string kind, RouterRule rule) : base(kind)
         {
@@ -55,14 +55,14 @@ namespace Azure.Communication.JobRouter
 
         /// <summary>
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
         /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
+        /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>
         public RouterRule Rule { get; set; }
     }

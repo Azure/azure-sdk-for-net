@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> SshPublicKey represents the public key used to authenticate with the virtual machine through SSH. </summary>
+    /// <summary> SshPublicKey represents the public key used to authenticate with a resource through SSH. </summary>
     public partial class SshPublicKey
     {
         /// <summary> Initializes a new instance of SshPublicKey. </summary>
-        /// <param name="keyData"> The public ssh key of the user. </param>
+        /// <param name="keyData"> The SSH public key data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> is null. </exception>
         public SshPublicKey(string keyData)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             KeyData = keyData;
         }
 
-        /// <summary> The public ssh key of the user. </summary>
+        /// <summary> The SSH public key data. </summary>
         public string KeyData { get; set; }
     }
 }

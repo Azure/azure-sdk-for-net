@@ -43,14 +43,14 @@ namespace Azure.Maps.Routing.Models
         public JunctionType? JunctionType { get; }
         /// <summary>
         /// Indicates the direction of an instruction. If junctionType indicates a turn instruction:
-        /// 
+        ///
         ///   * 180 = U-turn
         ///   * [-179, -1] = Left turn
         ///   * 0 = Straight on (a '0 degree' turn)
         ///   * [1, 179] = Right turn
-        /// 
+        ///
         /// If junctionType indicates a bifurcation instruction:
-        /// 
+        ///
         ///   * &lt;0 - keep left
         ///   * \&gt;0 - keep right
         /// </summary>
@@ -67,14 +67,14 @@ namespace Azure.Maps.Routing.Models
         public string Message { get; }
         /// <summary>
         /// A human-readable message for the maneuver combined with the message from the next instruction. Sometimes it is possible to combine two successive instructions into a single instruction making it easier to follow. When this is the case the possibleCombineWithNext flag will be true. For example:
-        /// 
+        ///
         /// ```
         /// 10. Turn left onto Einsteinweg/A10/E22 towards Ring Amsterdam
         /// 11. Follow Einsteinweg/A10/E22 towards Ring Amsterdam
         /// ```
-        /// 
+        ///
         /// The possibleCombineWithNext flag on instruction 10 is true. This indicates to the clients of coded guidance that it can be combined with instruction 11. The instructions will be combined automatically for clients requesting human-readable guidance. The combinedMessage field contains the combined message:
-        /// 
+        ///
         /// ```
         /// Turn left onto Einsteinweg/A10/E22 towards Ring Amsterdam
         /// then follow Einsteinweg/A10/E22 towards Ring Amsterdam.

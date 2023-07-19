@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VirtualHubVirtualHubRouteTableV2Get()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualHubBgpConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/VirtualHubBgpConnectionGet.json
             // this example is just showing the usage of "VirtualHubBgpConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_VirtualHubRouteTableV2Put()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualHubBgpConnectionPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/VirtualHubBgpConnectionPut.json
             // this example is just showing the usage of "VirtualHubBgpConnection_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_VirtualHubRouteTableV2Delete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualHubBgpConnectionDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/VirtualHubBgpConnectionDelete.json
             // this example is just showing the usage of "VirtualHubBgpConnection_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,9 +121,9 @@ namespace Azure.ResourceManager.Network.Samples
         // VirtualRouterPeerListLearnedRoutes
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLearnedRoutesVirtualHubBgpConnection_VirtualRouterPeerListLearnedRoutes()
+        public async Task GetVirtualHubBgpConnectionLearnedRoutes_VirtualRouterPeerListLearnedRoutes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualRouterPeerListLearnedRoute.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/VirtualRouterPeerListLearnedRoute.json
             // this example is just showing the usage of "VirtualHubBgpConnections_ListLearnedRoutes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,8 +141,8 @@ namespace Azure.ResourceManager.Network.Samples
             BgpConnectionResource bgpConnection = client.GetBgpConnectionResource(bgpConnectionResourceId);
 
             // invoke the operation
-            ArmOperation<PeerRouteList> lro = await bgpConnection.GetLearnedRoutesVirtualHubBgpConnectionAsync(WaitUntil.Completed);
-            PeerRouteList result = lro.Value;
+            ArmOperation<IDictionary<string, IList<PeerRoute>>> lro = await bgpConnection.GetVirtualHubBgpConnectionLearnedRoutesAsync(WaitUntil.Completed);
+            IDictionary<string, IList<PeerRoute>> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -149,9 +150,9 @@ namespace Azure.ResourceManager.Network.Samples
         // VirtualRouterPeerListAdvertisedRoutes
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAdvertisedRoutesVirtualHubBgpConnection_VirtualRouterPeerListAdvertisedRoutes()
+        public async Task GetVirtualHubBgpConnectionAdvertisedRoutes_VirtualRouterPeerListAdvertisedRoutes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/VirtualRouterPeerListAdvertisedRoute.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/VirtualRouterPeerListAdvertisedRoute.json
             // this example is just showing the usage of "VirtualHubBgpConnections_ListAdvertisedRoutes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,8 +170,8 @@ namespace Azure.ResourceManager.Network.Samples
             BgpConnectionResource bgpConnection = client.GetBgpConnectionResource(bgpConnectionResourceId);
 
             // invoke the operation
-            ArmOperation<PeerRouteList> lro = await bgpConnection.GetAdvertisedRoutesVirtualHubBgpConnectionAsync(WaitUntil.Completed);
-            PeerRouteList result = lro.Value;
+            ArmOperation<IDictionary<string, IList<PeerRoute>>> lro = await bgpConnection.GetVirtualHubBgpConnectionAdvertisedRoutesAsync(WaitUntil.Completed);
+            IDictionary<string, IList<PeerRoute>> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

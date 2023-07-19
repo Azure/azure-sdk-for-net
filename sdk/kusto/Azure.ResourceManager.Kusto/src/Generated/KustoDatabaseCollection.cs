@@ -212,48 +212,6 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary>
-        /// Returns the list of databases of the given Kusto cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_ListByCluster</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KustoDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoDatabaseResource(Client, KustoDatabaseData.DeserializeKustoDatabaseData(e)), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseCollection.GetAll", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns the list of databases of the given Kusto cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_ListByCluster</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KustoDatabaseResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoDatabaseResource(Client, KustoDatabaseData.DeserializeKustoDatabaseData(e)), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseCollection.GetAll", "value", null, cancellationToken);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>

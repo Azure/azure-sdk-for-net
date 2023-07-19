@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken);
+                JsonSerializer.Serialize(writer, SasToken);
             }
             writer.WriteEndObject();
         }
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<Uri> blobContainerUri = default;
-            Optional<FactorySecretString> sasToken = default;
+            Optional<DataFactorySecretString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobContainerUri"u8))
@@ -54,11 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sasToken = FactorySecretString.DeserializeFactorySecretString(property.Value);
+                    sasToken = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken.Value);
+            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken);
         }
     }
 }

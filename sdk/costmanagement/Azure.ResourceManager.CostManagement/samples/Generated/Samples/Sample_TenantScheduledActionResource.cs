@@ -58,7 +58,7 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
 },
                 },
                 Status = ScheduledActionStatus.Enabled,
-                ViewId = "/providers/Microsoft.CostManagement/views/swaggerExample",
+                ViewId = new ResourceIdentifier("/providers/Microsoft.CostManagement/views/swaggerExample"),
                 Kind = ScheduledActionKind.Email,
             };
             string ifMatch = "";
