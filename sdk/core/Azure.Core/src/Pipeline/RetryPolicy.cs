@@ -23,6 +23,8 @@ namespace Azure.Core.Pipeline
         /// </summary>
         private readonly DelayStrategy _delayStrategy;
 
+        private readonly ResponseClassifier? _responseClassifier;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
@@ -32,6 +34,18 @@ namespace Azure.Core.Pipeline
         {
             _maxRetries = maxRetries;
             _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
+        /// </summary>
+        /// <param name="options">The set of options to use for configuring the retry policy.</param>
+        public RetryPolicy(RetryPolicyOptions options)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            _maxRetries = options.MaxRetries;
+            _delayStrategy = options.DelayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
+            _responseClassifier = options.ResponseClassifier;
         }
 
         /// <summary>
@@ -197,15 +211,16 @@ namespace Azure.Core.Pipeline
 
         private bool ShouldRetryInternal(HttpMessage message, Exception? exception)
         {
+            var classifier = _responseClassifier ?? message.ResponseClassifier;
             if (message.RetryNumber < _maxRetries)
             {
                 if (exception != null)
                 {
-                    return message.ResponseClassifier.IsRetriable(message, exception);
+                    return classifier.IsRetriable(message, exception);
                 }
 
                 // Response.IsError is true if we get here
-                return message.ResponseClassifier.IsRetriableResponse(message);
+                return classifier.IsRetriableResponse(message);
             }
 
             // out of retries

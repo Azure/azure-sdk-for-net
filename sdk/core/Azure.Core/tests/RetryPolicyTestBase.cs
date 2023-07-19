@@ -66,6 +66,28 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task RespectsCustomResponseClassifierInOptions()
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 404 });
+            var options = new RetryPolicyOptions
+            {
+                ResponseClassifier = responseClassifier
+            };
+            (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(options);
+            MockTransport mockTransport = CreateMockTransport();
+            Task<Response> task = SendGetRequest(mockTransport, policy);
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(404));
+
+            await gate.Cycle();
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(501));
+
+            Response response = await task.TimeoutAfterDefault();
+            Assert.AreEqual(501, response.Status);
+        }
+
+        [Test]
         public async Task ShouldRetryIsCalledOnlyForErrors()
         {
             (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
@@ -654,6 +676,17 @@ namespace Azure.Core.Tests
             return (policy, policy.DelayGate);
         }
 
+        protected (HttpPipelinePolicy Policy, AsyncGate<TimeSpan, object> Gate) CreateRetryPolicy(RetryPolicyOptions options)
+        {
+            var strategy =
+                _mode == RetryMode.Exponential
+                    ? DelayStrategy.CreateExponentialDelayStrategy(TimeSpan.FromSeconds(3))
+                    : DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(3));
+            options.DelayStrategy = strategy;
+            var policy = new RetryPolicyMock(options);
+            return (policy, policy.DelayGate);
+        }
+
         internal class RetryPolicyMock : RetryPolicy
         {
             internal bool ShouldRetryCalled { get; set; }
@@ -668,6 +701,10 @@ namespace Azure.Core.Tests
                     mode == RetryMode.Exponential ?
                         DelayStrategy.CreateExponentialDelayStrategy(delay, maxDelay) :
                         DelayStrategy.CreateFixedDelayStrategy(delay))
+            {
+            }
+
+            public RetryPolicyMock(RetryPolicyOptions options) : base(options)
             {
             }
 

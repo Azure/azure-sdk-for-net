@@ -103,6 +103,55 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
+Another customization that is possible is to easily configure what exceptions or status codes 
+are retried. By default, this is configured in the `ResponseClassifier` type, but it can be 
+overridden by setting the `ResponseClassifier` property on the `RetryPolicyOptions` when 
+constructing a `RetryPolicy`. In the example below, we create a custom response classifier that 
+we use in our custom `RetryPolicy`.
+```C# Snippet:CustomResponseClassifier
+public class CustomResponseClassifier : ResponseClassifier
+{
+    public override bool IsRetriableResponse(HttpMessage message)
+    {
+        switch (message.Response.Status)
+        {
+            case 404:
+                return true;
+            default:
+                return base.IsRetriableResponse(message);
+        }
+    }
+
+    public override bool IsRetriableException(Exception exception)
+    {
+        if (exception is SomeCustomException)
+        {
+            return true;
+        }
+
+        return base.IsRetriableException(exception);
+    }
+}
+
+public class SomeCustomException : Exception
+{
+}
+```
+
+Here is how the custom response classifier would be used in the client options.
+
+```C# Snippet:CustomizedResponseClassifier
+var retryPolicyOptions = new RetryPolicyOptions()
+{
+    ResponseClassifier = new CustomResponseClassifier()
+};
+var retryPolicy = new RetryPolicy(retryPolicyOptions);
+SecretClientOptions options = new SecretClientOptions()
+{
+    RetryPolicy = retryPolicy
+};
+```
+
 It's also possible to have full control over the retry logic by setting the `RetryPolicy` property to an implementation of `HttpPipelinePolicy` where you would need to implement the retry loop yourself. One use case for this is if you want to implement your own retry policy with Polly. Note that if you replace the `RetryPolicy` with a `HttpPipelinePolicy`, you will need to make sure to update the `HttpMessage.ProcessingContext` that other pipeline policies may be relying on.
 
 ```C# Snippet:PollyPolicy
