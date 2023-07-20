@@ -71,6 +71,7 @@ trigger:
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edge/Azure.ResourceManager.Edge
+    - sdk/edgeconnectivitystatuses/Azure.ResourceManager.EdgeConnectivityStatuses
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
     - sdk/edgeupdates/Azure.ResourceManager.EdgeUpdates
     - sdk/elastic/Azure.ResourceManager.Elastic
@@ -250,6 +251,7 @@ pr:
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edge/Azure.ResourceManager.Edge
+    - sdk/edgeconnectivitystatuses/Azure.ResourceManager.EdgeConnectivityStatuses
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
     - sdk/edgeupdates/Azure.ResourceManager.EdgeUpdates
     - sdk/elastic/Azure.ResourceManager.Elastic
