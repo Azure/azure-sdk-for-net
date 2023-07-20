@@ -224,7 +224,7 @@ namespace Azure.Communication.JobRouter
         public JobMatchingMode(Azure.Communication.JobRouter.SuspendMode suspendMode) { }
         public Azure.Communication.JobRouter.JobMatchModeType? ModeType { get { throw null; } }
         public Azure.Communication.JobRouter.QueueAndMatchMode QueueAndMatchMode { get { throw null; } }
-        public Azure.Communication.JobRouter.ScheduleAndSuspendMode ScheduleAndSuspendMode { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.ScheduleAndSuspendMode ScheduleAndSuspendMode { get { throw null; } }
         public Azure.Communication.JobRouter.SuspendMode SuspendMode { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -311,20 +311,20 @@ namespace Azure.Communication.JobRouter
         public JobRouterClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public virtual Azure.Response<Azure.Communication.JobRouter.Models.AcceptJobOfferResult> AcceptJobOffer(string workerId, string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.AcceptJobOfferResult>> AcceptJobOfferAsync(string workerId, string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.JobRouter.Models.CancelJobResult> CancelJob(Azure.Communication.JobRouter.CancelJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.CancelJobResult>> CancelJobAsync(Azure.Communication.JobRouter.CancelJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.JobRouter.Models.CloseJobResult> CloseJob(Azure.Communication.JobRouter.CloseJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.CloseJobResult>> CloseJobAsync(Azure.Communication.JobRouter.CloseJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.JobRouter.Models.CompleteJobResult> CompleteJob(Azure.Communication.JobRouter.CompleteJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.CompleteJobResult>> CompleteJobAsync(Azure.Communication.JobRouter.CompleteJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CancelJob(Azure.Communication.JobRouter.CancelJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelJobAsync(Azure.Communication.JobRouter.CancelJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CloseJob(Azure.Communication.JobRouter.CloseJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CloseJobAsync(Azure.Communication.JobRouter.CloseJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CompleteJob(Azure.Communication.JobRouter.CompleteJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CompleteJobAsync(Azure.Communication.JobRouter.CompleteJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.JobRouter.Models.RouterJob> CreateJob(Azure.Communication.JobRouter.CreateJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.RouterJob>> CreateJobAsync(Azure.Communication.JobRouter.CreateJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.JobRouter.Models.RouterJob> CreateJobWithClassificationPolicy(Azure.Communication.JobRouter.CreateJobWithClassificationPolicyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.RouterJob>> CreateJobWithClassificationPolicyAsync(Azure.Communication.JobRouter.CreateJobWithClassificationPolicyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.JobRouter.Models.RouterWorker> CreateWorker(Azure.Communication.JobRouter.CreateWorkerOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.RouterWorker>> CreateWorkerAsync(Azure.Communication.JobRouter.CreateWorkerOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.JobRouter.Models.DeclineJobOfferResult> DeclineJobOffer(Azure.Communication.JobRouter.DeclineJobOfferOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.DeclineJobOfferResult>> DeclineJobOfferAsync(Azure.Communication.JobRouter.DeclineJobOfferOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeclineJobOffer(Azure.Communication.JobRouter.DeclineJobOfferOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeclineJobOfferAsync(Azure.Communication.JobRouter.DeclineJobOfferOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteJob(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteJobAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteWorker(string workerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -341,8 +341,8 @@ namespace Azure.Communication.JobRouter
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.RouterWorker>> GetWorkerAsync(string workerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.JobRouter.Models.RouterWorkerItem> GetWorkers(Azure.Communication.JobRouter.GetWorkersOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.JobRouter.Models.RouterWorkerItem> GetWorkersAsync(Azure.Communication.JobRouter.GetWorkersOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.JobRouter.Models.ReclassifyJobResult> ReclassifyJob(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.ReclassifyJobResult>> ReclassifyJobAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ReclassifyJob(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ReclassifyJobAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.JobRouter.Models.UnassignJobResult> UnassignJob(Azure.Communication.JobRouter.UnassignJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.UnassignJobResult>> UnassignJobAsync(Azure.Communication.JobRouter.UnassignJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.JobRouter.Models.RouterJob> UpdateJob(Azure.Communication.JobRouter.UpdateJobOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -438,8 +438,7 @@ namespace Azure.Communication.JobRouter
     public partial class PassThroughWorkerSelectorAttachment : Azure.Communication.JobRouter.WorkerSelectorAttachment
     {
         public PassThroughWorkerSelectorAttachment(string key, Azure.Communication.JobRouter.LabelOperator labelOperator) { }
-        public PassThroughWorkerSelectorAttachment(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, System.TimeSpan? ttl = default(System.TimeSpan?)) { }
-        public double? ExpiresAfterSeconds { get { throw null; } set { } }
+        public PassThroughWorkerSelectorAttachment(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, System.TimeSpan? expiresAfter = default(System.TimeSpan?)) { }
         public string Key { get { throw null; } set { } }
         public Azure.Communication.JobRouter.LabelOperator LabelOperator { get { throw null; } set { } }
     }
@@ -523,12 +522,11 @@ namespace Azure.Communication.JobRouter
     {
         public RouterWorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value) { }
         public bool? Expedite { get { throw null; } set { } }
-        public double? ExpiresAfterSeconds { get { throw null; } set { } }
+        public System.TimeSpan? ExpiresAfter { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresAt { get { throw null; } }
         public string Key { get { throw null; } set { } }
         public Azure.Communication.JobRouter.LabelOperator LabelOperator { get { throw null; } set { } }
         public Azure.Communication.JobRouter.Models.RouterWorkerSelectorStatus? Status { get { throw null; } }
-        public System.TimeSpan? Ttl { get { throw null; } set { } }
         public Azure.Communication.JobRouter.LabelValue Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -635,11 +633,6 @@ namespace Azure.Communication.JobRouter
         public string AssignmentId { get { throw null; } }
         public string JobId { get { throw null; } }
     }
-    public partial class UnassignJobRequest
-    {
-        public UnassignJobRequest() { }
-        public bool? SuspendMatching { get { throw null; } set { } }
-    }
     public partial class UpdateClassificationPolicyOptions
     {
         public UpdateClassificationPolicyOptions(string classificationPolicyId) { }
@@ -744,17 +737,13 @@ namespace Azure.Communication.JobRouter.Models
         public string JobId { get { throw null; } }
         public string WorkerId { get { throw null; } }
     }
-    public partial class CancelJobResult
-    {
-        internal CancelJobResult() { }
-    }
     public partial class ClassificationPolicy
     {
         internal ClassificationPolicy() { }
-        public string FallbackQueueId { get { throw null; } set { } }
+        public string FallbackQueueId { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.Communication.JobRouter.RouterRule PrioritizationRule { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public Azure.Communication.JobRouter.RouterRule PrioritizationRule { get { throw null; } }
         public System.Collections.Generic.List<Azure.Communication.JobRouter.QueueSelectorAttachment> QueueSelectors { get { throw null; } }
         public System.Collections.Generic.List<Azure.Communication.JobRouter.WorkerSelectorAttachment> WorkerSelectors { get { throw null; } }
     }
@@ -764,34 +753,21 @@ namespace Azure.Communication.JobRouter.Models
         public Azure.Communication.JobRouter.Models.ClassificationPolicy ClassificationPolicy { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
     }
-    public partial class CloseJobResult
-    {
-        internal CloseJobResult() { }
-    }
     public static partial class CommunicationJobRouterModelFactory
     {
         public static Azure.Communication.JobRouter.Models.AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterJobAssignment RouterJobAssignment(string assignmentId = null, string workerId = null, System.DateTimeOffset assignedAt = default(System.DateTimeOffset), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? closedAt = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterJobOffer RouterJobOffer(string offerId = null, string jobId = null, int capacityCost = 0, System.DateTimeOffset? offeredAt = default(System.DateTimeOffset?), System.DateTimeOffset? expiresAt = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Communication.JobRouter.Models.RouterQueueItem RouterQueueItem(Azure.Communication.JobRouter.Models.RouterQueue queue = null, string etag = null) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = 0, System.Collections.Generic.IReadOnlyDictionary<string, double> estimatedWaitTimeMinutes = null, double? longestJobWaitTimeMinutes = default(double?)) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterWorkerAssignment RouterWorkerAssignment(string assignmentId = null, string jobId = null, int capacityCost = 0, System.DateTimeOffset assignedAt = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Communication.JobRouter.Models.UnassignJobResult UnassignJobResult(string jobId = null, int unassignmentCount = 0) { throw null; }
-    }
-    public partial class CompleteJobResult
-    {
-        internal CompleteJobResult() { }
-    }
-    public partial class DeclineJobOfferResult
-    {
-        internal DeclineJobOfferResult() { }
     }
     public partial class DistributionPolicy
     {
         internal DistributionPolicy() { }
         public string Id { get { throw null; } }
-        public Azure.Communication.JobRouter.DistributionMode Mode { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.DistributionMode Mode { get { throw null; } }
+        public string Name { get { throw null; } }
         public System.TimeSpan? OfferExpiresAfter { get { throw null; } set { } }
     }
     public partial class DistributionPolicyItem
@@ -805,7 +781,7 @@ namespace Azure.Communication.JobRouter.Models
         internal ExceptionPolicy() { }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.ExceptionRule> ExceptionRules { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public string Name { get { throw null; } }
     }
     public partial class ExceptionPolicyItem
     {
@@ -813,26 +789,22 @@ namespace Azure.Communication.JobRouter.Models
         public Azure.ETag ETag { get { throw null; } }
         public Azure.Communication.JobRouter.Models.ExceptionPolicy ExceptionPolicy { get { throw null; } }
     }
-    public partial class ReclassifyJobResult
-    {
-        internal ReclassifyJobResult() { }
-    }
     public partial class RouterJob
     {
         internal RouterJob() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Communication.JobRouter.Models.RouterJobAssignment> Assignments { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.JobRouter.RouterWorkerSelector> AttachedWorkerSelectors { get { throw null; } }
-        public string ChannelId { get { throw null; } set { } }
-        public string ChannelReference { get { throw null; } set { } }
-        public string ClassificationPolicyId { get { throw null; } set { } }
-        public string DispositionCode { get { throw null; } set { } }
+        public string ChannelId { get { throw null; } }
+        public string ChannelReference { get { throw null; } }
+        public string ClassificationPolicyId { get { throw null; } }
+        public string DispositionCode { get { throw null; } }
         public System.DateTimeOffset? EnqueuedAt { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.Dictionary<string, Azure.Communication.JobRouter.LabelValue> Labels { get { throw null; } }
-        public Azure.Communication.JobRouter.JobMatchingMode MatchingMode { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.JobMatchingMode MatchingMode { get { throw null; } }
         public System.Collections.Generic.List<Azure.Communication.JobRouter.Models.RouterJobNote> Notes { get { throw null; } }
-        public int? Priority { get { throw null; } set { } }
-        public string QueueId { get { throw null; } set { } }
+        public int? Priority { get { throw null; } }
+        public string QueueId { get { throw null; } }
         public System.Collections.Generic.List<Azure.Communication.JobRouter.RouterWorkerSelector> RequestedWorkerSelectors { get { throw null; } }
         public System.DateTimeOffset? ScheduledAt { get { throw null; } }
         public Azure.Communication.JobRouter.Models.RouterJobStatus? Status { get { throw null; } }
@@ -856,7 +828,7 @@ namespace Azure.Communication.JobRouter.Models
     public partial class RouterJobNote
     {
         public RouterJobNote() { }
-        public System.DateTimeOffset? AddedAtUtc { get { throw null; } set { } }
+        public System.DateTimeOffset? AddedAt { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
     }
     public partial class RouterJobOffer
@@ -908,16 +880,16 @@ namespace Azure.Communication.JobRouter.Models
     public partial class RouterQueue
     {
         internal RouterQueue() { }
-        public string DistributionPolicyId { get { throw null; } set { } }
-        public string ExceptionPolicyId { get { throw null; } set { } }
+        public string DistributionPolicyId { get { throw null; } }
+        public string ExceptionPolicyId { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.LabelValue> Labels { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public string Name { get { throw null; } }
     }
     public partial class RouterQueueItem
     {
         internal RouterQueueItem() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
         public Azure.Communication.JobRouter.Models.RouterQueue Queue { get { throw null; } }
     }
     public partial class RouterQueueStatistics
@@ -932,7 +904,7 @@ namespace Azure.Communication.JobRouter.Models
     {
         public RouterWorker() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.JobRouter.Models.RouterWorkerAssignment> AssignedJobs { get { throw null; } }
-        public bool? AvailableForOffers { get { throw null; } set { } }
+        public bool? AvailableForOffers { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.ChannelConfiguration> ChannelConfigurations { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.LabelValue> Labels { get { throw null; } }
@@ -941,7 +913,7 @@ namespace Azure.Communication.JobRouter.Models
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.RouterQueueAssignment> QueueAssignments { get { throw null; } }
         public Azure.Communication.JobRouter.RouterWorkerState? State { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.LabelValue> Tags { get { throw null; } }
-        public int? TotalCapacity { get { throw null; } set { } }
+        public int? TotalCapacity { get { throw null; } }
     }
     public partial class RouterWorkerAssignment
     {

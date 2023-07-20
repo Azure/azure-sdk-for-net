@@ -43,6 +43,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             return new DataTransfer(
                 id: Guid.NewGuid().ToString(),
+                transferManager: new(),
                 status: status);
         }
 

@@ -35,11 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="clusterUri"> HDInsight cluster URI. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> HDInsight cluster user name. Type: string (or Expression with resultType string). </param>
-        /// <param name="password">
-        /// HDInsight cluster password.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> HDInsight cluster password. </param>
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <param name="hcatalogLinkedServiceName"> A reference to the Azure SQL linked service that points to the HCatalog database. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
@@ -62,11 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> ClusterUri { get; set; }
         /// <summary> HDInsight cluster user name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
-        /// <summary>
-        /// HDInsight cluster password.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> HDInsight cluster password. </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }

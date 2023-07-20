@@ -31,11 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the SAP HANA server. </param>
         /// <param name="userName"> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </param>
-        /// <param name="password">
-        /// Password to access the SAP HANA server.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> Password to access the SAP HANA server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         internal SapHanaLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, SapHanaAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -56,11 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public SapHanaAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
-        /// <summary>
-        /// Password to access the SAP HANA server.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> Password to access the SAP HANA server. </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
