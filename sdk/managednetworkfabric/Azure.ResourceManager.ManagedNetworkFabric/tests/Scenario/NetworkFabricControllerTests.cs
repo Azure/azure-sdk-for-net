@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -31,7 +30,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkFabricControllerName);
             TestContext.Out.WriteLine($"networkFabricControllerId: {networkFabricControllerResourceId}");
 
-            ResourceIdentifier deleteNetworkFabricControllerId = new ResourceIdentifier("/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/nfa-tool-ts-sdk-nfc1-062023");
             TestContext.Out.WriteLine($"NFC Test started.....");
 
             NetworkFabricControllerResource networkFabricController = Client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
@@ -71,32 +69,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             #endregion
 
-/*            #region NFC Update test
-            NetworkFabricControllerPatch patch = new NetworkFabricControllerPatch()
-            {
-                InfrastructureExpressRouteConnections =
-                {
-                    new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
-                    {
-                        ExpressRouteAuthorizationKey = "1234ABCD-0A1B-1234-5678-123456ABCDEF",
-                    }
-                },
-                WorkloadExpressRouteConnections =
-                {
-                    new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
-                    {
-                        ExpressRouteAuthorizationKey = "1234ABCD-0A1B-1234-5678-123456ABCDEF",
-                    }
-                },
-            };
-            ArmOperation<NetworkFabricControllerResource> updatedNFC = await networkFabricController.UpdateAsync(WaitUntil.Completed, patch);
-
-            NetworkFabricControllerResource updatedResource = updatedNFC.Value;
-
-            NetworkFabricControllerData updatedData = updatedResource.Data;
-
-            #endregion*/
-
             // Get
             TestContext.Out.WriteLine($"NFC GET started.....");
             NetworkFabricControllerResource getResult = await networkFabricController.GetAsync();
@@ -110,13 +82,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 listByResourceGroup.Add(item);
             }
-
-/*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<NetworkFabricControllerResource>();
-            await foreach (NetworkFabricControllerResource item in DefaultSubscription.GetNetworkFabricControllersAsync())
-            {
-                listBySubscription.Add(item);
-            }*/
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");

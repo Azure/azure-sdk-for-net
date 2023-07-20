@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Azure.Core;
@@ -28,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"Entered into the NetworkInterface tests....");
             TestContext.Out.WriteLine($"Provided NetworkInterface name : {TestEnvironment.NetworkInterfaceName}");
 
-            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkDeviceName);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkDeviceNameUnderProvisionedNF);
 
             NetworkDeviceResource networkDevice = Client.GetNetworkDeviceResource(networkDeviceResourceId);
             networkDevice = await networkDevice.GetAsync();
 
-            ResourceIdentifier networkInterfaceId = NetworkInterfaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupResource.Id.Name, TestEnvironment.NetworkDeviceName, TestEnvironment.NetworkInterfaceName);
+            ResourceIdentifier networkInterfaceId = NetworkInterfaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupResource.Id.Name, TestEnvironment.NetworkDeviceNameUnderProvisionedNF, TestEnvironment.NetworkInterfaceName);
             TestContext.Out.WriteLine($"networkInterfaceId: {networkInterfaceId}");
             NetworkInterfaceResource networkInterface = Client.GetNetworkInterfaceResource(networkInterfaceId);
 
@@ -54,6 +52,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
+
+            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            {
+                State = EnableDisableState.Disable
+            };
+            ArmOperation<CommonPostActionResponseForStateUpdate> disableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            CommonPostActionResponseForStateUpdate result = disableAdminStateResponse.Value;
+            TestContext.WriteLine($"Succeeded: {result}");
+
+            body = new UpdateAdministrativeState()
+            {
+                State = EnableDisableState.Enable
+            };
+            ArmOperation<CommonPostActionResponseForStateUpdate> enableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            result = enableAdminStateResponse.Value;
+            TestContext.WriteLine($"Succeeded: {result}");
         }
     }
 }

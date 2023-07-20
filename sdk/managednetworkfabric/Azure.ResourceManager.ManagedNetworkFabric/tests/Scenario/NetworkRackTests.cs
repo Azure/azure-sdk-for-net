@@ -48,15 +48,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
-
-/*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<NetworkRackResource>();
-            await foreach (NetworkRackResource item in DefaultSubscription.GetNetworkRacksAsync())
-            {
-                listBySubscription.Add(item);
-                Console.WriteLine($"Succeeded on id: {item}");
-            }
-            Assert.IsNotEmpty(listBySubscription);*/
         }
     }
 }

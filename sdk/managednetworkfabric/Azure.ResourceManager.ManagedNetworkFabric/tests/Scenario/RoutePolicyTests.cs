@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -81,15 +80,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
-
-/*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<RoutePolicyResource>();
-            await foreach (RoutePolicyResource item in DefaultSubscription.GetRoutePoliciesAsync())
-            {
-                listBySubscription.Add(item);
-                Console.WriteLine($"Succeeded on id: {item}");
-            }
-            Assert.IsNotEmpty(listBySubscription);*/
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");

@@ -1,15 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -80,16 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
-            /*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-                        var listBySubscription = new List<L3IsolationDomainResource>();
-                        await foreach (L3IsolationDomainResource item in DefaultSubscription.GetL3IsolationDomainsAsync())
-                        {
-                            listBySubscription.Add(item);
-                            Console.WriteLine($"Succeeded on id: {item}");
-                        }
-                        Assert.IsNotEmpty(listBySubscription);*/
-
-          // Delete
+            // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             ArmOperation deleteResponse = await l3IsolationDomain.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(deleteResponse.HasCompleted);

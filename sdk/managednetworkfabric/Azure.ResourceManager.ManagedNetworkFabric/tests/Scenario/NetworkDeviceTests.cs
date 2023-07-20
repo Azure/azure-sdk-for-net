@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,9 +22,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         public async Task NetworkDevices()
         {
             TestContext.Out.WriteLine($"Entered into the NetworkDevice tests....");
-            TestContext.Out.WriteLine($"Provided networkDevice name : {TestEnvironment.NetworkDeviceName}");
+            TestContext.Out.WriteLine($"Provided networkDevice name : {TestEnvironment.NetworkDeviceNameUnderDeprovisionedNF}");
 
-            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkDeviceName);
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkDeviceNameUnderDeprovisionedNF);
             TestContext.Out.WriteLine($"networkDeviceResourceId: {networkDeviceResourceId}");
 
             TestContext.Out.WriteLine($"NetworkDevice Test started.....");
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"GET started.....");
             NetworkDeviceResource getResult = await device.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkDeviceName);
+            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkDeviceNameUnderDeprovisionedNF);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -49,16 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
-/*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<NetworkDeviceResource>();
-            await foreach (NetworkDeviceResource item in DefaultSubscription.GetNetworkDevicesAsync())
-            {
-                listBySubscription.Add(item);
-                Console.WriteLine($"Succeeded on id: {item}");
-            }
-            Assert.IsNotEmpty(listBySubscription);*/
-
-/*            // Update Serial Number
+            // Update Serial Number
             NetworkDevicePatch patch = new NetworkDevicePatch()
             {
                 Annotation = "null",
@@ -66,7 +56,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 SerialNumber = "Arista;DCS-7280PR3-24;12.05;JPE21330382",
             };
             ArmOperation<NetworkDeviceResource> lro = await device.UpdateAsync(WaitUntil.Completed, patch);
-            NetworkDeviceResource result = lro.Value;*/
+            NetworkDeviceResource result = lro.Value;
+            Assert.AreEqual(result.Data.SerialNumber, patch.SerialNumber);
         }
     }
 }

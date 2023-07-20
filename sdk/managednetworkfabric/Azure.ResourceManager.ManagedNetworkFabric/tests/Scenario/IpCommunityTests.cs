@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -74,18 +73,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
-/*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<IPCommunityResource>();
-            await foreach (IPCommunityResource item in DefaultSubscription.GetIPCommunitiesAsync())
-            {
-                listBySubscription.Add(item);
-                Console.WriteLine($"Succeeded on id: {item}");
-            }
-            Assert.IsNotEmpty(listBySubscription);*/
-
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
-            var deleteResponse = await ipCommunity.DeleteAsync(WaitUntil.Completed);
+            ArmOperation deleteResponse = await ipCommunity.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(deleteResponse.HasCompleted);
         }
     }

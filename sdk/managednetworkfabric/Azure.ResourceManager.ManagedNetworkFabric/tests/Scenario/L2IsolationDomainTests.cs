@@ -52,19 +52,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             L2IsolationDomainResource l2IsolationDomain = Client.GetL2IsolationDomainResource(l2DomainResourceId);
 
-            //Update
-/*            L2IsolationDomainPatch patch = new L2IsolationDomainPatch()
-            {
-                Annotation = "annotation1",
-                Mtu = 6000,
-                Tags =
-                {
-                    ["keyID"] = "keyValue",
-                },
-            };
-            ArmOperation<L2IsolationDomainResource> updatedL2Isd = await l2IsolationDomain.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(updatedL2Isd.Value.Data.Name, patch.Annotation);*/
-
             // Get
             TestContext.Out.WriteLine($"GET started.....");
             L2IsolationDomainResource getResult = await l2IsolationDomain.GetAsync();
@@ -80,14 +67,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
-
-/*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<L2IsolationDomainResource>();
-            await foreach (L2IsolationDomainResource item in DefaultSubscription.GetL2IsolationDomainsAsync())
-            {
-                listBySubscription.Add(item);
-            }
-            Assert.IsNotEmpty(listBySubscription);*/
 
             // Update Admin State
             TestContext.Out.WriteLine($"POST started.....");

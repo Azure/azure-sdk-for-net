@@ -64,15 +64,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
-            /*            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-                        var listBySubscription = new List<IPExtendedCommunityResource>();
-                        await foreach (IPExtendedCommunityResource item in DefaultSubscription.GetIPExtendedCommunitiesAsync())
-                        {
-                            listBySubscription.Add(item);
-                            Console.WriteLine($"Succeeded on id: {item}");
-                        }
-                        Assert.IsNotEmpty(listBySubscription);*/
-
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             var deleteResponse = await ipExtendedCommunity.DeleteAsync(WaitUntil.Completed);
