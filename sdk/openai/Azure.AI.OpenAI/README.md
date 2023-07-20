@@ -221,6 +221,129 @@ await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoices
 }
 ```
 
+### Use Chat Functions
+
+Chat Functions allow a caller of Chat Completions to define capabilities that the model can use to extend its
+functionality into external tools and data sources.
+
+You can read more about Chat Functions on OpenAI's blog: https://openai.com/blog/function-calling-and-other-api-updates
+
+**NOTE**: Chat Functions require model versions beginning with gpt-4 and gpt-3.5-turbo's `-0613` labels. They are not
+available with older versions of the models.
+
+To use Chat Functions, you first define the function you'd like the model to be able to use when appropriate. Using
+the example from the linked blog post, above:
+
+```C# Snippet:ChatFunctions:DefineFunction
+var getWeatherFuntionDefinition = new FunctionDefinition()
+{
+    Name = "get_current_weather",
+    Description = "Get the current weather in a given location",
+    Parameters = BinaryData.FromObjectAsJson(
+    new
+    {
+        Type = "object",
+        Properties = new
+        {
+            Location = new
+            {
+                Type = "string",
+                Description = "The city and state, e.g. San Francisco, CA",
+            },
+            Unit = new
+            {
+                Type = "string",
+                Enum = new[] { "celsius", "fahrenheit" },
+            }
+        },
+        Required = new[] { "location" },
+    },
+    new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+};
+```
+
+With the function defined, it can then be used in a Chat Completions request via its options. Function data is
+handled across multiple calls that build up data for subsequent stateless requests, so we maintain a list of chat
+messages as a form of conversation history.
+
+```C# Snippet:ChatFunctions:RequestWithFunctions
+var conversationMessages = new List<ChatMessage>()
+{
+    new(ChatRole.User, "What is the weather like in Boston?"),
+};
+
+var chatCompletionsOptions = new ChatCompletionsOptions();
+foreach (ChatMessage chatMessage in conversationMessages)
+{
+    chatCompletionsOptions.Messages.Add(chatMessage);
+}
+chatCompletionsOptions.Functions.Add(getWeatherFuntionDefinition);
+
+Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
+    "gpt-35-turbo-0613",
+    chatCompletionsOptions);
+```
+
+If the model determines that it should call a Chat Function, a finish reason of 'FunctionCall' will be populated on
+the choice and details will be present in the response message's `FunctionCall` property. Usually, the name of the
+function call will be one that was provided and the arguments will be a populated JSON document matching the schema
+included in the `FunctionDefinition` used; it is **not guaranteed** that this data is valid or even properly formatted,
+however, so validation and error checking should always accompany function call processing.
+
+To resolve the function call and continue the user-facing interaction, process the argument payload as needed and then
+serialize appropriate response data into a new message with `ChatRole.Function`. Then make a new request with all of
+the messages so far -- the initial `User` message, the first response's `FunctionCall` message, and the resolving
+`Function` message generated in reply to the function call -- so the model can use the data to better formulate a chat
+completions response.
+
+Note that the function call response you provide does not need to follow any schema provided in the initial call. The
+model will infer usage of the response data based on inferred context of names and fields.
+
+```C# Snippet:ChatFunctions:HandleFunctionCall
+ChatChoice responseChoice = response.Value.Choices[0];
+if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
+{
+    // Include the FunctionCall message in the conversation history
+    conversationMessages.Add(responseChoice.Message);
+
+    if (responseChoice.Message.FunctionCall.Name == "get_current_weather")
+    {
+        // Validate and process the JSON arguments for the function call
+        string unvalidatedArguments = responseChoice.Message.FunctionCall.Arguments;
+        var functionResultData = (object)null; // GetYourFunctionResultData(unvalidatedArguments);
+        // Here, replacing with an example as if returned from GetYourFunctionResultData
+        functionResultData = new
+        {
+            Temperature = 31,
+            Unit = "celsius",
+        };
+        // Serialize the result data from the function into a new chat message with the 'Function' role,
+        // then add it to the messages after the first User message and initial response FunctionCall
+        var functionResponseMessage = new ChatMessage(
+            ChatRole.Function,
+            JsonSerializer.Serialize(
+                functionResultData,
+                new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+        conversationMessages.Add(functionResponseMessage);
+        // Now make a new request using all three messages in conversationMessages
+    }
+}
+```
+
+### Generate images with DALL-E image generation models
+
+```C# Snippet:GenerateImages
+Response<ImageGenerations> imageGenerations = await client.GetImageGenerationsAsync(
+    new ImageGenerationOptions()
+    {
+        Prompt = "a happy monkey eating a banana, in watercolor",
+        Size = ImageSize.Size256x256,
+    });
+
+// Image Generations responses provide URLs you can use to retrieve requested images
+Uri imageUri = imageGenerations.Value.Data[0].Url;
+```
+
 ## Troubleshooting
 
 When you interact with Azure OpenAI using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][openai_rest] requests.

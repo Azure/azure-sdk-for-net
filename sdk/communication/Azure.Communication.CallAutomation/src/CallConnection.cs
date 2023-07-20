@@ -322,6 +322,7 @@ namespace Azure.Communication.CallAutomation
                 request.Transferee = CommunicationIdentifierSerializer.Serialize(options.Transferee);
             }
 
+            request.CallbackUriOverride = options.CallbackUriOverride;
             return request;
         }
 
@@ -447,7 +448,7 @@ namespace Azure.Communication.CallAutomation
             {
                 request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
             }
-
+            request.CallbackUriOverride = options.CallbackUriOverride;
             request.CustomContext = new CustomContextInternal(
                 options.ParticipantToAdd.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.SipHeaders,
                 options.ParticipantToAdd.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.VoipHeaders);
@@ -604,7 +605,7 @@ namespace Azure.Communication.CallAutomation
                 {
                     request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
-
+                request.CallbackUriOverride = options.CallbackUriOverride;
                 var response = await RestClient.RemoveParticipantAsync(
                     CallConnectionId,
                     request,
@@ -665,7 +666,7 @@ namespace Azure.Communication.CallAutomation
                 {
                     options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
-
+                request.CallbackUriOverride = options.CallbackUriOverride;
                 var response = RestClient.RemoveParticipant(
                     CallConnectionId,
                     request,
