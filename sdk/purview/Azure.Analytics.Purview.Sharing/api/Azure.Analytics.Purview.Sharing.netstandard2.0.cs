@@ -14,8 +14,8 @@ namespace Azure.Analytics.Purview.Sharing
         public ReceivedSharesClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public ReceivedSharesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Sharing.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response ActivateTenantEmailRegistration(Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ActivateTenantEmailRegistrationAsync(Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response ActivateTenantEmailRegistration(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ActivateTenantEmailRegistrationAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<System.BinaryData> CreateOrReplaceReceivedShare(Azure.WaitUntil waitUntil, string receivedShareId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateOrReplaceReceivedShareAsync(Azure.WaitUntil waitUntil, string receivedShareId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<System.BinaryData> DeleteReceivedShare(Azure.WaitUntil waitUntil, string receivedShareId, Azure.RequestContext context) { throw null; }
@@ -26,8 +26,8 @@ namespace Azure.Analytics.Purview.Sharing
         public virtual Azure.AsyncPageable<System.BinaryData> GetAllDetachedReceivedSharesAsync(string filter, string orderby, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetReceivedShare(string receivedShareId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetReceivedShareAsync(string receivedShareId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response RegisterTenantEmailRegistration(string repeatabilityRequestId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RegisterTenantEmailRegistrationAsync(string repeatabilityRequestId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response RegisterTenantEmailRegistration(Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RegisterTenantEmailRegistrationAsync(Azure.RequestContext context) { throw null; }
     }
     public partial class SentSharesClient
     {
@@ -51,8 +51,8 @@ namespace Azure.Analytics.Purview.Sharing
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSentShareAsync(string sentShareId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetSentShareInvitation(string sentShareId, string sentShareInvitationId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response NotifyUserSentShareInvitation(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response NotifyUserSentShareInvitation(string sentShareId, string sentShareInvitationId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, Azure.RequestContext context) { throw null; }
     }
     public partial class ShareResourcesClient
     {
