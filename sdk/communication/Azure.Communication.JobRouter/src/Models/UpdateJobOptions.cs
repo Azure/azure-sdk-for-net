@@ -48,7 +48,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> The channel identifier. eg. voice, chat, etc. </summary>
         public string ChannelId { get; set; }
 
-        /// <summary> The priority of this job. </summary>
+        /// <summary> The priority of this job (range from -100 to 100). </summary>
         public int? Priority { get; set; }
 
         /// <summary> Reason code for cancelled or closed jobs. </summary>
