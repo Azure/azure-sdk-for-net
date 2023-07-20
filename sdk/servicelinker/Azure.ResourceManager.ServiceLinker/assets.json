@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/servicelinker/Azure.ResourceManager.ServiceLinker",
+  "Tag": "net/servicelinker/Azure.ResourceManager.ServiceLinker_76feee1b80"
+}

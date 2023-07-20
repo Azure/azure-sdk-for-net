@@ -10,8 +10,11 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)CheckpointerTesting.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DataMovementTestBase.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DisposingLocalDirectory.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferDirection.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferUtility.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageDataMovementSharedSources)..\Models\JobPlan\*.cs" LinkBase="Shared\DataMovement\JobPlanModels" />

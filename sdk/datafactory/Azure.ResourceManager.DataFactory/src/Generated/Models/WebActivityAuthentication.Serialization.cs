@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
-                writer.WriteObjectValue(Pfx);
+                JsonSerializer.Serialize(writer, Pfx);
             }
             if (Optional.IsDefined(Username))
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(Resource))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pfx = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
+                    pfx = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("username"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
+                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new WebActivityAuthentication(type.Value, pfx.Value, username.Value, password.Value, resource.Value, userTenant.Value, credential.Value);
+            return new WebActivityAuthentication(type.Value, pfx, username.Value, password, resource.Value, userTenant.Value, credential.Value);
         }
     }
 }

@@ -20,5 +20,12 @@ namespace Azure.AI.OpenAI
             : this(new string[] { input })
         {
         }
+
+        /// <inheritdoc cref="EmbeddingsOptions.EmbeddingsOptions(System.Collections.Generic.IEnumerable{string})"/>
+        public EmbeddingsOptions()
+        {
+            // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
+            //                      may be reconsidered for required payload constituents in the future.
+        }
     }
 }

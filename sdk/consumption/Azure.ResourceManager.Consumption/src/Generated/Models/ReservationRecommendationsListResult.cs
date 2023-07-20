@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Result of listing reservation recommendations.
-    /// Serialized Name: ReservationRecommendationsListResult
-    /// </summary>
+    /// <summary> Result of listing reservation recommendations. </summary>
     internal partial class ReservationRecommendationsListResult
     {
         /// <summary> Initializes a new instance of ReservationRecommendationsListResult. </summary>
@@ -25,18 +22,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ReservationRecommendationsListResult. </summary>
         /// <param name="value">
         /// The list of reservation recommendations.
-        /// Serialized Name: ReservationRecommendationsListResult.value
         /// Please note <see cref="ConsumptionReservationRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConsumptionLegacyReservationRecommendation"/> and <see cref="ConsumptionModernReservationRecommendation"/>.
         /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: ReservationRecommendationsListResult.nextLink
-        /// </param>
-        /// <param name="previousLink">
-        /// The link (url) to the previous page of results.
-        /// Serialized Name: ReservationRecommendationsListResult.previousLink
-        /// </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="previousLink"> The link (url) to the previous page of results. </param>
         internal ReservationRecommendationsListResult(IReadOnlyList<ConsumptionReservationRecommendation> value, string nextLink, string previousLink)
         {
             Value = value;
@@ -46,20 +36,13 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary>
         /// The list of reservation recommendations.
-        /// Serialized Name: ReservationRecommendationsListResult.value
         /// Please note <see cref="ConsumptionReservationRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConsumptionLegacyReservationRecommendation"/> and <see cref="ConsumptionModernReservationRecommendation"/>.
         /// </summary>
         public IReadOnlyList<ConsumptionReservationRecommendation> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: ReservationRecommendationsListResult.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// The link (url) to the previous page of results.
-        /// Serialized Name: ReservationRecommendationsListResult.previousLink
-        /// </summary>
+        /// <summary> The link (url) to the previous page of results. </summary>
         public string PreviousLink { get; }
     }
 }

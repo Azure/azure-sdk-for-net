@@ -32,6 +32,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("speechLanguage"u8);
                 writer.WriteStringValue(SpeechLanguage);
             }
+            if (Optional.IsDefined(SpeechRecognitionModelEndpointId))
+            {
+                writer.WritePropertyName("speechRecognitionModelEndpointId"u8);
+                writer.WriteStringValue(SpeechRecognitionModelEndpointId);
+            }
             if (Optional.IsDefined(DtmfOptions))
             {
                 writer.WritePropertyName("dtmfOptions"u8);

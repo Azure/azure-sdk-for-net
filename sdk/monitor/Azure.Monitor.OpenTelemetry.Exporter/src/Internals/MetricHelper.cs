@@ -11,7 +11,7 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class MetricHelper
+    internal static class MetricHelper
     {
         private const int Version = 2;
 

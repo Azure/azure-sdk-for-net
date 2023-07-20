@@ -44,11 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="zooKeeperNameSpace"> The namespace on ZooKeeper under which Hive Server 2 nodes are added. </param>
         /// <param name="useNativeQuery"> Specifies whether the driver uses native HiveQL queries,or converts them into an equivalent form in HiveQL. </param>
         /// <param name="username"> The user name that you use to access Hive Server. </param>
-        /// <param name="password">
-        /// The password corresponding to the user name that you provided in the Username field
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> The password corresponding to the user name that you provided in the Username field. </param>
         /// <param name="httpPath"> The partial URL corresponding to the Hive server. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
@@ -96,11 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<bool> UseNativeQuery { get; set; }
         /// <summary> The user name that you use to access Hive Server. </summary>
         public DataFactoryElement<string> Username { get; set; }
-        /// <summary>
-        /// The password corresponding to the user name that you provided in the Username field
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The password corresponding to the user name that you provided in the Username field. </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
         /// <summary> The partial URL corresponding to the Hive server. </summary>
         public DataFactoryElement<string> HttpPath { get; set; }

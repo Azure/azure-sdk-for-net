@@ -931,6 +931,12 @@
       ]
     },
     {
+      "filename": "**/sdk/sphere/**/*.cs",
+      "words": [
+        "Nwfs"
+      ]
+    },
+    {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
         "CIAS",

@@ -59,22 +59,10 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> The id of the job. </summary>
         public string Id { get; }
-        /// <summary> Reference to an external parent context, eg. call ID. </summary>
-        public string ChannelReference { get; set; }
         /// <summary> The status of the Job. </summary>
         public RouterJobStatus? Status { get; }
         /// <summary> The time a job was queued in UTC. </summary>
         public DateTimeOffset? EnqueuedAt { get; }
-        /// <summary> The channel identifier. eg. voice, chat, etc. </summary>
-        public string ChannelId { get; set; }
-        /// <summary> The Id of the Classification policy used for classifying a job. </summary>
-        public string ClassificationPolicyId { get; set; }
-        /// <summary> The Id of the Queue that this job is queued to. </summary>
-        public string QueueId { get; set; }
-        /// <summary> The priority of this job. </summary>
-        public int? Priority { get; set; }
-        /// <summary> Reason code for cancelled or closed jobs. </summary>
-        public string DispositionCode { get; set; }
         /// <summary> A collection of label selectors attached by a classification policy, which a worker must satisfy in order to process this job. </summary>
         public IReadOnlyList<RouterWorkerSelector> AttachedWorkerSelectors { get; }
         /// <summary>
@@ -84,7 +72,5 @@ namespace Azure.Communication.JobRouter.Models
         public IReadOnlyDictionary<string, RouterJobAssignment> Assignments { get; }
         /// <summary> If set, job will be scheduled to be enqueued at a given time. </summary>
         public DateTimeOffset? ScheduledAt { get; }
-        /// <summary> Gets or sets the matching mode. </summary>
-        public JobMatchingMode MatchingMode { get; set; }
     }
 }
