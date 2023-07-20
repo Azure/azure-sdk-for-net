@@ -1022,7 +1022,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         // To run this test, the NamespaceTenant AAD info needs to be set to an AAD app that does not have any RBAC permissions,
         // and entityId needs to be set to the entity ID of the application.
         [RecordedTest]
-        //[Ignore("AAD app not configured for this test")]
+        [Ignore("AAD app not configured for this test")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2023_08_03)]
         public async Task DeleteAsync_Paginated()
         {
