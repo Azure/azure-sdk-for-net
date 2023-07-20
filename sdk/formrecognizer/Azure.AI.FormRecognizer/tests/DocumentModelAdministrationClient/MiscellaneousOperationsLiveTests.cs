@@ -176,18 +176,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
             else
             {
-                // We have changed the following validation because of a service bug. This needs to be updated once the bug is fixed.
-                // More information: https://github.com/Azure/azure-sdk-for-net/issues/35809
-
-                /* The expected behavior. This must be added back once the service bug is fixed.
                 Assert.Null(model.ExpiresOn);
-                */
-
-                // The current behavior. This 'if' block must be completely removed once the service bug is fixed.
-                if (model.ExpiresOn.HasValue)
-                {
-                    Assert.Greater(model.ExpiresOn, model.CreatedOn);
-                }
             }
 
             // TODO add validation for Doctypes https://github.com/Azure/azure-sdk-for-net-pr/issues/1432

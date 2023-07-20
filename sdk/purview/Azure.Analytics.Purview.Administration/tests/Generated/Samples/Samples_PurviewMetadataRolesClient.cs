@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewMetadataRolesClient(endpoint, credential);
 
-            foreach (var item in client.GetMetadataRoles())
+            foreach (var item in client.GetMetadataRoles(new RequestContext()))
             {
             }
         }
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewMetadataRolesClient(endpoint, credential);
 
-            foreach (var item in client.GetMetadataRoles())
+            foreach (var item in client.GetMetadataRoles(new RequestContext()))
             {
             }
         }
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewMetadataRolesClient(endpoint, credential);
 
-            await foreach (var item in client.GetMetadataRolesAsync())
+            await foreach (var item in client.GetMetadataRolesAsync(new RequestContext()))
             {
             }
         }
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewMetadataRolesClient(endpoint, credential);
 
-            await foreach (var item in client.GetMetadataRolesAsync())
+            await foreach (var item in client.GetMetadataRolesAsync(new RequestContext()))
             {
             }
         }

@@ -39,6 +39,27 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> A collection of notes attached to a job. </summary>
         public List<RouterJobNote> Notes { get; } = new List<RouterJobNote>();
 
+        /// <summary> Reference to an external parent context, eg. call ID. </summary>
+        public string ChannelReference { get; internal set; }
+
+        /// <summary> The channel identifier. eg. voice, chat, etc. </summary>
+        public string ChannelId { get; internal set; }
+
+        /// <summary> The Id of the Classification policy used for classifying a job. </summary>
+        public string ClassificationPolicyId { get; internal set; }
+
+        /// <summary> The Id of the Queue that this job is queued to. </summary>
+        public string QueueId { get; internal set; }
+
+        /// <summary> The priority of this job. </summary>
+        public int? Priority { get; internal set; }
+
+        /// <summary> Reason code for cancelled or closed jobs. </summary>
+        public string DispositionCode { get; internal set; }
+
+        /// <summary> Gets or sets the matching mode. </summary>
+        public JobMatchingMode MatchingMode { get; internal set; }
+
         [CodeGenMember("Labels")]
         internal IDictionary<string, object> _labels
         {
@@ -87,7 +108,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Notes != null && Notes.Count != 0
-                    ? Notes?.ToDictionary(x => (x.AddedAtUtc ?? DateTimeOffset.UtcNow)
+                    ? Notes?.ToDictionary(x => (x.AddedAt ?? DateTimeOffset.UtcNow)
                         .ToUniversalTime().ToString("O", CultureInfo.InvariantCulture), x => x.Message)
                     : new ChangeTrackingDictionary<string, string>();
             }
@@ -97,7 +118,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     Notes.Add(new RouterJobNote
                     {
-                        AddedAtUtc = DateTimeOffsetParser.ParseAndGetDateTimeOffset(note.Key),
+                        AddedAt = DateTimeOffsetParser.ParseAndGetDateTimeOffset(note.Key),
                         Message = note.Value
                     });
                 }

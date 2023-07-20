@@ -146,7 +146,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='GetSensorAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSensorAsync(string sensorPartnerId, string sensorId, RequestContext context = null)
+        public virtual async Task<Response> GetSensorAsync(string sensorPartnerId, string sensorId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(sensorId, nameof(sensorId));
@@ -183,7 +183,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='GetSensor(string,string,RequestContext)']/*" />
-        public virtual Response GetSensor(string sensorPartnerId, string sensorId, RequestContext context = null)
+        public virtual Response GetSensor(string sensorPartnerId, string sensorId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(sensorId, nameof(sensorId));
@@ -294,7 +294,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='GetConnectionStringAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetConnectionStringAsync(string sensorPartnerId, string sensorId, RequestContext context = null)
+        public virtual async Task<Response> GetConnectionStringAsync(string sensorPartnerId, string sensorId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(sensorId, nameof(sensorId));
@@ -331,7 +331,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='GetConnectionString(string,string,RequestContext)']/*" />
-        public virtual Response GetConnectionString(string sensorPartnerId, string sensorId, RequestContext context = null)
+        public virtual Response GetConnectionString(string sensorPartnerId, string sensorId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(sensorId, nameof(sensorId));
@@ -464,7 +464,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='GetSensorsAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSensorsAsync(string sensorPartnerId, IEnumerable<string> sensorDataModelIds = null, IEnumerable<string> sensorMappingIds = null, IEnumerable<string> deviceIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSensorsAsync(string sensorPartnerId, IEnumerable<string> sensorDataModelIds, IEnumerable<string> sensorMappingIds, IEnumerable<string> deviceIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
 
@@ -509,7 +509,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Sensors.xml" path="doc/members/member[@name='GetSensors(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSensors(string sensorPartnerId, IEnumerable<string> sensorDataModelIds = null, IEnumerable<string> sensorMappingIds = null, IEnumerable<string> deviceIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSensors(string sensorPartnerId, IEnumerable<string> sensorDataModelIds, IEnumerable<string> sensorMappingIds, IEnumerable<string> deviceIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
 

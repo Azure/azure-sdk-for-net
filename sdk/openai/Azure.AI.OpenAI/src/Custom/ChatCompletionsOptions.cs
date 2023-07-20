@@ -43,6 +43,32 @@ namespace Azure.AI.OpenAI
         /// <inheritdoc cref="CompletionsOptions.User"/>
         public string User { get; set; }
 
+         /// <summary> A list of functions the model may generate JSON inputs for. </summary>
+        public IList<FunctionDefinition> Functions { get; set; }
+
+        /// <summary>
+        /// Controls how the model will use provided Functions.
+        /// </summary>
+        /// <remarks>
+        ///     <list type="bullet">
+        ///     <item>
+        ///         Providing a custom <see cref="FunctionDefinition"/> will request that the model limit its
+        ///         completions to function calls for that function.
+        ///     </item>
+        ///     <item>
+        ///         <see cref="FunctionDefinition.Auto"/> represents the default behavior and will allow the model
+        ///         to freely select between issuing a stanard completions response or a call to any provided
+        ///         function.
+        ///     </item>
+        ///     <item>
+        ///         <see cref="FunctionDefinition.None"/> will request that the model only issue standard
+        ///         completions responses, irrespective of provided functions. Note that the function definitions
+        ///         provided may still influence the completions content.
+        ///     </item>
+        ///     </list>
+        /// </remarks>
+        public FunctionDefinition FunctionCall { get; set; }
+
         internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
 
         internal string InternalNonAzureModelName { get; set; }
@@ -64,12 +90,15 @@ namespace Azure.AI.OpenAI
             Messages = messages.ToList();
             TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
             StopSequences = new ChangeTrackingList<string>();
+            Functions = new ChangeTrackingList<FunctionDefinition>();
         }
 
         /// <inheritdoc cref="ChatCompletionsOptions(IEnumerable{ChatMessage})"/>
         public ChatCompletionsOptions()
             : this(new ChangeTrackingList<ChatMessage>())
         {
+            // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
+            //                      may be reconsidered for required payload constituents in the future.
         }
     }
 }

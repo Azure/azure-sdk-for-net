@@ -126,7 +126,7 @@ This sample shows how to call GetDeviceDataModelAsync with required parameters a
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>");
+Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -155,7 +155,7 @@ This sample shows how to call GetDeviceDataModel with required parameters and pa
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-Response response = client.GetDeviceDataModel("<sensorPartnerId>", "<deviceDataModelId>");
+Response response = client.GetDeviceDataModel("<sensorPartnerId>", "<deviceDataModelId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("type").ToString());
@@ -208,18 +208,7 @@ This sample shows how to call GetDeviceDataModelsAsync with required parameters 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceDataModelsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
-
-await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -249,18 +238,7 @@ This sample shows how to call GetDeviceDataModels with required parameters and p
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
 
-foreach (var item in client.GetDeviceDataModels("<sensorPartnerId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceDataModels with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDeviceDataModelsClient("2022-11-01-preview");
-
-foreach (var item in client.GetDeviceDataModels("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var item in client.GetDeviceDataModels("<sensorPartnerId>", new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());

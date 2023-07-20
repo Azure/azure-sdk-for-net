@@ -16,6 +16,7 @@ using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs;
 using Microsoft.CodeAnalysis.Diagnostics;
+using System.Linq;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
 {
@@ -131,7 +132,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create Blob Data Controller to skip through all failures
                 TransferManagerOptions options = new TransferManagerOptions()
                 {
-                    ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                    ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
                 };
                 TransferManager transferManager = new TransferManager(options);
 
@@ -509,15 +510,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 TransferOptions downloadOptions = new TransferOptions();
                 downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
-                    // TODO: change the Exception if it's a RequestFailedException and then look at the exception.StatusCode
-                    if (args.Exception.Message.Contains("500"))
-                    {
-                        Console.WriteLine("We're getting throttled stop trying and lets try later");
-                    }
-                    else if (args.Exception.Message == "403")
-                    {
-                        Console.WriteLine("We're getting auth errors. Might be the entire container, consider stopping");
-                    }
+                    // Log Exception Message
+                    Console.WriteLine(args.Exception.Message);
                     // Remove stub
                     await Task.CompletedTask;
                 };
@@ -567,16 +561,23 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Make a service request to verify we've successfully authenticated
             await container.CreateIfNotExistsAsync();
+            await container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
             // Prepare to copy
             try
             {
                 // Get a reference to a destination blobs
                 BlockBlobClient sourceBlob = container.GetBlockBlobClient("sample-blob");
+
+                using (FileStream stream = File.Open(originalPath, FileMode.Open))
+                {
+                    await sourceBlob.UploadAsync(stream);
+                    stream.Position = 0;
+                }
                 StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
 
                 BlockBlobClient destinationBlob = container.GetBlockBlobClient("sample-blob2");
-                StorageResource destinationResource = new BlockBlobStorageResource(sourceBlob);
+                StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
 
                 // Upload file data
                 TransferManager transferManager = new TransferManager(default);
@@ -588,6 +589,9 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Generous 10 second wait for our transfer to finish
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(10000);
                 await transfer.AwaitCompletion(cancellationTokenSource.Token);
+
+                Assert.IsTrue(await destinationBlob.ExistsAsync());
+                Assert.AreEqual(transfer.TransferStatus, StorageTransferStatus.Completed);
             }
             finally
             {
@@ -715,16 +719,41 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferIfRunningAsync(dataTransfer);
                 #endregion Snippet:TransferManagerTryPause_Async
 
-                #region Snippet:TransferManagerResume_Async
+                StorageSharedKeyCredential GetMyCredential(string uri)
+                    => new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
 
-                DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
-                    transferId: dataTransfer.Id,
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource);
+                #region Snippet:TransferManagerResume_Async
+                async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesAsync(DataTransferProperties info)
+                {
+                    StorageResource sourceResource = null, destinationResource = null;
+                    if (BlobStorageResources.TryGetResourceProviders(
+                        info,
+                        out BlobStorageResourceProvider blobSrcProvider,
+                        out BlobStorageResourceProvider blobDstProvider))
+                    {
+                        sourceResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.SourcePath));
+                        destinationResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.DestinationPath));
+                    }
+                    if (LocalStorageResources.TryGetResourceProviders(
+                        info,
+                        out LocalStorageResourceProvider localSrcProvider,
+                        out LocalStorageResourceProvider localDstProvider))
+                    {
+                        sourceResource ??= localSrcProvider.MakeResource();
+                        destinationResource ??= localDstProvider.MakeResource();
+                    }
+                    return (sourceResource, destinationResource);
+                }
+                List<DataTransfer> resumedTransfers = new();
+                await foreach (DataTransferProperties transferProperties in transferManager.GetResumableTransfersAsync())
+                {
+                    (StorageResource resumeSource, StorageResource resumeDestination) = await MakeResourcesAsync(transferProperties);
+                    resumedTransfers.Add(await transferManager.ResumeTransferAsync(transferProperties.TransferId, resumeSource, resumeDestination));
+                }
                 #endregion Snippet:TransferManagerResume_Async
 
                 // Wait for download to finish
-                await resumedTransfer.AwaitCompletion();
+                await Task.WhenAll(resumedTransfers.Select(t => t.AwaitCompletion()));
             }
             finally
             {

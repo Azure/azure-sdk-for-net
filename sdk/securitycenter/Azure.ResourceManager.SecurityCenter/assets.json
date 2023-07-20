@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/securitycenter/Azure.ResourceManager.SecurityCenter",
+  "Tag": "net/securitycenter/Azure.ResourceManager.SecurityCenter_f3792d7894"
+}
