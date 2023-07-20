@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Details about historical usage data that has been used for computing the recommendation.
-    /// Serialized Name: ReservationRecommendationDetailsUsageProperties
-    /// </summary>
+    /// <summary> Details about historical usage data that has been used for computing the recommendation. </summary>
     public partial class ConsumptionUsageProperties
     {
         /// <summary> Initializes a new instance of ConsumptionUsageProperties. </summary>
@@ -23,26 +20,11 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionUsageProperties. </summary>
-        /// <param name="firstConsumptionDate">
-        /// The first usage date used for looking back for computing the recommendation.
-        /// Serialized Name: ReservationRecommendationDetailsUsageProperties.firstConsumptionDate
-        /// </param>
-        /// <param name="lastConsumptionDate">
-        /// The last usage date used for looking back for computing the recommendation.
-        /// Serialized Name: ReservationRecommendationDetailsUsageProperties.lastConsumptionDate
-        /// </param>
-        /// <param name="lookBackUnitType">
-        /// What the usage data values represent ex: virtual machine instance.
-        /// Serialized Name: ReservationRecommendationDetailsUsageProperties.lookBackUnitType
-        /// </param>
-        /// <param name="usageData">
-        /// The breakdown of historical resource usage.  The values are in the order of usage between the firstConsumptionDate and the lastConsumptionDate.
-        /// Serialized Name: ReservationRecommendationDetailsUsageProperties.usageData
-        /// </param>
-        /// <param name="usageGrain">
-        /// The grain of the values represented in the usage data ex: hourly.
-        /// Serialized Name: ReservationRecommendationDetailsUsageProperties.usageGrain
-        /// </param>
+        /// <param name="firstConsumptionDate"> The first usage date used for looking back for computing the recommendation. </param>
+        /// <param name="lastConsumptionDate"> The last usage date used for looking back for computing the recommendation. </param>
+        /// <param name="lookBackUnitType"> What the usage data values represent ex: virtual machine instance. </param>
+        /// <param name="usageData"> The breakdown of historical resource usage.  The values are in the order of usage between the firstConsumptionDate and the lastConsumptionDate. </param>
+        /// <param name="usageGrain"> The grain of the values represented in the usage data ex: hourly. </param>
         internal ConsumptionUsageProperties(string firstConsumptionDate, string lastConsumptionDate, string lookBackUnitType, IReadOnlyList<float> usageData, string usageGrain)
         {
             FirstConsumptionDate = firstConsumptionDate;
@@ -52,30 +34,15 @@ namespace Azure.ResourceManager.Consumption.Models
             UsageGrain = usageGrain;
         }
 
-        /// <summary>
-        /// The first usage date used for looking back for computing the recommendation.
-        /// Serialized Name: ReservationRecommendationDetailsUsageProperties.firstConsumptionDate
-        /// </summary>
+        /// <summary> The first usage date used for looking back for computing the recommendation. </summary>
         public string FirstConsumptionDate { get; }
-        /// <summary>
-        /// The last usage date used for looking back for computing the recommendation.
-        /// Serialized Name: ReservationRecommendationDetailsUsageProperties.lastConsumptionDate
-        /// </summary>
+        /// <summary> The last usage date used for looking back for computing the recommendation. </summary>
         public string LastConsumptionDate { get; }
-        /// <summary>
-        /// What the usage data values represent ex: virtual machine instance.
-        /// Serialized Name: ReservationRecommendationDetailsUsageProperties.lookBackUnitType
-        /// </summary>
+        /// <summary> What the usage data values represent ex: virtual machine instance. </summary>
         public string LookBackUnitType { get; }
-        /// <summary>
-        /// The breakdown of historical resource usage.  The values are in the order of usage between the firstConsumptionDate and the lastConsumptionDate.
-        /// Serialized Name: ReservationRecommendationDetailsUsageProperties.usageData
-        /// </summary>
+        /// <summary> The breakdown of historical resource usage.  The values are in the order of usage between the firstConsumptionDate and the lastConsumptionDate. </summary>
         public IReadOnlyList<float> UsageData { get; }
-        /// <summary>
-        /// The grain of the values represented in the usage data ex: hourly.
-        /// Serialized Name: ReservationRecommendationDetailsUsageProperties.usageGrain
-        /// </summary>
+        /// <summary> The grain of the values represented in the usage data ex: hourly. </summary>
         public string UsageGrain { get; }
     }
 }
