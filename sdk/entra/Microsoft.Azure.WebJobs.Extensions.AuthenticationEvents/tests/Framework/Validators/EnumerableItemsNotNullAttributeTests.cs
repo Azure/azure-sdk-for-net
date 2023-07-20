@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
     /// <summary>
     /// This class will test OneOrMoreRequiredAttribute
     /// </summary>
-    public class EnumberableItemsNotNullAttributeTests
+    public class EnumerableItemsNotNullAttributeTests
     {
         [Test]
         [TestCaseSource(nameof(TestScenarios))]
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
         /// </summary>
         private class DummyClass
         {
-            [EnumberableItemsNotNull]
+            [EnumerableItemsNotNull]
             public object Obj { get; set; }
         }
 
