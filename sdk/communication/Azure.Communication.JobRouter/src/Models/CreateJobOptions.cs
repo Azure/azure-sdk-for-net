@@ -56,10 +56,10 @@ namespace Azure.Communication.JobRouter
         public int? Priority { get; set; }
 
         /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
-        public IList<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();
+        public List<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();
 
         /// <summary> Notes attached to a job, sorted by timestamp. </summary>
-        public IList<RouterJobNote> Notes { get; } = new List<RouterJobNote>();
+        public List<RouterJobNote> Notes { get; } = new List<RouterJobNote>();
 
         /// <summary> A set of non-identifying attributes attached to this job. </summary>
         public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();

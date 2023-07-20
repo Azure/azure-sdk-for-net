@@ -34,6 +34,8 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
         public string SpeechLanguage { get; set; }
+        /// <summary> Endpoint where the custom model was deployed. </summary>
+        public string SpeechRecognitionModelEndpointId { get; set; }
         /// <summary> Defines configurations for DTMF. </summary>
         public DtmfOptionsInternal DtmfOptions { get; set; }
         /// <summary> Defines Ivr choices for recognize. </summary>

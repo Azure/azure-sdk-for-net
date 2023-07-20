@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> Gets a collection of GlobalRulestackResources in the TenantResource. </summary>
         /// <returns> An object representing collection of GlobalRulestackResources and their operations over a GlobalRulestackResource. </returns>
-        public virtual GlobalRulestackResourceCollection GetGlobalRulestackResources()
+        public virtual GlobalRulestackCollection GetGlobalRulestacks()
         {
-            return GetCachedClient(Client => new GlobalRulestackResourceCollection(Client, Id));
+            return GetCachedClient(Client => new GlobalRulestackCollection(Client, Id));
         }
     }
 }

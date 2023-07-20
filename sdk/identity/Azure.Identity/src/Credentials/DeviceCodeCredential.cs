@@ -23,6 +23,8 @@ namespace Azure.Identity
         internal string ClientId { get; }
         internal bool DisableAutomaticAuthentication { get; }
         internal AuthenticationRecord Record { get; private set; }
+        private bool _isCaeEnabledRequestCached = false;
+        private bool _isCaeDisabledRequestCached = false;
         internal Func<DeviceCodeInfo, CancellationToken, Task> DeviceCodeCallback { get; }
         internal CredentialPipeline Pipeline { get; }
         internal string DefaultScope { get; }
@@ -211,13 +213,19 @@ namespace Azure.Identity
                 Exception inner = null;
 
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
+                var isCachePopulated = Record switch
+                {
+                    not null when requestContext.IsCaeEnabled && _isCaeEnabledRequestCached => true,
+                    not null when !requestContext.IsCaeEnabled && _isCaeDisabledRequestCached => true,
+                    _ => false
+                };
 
-                if (Record != null)
+                if (isCachePopulated)
                 {
                     try
                     {
                         AuthenticationResult result = await Client
-                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
+                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                             .ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -243,10 +251,18 @@ namespace Azure.Identity
         private async Task<AccessToken> GetTokenViaDeviceCodeAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
         {
             AuthenticationResult result = await Client
-                .AcquireTokenWithDeviceCodeAsync(context.Scopes, context.Claims, code => DeviceCodeCallbackImpl(code, cancellationToken), async, cancellationToken)
+                .AcquireTokenWithDeviceCodeAsync(context.Scopes, context.Claims, code => DeviceCodeCallbackImpl(code, cancellationToken), context.IsCaeEnabled, async, cancellationToken)
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
+            if (context.IsCaeEnabled)
+            {
+                _isCaeEnabledRequestCached = true;
+            }
+            else
+            {
+                _isCaeDisabledRequestCached = true;
+            }
 
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }

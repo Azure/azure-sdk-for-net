@@ -17,6 +17,7 @@ batch:
   namespace: Azure.AI.Language.QuestionAnswering.Authoring
   add-credentials: true
   data-plane: true
+  keep-non-overloadable-protocol-signature: true
 
 modelerfour:
   lenient-model-deduplication: true

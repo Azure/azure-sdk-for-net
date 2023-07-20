@@ -19,10 +19,10 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToString());
-            if (Optional.IsDefined(ExpiresAfterSeconds))
+            if (Optional.IsDefined(_expiresAfterSeconds))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
-                writer.WriteNumberValue(ExpiresAfterSeconds.Value);
+                writer.WriteNumberValue(_expiresAfterSeconds.Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);

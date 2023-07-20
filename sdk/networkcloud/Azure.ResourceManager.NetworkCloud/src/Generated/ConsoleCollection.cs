@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Get a list of virtual machine consoles in the provided resource group.
+        /// Get a list of consoles for the provided virtual machine.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Consoles_ListByResourceGroup</description>
+        /// <description>Consoles_ListByVirtualMachine</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="ConsoleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsoleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _consoleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consoleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _consoleRestClient.CreateListByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consoleRestClient.CreateListByVirtualMachineNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConsoleResource(Client, ConsoleData.DeserializeConsoleData(e)), _consoleClientDiagnostics, Pipeline, "ConsoleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of virtual machine consoles in the provided resource group.
+        /// Get a list of consoles for the provided virtual machine.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Consoles_ListByResourceGroup</description>
+        /// <description>Consoles_ListByVirtualMachine</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="ConsoleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsoleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _consoleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consoleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _consoleRestClient.CreateListByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consoleRestClient.CreateListByVirtualMachineNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConsoleResource(Client, ConsoleData.DeserializeConsoleData(e)), _consoleClientDiagnostics, Pipeline, "ConsoleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

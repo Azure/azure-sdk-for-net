@@ -125,39 +125,20 @@ namespace Azure.ResourceManager.NetworkCloud
         }
         #endregion
 
-        #region DefaultCniNetworkResource
+        #region KubernetesClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="DefaultCniNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DefaultCniNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DefaultCniNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KubernetesClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubernetesClusterResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DefaultCniNetworkResource" /> object. </returns>
-        public static DefaultCniNetworkResource GetDefaultCniNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KubernetesClusterResource" /> object. </returns>
+        public static KubernetesClusterResource GetKubernetesClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DefaultCniNetworkResource.ValidateResourceId(id);
-                return new DefaultCniNetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region HybridAksClusterResource
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridAksClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridAksClusterResource.CreateResourceIdentifier" /> to create a <see cref="HybridAksClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridAksClusterResource" /> object. </returns>
-        public static HybridAksClusterResource GetHybridAksClusterResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                HybridAksClusterResource.ValidateResourceId(id);
-                return new HybridAksClusterResource(client, id);
+                KubernetesClusterResource.ValidateResourceId(id);
+                return new KubernetesClusterResource(client, id);
             }
             );
         }
@@ -367,6 +348,25 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 ClusterMetricsConfigurationResource.ValidateResourceId(id);
                 return new ClusterMetricsConfigurationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AgentPoolResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AgentPoolResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AgentPoolResource" /> object. </returns>
+        public static AgentPoolResource GetAgentPoolResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AgentPoolResource.ValidateResourceId(id);
+                return new AgentPoolResource(client, id);
             }
             );
         }
@@ -615,116 +615,60 @@ namespace Azure.ResourceManager.NetworkCloud
             return resourceGroupResource.GetClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DefaultCniNetworkResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of KubernetesClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DefaultCniNetworkResources and their operations over a DefaultCniNetworkResource. </returns>
-        public static DefaultCniNetworkCollection GetDefaultCniNetworks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of KubernetesClusterResources and their operations over a KubernetesClusterResource. </returns>
+        public static KubernetesClusterCollection GetKubernetesClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDefaultCniNetworks();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKubernetesClusters();
         }
 
         /// <summary>
-        /// Get properties of the provided default CNI network.
+        /// Get properties of the provided the Kubernetes cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/defaultCniNetworks/{defaultCniNetworkName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DefaultCniNetworks_Get</description>
+        /// <description>KubernetesClusters_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="defaultCniNetworkName"> The name of the default CNI network. </param>
+        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defaultCniNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="defaultCniNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DefaultCniNetworkResource>> GetDefaultCniNetworkAsync(this ResourceGroupResource resourceGroupResource, string defaultCniNetworkName, CancellationToken cancellationToken = default)
+        public static async Task<Response<KubernetesClusterResource>> GetKubernetesClusterAsync(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDefaultCniNetworks().GetAsync(defaultCniNetworkName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetKubernetesClusters().GetAsync(kubernetesClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get properties of the provided default CNI network.
+        /// Get properties of the provided the Kubernetes cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/defaultCniNetworks/{defaultCniNetworkName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DefaultCniNetworks_Get</description>
+        /// <description>KubernetesClusters_Get</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="defaultCniNetworkName"> The name of the default CNI network. </param>
+        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defaultCniNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="defaultCniNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DefaultCniNetworkResource> GetDefaultCniNetwork(this ResourceGroupResource resourceGroupResource, string defaultCniNetworkName, CancellationToken cancellationToken = default)
+        public static Response<KubernetesClusterResource> GetKubernetesCluster(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDefaultCniNetworks().Get(defaultCniNetworkName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of HybridAksClusterResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of HybridAksClusterResources and their operations over a HybridAksClusterResource. </returns>
-        public static HybridAksClusterCollection GetHybridAksClusters(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHybridAksClusters();
-        }
-
-        /// <summary>
-        /// Get the additional details related to the provided Hybrid AKS provisioned cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/hybridAksClusters/{hybridAksClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridAksClusters_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="hybridAksClusterName"> The name of the Hybrid AKS cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridAksClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridAksClusterName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<HybridAksClusterResource>> GetHybridAksClusterAsync(this ResourceGroupResource resourceGroupResource, string hybridAksClusterName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetHybridAksClusters().GetAsync(hybridAksClusterName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the additional details related to the provided Hybrid AKS provisioned cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/hybridAksClusters/{hybridAksClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridAksClusters_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="hybridAksClusterName"> The name of the Hybrid AKS cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridAksClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridAksClusterName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<HybridAksClusterResource> GetHybridAksCluster(this ResourceGroupResource resourceGroupResource, string hybridAksClusterName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetHybridAksClusters().Get(hybridAksClusterName, cancellationToken);
+            return resourceGroupResource.GetKubernetesClusters().Get(kubernetesClusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of L2NetworkResources in the ResourceGroupResource. </summary>
@@ -1344,87 +1288,45 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Get a list of default CNI networks in the provided subscription.
+        /// Get a list of Kubernetes clusters in the provided subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/defaultCniNetworks</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/kubernetesClusters</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DefaultCniNetworks_ListBySubscription</description>
+        /// <description>KubernetesClusters_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DefaultCniNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DefaultCniNetworkResource> GetDefaultCniNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<KubernetesClusterResource> GetKubernetesClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDefaultCniNetworksAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKubernetesClustersAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of default CNI networks in the provided subscription.
+        /// Get a list of Kubernetes clusters in the provided subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/defaultCniNetworks</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/kubernetesClusters</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DefaultCniNetworks_ListBySubscription</description>
+        /// <description>KubernetesClusters_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DefaultCniNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DefaultCniNetworkResource> GetDefaultCniNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<KubernetesClusterResource> GetKubernetesClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDefaultCniNetworks(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of additional details related to Hybrid AKS provisioned clusters in the provided subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/hybridAksClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridAksClusters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridAksClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HybridAksClusterResource> GetHybridAksClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridAksClustersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of additional details related to Hybrid AKS provisioned clusters in the provided subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/hybridAksClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridAksClusters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridAksClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HybridAksClusterResource> GetHybridAksClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridAksClusters(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKubernetesClusters(cancellationToken);
         }
 
         /// <summary>

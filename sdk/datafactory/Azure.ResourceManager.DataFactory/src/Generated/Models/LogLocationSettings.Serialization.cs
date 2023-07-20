@@ -17,8 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
-            if (Optional.IsDefined(Path))
+            JsonSerializer.Serialize(writer, LinkedServiceName); if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 JsonSerializer.Serialize(writer, Path);
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("path"u8))

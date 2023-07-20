@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             PostgreSqlFlexibleServerIdentityType type = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -62,8 +64,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     type = new PostgreSqlFlexibleServerIdentityType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("tenantId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(Optional.ToDictionary(userAssignedIdentities), type);
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(Optional.ToDictionary(userAssignedIdentities), type, Optional.ToNullable(tenantId));
         }
     }
 }
