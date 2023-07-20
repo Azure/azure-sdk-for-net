@@ -913,6 +913,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
@@ -939,6 +940,7 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
