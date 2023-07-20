@@ -296,6 +296,9 @@ namespace Azure.Core.Serialization
             };
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
         internal bool Equals(DynamicData other)
         {
             if (other is null)

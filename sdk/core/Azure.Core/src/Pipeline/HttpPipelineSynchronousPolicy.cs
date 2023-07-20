@@ -25,7 +25,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         protected HttpPipelineSynchronousPolicy()
         {
-            var onReceivedResponseMethod = GetType()?.GetMethod(nameof(OnReceivedResponse), BindingFlags.Instance | BindingFlags.Public, null, _onReceivedResponseParameters, null);
+            var onReceivedResponseMethod = GetType().GetMethod(nameof(OnReceivedResponse), BindingFlags.Instance | BindingFlags.Public, null, _onReceivedResponseParameters, null);
             if (onReceivedResponseMethod != null)
             {
                 _hasOnReceivedResponse = onReceivedResponseMethod.GetBaseDefinition().DeclaringType != onReceivedResponseMethod.DeclaringType;

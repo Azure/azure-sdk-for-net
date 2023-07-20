@@ -45,6 +45,9 @@ namespace Azure.Core.Serialization
         /// <param name="stream">The <see cref="System.IO.Stream"/> to read from.</param>
         /// <param name="returnType">The type of the object to convert to and return.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Inherited methods require unreferenced code.")]
+#endif
         public abstract object? Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken);
 
         /// <summary>
