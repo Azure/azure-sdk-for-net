@@ -1163,7 +1163,7 @@ using Azure.Core.Pipeline;
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
-                foreach (var queueAssignment in options.QueueIds)
+                foreach (var queueAssignment in options.QueueAssignments)
                 {
                     request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
                 }
@@ -1218,7 +1218,7 @@ using Azure.Core.Pipeline;
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
-                foreach (var queueAssignment in options.QueueIds)
+                foreach (var queueAssignment in options.QueueAssignments)
                 {
                     request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
                 }
@@ -1272,7 +1272,7 @@ using Azure.Core.Pipeline;
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
-                foreach (var queueAssignment in options.QueueIds)
+                foreach (var queueAssignment in options.QueueAssignments)
                 {
                     request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
                 }
@@ -1327,7 +1327,7 @@ using Azure.Core.Pipeline;
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
-                foreach (var queueAssignment in options.QueueIds)
+                foreach (var queueAssignment in options.QueueAssignments)
                 {
                     request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
                 }
