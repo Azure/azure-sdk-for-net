@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - C:\azure-rest-api-specs\specification\storage\data-plane\Azure.Storage.Files.DataLake\preview\2023-05-03\DataLakeStorage.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/2918e938227a026731c9ac4788c24c57e30b257b/specification/storage/data-plane/Azure.Storage.Files.DataLake/preview/2023-05-03/DataLakeStorage.json
 generation1-convenience-client: true
 modelerfour:
     seal-single-value-enum-by-default: true
