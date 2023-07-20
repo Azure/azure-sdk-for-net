@@ -71,8 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("servicePrincipalId"u8);
             JsonSerializer.Serialize(writer, ServicePrincipalId);
             writer.WritePropertyName("servicePrincipalKey"u8);
-            writer.WriteObjectValue(ServicePrincipalKey);
-            writer.WritePropertyName("tenant"u8);
+            JsonSerializer.Serialize(writer, ServicePrincipalKey); writer.WritePropertyName("tenant"u8);
             JsonSerializer.Serialize(writer, Tenant);
             writer.WritePropertyName("aadResourceId"u8);
             JsonSerializer.Serialize(writer, AadResourceId);
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
                         {
-                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))

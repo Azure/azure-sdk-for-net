@@ -25,4 +25,7 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\tsp-location.yaml" Link="tsp-location.yaml" />
+  </ItemGroup>
 </Project>

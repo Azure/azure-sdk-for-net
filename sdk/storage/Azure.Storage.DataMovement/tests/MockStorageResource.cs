@@ -15,21 +15,21 @@ namespace Azure.Storage.DataMovement.Tests
     {
         private readonly Stream _readStream;
 
-        public override string ResourceId => "Mock";
+        protected internal override string ResourceId => "Mock";
 
-        public override TransferType TransferType => TransferType.Sequential;
+        protected internal override TransferType TransferType => TransferType.Sequential;
 
         private readonly long _maxChunkSize;
-        public override long MaxChunkSize => _maxChunkSize;
+        protected internal override long MaxChunkSize => _maxChunkSize;
 
         private readonly bool _canProduceUri;
-        public override bool CanProduceUri => _canProduceUri;
+        protected internal override bool CanProduceUri => _canProduceUri;
 
         public override Uri Uri => new Uri("https://example.com");
 
         public override string Path => "random";
 
-        public override long? Length { get; }
+        protected internal override long? Length { get; }
 
         private MockStorageResource(long? length, bool conProduceUri, long maxChunkSize)
         {
@@ -52,27 +52,27 @@ namespace Azure.Storage.DataMovement.Tests
             return new MockStorageResource(default, canProduceUri, maxChunkSize ?? 1024);
         }
 
-        public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task CopyBlockFromUriAsync(StorageResourceSingle sourceResource, HttpRange range, bool overwrite, long completeLength = 0, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
+        protected internal override Task CopyBlockFromUriAsync(StorageResourceSingle sourceResource, HttpRange range, bool overwrite, long completeLength = 0, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task CopyFromUriAsync(StorageResourceSingle sourceResource, bool overwrite, long completeLength, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
+        protected internal override Task CopyFromUriAsync(StorageResourceSingle sourceResource, bool overwrite, long completeLength, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        protected internal override Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(true);
         }
 
-        public override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default)
+        protected internal override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default)
         {
             return Task.FromResult(new StorageResourceProperties(
                 lastModified: default,
@@ -82,18 +82,18 @@ namespace Azure.Storage.DataMovement.Tests
                 resourceType: StorageResourceType.LocalFile));
         }
 
-        public override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        protected internal override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult<HttpAuthorization>(default);
         }
 
-        public override Task<ReadStreamStorageResourceResult> ReadStreamAsync(long position = 0, long? length = null, CancellationToken cancellationToken = default)
+        protected internal override Task<ReadStreamStorageResourceResult> ReadStreamAsync(long position = 0, long? length = null, CancellationToken cancellationToken = default)
         {
             _readStream.Position = 0;
             return Task.FromResult(new ReadStreamStorageResourceResult(_readStream));
         }
 
-        public override async Task WriteFromStreamAsync(Stream stream, long streamLength, bool overwrite, long position = 0, long completeLength = 0, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
+        protected internal override async Task WriteFromStreamAsync(Stream stream, long streamLength, bool overwrite, long position = 0, long completeLength = 0, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
         {
             await stream.CopyToAsync(Stream.Null);
         }

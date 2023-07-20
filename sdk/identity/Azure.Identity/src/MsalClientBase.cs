@@ -16,7 +16,7 @@ namespace Azure.Identity
         private readonly AsyncLockWithValue<(TClient Client, TokenCache Cache)> _clientWithCaeAsyncLock;
         private readonly bool _logAccountDetails;
         private readonly TokenCachePersistenceOptions _tokenCachePersistenceOptions;
-        protected internal bool IsPiiLoggingEnabled { get; }
+        protected internal bool IsSupportLoggingEnabled { get; }
         protected internal bool DisableInstanceDiscovery { get; }
         protected string[] cp1Capabilities = new[] { "CP1" };
         protected internal CredentialPipeline Pipeline { get; }
@@ -44,7 +44,7 @@ namespace Azure.Identity
             DisableInstanceDiscovery = options is ISupportsDisableInstanceDiscovery supportsDisableInstanceDiscovery && supportsDisableInstanceDiscovery.DisableInstanceDiscovery;
             ISupportsTokenCachePersistenceOptions cacheOptions = options as ISupportsTokenCachePersistenceOptions;
             _tokenCachePersistenceOptions = cacheOptions?.TokenCachePersistenceOptions;
-            IsPiiLoggingEnabled = options?.IsLoggingPIIEnabled ?? false;
+            IsSupportLoggingEnabled = options?.IsSupportLoggingEnabled ?? false;
             Pipeline = pipeline;
             TenantId = tenantId;
             ClientId = clientId;
@@ -85,7 +85,7 @@ namespace Azure.Identity
 
         protected void LogMsal(LogLevel level, string message, bool isPii)
         {
-            if (!isPii || IsPiiLoggingEnabled)
+            if (!isPii || IsSupportLoggingEnabled)
             {
                 AzureIdentityEventSource.Singleton.LogMsal(level, message);
             }

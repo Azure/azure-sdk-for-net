@@ -460,7 +460,7 @@ namespace Azure.Storage.DataMovement
             bool resumeJob,
             CancellationToken cancellationToken)
         {
-            DataTransfer dataTransfer = new DataTransfer(id: transferId);
+            DataTransfer dataTransfer = new DataTransfer(id: transferId, transferManager: this);
             _dataTransfers.Add(dataTransfer.Id, dataTransfer);
 
             TransferJobInternal transferJobInternal;
@@ -805,6 +805,7 @@ namespace Azure.Storage.DataMovement
 
                 _dataTransfers.Add(transferId, new DataTransfer(
                     id: transferId,
+                    transferManager: this,
                     status: header.AtomicJobStatus));
             }
         }
