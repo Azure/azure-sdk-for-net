@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of DataProtectionOperationJobExtendedInfo. </summary>
-        /// <param name="jobId"> Arm Id of the job created for this operation. </param>
+        /// <param name="jobResourceId"> Arm Id of the job created for this operation. </param>
         /// <returns> A new <see cref="Models.DataProtectionOperationJobExtendedInfo"/> instance for mocking. </returns>
-        public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(Guid? jobId = null)
+        public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(ResourceIdentifier jobResourceId = null)
         {
-            return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", jobId);
+            return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", jobResourceId);
         }
 
         /// <summary> Initializes a new instance of DataProtectionBackupRecoveryPointData. </summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="policyId"> ARM ID of the policy. </param>
         /// <param name="policyName"> Name of the policy. </param>
         /// <param name="isProgressEnabled"> Indicated whether progress is enabled for the job. </param>
-        /// <param name="progressUri"> Url which contains job&apos;s progress. </param>
+        /// <param name="progressUri"> Url which contains job's progress. </param>
         /// <param name="restoreType"> It indicates the sub type of operation i.e. in case of Restore it can be ALR/OLR. </param>
         /// <param name="sourceResourceGroup"> Resource Group Name of the Datasource. </param>
         /// <param name="sourceSubscriptionId"> SubscriptionId corresponding to the DataSource. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
-        /// <param name="additionalDetails"> Job&apos;s Additional Details. </param>
+        /// <param name="additionalDetails"> Job's Additional Details. </param>
         /// <param name="backupInstanceState"> State of the Backup Instance. </param>
         /// <param name="dataTransferredInBytes"> Number of bytes transferred. </param>
         /// <param name="recoveryDestination"> Destination where restore is done. </param>
@@ -371,6 +371,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static ResourceGuardProtectedObjectData ResourceGuardProtectedObjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
             return new ResourceGuardProtectedObjectData(id, name, resourceType, systemData);
+        }
+
+        /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.ResourceGuardProxyBaseResourceData"/> instance for mocking. </returns>
+        public static ResourceGuardProxyBaseResourceData ResourceGuardProxyBaseResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceGuardProxyBase properties = null)
+        {
+            return new ResourceGuardProxyBaseResourceData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of DataProtectionUnlockDeleteResult. </summary>
+        /// <param name="unlockDeleteExpiryTime"> This is the time when unlock delete privileges will get expired. </param>
+        /// <returns> A new <see cref="Models.DataProtectionUnlockDeleteResult"/> instance for mocking. </returns>
+        public static DataProtectionUnlockDeleteResult DataProtectionUnlockDeleteResult(string unlockDeleteExpiryTime = null)
+        {
+            return new DataProtectionUnlockDeleteResult(unlockDeleteExpiryTime);
         }
 
         /// <summary> Initializes a new instance of DataProtectionBackupRetentionTag. </summary>

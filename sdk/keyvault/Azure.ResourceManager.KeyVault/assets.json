@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/keyvault/Azure.ResourceManager.KeyVault",
+  "Tag": "net/keyvault/Azure.ResourceManager.KeyVault_a9ad4b7786"
+}

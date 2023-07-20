@@ -27,7 +27,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = client.GetLineageGraph("<guid>", "<direction>");
+            Response response = client.GetLineageGraph("<guid>", "<direction>", 1234, 1234, true, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = await client.GetLineageGraphAsync("<guid>", "<direction>");
+            Response response = await client.GetLineageGraphAsync("<guid>", "<direction>", 1234, 1234, true, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = client.NextPageLineage("<guid>", "<direction>");
+            Response response = client.NextPageLineage("<guid>", "<direction>", true, 1234, 1234, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -240,7 +240,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = await client.NextPageLineageAsync("<guid>", "<direction>");
+            Response response = await client.NextPageLineageAsync("<guid>", "<direction>", true, 1234, 1234, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -311,7 +311,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = client.GetLineageByUniqueAttribute("<typeName>", "<direction>");
+            Response response = client.GetLineageByUniqueAttribute("<typeName>", "<direction>", 1234, 1234, true, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -382,7 +382,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
-            Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "<direction>");
+            Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "<direction>", 1234, 1234, true, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());

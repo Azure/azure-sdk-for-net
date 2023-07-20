@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a Container Apps Job&apos;s executions
+        /// Get a Container Apps Job's executions
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a Container Apps Job&apos;s executions
+        /// Get a Container Apps Job's executions
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

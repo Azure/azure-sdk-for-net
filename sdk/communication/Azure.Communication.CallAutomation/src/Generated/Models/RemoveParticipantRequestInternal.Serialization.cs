@@ -22,6 +22,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
+            if (Optional.IsDefined(CallbackUriOverride))
+            {
+                writer.WritePropertyName("callbackUriOverride"u8);
+                writer.WriteStringValue(CallbackUriOverride);
+            }
             writer.WriteEndObject();
         }
     }

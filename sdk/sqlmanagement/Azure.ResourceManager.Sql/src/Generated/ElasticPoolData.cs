@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> The location. </param>
         /// <param name="sku">
         /// The elastic pool SKU.
-        /// 
+        ///
         /// The list of SKUs may vary by region and support offer. To determine the SKUs (including the SKU name, tier/edition, family, and capacity) that are available to your subscription in an Azure region, use the `Capabilities_ListByLocation` REST API or the following command:
-        /// 
+        ///
         /// ```azurecli
         /// az sql elastic-pool list-editions -l &lt;location&gt; -o table
         /// ````
-        /// 
+        ///
         /// </param>
         /// <param name="kind"> Kind of elastic pool. This is metadata used for the Azure portal experience. </param>
         /// <param name="state"> The state of the elastic pool. </param>
@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// The elastic pool SKU.
-        /// 
+        ///
         /// The list of SKUs may vary by region and support offer. To determine the SKUs (including the SKU name, tier/edition, family, and capacity) that are available to your subscription in an Azure region, use the `Capabilities_ListByLocation` REST API or the following command:
-        /// 
+        ///
         /// ```azurecli
         /// az sql elastic-pool list-editions -l &lt;location&gt; -o table
         /// ````
-        /// 
+        ///
         /// </summary>
         public SqlSku Sku { get; set; }
         /// <summary> Kind of elastic pool. This is metadata used for the Azure portal experience. </summary>

@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
-using OpenTelemetry.Extensions.AzureMonitor;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
@@ -91,14 +91,24 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
 
             builder.WithTracing(b => b
+                            .AddSource("Azure.*")
                             .AddAspNetCoreInstrumentation()
-                            .AddHttpClientInstrumentation()
-                            .AddSqlClientInstrumentation()
-                            .SetSampler(sp =>
+                            .AddHttpClientInstrumentation(o => o.FilterHttpRequestMessage = (_) =>
                             {
-                                var options = sp.GetRequiredService<IOptionsMonitor<ApplicationInsightsSamplerOptions>>().Get(Options.DefaultName);
-                                return new ApplicationInsightsSampler(options);
+                                // Azure SDKs create their own client span before calling the service using HttpClient
+                                // In this case, we would see two spans corresponding to the same operation
+                                // 1) created by Azure SDK 2) created by HttpClient
+                                // To prevent this duplication we are filtering the span from HttpClient
+                                // as span from Azure SDK contains all relevant information needed.
+                                var parentActivity = Activity.Current?.Parent;
+                                if (parentActivity != null && parentActivity.Source.Name.Equals("Azure.Core.Http"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
                             })
+                            .AddSqlClientInstrumentation()
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
@@ -111,13 +121,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 logging.AddOpenTelemetry(builderOptions =>
                 {
                     builderOptions.IncludeFormattedMessage = true;
-                    builderOptions.ParseStateValues = true;
                     builderOptions.IncludeScopes = false;
                 });
             });
-
-            // Set the default sampling ratio to 100 % to ensure that all telemetry is captured by default.
-            builder.Services.Configure<ApplicationInsightsSamplerOptions>(options => { options.SamplingRatio = 1.0F; });
 
             // Add AzureMonitorLogExporter to AzureMonitorOptions
             // once the service provider is available containing the final

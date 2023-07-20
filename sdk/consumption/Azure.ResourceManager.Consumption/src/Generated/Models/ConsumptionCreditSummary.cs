@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// A credit summary resource.
-    /// Serialized Name: CreditSummary
-    /// </summary>
+    /// <summary> A credit summary resource. </summary>
     public partial class ConsumptionCreditSummary : ResourceData
     {
         /// <summary> Initializes a new instance of ConsumptionCreditSummary. </summary>
@@ -27,38 +24,14 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="balanceSummary">
-        /// Summary of balances associated with this credit summary.
-        /// Serialized Name: CreditSummary.properties.balanceSummary
-        /// </param>
-        /// <param name="pendingCreditAdjustments">
-        /// Pending credit adjustments.
-        /// Serialized Name: CreditSummary.properties.pendingCreditAdjustments
-        /// </param>
-        /// <param name="expiredCredit">
-        /// Expired credit.
-        /// Serialized Name: CreditSummary.properties.expiredCredit
-        /// </param>
-        /// <param name="pendingEligibleCharges">
-        /// Pending eligible charges.
-        /// Serialized Name: CreditSummary.properties.pendingEligibleCharges
-        /// </param>
-        /// <param name="creditCurrency">
-        /// The credit currency.
-        /// Serialized Name: CreditSummary.properties.creditCurrency
-        /// </param>
-        /// <param name="billingCurrency">
-        /// The billing currency.
-        /// Serialized Name: CreditSummary.properties.billingCurrency
-        /// </param>
-        /// <param name="reseller">
-        /// Credit&apos;s reseller.
-        /// Serialized Name: CreditSummary.properties.reseller
-        /// </param>
-        /// <param name="etag">
-        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
-        /// Serialized Name: ProxyResource.eTag
-        /// </param>
+        /// <param name="balanceSummary"> Summary of balances associated with this credit summary. </param>
+        /// <param name="pendingCreditAdjustments"> Pending credit adjustments. </param>
+        /// <param name="expiredCredit"> Expired credit. </param>
+        /// <param name="pendingEligibleCharges"> Pending eligible charges. </param>
+        /// <param name="creditCurrency"> The credit currency. </param>
+        /// <param name="billingCurrency"> The billing currency. </param>
+        /// <param name="reseller"> Credit's reseller. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         internal ConsumptionCreditSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CreditBalanceSummary balanceSummary, ConsumptionAmount pendingCreditAdjustments, ConsumptionAmount expiredCredit, ConsumptionAmount pendingEligibleCharges, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ETag? etag) : base(id, name, resourceType, systemData)
         {
             BalanceSummary = balanceSummary;
@@ -71,45 +44,21 @@ namespace Azure.ResourceManager.Consumption.Models
             ETag = etag;
         }
 
-        /// <summary>
-        /// Summary of balances associated with this credit summary.
-        /// Serialized Name: CreditSummary.properties.balanceSummary
-        /// </summary>
+        /// <summary> Summary of balances associated with this credit summary. </summary>
         public CreditBalanceSummary BalanceSummary { get; }
-        /// <summary>
-        /// Pending credit adjustments.
-        /// Serialized Name: CreditSummary.properties.pendingCreditAdjustments
-        /// </summary>
+        /// <summary> Pending credit adjustments. </summary>
         public ConsumptionAmount PendingCreditAdjustments { get; }
-        /// <summary>
-        /// Expired credit.
-        /// Serialized Name: CreditSummary.properties.expiredCredit
-        /// </summary>
+        /// <summary> Expired credit. </summary>
         public ConsumptionAmount ExpiredCredit { get; }
-        /// <summary>
-        /// Pending eligible charges.
-        /// Serialized Name: CreditSummary.properties.pendingEligibleCharges
-        /// </summary>
+        /// <summary> Pending eligible charges. </summary>
         public ConsumptionAmount PendingEligibleCharges { get; }
-        /// <summary>
-        /// The credit currency.
-        /// Serialized Name: CreditSummary.properties.creditCurrency
-        /// </summary>
+        /// <summary> The credit currency. </summary>
         public string CreditCurrency { get; }
-        /// <summary>
-        /// The billing currency.
-        /// Serialized Name: CreditSummary.properties.billingCurrency
-        /// </summary>
+        /// <summary> The billing currency. </summary>
         public string BillingCurrency { get; }
-        /// <summary>
-        /// Credit&apos;s reseller.
-        /// Serialized Name: CreditSummary.properties.reseller
-        /// </summary>
+        /// <summary> Credit's reseller. </summary>
         public ConsumptionReseller Reseller { get; }
-        /// <summary>
-        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
-        /// Serialized Name: ProxyResource.eTag
-        /// </summary>
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }
     }
 }

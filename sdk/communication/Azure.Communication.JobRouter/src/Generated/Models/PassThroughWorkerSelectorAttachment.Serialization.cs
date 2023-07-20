@@ -18,11 +18,11 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
-            writer.WriteStringValue(LabelOperator.ToSerialString());
-            if (Optional.IsDefined(_ttlSeconds))
+            writer.WriteStringValue(LabelOperator.ToString());
+            if (Optional.IsDefined(_expiresAfterSeconds))
             {
-                writer.WritePropertyName("ttlSeconds"u8);
-                writer.WriteNumberValue(_ttlSeconds.Value);
+                writer.WritePropertyName("expiresAfterSeconds"u8);
+                writer.WriteNumberValue(_expiresAfterSeconds.Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -37,7 +37,7 @@ namespace Azure.Communication.JobRouter
             }
             string key = default;
             LabelOperator labelOperator = default;
-            Optional<double> ttlSeconds = default;
+            Optional<double> expiresAfterSeconds = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,16 +48,16 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("labelOperator"u8))
                 {
-                    labelOperator = property.Value.GetString().ToLabelOperator();
+                    labelOperator = new LabelOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ttlSeconds"u8))
+                if (property.NameEquals("expiresAfterSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ttlSeconds = property.Value.GetDouble();
+                    expiresAfterSeconds = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -66,7 +66,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new PassThroughWorkerSelectorAttachment(kind, key, labelOperator, Optional.ToNullable(ttlSeconds));
+            return new PassThroughWorkerSelectorAttachment(kind, key, labelOperator, Optional.ToNullable(expiresAfterSeconds));
         }
     }
 }

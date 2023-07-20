@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             return message;
         }
 
-        /// <summary> Regenerates the RedisEnterprise database&apos;s access keys. </summary>
+        /// <summary> Regenerates the RedisEnterprise database's access keys. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
-        /// <summary> Regenerates the RedisEnterprise database&apos;s access keys. </summary>
+        /// <summary> Regenerates the RedisEnterprise database's access keys. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>

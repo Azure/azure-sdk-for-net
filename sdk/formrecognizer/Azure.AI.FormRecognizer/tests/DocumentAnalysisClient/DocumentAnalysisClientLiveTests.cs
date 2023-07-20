@@ -617,7 +617,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.True(style.IsHandwritten);
 
-            Assert.AreEqual(38, result.Paragraphs.Count);
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            {
+                Assert.AreEqual(52, result.Paragraphs.Count);
+            }
+            else
+            {
+                Assert.AreEqual(38, result.Paragraphs.Count);
+            }
 
             DocumentParagraph sampleParagraph = result.Paragraphs[1];
 
@@ -1432,7 +1439,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 if (documentIndex == 0)
                 {
-                    Assert.AreEqual("$14,50", sampleField.Content);
+                    Assert.AreEqual("$14.50", sampleField.Content);
                 }
                 else if (documentIndex == 1)
                 {
@@ -1474,7 +1481,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 if (pageIndex == 0 || pageIndex == 2)
                 {
-                    var expectedContent = pageIndex == 0 ? "$14,50" : "1203.39";
+                    var expectedContent = pageIndex == 0 ? "$14.50" : "1203.39";
 
                     Assert.True(page.Words.Any(w => w.Content == expectedContent));
                 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </summary>
+        /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
         public RedisEnterpriseTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Encryption-at-rest configuration for the cluster. </summary>
         internal ClusterPropertiesEncryption Encryption { get; set; }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public RedisEnterpriseProvisioningStatus? ProvisioningState { get; }
         /// <summary> Current resource status of the cluster. </summary>
         public RedisEnterpriseClusterResourceState? ResourceState { get; }
-        /// <summary> Version of redis the cluster supports, e.g. &apos;6&apos;. </summary>
+        /// <summary> Version of redis the cluster supports, e.g. '6'. </summary>
         public string RedisVersion { get; }
         /// <summary> List of private endpoint connections associated with the specified RedisEnterprise cluster. </summary>
         public IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get; }

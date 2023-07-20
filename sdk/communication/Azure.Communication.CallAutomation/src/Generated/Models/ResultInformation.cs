@@ -16,9 +16,9 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of ResultInformation. </summary>
-        /// <param name="code"></param>
-        /// <param name="subCode"></param>
-        /// <param name="message"></param>
+        /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="message"> Detail message that describes the current result. </param>
         internal ResultInformation(int? code, int? subCode, string message)
         {
             Code = code;
@@ -26,11 +26,11 @@ namespace Azure.Communication.CallAutomation
             Message = message;
         }
 
-        /// <summary> Gets the code. </summary>
+        /// <summary> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </summary>
         public int? Code { get; }
-        /// <summary> Gets the sub code. </summary>
+        /// <summary> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </summary>
         public int? SubCode { get; }
-        /// <summary> Gets the message. </summary>
+        /// <summary> Detail message that describes the current result. </summary>
         public string Message { get; }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,14 +63,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Uri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Uri);
             writer.WritePropertyName("userToken"u8);
-            writer.WriteObjectValue(UserToken);
-            if (Optional.IsDefined(EncryptedCredential))
+            JsonSerializer.Serialize(writer, UserToken); if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
 #if NET6_0_OR_GREATER
@@ -102,8 +98,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData url = default;
-            FactorySecretBaseDefinition userToken = default;
+            DataFactoryElement<string> url = default;
+            DataFactorySecretBaseDefinition userToken = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,12 +170,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("url"u8))
                         {
-                            url = BinaryData.FromString(property0.Value.GetRawText());
+                            url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userToken"u8))
                         {
-                            userToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            userToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

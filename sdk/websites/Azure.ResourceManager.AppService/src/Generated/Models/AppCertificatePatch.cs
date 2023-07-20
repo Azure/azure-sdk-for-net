@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultId"> Key Vault Csm resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="keyVaultSecretStatus"> Status of the Key Vault secret. </param>
-        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
+        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="kind"> Kind of resource. </param>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string KeyVaultSecretName { get; set; }
         /// <summary> Status of the Key Vault secret. </summary>
         public KeyVaultSecretStatus? KeyVaultSecretStatus { get; }
-        /// <summary> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </summary>
+        /// <summary> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </summary>
         public ResourceIdentifier ServerFarmId { get; set; }
         /// <summary> CNAME of the certificate to be issued via free certificate. </summary>
         public string CanonicalName { get; set; }

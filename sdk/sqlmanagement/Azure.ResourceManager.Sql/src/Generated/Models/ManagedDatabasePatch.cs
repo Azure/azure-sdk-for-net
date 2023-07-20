@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
         public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
         /// <summary> The restorable cross-subscription dropped database resource id to restore when creating this database. </summary>
         public string CrossSubscriptionRestorableDroppedDatabaseId { get; set; }
-        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be &apos;SharedAccessSignature&apos; or &apos;ManagedIdentity&apos;; if not specified &apos;SharedAccessSignature&apos; is assumed. </summary>
+        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </summary>
         public string StorageContainerIdentity { get; set; }
         /// <summary> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </summary>
         public string StorageContainerSasToken { get; set; }

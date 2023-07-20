@@ -31,23 +31,9 @@ namespace Azure.Communication.Email
 
         internal void ValidateAttachmentContent()
         {
-            if (string.IsNullOrWhiteSpace(ContentInBase64))
+            if (Content.ToMemory().IsEmpty)
             {
                 throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
-            }
-        }
-
-        internal string ContentInBase64
-        {
-            get
-            {
-                string valueToReturn = Convert.ToBase64String(Content.ToArray());
-                if (string.IsNullOrWhiteSpace(valueToReturn))
-                {
-                    throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
-                }
-
-                return valueToReturn;
             }
         }
 

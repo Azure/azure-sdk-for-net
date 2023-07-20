@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="extensionSettings"> The extension settings. The format is specific for particular extension. </param>
         /// <param name="inputDataSources"> The list of data sources this extension needs data from. </param>
         /// <param name="name">
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         internal ExtensionDataSource(IList<ExtensionDataSourceStream> streams, string extensionName, BinaryData extensionSettings, IList<string> inputDataSources, string name)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The list of data sources this extension needs data from. </summary>
         public IList<string> InputDataSources { get; }
         /// <summary>
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

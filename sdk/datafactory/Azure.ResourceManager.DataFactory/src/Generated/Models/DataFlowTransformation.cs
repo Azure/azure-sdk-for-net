@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataset"> Dataset reference. </param>
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
-        internal DataFlowTransformation(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet)
+        internal DataFlowTransformation(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet)
         {
             Name = name;
             Description = description;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary> Linked service reference. </summary>
-        public FactoryLinkedServiceReference LinkedService { get; set; }
+        public DataFactoryLinkedServiceReference LinkedService { get; set; }
         /// <summary> Flowlet Reference. </summary>
         public DataFlowReference Flowlet { get; set; }
     }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> The key type like &apos;AzureKeyVault&apos;. </summary>
+    /// <summary> The key type like 'AzureKeyVault'. </summary>
     public readonly partial struct PostgreSqlServerKeyType : IEquatable<PostgreSqlServerKeyType>
     {
         private readonly string _value;

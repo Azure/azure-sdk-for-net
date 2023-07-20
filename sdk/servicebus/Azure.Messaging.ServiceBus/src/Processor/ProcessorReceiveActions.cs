@@ -22,6 +22,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly CancellationTokenSource _lockRenewalCancellationSource;
         private readonly ConcurrentDictionary<Task, byte> _renewalTasks = new();
         private readonly bool _autoRenew;
+        private readonly ProcessMessageEventArgs _processMessageEventArgs;
 
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages { get; } = new();
 
@@ -32,19 +33,26 @@ namespace Azure.Messaging.ServiceBus
         {
         }
 
-        internal ProcessorReceiveActions(ServiceBusReceivedMessage triggerMessage, ReceiverManager manager, bool autoRenewMessageLocks)
+        internal ProcessorReceiveActions(EventArgs args, ReceiverManager manager, bool autoRenewMessageLocks)
         {
             _manager = manager;
 
             // manager would be null in scenarios where customers are using the public constructor of the event args for testing purposes.
             _receiver = manager?.Receiver;
-            _autoRenew = autoRenewMessageLocks;
-            Messages[triggerMessage] = default;
-
-            if (_autoRenew)
+            if (args is ProcessMessageEventArgs processMessageEventArgs)
             {
-                _lockRenewalCancellationSource = new CancellationTokenSource();
-                _renewalTasks[_manager.RenewMessageLockAsync(triggerMessage, _lockRenewalCancellationSource)] = default;
+                _autoRenew = autoRenewMessageLocks;
+                _processMessageEventArgs = processMessageEventArgs;
+                Messages[processMessageEventArgs.Message] = default;
+                if (_autoRenew)
+                {
+                    _lockRenewalCancellationSource = new CancellationTokenSource();
+                    _renewalTasks[_manager.RenewMessageLockAsync(_processMessageEventArgs, processMessageEventArgs.Message, _lockRenewalCancellationSource)] = default;
+                }
+            }
+            else
+            {
+                Messages[((ProcessSessionMessageEventArgs)args).Message] = default;
             }
         }
 
@@ -119,7 +127,8 @@ namespace Azure.Messaging.ServiceBus
                 foreach (ServiceBusReceivedMessage message in messages)
                 {
                     Messages[message] = default;
-                    _renewalTasks[_manager.RenewMessageLockAsync(message, _lockRenewalCancellationSource)] = default;
+                    // Currently only the trigger message supports cancellation token for LockedUntil.
+                    _renewalTasks[_manager.RenewMessageLockAsync(_processMessageEventArgs, message, _lockRenewalCancellationSource)] = default;
                 }
             }
             else

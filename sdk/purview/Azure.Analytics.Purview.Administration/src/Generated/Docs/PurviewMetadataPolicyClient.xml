@@ -11,7 +11,7 @@ var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", crede
 
 var data = new {};
 
-Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
+Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -114,7 +114,7 @@ var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", crede
 
 var data = new {};
 
-Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
+Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data), new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -281,7 +281,7 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollection
     </member>
     <member name="GetMetadataPoliciesAsync(RequestContext)">
 <example>
-This sample shows how to call GetMetadataPoliciesAsync and parse the result.
+This sample shows how to call GetMetadataPoliciesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -295,7 +295,7 @@ await foreach (var item in client.GetMetadataPoliciesAsync(new RequestContext())
     </member>
     <member name="GetMetadataPolicies(RequestContext)">
 <example>
-This sample shows how to call GetMetadataPolicies and parse the result.
+This sample shows how to call GetMetadataPolicies with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");

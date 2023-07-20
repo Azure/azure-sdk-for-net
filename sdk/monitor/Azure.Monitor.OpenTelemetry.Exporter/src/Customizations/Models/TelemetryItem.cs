@@ -23,7 +23,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
-            var userAgent = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+            if (activity.GetTelemetryType() == TelemetryType.Request)
+            {
+                if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationNameV2(activity, ref activityTagsProcessor.MappedTags);
+                }
+                else if (activityTagsProcessor.activityType.HasFlag(OperationType.Http))
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
+                }
+                else
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = activity.DisplayName;
+                }
+
+                // Set ip in case of server spans only.
+                if (activity.Kind == ActivityKind.Server)
+                {
+                    var locationIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
+                    if (locationIp != null)
+                    {
+                        Tags[ContextTagKeys.AiLocationIp.ToString()] = locationIp;
+                    }
+                }
+            }
+
+            var userAgent = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUserAgentOriginal)?.ToString()
+                ?? AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
 
             if (userAgent != null)
             {
@@ -31,14 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags["ai.user.userAgent"] = userAgent;
             }
 
-            // we only have mapping for server spans
-            // todo: non-server spans
-            if (activity.Kind == ActivityKind.Server)
-            {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
-            }
-
+            SetAuthenticatedUserId(ref activityTagsProcessor);
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
             if (AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, "sampleRate") is float sampleRate)
             {
@@ -56,14 +76,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 // todo: update swagger to include this key.
                 Tags["ai.user.userAgent"] = userAgent;
-            }
-
-            // we only have mapping for server spans
-            // todo: non-server spans
-            if (kind == ActivityKind.Server)
-            {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()];
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()];
             }
 
             Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()];
@@ -107,6 +119,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         internal static DateTimeOffset FormatUtcTimestamp(System.DateTime utcTimestamp)
         {
             return DateTime.SpecifyKind(utcTimestamp, DateTimeKind.Utc);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetAuthenticatedUserId(ref ActivityTagsProcessor activityTagsProcessor)
+        {
+            if (activityTagsProcessor.EndUserId != null)
+            {
+                Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = activityTagsProcessor.EndUserId;
+            }
         }
     }
 }

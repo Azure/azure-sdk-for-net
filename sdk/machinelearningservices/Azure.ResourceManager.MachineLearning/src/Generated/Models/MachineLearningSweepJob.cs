@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
-        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
+        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.

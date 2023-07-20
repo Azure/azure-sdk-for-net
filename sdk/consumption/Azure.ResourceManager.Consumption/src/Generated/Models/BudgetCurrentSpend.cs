@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The current amount of cost which is being tracked for a budget.
-    /// Serialized Name: CurrentSpend
-    /// </summary>
+    /// <summary> The current amount of cost which is being tracked for a budget. </summary>
     public partial class BudgetCurrentSpend
     {
         /// <summary> Initializes a new instance of BudgetCurrentSpend. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of BudgetCurrentSpend. </summary>
-        /// <param name="amount">
-        /// The total amount of cost which is being tracked by the budget.
-        /// Serialized Name: CurrentSpend.amount
-        /// </param>
-        /// <param name="unit">
-        /// The unit of measure for the budget amount.
-        /// Serialized Name: CurrentSpend.unit
-        /// </param>
+        /// <param name="amount"> The total amount of cost which is being tracked by the budget. </param>
+        /// <param name="unit"> The unit of measure for the budget amount. </param>
         internal BudgetCurrentSpend(decimal? amount, string unit)
         {
             Amount = amount;
             Unit = unit;
         }
 
-        /// <summary>
-        /// The total amount of cost which is being tracked by the budget.
-        /// Serialized Name: CurrentSpend.amount
-        /// </summary>
+        /// <summary> The total amount of cost which is being tracked by the budget. </summary>
         public decimal? Amount { get; }
-        /// <summary>
-        /// The unit of measure for the budget amount.
-        /// Serialized Name: CurrentSpend.unit
-        /// </summary>
+        /// <summary> The unit of measure for the budget amount. </summary>
         public string Unit { get; }
     }
 }

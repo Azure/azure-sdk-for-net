@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary> Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="data"/> is null. </exception>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary> Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="data"/> is null. </exception>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Advisor
         /// <summary> Create/Overwrite Azure Advisor configuration. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroup"> The name of the Azure resource group. </param>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="data"/> is null. </exception>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Advisor
         /// <summary> Create/Overwrite Azure Advisor configuration. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroup"> The name of the Azure resource group. </param>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="data"/> is null. </exception>

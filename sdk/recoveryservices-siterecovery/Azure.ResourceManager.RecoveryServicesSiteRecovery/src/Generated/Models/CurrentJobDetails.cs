@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="jobName"> The job name. </param>
         /// <param name="jobId"> The ARM Id of the job being executed. </param>
         /// <param name="startOn"> The start time of the job. </param>
-        internal CurrentJobDetails(string jobName, string jobId, DateTimeOffset? startOn)
+        internal CurrentJobDetails(string jobName, ResourceIdentifier jobId, DateTimeOffset? startOn)
         {
             JobName = jobName;
             JobId = jobId;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The job name. </summary>
         public string JobName { get; }
         /// <summary> The ARM Id of the job being executed. </summary>
-        public string JobId { get; }
+        public ResourceIdentifier JobId { get; }
         /// <summary> The start time of the job. </summary>
         public DateTimeOffset? StartOn { get; }
     }

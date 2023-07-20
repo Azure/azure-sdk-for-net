@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The name of private link resource. </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The name of private link resource. </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
