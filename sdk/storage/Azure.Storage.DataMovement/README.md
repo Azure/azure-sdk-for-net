@@ -79,16 +79,6 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 Please see the examples for [Blobs DataMovement][blobs_examples].
 
-Pause a transfer using the TransferManager using the respective DataTransfer object
-```C# Snippet:TransferManagerTryPause_Async
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: sourceResource,
-    destinationResource: destinationResource);
-
-// Pause from the Transfer Manager using the DataTransfer object
-await transferManager.PauseTransferIfRunningAsync(dataTransfer);
-```
-
 Pause a transfer using the TransferManager using the respective transfer ID
 ```C# Snippet:TransferManagerTryPauseId_Async
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
