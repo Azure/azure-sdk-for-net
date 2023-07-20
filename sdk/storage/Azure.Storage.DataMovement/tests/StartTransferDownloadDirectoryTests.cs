@@ -12,6 +12,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
+using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -85,7 +86,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // List all files in the destination local path
-            List<string> destinationFiles = ListFilesInDirectory(destinationLocalPath);
+            List<string> destinationFiles = FileUtil.ListFileNamesRecursive(destinationLocalPath);
             Assert.AreEqual(destinationFiles.Count, sourceFiles.Count);
             destinationFiles.Sort();
             sourceFiles.Sort();
@@ -430,7 +431,7 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transfer.AwaitCompletion(tokenSource.Token);
 
-            IEnumerable<string> destinationFiles = ListFilesInDirectory(destination.DirectoryPath)
+            IEnumerable<string> destinationFiles = FileUtil.ListFileNamesRecursive(destination.DirectoryPath)
                 .Select(f => f.Substring(destination.DirectoryPath.Length + 1).Replace("\\", "/"));
 
             Assert.IsTrue(destinationFiles.OrderBy(f => f).SequenceEqual(files.OrderBy(f => f)));
