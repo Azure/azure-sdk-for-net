@@ -68,7 +68,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// <summary>
         /// Bot App Id for Dialog tests.
         /// </summary>
-        public string BotAppId => GetRecordedOptionalVariable(botAppId, options => options.IsSecret());
+        public string BotAppId => GetRecordedOptionalVariable(botAppId, options => options.IsSecret("Sanitized"));
 
         /// <summary>
         /// ServiceBus string
