@@ -60,7 +60,7 @@ namespace Azure.Communication.CallAutomation
         /// The callee that being transferred
         /// </summary>
         public CommunicationIdentifier Transferee { get; set; }
-        
+
         /// <summary>
         /// The callback URI override for this transfer call request.
         /// </summary>
