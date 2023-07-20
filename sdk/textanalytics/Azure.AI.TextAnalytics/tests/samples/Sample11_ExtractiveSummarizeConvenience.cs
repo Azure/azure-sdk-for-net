@@ -61,8 +61,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Perform the text analysis operation.
-            ExtractiveSummarizeOperation operation = client.StartExtractiveSummarize(batchedDocuments);
-            operation.WaitForCompletion();
+            ExtractiveSummarizeOperation operation = client.ExtractiveSummarize(WaitUntil.Completed, batchedDocuments);
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
@@ -94,7 +93,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     Console.WriteLine($"  Extracted {documentResult.Sentences.Count} sentence(s):");
                     Console.WriteLine();
 
-                    foreach (SummarySentence sentence in documentResult.Sentences)
+                    foreach (ExtractiveSummarySentence sentence in documentResult.Sentences)
                     {
                         Console.WriteLine($"  Sentence: {sentence.Text}");
                         Console.WriteLine($"  Rank Score: {sentence.RankScore}");

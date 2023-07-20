@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a virtual wan p2s vpn gateway if it doesn&apos;t exist else updates the existing gateway.
+        /// Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a virtual wan p2s vpn gateway if it doesn&apos;t exist else updates the existing gateway.
+        /// Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the managed instance&apos;s Start/Stop schedule.
+        /// Gets the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the managed instance&apos;s Start/Stop schedule.
+        /// Gets the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Deletes the managed instance&apos;s Start/Stop schedule.
+        /// Deletes the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Deletes the managed instance&apos;s Start/Stop schedule.
+        /// Deletes the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates the managed instance&apos;s Start/Stop schedule.
+        /// Creates or updates the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates the managed instance&apos;s Start/Stop schedule.
+        /// Creates or updates the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

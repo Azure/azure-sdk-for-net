@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAttestationModelFactory
     {
-
         /// <summary> Initializes a new instance of AttestationProviderData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

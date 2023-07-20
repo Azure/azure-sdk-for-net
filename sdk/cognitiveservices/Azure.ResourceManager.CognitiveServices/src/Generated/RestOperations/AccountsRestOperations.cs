@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-01";
+            _apiVersion = apiVersion ?? "2023-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        /// <summary> Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It&apos;s also the resource type for billing. </summary>
+        /// <summary> Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It's also the resource type for billing. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary> Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It&apos;s also the resource type for billing. </summary>
+        /// <summary> Create Cognitive Services Account. Accounts is a resource group wide resource type. It holds the keys for developer to access intelligent APIs. It's also the resource type for billing. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>

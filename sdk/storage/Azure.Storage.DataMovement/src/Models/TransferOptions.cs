@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
-    /// <see cref="TransferOptions"/> is used to provide options for a transfer of a single resource.
+    /// <see cref="TransferOptions"/> is used to provide options for a transfer.
     /// </summary>
     public class TransferOptions : IEquatable<TransferOptions>
     {
@@ -31,10 +31,15 @@ namespace Azure.Storage.DataMovement.Models
         public long? InitialTransferSize { get; set; }
 
         /// <summary>
-        /// Optional. Defines the checkpoint id that the transfer should continue from and will
-        /// grab transfer information from <see cref="TransferManagerOptions.CheckpointerOptions"/>.
+        /// Optional. An <see cref="IProgress{StorageTransferProgress}"/> for tracking progress of the transfer.
+        /// See <see cref="StorageTransferProgress"/> for details on what is tracked.
         /// </summary>
-        public string ResumeFromCheckpointId { get; set; }
+        public IProgress<StorageTransferProgress> ProgressHandler { get; set; }
+
+        /// <summary>
+        /// Optional. Options for changing behavior of the ProgressHandler.
+        /// </summary>
+        public ProgressHandlerOptions ProgressHandlerOptions { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.

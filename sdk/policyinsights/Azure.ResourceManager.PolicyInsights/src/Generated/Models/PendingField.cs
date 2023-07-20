@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     public partial class PendingField
     {
         /// <summary> Initializes a new instance of PendingField. </summary>
-        /// <param name="field"> The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias. </param>
+        /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="field"/> is null. </exception>
         public PendingField(string field)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> The name of the field. This can be a top-level property like &apos;name&apos; or &apos;type&apos; or an Azure Policy field alias. </summary>
+        /// <summary> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </summary>
         public string Field { get; }
         /// <summary> The list of potential values for the field that should be evaluated against Azure Policy. </summary>
         public IList<string> Values { get; }

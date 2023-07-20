@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

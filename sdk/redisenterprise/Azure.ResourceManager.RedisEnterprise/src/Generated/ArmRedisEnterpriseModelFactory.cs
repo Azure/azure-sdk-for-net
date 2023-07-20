@@ -18,10 +18,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRedisEnterpriseModelFactory
     {
-
         /// <summary> Initializes a new instance of RedisEnterpriseOperationStatus. </summary>
-        /// <param name="id"> The operation&apos;s unique id. </param>
-        /// <param name="name"> The operation&apos;s name. </param>
+        /// <param name="id"> The operation's unique id. </param>
+        /// <param name="name"> The operation's name. </param>
         /// <param name="startOn"> The start time of the operation. </param>
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="status"> The current status of the operation. </param>
@@ -42,12 +41,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
         /// <param name="zones"> The Availability Zones where this cluster will be deployed. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
         /// <param name="customerManagedKeyEncryption"> Encryption-at-rest configuration for the cluster. </param>
         /// <param name="hostName"> DNS name of the cluster endpoint. </param>
         /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
         /// <param name="resourceState"> Current resource status of the cluster. </param>
-        /// <param name="redisVersion"> Version of redis the cluster supports, e.g. &apos;6&apos;. </param>
+        /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified RedisEnterprise cluster. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseClusterData"/> instance for mocking. </returns>
         public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RedisEnterpriseSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null)
@@ -96,9 +95,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseModule. </summary>
-        /// <param name="name"> The name of the module, e.g. &apos;RedisBloom&apos;, &apos;RediSearch&apos;, &apos;RedisTimeSeries&apos;. </param>
-        /// <param name="args"> Configuration options for the module, e.g. &apos;ERROR_RATE 0.01 INITIAL_SIZE 400&apos;. </param>
-        /// <param name="version"> The version of the module, e.g. &apos;1.0&apos;. </param>
+        /// <param name="name"> The name of the module, e.g. 'RedisBloom', 'RediSearch', 'RedisTimeSeries'. </param>
+        /// <param name="args"> Configuration options for the module, e.g. 'ERROR_RATE 0.01 INITIAL_SIZE 400'. </param>
+        /// <param name="version"> The version of the module, e.g. '1.0'. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseModule"/> instance for mocking. </returns>
         public static RedisEnterpriseModule RedisEnterpriseModule(string name = null, string args = null, string version = null)
         {

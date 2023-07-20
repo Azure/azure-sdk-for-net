@@ -146,6 +146,59 @@ namespace Azure.ResourceManager.Network
             return GetVirtualApplianceSites().Get(siteName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of NetworkVirtualApplianceConnectionResources in the NetworkVirtualAppliance. </summary>
+        /// <returns> An object representing collection of NetworkVirtualApplianceConnectionResources and their operations over a NetworkVirtualApplianceConnectionResource. </returns>
+        public virtual NetworkVirtualApplianceConnectionCollection GetNetworkVirtualApplianceConnections()
+        {
+            return GetCachedClient(Client => new NetworkVirtualApplianceConnectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves the details of specified NVA connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/networkVirtualApplianceConnections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualApplianceConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionName"> The name of the NVA connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkVirtualApplianceConnectionResource>> GetNetworkVirtualApplianceConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkVirtualApplianceConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the details of specified NVA connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/networkVirtualApplianceConnections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkVirtualApplianceConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionName"> The name of the NVA connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkVirtualApplianceConnectionResource> GetNetworkVirtualApplianceConnection(string connectionName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkVirtualApplianceConnections().Get(connectionName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets the specified Network Virtual Appliance.
         /// <list type="bullet">

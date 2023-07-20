@@ -93,6 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string? expectedTraceId,
             string? expectedSpanId,
             IDictionary<string, string>? expectedProperties,
+            string expectedAuthUserId,
             bool expectedSuccess = true)
         {
             Assert.Equal("RemoteDependency", telemetryItem.Name); // telemetry type
@@ -100,8 +101,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            Assert.Equal(4, telemetryItem.Tags.Count);
+            Assert.Equal(5, telemetryItem.Tags.Count);
             Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
+            Assert.Equal(expectedAuthUserId, telemetryItem.Tags["ai.user.authUserId"]);
             Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
             Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
@@ -131,6 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string? expectedTraceId,
             IDictionary<string, string> expectedProperties,
             string? expectedSpanId,
+            string expectedAuthUserId,
             bool expectedSuccess = true)
         {
             Assert.Equal("Request", telemetryItem.Name); // telemetry type
@@ -138,18 +141,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            var expectedTagsCount = 4;
-
-            if (activityKind == ActivityKind.Server)
-            {
-                expectedTagsCount = 6;
-
-                Assert.Contains("ai.operation.name", telemetryItem.Tags.Keys);
-                Assert.Contains("ai.location.ip", telemetryItem.Tags.Keys);
-            }
+            var expectedTagsCount = 6;
 
             Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
             Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
+            Assert.Equal(expectedAuthUserId, telemetryItem.Tags["ai.user.authUserId"]);
             Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
             Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
@@ -208,7 +204,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         public static void AssertMetricTelemetry(
             TelemetryItem telemetryItem,
             string expectedMetricDataPointName,
-            string expectedMetricDataPointNamespace,
             double expectedMetricDataPointValue,
             int? expectedMetricDataPointCount = null,
             double? expectedMetricDataPointMax = null,
@@ -230,7 +225,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             var metricDataPoint = metricsData.Metrics[0];
             Assert.Equal(expectedMetricDataPointName, metricDataPoint.Name);
-            Assert.Equal(expectedMetricDataPointNamespace, metricDataPoint.Namespace);
             Assert.Equal(expectedMetricDataPointCount, metricDataPoint.Count);
             Assert.Equal(expectedMetricDataPointMax, metricDataPoint.Max);
             Assert.Equal(expectedMetricDataPointMin, metricDataPoint.Min);

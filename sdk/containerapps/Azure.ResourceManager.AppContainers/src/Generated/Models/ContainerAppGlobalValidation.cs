@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="redirectToProvider">
         /// The default authentication provider to use when multiple providers are configured.
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
-        /// action is set to &quot;RedirectToLoginPage&quot;.
+        /// action is set to "RedirectToLoginPage".
         /// </param>
         /// <param name="excludedPaths"> The paths for which unauthenticated flow would not be redirected to the login page. </param>
         internal ContainerAppGlobalValidation(ContainerAppUnauthenticatedClientActionV2? unauthenticatedClientAction, string redirectToProvider, IList<string> excludedPaths)
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary>
         /// The default authentication provider to use when multiple providers are configured.
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
-        /// action is set to &quot;RedirectToLoginPage&quot;.
+        /// action is set to "RedirectToLoginPage".
         /// </summary>
         public string RedirectToProvider { get; set; }
         /// <summary> The paths for which unauthenticated flow would not be redirected to the login page. </summary>

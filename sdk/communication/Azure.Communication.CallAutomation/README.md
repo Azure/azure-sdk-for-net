@@ -9,7 +9,7 @@ This package contains a C# SDK for Azure Communication Call Automation.
 Install the Azure Communication CallAutomation client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.CallAutomation --prerelease
+dotnet add package Azure.Communication.CallAutomation
 ```
 
 ### Prerequisites

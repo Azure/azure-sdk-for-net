@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="siteName"> Name of an app. </param>
         /// <param name="databases"> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </param>
         /// <param name="ignoreConflictingHostNames">
-        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to 
-        /// the app&apos;s object when it is being restored, but that might fail due to conflicts during the operation.
+        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to
+        /// the app's object when it is being restored, but that might fail due to conflicts during the operation.
         /// </param>
         /// <param name="ignoreDatabases"> Ignore the databases and only restore the site content. </param>
         /// <param name="appServicePlan"> Specify app service plan that will own restored site. </param>
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </summary>
         public IList<AppServiceDatabaseBackupSetting> Databases { get; }
         /// <summary>
-        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to 
-        /// the app&apos;s object when it is being restored, but that might fail due to conflicts during the operation.
+        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to
+        /// the app's object when it is being restored, but that might fail due to conflicts during the operation.
         /// </summary>
         public bool? IgnoreConflictingHostNames { get; set; }
         /// <summary> Ignore the databases and only restore the site content. </summary>

@@ -690,44 +690,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
         #endregion
 
-        #region SqlVulnerabilityAssessmentScanResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="SqlVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResource" /> object. </returns>
-        public static SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
-                return new SqlVulnerabilityAssessmentScanResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SqlVulnerabilityAssessmentBaselineRuleResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource" /> object. </returns>
-        public static SqlVulnerabilityAssessmentBaselineRuleResource GetSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
-                return new SqlVulnerabilityAssessmentBaselineRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region SubscriptionSecurityAlertResource
         /// <summary>
         /// Gets an object representing a <see cref="SubscriptionSecurityAlertResource" /> along with the instance operations that can be performed on it but with no data.
@@ -842,39 +804,20 @@ namespace Azure.ResourceManager.SecurityCenter
         }
         #endregion
 
-        #region SubscriptionGovernanceRuleResource
+        #region GovernanceRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionGovernanceRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionGovernanceRuleResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionGovernanceRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GovernanceRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GovernanceRuleResource.CreateResourceIdentifier" /> to create a <see cref="GovernanceRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionGovernanceRuleResource" /> object. </returns>
-        public static SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GovernanceRuleResource" /> object. </returns>
+        public static GovernanceRuleResource GetGovernanceRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SubscriptionGovernanceRuleResource.ValidateResourceId(id);
-                return new SubscriptionGovernanceRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SecurityConnectorGovernanceRuleResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SecurityConnectorGovernanceRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityConnectorGovernanceRuleResource.CreateResourceIdentifier" /> to create a <see cref="SecurityConnectorGovernanceRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityConnectorGovernanceRuleResource" /> object. </returns>
-        public static SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SecurityConnectorGovernanceRuleResource.ValidateResourceId(id);
-                return new SecurityConnectorGovernanceRuleResource(client, id);
+                GovernanceRuleResource.ValidateResourceId(id);
+                return new GovernanceRuleResource(client, id);
             }
             );
         }
@@ -932,6 +875,44 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 SecurityConnectorApplicationResource.ValidateResourceId(id);
                 return new SecurityConnectorApplicationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SqlVulnerabilityAssessmentScanResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlVulnerabilityAssessmentScanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlVulnerabilityAssessmentScanResource.CreateResourceIdentifier" /> to create a <see cref="SqlVulnerabilityAssessmentScanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResource" /> object. </returns>
+        public static SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
+                return new SqlVulnerabilityAssessmentScanResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SqlVulnerabilityAssessmentBaselineRuleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlVulnerabilityAssessmentBaselineRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentBaselineRuleResource" /> object. </returns>
+        public static SqlVulnerabilityAssessmentBaselineRuleResource GetSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
+                return new SqlVulnerabilityAssessmentBaselineRuleResource(client, id);
             }
             );
         }
@@ -1184,6 +1165,65 @@ namespace Azure.ResourceManager.SecurityCenter
             return client.GetSecurityAssessments(scope).Get(assessmentName, expand, cancellationToken);
         }
 
+        /// <summary> Gets a collection of GovernanceRuleResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of GovernanceRuleResources and their operations over a GovernanceRuleResource. </returns>
+        public static GovernanceRuleCollection GetGovernanceRules(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetGovernanceRules();
+        }
+
+        /// <summary>
+        /// Get a specific governance rule for the requested scope by ruleId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<GovernanceRuleResource>> GetGovernanceRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        {
+            return await client.GetGovernanceRules(scope).GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific governance rule for the requested scope by ruleId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<GovernanceRuleResource> GetGovernanceRule(this ArmClient client, ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        {
+            return client.GetGovernanceRules(scope).Get(ruleId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of SqlVulnerabilityAssessmentScanResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -1208,7 +1248,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scanId"> The scan Id. Type &apos;latest&apos; to get the scan record for the latest scan. </param>
+        /// <param name="scanId"> The scan Id. Type 'latest' to get the scan record for the latest scan. </param>
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1234,7 +1274,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scanId"> The scan Id. Type &apos;latest&apos; to get the scan record for the latest scan. </param>
+        /// <param name="scanId"> The scan Id. Type 'latest' to get the scan record for the latest scan. </param>
         /// <param name="workspaceId"> The workspace Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2941,7 +2981,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use &apos;ascScore&apos;.
+        /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use 'ascScore'.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2954,7 +2994,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
+        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
@@ -2965,7 +3005,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use &apos;ascScore&apos;.
+        /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use 'ascScore'.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2978,7 +3018,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use &apos;ascScore&apos; as in the sample request below. </param>
+        /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
@@ -3150,62 +3190,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Response<IngestionSettingResource> GetIngestionSetting(this SubscriptionResource subscriptionResource, string ingestionSettingName, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetIngestionSettings().Get(ingestionSettingName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SubscriptionGovernanceRuleResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SubscriptionGovernanceRuleResources and their operations over a SubscriptionGovernanceRuleResource. </returns>
-        public static SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this SubscriptionResource subscriptionResource)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionGovernanceRules();
-        }
-
-        /// <summary>
-        /// Get a specific governanceRule for the requested scope by ruleId
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetSubscriptionGovernanceRules().GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a specific governanceRule for the requested scope by ruleId
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetSubscriptionGovernanceRules().Get(ruleId, cancellationToken);
         }
 
         /// <summary> Gets a collection of SubscriptionSecurityApplicationResources in the SubscriptionResource. </summary>
@@ -3519,7 +3503,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Lists all the security automations in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security automations for the specified subscription.
+        /// Lists all the security automations in the specified subscription. Use the 'nextLink' property in the response to get the next page of security automations for the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -3540,7 +3524,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Lists all the security automations in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security automations for the specified subscription.
+        /// Lists all the security automations in the specified subscription. Use the 'nextLink' property in the response to get the next page of security automations for the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4071,7 +4055,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Lists all the security connectors in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified subscription.
+        /// Lists all the security connectors in the specified subscription. Use the 'nextLink' property in the response to get the next page of security connectors for the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -4092,7 +4076,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Lists all the security connectors in the specified subscription. Use the &apos;nextLink&apos; property in the response to get the next page of security connectors for the specified subscription.
+        /// Lists all the security connectors in the specified subscription. Use the 'nextLink' property in the response to get the next page of security connectors for the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

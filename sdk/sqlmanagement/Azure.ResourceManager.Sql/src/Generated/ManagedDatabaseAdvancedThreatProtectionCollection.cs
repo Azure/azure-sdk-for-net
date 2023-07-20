@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a managed database&apos;s Advanced Threat Protection state.
+        /// Creates or updates a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a managed database&apos;s Advanced Threat Protection state.
+        /// Creates or updates a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s Advanced Threat Protection state.
+        /// Gets a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s Advanced Threat Protection state.
+        /// Gets a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of managed database&apos;s Advanced Threat Protection states.
+        /// Gets a list of managed database's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of managed database&apos;s Advanced Threat Protection states.
+        /// Gets a list of managed database's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

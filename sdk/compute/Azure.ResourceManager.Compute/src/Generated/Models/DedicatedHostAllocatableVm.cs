@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of DedicatedHostAllocatableVm. </summary>
         /// <param name="vmSize"> VM size in terms of which the unutilized capacity is represented. </param>
-        /// <param name="count"> Maximum number of VMs of size vmSize that can fit in the dedicated host&apos;s remaining capacity. </param>
+        /// <param name="count"> Maximum number of VMs of size vmSize that can fit in the dedicated host's remaining capacity. </param>
         internal DedicatedHostAllocatableVm(string vmSize, double? count)
         {
             VmSize = vmSize;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> VM size in terms of which the unutilized capacity is represented. </summary>
         public string VmSize { get; }
-        /// <summary> Maximum number of VMs of size vmSize that can fit in the dedicated host&apos;s remaining capacity. </summary>
+        /// <summary> Maximum number of VMs of size vmSize that can fit in the dedicated host's remaining capacity. </summary>
         public double? Count { get; }
     }
 }

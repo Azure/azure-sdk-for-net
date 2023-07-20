@@ -714,5 +714,11 @@ namespace Azure.Storage
             internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
             internal const string QueryParameterKey = "timeout";
         }
+
+        internal static class CopyHttpAuthorization
+        {
+            internal static readonly string[] Scopes = { "https://storage.azure.com/.default" };
+            internal const string BearerScheme = "Bearer";
+        }
     }
 }

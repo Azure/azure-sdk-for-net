@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the action. </param>
         /// <param name="logicAppResourceId"> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </param>
-        /// <param name="workflowId"> The name of the logic app&apos;s workflow. </param>
+        /// <param name="workflowId"> The name of the logic app's workflow. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleActionData"/> instance for mocking. </returns>
         public static SecurityInsightsAlertRuleActionData SecurityInsightsAlertRuleActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier logicAppResourceId = null, string workflowId = null)
         {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsAlertConfidenceReason. </summary>
-        /// <param name="reason"> The reason&apos;s description. </param>
+        /// <param name="reason"> The reason's description. </param>
         /// <param name="reasonType"> The type (category) of the reason. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsAlertConfidenceReason"/> instance for mocking. </returns>
         public static SecurityInsightsAlertConfidenceReason SecurityInsightsAlertConfidenceReason(string reason = null, string reasonType = null)
@@ -603,10 +603,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="displayNamesFilter"> the alerts&apos; displayNames on which the cases will be generated. </param>
-        /// <param name="displayNamesExcludeFilter"> the alerts&apos; displayNames on which the cases will not be generated. </param>
-        /// <param name="productFilter"> The alerts&apos; productName on which the cases will be generated. </param>
-        /// <param name="severitiesFilter"> the alerts&apos; severities on which the cases will be generated. </param>
+        /// <param name="displayNamesFilter"> the alerts' displayNames on which the cases will be generated. </param>
+        /// <param name="displayNamesExcludeFilter"> the alerts' displayNames on which the cases will not be generated. </param>
+        /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
+        /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
         /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
         /// <param name="description"> The description of the alert rule. </param>
         /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
@@ -634,10 +634,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="displayName"> The display name for alert rule template. </param>
         /// <param name="requiredDataConnectors"> The required data connectors for this template. </param>
         /// <param name="status"> The alert rule template status. </param>
-        /// <param name="displayNamesFilter"> the alerts&apos; displayNames on which the cases will be generated. </param>
-        /// <param name="displayNamesExcludeFilter"> the alerts&apos; displayNames on which the cases will not be generated. </param>
-        /// <param name="productFilter"> The alerts&apos; productName on which the cases will be generated. </param>
-        /// <param name="severitiesFilter"> the alerts&apos; severities on which the cases will be generated. </param>
+        /// <param name="displayNamesFilter"> the alerts' displayNames on which the cases will be generated. </param>
+        /// <param name="displayNamesExcludeFilter"> the alerts' displayNames on which the cases will not be generated. </param>
+        /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
+        /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
         /// <returns> A new <see cref="Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> instance for mocking. </returns>
         public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? alertRulesCreatedByTemplateCount = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, string description = null, string displayName = null, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = null, SecurityInsightsAlertRuleTemplateStatus? status = null, IEnumerable<string> displayNamesFilter = null, IEnumerable<string> displayNamesExcludeFilter = null, MicrosoftSecurityProductName? productFilter = null, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = null)
         {
@@ -1063,8 +1063,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="providerName"> Name of the provider from whom this Threat Intelligence information was received. </param>
         /// <param name="reportLink"> Report link. </param>
         /// <param name="threatDescription"> Threat description (free text). </param>
-        /// <param name="threatName"> Threat name (e.g. &quot;Jedobot malware&quot;). </param>
-        /// <param name="threatType"> Threat type (e.g. &quot;Botnet&quot;). </param>
+        /// <param name="threatName"> Threat name (e.g. "Jedobot malware"). </param>
+        /// <param name="threatType"> Threat type (e.g. "Botnet"). </param>
         /// <returns> A new <see cref="Models.SecurityInsightsThreatIntelligence"/> instance for mocking. </returns>
         public static SecurityInsightsThreatIntelligence SecurityInsightsThreatIntelligence(double? confidence = null, string providerName = null, string reportLink = null, string threatDescription = null, string threatName = null, string threatType = null)
         {
@@ -1097,9 +1097,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="mailboxPrimaryAddress"> The mailbox&apos;s primary address. </param>
-        /// <param name="displayName"> The mailbox&apos;s display name. </param>
-        /// <param name="upn"> The mailbox&apos;s UPN. </param>
+        /// <param name="mailboxPrimaryAddress"> The mailbox's primary address. </param>
+        /// <param name="displayName"> The mailbox's display name. </param>
+        /// <param name="upn"> The mailbox's UPN. </param>
         /// <param name="externalDirectoryObjectId"> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsMailboxEntity"/> instance for mocking. </returns>
         public static SecurityInsightsMailboxEntity SecurityInsightsMailboxEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string mailboxPrimaryAddress = null, string displayName = null, string upn = null, Guid? externalDirectoryObjectId = null)
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="queryOn"> The query time. </param>
         /// <param name="mailCount"> The number of mail messages that are part of the mail cluster. </param>
         /// <param name="isVolumeAnomaly"> Is this a volume anomaly mail cluster. </param>
-        /// <param name="source"> The source of the mail cluster (default is &apos;O365 ATP&apos;). </param>
+        /// <param name="source"> The source of the mail cluster (default is 'O365 ATP'). </param>
         /// <param name="clusterSourceIdentifier"> The id of the cluster source. </param>
         /// <param name="clusterSourceType"> The type of the cluster source. </param>
         /// <param name="clusterQueryStartOn"> The cluster query start time. </param>
@@ -1148,17 +1148,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="fileEntityIds"> The File entity ids of this mail message&apos;s attachments. </param>
+        /// <param name="fileEntityIds"> The File entity ids of this mail message's attachments. </param>
         /// <param name="recipient"> The recipient of this mail message. Note that in case of multiple recipients the mail message is forked and each copy has one recipient. </param>
         /// <param name="uris"> The Urls contained in this mail message. </param>
         /// <param name="threats"> The threats of this mail message. </param>
-        /// <param name="p1Sender"> The p1 sender&apos;s email address. </param>
-        /// <param name="p1SenderDisplayName"> The p1 sender&apos;s display name. </param>
-        /// <param name="p1SenderDomain"> The p1 sender&apos;s domain. </param>
-        /// <param name="senderIP"> The sender&apos;s IP address. </param>
-        /// <param name="p2Sender"> The p2 sender&apos;s email address. </param>
-        /// <param name="p2SenderDisplayName"> The p2 sender&apos;s display name. </param>
-        /// <param name="p2SenderDomain"> The p2 sender&apos;s domain. </param>
+        /// <param name="p1Sender"> The p1 sender's email address. </param>
+        /// <param name="p1SenderDisplayName"> The p1 sender's display name. </param>
+        /// <param name="p1SenderDomain"> The p1 sender's domain. </param>
+        /// <param name="senderIP"> The sender's IP address. </param>
+        /// <param name="p2Sender"> The p2 sender's email address. </param>
+        /// <param name="p2SenderDisplayName"> The p2 sender's display name. </param>
+        /// <param name="p2SenderDomain"> The p2 sender's domain. </param>
         /// <param name="receiveOn"> The receive date of this message. </param>
         /// <param name="networkMessageId"> The network message id of this mail message. </param>
         /// <param name="internetMessageId"> The internet message id of this mail message. </param>
@@ -1298,7 +1298,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="messageReceivedOn"> The Time stamp when the message is received (Mail). </param>
         /// <param name="recipient"> The recipient of the mail. </param>
         /// <param name="sender"> The sender of the mail. </param>
-        /// <param name="senderIP"> The sender&apos;s IP. </param>
+        /// <param name="senderIP"> The sender's IP. </param>
         /// <param name="subject"> The subject of submission mail. </param>
         /// <param name="reportType"> The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsSubmissionMailEntity"/> instance for mocking. </returns>

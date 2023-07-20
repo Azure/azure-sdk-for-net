@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             NetworkAclBypassResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with &quot;defaultExperience&quot;: &quot;Cassandra&quot;. Current &quot;defaultExperience&quot; values also include &quot;Table&quot;, &quot;Graph&quot;, &quot;DocumentDB&quot;, and &quot;MongoDB&quot;. </summary>
+        /// <summary> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The location of the resource group to which the resource belongs. </summary>
         public AzureLocation? Location { get; set; }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? DisableKeyBasedMetadataWriteAccess { get; set; }
         /// <summary> The URI of the key vault. </summary>
         public Uri KeyVaultKeyUri { get; set; }
-        /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </summary>
+        /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </summary>
         public string DefaultIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
         public CosmosDBPublicNetworkAccess? PublicNetworkAccess { get; set; }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? EnablePartitionMerge { get; set; }
         /// <summary> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </summary>
         public bool? EnableBurstCapacity { get; set; }
-        /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API&apos;s, which only work with Tls 1.2. </summary>
+        /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
         public CosmosDBMinimalTlsVersion? MinimalTlsVersion { get; set; }
     }
 }

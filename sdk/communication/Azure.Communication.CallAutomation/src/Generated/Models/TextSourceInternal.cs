@@ -27,15 +27,17 @@ namespace Azure.Communication.CallAutomation
         public string Text { get; }
         /// <summary>
         /// Source language locale to be played
-        /// Refer to available locales here: &lt;seealso href=&quot;https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts&quot; /&gt;
+        /// Refer to available locales here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
         /// </summary>
         public string SourceLocale { get; set; }
         /// <summary> Voice gender type. </summary>
         public GenderType? VoiceGender { get; set; }
         /// <summary>
         /// Voice name to be played
-        /// Refer to available Text-to-speech voices here: &lt;seealso href=&quot;https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts&quot; /&gt;
+        /// Refer to available Text-to-speech voices here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
         /// </summary>
         public string VoiceName { get; set; }
+        /// <summary> Endpoint where the custom voice was deployed. </summary>
+        public string CustomVoiceEndpointId { get; set; }
     }
 }

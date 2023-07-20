@@ -3,18 +3,7 @@
   <members>
     <member name="GetGlossariesAsync(int?,int?,string,bool?,RequestContext)">
 <example>
-This sample shows how to call GetGlossariesAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = await client.GetGlossariesAsync();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetGlossariesAsync with all parameters, and how to parse the result.
+This sample shows how to call GetGlossariesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -60,18 +49,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
     </member>
     <member name="GetGlossaries(int?,int?,string,bool?,RequestContext)">
 <example>
-This sample shows how to call GetGlossaries and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = client.GetGlossaries();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetGlossaries with all parameters, and how to parse the result.
+This sample shows how to call GetGlossaries with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -329,7 +307,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = await client.CreateGlossaryAsync(RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateGlossaryAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -581,7 +559,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = client.CreateGlossary(RequestContent.Create(data), new RequestContext());
+Response response = client.CreateGlossary(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -694,7 +672,7 @@ var data = new[] {
     }
 };
 
-Response response = await client.CreateGlossaryCategoriesAsync(RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateGlossaryCategoriesAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
@@ -813,7 +791,7 @@ var data = new[] {
     }
 };
 
-Response response = client.CreateGlossaryCategories(RequestContent.Create(data), new RequestContext());
+Response response = client.CreateGlossaryCategories(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
@@ -943,7 +921,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1073,7 +1051,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = client.CreateGlossaryCategory(RequestContent.Create(data), new RequestContext());
+Response response = client.CreateGlossaryCategory(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1307,7 +1285,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data), new RequestContext());
+Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1437,7 +1415,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = client.UpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data), new RequestContext());
+Response response = client.UpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1489,7 +1467,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>", new RequestContext());
+Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1502,7 +1480,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = client.DeleteGlossaryCategory("<categoryGuid>", new RequestContext());
+Response response = client.DeleteGlossaryCategory("<categoryGuid>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1519,7 +1497,7 @@ var data = new {
     key = "<String>",
 };
 
-Response response = await client.PartialUpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data), new RequestContext());
+Response response = await client.PartialUpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1575,7 +1553,7 @@ var data = new {
     key = "<String>",
 };
 
-Response response = client.PartialUpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data), new RequestContext());
+Response response = client.PartialUpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1627,17 +1605,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>")[0].ToString());
-]]></code>
-This sample shows how to call GetRelatedCategoriesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
 Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1652,17 +1619,6 @@ Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("relationGuid").To
     <member name="GetRelatedCategories(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetRelatedCategories with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = client.GetRelatedCategories("<categoryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>")[0].ToString());
-]]></code>
-This sample shows how to call GetRelatedCategories with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -1687,17 +1643,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = await client.GetCategoryTermsAsync("<categoryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetCategoryTermsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
 Response response = await client.GetCategoryTermsAsync("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -1715,17 +1660,6 @@ Console.WriteLine(result[0].GetProperty("termGuid").ToString());
     <member name="GetCategoryTerms(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetCategoryTerms with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = client.GetCategoryTerms("<categoryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetCategoryTerms with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2028,7 +1962,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data), true, new RequestContext());
+Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -2471,7 +2405,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = client.CreateGlossaryTerm(RequestContent.Create(data), true, new RequestContext());
+Response response = client.CreateGlossaryTerm(RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -2634,17 +2568,6 @@ Console.WriteLine(result.GetProperty("guid").ToString());
     <member name="GetGlossaryTermAsync(string,bool?,IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call GetGlossaryTermAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = await client.GetGlossaryTermAsync("<termGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetGlossaryTermAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -2813,17 +2736,6 @@ Console.WriteLine(result.GetProperty("guid").ToString());
     <member name="GetGlossaryTerm(string,bool?,IEnumerable{string},RequestContext)">
 <example>
 This sample shows how to call GetGlossaryTerm with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = client.GetGlossaryTerm("<termGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetGlossaryTerm with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -3272,7 +3184,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = await client.UpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data), true, new RequestContext());
+Response response = await client.UpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -3715,7 +3627,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = client.UpdateGlossaryTerm("<termGuid>", RequestContent.Create(data), true, new RequestContext());
+Response response = client.UpdateGlossaryTerm("<termGuid>", RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -3883,7 +3795,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = await client.DeleteGlossaryTermAsync("<termGuid>", new RequestContext());
+Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -3896,7 +3808,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = client.DeleteGlossaryTerm("<termGuid>", new RequestContext());
+Response response = client.DeleteGlossaryTerm("<termGuid>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -3928,7 +3840,7 @@ var data = new {
     key = "<String>",
 };
 
-Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data), true, new RequestContext());
+Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -4115,7 +4027,7 @@ var data = new {
     key = "<String>",
 };
 
-Response response = client.PartialUpdateGlossaryTerm("<termGuid>", RequestContent.Create(data), true, new RequestContext());
+Response response = client.PartialUpdateGlossaryTerm("<termGuid>", RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -4562,7 +4474,7 @@ var data = new[] {
     }
 };
 
-Response response = await client.CreateGlossaryTermsAsync(RequestContent.Create(data), true, new RequestContext());
+Response response = await client.CreateGlossaryTermsAsync(RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
@@ -5009,7 +4921,7 @@ var data = new[] {
     }
 };
 
-Response response = client.CreateGlossaryTerms(RequestContent.Create(data), true, new RequestContext());
+Response response = client.CreateGlossaryTerms(RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
@@ -5177,17 +5089,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetEntitiesAssignedWithTermAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
 Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -5208,17 +5109,6 @@ Console.WriteLine(result[0].GetProperty("uniqueAttributes").GetProperty("<test>"
     <member name="GetEntitiesAssignedWithTerm(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetEntitiesAssignedWithTerm with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = client.GetEntitiesAssignedWithTerm("<termGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetEntitiesAssignedWithTerm with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -5285,7 +5175,7 @@ var data = new[] {
     }
 };
 
-Response response = await client.AssignTermToEntitiesAsync("<termGuid>", RequestContent.Create(data), new RequestContext());
+Response response = await client.AssignTermToEntitiesAsync("<termGuid>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -5334,7 +5224,7 @@ var data = new[] {
     }
 };
 
-Response response = client.AssignTermToEntities("<termGuid>", RequestContent.Create(data), new RequestContext());
+Response response = client.AssignTermToEntities("<termGuid>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -5383,7 +5273,7 @@ var data = new[] {
     }
 };
 
-Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", RequestContent.Create(data), new RequestContext());
+Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -5432,7 +5322,7 @@ var data = new[] {
     }
 };
 
-Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", RequestContent.Create(data), new RequestContext());
+Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -5481,7 +5371,7 @@ var data = new[] {
     }
 };
 
-Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", RequestContent.Create(data), new RequestContext());
+Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -5530,7 +5420,7 @@ var data = new[] {
     }
 };
 
-Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", RequestContent.Create(data), new RequestContext());
+Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -5538,17 +5428,6 @@ Console.WriteLine(response.Status);
     <member name="GetRelatedTermsAsync(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetRelatedTermsAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = await client.GetRelatedTermsAsync("<termGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>")[0].ToString());
-]]></code>
-This sample shows how to call GetRelatedTermsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -5571,17 +5450,6 @@ Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("termGuid").ToStri
     <member name="GetRelatedTerms(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetRelatedTerms with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = client.GetRelatedTerms("<termGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("<test>")[0].ToString());
-]]></code>
-This sample shows how to call GetRelatedTerms with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -5907,7 +5775,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data), new RequestContext());
+Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -6159,7 +6027,7 @@ var data = new {
     guid = "<guid>",
 };
 
-Response response = client.UpdateGlossary("<glossaryGuid>", RequestContent.Create(data), new RequestContext());
+Response response = client.UpdateGlossary("<glossaryGuid>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -6205,7 +6073,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = await client.DeleteGlossaryAsync("<glossaryGuid>", new RequestContext());
+Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -6218,7 +6086,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = client.DeleteGlossary("<glossaryGuid>", new RequestContext());
+Response response = client.DeleteGlossary("<glossaryGuid>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -6226,17 +6094,6 @@ Console.WriteLine(response.Status);
     <member name="GetGlossaryCategoriesAsync(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryCategoriesAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetGlossaryCategoriesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -6294,17 +6151,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = client.GetGlossaryCategories("<glossaryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetGlossaryCategories with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
 Response response = client.GetGlossaryCategories("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -6357,17 +6203,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetGlossaryCategoriesHeadersAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
 Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -6387,17 +6222,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetGlossaryCategoriesHeaders with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
 Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -6412,17 +6236,6 @@ Console.WriteLine(result[0].GetProperty("relationGuid").ToString());
     <member name="GetDetailedGlossaryAsync(string,bool?,RequestContext)">
 <example>
 This sample shows how to call GetDetailedGlossaryAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetDetailedGlossaryAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -6661,17 +6474,6 @@ Console.WriteLine(result.GetProperty("guid").ToString());
     <member name="GetDetailedGlossary(string,bool?,RequestContext)">
 <example>
 This sample shows how to call GetDetailedGlossary with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = client.GetDetailedGlossary("<glossaryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetDetailedGlossary with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -6934,7 +6736,7 @@ var data = new {
     key = "<String>",
 };
 
-Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data), true, new RequestContext());
+Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -6999,7 +6801,7 @@ var data = new {
     key = "<String>",
 };
 
-Response response = client.PartialUpdateGlossary("<glossaryGuid>", RequestContent.Create(data), true, new RequestContext());
+Response response = client.PartialUpdateGlossary("<glossaryGuid>", RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -7040,17 +6842,6 @@ Console.WriteLine(result.GetProperty("guid").ToString());
     <member name="GetGlossaryTermsAsync(string,bool?,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryTermsAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetGlossaryTermsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -7224,17 +7015,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = client.GetGlossaryTerms("<glossaryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetGlossaryTerms with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
 Response response = client.GetGlossaryTerms("<glossaryGuid>", true, 1234, 1234, "<sort>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -7403,17 +7183,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetGlossaryTermHeadersAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
 Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -7431,17 +7200,6 @@ Console.WriteLine(result[0].GetProperty("termGuid").ToString());
     <member name="GetGlossaryTermHeaders(string,int?,int?,string,RequestContext)">
 <example>
 This sample shows how to call GetGlossaryTermHeaders with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = client.GetGlossaryTermHeaders("<glossaryGuid>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetGlossaryTermHeaders with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -7532,7 +7290,7 @@ var data = new[] {
     "<String>"
 };
 
-Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", RequestContent.Create(data), true, new RequestContext());
+Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -7566,7 +7324,7 @@ var data = new[] {
     "<String>"
 };
 
-Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", RequestContent.Create(data), true, new RequestContext());
+Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", RequestContent.Create(data), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -7576,17 +7334,6 @@ Console.WriteLine(result.ToString());
     <member name="GetTermsByGlossaryNameAsync(string,int?,int?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetTermsByGlossaryNameAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetTermsByGlossaryNameAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -7755,17 +7502,6 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
     <member name="GetTermsByGlossaryName(string,int?,int?,bool?,RequestContext)">
 <example>
 This sample shows how to call GetTermsByGlossaryName with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-Response response = client.GetTermsByGlossaryName("<glossaryName>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetTermsByGlossaryName with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -7955,7 +7691,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true, new RequestContext());
+var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7994,7 +7730,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true, new RequestContext());
+var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -8033,7 +7769,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true, new RequestContext());
+var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -8072,7 +7808,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true, new RequestContext());
+var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
