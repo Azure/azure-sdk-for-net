@@ -10,7 +10,6 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -138,7 +137,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTime));
-            await transfer.AwaitCompletion(tokenSource.Token);
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             ProgressHandlerAsserts.AssertFileProgress(progressHandler.Updates, fileCount, skippedCount, failedCount);
             ProgressHandlerAsserts.AssertBytesTransferred(progressHandler.Updates, expectedBytesTransferred);
@@ -358,7 +357,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions);
 
             tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await resumeTransfer.AwaitCompletion(tokenSource.Token);
+            await resumeTransfer.WaitForCompletionAsync(tokenSource.Token);
 
             // Assert
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);

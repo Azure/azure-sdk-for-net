@@ -3,9 +3,8 @@
 using System;
 using System.Threading;
 using Azure.Core;
-using Azure.Storage.DataMovement;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Event Argument for Failed Single Blob Upload Transfers

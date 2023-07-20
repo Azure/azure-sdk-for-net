@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// <see cref="TransferOptions"/> is used to provide options for a transfer.

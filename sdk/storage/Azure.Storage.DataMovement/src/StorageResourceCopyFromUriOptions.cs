@@ -4,7 +4,7 @@
 using System.IO;
 using System.Threading;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Options for <see cref="StorageResourceSingle.WriteFromStreamAsync(Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, CancellationToken)"/>

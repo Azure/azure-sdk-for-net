@@ -128,7 +128,7 @@ namespace Azure.Storage.DataMovement.Tests
                 status: StorageTransferStatus.Completed);
 
             // Act
-            await transfer.AwaitCompletion();
+            await transfer.WaitForCompletionAsync();
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
@@ -149,7 +149,7 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
             Assert.CatchAsync<OperationCanceledException>(
-                async () => await transfer.AwaitCompletion(cancellationTokenSource.Token),
+                async () => await transfer.WaitForCompletionAsync(cancellationTokenSource.Token),
                 "Expected OperationCanceledException to be thrown");
         }
 

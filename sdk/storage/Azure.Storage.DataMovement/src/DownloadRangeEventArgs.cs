@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using Azure.Core;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     internal class DownloadRangeEventArgs : StorageTransferEventArgs
     {
