@@ -59,7 +59,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     public abstract partial class ActionableResponse<T> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse where T : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventAction
     {
         protected ActionableResponse() { }
-        [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("actions")]
         public System.Collections.Generic.List<T> Actions { get { throw null; } set { } }
     }
