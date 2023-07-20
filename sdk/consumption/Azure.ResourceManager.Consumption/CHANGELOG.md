@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed all `meterId` serialization issue
+- Fixed all `meterId` serialization issues
 
 ### Other Changes
 
