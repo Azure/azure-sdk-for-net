@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='expand'>
         /// The expand expression to apply on the operation. Possible values include:
-        /// 'ReplicationStatus', 'ValidationProfile'
+        /// 'ReplicationStatus'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
