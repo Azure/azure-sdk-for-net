@@ -37,6 +37,9 @@ namespace Azure.Core.Json
         /// </summary>
         public JsonValueKind? ValueKind
         {
+#if NET6_0_OR_GREATER
+            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
             get
             {
                 if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))

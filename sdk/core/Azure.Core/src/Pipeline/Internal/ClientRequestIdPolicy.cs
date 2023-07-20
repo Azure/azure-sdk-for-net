@@ -3,6 +3,9 @@
 
 namespace Azure.Core.Pipeline
 {
+#if NET6_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
+#endif
     internal class ClientRequestIdPolicy : HttpPipelineSynchronousPolicy
     {
         internal const string ClientRequestIdHeader = "x-ms-client-request-id";

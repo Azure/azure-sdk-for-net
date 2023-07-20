@@ -7,6 +7,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
+#if NET6_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
+#endif
     internal class AzureKeyCredentialPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly string _name;
