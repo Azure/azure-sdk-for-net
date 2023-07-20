@@ -11,10 +11,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
 {
     /// <summary>Validator to ensure that a type value is enumerable and contains no null items.</summary>
     [AttributeUsage(AttributeTargets.Property)]
-    internal class EnumberableItemsNotNullAttribute : ValidationAttribute
+    internal class EnumerableItemsNotNullAttribute : ValidationAttribute
     {
-        /// <summary>Initializes a new instance of the <see cref="EnumberableItemsNotNullAttribute" /> class.</summary>
-        public EnumberableItemsNotNullAttribute()
+        /// <summary>Initializes a new instance of the <see cref="EnumerableItemsNotNullAttribute" /> class.</summary>
+        public EnumerableItemsNotNullAttribute()
             : base(AuthenticationEventResource.Ex_Null_Action_Items)
         {
         }
