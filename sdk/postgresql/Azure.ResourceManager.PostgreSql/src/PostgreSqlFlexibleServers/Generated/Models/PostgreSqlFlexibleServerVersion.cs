@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string Ver15Value = "15";
         private const string Ver14Value = "14";
         private const string Ver13Value = "13";
         private const string Ver12Value = "12";
