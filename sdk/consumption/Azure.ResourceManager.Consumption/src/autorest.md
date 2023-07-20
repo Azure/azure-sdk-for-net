@@ -91,6 +91,7 @@ models-to-treat-empty-string-as-null:
   - ConsumptionMarketplace
   - ConsumptionModernReservationRecommendation
   - ConsumptionModernUsageDetail
+  - PriceSheetProperties
 
 rename-mapping:
   Budget: ConsumptionBudget
