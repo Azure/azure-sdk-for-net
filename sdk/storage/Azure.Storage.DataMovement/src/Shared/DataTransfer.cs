@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,7 +9,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Holds transfer information
+    /// Holds transfer information.
     /// </summary>
     public class DataTransfer
     {
@@ -33,34 +29,37 @@ namespace Azure.Storage.DataMovement
         public string Id => _state.Id;
 
         /// <summary>
+        /// The <see cref="TransferManager"/> responsible for this transfer.
+        /// </summary>
+        public TransferManager TransferManager { get; }
+
+        /// <summary>
         /// Defines the current state of the transfer.
         /// </summary>
         internal DataTransferState _state;
 
         /// <summary>
-        /// Only to be created internally by the transfer manager.
+        /// For mocking.
         /// </summary>
         internal DataTransfer()
         {
-            _state = new DataTransferState();
         }
 
         /// <summary>
-        /// For mocking
+        /// Constructing a DataTransfer object.
         /// </summary>
-        /// <param name="status"></param>
-        internal DataTransfer(StorageTransferStatus status)
+        /// <param name="id">The transfer ID of the transfer object.</param>
+        /// <param name="transferManager">Reference to the transfer manager running this transfer.</param>
+        /// <param name="status">The Transfer Status of the Transfer. See <see cref="StorageTransferStatus"/>.</param>
+        internal DataTransfer(
+            string id,
+            TransferManager transferManager,
+            StorageTransferStatus status = StorageTransferStatus.Queued)
         {
-            _state = new DataTransferState(status);
-        }
-
-        /// <summary>
-        /// Only to be created internally by the transfer manager when someone
-        /// provides a valid job plan file to resume from.
-        /// </summary>
-        internal DataTransfer(string id, long bytesTransferred)
-        {
-            _state = new DataTransferState(id, bytesTransferred);
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(transferManager, nameof(transferManager));
+            _state = new DataTransferState(id, status);
+            TransferManager = transferManager;
         }
 
         /// <summary>
@@ -79,8 +78,23 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         public async Task AwaitCompletion(CancellationToken cancellationToken = default)
         {
-            cancellationToken.Register(() => _state._completionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
-            await _state._completionSource.Task.ConfigureAwait(false);
+            await _state.CompletionSource.Task.AwaitWithCancellation(cancellationToken);
         }
+
+        /// <summary>
+        /// Attempts to pause the current Data Transfer.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// Will return false if the data transfer has already been completed.
+        ///
+        /// Will return true if the pause has taken place.
+        /// </returns>
+        public virtual async Task PauseIfRunningAsync(CancellationToken cancellationToken = default)
+        {
+            await _state.PauseIfRunningAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        internal virtual bool CanPause() => _state.CanPause();
     }
 }

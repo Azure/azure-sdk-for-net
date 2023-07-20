@@ -20,6 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             DocumentKeyValueElement key = default;
             Optional<DocumentKeyValueElement> value = default;
+            Optional<string> commonName = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,10 +33,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("commonName"u8))
+                {
+                    commonName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))
@@ -44,7 +49,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentKeyValuePair(key, value.Value, confidence);
+            return new DocumentKeyValuePair(key, value.Value, commonName.Value, confidence);
         }
     }
 }

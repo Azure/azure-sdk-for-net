@@ -417,6 +417,11 @@ function EnsureCustomSource($package) {
       -Source CustomPackageSource `
       -AllVersions `
       -AllowPrereleaseVersions
+
+      if (!$? -or !$existingVersions) { 
+        Write-Host "Failed to find package $($package.Name) in custom source $customPackageSource"
+        return $package
+      }
   }
   catch {
     Write-Error $_ -ErrorAction Continue
@@ -435,16 +440,27 @@ function EnsureCustomSource($package) {
   return $package
 }
 
+$PackageExclusions = @{
+}
+
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
+
+  Write-Host "Excluded packages:"
+  foreach ($excludedPackage in $PackageExclusions.Keys) {
+    Write-Host "  $excludedPackage - $($PackageExclusions[$excludedPackage])"
+  }
+
+  $FilteredMetadata = $DocsMetadata.Where({ !($PackageExclusions.ContainsKey($_.Package)) })
+
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
     'preview' `
-    $DocsMetadata
+    $FilteredMetadata
 
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet.csv') `
     'latest' `
-    $DocsMetadata
+    $FilteredMetadata
 }
 
 function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {

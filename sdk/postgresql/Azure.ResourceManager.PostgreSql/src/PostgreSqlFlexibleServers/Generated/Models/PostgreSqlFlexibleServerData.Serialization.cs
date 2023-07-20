@@ -114,11 +114,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicaCapacity))
-            {
-                writer.WritePropertyName("replicaCapacity"u8);
-                writer.WriteNumberValue(ReplicaCapacity.Value);
-            }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
@@ -167,7 +162,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = PostgreSqlFlexibleServerSku.DeserializePostgreSqlFlexibleServerSku(property.Value);
@@ -177,7 +171,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = PostgreSqlFlexibleServerUserAssignedIdentity.DeserializePostgreSqlFlexibleServerUserAssignedIdentity(property.Value);
@@ -187,7 +180,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -222,7 +214,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -251,7 +242,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             version = new PostgreSqlFlexibleServerVersion(property0.Value.GetString());
@@ -266,7 +256,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new PostgreSqlFlexibleServerState(property0.Value.GetString());
@@ -281,7 +270,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storage = PostgreSqlFlexibleServerStorage.DeserializePostgreSqlFlexibleServerStorage(property0.Value);
@@ -291,7 +279,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             authConfig = PostgreSqlFlexibleServerAuthConfig.DeserializePostgreSqlFlexibleServerAuthConfig(property0.Value);
@@ -301,7 +288,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataEncryption = PostgreSqlFlexibleServerDataEncryption.DeserializePostgreSqlFlexibleServerDataEncryption(property0.Value);
@@ -311,7 +297,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backup = PostgreSqlFlexibleServerBackupProperties.DeserializePostgreSqlFlexibleServerBackupProperties(property0.Value);
@@ -321,7 +306,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             network = PostgreSqlFlexibleServerNetwork.DeserializePostgreSqlFlexibleServerNetwork(property0.Value);
@@ -331,7 +315,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             highAvailability = PostgreSqlFlexibleServerHighAvailability.DeserializePostgreSqlFlexibleServerHighAvailability(property0.Value);
@@ -341,7 +324,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maintenanceWindow = PostgreSqlFlexibleServerMaintenanceWindow.DeserializePostgreSqlFlexibleServerMaintenanceWindow(property0.Value);
@@ -351,7 +333,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceServerResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -361,7 +342,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             pointInTimeUTC = property0.Value.GetDateTimeOffset("O");
@@ -376,7 +356,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicationRole = new PostgreSqlFlexibleServerReplicationRole(property0.Value.GetString());
@@ -386,7 +365,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicaCapacity = property0.Value.GetInt32();
@@ -396,7 +374,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createMode = new PostgreSqlFlexibleServerCreateMode(property0.Value.GetString());

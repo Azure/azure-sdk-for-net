@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests.Mock
             {
                 TenantId = Options.TenantId,
                 AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants,
-				CliProcessTimeout = Options.DeveloperCredentialTimeout
+				ProcessTimeout = Options.CredentialProcessTimeout
             };
 
             return new AzureCliCredential(Pipeline, _processService, options);
@@ -51,7 +51,7 @@ namespace Azure.Identity.Tests.Mock
             {
                 TenantId = Options.TenantId,
                 AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants,
-				AzdCliProcessTimeout = Options.DeveloperCredentialTimeout
+				ProcessTimeout = Options.CredentialProcessTimeout
             };
 
             return new AzureDeveloperCliCredential(Pipeline, _processService, options);
@@ -63,7 +63,7 @@ namespace Azure.Identity.Tests.Mock
             {
                 TenantId = Options.VisualStudioTenantId,
                 AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants,
-                VisualStudioProcessTimeout = Options.DeveloperCredentialTimeout
+                ProcessTimeout = Options.CredentialProcessTimeout
             };
 
             return new VisualStudioCredential(Options.VisualStudioTenantId, Pipeline, _fileSystem, _processService, options);
@@ -86,7 +86,7 @@ namespace Azure.Identity.Tests.Mock
             {
                 TenantId = Options.VisualStudioCodeTenantId,
                 AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants,
-                PowerShellProcessTimeout = Options.DeveloperCredentialTimeout
+                ProcessTimeout = Options.CredentialProcessTimeout
             };
 
             return new AzurePowerShellCredential(options, Pipeline, _processService);

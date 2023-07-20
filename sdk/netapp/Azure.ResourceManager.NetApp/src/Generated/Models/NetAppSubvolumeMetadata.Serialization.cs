@@ -55,7 +55,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -84,7 +83,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             size = property0.Value.GetInt64();
@@ -94,7 +92,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bytesUsed = property0.Value.GetInt64();
@@ -109,7 +106,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTimeStamp = property0.Value.GetDateTimeOffset("O");
@@ -119,7 +115,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessedTimeStamp = property0.Value.GetDateTimeOffset("O");
@@ -129,7 +124,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             modifiedTimeStamp = property0.Value.GetDateTimeOffset("O");
@@ -139,7 +133,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             changedTimeStamp = property0.Value.GetDateTimeOffset("O");

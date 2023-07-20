@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of TrafficRegions. </summary>
         public TrafficRegions()
         {
-            Regions = new ChangeTrackingList<string>();
+            Regions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of TrafficRegions. </summary>
         /// <param name="regions"></param>
-        internal TrafficRegions(IList<string> regions)
+        internal TrafficRegions(IList<AzureLocation> regions)
         {
             Regions = regions;
         }
 
         /// <summary> Gets the regions. </summary>
-        public IList<string> Regions { get; }
+        public IList<AzureLocation> Regions { get; }
     }
 }

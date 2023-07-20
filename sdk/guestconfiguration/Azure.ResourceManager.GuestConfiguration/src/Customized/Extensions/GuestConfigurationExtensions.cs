@@ -3,9 +3,7 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
 
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> An async collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentDataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAllGuestConfigurationAssignmentDataAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllGuestConfigurationAssignmentDataAsync(cancellationToken);
         }
 
         /// <summary>
@@ -57,7 +55,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> A collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentData(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAllGuestConfigurationAssignmentData(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllGuestConfigurationAssignmentData(cancellationToken);
         }
 
         /// <summary>
@@ -78,7 +76,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> An async collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentDataAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetAllGuestConfigurationAssignmentDataAsync(cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllGuestConfigurationAssignmentDataAsync(cancellationToken);
         }
 
         /// <summary>
@@ -99,7 +97,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> A collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentData(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetAllGuestConfigurationAssignmentData(cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllGuestConfigurationAssignmentData(cancellationToken);
         }
     }
 }

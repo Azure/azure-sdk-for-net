@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -41,7 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var logCategoryName = $"logCategoryName{uniqueTestId}";
 
-            ConcurrentBag<TelemetryItem>? telemetryItems = null;
+            List<TelemetryItem>? telemetryItems = null;
 
             var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -49,7 +48,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
-                        options.ParseStateValues = true;
                         options.AddAzureMonitorLogExporterForTest(out telemetryItems);
                     });
             });
@@ -69,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems?.Single();
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Message").Single();
 
             TelemetryItemValidationHelper.AssertMessageTelemetry(
                 telemetryItem: telemetryItem!,
@@ -94,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var logCategoryName = $"logCategoryName{uniqueTestId}";
 
-            ConcurrentBag<TelemetryItem>? telemetryItems = null;
+            List<TelemetryItem>? telemetryItems = null;
 
             var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -129,7 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ASSERT
             Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(telemetryItems);
-            var telemetryItem = telemetryItems?.Single();
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Exception").Single();
 
             TelemetryItemValidationHelper.AssertLog_As_ExceptionTelemetry(
                 telemetryItem: telemetryItem!,

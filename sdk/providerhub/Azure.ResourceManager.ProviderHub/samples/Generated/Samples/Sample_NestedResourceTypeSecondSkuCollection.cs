@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SkusGetNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_GetNestedResourceTypeSecond.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeSecond.json
             // this example is just showing the usage of "Skus_GetNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SkuResourceData resourceData = result.Data;
+            ResourceTypeSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_SkusGetNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_GetNestedResourceTypeSecond.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_GetNestedResourceTypeSecond.json
             // this example is just showing the usage of "Skus_GetNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_SkusCreateOrUpdateNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_CreateOrUpdateNestedResourceTypeSecond.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_CreateOrUpdateNestedResourceTypeSecond.json
             // this example is just showing the usage of "Skus_CreateOrUpdateNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,21 +116,21 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // invoke the operation
             string sku = "testSku";
-            SkuResourceData data = new SkuResourceData()
+            ResourceTypeSkuData data = new ResourceTypeSkuData()
             {
-                Properties = new SkuResourceProperties(new SkuSetting[]
+                Properties = new ResourceTypeSkuProperties(new ResourceTypeSkuSetting[]
             {
-new SkuSetting("freeSku")
+new ResourceTypeSkuSetting("freeSku")
 {
 Tier = "Tier1",
 Kind = "Standard",
-},new SkuSetting("premiumSku")
+},new ResourceTypeSkuSetting("premiumSku")
 {
 Tier = "Tier2",
 Kind = "Premium",
 Costs =
 {
-new SkuCost("xxx")
+new ResourceTypeSkuCost("xxx")
 },
 }
             }),
@@ -140,7 +140,7 @@ new SkuCost("xxx")
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SkuResourceData resourceData = result.Data;
+            ResourceTypeSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -150,7 +150,7 @@ new SkuCost("xxx")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_SkusListByResourceTypeRegistrationsNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond.json
             // this example is just showing the usage of "Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,7 +176,7 @@ new SkuCost("xxx")
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SkuResourceData resourceData = item.Data;
+                ResourceTypeSkuData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

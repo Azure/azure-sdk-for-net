@@ -18,6 +18,7 @@ namespace Azure.Communication.CallAutomation
         {
             Targets = targets;
             CallbackUri = callbackUri;
+            CustomContext = new CustomContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -55,5 +56,10 @@ namespace Azure.Communication.CallAutomation
         /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
         public Uri AzureCognitiveServicesEndpointUrl { get; set; }
+
+        /// <summary>
+        /// The Custom Context which contains SIP and voip headers.
+        /// </summary>
+        public CustomContext CustomContext { get; }
     }
 }

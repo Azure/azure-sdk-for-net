@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -23,14 +21,14 @@ namespace Azure.Identity
     public class AzureDeveloperCliCredential : TokenCredential
     {
         internal const string AzdCliNotInstalled = "Azure Developer CLI could not be found.";
-        internal const string AzdNotLogIn = "Please run 'azd login' from a command prompt to authenticate before using this credential.";
+        internal const string AzdNotLogIn = "Please run 'azd auth login' from a command prompt to authenticate before using this credential.";
         internal const string WinAzdCliError = "'azd' is not recognized";
         internal const string AzdCliTimeoutError = "Azure Developer CLI authentication timed out.";
         internal const string AzdCliFailedError = "Azure Developer CLI authentication failed due to an unknown error.";
-        internal const string Troubleshoot = "Please visit https://aka.ms/azure-dev for installation instructions and then, once installed, authenticate to your Azure account using 'azd login'.";
+        internal const string Troubleshoot = "Please visit https://aka.ms/azure-dev for installation instructions and then, once installed, authenticate to your Azure account using 'azd auth login'.";
         internal const string InteractiveLoginRequired = "Azure Developer CLI could not login. Interactive login is required.";
         internal const string AzdCLIInternalError = "AzdCLIInternalError: The command failed with an unexpected error. Here is the traceback:";
-        internal TimeSpan AzdCliProcessTimeout { get; private set; }
+        internal TimeSpan ProcessTimeout { get; private set; }
 
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
         private const string DefaultWorkingDirNonWindows = "/bin/";
@@ -44,6 +42,7 @@ namespace Azure.Identity
         private readonly bool _logAccountDetails;
         internal string TenantId { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
+        internal bool _isChainedCredential;
 
         /// <summary>
         /// Create an instance of the <see cref="AzureDeveloperCliCredential"/> class.
@@ -62,13 +61,14 @@ namespace Azure.Identity
 
         internal AzureDeveloperCliCredential(CredentialPipeline pipeline, IProcessService processService, AzureDeveloperCliCredentialOptions options = null)
         {
-            _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logPII = options?.IsSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _pipeline = pipeline;
             _processService = processService ?? ProcessService.Default;
             TenantId = options?.TenantId;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
-            AzdCliProcessTimeout = options?.AzdCliProcessTimeout ?? TimeSpan.FromSeconds(13);
+            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
+            _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.Identity
 
             GetFileNameAndArguments(context.Scopes, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureDeveloperCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), AzdCliProcessTimeout, _logPII, cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
 
             string output;
             try
@@ -123,7 +123,14 @@ namespace Azure.Identity
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
-                throw new AuthenticationFailedException(AzdCliTimeoutError);
+                if (_isChainedCredential)
+                {
+                    throw new CredentialUnavailableException(AzdCliTimeoutError);
+                }
+                else
+                {
+                    throw new AuthenticationFailedException(AzdCliTimeoutError);
+                }
             }
             catch (InvalidOperationException exception)
             {
@@ -137,7 +144,7 @@ namespace Azure.Identity
                 }
 
                 bool isAADSTSError = exception.Message.Contains("AADSTS");
-                bool isLoginError = exception.Message.IndexOf("azd login", StringComparison.OrdinalIgnoreCase) != -1;
+                bool isLoginError = exception.Message.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (isLoginError && !isAADSTSError)
                 {
@@ -153,7 +160,14 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(InteractiveLoginRequired);
                 }
 
-                throw new AuthenticationFailedException($"{AzdCliFailedError} {Troubleshoot} {exception.Message}");
+                if (_isChainedCredential)
+                {
+                    throw new CredentialUnavailableException($"{AzdCliFailedError} {Troubleshoot} {exception.Message}");
+                }
+                else
+                {
+                    throw new AuthenticationFailedException($"{AzdCliFailedError} {Troubleshoot} {exception.Message}");
+                }
             }
 
             AccessToken token = DeserializeOutput(output);
@@ -189,7 +203,7 @@ namespace Azure.Identity
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe");
-                argument = $"/c \"{command}\"";
+                argument = $"/d /c \"{command}\"";
             }
             else
             {

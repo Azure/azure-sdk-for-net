@@ -82,7 +82,6 @@ namespace Azure.ResourceManager.NetApp
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -106,7 +105,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");
@@ -121,7 +119,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             size = property0.Value.GetInt64();
@@ -136,7 +133,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backupType = new NetAppBackupType(property0.Value.GetString());
@@ -156,7 +152,6 @@ namespace Azure.ResourceManager.NetApp
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             useExistingSnapshot = property0.Value.GetBoolean();

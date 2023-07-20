@@ -15,12 +15,11 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A unit of work to be routed. </summary>
     public partial class RouterJob
     {
-
         /// <summary> Initializes a new instance of RouterJob. </summary>
         /// <param name="id"> The id of the job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
-        /// <param name="jobStatus"> The state of the Job. </param>
-        /// <param name="enqueueTimeUtc"> The time a job was queued. </param>
+        /// <param name="status"> The status of the Job. </param>
+        /// <param name="enqueuedAt"> The time a job was queued in UTC. </param>
         /// <param name="channelId"> The channel identifier. eg. voice, chat, etc. </param>
         /// <param name="classificationPolicyId"> The Id of the Classification policy used for classifying a job. </param>
         /// <param name="queueId"> The Id of the Queue that this job is queued to. </param>
@@ -35,12 +34,14 @@ namespace Azure.Communication.JobRouter.Models
         /// </param>
         /// <param name="tags"> A set of non-identifying attributes attached to this job. </param>
         /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
-        internal RouterJob(string id, string channelReference, RouterJobStatus? jobStatus, DateTimeOffset? enqueueTimeUtc, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<WorkerSelector> requestedWorkerSelectors, IReadOnlyList<WorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, JobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes)
+        /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
+        /// <param name="matchingMode"></param>
+        internal RouterJob(string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
         {
             Id = id;
             ChannelReference = channelReference;
-            JobStatus = jobStatus;
-            EnqueueTimeUtc = enqueueTimeUtc;
+            Status = status;
+            EnqueuedAt = enqueuedAt;
             ChannelId = channelId;
             ClassificationPolicyId = classificationPolicyId;
             QueueId = queueId;
@@ -52,32 +53,24 @@ namespace Azure.Communication.JobRouter.Models
             Assignments = assignments;
             _tags = tags;
             _notes = notes;
+            ScheduledAt = scheduledAt;
+            MatchingMode = matchingMode;
         }
 
         /// <summary> The id of the job. </summary>
         public string Id { get; }
-        /// <summary> Reference to an external parent context, eg. call ID. </summary>
-        public string ChannelReference { get; set; }
-        /// <summary> The state of the Job. </summary>
-        public RouterJobStatus? JobStatus { get; }
-        /// <summary> The time a job was queued. </summary>
-        public DateTimeOffset? EnqueueTimeUtc { get; }
-        /// <summary> The channel identifier. eg. voice, chat, etc. </summary>
-        public string ChannelId { get; set; }
-        /// <summary> The Id of the Classification policy used for classifying a job. </summary>
-        public string ClassificationPolicyId { get; set; }
-        /// <summary> The Id of the Queue that this job is queued to. </summary>
-        public string QueueId { get; set; }
-        /// <summary> The priority of this job. </summary>
-        public int? Priority { get; set; }
-        /// <summary> Reason code for cancelled or closed jobs. </summary>
-        public string DispositionCode { get; set; }
+        /// <summary> The status of the Job. </summary>
+        public RouterJobStatus? Status { get; }
+        /// <summary> The time a job was queued in UTC. </summary>
+        public DateTimeOffset? EnqueuedAt { get; }
         /// <summary> A collection of label selectors attached by a classification policy, which a worker must satisfy in order to process this job. </summary>
-        public IReadOnlyList<WorkerSelector> AttachedWorkerSelectors { get; }
+        public IReadOnlyList<RouterWorkerSelector> AttachedWorkerSelectors { get; }
         /// <summary>
         /// A collection of the assignments of the job.
         /// Key is AssignmentId.
         /// </summary>
-        public IReadOnlyDictionary<string, JobAssignment> Assignments { get; }
+        public IReadOnlyDictionary<string, RouterJobAssignment> Assignments { get; }
+        /// <summary> If set, job will be scheduled to be enqueued at a given time. </summary>
+        public DateTimeOffset? ScheduledAt { get; }
     }
 }

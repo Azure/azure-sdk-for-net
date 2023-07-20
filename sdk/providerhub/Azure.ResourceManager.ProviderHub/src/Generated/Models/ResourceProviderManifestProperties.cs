@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="capabilities"></param>
         /// <param name="metadata"> Anything. </param>
         /// <param name="templateDeploymentOptions"></param>
-        internal ResourceProviderManifestProperties(ResourceProviderManifestPropertiesProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ResourceProviderManifestPropertiesFeaturesRule featuresRule, ResourceProviderManifestPropertiesRequestHeaderOptions requestHeaderOptions, ResourceProviderManifestPropertiesManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, ResourceProviderManifestPropertiesTemplateDeploymentOptions templateDeploymentOptions)
+        internal ResourceProviderManifestProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Gets or sets the provider authentication. </summary>
-        internal ResourceProviderManifestPropertiesProviderAuthentication ProviderAuthentication { get; set; }
+        internal ResourceProviderAuthentication ProviderAuthentication { get; set; }
         /// <summary> Gets or sets the provider authentication allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication is null ? default : ProviderAuthentication.AllowedAudiences;
-            set => ProviderAuthentication = new ResourceProviderManifestPropertiesProviderAuthentication(value);
+            set => ProviderAuthentication = new ResourceProviderAuthentication(value);
         }
 
         /// <summary> Gets the provider authorizations. </summary>
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets the required features. </summary>
         public IList<string> RequiredFeatures { get; }
         /// <summary> Gets or sets the features rule. </summary>
-        internal ResourceProviderManifestPropertiesFeaturesRule FeaturesRule { get; set; }
+        internal FeaturesRule FeaturesRule { get; set; }
         /// <summary> Gets or sets the required features policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
             set
             {
-                FeaturesRule = value.HasValue ? new ResourceProviderManifestPropertiesFeaturesRule(value.Value) : null;
+                FeaturesRule = value.HasValue ? new FeaturesRule(value.Value) : null;
             }
         }
 
         /// <summary> Gets or sets the request header options. </summary>
-        internal ResourceProviderManifestPropertiesRequestHeaderOptions RequestHeaderOptions { get; set; }
+        internal RequestHeaderOptions RequestHeaderOptions { get; set; }
         /// <summary> Gets or sets the opt in headers. </summary>
         public OptInHeaderType? OptInHeaders
         {
@@ -91,13 +91,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             set
             {
                 if (RequestHeaderOptions is null)
-                    RequestHeaderOptions = new ResourceProviderManifestPropertiesRequestHeaderOptions();
+                    RequestHeaderOptions = new RequestHeaderOptions();
                 RequestHeaderOptions.OptInHeaders = value;
             }
         }
 
         /// <summary> Gets or sets the management. </summary>
-        public ResourceProviderManifestPropertiesManagement Management { get; set; }
+        public ResourceProviderManagement Management { get; set; }
         /// <summary> Gets the capabilities. </summary>
         public IList<ResourceProviderCapabilities> Capabilities { get; }
         /// <summary>
@@ -132,6 +132,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </summary>
         public BinaryData Metadata { get; set; }
         /// <summary> Gets or sets the template deployment options. </summary>
-        public ResourceProviderManifestPropertiesTemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
+        public TemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
     }
 }

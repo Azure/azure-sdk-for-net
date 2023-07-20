@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> displayName = default;
             Optional<string> regionalDisplayName = default;
             Optional<LocationMetadata> metadata = default;
+            Optional<IReadOnlyList<AvailabilityZoneMappings>> availabilityZoneMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -46,7 +48,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToLocationType();
@@ -66,14 +67,27 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = LocationMetadata.DeserializeLocationMetadata(property.Value);
                     continue;
                 }
+                if (property.NameEquals("availabilityZoneMappings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AvailabilityZoneMappings> array = new List<AvailabilityZoneMappings>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.AvailabilityZoneMappings.DeserializeAvailabilityZoneMappings(item));
+                    }
+                    availabilityZoneMappings = array;
+                    continue;
+                }
             }
-            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, Optional.ToNullable(type), displayName.Value, regionalDisplayName.Value, metadata.Value);
+            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, Optional.ToNullable(type), displayName.Value, regionalDisplayName.Value, metadata.Value, Optional.ToList(availabilityZoneMappings));
         }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    /// <summary> The type of number e.g. &apos;ShortCode&apos;, &apos;AlphaId&apos;. </summary>
+    /// <summary> The type of number e.g. 'ShortCode', 'AlphaId'. </summary>
     public readonly partial struct NumberType : IEquatable<NumberType>
     {
         private readonly string _value;

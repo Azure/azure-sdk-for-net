@@ -121,9 +121,7 @@ namespace Azure.Messaging.EventGrid
                 return message.Response.Status switch
                 {
                     200 => message.Response,
-                    _ => async ?
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response)
+                    _ => throw new RequestFailedException(message.Response)
                 };
             }
             catch (Exception e)
@@ -190,9 +188,7 @@ namespace Azure.Messaging.EventGrid
                 return message.Response.Status switch
                 {
                     200 => message.Response,
-                    _ => async ?
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response)
+                    _ => throw new RequestFailedException(message.Response)
                 };
             }
             catch (Exception e)
@@ -294,9 +290,7 @@ namespace Azure.Messaging.EventGrid
                 return message.Response.Status switch
                 {
                     200 => message.Response,
-                    _ => async ?
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response)
+                    _ => throw new RequestFailedException(message.Response)
                 };
             }
             catch (Exception e)
@@ -364,9 +358,7 @@ namespace Azure.Messaging.EventGrid
                 return message.Response.Status switch
                 {
                     200 => message.Response,
-                    _ => async ?
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response)
+                    _ => throw new RequestFailedException(message.Response)
                 };
             }
             catch (Exception e)

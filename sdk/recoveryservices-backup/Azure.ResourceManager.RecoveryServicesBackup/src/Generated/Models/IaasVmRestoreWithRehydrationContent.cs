@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -56,12 +57,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="encryptionDetails"> Details needed if the VM was encrypted at the time of backup. </param>
         /// <param name="restoreDiskLunList"> List of Disk LUNs for partial restore. </param>
         /// <param name="doesRestoreWithManagedDisks"> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </param>
-        /// <param name="diskEncryptionSetId"> DiskEncryptionSet&apos;s ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </param>
+        /// <param name="diskEncryptionSetId"> DiskEncryptionSet's ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </param>
         /// <param name="zones"> Target zone where the VM and its disks should be restored. </param>
         /// <param name="identityInfo"> Managed Identity information required to access customer storage account. </param>
         /// <param name="identityBasedRestoreDetails"> IaaS VM workload specific restore details for restores using managed identity. </param>
+        /// <param name="extendedLocation">
+        /// Target extended location where the VM should be restored,
+        /// should be null if restore is to be done in public cloud
+        /// </param>
+        /// <param name="securedVmDetails"> Stores Secured VM Details. </param>
+        /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
         /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
-        internal IaasVmRestoreWithRehydrationContent(string objectType, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo) : base(objectType, recoveryPointId, recoveryType, sourceResourceId, targetVirtualMachineId, targetResourceGroupId, storageAccountId, virtualNetworkId, subnetId, targetDomainNameId, region, affinityGroup, doesCreateNewCloudService, originalStorageAccountOption, encryptionDetails, restoreDiskLunList, doesRestoreWithManagedDisks, diskEncryptionSetId, zones, identityInfo, identityBasedRestoreDetails)
+        internal IaasVmRestoreWithRehydrationContent(string objectType, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVmDetails securedVmDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo) : base(objectType, recoveryPointId, recoveryType, sourceResourceId, targetVirtualMachineId, targetResourceGroupId, storageAccountId, virtualNetworkId, subnetId, targetDomainNameId, region, affinityGroup, doesCreateNewCloudService, originalStorageAccountOption, encryptionDetails, restoreDiskLunList, doesRestoreWithManagedDisks, diskEncryptionSetId, zones, identityInfo, identityBasedRestoreDetails, extendedLocation, securedVmDetails, targetDiskNetworkAccessSettings)
         {
             RecoveryPointRehydrationInfo = recoveryPointRehydrationInfo;
             ObjectType = objectType ?? "IaasVMRestoreWithRehydrationRequest";

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary>
-    /// The clinical trials that the patient(s) should be matched to. 
+    /// The clinical trials that the patient(s) should be matched to.
     /// The trial selection can be given as a list of custom clinical trials and/or a list of filters to known clinical trial registries.
     /// In case both are given, the resulting trial set is a union of the two sets.
     /// </summary>
@@ -22,6 +22,18 @@ namespace Azure.Health.Insights.ClinicalMatching
         {
             CustomTrials = new ChangeTrackingList<ClinicalTrialDetails>();
             RegistryFilters = new ChangeTrackingList<ClinicalTrialRegistryFilter>();
+        }
+
+        /// <summary> Initializes a new instance of ClinicalTrials. </summary>
+        /// <param name="customTrials"> A list of clinical trials. </param>
+        /// <param name="registryFilters">
+        /// A list of filters, each one creating a selection of trials from a given
+        /// clinical trial registry.
+        /// </param>
+        internal ClinicalTrials(IList<ClinicalTrialDetails> customTrials, IList<ClinicalTrialRegistryFilter> registryFilters)
+        {
+            CustomTrials = customTrials;
+            RegistryFilters = registryFilters;
         }
 
         /// <summary> A list of clinical trials. </summary>

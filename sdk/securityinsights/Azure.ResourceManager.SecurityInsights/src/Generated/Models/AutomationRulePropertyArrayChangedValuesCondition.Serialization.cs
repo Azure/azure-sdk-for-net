@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     arrayType = new AutomationRulePropertyArrayChangedConditionSupportedArrayType(property.Value.GetString());
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     changeType = new AutomationRulePropertyArrayChangedConditionSupportedChangeType(property.Value.GetString());

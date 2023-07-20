@@ -17,7 +17,7 @@ These code samples show common scenario operations with the Azure Health Insight
 |----------------|-------------|
 |[Sample01_MatchTrials][sample_get_all_matching_clinical_trials_for_a_specific_patient] |Get all matching clinical trials for a specific patient. (sync)|
 |[Sample01_MatchTrialsAsync][sample_get_all_matching_clinical_trials_for_a_specific_patient_async] |Get all matching clinical trials for a specific patient. (async)|
-<!-- LINKS
+
+<!-- LINKS -->
 [sample_get_all_matching_clinical_trials_for_a_specific_patient]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/samples/Sample01_MatchTrials.md
 [sample_get_all_matching_clinical_trials_for_a_specific_patient_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/samples/Sample01_MatchTrialsAsync.md
--->

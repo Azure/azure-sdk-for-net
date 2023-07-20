@@ -82,7 +82,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        receiptDeliveryUrl = null;
                         continue;
                     }
                     receiptDeliveryUrl = new Uri(property.Value.GetString());

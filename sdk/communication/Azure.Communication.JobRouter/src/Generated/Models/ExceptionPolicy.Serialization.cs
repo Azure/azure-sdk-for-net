@@ -22,11 +22,11 @@ namespace Azure.Communication.JobRouter.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(ExceptionRules))
+            if (Optional.IsCollectionDefined(_exceptionRules))
             {
                 writer.WritePropertyName("exceptionRules"u8);
                 writer.WriteStartObject();
-                foreach (var item in ExceptionRules)
+                foreach (var item in _exceptionRules)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value);
@@ -61,7 +61,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ExceptionRule> dictionary = new Dictionary<string, ExceptionRule>();

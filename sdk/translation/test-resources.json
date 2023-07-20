@@ -50,6 +50,10 @@
         }
     },
     "variables": {
+        "txtUniqueSubDomainName": "[format('{0}', parameters('baseName'))]",
+        "txtEndpointValue": "[format('https://api.cognitive.microsofttranslator.com')]",
+        "txtCustomEndpointValue": "[format('https://{0}.cognitiveservices.azure.com', parameters('baseName'))]",
+        "txtRegionValue": "[format('{0}', parameters('location'))]",
         "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]",
@@ -74,7 +78,7 @@
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "2017-04-18",
             "name": "[variables('uniqueSubDomainName')]",
-            "location":"[parameters('location')]",
+            "location": "[parameters('location')]",
             "sku": {
                 "name": "S1"
             },
@@ -109,6 +113,19 @@
                 "accessTier": "Cool"
             }
         },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2017-04-18",
+            "name": "[variables('txtUniqueSubDomainName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "S1"
+            },
+            "kind": "TextTranslation",
+            "properties": {
+                "customSubDomainName": "[variables('txtUniqueSubDomainName')]"
+            }
+        }
     ],
     "outputs": {
         "DOCUMENT_TRANSLATION_API_KEY": {
@@ -125,7 +142,23 @@
         },
         "DOCUMENT_TRANSLATION_CONNECTION_STRING": {
             "type": "string",
-            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-04-01').keys[0].value,';EndpointSuffix=core.windows.net')]" 
+            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-04-01').keys[0].value,';EndpointSuffix=core.windows.net')]"
+        },
+        "TEXT_TRANSLATION_API_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('txtUniqueSubDomainName')), '2017-04-18').key1]"
+        },
+        "TEXT_TRANSLATION_ENDPOINT": {
+            "type": "string",
+            "value": "[variables('txtEndpointValue')]"
+        },
+        "TEXT_TRANSLATION_CUSTOM_ENDPOINT": {
+            "type": "string",
+            "value": "[variables('txtCustomEndpointValue')]"
+        },
+        "TEXT_TRANSLATION_REGION": {
+            "type": "string",
+            "value": "[variables('txtRegionValue')]"
         }
     }
 }

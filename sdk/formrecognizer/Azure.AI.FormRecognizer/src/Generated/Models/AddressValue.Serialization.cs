@@ -26,6 +26,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<string> postalCode = default;
             Optional<string> countryRegion = default;
             Optional<string> streetAddress = default;
+            Optional<string> unit = default;
+            Optional<string> cityDistrict = default;
+            Optional<string> stateDistrict = default;
+            Optional<string> suburb = default;
+            Optional<string> house = default;
+            Optional<string> level = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("houseNumber"u8))
@@ -68,8 +74,38 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     streetAddress = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("unit"u8))
+                {
+                    unit = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("cityDistrict"u8))
+                {
+                    cityDistrict = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("stateDistrict"u8))
+                {
+                    stateDistrict = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("suburb"u8))
+                {
+                    suburb = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("house"u8))
+                {
+                    house = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("level"u8))
+                {
+                    level = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AddressValue(houseNumber.Value, poBox.Value, road.Value, city.Value, state.Value, postalCode.Value, countryRegion.Value, streetAddress.Value);
+            return new AddressValue(houseNumber.Value, poBox.Value, road.Value, city.Value, state.Value, postalCode.Value, countryRegion.Value, streetAddress.Value, unit.Value, cityDistrict.Value, stateDistrict.Value, suburb.Value, house.Value, level.Value);
         }
     }
 }

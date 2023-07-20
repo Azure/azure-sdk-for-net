@@ -1,30 +1,29 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Options for the StorageTransferManager.
+    /// Options for TransferManager that apply to all transfers.
     /// </summary>
     public class TransferManagerOptions
     {
         /// <summary>
-        /// Optional event handler containing all possible status event status holders.
+        /// Define an implementation of ClientOptions such that DiagnosticOptions can be used.
+        /// Don't want to expose full ClientOptions.
         /// </summary>
-        internal IProgress<StorageTransferProgress> ProgressHandler { get; set; }
+        internal class TransferManagerClientOptions : ClientOptions
+        {
+        }
 
         /// <summary>
-        /// Optional. If set to false, the operation will terminate quickly on encountering
-        /// failures from the storage service. If true, the operation will ignore storage service
-        /// related failures and proceed with the other sub-entities of the transfer job
-        /// and pending transfer jobs.
+        /// Optional. Sets the way errors during a transfer will be handled.
+        /// Default is <see cref="ErrorHandlingBehavior.StopOnAllFailures"/>.
         /// </summary>
-        public ErrorHandlingOptions ErrorHandling { get; set; }
+        public ErrorHandlingBehavior ErrorHandling { get; set; }
 
         /// <summary>
         /// The maximum number of workers that may be used in a parallel transfer.
@@ -32,10 +31,16 @@ namespace Azure.Storage.DataMovement
         public int? MaximumConcurrency { get; set; }
 
         /// <summary>
-        /// Optional. Defines the checkpoint ID that the transfer should continue from.
-        ///
-        /// TODO: https://github.com/Azure/azure-sdk-for-net/issues/32955
+        /// Optional. Defines the options for creating a checkpointer which is used for saving
+        /// transfer state so transfers can be resumed.
         /// </summary>
-        internal TransferCheckpointer Checkpointer { get; set; }
+        public TransferCheckpointerOptions CheckpointerOptions { get; set; }
+
+        internal TransferManagerClientOptions ClientOptions { get; } = new();
+
+        /// <summary>
+        /// Gets the transfer manager diagnostic options.
+        /// </summary>
+        public DiagnosticsOptions Diagnostics => ClientOptions.Diagnostics;
     }
 }

@@ -2,15 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
+    [CodeGenType("ContainersContainerRegistryModelFactory")]
     public static partial class ContainerRegistryModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="UploadManifestResult" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetManifestResult" />. </summary>
         /// <param name="digest"> The digest of the uploaded manifest, calculated by the registry. </param>
-        /// <returns> A new <see cref="UploadManifestResult"/> instance for mocking. </returns>
-        public static SetManifestResult UploadManifestResult(string digest = null)
+        /// <returns> A new <see cref="SetManifestResult"/> instance for mocking. </returns>
+        public static SetManifestResult SetManifestResult(string digest = null)
         {
             return new SetManifestResult(digest);
         }

@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Rules defining user&apos;s geo access within a CDN endpoint. </summary>
+    /// <summary> Rules defining user's geo access within a CDN endpoint. </summary>
     public partial class GeoFilter
     {
         /// <summary> Initializes a new instance of GeoFilter. </summary>
-        /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. &apos;/mypictures&apos;, &apos;/mypicture/kitty.jpg&apos;, and etc.). </param>
+        /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.). </param>
         /// <param name="action"> Action of the geo filter, i.e. allow or block access. </param>
         /// <param name="countryCodes"> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativePath"/> or <paramref name="countryCodes"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of GeoFilter. </summary>
-        /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. &apos;/mypictures&apos;, &apos;/mypicture/kitty.jpg&apos;, and etc.). </param>
+        /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.). </param>
         /// <param name="action"> Action of the geo filter, i.e. allow or block access. </param>
         /// <param name="countryCodes"> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </param>
         internal GeoFilter(string relativePath, GeoFilterAction action, IList<string> countryCodes)
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CountryCodes = countryCodes;
         }
 
-        /// <summary> Relative path applicable to geo filter. (e.g. &apos;/mypictures&apos;, &apos;/mypicture/kitty.jpg&apos;, and etc.). </summary>
+        /// <summary> Relative path applicable to geo filter. (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.). </summary>
         public string RelativePath { get; set; }
         /// <summary> Action of the geo filter, i.e. allow or block access. </summary>
         public GeoFilterAction Action { get; set; }

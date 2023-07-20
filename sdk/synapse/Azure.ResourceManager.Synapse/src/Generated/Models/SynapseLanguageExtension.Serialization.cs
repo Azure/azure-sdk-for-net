@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     languageExtensionName = new SynapseLanguageExtensionName(property.Value.GetString());

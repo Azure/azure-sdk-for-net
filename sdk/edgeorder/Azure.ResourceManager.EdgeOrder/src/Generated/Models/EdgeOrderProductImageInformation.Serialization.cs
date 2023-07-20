@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageType = new EdgeOrderProductImageType(property.Value.GetString());
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        imageUrl = null;
                         continue;
                     }
                     imageUrl = new Uri(property.Value.GetString());

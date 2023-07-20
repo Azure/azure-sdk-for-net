@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> centralServerVmId = default;
+            Optional<ResourceIdentifier> centralServerVmId = default;
             Optional<string> managedRgStorageAccountName = default;
             Optional<AzureLocation> appLocation = default;
             SapConfigurationType configurationType = default;
@@ -44,7 +44,11 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 if (property.NameEquals("centralServerVmId"u8))
                 {
-                    centralServerVmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    centralServerVmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("managedRgStorageAccountName"u8))
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appLocation = new AzureLocation(property.Value.GetString());

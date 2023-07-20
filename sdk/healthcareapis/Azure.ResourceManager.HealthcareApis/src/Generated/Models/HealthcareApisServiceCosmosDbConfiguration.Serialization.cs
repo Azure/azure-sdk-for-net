@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offerThroughput = property.Value.GetInt32();
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyVaultKeyUri = null;
                         continue;
                     }
                     keyVaultKeyUri = new Uri(property.Value.GetString());

@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KubernetesSourceControlConfigurationData> array = new List<KubernetesSourceControlConfigurationData>();

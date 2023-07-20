@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("partnerRegistrationFullyQualifiedId"u8);
                 writer.WriteStringValue(PartnerRegistrationFullyQualifiedId);
             }
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            {
+                writer.WritePropertyName("minimumTlsVersionAllowed"u8);
+                writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
+            }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<IReadOnlyList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<PartnerNamespaceProvisioningState> provisioningState = default;
             Optional<ResourceIdentifier> partnerRegistrationFullyQualifiedId = default;
+            Optional<TlsVersion> minimumTlsVersionAllowed = default;
             Optional<Uri> endpoint = default;
             Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
@@ -94,7 +100,6 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -129,7 +134,6 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -148,7 +152,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<EventGridPrivateEndpointConnectionData> array = new List<EventGridPrivateEndpointConnectionData>();
@@ -163,7 +166,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new PartnerNamespaceProvisioningState(property0.Value.GetString());
@@ -173,17 +175,24 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             partnerRegistrationFullyQualifiedId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("minimumTlsVersionAllowed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minimumTlsVersionAllowed = new TlsVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("endpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endpoint = null;
                                 continue;
                             }
                             endpoint = new Uri(property0.Value.GetString());
@@ -193,7 +202,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new EventGridPublicNetworkAccess(property0.Value.GetString());
@@ -203,7 +211,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
@@ -218,7 +225,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableLocalAuth = property0.Value.GetBoolean();
@@ -228,7 +234,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             partnerTopicRoutingMode = new PartnerTopicRoutingMode(property0.Value.GetString());
@@ -238,7 +243,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new PartnerNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), partnerRegistrationFullyQualifiedId.Value, endpoint.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(partnerTopicRoutingMode));
+            return new PartnerNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), partnerRegistrationFullyQualifiedId.Value, Optional.ToNullable(minimumTlsVersionAllowed), endpoint.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(partnerTopicRoutingMode));
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-07-12";
+            _apiVersion = apiVersion ?? "2022-09-09";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

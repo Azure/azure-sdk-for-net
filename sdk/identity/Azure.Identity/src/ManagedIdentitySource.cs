@@ -46,19 +46,17 @@ namespace Azure.Identity
             Response response,
             CancellationToken cancellationToken)
         {
-            string message;
             Exception exception = null;
             try
             {
-                using JsonDocument json = async
-                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                    : JsonDocument.Parse(response.ContentStream);
                 if (response.Status == 200)
                 {
+                    using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
+
                     return GetTokenFromResponse(json.RootElement);
                 }
-
-                message = GetMessageFromResponse(json.RootElement);
             }
             catch (JsonException jex)
             {
@@ -67,13 +65,9 @@ namespace Azure.Identity
             catch (Exception e)
             {
                 exception = e;
-                message = UnexpectedResponse;
             }
 
-            var responseError = new ResponseError(null, message);
-            throw async
-                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, responseError, innerException: exception).ConfigureAwait(false)
-                : Pipeline.Diagnostics.CreateRequestFailedException(response, responseError, innerException: exception);
+            throw new RequestFailedException(response, exception);
         }
 
         protected abstract Request CreateRequest(string[] scopes);
@@ -83,7 +77,7 @@ namespace Azure.Identity
             return new HttpMessage(request, _responseClassifier);
         }
 
-        protected static async Task<string> GetMessageFromResponse(Response response, bool async, CancellationToken cancellationToken)
+        internal static async Task<string> GetMessageFromResponse(Response response, bool async, CancellationToken cancellationToken)
         {
             if (response?.ContentStream == null || !response.ContentStream.CanRead || response.ContentStream.Length == 0)
             {

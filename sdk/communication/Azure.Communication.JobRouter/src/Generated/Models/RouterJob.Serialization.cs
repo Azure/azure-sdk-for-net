@@ -101,6 +101,11 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(MatchingMode))
+            {
+                writer.WritePropertyName("matchingMode"u8);
+                writer.WriteObjectValue(MatchingMode);
+            }
             writer.WriteEndObject();
         }
 
@@ -112,19 +117,21 @@ namespace Azure.Communication.JobRouter.Models
             }
             Optional<string> id = default;
             Optional<string> channelReference = default;
-            Optional<RouterJobStatus> jobStatus = default;
-            Optional<DateTimeOffset> enqueueTimeUtc = default;
+            Optional<RouterJobStatus> status = default;
+            Optional<DateTimeOffset> enqueuedAt = default;
             Optional<string> channelId = default;
             Optional<string> classificationPolicyId = default;
             Optional<string> queueId = default;
             Optional<int> priority = default;
             Optional<string> dispositionCode = default;
-            Optional<IList<WorkerSelector>> requestedWorkerSelectors = default;
-            Optional<IReadOnlyList<WorkerSelector>> attachedWorkerSelectors = default;
+            Optional<IList<RouterWorkerSelector>> requestedWorkerSelectors = default;
+            Optional<IReadOnlyList<RouterWorkerSelector>> attachedWorkerSelectors = default;
             Optional<IDictionary<string, object>> labels = default;
-            Optional<IReadOnlyDictionary<string, JobAssignment>> assignments = default;
+            Optional<IReadOnlyDictionary<string, RouterJobAssignment>> assignments = default;
             Optional<IDictionary<string, object>> tags = default;
             Optional<IDictionary<string, string>> notes = default;
+            Optional<DateTimeOffset> scheduledAt = default;
+            Optional<JobMatchingMode> matchingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,24 +144,22 @@ namespace Azure.Communication.JobRouter.Models
                     channelReference = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobStatus"u8))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobStatus = new RouterJobStatus(property.Value.GetString());
+                    status = new RouterJobStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enqueueTimeUtc"u8))
+                if (property.NameEquals("enqueuedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enqueueTimeUtc = property.Value.GetDateTimeOffset("O");
+                    enqueuedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("channelId"u8))
@@ -176,7 +181,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     priority = property.Value.GetInt32();
@@ -191,13 +195,12 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkerSelector> array = new List<WorkerSelector>();
+                    List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkerSelector.DeserializeWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
                     }
                     requestedWorkerSelectors = array;
                     continue;
@@ -206,13 +209,12 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkerSelector> array = new List<WorkerSelector>();
+                    List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkerSelector.DeserializeWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
                     }
                     attachedWorkerSelectors = array;
                     continue;
@@ -221,7 +223,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
@@ -243,13 +244,12 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, JobAssignment> dictionary = new Dictionary<string, JobAssignment>();
+                    Dictionary<string, RouterJobAssignment> dictionary = new Dictionary<string, RouterJobAssignment>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JobAssignment.DeserializeJobAssignment(property0.Value));
+                        dictionary.Add(property0.Name, RouterJobAssignment.DeserializeRouterJobAssignment(property0.Value));
                     }
                     assignments = dictionary;
                     continue;
@@ -258,7 +258,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
@@ -280,7 +279,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -291,8 +289,26 @@ namespace Azure.Communication.JobRouter.Models
                     notes = dictionary;
                     continue;
                 }
+                if (property.NameEquals("scheduledAt"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledAt = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("matchingMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    matchingMode = JobMatchingMode.DeserializeJobMatchingMode(property.Value);
+                    continue;
+                }
             }
-            return new RouterJob(id.Value, channelReference.Value, Optional.ToNullable(jobStatus), Optional.ToNullable(enqueueTimeUtc), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, Optional.ToList(requestedWorkerSelectors), Optional.ToList(attachedWorkerSelectors), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), Optional.ToDictionary(notes));
+            return new RouterJob(id.Value, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, Optional.ToList(requestedWorkerSelectors), Optional.ToList(attachedWorkerSelectors), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), Optional.ToDictionary(notes), Optional.ToNullable(scheduledAt), matchingMode.Value);
         }
     }
 }

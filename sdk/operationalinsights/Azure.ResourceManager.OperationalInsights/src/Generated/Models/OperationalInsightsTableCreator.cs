@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> Table&apos;s creator. </summary>
+    /// <summary> Table's creator. </summary>
     public readonly partial struct OperationalInsightsTableCreator : IEquatable<OperationalInsightsTableCreator>
     {
         private readonly string _value;

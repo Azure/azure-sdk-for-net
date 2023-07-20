@@ -1,6 +1,23 @@
 # Release History
 
-## 1.0.0 (2023-02-22)
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0 (2023-07-12)
+
+### Bugs Fixed
+
+- Fix secondary key validation failed.
+- Fix multi request origins validation.
+
+## 1.0.0 (2023-03-22)
 
 ### Features Added
 
@@ -8,7 +25,11 @@
 
 ### Breaking Changes
 
-- Upgrade framework to .NET 6.0 LTS version.
+- Rename `ServiceEndpoint` to `WebPubSubServiceEndpoint`.
+
+### Bugs Fixed
+
+- Fix `Headers` field in `ConnectEventRequest` that was missed.
 
 ## 1.0.0-beta.4 (2022-11-11)
 

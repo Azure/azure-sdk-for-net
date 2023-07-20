@@ -46,15 +46,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
-            Optional<ProviderHubMetadataProviderAuthentication> providerAuthentication = default;
-            Optional<ProviderHubMetadataThirdPartyProviderAuthorization> thirdPartyProviderAuthorization = default;
+            Optional<ResourceProviderAuthentication> providerAuthentication = default;
+            Optional<ThirdPartyProviderAuthorization> thirdPartyProviderAuthorization = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerAuthorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceProviderAuthorization> array = new List<ResourceProviderAuthorization>();
@@ -69,20 +68,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerAuthentication = ProviderHubMetadataProviderAuthentication.DeserializeProviderHubMetadataProviderAuthentication(property.Value);
+                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value);
                     continue;
                 }
                 if (property.NameEquals("thirdPartyProviderAuthorization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    thirdPartyProviderAuthorization = ProviderHubMetadataThirdPartyProviderAuthorization.DeserializeProviderHubMetadataThirdPartyProviderAuthorization(property.Value);
+                    thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(property.Value);
                     continue;
                 }
             }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> updatedDateTime = default;
             Optional<string> description = default;
-            Optional<Uri> privateUri = default;
+            Optional<string> privateUri = default;
             Optional<bool> isOnline = default;
             Optional<bool> isCurrent = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdDateTime = property.Value.GetDateTimeOffset("O");
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updatedDateTime = property.Value.GetDateTimeOffset("O");
@@ -66,19 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("privateUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        privateUri = null;
-                        continue;
-                    }
-                    privateUri = new Uri(property.Value.GetString());
+                    privateUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isOnline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isOnline = property.Value.GetBoolean();
@@ -88,7 +80,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isCurrent = property.Value.GetBoolean();

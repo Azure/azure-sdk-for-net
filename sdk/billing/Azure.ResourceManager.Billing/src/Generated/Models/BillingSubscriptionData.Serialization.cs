@@ -156,7 +156,6 @@ namespace Azure.ResourceManager.Billing
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -175,7 +174,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoRenew = new BillingSubscriptionAutoRenewState(property0.Value.GetString());
@@ -195,7 +193,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingProfileId = new ResourceIdentifier(property0.Value.GetString());
@@ -205,7 +202,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -260,7 +256,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             invoiceSectionId = new ResourceIdentifier(property0.Value.GetString());
@@ -280,7 +275,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastMonthCharges = BillingAmount.DeserializeBillingAmount(property0.Value);
@@ -290,7 +284,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             monthToDateCharges = BillingAmount.DeserializeBillingAmount(property0.Value);
@@ -300,7 +293,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nextBillingCycleDetails = NextBillingCycleDetails.DeserializeNextBillingCycleDetails(property0.Value);
@@ -330,7 +322,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purchaseDate = property0.Value.GetDateTimeOffset("O");
@@ -340,7 +331,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             quantity = property0.Value.GetInt64();
@@ -350,7 +340,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reseller = CreatedSubscriptionReseller.DeserializeCreatedSubscriptionReseller(property0.Value);
@@ -360,7 +349,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             renewalTermDetails = SubscriptionRenewalTermDetails.DeserializeSubscriptionRenewalTermDetails(property0.Value);
@@ -380,7 +368,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new BillingSubscriptionStatus(property0.Value.GetString());
@@ -395,7 +382,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -410,7 +396,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             termDuration = property0.Value.GetTimeSpan("P");
@@ -420,7 +405,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             termStartDate = property0.Value.GetDateTimeOffset("O");
@@ -430,7 +414,6 @@ namespace Azure.ResourceManager.Billing
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             termEndDate = property0.Value.GetDateTimeOffset("O");
@@ -449,7 +432,6 @@ namespace Azure.ResourceManager.Billing
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     subscriptionEnrollmentAccountStatus = new SubscriptionEnrollmentAccountStatus(property1.Value.GetString());
@@ -459,7 +441,6 @@ namespace Azure.ResourceManager.Billing
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     enrollmentAccountStartDate = property1.Value.GetDateTimeOffset("O");

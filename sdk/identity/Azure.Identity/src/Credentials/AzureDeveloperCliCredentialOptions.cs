@@ -12,7 +12,7 @@ namespace Azure.Identity
     public class AzureDeveloperCliCredentialOptions : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants
     {
         /// <summary>
-        /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant provided to the 'azd login' command.
+        /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant provided to the 'azd auth login' command.
         /// </summary>
         public string TenantId { get; set; }
 
@@ -26,6 +26,6 @@ namespace Azure.Identity
         /// <summary>
         /// The CLI process timeout.
         /// </summary>
-        public TimeSpan? AzdCliProcessTimeout { get; set; }
+        public TimeSpan? ProcessTimeout { get; set; }
     }
 }

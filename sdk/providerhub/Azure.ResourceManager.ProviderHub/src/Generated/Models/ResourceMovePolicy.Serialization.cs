@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidationRequired))
+            if (Optional.IsDefined(IsValidationRequired))
             {
                 writer.WritePropertyName("validationRequired"u8);
-                writer.WriteBooleanValue(ValidationRequired.Value);
+                writer.WriteBooleanValue(IsValidationRequired.Value);
             }
-            if (Optional.IsDefined(CrossResourceGroupMoveEnabled))
+            if (Optional.IsDefined(IsCrossResourceGroupMoveEnabled))
             {
                 writer.WritePropertyName("crossResourceGroupMoveEnabled"u8);
-                writer.WriteBooleanValue(CrossResourceGroupMoveEnabled.Value);
+                writer.WriteBooleanValue(IsCrossResourceGroupMoveEnabled.Value);
             }
-            if (Optional.IsDefined(CrossSubscriptionMoveEnabled))
+            if (Optional.IsDefined(IsCrossSubscriptionMoveEnabled))
             {
                 writer.WritePropertyName("crossSubscriptionMoveEnabled"u8);
-                writer.WriteBooleanValue(CrossSubscriptionMoveEnabled.Value);
+                writer.WriteBooleanValue(IsCrossSubscriptionMoveEnabled.Value);
             }
             writer.WriteEndObject();
         }
@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validationRequired = property.Value.GetBoolean();
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crossResourceGroupMoveEnabled = property.Value.GetBoolean();
@@ -68,7 +66,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     crossSubscriptionMoveEnabled = property.Value.GetBoolean();

@@ -4,20 +4,22 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-generate-model-factory: false
 csharp: true
 clear-output-folder: true
 skip-csproj: true
 library-name: MySql
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2021-05-01
+  - tag: package-flexibleserver-2022-09-30-preview
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
 namespace: Azure.ResourceManager.MySql
-require: https://github.com/Azure/azure-rest-api-specs/blob/9d85adf7eb1bf9877be1e7a7991b7f1e2252a0e2/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4f6418dca8c15697489bbe6f855558bb79ca5bf5/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySql/Generated
 modelerfour:
   flatten-payloads: false
@@ -179,9 +181,9 @@ directive:
 
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2021-05-01'
+``` yaml $(tag) == 'package-flexibleserver-2022-09-30-preview'
 namespace: Azure.ResourceManager.MySql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/9d85adf7eb1bf9877be1e7a7991b7f1e2252a0e2/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c6b16dc98d720304633b76c8e82c282ffa9cc08/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySqlFlexibleServers/Generated
 modelerfour:
   flatten-payloads: false
@@ -278,13 +280,32 @@ rename-mapping:
   IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
   IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState
   NameAvailability.nameAvailable: IsNameAvailable
+  AzureADAdministrator: MySqlFlexibleServerAadAdministrator
+  AdministratorListResult: MySqlFlexibleServerAadAdministratorListResult
+  AdministratorName: MySqlFlexibleServerAdministratorName
+  BackupAndExportRequest: MySqlFlexibleServerBackupAndExportRequest
+  BackupAndExportResponse: MySqlFlexibleServerBackupAndExportResult
+  BackupFormat: MySqlFlexibleServerBackupFormat
+  BackupRequestBase: MySqlFlexibleServerBackupContentBase
+  BackupSettings: MySqlFlexibleServerBackupSettings
+  BackupStoreDetails: MySqlFlexibleServerBackupStoreDetails
+  FullBackupStoreDetails: MySqlFlexibleServerFullBackupStoreDetails
+  AdministratorType: MySqlFlexibleServerAdministratorType
+  LogFile: MySqlFlexibleServerLogFile
+  LogFileListResult: MySqlFlexibleServerLogFileListResult
+  OperationStatus: MySqlFlexibleServerBackupAndExportOperationStatus
+  ResetAllToDefault: MySqlFlexibleServerConfigurationResetAllToDefault
+  ServerGtidSetParameter: MySqlFlexibleServerGtidSetContent
+  ValidateBackupResponse: MySqlFlexibleServerValidateBackupResult
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
+  CheckNameAvailabilityWithoutLocation_Execute: CheckMySqlFlexibleServerNameAvailabilityWithoutLocation
   Configurations_BatchUpdate: UpdateConfigurations
+  BackupAndExport_ValidateBackup: ValidateBackup
 
 directive:
-  - from: mysql.json
+  - from: FlexibleServers.json
     where: $.definitions
     transform: >
       $.Identity['x-ms-client-flatten'] = false;
@@ -292,7 +313,7 @@ directive:
       delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
 
   # Add a new mode for update operation
-  - from: mysql.json
+  - from: Configurations.json
     where: $.definitions
     transform: >
       $.MySqlFlexibleServerConfigurations =  {
@@ -308,8 +329,7 @@ directive:
           },
           'description': 'A list of server configurations.'
         };
-
-  - from: mysql.json
+  - from: Configurations.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/updateConfigurations'].post
     transform: >
       $.responses['200']['schema']['$ref'] = '#/definitions/MySqlFlexibleServerConfigurations';

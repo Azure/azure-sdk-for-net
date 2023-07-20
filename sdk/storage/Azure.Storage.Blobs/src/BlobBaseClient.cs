@@ -19,13 +19,6 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
-[assembly: InternalsVisibleTo("Azure.Storage.DataMovement.Blobs, PublicKey=" +
-    "0024000004800000940000000602000000240000525341310004000001000100d15ddcb2968829" +
-    "5338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc" +
-    "012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265" +
-    "e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593d" +
-    "aa7b11b4")]
-
 namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
@@ -641,39 +634,30 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region internal static accessors for Azure.Storage.DataMovement.Blobs
         /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="TokenCredential"/>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="HttpAuthorization"/>
         /// for passing the authorization when performing service to service copy
         /// where OAuth is necessary to authenticate the source.
         /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
+        /// <param name="client">
+        /// The storage client which to generate the
+        /// authorization header off of.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-        internal static TokenCredential GetTokenCredential(BlobBaseClient client) =>
-            client.ClientConfiguration.OAuthTokenCredential;
-
-        /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
-        /// for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-        internal static BlobClientOptions GetClientOptions(BlobBaseClient client) =>
-            new BlobClientOptions(client.ClientConfiguration.Version)
+        protected static async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(
+            BlobBaseClient client,
+            CancellationToken cancellationToken = default)
+        {
+            if (client.ClientConfiguration.OAuthTokenCredential != default)
             {
-                // We only use this for communicating diagnostics, at the moment
-                Diagnostics =
-                {
-                    IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
-                }
-            };
-
-        /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
-        /// for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-        internal static bool GetUsingClientSideEncryption(BlobBaseClient client) => client.UsingClientSideEncryption;
-        #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
+                return await client.ClientConfiguration.OAuthTokenCredential.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
+            }
+            return default;
+        }
+        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
         ///// Creates a clone of this instance that references a version ID rather than the base blob.
@@ -1623,7 +1607,13 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         readDestStream.Position = 0;
 
-                        ContentHasher.AssertResponseHashMatch(readDestStream, validationOptions.ChecksumAlgorithm, response.GetRawResponse());
+                        await ContentHasher.AssertResponseHashMatchInternal(
+                            readDestStream,
+                            validationOptions.ChecksumAlgorithm,
+                            response.GetRawResponse(),
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                        ;
 
                         // we've consumed the network stream to hash it; return buffered stream to the user
                         stream = readDestStream;
@@ -2884,14 +2874,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
-            if (async)
-            {
-                return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                return downloader.DownloadTo(destination, conditions, cancellationToken);
-            }
+            return await downloader.DownloadToInternal(destination, conditions, async, cancellationToken).ConfigureAwait(false);
         }
         #endregion Parallel Download
 
@@ -3941,11 +3924,11 @@ namespace Azure.Storage.Blobs.Specialized
         #region CopyFromUri
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -3956,7 +3939,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="options">
@@ -3995,11 +3978,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -4010,7 +3993,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="options">
@@ -4049,11 +4032,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// for source blob sizes up to 256 MiB. This API is available starting in version 2018-03-28.
         /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
         /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// The size of the source blob can be a maximum length of up to 256 MiB.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
@@ -4064,7 +4047,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
         /// source blob must either be public or must be authorized via a shared access signature. If the
         /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
         /// <param name="metadata">
@@ -4685,16 +4668,18 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName)
                         .ConfigureAwait(false);
 
-                    if (BlobBaseClientExistsClassifier.IsResourceNotFoundResponse(response.GetRawResponse()))
+                    Response rawResponse = response.GetRawResponse();
+                    if (BlobBaseClientExistsClassifier.IsResourceNotFoundResponse(rawResponse))
                     {
-                        return Response.FromValue(false, default);
-                    }
-                    if (BlobBaseClientExistsClassifier.IsUsesCustomerSpecifiedEncryptionResponse(response.GetRawResponse()))
-                    {
-                        return Response.FromValue(true, default);
+                        return Response.FromValue(false, rawResponse);
                     }
 
-                    return Response.FromValue(true, response.GetRawResponse());
+                    if (BlobBaseClientExistsClassifier.IsUsesCustomerSpecifiedEncryptionResponse(rawResponse))
+                    {
+                        return Response.FromValue(true, rawResponse);
+                    }
+
+                    return Response.FromValue(true, rawResponse);
                 }
                 catch (Exception ex)
                 {
@@ -4899,7 +4884,7 @@ namespace Azure.Storage.Blobs.Specialized
             await GetPropertiesInternal(
                 conditions,
                 async: true,
-                new RequestContext() { CancellationToken = cancellationToken})
+                new RequestContext() { CancellationToken = cancellationToken })
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -5512,7 +5497,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                 // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions:BlobRequestConditionProperty.None,
+                    invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(BlobBaseClient.CreateSnapshot),
                     parameterName: nameof(conditions));
 

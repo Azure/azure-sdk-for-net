@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of ReservationRefundBillingInformation. </summary>
         /// <param name="billingPlan"> Represent the billing plans. </param>
-        /// <param name="completedTransactions"> The number of completed transactions in this reservation&apos;s payment. </param>
-        /// <param name="totalTransactions"> The number of total transactions in this reservation&apos;s payment. </param>
+        /// <param name="completedTransactions"> The number of completed transactions in this reservation's payment. </param>
+        /// <param name="totalTransactions"> The number of total transactions in this reservation's payment. </param>
         /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Represent the billing plans. </summary>
         public ReservationBillingPlan? BillingPlan { get; }
-        /// <summary> The number of completed transactions in this reservation&apos;s payment. </summary>
+        /// <summary> The number of completed transactions in this reservation's payment. </summary>
         public int? CompletedTransactions { get; }
-        /// <summary> The number of total transactions in this reservation&apos;s payment. </summary>
+        /// <summary> The number of total transactions in this reservation's payment. </summary>
         public int? TotalTransactions { get; }
         /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingCurrencyTotalPaidAmount { get; }

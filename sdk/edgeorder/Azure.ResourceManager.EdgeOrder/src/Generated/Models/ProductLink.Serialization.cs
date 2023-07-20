@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkType = new ProductLinkType(property.Value.GetString());
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        linkUrl = null;
                         continue;
                     }
                     linkUrl = new Uri(property.Value.GetString());

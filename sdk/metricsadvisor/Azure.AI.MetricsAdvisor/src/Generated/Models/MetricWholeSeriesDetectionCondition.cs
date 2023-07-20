@@ -10,11 +10,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The WholeMetricConfiguration. </summary>
     public partial class MetricWholeSeriesDetectionCondition
     {
-
         /// <summary> Initializes a new instance of MetricWholeSeriesDetectionCondition. </summary>
         /// <param name="conditionOperator">
         /// condition operator
-        /// 
+        ///
         /// should be specified when combining multiple detection conditions
         /// </param>
         /// <param name="smartDetectionCondition"></param>

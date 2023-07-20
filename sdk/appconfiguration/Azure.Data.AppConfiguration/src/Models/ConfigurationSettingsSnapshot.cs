@@ -14,7 +14,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of Snapshot. </summary>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
-        public ConfigurationSettingsSnapshot(IEnumerable<ConfigurationSettingFilter> filters)
+        public ConfigurationSettingsSnapshot(IEnumerable<SnapshotSettingFilter> filters)
         {
             Argument.AssertNotNull(filters, nameof(filters));
 
@@ -27,7 +27,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="status"> The current status of the snapshot. </param>
         /// <param name="statusCode"> Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes. </param>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
-        /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key. </param>
+        /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </param>
         /// <param name="created"> The time that the snapshot was created. </param>
         /// <param name="expires"> The time that the snapshot will expire. </param>
         /// <param name="retentionPeriod"> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </param>
@@ -35,7 +35,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
         /// <param name="etag"> A value representing the current state of the snapshot. </param>
-        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, int? statusCode, IList<ConfigurationSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemCount, IDictionary<string, string> tags, ETag etag)
+        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, int? statusCode, IList<SnapshotSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemCount, IDictionary<string, string> tags, ETag etag)
         {
             Name = name;
             Status = status;
@@ -44,7 +44,7 @@ namespace Azure.Data.AppConfiguration
             CompositionType = compositionType;
             Created = created;
             Expires = expires;
-            RetentionPeriod = retentionPeriod;
+            _retentionPeriod = retentionPeriod;
             Size = size;
             ItemCount = itemCount;
             Tags = tags;
@@ -58,15 +58,36 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes. </summary>
         public int? StatusCode { get; }
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
-        public IList<ConfigurationSettingFilter> Filters { get; }
-        /// <summary> The composition type describes how the key-values within the snapshot are composed. The &apos;all&apos; composition type includes all key-values. The &apos;group_by_key&apos; composition type ensures there are no two key-values containing the same key. </summary>
+        public IList<SnapshotSettingFilter> Filters { get; }
+        /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
         public CompositionType? CompositionType { get; set; }
         /// <summary> The time that the snapshot was created. </summary>
         public DateTimeOffset? Created { get; }
         /// <summary> The time that the snapshot will expire. </summary>
         public DateTimeOffset? Expires { get; }
-        /// <summary> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
-        public long? RetentionPeriod { get; set; }
+        private long? _retentionPeriod;
+        /// <summary> The amount of time that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
+        public TimeSpan? RetentionPeriod {
+            get
+            {
+                return _retentionPeriod != null ? TimeSpan.FromSeconds((double)_retentionPeriod) : null;
+            }
+            set
+            {
+                var seconds = value.Value.TotalSeconds;
+                long secondsLong;
+                try
+                {
+                    secondsLong = Convert.ToInt64(seconds);
+                }
+                catch (OverflowException)
+                {
+                    // We won't have negative seconds.
+                    secondsLong = long.MaxValue;
+                }
+                _retentionPeriod = secondsLong;
+            }
+        }
         /// <summary> The size in bytes of the snapshot. </summary>
         public long? Size { get; }
         /// <summary> The amount of key-values in the snapshot. </summary>

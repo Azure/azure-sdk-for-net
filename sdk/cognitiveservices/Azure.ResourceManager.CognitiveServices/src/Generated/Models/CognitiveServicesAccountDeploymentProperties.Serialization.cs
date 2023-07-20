@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("raiPolicyName"u8);
                 writer.WriteStringValue(RaiPolicyName);
             }
+            if (Optional.IsDefined(VersionUpgradeOption))
+            {
+                writer.WritePropertyName("versionUpgradeOption"u8);
+                writer.WriteStringValue(VersionUpgradeOption.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -46,13 +51,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
             Optional<string> raiPolicyName = default;
             Optional<ServiceAccountCallRateLimit> callRateLimit = default;
+            Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rateLimits = default;
+            Optional<DeploymentModelVersionUpgradeOption> versionUpgradeOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new CognitiveServicesAccountDeploymentProvisioningState(property.Value.GetString());
@@ -62,7 +68,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value);
@@ -72,7 +77,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(property.Value);
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -102,14 +105,36 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
                     continue;
                 }
+                if (property.NameEquals("rateLimits"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ServiceAccountThrottlingRule> array = new List<ServiceAccountThrottlingRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item));
+                    }
+                    rateLimits = array;
+                    continue;
+                }
+                if (property.NameEquals("versionUpgradeOption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    versionUpgradeOption = new DeploymentModelVersionUpgradeOption(property.Value.GetString());
+                    continue;
+                }
             }
-            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value);
+            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value, Optional.ToList(rateLimits), Optional.ToNullable(versionUpgradeOption));
         }
     }
 }

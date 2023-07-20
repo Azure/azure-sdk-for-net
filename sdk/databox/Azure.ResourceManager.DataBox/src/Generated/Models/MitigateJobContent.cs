@@ -5,19 +5,15 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> The Mitigate Job captured from request body for Mitigate API. </summary>
     public partial class MitigateJobContent
     {
-        /// <summary> Initializes a new instance of MitigateJobContent. </summary>
-        /// <param name="customerResolutionCode"> Resolution code for the job. </param>
-        public MitigateJobContent(CustomerResolutionCode customerResolutionCode)
-        {
-            CustomerResolutionCode = customerResolutionCode;
-        }
-
-        /// <summary> Resolution code for the job. </summary>
-        public CustomerResolutionCode CustomerResolutionCode { get; }
+        /// <summary> Serial number and the customer resolution code corresponding to each serial number. </summary>
+        public IDictionary<string, CustomerResolutionCode> SerialNumberCustomerResolutionMap { get; }
     }
 }

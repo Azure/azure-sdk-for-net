@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HealthError>> vaultErrors = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> vaultErrors = default;
             Optional<ResourceHealthSummary> protectedItemsHealth = default;
             Optional<ResourceHealthSummary> fabricsHealth = default;
             Optional<ResourceHealthSummary> containersHealth = default;
@@ -29,13 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     vaultErrors = array;
                     continue;
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectedItemsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);
@@ -54,7 +52,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fabricsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);
@@ -64,7 +61,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     containersHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);

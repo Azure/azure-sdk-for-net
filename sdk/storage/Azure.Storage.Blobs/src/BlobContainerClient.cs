@@ -316,9 +316,28 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobContainerUri, credential.AsPolicy(options), options)
         {
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
+            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
+            _uri = blobContainerUri;
+            _authenticationPolicy = credential.AsPolicy(options);
+            options ??= new BlobClientOptions();
+
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(_authenticationPolicy),
+                tokenCredential: credential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
+
+            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
+            _containerRestClient = BuildContainerRestClient(blobContainerUri);
+
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
 
         /// <summary>
@@ -338,7 +357,10 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal BlobContainerClient(Uri blobContainerUri, HttpPipelinePolicy authentication, BlobClientOptions options)
+        internal BlobContainerClient(
+            Uri blobContainerUri,
+            HttpPipelinePolicy authentication,
+            BlobClientOptions options)
         {
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
             _uri = blobContainerUri;
@@ -3402,8 +3424,8 @@ namespace Azure.Storage.Blobs
         #region FilterBlobs
         /// <summary>
         /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
-        /// match a given search expression. Filter blobs searches across all containers within a
-        /// storage account but can be scoped within the expression to a single container.
+        /// match a given search expression and only the tags appearing in the expression will be returned.
+        /// Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
@@ -3434,8 +3456,8 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
-        /// match a given search expression. Filter blobs searches across all containers within a
-        /// storage account but can be scoped within the expression to a single container.
+        /// match a given search expression and only the tags appearing in the expression will be returned.
+        /// Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">

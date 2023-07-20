@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
+                writer.WriteNumberValue(Severity.Value.ToSerialInt64());
             }
             if (Optional.IsDefined(IsEnabled))
             {

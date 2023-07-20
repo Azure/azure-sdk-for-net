@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SingleServerFullResourceNames. </summary>
         public SingleServerFullResourceNames()
         {
-            NamingPatternType = NamingPatternType.FullResourceName;
+            NamingPatternType = SapNamingPatternType.FullResourceName;
         }
 
         /// <summary> Initializes a new instance of SingleServerFullResourceNames. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
         /// <param name="virtualMachine"> The resource names object for virtual machine and related resources. </param>
-        internal SingleServerFullResourceNames(NamingPatternType namingPatternType, VirtualMachineResourceNames virtualMachine) : base(namingPatternType)
+        internal SingleServerFullResourceNames(SapNamingPatternType namingPatternType, VirtualMachineResourceNames virtualMachine) : base(namingPatternType)
         {
             VirtualMachine = virtualMachine;
             NamingPatternType = namingPatternType;

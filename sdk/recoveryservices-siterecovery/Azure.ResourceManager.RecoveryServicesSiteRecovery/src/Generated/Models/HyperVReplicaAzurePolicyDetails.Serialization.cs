@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<int> replicationInterval = default;
             Optional<string> onlineReplicationStartTime = default;
             Optional<string> encryption = default;
-            Optional<string> activeStorageAccountId = default;
+            Optional<ResourceIdentifier> activeStorageAccountId = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointHistoryDurationInHours = property.Value.GetInt32();
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applicationConsistentSnapshotFrequencyInHours = property.Value.GetInt32();
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicationInterval = property.Value.GetInt32();
@@ -69,7 +66,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("activeStorageAccountId"u8))
                 {
-                    activeStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    activeStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             return message;
         }
 
-        /// <summary> Updates account&apos;s patchable properties. </summary>
+        /// <summary> Updates account's patchable properties. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> Account name. </param>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// <summary> Updates account&apos;s patchable properties. </summary>
+        /// <summary> Updates account's patchable properties. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> Account name. </param>

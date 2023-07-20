@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
-            Optional<IList<FactoryDayOfWeek>> weekDays = default;
+            Optional<IList<DataFactoryDayOfWeek>> weekDays = default;
             Optional<IList<int>> monthDays = default;
             Optional<IList<RecurrenceScheduleOccurrence>> monthlyOccurrences = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -98,7 +98,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -128,13 +126,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FactoryDayOfWeek> array = new List<FactoryDayOfWeek>();
+                    List<DataFactoryDayOfWeek> array = new List<DataFactoryDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToFactoryDayOfWeek());
+                        array.Add(item.GetString().ToDataFactoryDayOfWeek());
                     }
                     weekDays = array;
                     continue;
@@ -143,7 +140,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -158,7 +154,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RecurrenceScheduleOccurrence> array = new List<RecurrenceScheduleOccurrence>();

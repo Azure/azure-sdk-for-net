@@ -20,14 +20,19 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
+            Optional<string> nextLink = default;
             Optional<IReadOnlyList<KustoDatabaseData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KustoDatabaseData> array = new List<KustoDatabaseData>();
@@ -39,7 +44,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new DatabaseListResult(Optional.ToList(value));
+            return new DatabaseListResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

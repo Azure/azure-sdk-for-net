@@ -31,9 +31,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="backendHttpSettings"> Backend http settings resource of URL path map path rule. </param>
         /// <param name="redirectConfiguration"> Redirect configuration resource of URL path map path rule. </param>
         /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
+        /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType)
+        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType)
         {
             ETag = etag;
             Paths = paths;
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             BackendHttpSettings = backendHttpSettings;
             RedirectConfiguration = redirectConfiguration;
             RewriteRuleSet = rewriteRuleSet;
+            LoadDistributionPolicy = loadDistributionPolicy;
             ProvisioningState = provisioningState;
             FirewallPolicy = firewallPolicy;
         }
@@ -102,6 +104,20 @@ namespace Azure.ResourceManager.Network.Models
                 if (RewriteRuleSet is null)
                     RewriteRuleSet = new WritableSubResource();
                 RewriteRuleSet.Id = value;
+            }
+        }
+
+        /// <summary> Load Distribution Policy resource of URL path map path rule. </summary>
+        internal WritableSubResource LoadDistributionPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier LoadDistributionPolicyId
+        {
+            get => LoadDistributionPolicy is null ? default : LoadDistributionPolicy.Id;
+            set
+            {
+                if (LoadDistributionPolicy is null)
+                    LoadDistributionPolicy = new WritableSubResource();
+                LoadDistributionPolicy.Id = value;
             }
         }
 

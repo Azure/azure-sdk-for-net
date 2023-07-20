@@ -29,17 +29,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ResourceTypeExtensionOptionsResourceCreationBegin> resourceCreationBegin = default;
+            Optional<ExtensionOptions> resourceCreationBegin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceCreationBegin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceCreationBegin = ResourceTypeExtensionOptionsResourceCreationBegin.DeserializeResourceTypeExtensionOptionsResourceCreationBegin(property.Value);
+                    resourceCreationBegin = ExtensionOptions.DeserializeExtensionOptions(property.Value);
                     continue;
                 }
             }

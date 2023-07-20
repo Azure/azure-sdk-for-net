@@ -87,7 +87,6 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new KeyVaultRoleDefinitionType(property.Value.GetString());
@@ -116,7 +115,6 @@ namespace Azure.Security.KeyVault.Administration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type0 = new KeyVaultRoleType(property0.Value.GetString());
@@ -126,7 +124,6 @@ namespace Azure.Security.KeyVault.Administration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<KeyVaultPermission> array = new List<KeyVaultPermission>();
@@ -141,7 +138,6 @@ namespace Azure.Security.KeyVault.Administration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<KeyVaultRoleScope> array = new List<KeyVaultRoleScope>();

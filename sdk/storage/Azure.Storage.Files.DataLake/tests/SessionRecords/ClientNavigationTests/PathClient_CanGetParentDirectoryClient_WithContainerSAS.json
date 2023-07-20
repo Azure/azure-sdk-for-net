@@ -29,7 +29,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://dgxxscnapby3pev24a.dfs.preprod.core.windows.net/test-filesystem-1fde1d0a-7f4d-4c1b-1cd0-b28c853d47cd/test-directory-0792a32d-4d9c-2178-943d-b6309a84a6c2/test-file-0cc2e8f6-d7ad-11c4-5658-e9311de66490?sv=2022-11-02\u0026st=2022-03-03T04%3A00%3A46Z\u0026se=2022-03-03T06%3A00%3A46Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=file",
+      "RequestUri": "https://dgxxscnapby3pev24a.dfs.preprod.core.windows.net/test-filesystem-1fde1d0a-7f4d-4c1b-1cd0-b28c853d47cd/test-directory-0792a32d-4d9c-2178-943d-b6309a84a6c2/test-file-0cc2e8f6-d7ad-11c4-5658-e9311de66490?sv=2023-01-03\u0026st=2022-03-03T04%3A00%3A46Z\u0026se=2022-03-03T06%3A00%3A46Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -55,7 +55,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://dgxxscnapby3pev24a.dfs.preprod.core.windows.net/test-filesystem-1fde1d0a-7f4d-4c1b-1cd0-b28c853d47cd?sv=2022-11-02\u0026st=2022-03-03T04%3A00%3A46Z\u0026se=2022-03-03T06%3A00%3A46Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=filesystem\u0026directory=test-directory-0792a32d-4d9c-2178-943d-b6309a84a6c2\u0026recursive=false\u0026upn=false",
+      "RequestUri": "https://dgxxscnapby3pev24a.dfs.preprod.core.windows.net/test-filesystem-1fde1d0a-7f4d-4c1b-1cd0-b28c853d47cd?sv=2023-01-03\u0026st=2022-03-03T04%3A00%3A46Z\u0026se=2022-03-03T06%3A00%3A46Z\u0026sr=c\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=filesystem\u0026directory=test-directory-0792a32d-4d9c-2178-943d-b6309a84a6c2\u0026recursive=false\u0026upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

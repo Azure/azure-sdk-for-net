@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -97,7 +96,6 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -131,7 +129,6 @@ namespace Azure.ResourceManager.DnsResolver
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -146,7 +143,6 @@ namespace Azure.ResourceManager.DnsResolver
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             forwardingRuleState = new DnsForwardingRuleState(property0.Value.GetString());
@@ -156,7 +152,6 @@ namespace Azure.ResourceManager.DnsResolver
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new DnsResolverProvisioningState(property0.Value.GetString());

@@ -22,7 +22,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Optional<string> eligibilityCriteriaEvidence = default;
             Optional<ClinicalNoteEvidence> patientDataEvidence = default;
             Optional<ClinicalCodedElement> patientInfoEvidence = default;
-            Optional<float?> importance = default;
+            Optional<float> importance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eligibilityCriteriaEvidence"u8))
@@ -34,7 +34,6 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     patientDataEvidence = ClinicalNoteEvidence.DeserializeClinicalNoteEvidence(property.Value);
@@ -44,7 +43,6 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     patientInfoEvidence = ClinicalCodedElement.DeserializeClinicalCodedElement(property.Value);
@@ -54,14 +52,13 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        importance = null;
                         continue;
                     }
                     importance = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence, patientDataEvidence, patientInfoEvidence, Optional.ToNullable(importance));
+            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence.Value, patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

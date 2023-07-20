@@ -11,9 +11,7 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     [CodeGenModel("Setting")]
     [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(string))]
-#pragma warning disable CA1825 // Avoid zero-length array allocations
     [CodeGenSuppress("Content")]
-#pragma warning restore CA1825 // Avoid zero-length array allocations
     public partial class KeyVaultSetting
     {
         /// <summary>

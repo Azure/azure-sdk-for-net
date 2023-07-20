@@ -51,11 +51,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// throughout the lifetime of the resource.</param>
         /// <param name="platformFaultDomainCount">Specifies the value of fault
         /// domain count that Capacity Reservation supports for requested VM
-        /// size.&lt;br&gt;NOTE: The fault domain count specified for a
-        /// resource (like virtual machines scale set) must be less than or
-        /// equal to this value if it deploys using capacity
-        /// reservation.&lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2022-08-01.</param>
+        /// size. **Note:** The fault domain count specified for a resource
+        /// (like virtual machines scale set) must be less than or equal to
+        /// this value if it deploys using capacity reservation. Minimum
+        /// api-version: 2022-08-01.</param>
         /// <param name="virtualMachinesAssociated">A list of all virtual
         /// machine resource ids that are associated with the capacity
         /// reservation.</param>
@@ -66,8 +65,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="instanceView">The Capacity reservation instance
         /// view.</param>
         /// <param name="timeCreated">Specifies the time at which the Capacity
-        /// Reservation resource was created.&lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2021-11-01.</param>
+        /// Reservation resource was created. Minimum api-version:
+        /// 2021-11-01.</param>
         /// <param name="zones">Availability Zone to use for this capacity
         /// reservation. The zone has to be single value and also should be
         /// part for the list of zones specified during the capacity
@@ -105,12 +104,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets specifies the value of fault domain count that Capacity
-        /// Reservation supports for requested VM size.&amp;lt;br&amp;gt;NOTE:
-        /// The fault domain count specified for a resource (like virtual
-        /// machines scale set) must be less than or equal to this value if it
-        /// deploys using capacity
-        /// reservation.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
-        /// api-version: 2022-08-01.
+        /// Reservation supports for requested VM size. **Note:** The fault
+        /// domain count specified for a resource (like virtual machines scale
+        /// set) must be less than or equal to this value if it deploys using
+        /// capacity reservation. Minimum api-version: 2022-08-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.platformFaultDomainCount")]
         public int? PlatformFaultDomainCount { get; private set; }
@@ -142,8 +139,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets specifies the time at which the Capacity Reservation resource
-        /// was created.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
-        /// api-version: 2021-11-01.
+        /// was created. Minimum api-version: 2021-11-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }

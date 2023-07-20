@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(RunningState))
+            {
+                writer.WritePropertyName("runningState"u8);
+                writer.WriteStringValue(RunningState.Value.ToString());
+            }
             if (Optional.IsDefined(LedgerType))
             {
                 writer.WritePropertyName("ledgerType"u8);
@@ -55,6 +60,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<Uri> ledgerUri = default;
             Optional<Uri> identityServiceUri = default;
             Optional<string> ledgerInternalNamespace = default;
+            Optional<ConfidentialLedgerRunningState> runningState = default;
             Optional<ConfidentialLedgerType> ledgerType = default;
             Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
             Optional<IList<AadBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
@@ -70,7 +76,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        ledgerUri = null;
                         continue;
                     }
                     ledgerUri = new Uri(property.Value.GetString());
@@ -80,7 +85,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        identityServiceUri = null;
                         continue;
                     }
                     identityServiceUri = new Uri(property.Value.GetString());
@@ -91,11 +95,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     ledgerInternalNamespace = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("runningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runningState = new ConfidentialLedgerRunningState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("ledgerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ledgerType = new ConfidentialLedgerType(property.Value.GetString());
@@ -105,7 +117,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ConfidentialLedgerProvisioningState(property.Value.GetString());
@@ -115,7 +126,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AadBasedSecurityPrincipal> array = new List<AadBasedSecurityPrincipal>();
@@ -130,7 +140,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CertBasedSecurityPrincipal> array = new List<CertBasedSecurityPrincipal>();
@@ -142,7 +151,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals));
+            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(runningState), Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals));
         }
     }
 }

@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.ManagedServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ManagedServicesMarketplaceRegistrationProperties.DeserializeManagedServicesMarketplaceRegistrationProperties(property.Value);
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.ManagedServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value);
@@ -67,7 +65,6 @@ namespace Azure.ResourceManager.ManagedServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

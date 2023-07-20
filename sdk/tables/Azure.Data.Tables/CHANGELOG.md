@@ -1,14 +1,9 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.8.1 (2023-07-11)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed the URL returned by `TableClient.Uri` when connecting to Azurite
 
 ## 12.8.0 (2023-02-08)
 

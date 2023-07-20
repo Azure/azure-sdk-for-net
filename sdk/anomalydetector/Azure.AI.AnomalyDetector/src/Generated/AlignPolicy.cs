@@ -7,7 +7,7 @@
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> An optional field, indicating the manner to align multiple variables. </summary>
+    /// <summary> Manner of aligning multiple variables. </summary>
     public partial class AlignPolicy
     {
         /// <summary> Initializes a new instance of AlignPolicy. </summary>
@@ -17,14 +17,11 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Initializes a new instance of AlignPolicy. </summary>
         /// <param name="alignMode">
-        /// An optional field, indicating how to align different variables to the same
-        /// time-range. Either Inner or Outer. 
+        /// Field that indicates how to align different variables to the same
+        /// time range.
         /// </param>
-        /// <param name="fillNAMethod">
-        /// An optional field, indicating how missing values will be filled. One of
-        /// Previous, Subsequent, Linear, Zero, Fixed.
-        /// </param>
-        /// <param name="paddingValue"> An optional field. Required when fillNAMethod is Fixed. </param>
+        /// <param name="fillNAMethod"> Field that indicates how missing values will be filled. </param>
+        /// <param name="paddingValue"> Field that's required when fillNAMethod is Fixed. </param>
         internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue)
         {
             AlignMode = alignMode;
@@ -33,16 +30,13 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary>
-        /// An optional field, indicating how to align different variables to the same
-        /// time-range. Either Inner or Outer. 
+        /// Field that indicates how to align different variables to the same
+        /// time range.
         /// </summary>
         public AlignMode? AlignMode { get; set; }
-        /// <summary>
-        /// An optional field, indicating how missing values will be filled. One of
-        /// Previous, Subsequent, Linear, Zero, Fixed.
-        /// </summary>
+        /// <summary> Field that indicates how missing values will be filled. </summary>
         public FillNAMethod? FillNAMethod { get; set; }
-        /// <summary> An optional field. Required when fillNAMethod is Fixed. </summary>
+        /// <summary> Field that's required when fillNAMethod is Fixed. </summary>
         public float? PaddingValue { get; set; }
     }
 }

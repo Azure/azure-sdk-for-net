@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -64,34 +65,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessKeyId))
             {
                 writer.WritePropertyName("accessKeyId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AccessKeyId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AccessKeyId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AccessKeyId);
             }
             if (Optional.IsDefined(SecretAccessKey))
             {
                 writer.WritePropertyName("secretAccessKey"u8);
-                writer.WriteObjectValue(SecretAccessKey);
+                JsonSerializer.Serialize(writer, SecretAccessKey);
             }
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ServiceUri);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServiceUri.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ServiceUri);
             }
             if (Optional.IsDefined(ForcePathStyle))
             {
                 writer.WritePropertyName("forcePathStyle"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ForcePathStyle);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ForcePathStyle.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ForcePathStyle);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -126,10 +115,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> accessKeyId = default;
-            Optional<FactorySecretBaseDefinition> secretAccessKey = default;
-            Optional<BinaryData> serviceUrl = default;
-            Optional<BinaryData> forcePathStyle = default;
+            Optional<DataFactoryElement<string>> accessKeyId = default;
+            Optional<DataFactorySecretBaseDefinition> secretAccessKey = default;
+            Optional<DataFactoryElement<string>> serviceUrl = default;
+            Optional<DataFactoryElement<bool>> forcePathStyle = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +133,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
@@ -159,7 +147,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
@@ -174,7 +161,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
@@ -205,47 +191,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessKeyId = BinaryData.FromString(property0.Value.GetRawText());
+                            accessKeyId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("secretAccessKey"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            secretAccessKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            secretAccessKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serviceUrl = BinaryData.FromString(property0.Value.GetRawText());
+                            serviceUrl = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("forcePathStyle"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            forcePathStyle = BinaryData.FromString(property0.Value.GetRawText());
+                            forcePathStyle = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
@@ -257,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3CompatibleLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, accessKeyId.Value, secretAccessKey.Value, serviceUrl.Value, forcePathStyle.Value, encryptedCredential.Value);
+            return new AmazonS3CompatibleLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, accessKeyId.Value, secretAccessKey, serviceUrl.Value, forcePathStyle.Value, encryptedCredential.Value);
         }
     }
 }

@@ -22,6 +22,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("baseModel"u8);
                 writer.WriteObjectValue(BaseModel);
             }
+            if (Optional.IsDefined(IsDefaultVersion))
+            {
+                writer.WritePropertyName("isDefaultVersion"u8);
+                writer.WriteBooleanValue(IsDefaultVersion.Value);
+            }
+            if (Optional.IsCollectionDefined(Skus))
+            {
+                writer.WritePropertyName("skus"u8);
+                writer.WriteStartArray();
+                foreach (var item in Skus)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(MaxCapacity))
             {
                 writer.WritePropertyName("maxCapacity"u8);
@@ -74,6 +89,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source);
+            }
             writer.WriteEndObject();
         }
 
@@ -84,6 +104,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
+            Optional<bool> isDefaultVersion = default;
+            Optional<IList<CognitiveServicesModelSku>> skus = default;
             Optional<int> maxCapacity = default;
             Optional<IDictionary<string, string>> capabilities = default;
             Optional<IDictionary<string, string>> finetuneCapabilities = default;
@@ -93,6 +115,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> format = default;
             Optional<string> name = default;
             Optional<string> version = default;
+            Optional<string> source = default;
             Optional<ServiceAccountCallRateLimit> callRateLimit = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -100,17 +123,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     baseModel = DeserializeCognitiveServicesAccountDeploymentModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("isDefaultVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isDefaultVersion = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("skus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CognitiveServicesModelSku> array = new List<CognitiveServicesModelSku>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CognitiveServicesModelSku.DeserializeCognitiveServicesModelSku(item));
+                    }
+                    skus = array;
                     continue;
                 }
                 if (property.NameEquals("maxCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxCapacity = property.Value.GetInt32();
@@ -120,7 +164,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -135,7 +178,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -150,7 +192,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deprecation = ServiceAccountModelDeprecationInfo.DeserializeServiceAccountModelDeprecationInfo(property.Value);
@@ -160,7 +201,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lifecycleStatus = new ModelLifecycleStatus(property.Value.GetString());
@@ -170,7 +210,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -191,18 +230,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("source"u8))
+                {
+                    source = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("callRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
                     continue;
                 }
             }
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, callRateLimit.Value, baseModel.Value, Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
+            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, baseModel.Value, Optional.ToNullable(isDefaultVersion), Optional.ToList(skus), Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
         }
     }
 }

@@ -197,7 +197,7 @@ namespace Azure.Containers.ContainerRegistry
         public static Azure.Containers.ContainerRegistry.ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = null, string name = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), int manifestCount = 0, int tagCount = 0, bool? canDelete = default(bool?), bool? canWrite = default(bool?), bool? canList = default(bool?), bool? canRead = default(bool?)) { throw null; }
         public static Azure.Containers.ContainerRegistry.DownloadRegistryBlobResult DownloadRegistryBlobResult(string digest = null, System.BinaryData content = null) { throw null; }
         public static Azure.Containers.ContainerRegistry.GetManifestResult GetManifestResult(string digest = null, string mediaType = null, System.BinaryData manifest = null) { throw null; }
-        public static Azure.Containers.ContainerRegistry.SetManifestResult UploadManifestResult(string digest = null) { throw null; }
+        public static Azure.Containers.ContainerRegistry.SetManifestResult SetManifestResult(string digest = null) { throw null; }
         public static Azure.Containers.ContainerRegistry.UploadRegistryBlobResult UploadRegistryBlobResult(string digest, long sizeInBytes) { throw null; }
     }
     public partial class ContainerRepository

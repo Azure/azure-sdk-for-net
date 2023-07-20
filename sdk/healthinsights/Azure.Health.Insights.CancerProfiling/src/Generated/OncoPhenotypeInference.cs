@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -41,7 +40,7 @@ namespace Azure.Health.Insights.CancerProfiling
             Value = value;
             Description = description;
             ConfidenceScore = confidenceScore;
-            Evidence = evidence.ToList();
+            Evidence = evidence;
             CaseId = caseId;
         }
 

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
             IList<AadBasedSecurityPrincipal> securityPrincipals)
         {
             return new ConfidentialLedgerProperties(properties.LedgerName, properties.LedgerUri,
-                properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.LedgerType,
+                properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.RunningState, properties.LedgerType,
                 properties.ProvisioningState, securityPrincipals, properties.CertBasedSecurityPrincipals);
         }
 

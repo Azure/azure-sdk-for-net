@@ -50,7 +50,6 @@ namespace Azure.Communication
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAnonymous = property.Value.GetBoolean();
@@ -60,7 +59,6 @@ namespace Azure.Communication
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cloud = new CommunicationCloudEnvironmentModel(property.Value.GetString());

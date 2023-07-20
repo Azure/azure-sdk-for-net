@@ -35,20 +35,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="createOption">Specifies how the virtual machines in
-        /// the scale set should be created.&lt;br&gt;&lt;br&gt; The only
-        /// allowed value is: **FromImage** \u2013 This value is used when you
-        /// are using an image to create the virtual machine. If you are using
-        /// a platform image, you also use the imageReference element described
-        /// above. If you are using a marketplace image, you  also use the plan
-        /// element previously described. Possible values include: 'FromImage',
+        /// the scale set should be created. The only allowed value is:
+        /// **FromImage.** This value is used when you are using an image to
+        /// create the virtual machine. If you are using a platform image, you
+        /// also use the imageReference element described above. If you are
+        /// using a marketplace image, you  also use the plan element
+        /// previously described. Possible values include: 'FromImage',
         /// 'Empty', 'Attach'</param>
         /// <param name="name">The disk name.</param>
-        /// <param name="caching">Specifies the caching requirements.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt;
-        /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
-        /// 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <param name="caching">Specifies the caching requirements. Possible
+        /// values are: **None,** **ReadOnly,** **ReadWrite.** The default
+        /// values are: **None for Standard storage. ReadOnly for Premium
+        /// storage.**. Possible values include: 'None', 'ReadOnly',
+        /// 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
         /// <param name="diffDiskSettings">Specifies the ephemeral disk
@@ -56,14 +55,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// scale set.</param>
         /// <param name="diskSizeGB">Specifies the size of an empty data disk
         /// in gigabytes. This element can be used to overwrite the size of the
-        /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; diskSizeGB is
-        /// the number of bytes x 1024^3 for the disk and the value cannot be
-        /// larger than 1023</param>
+        /// disk in a virtual machine image. The property 'diskSizeGB' is the
+        /// number of bytes x 1024^3 for the disk and the value cannot be
+        /// larger than 1023.</param>
         /// <param name="osType">This property allows you to specify the type
         /// of the OS that is included in the disk if creating a VM from
-        /// user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible
-        /// values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt;
-        /// **Linux**. Possible values include: 'Windows', 'Linux'</param>
+        /// user-image or a specialized VHD. Possible values are: **Windows,**
+        /// **Linux.**. Possible values include: 'Windows', 'Linux'</param>
         /// <param name="image">Specifies information about the unmanaged user
         /// image to base the scale set on.</param>
         /// <param name="vhdContainers">Specifies the container urls that are
@@ -108,14 +106,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the caching requirements.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **None**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadOnly**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **ReadWrite**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **None for Standard
-        /// storage. ReadOnly for Premium storage**. Possible values include:
-        /// 'None', 'ReadOnly', 'ReadWrite'
+        /// Gets or sets specifies the caching requirements. Possible values
+        /// are: **None,** **ReadOnly,** **ReadWrite.** The default values are:
+        /// **None for Standard storage. ReadOnly for Premium storage.**.
+        /// Possible values include: 'None', 'ReadOnly', 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
@@ -129,13 +123,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies how the virtual machines in the scale set
-        /// should be created.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; The only
-        /// allowed value is: **FromImage** \u2013 This value is used when you
-        /// are using an image to create the virtual machine. If you are using
-        /// a platform image, you also use the imageReference element described
-        /// above. If you are using a marketplace image, you  also use the plan
-        /// element previously described. Possible values include: 'FromImage',
-        /// 'Empty', 'Attach'
+        /// should be created. The only allowed value is: **FromImage.** This
+        /// value is used when you are using an image to create the virtual
+        /// machine. If you are using a platform image, you also use the
+        /// imageReference element described above. If you are using a
+        /// marketplace image, you  also use the plan element previously
+        /// described. Possible values include: 'FromImage', 'Empty', 'Attach'
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
         public string CreateOption { get; set; }
@@ -150,9 +143,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the size of an empty data disk in gigabytes.
         /// This element can be used to overwrite the size of the disk in a
-        /// virtual machine image. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-        /// diskSizeGB is the number of bytes x 1024^3 for the disk and the
-        /// value cannot be larger than 1023
+        /// virtual machine image. The property 'diskSizeGB' is the number of
+        /// bytes x 1024^3 for the disk and the value cannot be larger than
+        /// 1023.
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }
@@ -160,10 +153,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets this property allows you to specify the type of the OS
         /// that is included in the disk if creating a VM from user-image or a
-        /// specialized VHD. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible
-        /// values are: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Windows**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Linux**. Possible values
-        /// include: 'Windows', 'Linux'
+        /// specialized VHD. Possible values are: **Windows,** **Linux.**.
+        /// Possible values include: 'Windows', 'Linux'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
         public OperatingSystemTypes? OsType { get; set; }

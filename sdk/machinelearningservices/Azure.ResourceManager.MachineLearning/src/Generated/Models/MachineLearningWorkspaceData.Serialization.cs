@@ -186,7 +186,6 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -197,7 +196,6 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
@@ -207,7 +205,6 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -242,7 +239,6 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -301,7 +297,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                discoveryUrl = null;
                                 continue;
                             }
                             discoveryUrl = new Uri(property0.Value.GetString());
@@ -311,7 +306,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new MachineLearningProvisioningState(property0.Value.GetString());
@@ -321,7 +315,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryption = MachineLearningEncryptionSetting.DeserializeMachineLearningEncryptionSetting(property0.Value);
@@ -331,7 +324,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hbiWorkspace = property0.Value.GetBoolean();
@@ -346,7 +338,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkCount = property0.Value.GetInt32();
@@ -361,7 +352,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowPublicAccessWhenBehindVnet = property0.Value.GetBoolean();
@@ -371,7 +361,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new MachineLearningPublicNetworkAccess(property0.Value.GetString());
@@ -381,7 +370,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MachineLearningPrivateEndpointConnectionData> array = new List<MachineLearningPrivateEndpointConnectionData>();
@@ -396,7 +384,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MachineLearningSharedPrivateLinkResource> array = new List<MachineLearningSharedPrivateLinkResource>();
@@ -411,7 +398,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             notebookInfo = MachineLearningNotebookResourceInfo.DeserializeMachineLearningNotebookResourceInfo(property0.Value);
@@ -421,7 +407,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value);
@@ -436,7 +421,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
@@ -446,7 +430,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageHnsEnabled = property0.Value.GetBoolean();
@@ -456,7 +439,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                mlFlowTrackingUri = null;
                                 continue;
                             }
                             mlFlowTrackingUri = new Uri(property0.Value.GetString());
@@ -466,7 +448,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             v1LegacyMode = property0.Value.GetBoolean();

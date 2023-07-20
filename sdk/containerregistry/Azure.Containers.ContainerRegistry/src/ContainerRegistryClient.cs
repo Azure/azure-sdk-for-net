@@ -82,7 +82,12 @@ namespace Azure.Containers.ContainerRegistry
             _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
             string defaultScope = (options.Audience?.ToString() ?? DefaultScope) + "/.default";
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
+            HttpPipelineOptions pipelineOptions = new HttpPipelineOptions(options)
+            {
+                RequestFailedDetailsParser = new ContainerRegistryRequestFailedDetailsParser()
+            };
+            pipelineOptions.PerRetryPolicies.Add(new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 

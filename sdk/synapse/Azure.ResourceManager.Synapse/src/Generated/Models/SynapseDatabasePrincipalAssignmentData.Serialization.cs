@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -107,7 +106,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             role = new SynapseDatabasePrincipalRole(property0.Value.GetString());
@@ -117,7 +115,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
@@ -127,7 +124,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             principalType = new SynapsePrincipalType(property0.Value.GetString());
@@ -147,7 +143,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ResourceProvisioningState(property0.Value.GetString());
@@ -157,7 +152,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadObjectId = property0.Value.GetGuid();

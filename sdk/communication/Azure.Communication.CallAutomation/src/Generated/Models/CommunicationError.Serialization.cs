@@ -19,8 +19,8 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string code = default;
+            string message = default;
             Optional<string> target = default;
             Optional<IReadOnlyList<CommunicationError>> details = default;
             Optional<CommunicationError> innererror = default;
@@ -45,7 +45,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommunicationError> array = new List<CommunicationError>();
@@ -60,14 +59,13 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innererror = DeserializeCommunicationError(property.Value);
                     continue;
                 }
             }
-            return new CommunicationError(code.Value, message.Value, target.Value, Optional.ToList(details), innererror.Value);
+            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innererror.Value);
         }
     }
 }

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Maintenance
 {
     public partial class MaintenanceConfigurationData : IUtf8JsonSerializable
     {
-
         internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -45,7 +44,6 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -80,7 +78,6 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -104,7 +101,6 @@ namespace Azure.ResourceManager.Maintenance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -119,7 +115,6 @@ namespace Azure.ResourceManager.Maintenance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maintenanceScope = new MaintenanceScope(property0.Value.GetString());
@@ -129,7 +124,6 @@ namespace Azure.ResourceManager.Maintenance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             visibility = new MaintenanceConfigurationVisibility(property0.Value.GetString());
@@ -139,7 +133,6 @@ namespace Azure.ResourceManager.Maintenance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             installPatches = InputPatchConfiguration.DeserializeInputPatchConfiguration(property0.Value);
@@ -158,7 +151,6 @@ namespace Azure.ResourceManager.Maintenance
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     startDateTime = property1.Value.GetDateTimeOffset("O");
@@ -168,7 +160,6 @@ namespace Azure.ResourceManager.Maintenance
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     expirationDateTime = property1.Value.GetDateTimeOffset("O");
@@ -178,7 +169,6 @@ namespace Azure.ResourceManager.Maintenance
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     duration = property1.Value.GetTimeSpan("c");

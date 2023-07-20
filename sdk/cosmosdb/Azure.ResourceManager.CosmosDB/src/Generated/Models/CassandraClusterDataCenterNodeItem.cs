@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>
-        /// <param name="address"> The node&apos;s IP address. </param>
+        /// <param name="address"> The node's IP address. </param>
         /// <param name="state"> The state of the node in Cassandra ring. </param>
         /// <param name="status"></param>
         /// <param name="load"> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="size"></param>
         /// <param name="hostId"> The network ID of the node. </param>
         /// <param name="rack"> The rack this node is part of. </param>
-        /// <param name="timestamp"> The timestamp when these statistics were captured. </param>
+        /// <param name="timestamp"> The timestamp at which that snapshot of these usage statistics were taken. </param>
         /// <param name="diskUsedKB"> The amount of disk used, in kB, of the directory /var/lib/cassandra. </param>
         /// <param name="diskFreeKB"> The amount of disk free, in kB, of the directory /var/lib/cassandra. </param>
         /// <param name="memoryUsedKB"> Used memory (calculated as total - free - buffers - cache), in kB. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CpuUsage = cpuUsage;
         }
 
-        /// <summary> The node&apos;s IP address. </summary>
+        /// <summary> The node's IP address. </summary>
         public string Address { get; }
         /// <summary> The state of the node in Cassandra ring. </summary>
         public CassandraNodeState? State { get; }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Guid? HostId { get; }
         /// <summary> The rack this node is part of. </summary>
         public string Rack { get; }
-        /// <summary> The timestamp when these statistics were captured. </summary>
+        /// <summary> The timestamp at which that snapshot of these usage statistics were taken. </summary>
         public string Timestamp { get; }
         /// <summary> The amount of disk used, in kB, of the directory /var/lib/cassandra. </summary>
         public long? DiskUsedKB { get; }

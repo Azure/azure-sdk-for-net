@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScVmmVirtualNetworkData> array = new List<ScVmmVirtualNetworkData>();

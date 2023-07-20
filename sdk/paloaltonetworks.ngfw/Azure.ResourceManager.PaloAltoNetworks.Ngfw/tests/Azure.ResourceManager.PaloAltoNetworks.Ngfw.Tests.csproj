@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.PaloAltoNetworks.Ngfw.csproj" />
+  </ItemGroup>
+</Project>

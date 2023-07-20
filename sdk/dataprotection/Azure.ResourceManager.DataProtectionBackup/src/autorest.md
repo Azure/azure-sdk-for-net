@@ -5,11 +5,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/42e62bef21fca828da9a9a81d845d00aae466877/specification/dataprotection/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0724e72994ed3c77f76ed0bfa2df3b1f0c33a41b/specification/dataprotection/resource-manager/readme.md
+tag: package-2023-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -99,7 +99,7 @@ rename-mapping:
   TriggerBackupRequest.backupRuleOptions: BackupRules
   OperationExtendedInfo: DataProtectionOperationExtendedInfo
   OperationJobExtendedInfo: DataProtectionOperationJobExtendedInfo
-  OperationJobExtendedInfo.jobId: -|uuid
+  OperationJobExtendedInfo.jobId: JobResourceId|arm-id
   AzureBackupFindRestorableTimeRangesRequest: BackupFindRestorableTimeRangeContent
   AzureBackupFindRestorableTimeRangesRequest.startTime: StartOn|date-time
   AzureBackupFindRestorableTimeRangesRequest.endTime: EndOn|date-time
@@ -172,11 +172,13 @@ rename-mapping:
   Datasource.resourceID: -|arm-id
   Datasource.resourceLocation: -|azure-location
   Datasource.resourceType: -|resource-type
+  Datasource.resourceUri: ResourceUriString
   DatasourceSet: DataSourceSetInfo
   DatasourceSet.datasourceType: DataSourceType
   DatasourceSet.resourceID: -|arm-id
   DatasourceSet.resourceLocation: -|azure-location
   DatasourceSet.resourceType: -|resource-type
+  DatasourceSet.resourceUri: ResourceUriString
   PolicyInfo: BackupInstancePolicyInfo
   PolicyInfo.policyId: -|arm-id
   ValidationType: BackupValidationType
@@ -242,6 +244,8 @@ rename-mapping:
   SecuritySettings: BackupVaultSecuritySettings
   SoftDeleteSettings: BackupVaultSoftDeleteSettings
   SoftDeleteState: BackupVaultSoftDeleteState
+  UnlockDeleteRequest: DataProtectionUnlockDeleteContent
+  UnlockDeleteResponse: DataProtectionUnlockDeleteResult
 
 directive:
 # Correct the type of properties

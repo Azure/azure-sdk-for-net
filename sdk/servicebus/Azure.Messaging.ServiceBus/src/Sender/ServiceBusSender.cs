@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -272,7 +273,7 @@ namespace Azure.Messaging.ServiceBus
             // create a new scope for the specified operation
             DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 activityName,
-                DiagnosticScope.ActivityKind.Client,
+                ActivityKind.Client,
                 operation);
 
             scope.SetMessageData(messages);
@@ -289,7 +290,7 @@ namespace Azure.Messaging.ServiceBus
             // create a new scope for the specified operation
             DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 activityName,
-                DiagnosticScope.ActivityKind.Client,
+                ActivityKind.Client,
                 operation);
 
             scope.SetMessageData(messages);
@@ -427,6 +428,8 @@ namespace Azure.Messaging.ServiceBus
         ///   Occurs when the <paramref name="message"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
         ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
         /// </exception>
+        ///
+        /// <seealso cref="CancelScheduledMessageAsync(long, CancellationToken)"/>
         public virtual async Task<long> ScheduleMessageAsync(
             ServiceBusMessage message,
             DateTimeOffset scheduledEnqueueTime,
@@ -463,6 +466,8 @@ namespace Azure.Messaging.ServiceBus
         ///   Occurs when one of the <paramref name="messages"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
         ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
         /// </exception>
+        ///
+        /// <seealso cref="CancelScheduledMessagesAsync(IEnumerable{long}, CancellationToken)"/>
         public virtual async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             DateTimeOffset scheduledEnqueueTime,
@@ -520,6 +525,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="sequenceNumber">The <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <seealso cref="ScheduleMessageAsync(ServiceBusMessage, DateTimeOffset, CancellationToken)"/>
         public virtual async Task CancelScheduledMessageAsync(
             long sequenceNumber,
             CancellationToken cancellationToken = default) =>
@@ -533,6 +539,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="sequenceNumbers">The set of <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the messages to be cancelled.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <seealso cref="ScheduleMessagesAsync(IEnumerable{ServiceBusMessage}, DateTimeOffset, CancellationToken)"/>
         public virtual async Task CancelScheduledMessagesAsync(
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
@@ -558,7 +565,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.CancelActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             try

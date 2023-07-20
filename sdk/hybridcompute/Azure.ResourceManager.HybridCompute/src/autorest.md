@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
@@ -58,5 +57,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+models-to-treat-empty-string-as-null:
+  - AgentConfiguration
 
 ```

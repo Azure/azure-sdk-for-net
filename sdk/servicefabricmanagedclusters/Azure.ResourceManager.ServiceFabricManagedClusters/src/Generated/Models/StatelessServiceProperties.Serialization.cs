@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
+            if (Optional.IsDefined(ServiceDnsName))
+            {
+                writer.WritePropertyName("serviceDnsName"u8);
+                writer.WriteStringValue(ServiceDnsName);
+            }
             if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
@@ -106,6 +111,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string serviceTypeName = default;
             ManagedServicePartitionScheme partitionDescription = default;
             Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
+            Optional<string> serviceDnsName = default;
             Optional<string> placementConstraints = default;
             Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
             Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
@@ -123,7 +129,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minInstanceCount = property.Value.GetInt32();
@@ -133,7 +138,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minInstancePercentage = property.Value.GetInt32();
@@ -163,10 +167,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     servicePackageActivationMode = new ManagedServicePackageActivationMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("serviceDnsName"u8))
+                {
+                    serviceDnsName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("placementConstraints"u8))
@@ -178,7 +186,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServiceCorrelation> array = new List<ManagedServiceCorrelation>();
@@ -193,7 +200,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServiceLoadMetric> array = new List<ManagedServiceLoadMetric>();
@@ -208,7 +214,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServicePlacementPolicy> array = new List<ManagedServicePlacementPolicy>();
@@ -223,7 +228,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultMoveCost = new ServiceFabricManagedServiceMoveCost(property.Value.GetString());
@@ -233,7 +237,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedServiceScalingPolicy> array = new List<ManagedServiceScalingPolicy>();
@@ -245,7 +248,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new StatelessServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), instanceCount, Optional.ToNullable(minInstanceCount), Optional.ToNullable(minInstancePercentage));
+            return new StatelessServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, instanceCount, Optional.ToNullable(minInstanceCount), Optional.ToNullable(minInstancePercentage));
         }
     }
 }

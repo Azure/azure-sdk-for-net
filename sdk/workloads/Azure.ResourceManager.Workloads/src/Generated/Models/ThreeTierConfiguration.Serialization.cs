@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Workloads.Models
             ApplicationServerConfiguration applicationServer = default;
             DatabaseConfiguration databaseServer = default;
             Optional<HighAvailabilityConfiguration> highAvailabilityConfig = default;
-            Optional<StorageConfiguration> storageConfiguration = default;
+            Optional<SapStorageConfiguration> storageConfiguration = default;
             Optional<ThreeTierCustomResourceNames> customResourceNames = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value);
@@ -94,7 +93,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     highAvailabilityConfig = HighAvailabilityConfiguration.DeserializeHighAvailabilityConfiguration(property.Value);
@@ -104,17 +102,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageConfiguration = StorageConfiguration.DeserializeStorageConfiguration(property.Value);
+                    storageConfiguration = SapStorageConfiguration.DeserializeSapStorageConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customResourceNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customResourceNames = ThreeTierCustomResourceNames.DeserializeThreeTierCustomResourceNames(property.Value);
