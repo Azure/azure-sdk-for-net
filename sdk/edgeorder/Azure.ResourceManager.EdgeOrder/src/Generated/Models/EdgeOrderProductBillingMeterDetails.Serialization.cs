@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<EdgeOrderProductMeterDetails> meterDetails = default;
             Optional<EdgeOrderProductMeteringType> meteringType = default;
             Optional<string> frequency = default;
+            Optional<TermTypeDetails> termTypeDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,8 +53,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     frequency = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("termTypeDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    termTypeDetails = TermTypeDetails.DeserializeTermTypeDetails(property.Value);
+                    continue;
+                }
             }
-            return new EdgeOrderProductBillingMeterDetails(name.Value, meterDetails.Value, Optional.ToNullable(meteringType), frequency.Value);
+            return new EdgeOrderProductBillingMeterDetails(name.Value, meterDetails.Value, Optional.ToNullable(meteringType), frequency.Value, termTypeDetails.Value);
         }
     }
 }

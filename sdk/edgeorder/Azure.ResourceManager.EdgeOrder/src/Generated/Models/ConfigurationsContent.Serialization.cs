@@ -15,13 +15,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("configurationFilters"u8);
-            writer.WriteStartArray();
-            foreach (var item in ConfigurationFilters)
+            if (Optional.IsDefined(ConfigurationFilter))
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("configurationFilter"u8);
+                writer.WriteObjectValue(ConfigurationFilter);
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);

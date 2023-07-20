@@ -25,9 +25,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<EdgeOrderProductCostInformation> costInformation = default;
             Optional<ProductAvailabilityInformation> availabilityInformation = default;
             Optional<HierarchyInformation> hierarchyInformation = default;
+            Optional<FulfillmentType> fulfilledBy = default;
             Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
             Optional<IReadOnlyList<ProductSpecification>> specifications = default;
             Optional<ProductDimensions> dimensions = default;
+            Optional<IReadOnlyList<ChildConfigurationType>> childConfigurationTypes = default;
+            Optional<IReadOnlyList<GroupedChildConfigurations>> groupedChildConfigurations = default;
+            Optional<IReadOnlyList<string>> supportedTermCommitmentDurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -94,6 +98,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("fulfilledBy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            fulfilledBy = new FulfillmentType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("filterableProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -131,11 +144,53 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             dimensions = ProductDimensions.DeserializeProductDimensions(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("childConfigurationTypes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ChildConfigurationType> array = new List<ChildConfigurationType>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ChildConfigurationType(item.GetString()));
+                            }
+                            childConfigurationTypes = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("groupedChildConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<GroupedChildConfigurations> array = new List<GroupedChildConfigurations>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Models.GroupedChildConfigurations.DeserializeGroupedChildConfigurations(item));
+                            }
+                            groupedChildConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("supportedTermCommitmentDurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            supportedTermCommitmentDurations = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ProductConfiguration(displayName.Value, description.Value, Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Optional.ToList(filterableProperties), Optional.ToList(specifications), dimensions.Value);
+            return new ProductConfiguration(displayName.Value, description.Value, Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Optional.ToNullable(fulfilledBy), Optional.ToList(filterableProperties), Optional.ToList(specifications), dimensions.Value, Optional.ToList(childConfigurationTypes), Optional.ToList(groupedChildConfigurations), Optional.ToList(supportedTermCommitmentDurations));
         }
     }
 }

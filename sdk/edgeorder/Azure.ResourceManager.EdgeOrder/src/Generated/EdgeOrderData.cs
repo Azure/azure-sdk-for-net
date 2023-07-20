@@ -33,11 +33,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemIds"> List of order item ARM Ids which are part of an order. </param>
         /// <param name="currentStage"> Order current status. </param>
         /// <param name="orderStageHistory"> Order status history. </param>
-        internal EdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ResourceIdentifier> orderItemIds, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderStageHistory) : base(id, name, resourceType, systemData)
+        /// <param name="orderMode"> Order mode. </param>
+        internal EdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ResourceIdentifier> orderItemIds, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderStageHistory, OrderMode? orderMode) : base(id, name, resourceType, systemData)
         {
             OrderItemIds = orderItemIds;
             CurrentStage = currentStage;
             OrderStageHistory = orderStageHistory;
+            OrderMode = orderMode;
         }
 
         /// <summary> List of order item ARM Ids which are part of an order. </summary>
@@ -46,5 +48,7 @@ namespace Azure.ResourceManager.EdgeOrder
         public EdgeOrderStageDetails CurrentStage { get; }
         /// <summary> Order status history. </summary>
         public IReadOnlyList<EdgeOrderStageDetails> OrderStageHistory { get; }
+        /// <summary> Order mode. </summary>
+        public OrderMode? OrderMode { get; }
     }
 }

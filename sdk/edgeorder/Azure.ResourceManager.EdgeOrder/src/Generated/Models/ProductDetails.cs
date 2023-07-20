@@ -22,33 +22,50 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Argument.AssertNotNull(hierarchyInformation, nameof(hierarchyInformation));
 
             HierarchyInformation = hierarchyInformation;
-            DeviceDetails = new ChangeTrackingList<EdgeOrderProductDeviceDetails>();
+            OptInAdditionalConfigurations = new ChangeTrackingList<AdditionalConfiguration>();
+            ChildConfigurationDeviceDetails = new ChangeTrackingList<ConfigurationDeviceDetails>();
         }
 
         /// <summary> Initializes a new instance of ProductDetails. </summary>
         /// <param name="displayInfo"> Display details of the product. </param>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
-        /// <param name="count"> Quantity of the product. </param>
         /// <param name="productDoubleEncryptionStatus"> Double encryption status of the configuration. Read-only field. </param>
-        /// <param name="deviceDetails"> list of device details. </param>
-        internal ProductDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, int? count, DoubleEncryptionStatus? productDoubleEncryptionStatus, IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails)
+        /// <param name="identificationType"> Identification type of the configuration. </param>
+        /// <param name="parentDeviceDetails"> Device details of the parent configuration. </param>
+        /// <param name="parentProvisioningDetails"> Device Provisioning Details for Parent. </param>
+        /// <param name="optInAdditionalConfigurations"> List of additional configurations customer wants in the order item apart from the ones included in the base configuration. </param>
+        /// <param name="childConfigurationDeviceDetails"> Details of all child configurations that are part of the order item. </param>
+        /// <param name="termCommitmentInformation"> Term Commitment Information of the Device. </param>
+        internal ProductDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, DoubleEncryptionStatus? productDoubleEncryptionStatus, IdentificationType? identificationType, EdgeOrderProductDeviceDetails parentDeviceDetails, ProvisioningDetails parentProvisioningDetails, IList<AdditionalConfiguration> optInAdditionalConfigurations, IReadOnlyList<ConfigurationDeviceDetails> childConfigurationDeviceDetails, TermCommitmentInformation termCommitmentInformation)
         {
             DisplayInfo = displayInfo;
             HierarchyInformation = hierarchyInformation;
-            Count = count;
             ProductDoubleEncryptionStatus = productDoubleEncryptionStatus;
-            DeviceDetails = deviceDetails;
+            IdentificationType = identificationType;
+            ParentDeviceDetails = parentDeviceDetails;
+            ParentProvisioningDetails = parentProvisioningDetails;
+            OptInAdditionalConfigurations = optInAdditionalConfigurations;
+            ChildConfigurationDeviceDetails = childConfigurationDeviceDetails;
+            TermCommitmentInformation = termCommitmentInformation;
         }
 
         /// <summary> Display details of the product. </summary>
         public ProductDisplayInfo DisplayInfo { get; set; }
         /// <summary> Hierarchy of the product which uniquely identifies the product. </summary>
         public HierarchyInformation HierarchyInformation { get; set; }
-        /// <summary> Quantity of the product. </summary>
-        public int? Count { get; }
         /// <summary> Double encryption status of the configuration. Read-only field. </summary>
         public DoubleEncryptionStatus? ProductDoubleEncryptionStatus { get; }
-        /// <summary> list of device details. </summary>
-        public IReadOnlyList<EdgeOrderProductDeviceDetails> DeviceDetails { get; }
+        /// <summary> Identification type of the configuration. </summary>
+        public IdentificationType? IdentificationType { get; }
+        /// <summary> Device details of the parent configuration. </summary>
+        public EdgeOrderProductDeviceDetails ParentDeviceDetails { get; }
+        /// <summary> Device Provisioning Details for Parent. </summary>
+        public ProvisioningDetails ParentProvisioningDetails { get; set; }
+        /// <summary> List of additional configurations customer wants in the order item apart from the ones included in the base configuration. </summary>
+        public IList<AdditionalConfiguration> OptInAdditionalConfigurations { get; }
+        /// <summary> Details of all child configurations that are part of the order item. </summary>
+        public IReadOnlyList<ConfigurationDeviceDetails> ChildConfigurationDeviceDetails { get; }
+        /// <summary> Term Commitment Information of the Device. </summary>
+        public TermCommitmentInformation TermCommitmentInformation { get; }
     }
 }

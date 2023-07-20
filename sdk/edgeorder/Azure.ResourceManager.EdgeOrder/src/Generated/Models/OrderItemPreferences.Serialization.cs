@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("managementResourcePreferences"u8);
                 writer.WriteObjectValue(ManagementResourcePreferences);
             }
+            if (Optional.IsDefined(TermCommitmentPreferences))
+            {
+                writer.WritePropertyName("termCommitmentPreferences"u8);
+                writer.WriteObjectValue(TermCommitmentPreferences);
+            }
             writer.WriteEndObject();
         }
 
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<TransportPreferences> transportPreferences = default;
             Optional<EncryptionPreferences> encryptionPreferences = default;
             Optional<ManagementResourcePreferences> managementResourcePreferences = default;
+            Optional<TermCommitmentPreferences> termCommitmentPreferences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationPreferences"u8))
@@ -97,8 +103,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(property.Value);
                     continue;
                 }
+                if (property.NameEquals("termCommitmentPreferences"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    termCommitmentPreferences = TermCommitmentPreferences.DeserializeTermCommitmentPreferences(property.Value);
+                    continue;
+                }
             }
-            return new OrderItemPreferences(Optional.ToList(notificationPreferences), transportPreferences.Value, encryptionPreferences.Value, managementResourcePreferences.Value);
+            return new OrderItemPreferences(Optional.ToList(notificationPreferences), transportPreferences.Value, encryptionPreferences.Value, managementResourcePreferences.Value, termCommitmentPreferences.Value);
         }
     }
 }

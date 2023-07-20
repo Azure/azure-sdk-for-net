@@ -11,18 +11,51 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOrder;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder.Samples
 {
     public partial class Sample_EdgeOrderResource
     {
+        // ListOrderAtSubscriptionLevel
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetEdgeOrders_ListOrderAtSubscriptionLevel()
+        {
+            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/preview/2023-05-01-preview/examples/ListOrderAtSubscriptionLevel.json
+            // this example is just showing the usage of "Orders_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "YourSubscriptionId";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (EdgeOrderResource item in subscriptionResource.GetEdgeOrdersAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EdgeOrderData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
         // GetOrderByName
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetOrderByName()
         {
-            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/GetOrderByName.json
-            // this example is just showing the usage of "GetOrderByName" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/preview/2023-05-01-preview/examples/GetOrderByName.json
+            // this example is just showing the usage of "Orders_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,10 +64,10 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
             // this example assumes you already have this EdgeOrderResource created on azure
             // for more information of creating EdgeOrderResource, please refer to the document of EdgeOrderResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            string resourceGroupName = "TestRG";
-            AzureLocation location = new AzureLocation("%7B%7B%7Blocation%7D%7D");
-            string orderName = "TestOrderItemName901";
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
+            AzureLocation location = new AzureLocation("eastus");
+            string orderName = "TestOrderName3";
             ResourceIdentifier edgeOrderResourceId = EdgeOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, location, orderName);
             EdgeOrderResource edgeOrder = client.GetEdgeOrderResource(edgeOrderResourceId);
 
@@ -46,6 +79,39 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
             EdgeOrderData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // ListOrderAtResourceGroupLevel
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetEdgeOrders_ListOrderAtResourceGroupLevel()
+        {
+            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/preview/2023-05-01-preview/examples/ListOrderAtResourceGroupLevel.json
+            // this example is just showing the usage of "Orders_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "YourSubscriptionId";
+            string resourceGroupName = "YourResourceGroupName";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (EdgeOrderResource item in resourceGroupResource.GetEdgeOrdersAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EdgeOrderData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
         }
     }
 }

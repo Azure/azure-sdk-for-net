@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -22,6 +23,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Msi identity of the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Updates forward shipping address and contact details. </summary>
         public EdgeOrderItemAddressProperties ForwardAddress { get; set; }
         /// <summary> Customer preference. </summary>

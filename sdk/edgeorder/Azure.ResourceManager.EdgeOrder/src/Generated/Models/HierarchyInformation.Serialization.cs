@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("configurationName"u8);
                 writer.WriteStringValue(ConfigurationName);
             }
+            if (Optional.IsDefined(ConfigurationIdDisplayName))
+            {
+                writer.WritePropertyName("configurationIdDisplayName"u8);
+                writer.WriteStringValue(ConfigurationIdDisplayName);
+            }
             writer.WriteEndObject();
         }
 
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<string> productLineName = default;
             Optional<string> productName = default;
             Optional<string> configurationName = default;
+            Optional<string> configurationIdDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productFamilyName"u8))
@@ -70,8 +76,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     configurationName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("configurationIdDisplayName"u8))
+                {
+                    configurationIdDisplayName = property.Value.GetString();
+                    continue;
+                }
             }
-            return new HierarchyInformation(productFamilyName.Value, productLineName.Value, productName.Value, configurationName.Value);
+            return new HierarchyInformation(productFamilyName.Value, productLineName.Value, productName.Value, configurationName.Value, configurationIdDisplayName.Value);
         }
     }
 }

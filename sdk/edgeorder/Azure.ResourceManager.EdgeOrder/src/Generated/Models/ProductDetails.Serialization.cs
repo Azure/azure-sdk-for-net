@@ -23,6 +23,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             writer.WritePropertyName("hierarchyInformation"u8);
             writer.WriteObjectValue(HierarchyInformation);
+            if (Optional.IsDefined(ParentProvisioningDetails))
+            {
+                writer.WritePropertyName("parentProvisioningDetails"u8);
+                writer.WriteObjectValue(ParentProvisioningDetails);
+            }
+            if (Optional.IsCollectionDefined(OptInAdditionalConfigurations))
+            {
+                writer.WritePropertyName("optInAdditionalConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in OptInAdditionalConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -34,9 +49,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             Optional<ProductDisplayInfo> displayInfo = default;
             HierarchyInformation hierarchyInformation = default;
-            Optional<int> count = default;
             Optional<DoubleEncryptionStatus> productDoubleEncryptionStatus = default;
-            Optional<IReadOnlyList<EdgeOrderProductDeviceDetails>> deviceDetails = default;
+            Optional<IdentificationType> identificationType = default;
+            Optional<EdgeOrderProductDeviceDetails> parentDeviceDetails = default;
+            Optional<ProvisioningDetails> parentProvisioningDetails = default;
+            Optional<IList<AdditionalConfiguration>> optInAdditionalConfigurations = default;
+            Optional<IReadOnlyList<ConfigurationDeviceDetails>> childConfigurationDeviceDetails = default;
+            Optional<TermCommitmentInformation> termCommitmentInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayInfo"u8))
@@ -53,15 +72,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("count"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    count = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("productDoubleEncryptionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -71,22 +81,72 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     productDoubleEncryptionStatus = new DoubleEncryptionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deviceDetails"u8))
+                if (property.NameEquals("identificationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<EdgeOrderProductDeviceDetails> array = new List<EdgeOrderProductDeviceDetails>();
+                    identificationType = new IdentificationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("parentDeviceDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parentDeviceDetails = EdgeOrderProductDeviceDetails.DeserializeEdgeOrderProductDeviceDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("parentProvisioningDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parentProvisioningDetails = ProvisioningDetails.DeserializeProvisioningDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("optInAdditionalConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AdditionalConfiguration> array = new List<AdditionalConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderProductDeviceDetails.DeserializeEdgeOrderProductDeviceDetails(item));
+                        array.Add(AdditionalConfiguration.DeserializeAdditionalConfiguration(item));
                     }
-                    deviceDetails = array;
+                    optInAdditionalConfigurations = array;
+                    continue;
+                }
+                if (property.NameEquals("childConfigurationDeviceDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ConfigurationDeviceDetails> array = new List<ConfigurationDeviceDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ConfigurationDeviceDetails.DeserializeConfigurationDeviceDetails(item));
+                    }
+                    childConfigurationDeviceDetails = array;
+                    continue;
+                }
+                if (property.NameEquals("termCommitmentInformation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    termCommitmentInformation = TermCommitmentInformation.DeserializeTermCommitmentInformation(property.Value);
                     continue;
                 }
             }
-            return new ProductDetails(displayInfo.Value, hierarchyInformation, Optional.ToNullable(count), Optional.ToNullable(productDoubleEncryptionStatus), Optional.ToList(deviceDetails));
+            return new ProductDetails(displayInfo.Value, hierarchyInformation, Optional.ToNullable(productDoubleEncryptionStatus), Optional.ToNullable(identificationType), parentDeviceDetails.Value, parentProvisioningDetails.Value, Optional.ToList(optInAdditionalConfigurations), Optional.ToList(childConfigurationDeviceDetails), termCommitmentInformation.Value);
         }
     }
 }

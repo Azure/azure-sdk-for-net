@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> List of Products. </summary>
+    /// <summary> Represents a product. </summary>
     public partial class EdgeOrderProduct
     {
         /// <summary> Initializes a new instance of EdgeOrderProduct. </summary>
@@ -28,9 +28,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="costInformation"> Cost information for the product system. </param>
         /// <param name="availabilityInformation"> Availability information of the product system. </param>
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="fulfilledBy"> The entity responsible for fulfillment of the item at the given hierarchy level. </param>
+        /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="configurations"> List of configurations for the product. </param>
-        internal EdgeOrderProduct(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductConfiguration> configurations)
+        internal EdgeOrderProduct(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, FulfillmentType? fulfilledBy, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductConfiguration> configurations)
         {
             DisplayName = displayName;
             Description = description;
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             CostInformation = costInformation;
             AvailabilityInformation = availabilityInformation;
             HierarchyInformation = hierarchyInformation;
+            FulfilledBy = fulfilledBy;
             FilterableProperties = filterableProperties;
             Configurations = configurations;
         }
@@ -54,7 +56,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public ProductAvailabilityInformation AvailabilityInformation { get; }
         /// <summary> Hierarchy information of a product. </summary>
         public HierarchyInformation HierarchyInformation { get; }
-        /// <summary> list of filters supported for a product. </summary>
+        /// <summary> The entity responsible for fulfillment of the item at the given hierarchy level. </summary>
+        public FulfillmentType? FulfilledBy { get; }
+        /// <summary> List of filters supported for a product. </summary>
         public IReadOnlyList<FilterableProperty> FilterableProperties { get; }
         /// <summary> List of configurations for the product. </summary>
         public IReadOnlyList<ProductConfiguration> Configurations { get; }

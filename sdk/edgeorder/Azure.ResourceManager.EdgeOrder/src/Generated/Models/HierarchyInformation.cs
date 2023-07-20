@@ -20,12 +20,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="productLineName"> Represents product line name that uniquely identifies product line. </param>
         /// <param name="productName"> Represents product name that uniquely identifies product. </param>
         /// <param name="configurationName"> Represents configuration name that uniquely identifies configuration. </param>
-        internal HierarchyInformation(string productFamilyName, string productLineName, string productName, string configurationName)
+        /// <param name="configurationIdDisplayName"> Represents Model Display Name. </param>
+        internal HierarchyInformation(string productFamilyName, string productLineName, string productName, string configurationName, string configurationIdDisplayName)
         {
             ProductFamilyName = productFamilyName;
             ProductLineName = productLineName;
             ProductName = productName;
             ConfigurationName = configurationName;
+            ConfigurationIdDisplayName = configurationIdDisplayName;
         }
 
         /// <summary> Represents product family name that uniquely identifies product family. </summary>
@@ -36,5 +38,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string ProductName { get; set; }
         /// <summary> Represents configuration name that uniquely identifies configuration. </summary>
         public string ConfigurationName { get; set; }
+        /// <summary> Represents Model Display Name. </summary>
+        public string ConfigurationIdDisplayName { get; set; }
     }
 }

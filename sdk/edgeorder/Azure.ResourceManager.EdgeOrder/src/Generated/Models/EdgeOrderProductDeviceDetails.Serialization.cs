@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<string> serialNumber = default;
             Optional<string> managementResourceId = default;
             Optional<string> managementResourceTenantId = default;
+            Optional<ProvisioningDetails> provisioningDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"u8))
@@ -38,8 +39,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     managementResourceTenantId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("provisioningDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningDetails = ProvisioningDetails.DeserializeProvisioningDetails(property.Value);
+                    continue;
+                }
             }
-            return new EdgeOrderProductDeviceDetails(serialNumber.Value, managementResourceId.Value, managementResourceTenantId.Value);
+            return new EdgeOrderProductDeviceDetails(serialNumber.Value, managementResourceId.Value, managementResourceTenantId.Value, provisioningDetails.Value);
         }
     }
 }

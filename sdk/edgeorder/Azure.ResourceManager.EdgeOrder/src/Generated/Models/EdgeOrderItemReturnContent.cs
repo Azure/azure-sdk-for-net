@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ReturnReason = returnReason;
         }
 
-        /// <summary> customer return address. </summary>
+        /// <summary> Customer return address. </summary>
         public EdgeOrderItemAddressProperties ReturnAddress { get; set; }
         /// <summary> Return Reason. </summary>
         public string ReturnReason { get; }

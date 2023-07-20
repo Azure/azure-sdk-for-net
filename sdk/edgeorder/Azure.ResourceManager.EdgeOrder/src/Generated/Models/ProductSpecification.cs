@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Specifications of the configurations. </summary>
+    /// <summary> Specification of the configurations. </summary>
     public partial class ProductSpecification
     {
         /// <summary> Initializes a new instance of ProductSpecification. </summary>

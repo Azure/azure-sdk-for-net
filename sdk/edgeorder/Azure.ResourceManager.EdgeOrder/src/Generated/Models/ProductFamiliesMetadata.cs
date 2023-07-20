@@ -29,10 +29,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="costInformation"> Cost information for the product system. </param>
         /// <param name="availabilityInformation"> Availability information of the product system. </param>
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="fulfilledBy"> The entity responsible for fulfillment of the item at the given hierarchy level. </param>
+        /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
         /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
-        internal ProductFamiliesMetadata(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails)
+        internal ProductFamiliesMetadata(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, FulfillmentType? fulfilledBy, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails)
         {
             DisplayName = displayName;
             Description = description;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             CostInformation = costInformation;
             AvailabilityInformation = availabilityInformation;
             HierarchyInformation = hierarchyInformation;
+            FulfilledBy = fulfilledBy;
             FilterableProperties = filterableProperties;
             ProductLines = productLines;
             ResourceProviderDetails = resourceProviderDetails;
@@ -57,7 +59,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public ProductAvailabilityInformation AvailabilityInformation { get; }
         /// <summary> Hierarchy information of a product. </summary>
         public HierarchyInformation HierarchyInformation { get; }
-        /// <summary> list of filters supported for a product. </summary>
+        /// <summary> The entity responsible for fulfillment of the item at the given hierarchy level. </summary>
+        public FulfillmentType? FulfilledBy { get; }
+        /// <summary> List of filters supported for a product. </summary>
         public IReadOnlyList<FilterableProperty> FilterableProperties { get; }
         /// <summary> List of product lines supported in the product family. </summary>
         public IReadOnlyList<ProductLine> ProductLines { get; }
