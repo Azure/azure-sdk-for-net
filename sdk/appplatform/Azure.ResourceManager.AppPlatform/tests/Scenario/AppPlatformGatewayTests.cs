@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         [Test]
         public void CreateOrUpdate()
         {
-            ValidateAppPlatformGateway(_gateway.Data );
+            ValidateAppPlatformGateway(_gateway.Data);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         public async Task Get()
         {
             var gateway = await _getAppPlatformGatewayCollection.GetAsync(_gatewayName);
-            ValidateAppPlatformGateway(gateway.Value.Data );
+            ValidateAppPlatformGateway(gateway.Value.Data);
         }
 
         [Test]
@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private void ValidateAppPlatformGateway(AppPlatformGatewayData gateway)
         {
             Assert.IsNotNull(gateway);
+            Assert.AreEqual(_gatewayName, gateway.Name);
+            Assert.AreEqual("E0", gateway.Sku.Name);
+            Assert.AreEqual("Enterprise", gateway.Sku.Tier);
+            Assert.AreEqual(2, gateway.Sku.Capacity);
+            Assert.AreEqual(AppPlatformGatewayProvisioningState.Succeeded, gateway.Properties.ProvisioningState);
         }
     }
 }

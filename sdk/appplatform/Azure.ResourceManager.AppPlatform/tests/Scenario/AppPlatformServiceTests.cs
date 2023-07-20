@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         [Test]
         public async Task Get()
         {
-            var AppPlatformService = await _serviceCollection.GetAsync(_serviceName);
-            ValidateAppPlatformService(AppPlatformService.Value.Data);
+            var appPlatformService = await _serviceCollection.GetAsync(_serviceName);
+            ValidateAppPlatformService(appPlatformService.Value.Data);
         }
 
         [Test]
@@ -70,9 +70,33 @@ namespace Azure.ResourceManager.AppPlatform.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidateAppPlatformService(AppPlatformServiceData service  )
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddRemoveTag(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            // AddTag
+            await _appPlatformService.AddTagAsync("addtagkey", "addtagvalue");
+            _appPlatformService = await _serviceCollection.GetAsync(_serviceName);
+            Assert.AreEqual(2, _appPlatformService.Data.Tags.Count);
+            KeyValuePair<string, string> tag = _appPlatformService.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
+            Assert.AreEqual("addtagkey", tag.Key);
+            Assert.AreEqual("addtagvalue", tag.Value);
+
+            // RemoveTag
+            await _appPlatformService.RemoveTagAsync("addtagkey");
+            _appPlatformService = await _serviceCollection.GetAsync(_serviceName);
+            Assert.AreEqual(1, _appPlatformService.Data.Tags.Count);
+        }
+
+        private void ValidateAppPlatformService(AppPlatformServiceData service)
         {
             Assert.IsNotNull(service);
+            Assert.IsNotEmpty(service.Properties.Fqdn);
+            Assert.IsNotEmpty(service.Properties.ServiceInstanceId);
+            Assert.AreEqual(_serviceName, service.Name);
+            Assert.AreEqual(DefaultLocation, service.Location);
         }
     }
 }

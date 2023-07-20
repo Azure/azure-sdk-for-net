@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private AppPlatformSupportedBuildpackCollection _appPlatformSupportedBuildpackCollection;
         private const string _packName = "tanzu-buildpacks-dotnet-core";
 
-        public AppPlatformSupportedBuildpackTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AppPlatformSupportedBuildpackTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -51,12 +51,15 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         {
             var list = await _appPlatformSupportedBuildpackCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateAppPlatformSupportedBuildpack(list.FirstOrDefault().Data);
+            ValidateAppPlatformSupportedBuildpack(list.FirstOrDefault(item => item.Data.Name == _packName).Data);
         }
 
         private void ValidateAppPlatformSupportedBuildpack(AppPlatformSupportedBuildpackData pack)
         {
             Assert.IsNotNull(pack);
+            Assert.AreEqual(_packName, pack.Name);
+            Assert.AreEqual("tanzu-buildpacks/dotnet-core", pack.SupportedBuildpackId);
+            Assert.AreEqual("tanzu-buildpacks/dotnet-core", pack.Properties.BuildpackId);
         }
     }
 }

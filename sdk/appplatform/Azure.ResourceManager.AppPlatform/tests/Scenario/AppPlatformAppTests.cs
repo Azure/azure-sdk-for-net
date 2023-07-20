@@ -73,6 +73,12 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private void ValidateAppPlatformAppData(AppPlatformAppData app)
         {
             Assert.IsNotNull(app);
+            Assert.AreEqual(DefaultLocation, app.Location);
+            Assert.AreEqual(_appName, app.Name);
+            Assert.AreEqual("Microsoft.AppPlatform/Spring/apps", app.ResourceType.ToString());
+            Assert.IsFalse(app.Properties.IsHttpsOnly);
+            Assert.IsFalse(app.Properties.IsPublic);
+            Assert.IsFalse(app.Properties.IsEndToEndTlsEnabled);
         }
     }
 }

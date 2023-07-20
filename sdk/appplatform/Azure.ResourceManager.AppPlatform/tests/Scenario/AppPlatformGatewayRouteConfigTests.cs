@@ -102,7 +102,11 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private void ValidateAppPlatformGatewayRouteConfig(AppPlatformGatewayRouteConfigData routeConfig)
         {
             Assert.IsNotNull(routeConfig);
-            //Assert.AreEqual(_routeConfigName, routeConfig.Name);
+            Assert.IsNotNull(routeConfig.Properties.OpenApi);
+            Assert.IsNotNull(routeConfig.Properties.OpenApiUri);
+            Assert.AreEqual(_routeConfigName, routeConfig.Name);
+            Assert.AreEqual(AppPlatformGatewayRouteConfigProtocol.Https, routeConfig.Properties.Protocol);
+            Assert.AreEqual(AppPlatformGatewayProvisioningState.Succeeded, routeConfig.Properties.ProvisioningState);
         }
     }
 }

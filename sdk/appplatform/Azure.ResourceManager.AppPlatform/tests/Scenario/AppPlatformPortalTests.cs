@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private void ValidateAppPlatformApiPortal(AppPlatformApiPortalData portal)
         {
             Assert.IsNotNull(portal);
+            Assert.AreEqual(_portalName, portal.Name);
+            Assert.AreEqual(1, portal.Properties.Instances.Count);
+            Assert.AreEqual(AppPlatformApiPortalProvisioningState.Succeeded, portal.Properties.ProvisioningState);
+            Assert.AreEqual(1, portal.Sku.Capacity);
+            Assert.AreEqual("Enterprise", portal.Sku.Tier);
         }
     }
 }

@@ -85,6 +85,8 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private void ValidateAppPlatformStorage(AppPlatformStorageData appPlatformStorage)
         {
             Assert.IsNotNull(appPlatformStorage);
+            Assert.AreEqual(_storageName, appPlatformStorage.Name);
+            Assert.AreEqual(StorageType.StorageAccount, appPlatformStorage.Properties.StorageType);
         }
     }
 }

@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private void ValidateAppPlatformBuildService(AppPlatformBuildServiceData buildService)
         {
             Assert.IsNotNull(buildService);
+            Assert.AreEqual(_buildServicesName,buildService.Name);
+            Assert.AreEqual("Microsoft.AppPlatform/Spring/buildServices", buildService.ResourceType.ToString());
+            Assert.AreEqual(AppPlatformBuildServiceProvisioningState.Succeeded, buildService.Properties.ProvisioningState.Value);
         }
     }
 }

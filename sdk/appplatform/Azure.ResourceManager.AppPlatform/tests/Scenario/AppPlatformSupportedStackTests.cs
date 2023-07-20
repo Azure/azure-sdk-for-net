@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private AppPlatformSupportedStackCollection _appPlatformSupportedStackCollection;
         private const string _stackName = "io.buildpacks.stacks.bionic-base";
 
-        public AppPlatformSupportedStackTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AppPlatformSupportedStackTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -51,12 +51,15 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         {
             var list = await _appPlatformSupportedStackCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateAppPlatformSupportedStack(list.FirstOrDefault().Data);
+            ValidateAppPlatformSupportedStack(list.FirstOrDefault(item => item.Data.Name == _stackName).Data);
         }
 
         private void ValidateAppPlatformSupportedStack(AppPlatformSupportedStackData stack)
         {
             Assert.IsNotNull(stack);
+            Assert.AreEqual(_stackName, stack.Name);
+            Assert.AreEqual("base", stack.Properties.Version);
+            Assert.AreEqual("io.buildpacks.stacks.bionic", stack.Properties.StackId);
         }
     }
 }
