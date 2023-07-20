@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.DigitalTwins.Core
         internal static ImportJob DeserializeImportJob(JsonElement element)
         {
             Optional<string> id = default;
-            string inputBlobUri = default;
-            string outputBlobUri = default;
+            Uri inputBlobUri = default;
+            Uri outputBlobUri = default;
             Optional<ImportJobStatus> status = default;
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> lastActionDateTime = default;
             Optional<DateTimeOffset?> finishedDateTime = default;
             Optional<DateTimeOffset> purgeDateTime = default;
-            Optional<ErrorInformation> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -30,22 +31,21 @@ namespace Azure.DigitalTwins.Core
                 }
                 if (property.NameEquals("inputBlobUri"))
                 {
-                    inputBlobUri = property.Value.GetString();
+                    inputBlobUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("outputBlobUri"))
                 {
-                    outputBlobUri = property.Value.GetString();
+                    outputBlobUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToImportJobStatus();
+                    status = new ImportJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))
@@ -76,7 +76,6 @@ namespace Azure.DigitalTwins.Core
                         finishedDateTime = null;
                         continue;
                     }
-                    finishedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("purgeDateTime"))
@@ -96,11 +95,17 @@ namespace Azure.DigitalTwins.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorInformation.DeserializeErrorInformation(property.Value);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }
             return new ImportJob(id.Value, inputBlobUri, outputBlobUri, Optional.ToNullable(status), Optional.ToNullable(createdDateTime), Optional.ToNullable(lastActionDateTime), Optional.ToNullable(finishedDateTime), Optional.ToNullable(purgeDateTime), error.Value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void SerializeErrorValue(Utf8JsonWriter writer)
+        {
+            writer.WriteObjectValue(Error);
         }
     }
 }

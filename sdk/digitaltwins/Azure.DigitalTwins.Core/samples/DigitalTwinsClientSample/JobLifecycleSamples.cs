@@ -25,8 +25,8 @@ namespace Azure.DigitalTwins.Samples
             // We have to make sure the job Id is unique within the DT instance, and we have to upload a sample input blob to the customer's storage container.
 
             string sampleImportJobId = await GetUniqueJobIdAsync(SamplesConstants.TemporaryJobPrefix, client);
-            string inputBlobUri = options.StorageAccountContainerEndpoint + "/" + options.InputBlobName;
-            string outputBlobUri = options.StorageAccountContainerEndpoint + "/sampleOutputBlob.ndjson";
+            Uri inputBlobUri = new Uri(options.StorageAccountContainerEndpoint + "/" + options.InputBlobName);
+            Uri outputBlobUri = new Uri(options.StorageAccountContainerEndpoint + "/sampleOutputBlob.ndjson");
 
             ImportJob sampleImportJob = new ImportJob(inputBlobUri, outputBlobUri);
 
@@ -44,7 +44,7 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinsSampleCreateImportJob
 
-                await client.CreateImportJobsAsync(sampleImportJobId, sampleImportJob);
+                await client.ImportGraphAsync(sampleImportJobId, sampleImportJob);
                 Console.WriteLine($"Created jobs '{sampleImportJobId}' and '{sampleImportJob}'.");
 
                 #endregion Snippet:DigitalTwinsSampleCreateImportJob
@@ -63,7 +63,7 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinsSampleGetImportJob
 
-                Response<ImportJob> sampleImportJobResponse = await client.GetImportJobsByIdAsync(sampleImportJobId);
+                Response<ImportJob> sampleImportJobResponse = await client.GetImportJobAsync(sampleImportJobId);
                 Console.WriteLine($"Retrieved job '{sampleImportJobResponse.Value.Id}'.");
 
                 #endregion Snippet:DigitalTwinsSampleGetImportJob
@@ -79,7 +79,7 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                await client.CancelImportJobsAsync(sampleImportJobId);
+                await client.CancelImportJobAsync(sampleImportJobId);
                 Console.WriteLine($"Cancelled job '{sampleImportJobId}'.");
             }
             catch (RequestFailedException ex)
@@ -95,7 +95,7 @@ namespace Azure.DigitalTwins.Samples
 
             try
             {
-                await client.DeleteImportJobsAsync(sampleImportJobId);
+                await client.DeleteImportJobAsync(sampleImportJobId);
                 Console.WriteLine($"Deleted job '{sampleImportJobId}'.");
             }
             catch (RequestFailedException ex)

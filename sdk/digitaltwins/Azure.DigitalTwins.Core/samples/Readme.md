@@ -526,7 +526,7 @@ Console.WriteLine($"Published component telemetry message to twin '{twinId}'.");
 To create an import job, provide an Id of an import job such as "sampleImportJob" and import job data containing the blob file endpoint and optional output blob file endpoint like the example shown below.
 
 ```C# Snippet:DigitalTwinsSampleCreateImportJob
-await client.CreateImportJobsAsync(sampleImportJobId, sampleImportJob);
+await client.ImportGraphAsync(sampleImportJobId, sampleImportJob);
 Console.WriteLine($"Created jobs '{sampleImportJobId}' and '{sampleImportJob}'.");
 ```
 
@@ -535,18 +535,18 @@ Console.WriteLine($"Created jobs '{sampleImportJobId}' and '{sampleImportJob}'."
 List a specific import job given import job Id `GetImportJobAsync`.
 
 ```C# Snippet:DigitalTwinsSampleGetImportJob
-Response<ImportJob> sampleImportJobResponse = await client.GetImportJobsByIdAsync(sampleImportJobId);
+Response<ImportJob> sampleImportJobResponse = await client.GetImportJobAsync(sampleImportJobId);
 Console.WriteLine($"Retrieved job '{sampleImportJobResponse.Value.Id}'.");
 ```
 
 ### Cancel import job
 
-Delete an import job given import job Id.
+Cancel an import job given import job Id.
 
 ```C# Snippet:DigitalTwinsSampleCancelImportJob
 try
 {
-    await client.CancelImportJobsAsync(sampleImportJobId);
+    await client.CancelImportJobAsync(sampleImportJobId);
     Console.WriteLine($"Cancelled job '{sampleImportJobId}'.");
 }
 catch (RequestFailedException ex)
@@ -563,7 +563,7 @@ Delete an import job given import job Id.
 ```C# Snippet:DigitalTwinsSampleDeleteImportJob
 try
 {
-    await client.DeleteImportJobsAsync(sampleImportJobId);
+    await client.DeleteImportJobAsync(sampleImportJobId);
     Console.WriteLine($"Deleted job '{sampleImportJobId}'.");
 }
 catch (RequestFailedException ex)

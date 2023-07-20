@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-13d95b89111bd972d0fdd59e5bc775e3-3037f77d16bcfdb0-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230518.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "27973c764116fa299b26163b36f041df",
+        "traceparent": "00-b08de0dcdbe257c9a0d359a2a192b5ee-3e881ecd3cdbf719-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230720.1 (.NET 6.0.20; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "471fb72d5d04afb8c1b4af015fb1b940",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,10 +16,10 @@
       "ResponseHeaders": {
         "Content-Length": "273",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 May 2023 23:08:06 GMT",
-        "mise-correlation-id": "6440f1f0-4d99-400f-8070-9d2183caa102",
+        "Date": "Thu, 20 Jul 2023 18:54:32 GMT",
+        "mise-correlation-id": "7a39efe9-44ad-4efe-abb9-b0282b76af86",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-13d95b89111bd972d0fdd59e5bc775e3-28a6f34dc14726c0-01",
+        "traceresponse": "00-b08de0dcdbe257c9a0d359a2a192b5ee-c034151110b707b2-01",
         "x-ms-error-code": "DigitalTwinNotFound"
       },
       "ResponseBody": {
@@ -33,6 +33,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "924805358"
+    "RandomSeed": "1608808573"
   }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Error definition. </summary>
-    public partial class ErrorInformation
+    internal partial class ErrorInformation
     {
         /// <summary> Initializes a new instance of ErrorInformation. </summary>
         public ErrorInformation()

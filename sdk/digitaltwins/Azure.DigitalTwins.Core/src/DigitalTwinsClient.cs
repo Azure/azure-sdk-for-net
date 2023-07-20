@@ -2031,14 +2031,62 @@ namespace Azure.DigitalTwins.Core
         /// * 200 OK
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Task<Response<ImportJobCollection>> ListImportJobsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ImportJob> GetImportJobsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(ListImportJobs)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobs)}");
             scope.Start();
 
             try
             {
-                return _importJobsRestClient.ListAsync(null, cancellationToken);
+                async Task<Page<ImportJob>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobs)}");
+                    scope.Start();
+                    try
+                    {
+                        var options = new ImportJobsListOptions
+                        {
+                            // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                            MaxItemsPerPage = pageSizeHint
+                        };
+
+                        Response<ImportJobCollection> response = await _importJobsRestClient
+                            .ListAsync(options, cancellationToken)
+                            .ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                async Task<Page<ImportJob>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobs)}");
+                    scope.Start();
+                    try
+                    {
+                        var options = new ImportJobsListOptions
+                        {
+                            // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                            MaxItemsPerPage = pageSizeHint
+                        };
+
+                        Response<ImportJobCollection> response = await _importJobsRestClient
+                            .ListNextPageAsync(nextLink, options, cancellationToken)
+                            .ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
             catch (Exception ex)
             {
@@ -2053,14 +2101,59 @@ namespace Azure.DigitalTwins.Core
         /// * 200 OK
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ImportJobCollection> ListImportJobs(CancellationToken cancellationToken = default)
+        public virtual Pageable<ImportJob> GetImportJobs(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(ListImportJobs)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobs)}");
             scope.Start();
 
             try
             {
-                return _importJobsRestClient.List(null, cancellationToken);
+                Page<ImportJob> FirstPageFunc(int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobs)}");
+                    scope.Start();
+                    try
+                    {
+                        var options = new ImportJobsListOptions
+                        {
+                            // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                            MaxItemsPerPage = pageSizeHint
+                        };
+
+                        Response<ImportJobCollection> response = _importJobsRestClient.List(options, cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                Page<ImportJob> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetEventRoutes)}");
+                    scope.Start();
+
+                    var options = new ImportJobsListOptions
+                    {
+                        // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
+                        MaxItemsPerPage = pageSizeHint
+                    };
+
+                    try
+                    {
+                        Response<ImportJobCollection> response = _importJobsRestClient.ListNextPage(nextLink, options, cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
             catch (Exception ex)
             {
@@ -2081,9 +2174,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="importJob"> The import job being added. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="importJob"/> is null. </exception>
-        public virtual async Task<Response<ImportJob>> CreateImportJobsAsync(string jobId, ImportJob importJob, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImportJob>> ImportGraphAsync(string jobId, ImportJob importJob, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateImportJobs)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(ImportGraph)}");
             scope.AddAttribute(nameof(jobId), jobId);
             scope.Start();
 
@@ -2110,9 +2203,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="importJob"> The import job being added. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="importJob"/> is null. </exception>
-        public virtual Response<ImportJob> CreateImportJobs(string jobId, ImportJob importJob, CancellationToken cancellationToken = default)
+        public virtual Response<ImportJob> ImportGraph(string jobId, ImportJob importJob, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CreateImportJobs)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(ImportGraph)}");
             scope.AddAttribute(nameof(jobId), jobId);
             scope.Start();
 
@@ -2137,9 +2230,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response<ImportJob>> GetImportJobsByIdAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImportJob>> GetImportJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobsById)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJob)}");
             scope.AddAttribute(nameof(jobId), jobId);
             scope.Start();
 
@@ -2164,9 +2257,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response<ImportJob> GetImportJobsById(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ImportJob> GetImportJob(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJobsById)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetImportJob)}");
             scope.AddAttribute(nameof(jobId), jobId);
             scope.Start();
 
@@ -2191,9 +2284,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response> DeleteImportJobsAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteImportJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteImportJobs)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteImportJob)}");
             scope.AddAttribute(nameof(jobId), jobId);
             scope.Start();
 
@@ -2218,9 +2311,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response DeleteImportJobs(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteImportJob(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteImportJobs)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(DeleteImportJob)}");
             scope.AddAttribute(nameof(jobId), jobId);
             scope.Start();
 
@@ -2245,9 +2338,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response<ImportJob>> CancelImportJobsAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImportJob>> CancelImportJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CancelImportJobs)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CancelImportJob)}");
             scope.AddAttribute(nameof(jobId), jobId);
             scope.Start();
 
@@ -2272,9 +2365,9 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jobId"> The id for the import job. The id is unique within the service and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response<ImportJob> CancelImportJobs(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ImportJob> CancelImportJob(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CancelImportJobs)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(CancelImportJob)}");
             scope.AddAttribute(nameof(jobId), jobId);
             scope.Start();
 

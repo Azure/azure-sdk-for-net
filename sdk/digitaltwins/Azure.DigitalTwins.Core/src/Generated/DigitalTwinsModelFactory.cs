@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -28,19 +28,6 @@ namespace Azure.DigitalTwins.Core
             languageDescriptions ??= new Dictionary<string, string>();
 
             return new DigitalTwinsModelData(languageDisplayNames, languageDescriptions, id, uploadedOn, decommissioned, dtdlModel);
-        }
-
-        /// <summary> Initializes a new instance of ErrorInformation. </summary>
-        /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
-        /// <param name="message"> A human-readable representation of the error. </param>
-        /// <param name="details"> Internal error details. </param>
-        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        /// <returns> A new <see cref="Core.ErrorInformation"/> instance for mocking. </returns>
-        public static ErrorInformation ErrorInformation(string code = null, string message = null, IEnumerable<ErrorInformation> details = null, InnerError innererror = null)
-        {
-            details ??= new List<ErrorInformation>();
-
-            return new ErrorInformation(code, message, details?.ToList(), innererror);
         }
 
         /// <summary> Initializes a new instance of IncomingRelationship. </summary>
@@ -64,17 +51,6 @@ namespace Azure.DigitalTwins.Core
             return new DigitalTwinsEventRoute(id, endpointName, filter);
         }
 
-        /// <summary> Initializes a new instance of ImportJobCollection. </summary>
-        /// <param name="value"> The list of import job objects. </param>
-        /// <param name="nextLink"> A URI to retrieve the next page of results. </param>
-        /// <returns> A new <see cref="Core.ImportJobCollection"/> instance for mocking. </returns>
-        public static ImportJobCollection ImportJobCollection(IEnumerable<ImportJob> value = null, string nextLink = null)
-        {
-            value ??= new List<ImportJob>();
-
-            return new ImportJobCollection(value?.ToList(), nextLink);
-        }
-
         /// <summary> Initializes a new instance of ImportJob. </summary>
         /// <param name="id"> The identifier of the import job. </param>
         /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
@@ -86,7 +62,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="error"> Details of the error(s) that occurred executing the import job. </param>
         /// <returns> A new <see cref="Core.ImportJob"/> instance for mocking. </returns>
-        public static ImportJob ImportJob(string id = null, string inputBlobUri = null, string outputBlobUri = null, ImportJobStatus? status = null, DateTimeOffset? createdDateTime = null, DateTimeOffset? lastActionDateTime = null, DateTimeOffset? finishedDateTime = null, DateTimeOffset? purgeDateTime = null, ErrorInformation error = null)
+        public static ImportJob ImportJob(string id = null, Uri inputBlobUri = null, Uri outputBlobUri = null, ImportJobStatus? status = null, DateTimeOffset? createdDateTime = null, DateTimeOffset? lastActionDateTime = null, DateTimeOffset? finishedDateTime = null, DateTimeOffset? purgeDateTime = null, ResponseError error = null)
         {
             return new ImportJob(id, inputBlobUri, outputBlobUri, status, createdDateTime, lastActionDateTime, finishedDateTime, purgeDateTime, error);
         }

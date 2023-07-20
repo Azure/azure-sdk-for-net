@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
@@ -17,7 +18,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
         /// <param name="outputBlobUri"> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputBlobUri"/> or <paramref name="outputBlobUri"/> is null. </exception>
-        public ImportJob(string inputBlobUri, string outputBlobUri)
+        public ImportJob(Uri inputBlobUri, Uri outputBlobUri)
         {
             Argument.AssertNotNull(inputBlobUri, nameof(inputBlobUri));
             Argument.AssertNotNull(outputBlobUri, nameof(outputBlobUri));
@@ -36,7 +37,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="finishedDateTime"> End time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="error"> Details of the error(s) that occurred executing the import job. </param>
-        internal ImportJob(string id, string inputBlobUri, string outputBlobUri, ImportJobStatus? status, DateTimeOffset? createdDateTime, DateTimeOffset? lastActionDateTime, DateTimeOffset? finishedDateTime, DateTimeOffset? purgeDateTime, ErrorInformation error)
+        internal ImportJob(string id, Uri inputBlobUri, Uri outputBlobUri, ImportJobStatus? status, DateTimeOffset? createdDateTime, DateTimeOffset? lastActionDateTime, DateTimeOffset? finishedDateTime, DateTimeOffset? purgeDateTime, ResponseError error)
         {
             Id = id;
             InputBlobUri = inputBlobUri;
@@ -51,12 +52,6 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary> The identifier of the import job. </summary>
         public string Id { get; }
-        /// <summary> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </summary>
-        public string InputBlobUri { get; set; }
-        /// <summary> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </summary>
-        public string OutputBlobUri { get; set; }
-        /// <summary> Status of the job. </summary>
-        public ImportJobStatus? Status { get; }
         /// <summary> Start time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? CreatedDateTime { get; }
         /// <summary> Last time service performed any action from the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
@@ -65,7 +60,5 @@ namespace Azure.DigitalTwins.Core
         public DateTimeOffset? FinishedDateTime { get; }
         /// <summary> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? PurgeDateTime { get; }
-        /// <summary> Details of the error(s) that occurred executing the import job. </summary>
-        public ErrorInformation Error { get; set; }
     }
 }
