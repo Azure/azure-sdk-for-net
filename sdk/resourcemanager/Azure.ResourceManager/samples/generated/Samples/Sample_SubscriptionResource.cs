@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLocations_GetLocationsWithASubscriptionId()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/examples/GetLocations.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/examples/GetLocations.json
             // this example is just showing the usage of "Subscriptions_ListLocations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "291bba3f-e0a5-47bc-a099-3bdcb2a50a05";
+            string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLocations_GetLocationsWithExtendedLocations()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/examples/GetLocationsWithExtendedLocations.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/examples/GetLocationsWithExtendedLocations.json
             // this example is just showing the usage of "Subscriptions_ListLocations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "291bba3f-e0a5-47bc-a099-3bdcb2a50a05";
+            string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetASingleSubscription()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/examples/GetSubscription.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/examples/GetSubscription.json
             // this example is just showing the usage of "Subscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
