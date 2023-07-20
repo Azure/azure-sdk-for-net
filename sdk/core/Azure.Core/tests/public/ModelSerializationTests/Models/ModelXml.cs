@@ -22,7 +22,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public ModelXml(string key, string value, string readonlyProperty)
+        public ModelXml(string key, string value, string readonlyProperty, ChildModelXml childModel)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -30,6 +30,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             Key = key;
             Value = value;
             ReadOnlyProperty = readonlyProperty;
+            RenamedChildModelXml = childModel;
         }
 
         /// <summary> Gets or sets the key. </summary>
@@ -41,12 +42,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         /// <summary> Gets or sets the value. </summary>
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
+        [XmlElement("RenamedChildModelXml")]
+        public ChildModelXml RenamedChildModelXml { get; set; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IXmlModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
+            Serialize(writer, ModelSerializerOptions.AzureServiceDefault, nameHint);
 
         void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
+            => Serialize(writer, options, null);
+
+        private void Serialize(XmlWriter writer, ModelSerializerOptions options, string nameHint)
         {
-            writer.WriteStartElement("Tag");
+            writer.WriteStartElement(nameHint ?? "Tag");
             writer.WriteStartElement("Key");
             writer.WriteValue(Key);
             writer.WriteEndElement();
@@ -59,6 +66,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 writer.WriteValue(ReadOnlyProperty);
                 writer.WriteEndElement();
             }
+            writer.WriteObjectValue(RenamedChildModelXml, "RenamedChildModelXml");
             writer.WriteEndElement();
         }
 
@@ -67,6 +75,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             string key = default;
             string value = default;
             string readonlyProperty = default;
+            ChildModelXml childModelXml = default;
             if (element.Element("Key") is XElement keyElement)
             {
                 key = (string)keyElement;
@@ -79,7 +88,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             {
                 readonlyProperty = (string)readonlyPropertyElement;
             }
-            return new ModelXml(key, value, readonlyProperty);
+            if (element.Element("RenamedChildModelXml") is XElement renamedChildModelXmlElement)
+            {
+                childModelXml = ChildModelXml.DeserializeChildModelXml(renamedChildModelXmlElement, options);
+            }
+            return new ModelXml(key, value, readonlyProperty, childModelXml);
         }
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)

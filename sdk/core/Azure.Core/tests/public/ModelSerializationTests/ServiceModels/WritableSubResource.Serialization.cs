@@ -43,7 +43,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
         /// </summary>
         /// <param name="element">The JSON element to be deserialized.</param>
         /// <returns>Deserialized WritableSubResource object.</returns>
-        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelSerializerOptions options = default)
+        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.AzureServiceDefault;
 

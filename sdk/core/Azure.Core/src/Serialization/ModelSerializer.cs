@@ -25,15 +25,15 @@ namespace Azure.Core.Serialization
         {
             options ??= new ModelSerializerOptions();
 
-            if (options.Serializers.TryGetValue(typeof(T), out var serializer))
+            if (options.Value.Serializers.TryGetValue(typeof(T), out var serializer))
                 return serializer.Serialize(model);
 
             switch (model)
             {
                 case IJsonModelSerializable jsonModel:
-                    return SerializeJson(jsonModel, options);
+                    return SerializeJson(jsonModel, options.Value);
                 case IXmlModelSerializable xmlModel:
-                    return SerializeXml(xmlModel, options);
+                    return SerializeXml(xmlModel, options.Value);
                 default:
                     throw new NotSupportedException("Model type is not supported.");
             }

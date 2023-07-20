@@ -41,7 +41,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IXmlModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
+            Serialize(writer, ModelSerializerOptions.AzureServiceDefault, nameHint);
+
+        void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
+            => Serialize(writer, options, null);
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions options = default)
         {
@@ -63,9 +67,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
         }
 
-        void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
+        private void Serialize(XmlWriter writer, ModelSerializerOptions options, string nameHint)
         {
-            writer.WriteStartElement("Tag");
+            writer.WriteStartElement(nameHint ?? "Tag");
             writer.WriteStartElement("Key");
             writer.WriteValue(Key);
             writer.WriteEndElement();

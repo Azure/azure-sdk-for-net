@@ -26,7 +26,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
             writer.WriteEndObject();
         }
 
-        internal static SystemData DeserializeSystemData(JsonElement element, ModelSerializerOptions options = default)
+        internal static SystemData DeserializeSystemData(JsonElement element, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.AzureServiceDefault;
 

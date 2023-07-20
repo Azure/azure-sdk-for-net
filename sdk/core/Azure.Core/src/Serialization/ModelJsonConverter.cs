@@ -36,8 +36,10 @@ namespace Azure.Core.Serialization
         public ModelJsonConverter(string format = "D")
         {
             Format = format;
-            Options = new ModelSerializerOptions(Format);
-            Options.Serializers = Serializers;
+            Options = new ModelSerializerOptions(Format)
+            {
+                Serializers = Serializers
+            };
         }
 
         /// <summary>

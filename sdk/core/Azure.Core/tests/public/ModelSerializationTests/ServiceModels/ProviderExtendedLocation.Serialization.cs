@@ -17,7 +17,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
 
-        internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelSerializerOptions options = default)
+        internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.AzureServiceDefault;
 

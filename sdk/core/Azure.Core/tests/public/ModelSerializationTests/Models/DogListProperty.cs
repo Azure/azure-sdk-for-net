@@ -94,7 +94,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static DogListProperty DeserializeDogListProperty(JsonElement element, ModelSerializerOptions options = default)
+        internal static DogListProperty DeserializeDogListProperty(JsonElement element, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.AzureServiceDefault;
 
@@ -135,7 +135,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Data)
+                if (options.Value.Format == ModelSerializerFormat.Data)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

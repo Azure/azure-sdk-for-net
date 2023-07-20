@@ -1162,8 +1162,8 @@ namespace Azure.Core.Serialization
     }
     public static partial class ModelSerializer
     {
-        public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
-        public static System.BinaryData Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : Azure.Core.Serialization.IModelSerializable { throw null; }
+        public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = default(Azure.Core.Serialization.ModelSerializerOptions?)) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
+        public static System.BinaryData Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = default(Azure.Core.Serialization.ModelSerializerOptions?)) where T : Azure.Core.Serialization.IModelSerializable { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ModelSerializerFormat : System.IEquatable<Azure.Core.Serialization.ModelSerializerFormat>
@@ -1184,11 +1184,15 @@ namespace Azure.Core.Serialization
         public static bool operator !=(Azure.Core.Serialization.ModelSerializerFormat left, Azure.Core.Serialization.ModelSerializerFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ModelSerializerOptions
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct ModelSerializerOptions
     {
+        private object _dummy;
+        private int _dummyPrimitive;
         public static readonly Azure.Core.Serialization.ModelSerializerOptions AzureServiceDefault;
         public Azure.Core.Serialization.ModelSerializerFormat Format;
-        public ModelSerializerOptions(string format = "D") { }
+        public ModelSerializerOptions() { throw null; }
+        public ModelSerializerOptions(string format = "D") { throw null; }
         public System.Collections.Generic.Dictionary<System.Type, Azure.Core.Serialization.ObjectSerializer> Serializers { get { throw null; } }
     }
     public abstract partial class ObjectSerializer

@@ -19,7 +19,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
 {
     public partial class ResourceProviderData : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelSerializerOptions options = default)
+        public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.AzureServiceDefault;
 

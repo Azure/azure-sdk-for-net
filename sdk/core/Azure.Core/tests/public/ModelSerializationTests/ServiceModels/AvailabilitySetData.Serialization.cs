@@ -92,7 +92,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
             writer.WriteEndObject();
         }
 
-        public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelSerializerOptions options = default)
+        public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.AzureServiceDefault;
 

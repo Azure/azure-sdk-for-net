@@ -71,7 +71,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelX DeserializeModelX(JsonElement element, ModelSerializerOptions options = default)
+        internal static ModelX DeserializeModelX(JsonElement element, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.AzureServiceDefault;
 
@@ -100,7 +100,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     xProperty = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Data)
+                if (options.Value.Format == ModelSerializerFormat.Data)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
