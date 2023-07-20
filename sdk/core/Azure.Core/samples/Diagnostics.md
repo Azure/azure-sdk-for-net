@@ -196,14 +196,6 @@ AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
   </ItemGroup>
 ```
 
-You'll need `System.Diagnostics.DiagnosticSource` package with version `5.0` or later consume Azure SDK Activities.
-
-```xml
- <ItemGroup>
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.1" />
-  </ItemGroup>
-```
-
 The following sample shows how `ActivityListener` can be used to listen to Azure SDK Activities.
 
 ```C# Snippet:ActivitySourceListen
@@ -223,7 +215,7 @@ secretClient.GetSecret("<secret-name>");
 
 ## Distributed tracing
 
-Azure SDKs are instrumented for distributed tracing using ApplicationsInsights or OpenTelemetry.
+Azure SDKs are instrumented for distributed tracing using ApplicationInsights or OpenTelemetry.
 
 ### ApplicationInsights with Azure Monitor
 
