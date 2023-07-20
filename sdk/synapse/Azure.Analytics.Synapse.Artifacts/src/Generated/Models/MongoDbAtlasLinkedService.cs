@@ -37,12 +37,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="connectionString"> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </param>
-        /// <param name="mongoDbAtlasDriverVersion"> The MongoDB Atlas Driver version that you want to choose. Allowed value are 2.10.4 and 2.19.0. Type: string (or Expression with resultType string). </param>
-        internal MongoDbAtlasLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object database, object mongoDbAtlasDriverVersion) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="driverVersion"> The driver version that you want to choose. Allowed value are v1 and v2. Type: string (or Expression with resultType string). </param>
+        internal MongoDbAtlasLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object database, object driverVersion) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Database = database;
-            MongoDbAtlasDriverVersion = mongoDbAtlasDriverVersion;
+            DriverVersion = driverVersion;
             Type = type ?? "MongoDbAtlas";
         }
 
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ConnectionString { get; set; }
         /// <summary> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </summary>
         public object Database { get; set; }
-        /// <summary> The MongoDB Atlas Driver version that you want to choose. Allowed value are 2.10.4 and 2.19.0. Type: string (or Expression with resultType string). </summary>
-        public object MongoDbAtlasDriverVersion { get; set; }
+        /// <summary> The driver version that you want to choose. Allowed value are v1 and v2. Type: string (or Expression with resultType string). </summary>
+        public object DriverVersion { get; set; }
     }
 }

@@ -63,10 +63,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(ConnectionString);
             writer.WritePropertyName("database"u8);
             writer.WriteObjectValue(Database);
-            if (Optional.IsDefined(MongoDbAtlasDriverVersion))
+            if (Optional.IsDefined(DriverVersion))
             {
-                writer.WritePropertyName("mongoDbAtlasDriverVersion"u8);
-                writer.WriteObjectValue(MongoDbAtlasDriverVersion);
+                writer.WritePropertyName("driverVersion"u8);
+                writer.WriteObjectValue(DriverVersion);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<object>> annotations = default;
             object connectionString = default;
             object database = default;
-            Optional<object> mongoDbAtlasDriverVersion = default;
+            Optional<object> driverVersion = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +168,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             database = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("mongoDbAtlasDriverVersion"u8))
+                        if (property0.NameEquals("driverVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            mongoDbAtlasDriverVersion = property0.Value.GetObject();
+                            driverVersion = property0.Value.GetObject();
                             continue;
                         }
                     }
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDbAtlasLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, database, mongoDbAtlasDriverVersion.Value);
+            return new MongoDbAtlasLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, database, driverVersion.Value);
         }
 
         internal partial class MongoDbAtlasLinkedServiceConverter : JsonConverter<MongoDbAtlasLinkedService>

@@ -20,18 +20,16 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             /// <summary> Service version "2020-12-01". </summary>
             V2020_12_01 = 1,
-            /// <summary> Service version "2021-04-01". </summary>
-            V2021_04_01 = 2,
             /// <summary> Service version "2021-06-01-preview". </summary>
-            V2021_06_01_Preview = 3,
+            V2021_06_01_Preview = 2,
             /// <summary> Service version "2021-07-01-preview". </summary>
-            V2021_07_01_Preview = 4,
+            V2021_07_01_Preview = 3,
             /// <summary> Service version "2021-11-01-preview". </summary>
-            V2021_11_01_Preview = 5,
+            V2021_11_01_Preview = 4,
             /// <summary> Service version "2022-03-01-preview". </summary>
-            V2022_03_01_Preview = 6,
+            V2022_03_01_Preview = 5,
             /// <summary> Service version "2023-04-18-preview". </summary>
-            V2023_04_18_Preview = 7,
+            V2023_04_18_Preview = 6,
         }
 
         internal string Version { get; }
@@ -42,7 +40,6 @@ namespace Azure.Analytics.Synapse.Artifacts
             Version = version switch
             {
                 ServiceVersion.V2020_12_01 => "2020-12-01",
-                ServiceVersion.V2021_04_01 => "2021-04-01",
                 ServiceVersion.V2021_06_01_Preview => "2021-06-01-preview",
                 ServiceVersion.V2021_07_01_Preview => "2021-07-01-preview",
                 ServiceVersion.V2021_11_01_Preview => "2021-11-01-preview",
