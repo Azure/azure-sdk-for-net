@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
     <ProjectReference Include="..\tests\Azure.Core.Tests.csproj" />
+    <ProjectReference Include="..\tests\public\Azure.Core.Tests.Public.csproj" />
     <!--
       Explicit references to pull in patched versions of ASP.NET Core packages
     -->
@@ -21,6 +22,12 @@
     <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="SerializationBenchmark\TestData\AvailabilitySetData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SerializationBenchmark\TestData\ResourceProviderData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\JsonFormattedString.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
