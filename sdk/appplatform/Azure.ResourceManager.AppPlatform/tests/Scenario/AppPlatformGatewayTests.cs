@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private AppPlatformGatewayCollection _getAppPlatformGatewayCollection;
         private const string _gatewayName = "default";
         private AppPlatformGatewayResource _gateway;
-        public AppPlatformGatewayTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AppPlatformGatewayTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

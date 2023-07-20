@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private const string _portalName = "default";
         private AppPlatformApiPortalResource _portal;
 
-        public AppPlatformPortalTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AppPlatformPortalTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

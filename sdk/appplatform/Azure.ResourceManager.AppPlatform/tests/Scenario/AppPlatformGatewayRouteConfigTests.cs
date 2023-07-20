@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private string _routeConfigName;
         private AppPlatformGatewayRouteConfigResource _routeConfig;
 
-        public AppPlatformGatewayRouteConfigTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AppPlatformGatewayRouteConfigTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

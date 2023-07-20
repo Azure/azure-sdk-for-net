@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private string _storageName;
         private AppPlatformStorageResource _appPlatformStorage;
 
-        public AppPlatformStorageTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AppPlatformStorageTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
