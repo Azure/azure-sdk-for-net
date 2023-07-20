@@ -32,8 +32,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 var outboundDependencies = testBase.client.OutboundNetworkDependenciesEndpoints.ListByService(testBase.rgName, testBase.serviceName);
 
                 Assert.NotNull(outboundDependencies);
-                Assert.Equal(11, outboundDependencies.Value.Count);
-                Assert.NotNull(outboundDependencies.Value.Single(d => d.Category.Equals("Azure SMTP")));
+                Assert.Equal(10, outboundDependencies.Value.Count);
                 Assert.NotNull(outboundDependencies.Value.Single(d => d.Category.Equals("Azure Storage")));
                 Assert.NotNull(outboundDependencies.Value.Single(d => d.Category.Equals("Azure Active Directory")));
                 Assert.NotNull(outboundDependencies.Value.Single(d => d.Category.Equals("Azure SQL")));

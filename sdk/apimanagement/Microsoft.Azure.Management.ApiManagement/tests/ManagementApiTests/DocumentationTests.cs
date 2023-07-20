@@ -1,4 +1,11 @@
-﻿using ApiManagement.Tests;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+// using ApiManagement.Management.Tests;
+
+
+using ApiManagement.Tests;
+using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
@@ -6,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Microsoft.Azure.Management.ApiManagement.Tests.ManagementApiTests
+namespace ApiManagement.Tests.ManagementApiTests
 {
     public class DocumentationTests : TestBase
     {
@@ -92,7 +99,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ManagementApiTests
                     var documentationList = await testBase.client.Documentation.ListByServiceAsync(
                         testBase.rgName,
                         testBase.serviceName,
-                        new Rest.Azure.OData.ODataQuery<DocumentationContract> { Top = 1 });
+                        new Microsoft.Rest.Azure.OData.ODataQuery<DocumentationContract> { Top = 1 });
 
                     Assert.NotNull(documentationList);
                     Assert.Single(documentationList);
