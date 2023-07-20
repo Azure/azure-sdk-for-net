@@ -77,14 +77,14 @@ Upload a local directory to the root of the container
 ```C# Snippet:ExtensionMethodSimpleUploadToRoot
 DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
 
-await transfer.AwaitCompletion();
+await transfer.WaitForCompletionAsync();
 ```
 
 Upload a local directory to a virtual directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
 DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
 
-await transfer.AwaitCompletion();
+await transfer.WaitForCompletionAsync();
 ```
 
 Upload a local directory to a virtual directory in the container specifying more advanced options
@@ -103,21 +103,21 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 
 DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, options);
 
-await transfer.AwaitCompletion();
+await transfer.WaitForCompletionAsync();
 ```
 
 Download the entire container to a local directory
 ```C# Snippet:ExtensionMethodSimpleDownloadContainer
 DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
 
-await transfer.AwaitCompletion();
+await transfer.WaitForCompletionAsync();
 ```
 
 Download a directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
 DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
 
-await tranfer.AwaitCompletion();
+await tranfer.WaitForCompletionAsync();
 ```
 
 Download from the container specifying more advanced options
@@ -136,7 +136,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 
 DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
 
-await tranfer.AwaitCompletion();
+await tranfer.WaitForCompletionAsync();
 ```
 
 ### Examples using BlobContainerClient extension methods to upload and download directories.
@@ -158,7 +158,7 @@ Start Upload from Local File to Block Blob
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: new LocalFileStorageResource(sourceLocalPath),
     destinationResource: new BlockBlobStorageResource(destinationBlob));
-await dataTransfer.AwaitCompletion();
+await dataTransfer.WaitForCompletionAsync();
 ```
 Apply Options to Block Blob Download
 ```C# Snippet:BlockBlobDownloadOptions

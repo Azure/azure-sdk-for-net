@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -75,7 +74,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 };
             }
 
-            return (GetType(info.SourceScheme), GetType(info.DestinationScheme));
+            return (GetType(info.SourceTypeId), GetType(info.DestinationTypeId));
         }
     }
 }

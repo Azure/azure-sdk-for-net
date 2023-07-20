@@ -1,16 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.azure-api.net/healthinsights/oncophenotype/jobs?api-version=2023-03-01-preview",
+      "RequestUri": "https://srnagar-healthinsights.cognitiveservices.azure.com/healthinsights/oncophenotype/jobs?api-version=2023-03-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "1048",
+        "Content-Length": "1072",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-28e42bf227d63e00a6d9cc031117c37f-703058def7b3ae57-00",
-        "User-Agent": "azsdk-net-Health.Insights.CancerProfiling/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "bde6f932e3bd8ba966d5c6e6e8201526",
+        "Repeatability-First-Sent": "Fri, 14 Jul 2023 06:37:24 GMT",
+        "Repeatability-Request-ID": "2d8494ef-5624-4075-a3e8-5d4a7b060ae5",
+        "traceparent": "00-abcd0eec8e0e0f556764a3bc0b57c2b6-81df996bc4cbc912-00",
+        "User-Agent": "azsdk-net-Health.Insights.CancerProfiling/1.0.0-alpha.20230714.1 (.NET 6.0.20; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "ef2454718241ef6b53e52f2f53371e62",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -39,64 +41,71 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "7ecc6c49-0fcb-4d64-a79a-cac7734a0724",
+        "apim-request-id": "e8d395e5-899a-4010-9213-7efdc78a8607",
         "Content-Length": "0",
-        "Date": "Mon, 06 Mar 2023 09:10:35 GMT",
-        "Operation-Location": "https://sanitized.azure-api.net/healthinsights/oncophenotype/jobs/7c76e45b-fb37-4b7f-aa0c-e7bb0734aecc?api-version=2023-03-01-preview",
+        "Date": "Fri, 14 Jul 2023 06:37:26 GMT",
+        "operation-location": "https://srnagar-healthinsights.cognitiveservices.azure.com/healthinsights/oncophenotype/jobs/2d8494ef-5624-4075-a3e8-5d4a7b060ae5?api-version=2023-03-01-preview",
+        "repeatability-result": "accepted",
         "Retry-After": "5",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "777",
+        "x-ms-region": "West US 2"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://sanitized.azure-api.net/healthinsights/oncophenotype/jobs/7c76e45b-fb37-4b7f-aa0c-e7bb0734aecc?api-version=2023-03-01-preview",
+      "RequestUri": "https://srnagar-healthinsights.cognitiveservices.azure.com/healthinsights/oncophenotype/jobs/2d8494ef-5624-4075-a3e8-5d4a7b060ae5?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-28e42bf227d63e00a6d9cc031117c37f-5ce6f45bb60a201a-00",
-        "User-Agent": "azsdk-net-Health.Insights.CancerProfiling/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0c3e350c34489b80bd2a13d7407f99fa",
+        "traceparent": "00-abcd0eec8e0e0f556764a3bc0b57c2b6-5180402b85e2672b-00",
+        "User-Agent": "azsdk-net-Health.Insights.CancerProfiling/1.0.0-alpha.20230714.1 (.NET 6.0.20; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "34d56a1e356190dd7d0333d86d197db1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b5994a1b-0c78-4d59-9954-45f4c582115f",
-        "Content-Length": "199",
+        "apim-request-id": "a6befb90-b37b-45df-99a0-e60d9a6d80f2",
+        "Content-Length": "196",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 06 Mar 2023 09:10:35 GMT",
-        "Retry-After": "5",
+        "Date": "Fri, 14 Jul 2023 06:37:26 GMT",
+        "Retry-After": "3",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "338",
+        "x-ms-region": "West US 2"
       },
       "ResponseBody": {
-        "jobId": "7c76e45b-fb37-4b7f-aa0c-e7bb0734aecc",
-        "createdDateTime": "2023-03-06T09:10:35Z",
-        "expirationDateTime": "2023-03-06T09:27:15Z",
-        "lastUpdateDateTime": "2023-03-06T09:10:35Z",
-        "status": "notStarted"
+        "jobId": "2d8494ef-5624-4075-a3e8-5d4a7b060ae5",
+        "createdDateTime": "2023-07-14T06:37:26Z",
+        "expirationDateTime": "2023-07-15T06:37:26Z",
+        "lastUpdateDateTime": "2023-07-14T06:37:26Z",
+        "status": "running"
       }
     },
     {
-      "RequestUri": "https://sanitized.azure-api.net/healthinsights/oncophenotype/jobs/7c76e45b-fb37-4b7f-aa0c-e7bb0734aecc?api-version=2023-03-01-preview",
+      "RequestUri": "https://srnagar-healthinsights.cognitiveservices.azure.com/healthinsights/oncophenotype/jobs/2d8494ef-5624-4075-a3e8-5d4a7b060ae5?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-28e42bf227d63e00a6d9cc031117c37f-44839a4aebf26a89-00",
-        "User-Agent": "azsdk-net-Health.Insights.CancerProfiling/1.0.0-alpha.20230306.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "423ec87a7a0144311368b503db9068fe",
+        "traceparent": "00-abcd0eec8e0e0f556764a3bc0b57c2b6-f2f87876c9509b0d-00",
+        "User-Agent": "azsdk-net-Health.Insights.CancerProfiling/1.0.0-alpha.20230714.1 (.NET 6.0.20; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "490599b2d46e13993f6c87cd676dedc3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0fd99f75-7326-4d97-9d6d-7ed5b4e9e478",
+        "apim-request-id": "bf1d05bd-4d78-411f-aa18-b8b17af1db8f",
         "Content-Length": "6279",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 06 Mar 2023 09:10:41 GMT",
+        "Date": "Fri, 14 Jul 2023 06:37:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "1216",
+        "x-ms-region": "West US 2"
       },
       "ResponseBody": {
         "results": {
@@ -596,19 +605,19 @@
               ]
             }
           ],
-          "modelVersion": "2022-01-01-preview"
+          "modelVersion": "2023-03-01-preview"
         },
-        "jobId": "7c76e45b-fb37-4b7f-aa0c-e7bb0734aecc",
-        "createdDateTime": "2023-03-06T09:10:35Z",
-        "expirationDateTime": "2023-03-06T09:27:15Z",
-        "lastUpdateDateTime": "2023-03-06T09:10:36Z",
+        "jobId": "2d8494ef-5624-4075-a3e8-5d4a7b060ae5",
+        "createdDateTime": "2023-07-14T06:37:26Z",
+        "expirationDateTime": "2023-07-15T06:37:26Z",
+        "lastUpdateDateTime": "2023-07-14T06:37:29Z",
         "status": "succeeded"
       }
     }
   ],
   "Variables": {
     "AZURE_HEALTH_INSIGHTS_API_KEY": "Sanitized",
-    "AZURE_HEALTH_INSIGHTS_ENDPOINT": "https://sanitized.azure-api.net/",
-    "RandomSeed": "1312474858"
+    "AZURE_HEALTH_INSIGHTS_ENDPOINT": "https://srnagar-healthinsights.cognitiveservices.azure.com/",
+    "RandomSeed": "21153929"
   }
 }

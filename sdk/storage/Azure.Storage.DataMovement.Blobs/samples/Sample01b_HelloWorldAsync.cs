@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
@@ -11,11 +10,9 @@ using NUnit.Framework;
 using Azure.Core;
 using Azure.Identity;
 using System.Threading;
-using System.Runtime.InteropServices;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs;
-using Microsoft.CodeAnalysis.Diagnostics;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
@@ -71,7 +68,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource: new LocalFileStorageResource(sourceLocalPath),
                     destinationResource: new BlockBlobStorageResource(destinationBlob));
-                await dataTransfer.AwaitCompletion();
+                await dataTransfer.WaitForCompletionAsync();
                 #endregion
             }
             finally
@@ -141,7 +138,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource: new BlockBlobStorageResource(sourceBlob),
                     destinationResource: new LocalFileStorageResource(downloadPath));
-                await dataTransfer.AwaitCompletion();
+                await dataTransfer.WaitForCompletionAsync();
 
                 StorageResource sourceResource2 = new BlockBlobStorageResource(sourceBlob);
                 StorageResource destinationResource2 = new LocalFileStorageResource(downloadPath2);
@@ -584,11 +581,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create simple transfer single blob upload job
                 DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
-                await transfer.AwaitCompletion();
+                await transfer.WaitForCompletionAsync();
 
                 // Generous 10 second wait for our transfer to finish
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(10000);
-                await transfer.AwaitCompletion(cancellationTokenSource.Token);
+                await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
 
                 Assert.IsTrue(await destinationBlob.ExistsAsync());
                 Assert.AreEqual(transfer.TransferStatus, StorageTransferStatus.Completed);
@@ -684,87 +681,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         /// Test to show pause and resume tests
         /// </summary>
         [Test]
-        public async Task PauseAndResumeAsync_ManagerDataTransfer()
-        {
-            string connectionString = ConnectionString;
-            string containerName = Randomize("sample-container");
-
-            // Create a client that can authenticate with a connection string
-            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-            await container.CreateIfNotExistsAsync();
-            try
-            {
-                string downloadPath = CreateTempPath();
-                // Get a temporary path on disk where we can download the file
-                //@@ string downloadPath = "hello.jpg";
-
-                // Download the public blob at https://aka.ms/bloburl
-                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://aka.ms/bloburl"));
-                await sourceBlob.DownloadToAsync(downloadPath);
-
-                // Create transfer manager
-                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
-
-                // Create source and destination resource
-                StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-                StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
-
-                // Create simple transfer single blob download job
-                #region Snippet:TransferManagerTryPause_Async
-                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource);
-
-                // Pause from the Transfer Manager using the DataTransfer object
-                await transferManager.PauseTransferIfRunningAsync(dataTransfer);
-                #endregion Snippet:TransferManagerTryPause_Async
-
-                StorageSharedKeyCredential GetMyCredential(string uri)
-                    => new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
-
-                #region Snippet:TransferManagerResume_Async
-                async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesAsync(DataTransferProperties info)
-                {
-                    StorageResource sourceResource = null, destinationResource = null;
-                    if (BlobStorageResources.TryGetResourceProviders(
-                        info,
-                        out BlobStorageResourceProvider blobSrcProvider,
-                        out BlobStorageResourceProvider blobDstProvider))
-                    {
-                        sourceResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.SourcePath));
-                        destinationResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.DestinationPath));
-                    }
-                    if (LocalStorageResources.TryGetResourceProviders(
-                        info,
-                        out LocalStorageResourceProvider localSrcProvider,
-                        out LocalStorageResourceProvider localDstProvider))
-                    {
-                        sourceResource ??= localSrcProvider.MakeResource();
-                        destinationResource ??= localDstProvider.MakeResource();
-                    }
-                    return (sourceResource, destinationResource);
-                }
-                List<DataTransfer> resumedTransfers = new();
-                await foreach (DataTransferProperties transferProperties in transferManager.GetResumableTransfersAsync())
-                {
-                    (StorageResource resumeSource, StorageResource resumeDestination) = await MakeResourcesAsync(transferProperties);
-                    resumedTransfers.Add(await transferManager.ResumeTransferAsync(transferProperties.TransferId, resumeSource, resumeDestination));
-                }
-                #endregion Snippet:TransferManagerResume_Async
-
-                // Wait for download to finish
-                await Task.WhenAll(resumedTransfers.Select(t => t.AwaitCompletion()));
-            }
-            finally
-            {
-                await container.DeleteIfExistsAsync();
-            }
-        }
-
-        /// <summary>
-        /// Test to show pause and resume tests
-        /// </summary>
-        [Test]
         public async Task PauseAndResumeAsync_ManagerId()
         {
             string connectionString = ConnectionString;
@@ -801,13 +717,49 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferIfRunningAsync(transferId);
                 #endregion Snippet:TransferManagerTryPauseId_Async
 
+                StorageSharedKeyCredential GetMyCredential(string uri)
+                    => new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
+
+                #region Snippet:TransferManagerResume_Async
+                async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesAsync(DataTransferProperties info)
+                {
+                    StorageResource sourceResource = null, destinationResource = null;
+                    if (BlobStorageResources.TryGetResourceProviders(
+                        info,
+                        out BlobStorageResourceProvider blobSrcProvider,
+                        out BlobStorageResourceProvider blobDstProvider))
+                    {
+                        sourceResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.SourcePath));
+                        destinationResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.DestinationPath));
+                    }
+                    if (LocalStorageResources.TryGetResourceProviders(
+                        info,
+                        out LocalStorageResourceProvider localSrcProvider,
+                        out LocalStorageResourceProvider localDstProvider))
+                    {
+                        sourceResource ??= localSrcProvider.MakeResource();
+                        destinationResource ??= localDstProvider.MakeResource();
+                    }
+                    return (sourceResource, destinationResource);
+                }
+                List<DataTransfer> resumedTransfers = new();
+                await foreach (DataTransferProperties transferProperties in transferManager.GetResumableTransfersAsync())
+                {
+                    (StorageResource resumeSource, StorageResource resumeDestination) = await MakeResourcesAsync(transferProperties);
+                    resumedTransfers.Add(await transferManager.ResumeTransferAsync(transferProperties.TransferId, resumeSource, resumeDestination));
+                }
+                #endregion Snippet:TransferManagerResume_Async
+
+                // Wait for download to finish
+                await Task.WhenAll(resumedTransfers.Select(t => t.WaitForCompletionAsync()));
+
                 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
                     transferId: transferId,
                     sourceResource: sourceResource,
                     destinationResource: destinationResource);
 
                 // Wait for download to finish
-                await resumedTransfer.AwaitCompletion();
+                await resumedTransfer.WaitForCompletionAsync();
             }
             finally
             {
@@ -860,7 +812,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     destinationResource: destinationResource);
 
                 // Wait for download to finish
-                await resumedTransfer.AwaitCompletion();
+                await resumedTransfer.WaitForCompletionAsync();
             }
             finally
             {
@@ -900,7 +852,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     #region Snippet:ExtensionMethodSimpleUploadToRoot
                     DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
 
-                    await transfer.AwaitCompletion();
+                    await transfer.WaitForCompletionAsync();
                     #endregion
                 }
                 {
@@ -908,7 +860,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     #region Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
                     DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
 
-                    await transfer.AwaitCompletion();
+                    await transfer.WaitForCompletionAsync();
                     #endregion
                 }
                 {
@@ -927,7 +879,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                     DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, options);
 
-                    await transfer.AwaitCompletion();
+                    await transfer.WaitForCompletionAsync();
                     #endregion
                 }
             }
@@ -970,7 +922,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     #region Snippet:ExtensionMethodSimpleDownloadContainer
                     DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
 
-                    await transfer.AwaitCompletion();
+                    await transfer.WaitForCompletionAsync();
                     #endregion
                 }
                 {
@@ -978,7 +930,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     #region Snippet:ExtensionMethodSimpleDownloadContainerDirectory
                     DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
 
-                    await tranfer.AwaitCompletion();
+                    await tranfer.WaitForCompletionAsync();
                     #endregion
                 }
                 {
@@ -997,7 +949,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                     DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
 
-                    await tranfer.AwaitCompletion();
+                    await tranfer.WaitForCompletionAsync();
                     #endregion
                 }
             }
