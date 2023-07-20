@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators
 {
@@ -25,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
         {
             return value is not null
                 && value is IEnumerable<object> obj
-                && !obj.Any(x => x == null);
+                && !obj.Where(x => x == null).Any();
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
+﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framework.Validators
 {
