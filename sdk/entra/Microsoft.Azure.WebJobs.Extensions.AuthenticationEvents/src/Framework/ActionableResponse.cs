@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <value>The actions.</value>
         [JsonPropertyName("actions")]
         [OneOrMoreRequired]
-        [EnumberableItemsNotNull]
+        [EnumerableItemsNotNull]
         public List<T> Actions { get; set; } = new List<T>();
 
         /// <summary>Invalidates this instance.
