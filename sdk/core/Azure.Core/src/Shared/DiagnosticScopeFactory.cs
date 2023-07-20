@@ -15,19 +15,20 @@ namespace Azure.Core.Pipeline
     internal class DiagnosticScopeFactory
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
+#else
         private static Dictionary<string, DiagnosticListener>? _listeners;
         private readonly string? _resourceProviderNamespace;
         private readonly DiagnosticListener? _source;
         private readonly bool _suppressNestedClientActivities;
-
-#if NETCOREAPP2_1
-        private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
-#else
         private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
 #endif
 
         public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities)
         {
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
+            IsActivityEnabled = false;
+#else
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;
             _suppressNestedClientActivities = suppressNestedClientActivities;
@@ -45,15 +46,18 @@ namespace Azure.Core.Pipeline
                     }
                 }
             }
+#endif
         }
 
         public bool IsActivityEnabled { get; }
 
-#if NETCOREAPP2_1
-        public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal)
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
+        public DiagnosticScope CreateScope(string name, object? kind = null)
+        {
+             return default;
+        }
 #else
         public DiagnosticScope CreateScope(string name, System.Diagnostics.ActivityKind kind = ActivityKind.Internal)
-#endif
         {
             if (_source == null)
             {
@@ -74,7 +78,10 @@ namespace Azure.Core.Pipeline
             }
             return scope;
         }
+#endif
 
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
+#else
         /// <summary>
         /// This method combines client namespace and operation name into an ActivitySource name and creates the activity source.
         /// For example:
@@ -82,17 +89,9 @@ namespace Azure.Core.Pipeline
         ///     name: BlobClient.DownloadTo
         ///     result Azure.Storage.Blobs.BlobClient
         /// </summary>
-#if NETCOREAPP2_1
-        private static object? GetActivitySource(string ns, string name)
-#else
         private static ActivitySource? GetActivitySource(string ns, string name)
-#endif
         {
-#if NETCOREAPP2_1
-            if (!ActivityExtensions.SupportsActivitySource())
-#else
             if (!ActivityExtensions.SupportsActivitySource)
-#endif
             {
                 return null;
             }
@@ -103,11 +102,8 @@ namespace Azure.Core.Pipeline
             {
                 clientName += "." + name.Substring(0, indexOfDot);
             }
-#if NETCOREAPP2_1
-            return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
-#else
             return ActivitySources.GetOrAdd(clientName, static n => new ActivitySource(n));
-#endif
         }
+#endif
     }
 }

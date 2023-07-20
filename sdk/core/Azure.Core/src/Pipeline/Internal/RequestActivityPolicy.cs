@@ -19,8 +19,7 @@ namespace Azure.Core.Pipeline
         private const string RequestIdHeaderName = "Request-Id";
 
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Core");
-#if NETCOREAPP2_1
-        private static readonly object? s_activitySource = ActivityExtensions.CreateActivitySource("Azure.Core.Http");
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
 #else
         private static readonly ActivitySource s_activitySource = new ActivitySource("Azure.Core.Http");
 #endif
@@ -58,11 +57,9 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-#if NETCOREAPP2_1
-            using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
 #else
             using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, System.Diagnostics.ActivityKind.Client, false);
-#endif
 
             bool isActivitySourceEnabled = IsActivitySourceEnabled;
 
@@ -91,6 +88,7 @@ namespace Azure.Core.Pipeline
             }
 
             scope.Start();
+#endif
 
             try
             {
@@ -105,10 +103,15 @@ namespace Azure.Core.Pipeline
             }
             catch (Exception e)
             {
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
+#else
                 scope.Failed(e);
+#endif
                 throw;
             }
 
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
+#else
             if (isActivitySourceEnabled)
             {
                 scope.AddIntegerAttribute("http.status_code", message.Response.Status);
@@ -134,6 +137,7 @@ namespace Azure.Core.Pipeline
                 // Set the status to UNSET so the AppInsights doesn't try to infer it from the status code
                 scope.AddAttribute("otel.status_code",  "UNSET");
             }
+#endif
         }
 
         private static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -142,21 +146,17 @@ namespace Azure.Core.Pipeline
 
             if (currentActivity != null)
             {
-                var currentActivityId = currentActivity.Id ?? string.Empty;
-#if NETCOREAPP2_1
-                if (currentActivity.IsW3CFormat())
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
 #else
+                var currentActivityId = currentActivity.Id ?? string.Empty;
+
                 if (currentActivity.IdFormat == ActivityIdFormat.W3C)
-#endif
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
                         message.Request.Headers.Add(TraceParentHeaderName, currentActivityId);
-#if NETCOREAPP2_1
-                        if (currentActivity.GetTraceState() is string traceStateString)
-#else
+
                         if (currentActivity.TraceStateString is string traceStateString)
-#endif
                         {
                             message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
                         }
@@ -169,6 +169,7 @@ namespace Azure.Core.Pipeline
                         message.Request.Headers.Add(RequestIdHeaderName, currentActivityId);
                     }
                 }
+#endif
             }
 
             if (async)
@@ -184,14 +185,14 @@ namespace Azure.Core.Pipeline
 
         private bool ShouldCreateActivity =>
             _isDistributedTracingEnabled &&
-#if NETCOREAPP2_1
-            (s_diagnosticSource.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(s_activitySource));
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
+            false;
 #else
             (s_diagnosticSource.IsEnabled() || s_activitySource.HasListeners());
 #endif
 
-#if NETCOREAPP2_1
-        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && ActivityExtensions.ActivitySourceHasListeners(s_activitySource);
+#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
+        private bool IsActivitySourceEnabled = false;
 #else
         private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners();
 #endif
