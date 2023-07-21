@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.18.0-beta.1 (Unreleased)
-- Added support for service version 2023-08-03.
+- Added support for service version 2023-05-03 and 2023-08-03.
 
 ## 12.17.0 (2023-07-11)
 - Includes all features from 12.17.0-beta.1.
