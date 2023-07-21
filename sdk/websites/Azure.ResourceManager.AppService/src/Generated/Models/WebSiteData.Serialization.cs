@@ -458,7 +458,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                trafficManagerHostNames = null;
                                 continue;
                             }
                             List<string> array = new List<string>();
