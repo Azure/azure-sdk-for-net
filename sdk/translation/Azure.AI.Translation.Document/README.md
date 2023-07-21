@@ -27,11 +27,11 @@ dotnet add package Azure.AI.Translation.Document
 Document Translation supports [single-service access][single_service] only.
 To access the service, create a Translator resource.
 
-You can create either resource using: 
+You can create either resource using:
 
 **Option 1:** [Azure Portal][azure_portal_create_DT_resource].
 
-**Option 2:** [Azure CLI][cognitive_resource_cli]. 
+**Option 2:** [Azure CLI][cognitive_resource_cli].
 
 Below is an example of how you can create a Translator resource using the CLI:
 
@@ -85,7 +85,7 @@ var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCreden
 
 Client API key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication.
 
-Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  
+Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.
 
 To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
 
@@ -120,7 +120,7 @@ A `DocumentTranslationClient` is the primary interface for developers using the 
  - Identifying supported glossary and document formats.
 
 ### Translation Input
-To start a translation operation you need to create one instance or a list of `DocumentTranslationInput`. 
+To start a translation operation you need to create one instance or a list of `DocumentTranslationInput`.
 
 A single source URL to documents can be translated to many different languages:
 
@@ -169,7 +169,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
