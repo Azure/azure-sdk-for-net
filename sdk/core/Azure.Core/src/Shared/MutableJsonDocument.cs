@@ -138,7 +138,7 @@ namespace Azure.Core.Json
         /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static MutableJsonDocument Parse(ReadOnlyMemory<byte> utf8Json, JsonSerializerOptions? serializerOptions = default)
         {
-            var doc = JsonDocument.Parse(utf8Json);
+            JsonDocument doc = JsonDocument.Parse(utf8Json);
             return new MutableJsonDocument(doc, utf8Json, serializerOptions);
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Core.Json
         /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static MutableJsonDocument Parse(BinaryData utf8Json, JsonSerializerOptions? serializerOptions = default)
         {
-            var doc = JsonDocument.Parse(utf8Json);
+            JsonDocument doc = JsonDocument.Parse(utf8Json);
             return new MutableJsonDocument(doc, utf8Json.ToMemory(), serializerOptions);
         }
 

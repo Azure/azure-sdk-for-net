@@ -16,7 +16,6 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)IModelSerializable.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonChange.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonChangeKind.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonDocument.cs" LinkBase="Shared" />

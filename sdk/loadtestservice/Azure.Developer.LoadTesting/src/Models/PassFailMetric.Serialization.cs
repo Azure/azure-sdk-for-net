@@ -13,7 +13,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class PassFailMetric : IUtf8JsonSerializable, IModelSerializable
+    public partial class PassFailMetric : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -51,7 +51,7 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        void IModelSerializable.Serialize(Utf8JsonWriter writer)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             ((IUtf8JsonSerializable)this).Write(writer);
         }
@@ -63,9 +63,15 @@ namespace Azure.Developer.LoadTesting.Models
             return new PassFailMetric(mje);
         }
 
-        object IModelSerializable.Deserialize(JsonElement element)
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            return DeserializePassFailMetric(element);
+            JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePassFailMetric(doc.RootElement);
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            throw new NotImplementedException();
         }
     }
 }
