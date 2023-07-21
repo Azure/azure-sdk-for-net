@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Azure
 {
@@ -60,7 +59,7 @@ namespace Azure
         /// </summary>
         /// <param name="configurationFile"></param>
         /// <exception cref="InvalidCloudMachineConfigurationException"></exception>
-        public CloudMachine(string configurationFile = ".\\cloudconfig.json")
+        public CloudMachine(string configurationFile = "cloudconfig.json")
         {
             try
             {
