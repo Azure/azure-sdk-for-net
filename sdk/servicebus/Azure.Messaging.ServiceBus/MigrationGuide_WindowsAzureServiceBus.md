@@ -84,7 +84,7 @@ We now have methods with similar names, signature and location to create senders
 
 #### Connection Pooling
 
-By using a single top-level client, we can implicitly share a single AMQP connection for all operations that an application performs.By making this connection sharing be implicit to a `ServiceBusClient` instance, we can help ensure that applications will not use multiple connections unless they explicitly opt in by creating multiple `ServiceBusClient` instances. The mental model of 1 client - 1 connection is more intuitive than 1 client/sender/receiver - 1 connection.
+By using a single top-level client, we can implicitly share a single AMQP connection for all operations that an application performs. By making this connection sharing be implicit to a `ServiceBusClient` instance, we can help ensure that applications will not use multiple connections unless they explicitly opt in by creating multiple `ServiceBusClient` instances. The mental model of 1 client - 1 connection is more intuitive than 1 client/sender/receiver - 1 connection.
 
 ### Default transport type
 
