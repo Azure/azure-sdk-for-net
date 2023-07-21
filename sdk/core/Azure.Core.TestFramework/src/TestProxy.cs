@@ -60,6 +60,8 @@ namespace Azure.Core.TestFramework
 
         private TestProxy(string proxyPath, bool debugMode = false)
         {
+            debugMode = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("PROXY_MANUAL_START"));
+
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
                 $"\"{proxyPath}\" --storage-location=\"{TestEnvironment.RepositoryRoot}\"")
