@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary>
-    /// Azure query for the update configuration.
-    /// Serialized Name: ConfigurationAssignmentFilterProperties
-    /// </summary>
+    /// <summary> Azure query for the update configuration. </summary>
     public partial class MaintenanceConfigurationAssignmentFilter
     {
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentFilter. </summary>
@@ -26,26 +23,11 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentFilter. </summary>
-        /// <param name="resourceTypes">
-        /// List of allowed resources.
-        /// Serialized Name: ConfigurationAssignmentFilterProperties.resourceTypes
-        /// </param>
-        /// <param name="resourceGroups">
-        /// List of allowed resource groups.
-        /// Serialized Name: ConfigurationAssignmentFilterProperties.resourceGroups
-        /// </param>
-        /// <param name="osTypes">
-        /// List of allowed operating systems.
-        /// Serialized Name: ConfigurationAssignmentFilterProperties.osTypes
-        /// </param>
-        /// <param name="locations">
-        /// List of locations to scope the query to.
-        /// Serialized Name: ConfigurationAssignmentFilterProperties.locations
-        /// </param>
-        /// <param name="tagSettings">
-        /// Tag settings for the VM.
-        /// Serialized Name: ConfigurationAssignmentFilterProperties.tagSettings
-        /// </param>
+        /// <param name="resourceTypes"> List of allowed resources. </param>
+        /// <param name="resourceGroups"> List of allowed resource groups. </param>
+        /// <param name="osTypes"> List of allowed operating systems. </param>
+        /// <param name="locations"> List of locations to scope the query to. </param>
+        /// <param name="tagSettings"> Tag settings for the VM. </param>
         internal MaintenanceConfigurationAssignmentFilter(IList<ResourceType> resourceTypes, IList<string> resourceGroups, IList<string> osTypes, IList<AzureLocation> locations, VmTagSettings tagSettings)
         {
             ResourceTypes = resourceTypes;
@@ -55,30 +37,15 @@ namespace Azure.ResourceManager.Maintenance.Models
             TagSettings = tagSettings;
         }
 
-        /// <summary>
-        /// List of allowed resources.
-        /// Serialized Name: ConfigurationAssignmentFilterProperties.resourceTypes
-        /// </summary>
+        /// <summary> List of allowed resources. </summary>
         public IList<ResourceType> ResourceTypes { get; }
-        /// <summary>
-        /// List of allowed resource groups.
-        /// Serialized Name: ConfigurationAssignmentFilterProperties.resourceGroups
-        /// </summary>
+        /// <summary> List of allowed resource groups. </summary>
         public IList<string> ResourceGroups { get; }
-        /// <summary>
-        /// List of allowed operating systems.
-        /// Serialized Name: ConfigurationAssignmentFilterProperties.osTypes
-        /// </summary>
+        /// <summary> List of allowed operating systems. </summary>
         public IList<string> OSTypes { get; }
-        /// <summary>
-        /// List of locations to scope the query to.
-        /// Serialized Name: ConfigurationAssignmentFilterProperties.locations
-        /// </summary>
+        /// <summary> List of locations to scope the query to. </summary>
         public IList<AzureLocation> Locations { get; }
-        /// <summary>
-        /// Tag settings for the VM.
-        /// Serialized Name: ConfigurationAssignmentFilterProperties.tagSettings
-        /// </summary>
+        /// <summary> Tag settings for the VM. </summary>
         public VmTagSettings TagSettings { get; set; }
     }
 }

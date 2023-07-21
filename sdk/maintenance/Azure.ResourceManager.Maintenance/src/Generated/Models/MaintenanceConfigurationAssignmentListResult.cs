@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary>
-    /// Response for ConfigurationAssignments list
-    /// Serialized Name: ListConfigurationAssignmentsResult
-    /// </summary>
+    /// <summary> Response for ConfigurationAssignments list. </summary>
     internal partial class MaintenanceConfigurationAssignmentListResult
     {
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentListResult. </summary>
-        /// <param name="value">
-        /// The list of configuration Assignments
-        /// Serialized Name: ListConfigurationAssignmentsResult.value
-        /// </param>
+        /// <param name="value"> The list of configuration Assignments. </param>
         internal MaintenanceConfigurationAssignmentListResult(IReadOnlyList<MaintenanceConfigurationAssignmentData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The list of configuration Assignments
-        /// Serialized Name: ListConfigurationAssignmentsResult.value
-        /// </summary>
+        /// <summary> The list of configuration Assignments. </summary>
         public IReadOnlyList<MaintenanceConfigurationAssignmentData> Value { get; }
     }
 }

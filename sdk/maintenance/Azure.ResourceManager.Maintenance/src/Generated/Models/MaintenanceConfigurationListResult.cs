@@ -11,10 +11,7 @@ using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary>
-    /// Response for MaintenanceConfigurations list
-    /// Serialized Name: ListMaintenanceConfigurationsResult
-    /// </summary>
+    /// <summary> Response for MaintenanceConfigurations list. </summary>
     internal partial class MaintenanceConfigurationListResult
     {
         /// <summary> Initializes a new instance of MaintenanceConfigurationListResult. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Initializes a new instance of MaintenanceConfigurationListResult. </summary>
-        /// <param name="value">
-        /// The list of maintenance Configurations
-        /// Serialized Name: ListMaintenanceConfigurationsResult.value
-        /// </param>
+        /// <param name="value"> The list of maintenance Configurations. </param>
         internal MaintenanceConfigurationListResult(IReadOnlyList<MaintenanceConfigurationData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The list of maintenance Configurations
-        /// Serialized Name: ListMaintenanceConfigurationsResult.value
-        /// </summary>
+        /// <summary> The list of maintenance Configurations. </summary>
         public IReadOnlyList<MaintenanceConfigurationData> Value { get; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary>
-    /// Tag filter information for the VM.
-    /// Serialized Name: TagSettingsProperties
-    /// </summary>
+    /// <summary> Tag filter information for the VM. </summary>
     public partial class VmTagSettings
     {
         /// <summary> Initializes a new instance of VmTagSettings. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Initializes a new instance of VmTagSettings. </summary>
-        /// <param name="tags">
-        /// Dictionary of tags with its list of values.
-        /// Serialized Name: TagSettingsProperties.tags
-        /// </param>
-        /// <param name="filterOperator">
-        /// Filter VMs by Any or All specified tags.
-        /// Serialized Name: TagSettingsProperties.filterOperator
-        /// </param>
+        /// <param name="tags"> Dictionary of tags with its list of values. </param>
+        /// <param name="filterOperator"> Filter VMs by Any or All specified tags. </param>
         internal VmTagSettings(IDictionary<string, IList<string>> tags, VmTagOperator? filterOperator)
         {
             Tags = tags;
             FilterOperator = filterOperator;
         }
 
-        /// <summary>
-        /// Dictionary of tags with its list of values.
-        /// Serialized Name: TagSettingsProperties.tags
-        /// </summary>
+        /// <summary> Dictionary of tags with its list of values. </summary>
         public IDictionary<string, IList<string>> Tags { get; }
-        /// <summary>
-        /// Filter VMs by Any or All specified tags.
-        /// Serialized Name: TagSettingsProperties.filterOperator
-        /// </summary>
+        /// <summary> Filter VMs by Any or All specified tags. </summary>
         public VmTagOperator? FilterOperator { get; set; }
     }
 }

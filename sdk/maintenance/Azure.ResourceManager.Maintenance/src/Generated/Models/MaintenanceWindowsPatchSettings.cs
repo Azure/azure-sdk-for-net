@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary>
-    /// Input properties for patching a Windows machine.
-    /// Serialized Name: InputWindowsParameters
-    /// </summary>
+    /// <summary> Input properties for patching a Windows machine. </summary>
     public partial class MaintenanceWindowsPatchSettings
     {
         /// <summary> Initializes a new instance of MaintenanceWindowsPatchSettings. </summary>
@@ -25,22 +22,10 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Initializes a new instance of MaintenanceWindowsPatchSettings. </summary>
-        /// <param name="kbNumbersToExclude">
-        /// Windows KBID to be excluded for patching.
-        /// Serialized Name: InputWindowsParameters.kbNumbersToExclude
-        /// </param>
-        /// <param name="kbNumbersToInclude">
-        /// Windows KBID to be included for patching.
-        /// Serialized Name: InputWindowsParameters.kbNumbersToInclude
-        /// </param>
-        /// <param name="classificationsToInclude">
-        /// Classification category of patches to be patched
-        /// Serialized Name: InputWindowsParameters.classificationsToInclude
-        /// </param>
-        /// <param name="isExcludeKbsRebootRequired">
-        /// Exclude patches which need reboot
-        /// Serialized Name: InputWindowsParameters.excludeKbsRequiringReboot
-        /// </param>
+        /// <param name="kbNumbersToExclude"> Windows KBID to be excluded for patching. </param>
+        /// <param name="kbNumbersToInclude"> Windows KBID to be included for patching. </param>
+        /// <param name="classificationsToInclude"> Classification category of patches to be patched. </param>
+        /// <param name="isExcludeKbsRebootRequired"> Exclude patches which need reboot. </param>
         internal MaintenanceWindowsPatchSettings(IList<string> kbNumbersToExclude, IList<string> kbNumbersToInclude, IList<string> classificationsToInclude, bool? isExcludeKbsRebootRequired)
         {
             KbNumbersToExclude = kbNumbersToExclude;
@@ -49,25 +34,13 @@ namespace Azure.ResourceManager.Maintenance.Models
             IsExcludeKbsRebootRequired = isExcludeKbsRebootRequired;
         }
 
-        /// <summary>
-        /// Windows KBID to be excluded for patching.
-        /// Serialized Name: InputWindowsParameters.kbNumbersToExclude
-        /// </summary>
+        /// <summary> Windows KBID to be excluded for patching. </summary>
         public IList<string> KbNumbersToExclude { get; }
-        /// <summary>
-        /// Windows KBID to be included for patching.
-        /// Serialized Name: InputWindowsParameters.kbNumbersToInclude
-        /// </summary>
+        /// <summary> Windows KBID to be included for patching. </summary>
         public IList<string> KbNumbersToInclude { get; }
-        /// <summary>
-        /// Classification category of patches to be patched
-        /// Serialized Name: InputWindowsParameters.classificationsToInclude
-        /// </summary>
+        /// <summary> Classification category of patches to be patched. </summary>
         public IList<string> ClassificationsToInclude { get; }
-        /// <summary>
-        /// Exclude patches which need reboot
-        /// Serialized Name: InputWindowsParameters.excludeKbsRequiringReboot
-        /// </summary>
+        /// <summary> Exclude patches which need reboot. </summary>
         public bool? IsExcludeKbsRebootRequired { get; set; }
     }
 }

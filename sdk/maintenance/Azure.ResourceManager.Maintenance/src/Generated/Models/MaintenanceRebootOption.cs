@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary>
-    /// Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed.
-    /// Serialized Name: RebootOptions
-    /// </summary>
+    /// <summary> Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed. </summary>
     public readonly partial struct MaintenanceRebootOption : IEquatable<MaintenanceRebootOption>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Maintenance.Models
         private const string NeverValue = "Never";
         private const string AlwaysValue = "Always";
 
-        /// <summary>
-        /// IfRequired
-        /// Serialized Name: RebootOptions.IfRequired
-        /// </summary>
+        /// <summary> IfRequired. </summary>
         public static MaintenanceRebootOption IfRequired { get; } = new MaintenanceRebootOption(IfRequiredValue);
-        /// <summary>
-        /// Never
-        /// Serialized Name: RebootOptions.Never
-        /// </summary>
+        /// <summary> Never. </summary>
         public static MaintenanceRebootOption Never { get; } = new MaintenanceRebootOption(NeverValue);
-        /// <summary>
-        /// Always
-        /// Serialized Name: RebootOptions.Always
-        /// </summary>
+        /// <summary> Always. </summary>
         public static MaintenanceRebootOption Always { get; } = new MaintenanceRebootOption(AlwaysValue);
         /// <summary> Determines if two <see cref="MaintenanceRebootOption"/> values are the same. </summary>
         public static bool operator ==(MaintenanceRebootOption left, MaintenanceRebootOption right) => left.Equals(right);

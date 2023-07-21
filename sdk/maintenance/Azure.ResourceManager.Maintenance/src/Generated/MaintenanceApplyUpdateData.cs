@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Maintenance
     /// <summary>
     /// A class representing the MaintenanceApplyUpdate data model.
     /// Apply Update request
-    /// Serialized Name: ApplyUpdate
     /// </summary>
     public partial class MaintenanceApplyUpdateData : ResourceData
     {
@@ -29,18 +28,9 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status">
-        /// The status
-        /// Serialized Name: ApplyUpdate.properties.status
-        /// </param>
-        /// <param name="resourceId">
-        /// The resourceId
-        /// Serialized Name: ApplyUpdate.properties.resourceId
-        /// </param>
-        /// <param name="lastUpdatedOn">
-        /// Last Update time
-        /// Serialized Name: ApplyUpdate.properties.lastUpdateTime
-        /// </param>
+        /// <param name="status"> The status. </param>
+        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="lastUpdatedOn"> Last Update time. </param>
         internal MaintenanceApplyUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MaintenanceUpdateStatus? status, ResourceIdentifier resourceId, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData)
         {
             Status = status;
@@ -48,20 +38,11 @@ namespace Azure.ResourceManager.Maintenance
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary>
-        /// The status
-        /// Serialized Name: ApplyUpdate.properties.status
-        /// </summary>
+        /// <summary> The status. </summary>
         public MaintenanceUpdateStatus? Status { get; set; }
-        /// <summary>
-        /// The resourceId
-        /// Serialized Name: ApplyUpdate.properties.resourceId
-        /// </summary>
+        /// <summary> The resourceId. </summary>
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary>
-        /// Last Update time
-        /// Serialized Name: ApplyUpdate.properties.lastUpdateTime
-        /// </summary>
+        /// <summary> Last Update time. </summary>
         public DateTimeOffset? LastUpdatedOn { get; set; }
     }
 }

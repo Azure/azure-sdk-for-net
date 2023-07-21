@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary>
-    /// Input configuration for a patch run
-    /// Serialized Name: InputPatchConfiguration
-    /// </summary>
+    /// <summary> Input configuration for a patch run. </summary>
     public partial class MaintenancePatchConfiguration
     {
         /// <summary> Initializes a new instance of MaintenancePatchConfiguration. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Initializes a new instance of MaintenancePatchConfiguration. </summary>
-        /// <param name="rebootSetting">
-        /// Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed.
-        /// Serialized Name: InputPatchConfiguration.rebootSetting
-        /// </param>
-        /// <param name="windowsParameters">
-        /// Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property.
-        /// Serialized Name: InputPatchConfiguration.windowsParameters
-        /// </param>
-        /// <param name="linuxParameters">
-        /// Input parameters specific to patching Linux machine. For Windows machines, do not pass this property.
-        /// Serialized Name: InputPatchConfiguration.linuxParameters
-        /// </param>
+        /// <param name="rebootSetting"> Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed. </param>
+        /// <param name="windowsParameters"> Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property. </param>
+        /// <param name="linuxParameters"> Input parameters specific to patching Linux machine. For Windows machines, do not pass this property. </param>
         internal MaintenancePatchConfiguration(MaintenanceRebootOption? rebootSetting, MaintenanceWindowsPatchSettings windowsParameters, MaintenanceLinuxPatchSettings linuxParameters)
         {
             RebootSetting = rebootSetting;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             LinuxParameters = linuxParameters;
         }
 
-        /// <summary>
-        /// Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed.
-        /// Serialized Name: InputPatchConfiguration.rebootSetting
-        /// </summary>
+        /// <summary> Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed. </summary>
         public MaintenanceRebootOption? RebootSetting { get; set; }
-        /// <summary>
-        /// Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property.
-        /// Serialized Name: InputPatchConfiguration.windowsParameters
-        /// </summary>
+        /// <summary> Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property. </summary>
         public MaintenanceWindowsPatchSettings WindowsParameters { get; set; }
-        /// <summary>
-        /// Input parameters specific to patching Linux machine. For Windows machines, do not pass this property.
-        /// Serialized Name: InputPatchConfiguration.linuxParameters
-        /// </summary>
+        /// <summary> Input parameters specific to patching Linux machine. For Windows machines, do not pass this property. </summary>
         public MaintenanceLinuxPatchSettings LinuxParameters { get; set; }
     }
 }

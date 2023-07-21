@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsWithinSubscriptionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsWithinSubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationAssignmentsWithinSubscriptions", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsWithinSubscriptions(CancellationToken cancellationToken = default)
+        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscription(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsWithinSubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationAssignmentsWithinSubscriptions", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -203,9 +203,9 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentsForSubscriptionAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationAssignmentsForSubscription");
+            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationAssignmentBySubscription");
             scope.Start();
             try
             {
@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsForSubscription(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentBySubscription(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationAssignmentsForSubscription");
+            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationAssignmentBySubscription");
             scope.Start();
             try
             {
@@ -266,9 +266,9 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentsForSubscriptionAsync(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateOrUpdateConfigurationAssignmentsForSubscription");
+            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateOrUpdateConfigurationAssignmentBySubscription");
             scope.Start();
             try
             {
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentsForSubscription(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentBySubscription(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateOrUpdateConfigurationAssignmentsForSubscription");
+            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateOrUpdateConfigurationAssignmentBySubscription");
             scope.Start();
             try
             {
@@ -330,9 +330,9 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentsForSubscriptionAsync(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateConfigurationAssignmentsForSubscription");
+            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateConfigurationAssignmentBySubscription");
             scope.Start();
             try
             {
@@ -362,9 +362,9 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentsForSubscription(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentBySubscription(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateConfigurationAssignmentsForSubscription");
+            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateConfigurationAssignmentBySubscription");
             scope.Start();
             try
             {
@@ -393,9 +393,9 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentsForSubscriptionAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.DeleteConfigurationAssignmentsForSubscription");
+            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.DeleteConfigurationAssignmentBySubscription");
             scope.Start();
             try
             {
@@ -424,9 +424,9 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentsForSubscription(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentBySubscription(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.DeleteConfigurationAssignmentsForSubscription");
+            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.DeleteConfigurationAssignmentBySubscription");
             scope.Start();
             try
             {

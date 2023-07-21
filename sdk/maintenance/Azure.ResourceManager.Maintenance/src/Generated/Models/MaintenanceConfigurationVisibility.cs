@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary>
-    /// Gets or sets the visibility of the configuration. The default value is 'Custom'
-    /// Serialized Name: Visibility
-    /// </summary>
+    /// <summary> Gets or sets the visibility of the configuration. The default value is 'Custom'. </summary>
     public readonly partial struct MaintenanceConfigurationVisibility : IEquatable<MaintenanceConfigurationVisibility>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         private const string CustomValue = "Custom";
         private const string PublicValue = "Public";
 
-        /// <summary>
-        /// Only visible to users with permissions.
-        /// Serialized Name: Visibility.Custom
-        /// </summary>
+        /// <summary> Only visible to users with permissions. </summary>
         public static MaintenanceConfigurationVisibility Custom { get; } = new MaintenanceConfigurationVisibility(CustomValue);
-        /// <summary>
-        /// Visible to all users.
-        /// Serialized Name: Visibility.Public
-        /// </summary>
+        /// <summary> Visible to all users. </summary>
         public static MaintenanceConfigurationVisibility Public { get; } = new MaintenanceConfigurationVisibility(PublicValue);
         /// <summary> Determines if two <see cref="MaintenanceConfigurationVisibility"/> values are the same. </summary>
         public static bool operator ==(MaintenanceConfigurationVisibility left, MaintenanceConfigurationVisibility right) => left.Equals(right);

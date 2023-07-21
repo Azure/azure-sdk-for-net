@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetParentConfigurationAssignmentAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetParentConfigurationAssignmentOptions options, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentByParentAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetParentConfigurationAssignmentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -438,11 +438,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public static Response<MaintenanceConfigurationAssignmentData> GetParentConfigurationAssignment(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetParentConfigurationAssignmentOptions options, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentByParent(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetParentConfigurationAssignment(options, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByParent(options, cancellationToken);
         }
 
         /// <summary>
@@ -919,11 +919,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentsForResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentsForResourceGroupAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -944,11 +944,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsForResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentsForResourceGroup(configurationAssignmentName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByResourceGroup(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -970,12 +970,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentsForResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentsForResourceGroupAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -997,12 +997,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentsForResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentsForResourceGroup(configurationAssignmentName, data, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByResourceGroup(configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -1024,12 +1024,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentsForResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateConfigurationAssignmentsForResourceGroupAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1051,12 +1051,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public static Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentsForResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateConfigurationAssignmentsForResourceGroup(configurationAssignmentName, data, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateConfigurationAssignmentByResourceGroup(configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -1077,11 +1077,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentsForResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentsForResourceGroupAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1102,11 +1102,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentsForResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentsForResourceGroup(configurationAssignmentName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByResourceGroup(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -1393,9 +1393,9 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsWithinSubscriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentsWithinSubscriptionsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentsBySubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1414,9 +1414,9 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsWithinSubscriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentsWithinSubscriptions(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentsBySubscription(cancellationToken);
         }
 
         /// <summary>
@@ -1437,11 +1437,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentsForSubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentsForSubscriptionAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1462,11 +1462,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsForSubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentsForSubscription(configurationAssignmentName, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentBySubscription(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -1488,12 +1488,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentsForSubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CreateOrUpdateConfigurationAssignmentsForSubscriptionAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1515,12 +1515,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentsForSubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CreateOrUpdateConfigurationAssignmentsForSubscription(configurationAssignmentName, data, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CreateOrUpdateConfigurationAssignmentBySubscription(configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -1542,12 +1542,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentsForSubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateConfigurationAssignmentsForSubscriptionAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1569,12 +1569,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public static Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentsForSubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateConfigurationAssignmentsForSubscription(configurationAssignmentName, data, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateConfigurationAssignmentBySubscription(configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -1595,11 +1595,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentsForSubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).DeleteConfigurationAssignmentsForSubscriptionAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).DeleteConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1620,11 +1620,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentsForSubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).DeleteConfigurationAssignmentsForSubscription(configurationAssignmentName, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).DeleteConfigurationAssignmentBySubscription(configurationAssignmentName, cancellationToken);
         }
     }
 }

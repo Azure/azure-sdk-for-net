@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary>
-    /// Input properties for patching a Linux machine.
-    /// Serialized Name: InputLinuxParameters
-    /// </summary>
+    /// <summary> Input properties for patching a Linux machine. </summary>
     public partial class MaintenanceLinuxPatchSettings
     {
         /// <summary> Initializes a new instance of MaintenanceLinuxPatchSettings. </summary>
@@ -25,18 +22,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Initializes a new instance of MaintenanceLinuxPatchSettings. </summary>
-        /// <param name="packageNameMasksToExclude">
-        /// Package names to be excluded for patching.
-        /// Serialized Name: InputLinuxParameters.packageNameMasksToExclude
-        /// </param>
-        /// <param name="packageNameMasksToInclude">
-        /// Package names to be included for patching.
-        /// Serialized Name: InputLinuxParameters.packageNameMasksToInclude
-        /// </param>
-        /// <param name="classificationsToInclude">
-        /// Classification category of patches to be patched
-        /// Serialized Name: InputLinuxParameters.classificationsToInclude
-        /// </param>
+        /// <param name="packageNameMasksToExclude"> Package names to be excluded for patching. </param>
+        /// <param name="packageNameMasksToInclude"> Package names to be included for patching. </param>
+        /// <param name="classificationsToInclude"> Classification category of patches to be patched. </param>
         internal MaintenanceLinuxPatchSettings(IList<string> packageNameMasksToExclude, IList<string> packageNameMasksToInclude, IList<string> classificationsToInclude)
         {
             PackageNameMasksToExclude = packageNameMasksToExclude;
@@ -44,20 +32,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             ClassificationsToInclude = classificationsToInclude;
         }
 
-        /// <summary>
-        /// Package names to be excluded for patching.
-        /// Serialized Name: InputLinuxParameters.packageNameMasksToExclude
-        /// </summary>
+        /// <summary> Package names to be excluded for patching. </summary>
         public IList<string> PackageNameMasksToExclude { get; }
-        /// <summary>
-        /// Package names to be included for patching.
-        /// Serialized Name: InputLinuxParameters.packageNameMasksToInclude
-        /// </summary>
+        /// <summary> Package names to be included for patching. </summary>
         public IList<string> PackageNameMasksToInclude { get; }
-        /// <summary>
-        /// Classification category of patches to be patched
-        /// Serialized Name: InputLinuxParameters.classificationsToInclude
-        /// </summary>
+        /// <summary> Classification category of patches to be patched. </summary>
         public IList<string> ClassificationsToInclude { get; }
     }
 }

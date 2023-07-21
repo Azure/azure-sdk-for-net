@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         // ConfigurationAssignmentsResultWithinSubscription_List
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetConfigurationAssignmentsWithinSubscriptions_ConfigurationAssignmentsResultWithinSubscriptionList()
+        public async Task GetConfigurationAssignmentsBySubscription_ConfigurationAssignmentsResultWithinSubscriptionList()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsResultWithinSubscription_List.json
             // this example is just showing the usage of "ConfigurationAssignmentsWithinSubscription_List" operation, for the dependent resources, they will have to be created separately.
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MaintenanceConfigurationAssignmentData item in subscriptionResource.GetConfigurationAssignmentsWithinSubscriptionsAsync())
+            await foreach (MaintenanceConfigurationAssignmentData item in subscriptionResource.GetConfigurationAssignmentsBySubscriptionAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         // ConfigurationAssignments_GetParent
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetConfigurationAssignmentsForSubscription_ConfigurationAssignmentsGetParent()
+        public async Task GetConfigurationAssignmentBySubscription_ConfigurationAssignmentsGetParent()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForSubscriptions_Get.json
             // this example is just showing the usage of "ConfigurationAssignmentsForSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             // invoke the operation
             string configurationAssignmentName = "workervmConfiguration";
-            MaintenanceConfigurationAssignmentData result = await subscriptionResource.GetConfigurationAssignmentsForSubscriptionAsync(configurationAssignmentName);
+            MaintenanceConfigurationAssignmentData result = await subscriptionResource.GetConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         // ConfigurationAssignmentsForSubscriptions_CreateOrUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdateConfigurationAssignmentsForSubscription_ConfigurationAssignmentsForSubscriptionsCreateOrUpdate()
+        public async Task CreateOrUpdateConfigurationAssignmentBySubscription_ConfigurationAssignmentsForSubscriptionsCreateOrUpdate()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForSubscriptions_CreateOrUpdate.json
             // this example is just showing the usage of "ConfigurationAssignmentsForSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
@@ -127,7 +127,7 @@ new AzureLocation("Japan East"),new AzureLocation("UK South")
                     },
                 },
             };
-            MaintenanceConfigurationAssignmentData result = await subscriptionResource.CreateOrUpdateConfigurationAssignmentsForSubscriptionAsync(configurationAssignmentName, data);
+            MaintenanceConfigurationAssignmentData result = await subscriptionResource.CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, data);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -135,7 +135,7 @@ new AzureLocation("Japan East"),new AzureLocation("UK South")
         // ConfigurationAssignmentsForSubscriptions_CreateOrUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateConfigurationAssignmentsForSubscription_ConfigurationAssignmentsForSubscriptionsCreateOrUpdate()
+        public async Task UpdateConfigurationAssignmentBySubscription_ConfigurationAssignmentsForSubscriptionsCreateOrUpdate()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForSubscriptions_UpdateForResource.json
             // this example is just showing the usage of "ConfigurationAssignmentsForSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
@@ -187,7 +187,7 @@ new AzureLocation("Japan East"),new AzureLocation("UK South")
                     },
                 },
             };
-            MaintenanceConfigurationAssignmentData result = await subscriptionResource.UpdateConfigurationAssignmentsForSubscriptionAsync(configurationAssignmentName, data);
+            MaintenanceConfigurationAssignmentData result = await subscriptionResource.UpdateConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, data);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -195,7 +195,7 @@ new AzureLocation("Japan East"),new AzureLocation("UK South")
         // ConfigurationAssignmentsForSubscriptions_Delete
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DeleteConfigurationAssignmentsForSubscription_ConfigurationAssignmentsForSubscriptionsDelete()
+        public async Task DeleteConfigurationAssignmentBySubscription_ConfigurationAssignmentsForSubscriptionsDelete()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForSubscriptions_Delete.json
             // this example is just showing the usage of "ConfigurationAssignmentsForSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
@@ -213,7 +213,7 @@ new AzureLocation("Japan East"),new AzureLocation("UK South")
 
             // invoke the operation
             string configurationAssignmentName = "workervmConfiguration";
-            MaintenanceConfigurationAssignmentData result = await subscriptionResource.DeleteConfigurationAssignmentsForSubscriptionAsync(configurationAssignmentName);
+            MaintenanceConfigurationAssignmentData result = await subscriptionResource.DeleteConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName);
 
             Console.WriteLine($"Succeeded: {result}");
         }

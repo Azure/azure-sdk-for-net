@@ -11,10 +11,7 @@ using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary>
-    /// Response for ApplyUpdate list
-    /// Serialized Name: ListApplyUpdate
-    /// </summary>
+    /// <summary> Response for ApplyUpdate list. </summary>
     internal partial class MaintenanceApplyUpdateListResult
     {
         /// <summary> Initializes a new instance of MaintenanceApplyUpdateListResult. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Initializes a new instance of MaintenanceApplyUpdateListResult. </summary>
-        /// <param name="value">
-        /// The list of apply updates
-        /// Serialized Name: ListApplyUpdate.value
-        /// </param>
+        /// <param name="value"> The list of apply updates. </param>
         internal MaintenanceApplyUpdateListResult(IReadOnlyList<MaintenanceApplyUpdateData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The list of apply updates
-        /// Serialized Name: ListApplyUpdate.value
-        /// </summary>
+        /// <summary> The list of apply updates. </summary>
         public IReadOnlyList<MaintenanceApplyUpdateData> Value { get; }
     }
 }

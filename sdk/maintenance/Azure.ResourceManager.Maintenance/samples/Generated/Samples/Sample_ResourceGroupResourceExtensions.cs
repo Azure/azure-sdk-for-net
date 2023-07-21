@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         // ConfigurationAssignments_GetParent
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetParentConfigurationAssignment_ConfigurationAssignmentsGetParent()
+        public async Task GetConfigurationAssignmentByParent_ConfigurationAssignmentsGetParent()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignments_GetParent.json
             // this example is just showing the usage of "ConfigurationAssignments_GetParent" operation, for the dependent resources, they will have to be created separately.
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Maintenance.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation
-            ResourceGroupResourceGetParentConfigurationAssignmentOptions options = new ResourceGroupResourceGetParentConfigurationAssignmentOptions(providerName: "Microsoft.Compute", resourceParentType: "virtualMachineScaleSets", resourceParentName: "smdtest1", resourceType: "virtualMachines", resourceName: "smdvm1", configurationAssignmentName: "workervmPolicy") { };
-            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.GetParentConfigurationAssignmentAsync(options);
+            ResourceGroupResourceGetConfigurationAssignmentByParentOptions options = new ResourceGroupResourceGetConfigurationAssignmentByParentOptions(providerName: "Microsoft.Compute", resourceParentType: "virtualMachineScaleSets", resourceParentName: "smdtest1", resourceType: "virtualMachines", resourceName: "smdvm1", configurationAssignmentName: "workervmPolicy") { };
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.GetConfigurationAssignmentByParentAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         // ConfigurationAssignmentsForResourceGroup_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetConfigurationAssignmentsForResourceGroup_ConfigurationAssignmentsForResourceGroupGet()
+        public async Task GetConfigurationAssignmentByResourceGroup_ConfigurationAssignmentsForResourceGroupGet()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForResourceGroup_Get.json
             // this example is just showing the usage of "ConfigurationAssignmentsForResourceGroup_Get" operation, for the dependent resources, they will have to be created separately.
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             // invoke the operation
             string configurationAssignmentName = "workervmConfiguration";
-            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.GetConfigurationAssignmentsForResourceGroupAsync(configurationAssignmentName);
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.GetConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         // ConfigurationAssignmentsForResourceGroup_CreateOrUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdateConfigurationAssignmentsForResourceGroup_ConfigurationAssignmentsForResourceGroupCreateOrUpdate()
+        public async Task CreateOrUpdateConfigurationAssignmentByResourceGroup_ConfigurationAssignmentsForResourceGroupCreateOrUpdate()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForResourceGroup_CreateOrUpdate.json
             // this example is just showing the usage of "ConfigurationAssignmentsForResourceGroup_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
@@ -375,7 +375,7 @@ new AzureLocation("Japan East"),new AzureLocation("UK South")
                     },
                 },
             };
-            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.CreateOrUpdateConfigurationAssignmentsForResourceGroupAsync(configurationAssignmentName, data);
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.CreateOrUpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -383,7 +383,7 @@ new AzureLocation("Japan East"),new AzureLocation("UK South")
         // ConfigurationAssignmentsForResourceGroup_CreateOrUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateConfigurationAssignmentsForResourceGroup_ConfigurationAssignmentsForResourceGroupCreateOrUpdate()
+        public async Task UpdateConfigurationAssignmentByResourceGroup_ConfigurationAssignmentsForResourceGroupCreateOrUpdate()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForResourceGroup_UpdateForResource.json
             // this example is just showing the usage of "ConfigurationAssignmentsForResourceGroup_Update" operation, for the dependent resources, they will have to be created separately.
@@ -432,7 +432,7 @@ new AzureLocation("Japan East"),new AzureLocation("UK South")
                     },
                 },
             };
-            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.UpdateConfigurationAssignmentsForResourceGroupAsync(configurationAssignmentName, data);
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.UpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -440,7 +440,7 @@ new AzureLocation("Japan East"),new AzureLocation("UK South")
         // ConfigurationAssignmentsForResourceGroup_Delete
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DeleteConfigurationAssignmentsForResourceGroup_ConfigurationAssignmentsForResourceGroupDelete()
+        public async Task DeleteConfigurationAssignmentByResourceGroup_ConfigurationAssignmentsForResourceGroupDelete()
         {
             // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForResourceGroup_Delete.json
             // this example is just showing the usage of "ConfigurationAssignmentsForResourceGroup_Delete" operation, for the dependent resources, they will have to be created separately.
@@ -459,7 +459,7 @@ new AzureLocation("Japan East"),new AzureLocation("UK South")
 
             // invoke the operation
             string configurationAssignmentName = "workervmConfiguration";
-            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.DeleteConfigurationAssignmentsForResourceGroupAsync(configurationAssignmentName);
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.DeleteConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
