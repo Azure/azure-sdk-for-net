@@ -4,7 +4,7 @@
 using System.Diagnostics.Tracing;
 using Avro;
 using Azure.Core.Diagnostics;
-using Azure.Core.Experimental;
+using Azure.Core;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
