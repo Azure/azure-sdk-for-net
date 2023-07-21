@@ -1,14 +1,25 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2023-07-28)
+This release is the first stable release of the Managed Network Fabric library.
+
 
 ### Features Added
 
+This version supports the following new resources:
+
+    1. InternetGateyways
+    2. InternetGatewayRules
+    3. NetworkTap
+    4. NetworkTapRules
+    5. NetworkPacketBroker
+    6. NeighborGroup
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+    1. Supported new parameters and removed deprecated parameters in all existing resources.
+    2. Supported new post actions in the existing resources.
+    3. Removed some post actions that are not needed.
 
 ## 1.0.0-beta.1 (2023-06-28)
 
