@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-artifacts-composite-v7
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/8d060a29de4fea88816267daebd714c047c67c31/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/1e56b6fbe36e2dcbaccd342f108b7c6efb175181/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 generation1-convenience-client: true
 public-clients: true
@@ -28,23 +28,6 @@ directive:
   from: swagger-document
   where: $.parameters.Endpoint
   transform: $.format = "url"
-```
-### Handle name conflict with BLC type
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.Sorting
-  transform: >
-    $['x-ms-client-name'] = "SortingItem";
-```
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.Namespace
-  transform: >
-    $['x-ms-client-name'] = "BaseNamespace";
 ```
 
 ### Add nullable annotations
