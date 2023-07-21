@@ -5,33 +5,44 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    public partial class ElasticSanVolumeData : IUtf8JsonSerializable
+    public partial class ElasticSanPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreationData))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                writer.WritePropertyName("privateEndpoint"u8);
+                JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            writer.WritePropertyName("sizeGiB"u8);
-            writer.WriteNumberValue(SizeGiB);
+            writer.WritePropertyName("privateLinkServiceConnectionState"u8);
+            writer.WriteObjectValue(ConnectionState);
+            if (Optional.IsCollectionDefined(GroupIds))
+            {
+                writer.WritePropertyName("groupIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static ElasticSanVolumeData DeserializeElasticSanVolumeData(JsonElement element)
+        internal static ElasticSanPrivateEndpointConnectionData DeserializeElasticSanPrivateEndpointConnectionData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -41,10 +52,10 @@ namespace Azure.ResourceManager.ElasticSan
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<Guid> volumeId = default;
-            Optional<ElasticSanVolumeDataSourceInfo> creationData = default;
-            long sizeGiB = default;
-            Optional<IscsiTargetInfo> storageTarget = default;
+            Optional<ElasticSanProvisioningState> provisioningState = default;
+            Optional<SubResource> privateEndpoint = default;
+            ElasticSanPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            Optional<IList<string>> groupIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -80,43 +91,48 @@ namespace Azure.ResourceManager.ElasticSan
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("volumeId"u8))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            volumeId = property0.Value.GetGuid();
+                            provisioningState = new ElasticSanProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("creationData"u8))
+                        if (property0.NameEquals("privateEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value);
+                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("sizeGiB"u8))
+                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
-                            sizeGiB = property0.Value.GetInt64();
+                            privateLinkServiceConnectionState = ElasticSanPrivateLinkServiceConnectionState.DeserializeElasticSanPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("storageTarget"u8))
+                        if (property0.NameEquals("groupIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value);
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            groupIds = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToNullable(volumeId), creationData.Value, sizeGiB, storageTarget.Value);
+            return new ElasticSanPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState, Optional.ToList(groupIds));
         }
     }
 }
