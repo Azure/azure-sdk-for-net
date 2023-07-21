@@ -26,7 +26,7 @@ Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
         workerId: routerWorkerId,
         totalCapacity: 100)
     {
-        QueueIds =
+        QueueAssignments =
         {
             ["worker-q-1"] = new RouterQueueAssignment(),
             ["worker-q-2"] = new RouterQueueAssignment()
@@ -77,7 +77,7 @@ Console.WriteLine($"Worker associated with queues: {queriedWorker.Value.QueueAss
 Response<RouterWorker> updateWorker = await routerClient.UpdateWorkerAsync(
     new UpdateWorkerOptions(routerWorkerId)
     {
-        QueueIds = { ["worker-q-3"] = new RouterQueueAssignment() },
+        QueueAssignments = { ["worker-q-3"] = new RouterQueueAssignment() },
         ChannelConfigurations = { ["WebChatEscalated"] = new ChannelConfiguration(50), },
         Labels =
         {

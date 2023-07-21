@@ -100,7 +100,7 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
             ["Geo"] = new LabelValue("NA"),
             ["Skill_English_Lvl"] = new LabelValue(7),
         }, // attaching labels associated with worker
-        QueueIds = { [queueId] = new RouterQueueAssignment() }
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 string workerId2 = "worker-id-2";
@@ -111,7 +111,7 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
         AvailableForOffers = true, // registering worker at the time of creation
         ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
         Labels = { ["Skill_English_Lvl"] = new LabelValue(7) }, // attaching labels associated with worker
-        QueueIds = { [queueId] = new RouterQueueAssignment() }
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 
@@ -230,7 +230,7 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
             ["Geo"] = new LabelValue("NA"),
             ["Skill_English_Lvl"] = new LabelValue(7)
         }, // attaching labels associated with worker
-        QueueIds = { [queueId] = new RouterQueueAssignment() }
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 string workerId2 = "worker-id-2";
@@ -245,7 +245,7 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
             ["Geo"] = new LabelValue("NA"),
             ["Skill_English_Lvl"] = new LabelValue(7)
         }, // attaching labels associated with worker
-        QueueIds = { [queueId] = new RouterQueueAssignment() }
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 
@@ -373,7 +373,7 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
             ["Dept"] = new LabelValue("O365"),
             ["Skill_English_Lvl"] = new LabelValue(10),
         }, // attaching labels associated with worker
-        QueueIds = { [queueId] = new RouterQueueAssignment() }
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 string workerId2 = "worker-id-2";
@@ -391,7 +391,7 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
             ["Dept"] = new LabelValue("Xbox"),
             ["Skill_English_Lvl"] = new LabelValue(10),
         }, // attaching labels associated with worker
-        QueueIds = { [queueId] = new RouterQueueAssignment() }
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 
