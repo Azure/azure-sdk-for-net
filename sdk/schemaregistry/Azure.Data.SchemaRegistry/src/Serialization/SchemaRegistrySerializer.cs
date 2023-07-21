@@ -134,8 +134,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the specified schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The data did not adhere to the specified schema, or the schema itself was invalid. The inner exception will hold more detailed information about
+        ///   the exception.
         /// </exception>
         public TMessage Serialize<TMessage, TData>(
             TData data,
@@ -160,8 +160,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the specified schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The data did not adhere to the specified schema, or the schema itself was invalid. The inner exception will hold more detailed information about
+        ///   the exception.
         /// </exception>
         public async ValueTask<TMessage> SerializeAsync<TMessage, TData>(
             TData data,
@@ -189,8 +189,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the specified schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The data did not adhere to the specified schema, or the schema itself was invalid. The inner exception will hold more detailed information about
+        ///   the exception.
         /// </exception>
         public MessageContent Serialize(
             object data,
@@ -220,8 +220,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the specified schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The data did not adhere to the specified schema, or the schema itself was invalid. The inner exception will hold more detailed information about
+        ///   the exception.
         /// </exception>
         public async ValueTask<MessageContent> SerializeAsync(
             object data,
@@ -298,15 +298,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
                 throw new Exception("An error occurred while attempting to serialize the data.", ex);
             }
 
-            try
-            {
-                // Attempt to validate
-                _schemaValidator.Validate(value, dataType, schemaString);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("The validate method determined the object was invalid according to the schema.", ex);
-            }
+            // Attempt to validate
+            _schemaValidator.Validate(value, dataType, schemaString);
 
             try
             {
@@ -364,8 +357,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data. The <see cref="Exception.InnerException"/>
+        ///   will contain more information.
         /// </exception>
         public TData Deserialize<TData>(
             MessageContent content,
@@ -388,8 +381,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data. The <see cref="Exception.InnerException"/>
+        ///   will contain more information.
         /// </exception>
         public async ValueTask<TData> DeserializeAsync<TData>(
             MessageContent content,
@@ -412,8 +405,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data. The <see cref="Exception.InnerException"/>
+        ///   will contain more information.
         /// </exception>
         public object Deserialize(
             MessageContent content,
@@ -437,8 +430,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data. The <see cref="Exception.InnerException"/>
+        ///   will contain more information.
         /// </exception>
         public async ValueTask<object> DeserializeAsync(
             MessageContent content,
@@ -522,15 +515,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
                 throw new Exception($"An error occurred while attempting to deserialize the data.", ex);
             }
 
-            try
-            {
-                // Attempt to validate
-                _schemaValidator.Validate(objectToReturn, dataType, schemaDefinition);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("The validate method determined the object was invalid according to the schema.", ex);
-            }
+            // Attempt to validate
+            _schemaValidator.Validate(objectToReturn, dataType, schemaDefinition);
 
             return objectToReturn;
         }

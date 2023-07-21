@@ -106,7 +106,7 @@ namespace Azure
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool TryGetValue<T>(out T value) { throw null; }
     }
 }
-namespace Azure.Core.Experimental
+namespace Azure.Core
 {
     public partial class LruCache<TKey, TValue> : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.IEnumerable where TKey : notnull
     {
@@ -118,9 +118,6 @@ namespace Azure.Core.Experimental
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGet(TKey key, out TValue? value) { throw null; }
     }
-}
-namespace Azure.Core.Experimental.SchemaValidator
-{
     public abstract partial class SchemaValidator
     {
         protected SchemaValidator() { }
