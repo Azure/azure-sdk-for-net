@@ -79,18 +79,6 @@ namespace Azure.Communication.CallAutomation
             return new CallDisconnected(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <returns> A new <see cref="CallAutomation.CallTransferAccepted"/> instance for mocking. </returns>
-        public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new CallTransferAccepted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        }
-
         /// <summary> Initializes a new instance of CallTransferFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
@@ -220,14 +208,6 @@ namespace Azure.Communication.CallAutomation
         public static UserConsent UserConsent(int? recording = null)
         {
             return new UserConsent(recording);
-        }
-
-        /// <summary> Initializes a new instance of SensitiveFlag. </summary>
-        /// <param name="recording"></param>
-        /// <returns> A new <see cref="CallAutomation.SensitiveFlag"/> instance for mocking. </returns>
-        public static SensitiveFlag SensitiveFlag(int? recording = null)
-        {
-            return new SensitiveFlag(recording);
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
