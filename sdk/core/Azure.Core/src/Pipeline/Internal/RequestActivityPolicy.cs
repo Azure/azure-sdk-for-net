@@ -179,7 +179,7 @@ namespace Azure.Core.Pipeline
         private bool ShouldCreateActivity =>
             _isDistributedTracingEnabled &&
 #if NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
-            false;
+            s_diagnosticSource.IsEnabled();
 #else
             (s_diagnosticSource.IsEnabled() || s_activitySource.HasListeners());
 #endif
