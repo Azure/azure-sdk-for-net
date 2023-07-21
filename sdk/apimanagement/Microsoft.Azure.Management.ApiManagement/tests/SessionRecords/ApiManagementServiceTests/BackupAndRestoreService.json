@@ -1972,14 +1972,14 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"value\": \"50VKQ4epb72bH7wuTJ0wtcFPaFuFTNhfDeOwAPYd/11NdYMiiW9oIWGwpSUtWp4VmnM97Zpezpgp+AStWcfFjA==\",\r\n      \"permissions\": \"FULL\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"value\": \"NcVGYD5W2QtMhvafEQAxyaQ39E2R9SYAQwaYdlfTpM6PUL9nzU5gKu7wZ9PghMW1VLlNKtKBtRRQ+AStBBQA4A==\",\r\n      \"permissions\": \"FULL\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"value\": \"Sanitized\",\r\n      \"permissions\": \"FULL\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"value\": \"Sanitized+AStBBQA4A==\",\r\n      \"permissions\": \"FULL\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg6291/providers/Microsoft.ApiManagement/service/sdktestapim4389/backup?api-version=2022-08-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzYyOTEvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW00Mzg5L2JhY2t1cD9hcGktdmVyc2lvbj0yMDIyLTA4LTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"storageAccount\": \"sdkapimbackup7300\",\r\n  \"containerName\": \"apimbackupcontainer\",\r\n  \"backupName\": \"apimbackup.zip\",\r\n  \"accessKey\": \"50VKQ4epb72bH7wuTJ0wtcFPaFuFTNhfDeOwAPYd/11NdYMiiW9oIWGwpSUtWp4VmnM97Zpezpgp+AStWcfFjA==\"\r\n}",
+      "RequestBody": "{\r\n  \"storageAccount\": \"sdkapimbackup7300\",\r\n  \"containerName\": \"apimbackupcontainer\",\r\n  \"backupName\": \"apimbackup.zip\",\r\n  \"accessKey\": \"Sanitized\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "eb3c5c88-a3e8-4605-9535-0f03b5f8da35"
@@ -2765,7 +2765,7 @@
       "RequestUri": "/subscriptions/4f5285a3-9fd7-40ad-91b1-d8fc3823983d/resourceGroups/sdktestrg6291/providers/Microsoft.ApiManagement/service/sdktestapim4389/restore?api-version=2022-08-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGY1Mjg1YTMtOWZkNy00MGFkLTkxYjEtZDhmYzM4MjM5ODNkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzYyOTEvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW00Mzg5L3Jlc3RvcmU/YXBpLXZlcnNpb249MjAyMi0wOC0wMQ==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"storageAccount\": \"sdkapimbackup7300\",\r\n  \"containerName\": \"apimbackupcontainer\",\r\n  \"backupName\": \"apimbackup.zip\",\r\n  \"accessKey\": \"50VKQ4epb72bH7wuTJ0wtcFPaFuFTNhfDeOwAPYd/11NdYMiiW9oIWGwpSUtWp4VmnM97Zpezpgp+AStWcfFjA==\"\r\n}",
+      "RequestBody": "{\r\n  \"storageAccount\": \"sdkapimbackup7300\",\r\n  \"containerName\": \"apimbackupcontainer\",\r\n  \"backupName\": \"apimbackup.zip\",\r\n  \"accessKey\": \"Sanitized\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "25e2bd40-8762-47cf-9434-8ca1b382de11"

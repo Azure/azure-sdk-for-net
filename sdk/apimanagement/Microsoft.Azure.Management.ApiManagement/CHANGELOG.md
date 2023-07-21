@@ -3,6 +3,10 @@
 ### Changes in 9.0.0-preview
 
 - Switch the .NET client to use api-version `2022-08-01`
+- new entities added, are `ApiWikiOperation`, `Authorization Provider`, `DocumentationOperation`, `GraphQLApiResolverOperation`, `GraphQLApiResolverPolicyOperation`, `PolicyFragment`, `ProductWikiOperation`
+- Added support for configuring `NatGateway` for API Management service
+- Added support for Migrating API Management service
+- Breaking Change in Configuring `ContentItems` for Developer Portal
 
 ### Changes in 8.0.0-preview
 
