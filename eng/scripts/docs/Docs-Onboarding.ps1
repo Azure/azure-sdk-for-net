@@ -94,6 +94,5 @@ function Get-dotnet-DocsPackagesAlreadyOnboarded($docRepoLocation, $moniker) {
 
         $onboardedPackageHash[$package.Name] = $packageProperties
     }
-
     return $onboardedPackageHash
 }

@@ -91,8 +91,7 @@ foreach ($moniker in $MONIKERS) {
 
       if ($oldPackage.Version -ne $package.Version) {
         if (!(ValidatePackage $package)) {
-          LogWarning "Skip updating package that failed validation: $($package.Name)@$($package.Version)"
-          $outputPackages += $oldPackage
+          LogWarning "Omitting package that failed validation: $($package.Name)@$($package.Version)"
           continue
         }
 
