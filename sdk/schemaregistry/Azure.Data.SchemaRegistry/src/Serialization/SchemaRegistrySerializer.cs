@@ -1,20 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Data.SchemaRegistry;
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Messaging;
-using System.Text.Json;
 using Azure.Core.Serialization;
-using Azure.Core.Experimental.SchemaValidator;
-using Azure.Core.Experimental;
-using System.Collections.Generic;
+using Azure.Messaging;
 
 namespace Azure.Data.SchemaRegistry.Serialization
 {

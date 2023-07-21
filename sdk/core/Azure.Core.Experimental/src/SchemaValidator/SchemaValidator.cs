@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Core.Experimental.SchemaValidator
+namespace Azure.Core
 {
     /// <summary>
     /// This abstract class allows any available library to be used to generate schemas from .NET types and validate

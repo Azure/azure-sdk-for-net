@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 #nullable enable
 
-namespace Azure.Core.Experimental
+namespace Azure.Core
 {
     /// <summary>
     /// A simple LRU cache implementation using a doubly linked list and dictionary.
