@@ -55,6 +55,7 @@ namespace Azure.Core.Json
         internal T ConvertTo<T>()
         {
             JsonElement element = GetJsonElement();
+            Utf8JsonReader reader = GetReaderForElement(element);
 
             try
             {
@@ -65,16 +66,16 @@ namespace Azure.Core.Json
                 T? value;
 
                 // Use custom deserialization for an Azure model type.
-                if (typeof(T).GetInterfaces().Contains(typeof(IModelSerializable)) &&
-                    Activator.CreateInstance(typeof(T), true) is IModelSerializable model)
+                if (typeof(T).GetInterfaces().Contains(typeof(IJsonModelSerializable)) &&
+                    Activator.CreateInstance(typeof(T), true) is IJsonModelSerializable model)
                 {
-                    return (T)model.Deserialize(element);
+                    // TODO: Do we want default options or something else here?
+                    return (T)model.Deserialize(ref reader, ModelSerializerOptions.AzureServiceDefault);
                 }
 
 #if NET6_0_OR_GREATER
                 value = JsonSerializer.Deserialize<T>(element, _root.SerializerOptions);
 #else
-                Utf8JsonReader reader = GetReaderForElement(element);
                 value = JsonSerializer.Deserialize<T>(ref reader, _root.SerializerOptions);
 #endif
 
@@ -1101,12 +1102,13 @@ namespace Azure.Core.Json
 
             // Use custom serialization for an Azure model type.
             // TODO: replace this with IUtf8JsonSerializable if needed short term.
-            if (value is IModelSerializable model)
+            if (value is IJsonModelSerializable model)
             {
                 using MemoryStream stream = new();
                 using Utf8JsonWriter writer = new(stream);
 
-                model.Serialize(writer);
+                // TODO: Are default serializer options sufficient here?
+                model.Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
                 writer.Flush();
                 stream.Position = 0;
                 BinaryData data = BinaryData.FromStream(stream);
