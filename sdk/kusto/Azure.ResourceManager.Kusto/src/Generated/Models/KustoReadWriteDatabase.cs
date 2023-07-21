@@ -33,13 +33,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="hotCachePeriod"> The time the data should be kept in cache for fast queries in TimeSpan. </param>
         /// <param name="statistics"> The statistics of the database. </param>
         /// <param name="isFollowed"> Indicates whether the database is followed. </param>
-        internal KustoReadWriteDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, bool? isFollowed) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="keyVaultProperties"> KeyVault properties for the database encryption. </param>
+        /// <param name="suspensionDetails"> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </param>
+        internal KustoReadWriteDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, bool? isFollowed, KustoKeyVaultProperties keyVaultProperties, SuspensionDetails suspensionDetails) : base(id, name, resourceType, systemData, location, kind)
         {
             ProvisioningState = provisioningState;
             SoftDeletePeriod = softDeletePeriod;
             HotCachePeriod = hotCachePeriod;
             Statistics = statistics;
             IsFollowed = isFollowed;
+            KeyVaultProperties = keyVaultProperties;
+            SuspensionDetails = suspensionDetails;
             Kind = kind;
         }
 
@@ -59,5 +63,14 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Indicates whether the database is followed. </summary>
         public bool? IsFollowed { get; }
+        /// <summary> KeyVault properties for the database encryption. </summary>
+        public KustoKeyVaultProperties KeyVaultProperties { get; set; }
+        /// <summary> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </summary>
+        internal SuspensionDetails SuspensionDetails { get; }
+        /// <summary> The starting date and time of the suspension state. </summary>
+        public DateTimeOffset? SuspensionStartOn
+        {
+            get => SuspensionDetails?.SuspensionStartOn;
+        }
     }
 }

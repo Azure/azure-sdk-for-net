@@ -11,7 +11,7 @@ using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class AzureMonitorTraceExporter : BaseExporter<Activity>
+    internal sealed class AzureMonitorTraceExporter : BaseExporter<Activity>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
@@ -43,12 +43,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, TraceResource, _instrumentationKey);
                 if (telemetryItems.Count > 0)
                 {
-                    exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                    exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorTraceExporter, false, CancellationToken.None).EnsureCompleted();
                 }
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.FailedToExport(ex);
+                AzureMonitorExporterEventSource.Log.FailedToExport(nameof(AzureMonitorTraceExporter), _instrumentationKey, ex);
             }
 
             return exportResult;

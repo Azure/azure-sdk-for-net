@@ -48,28 +48,24 @@ namespace Azure.Communication.JobRouter
         /// <summary> The channel identifier. eg. voice, chat, etc. </summary>
         public string ChannelId { get; set; }
 
-        /// <summary> The priority of this job. </summary>
+        /// <summary> The priority of this job (range from -100 to 100). </summary>
         public int? Priority { get; set; }
 
         /// <summary> Reason code for cancelled or closed jobs. </summary>
         public string DispositionCode { get; set; }
 
         /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
-        public IList<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();
+        public List<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();
 
         /// <summary> Notes attached to a job, sorted by timestamp. </summary>
-        public IList<RouterJobNote> Notes { get; } = new List<RouterJobNote>();
+        public List<RouterJobNote> Notes { get; } = new List<RouterJobNote>();
 
         /// <summary> A set of non-identifying attributes attached to this job. </summary>
         public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
 
         /// <summary>
-        /// A flag indicating this job is ready for being matched with workers.
-        /// When set to true, job matching will not be started. If set to false, job matching will start automatically
+        /// If provided, will determine how job matching will be carried out.
         /// </summary>
-        public bool? UnavailableForMatching { get; set; }
-
-        /// <summary> If set, job will be scheduled to be enqueued at a given time. </summary>
-        public DateTimeOffset? ScheduledTimeUtc { get; set; }
+        public JobMatchingMode MatchingMode { get; set; }
     }
 }

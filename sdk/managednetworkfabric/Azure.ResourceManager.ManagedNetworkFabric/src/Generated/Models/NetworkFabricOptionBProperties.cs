@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Option B configuration to be used for management vpn. </summary>
+    /// <summary> Option B configuration. </summary>
     public partial class NetworkFabricOptionBProperties
     {
         /// <summary> Initializes a new instance of NetworkFabricOptionBProperties. </summary>

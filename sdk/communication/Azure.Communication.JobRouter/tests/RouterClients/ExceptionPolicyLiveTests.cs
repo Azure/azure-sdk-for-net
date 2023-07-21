@@ -101,7 +101,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
-                    PrioritizationRule = new StaticRule(new LabelValue(1))
+                    PrioritizationRule = new StaticRouterRule(new LabelValue(1))
                 });
             var exceptionPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateExceptionPolicyTest_WaitTime)}");
 
@@ -193,7 +193,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
-                    PrioritizationRule = new StaticRule(new LabelValue(1))
+                    PrioritizationRule = new StaticRouterRule(new LabelValue(1))
                 });
             var exceptionPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateExceptionPolicyAndRemoveProperty)}");
 

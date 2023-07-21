@@ -5,10 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models.JobPlan;
-using NUnit.Framework.Internal;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -20,8 +17,10 @@ namespace Azure.Storage.DataMovement.Tests
         internal const long _testPartNumber = 5;
         internal static readonly DateTimeOffset _testStartTime
             = new DateTimeOffset(2023, 03, 13, 15, 24, 6, default);
+        internal const string _testSourceResourceId = "LocalFile";
         internal const string _testSourcePath = "C:/sample-source";
         internal const string _testSourceQuery = "sourcequery";
+        internal const string _testDestinationResourceId = "LocalFile";
         internal const string _testDestinationPath = "C:/sample-destination";
         internal const string _testDestinationQuery = "destquery";
         internal const byte _testPriority = 0;
@@ -92,7 +91,9 @@ namespace Azure.Storage.DataMovement.Tests
             int jobPartCount,
             StorageTransferStatus status = StorageTransferStatus.Queued,
             List<string> sourcePaths = default,
-            List<string> destinationPaths = default)
+            List<string> destinationPaths = default,
+            string sourceResourceId = "LocalFile",
+            string destinationResourceId = "LocalFile")
         {
             // Populate sourcePaths if not provided
             if (sourcePaths == default)
@@ -122,7 +123,9 @@ namespace Azure.Storage.DataMovement.Tests
                 JobPartPlanHeader header = CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber,
+                    sourceResourceId: sourceResourceId,
                     sourcePath: sourcePaths.ElementAt(partNumber),
+                    destinationResourceId: destinationResourceId,
                     destinationPath: destinationPaths.ElementAt(partNumber),
                     atomicJobStatus: status,
                     atomicPartStatus: status);
@@ -141,8 +144,10 @@ namespace Azure.Storage.DataMovement.Tests
             DateTimeOffset startTime = default,
             string transferId = _testTransferId,
             long partNumber = _testPartNumber,
+            string sourceResourceId = _testSourceResourceId,
             string sourcePath = _testSourcePath,
             string sourceExtraQuery = _testSourceQuery,
+            string destinationResourceId = _testDestinationResourceId,
             string destinationPath = _testDestinationPath,
             string destinationExtraQuery = _testDestinationQuery,
             bool isFinalPart = false,
@@ -220,8 +225,10 @@ namespace Azure.Storage.DataMovement.Tests
                 startTime: startTime,
                 transferId: transferId,
                 partNumber: partNumber,
+                sourceResourceId: sourceResourceId,
                 sourcePath: sourcePath,
                 sourceExtraQuery: sourceExtraQuery,
+                destinationResourceId: destinationResourceId,
                 destinationPath: destinationPath,
                 destinationExtraQuery: destinationExtraQuery,
                 isFinalPart: isFinalPart,

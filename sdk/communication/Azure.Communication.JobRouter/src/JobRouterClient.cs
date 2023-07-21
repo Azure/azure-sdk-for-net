@@ -122,8 +122,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -178,8 +177,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -236,8 +234,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -291,8 +288,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -341,15 +337,15 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var request = new RouterJob                {
+                var request = new RouterJob
+                {
                     ChannelId = options.ChannelId,
                     ClassificationPolicyId = options.ClassificationPolicyId,
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
                     DispositionCode = options.DispositionCode,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -405,8 +401,7 @@ using Azure.Core.Pipeline;
                     QueueId = options.QueueId,
                     Priority = options.Priority,
                     DispositionCode = options.DispositionCode,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -545,7 +540,7 @@ using Azure.Core.Pipeline;
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/></exception>
         ///<exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<ReclassifyJobResult>> ReclassifyJobAsync(
+        public virtual async Task<Response> ReclassifyJobAsync(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -558,7 +553,7 @@ using Azure.Core.Pipeline;
                 var response = await RestClient.ReclassifyJobActionAsync(
                     id: jobId,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ReclassifyJobResult(), response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -572,7 +567,7 @@ using Azure.Core.Pipeline;
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/></exception>
         ///<exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<ReclassifyJobResult> ReclassifyJob(
+        public virtual Response ReclassifyJob(
             string jobId,
             CancellationToken cancellationToken = default)
         {
@@ -585,7 +580,7 @@ using Azure.Core.Pipeline;
                 var response = RestClient.ReclassifyJobAction(
                     id: jobId,
                     cancellationToken: cancellationToken);
-                return Response.FromValue(new ReclassifyJobResult(), response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -598,7 +593,7 @@ using Azure.Core.Pipeline;
         /// <param name="options"> Options for cancelling a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<CancelJobResult>> CancelJobAsync(
+        public virtual async Task<Response> CancelJobAsync(
             CancelJobOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -612,7 +607,7 @@ using Azure.Core.Pipeline;
                         dispositionCode: options.DispositionCode,
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
-                return Response.FromValue(new CancelJobResult(), response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -625,7 +620,7 @@ using Azure.Core.Pipeline;
         /// <param name="options"> Options for cancelling a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<CancelJobResult> CancelJob(
+        public virtual Response CancelJob(
             CancelJobOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -638,7 +633,7 @@ using Azure.Core.Pipeline;
                     note: options.Note,
                     dispositionCode: options.DispositionCode,
                     cancellationToken: cancellationToken);
-                return Response.FromValue(new CancelJobResult(), response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -651,7 +646,7 @@ using Azure.Core.Pipeline;
         /// <param name="options"> Options for completing a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<CompleteJobResult>> CompleteJobAsync(
+        public virtual async Task<Response> CompleteJobAsync(
             CompleteJobOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -666,7 +661,7 @@ using Azure.Core.Pipeline;
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
-                return Response.FromValue(new CompleteJobResult(), response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -679,7 +674,7 @@ using Azure.Core.Pipeline;
         /// <param name="options"> Options for completing a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<CompleteJobResult> CompleteJob(
+        public virtual Response CompleteJob(
             CompleteJobOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -693,7 +688,7 @@ using Azure.Core.Pipeline;
                     note: options.Note,
                     cancellationToken: cancellationToken);
 
-                return Response.FromValue(new CompleteJobResult(), response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -706,7 +701,7 @@ using Azure.Core.Pipeline;
         /// <param name="options"> Options for closing a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<CloseJobResult>> CloseJobAsync(
+        public virtual async Task<Response> CloseJobAsync(
             CloseJobOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -722,7 +717,7 @@ using Azure.Core.Pipeline;
                         note: options.Note,
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
-                return Response.FromValue(new CloseJobResult(), response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -735,7 +730,7 @@ using Azure.Core.Pipeline;
         /// <param name="options"> Options for closing a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<CloseJobResult> CloseJob(
+        public virtual Response CloseJob(
             CloseJobOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -750,7 +745,7 @@ using Azure.Core.Pipeline;
                     closeAt: options.CloseAt,
                     note: options.Note,
                     cancellationToken: cancellationToken);
-                return Response.FromValue(new CloseJobResult(), response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -1050,7 +1045,7 @@ using Azure.Core.Pipeline;
         /// <param name="options"> The options for declining a job offer. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<DeclineJobOfferResult>> DeclineJobOfferAsync(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeclineJobOfferAsync(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
             scope.Start();
@@ -1063,7 +1058,7 @@ using Azure.Core.Pipeline;
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
-                return Response.FromValue(new DeclineJobOfferResult(), response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -1076,7 +1071,7 @@ using Azure.Core.Pipeline;
         /// <param name="options"> The options for declining a job offer. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<DeclineJobOfferResult> DeclineJobOffer(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
+        public virtual Response DeclineJobOffer(DeclineJobOfferOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(DeclineJobOffer)}");
             scope.Start();
@@ -1088,7 +1083,7 @@ using Azure.Core.Pipeline;
                     declineJobOfferRequest: new DeclineJobOfferRequest { RetryOfferAt = options.RetryOfferAt },
                     cancellationToken: cancellationToken);
 
-                return Response.FromValue(new DeclineJobOfferResult(), response.GetRawResponse());
+                return response.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -1168,7 +1163,7 @@ using Azure.Core.Pipeline;
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
-                foreach (var queueAssignment in options.QueueIds)
+                foreach (var queueAssignment in options.QueueAssignments)
                 {
                     request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
                 }
@@ -1223,7 +1218,7 @@ using Azure.Core.Pipeline;
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
-                foreach (var queueAssignment in options.QueueIds)
+                foreach (var queueAssignment in options.QueueAssignments)
                 {
                     request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
                 }
@@ -1277,7 +1272,7 @@ using Azure.Core.Pipeline;
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
-                foreach (var queueAssignment in options.QueueIds)
+                foreach (var queueAssignment in options.QueueAssignments)
                 {
                     request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
                 }
@@ -1332,7 +1327,7 @@ using Azure.Core.Pipeline;
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
-                foreach (var queueAssignment in options.QueueIds)
+                foreach (var queueAssignment in options.QueueAssignments)
                 {
                     request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
                 }
@@ -1665,7 +1660,7 @@ using Azure.Core.Pipeline;
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<RouterWorker> DeleteWorker(string workerId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteWorker(string workerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(workerId, nameof(workerId));
 
@@ -1673,7 +1668,7 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                return RestClient.GetWorker(workerId, cancellationToken);
+                return RestClient.DeleteWorker(workerId, cancellationToken);
             }
             catch (Exception ex)
             {

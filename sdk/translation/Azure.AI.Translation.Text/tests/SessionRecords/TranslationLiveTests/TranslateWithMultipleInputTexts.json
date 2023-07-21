@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "af79da81ee7a8c9977a73c1c458c7378",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Text\u0022:\u0022This is a test.\u0022},{\u0022Text\u0022:\u0022Esto es una prueba.\u0022},{\u0022Text\u0022:\u0022Dies ist ein Test.\u0022}]",
+      "RequestBody": "[{\u0022text\u0022:\u0022This is a test.\u0022},{\u0022text\u0022:\u0022Esto es una prueba.\u0022},{\u0022text\u0022:\u0022Dies ist ein Test.\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": [

@@ -49,7 +49,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var routerWorkerResponse = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId, totalCapacity)
                 {
-                    QueueIds = { { createQueueResponse.Value.Id, new RouterQueueAssignment() } },
+                    QueueAssignments = { { createQueueResponse.Value.Id, new RouterQueueAssignment() } },
                     Labels =
                     {
                         ["test_label_1"] = new LabelValue("testLabel"),
@@ -80,7 +80,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        [Ignore(reason: "Pagination doesn't get generated correctly")]
         public async Task GetWorkersTest()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -104,7 +103,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var registerWorker1Response = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId1, 10)
                 {
-                    QueueIds = { [createQueue1.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [createQueue1.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations =
                     {
                         ["WebChat"] = new ChannelConfiguration(1),
@@ -118,11 +117,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var registerWorker2Response = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId2, 10)
                 {
-                    QueueIds = { [createQueue2.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [createQueue2.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations =
                     {
-                        ["WebChat"] = new ChannelConfiguration(1) { MaxNumberOfJobs = 4 },
-                        ["Voip"] = new ChannelConfiguration(10) { MaxNumberOfJobs = 9 }
+                        ["WebChat"] = new ChannelConfiguration(5) { MaxNumberOfJobs = 1 },
+                        ["Voip"] = new ChannelConfiguration(10) { MaxNumberOfJobs = 1 }
                     },
                     AvailableForOffers = true,
                 });
@@ -130,9 +129,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(workerId2) { AvailableForOffers = false })));
 
             var registerWorker3Response = await routerClient.CreateWorkerAsync(
-                new CreateWorkerOptions(workerId3, 10)
+                new CreateWorkerOptions(workerId3, 12)
                 {
-                    QueueIds =
+                    QueueAssignments =
                     {
                         [createQueue1.Id] = new RouterQueueAssignment(),
                         [createQueue2.Id] = new RouterQueueAssignment()
@@ -150,7 +149,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var registerWorker4Response = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId4, 10)
                 {
-                    QueueIds = { [createQueue1.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [createQueue1.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations = { ["WebChat"] = new ChannelConfiguration(1) },
                     AvailableForOffers = true,
                 });

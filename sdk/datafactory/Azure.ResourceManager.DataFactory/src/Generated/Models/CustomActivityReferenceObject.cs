@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,21 +17,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
         public CustomActivityReferenceObject()
         {
-            LinkedServices = new ChangeTrackingList<FactoryLinkedServiceReference>();
+            LinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Datasets = new ChangeTrackingList<DatasetReference>();
         }
 
         /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
         /// <param name="linkedServices"> Linked service references. </param>
         /// <param name="datasets"> Dataset references. </param>
-        internal CustomActivityReferenceObject(IList<FactoryLinkedServiceReference> linkedServices, IList<DatasetReference> datasets)
+        internal CustomActivityReferenceObject(IList<DataFactoryLinkedServiceReference> linkedServices, IList<DatasetReference> datasets)
         {
             LinkedServices = linkedServices;
             Datasets = datasets;
         }
 
         /// <summary> Linked service references. </summary>
-        public IList<FactoryLinkedServiceReference> LinkedServices { get; }
+        public IList<DataFactoryLinkedServiceReference> LinkedServices { get; }
         /// <summary> Dataset references. </summary>
         public IList<DatasetReference> Datasets { get; }
     }

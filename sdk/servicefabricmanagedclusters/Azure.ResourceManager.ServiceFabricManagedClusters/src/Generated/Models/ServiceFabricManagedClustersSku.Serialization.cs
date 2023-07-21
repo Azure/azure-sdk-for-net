@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class ServiceFabricManagedClustersSku : IUtf8JsonSerializable
+    public partial class ServiceFabricManagedClustersSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

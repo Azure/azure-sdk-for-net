@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ManagedVirtualNetworkListResponse. </summary>
         /// <param name="value"> List of managed Virtual Networks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ManagedVirtualNetworkListResponse(IEnumerable<FactoryVirtualNetworkData> value)
+        internal ManagedVirtualNetworkListResponse(IEnumerable<DataFactoryManagedVirtualNetworkData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ManagedVirtualNetworkListResponse. </summary>
         /// <param name="value"> List of managed Virtual Networks. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal ManagedVirtualNetworkListResponse(IReadOnlyList<FactoryVirtualNetworkData> value, string nextLink)
+        internal ManagedVirtualNetworkListResponse(IReadOnlyList<DataFactoryManagedVirtualNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of managed Virtual Networks. </summary>
-        public IReadOnlyList<FactoryVirtualNetworkData> Value { get; }
+        public IReadOnlyList<DataFactoryManagedVirtualNetworkData> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }

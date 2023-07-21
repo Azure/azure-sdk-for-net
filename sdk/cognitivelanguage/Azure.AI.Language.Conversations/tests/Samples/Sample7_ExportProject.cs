@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -33,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #endif
 
             // Get the resultUrl from the response, which contains the exported project.
-            dynamic result = exportOperation.Value.ToDynamicFromJson();
+            dynamic result = exportOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             Uri resultUrl = result.resultUrl;
 
             // Use the client pipeline to create and send a request to download the raw URL.
@@ -75,7 +76,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Operation<BinaryData> exportOperation = await client.ExportProjectAsync(WaitUntil.Completed, projectName);
 
             // Get the resultUrl from the response, which contains the exported project.
-            dynamic result = exportOperation.Value.ToDynamicFromJson();
+            dynamic result = exportOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             Uri resultUrl = result.resultUrl;
 
             // Use the client pipeline to create and send a request to download the raw URL.

@@ -433,6 +433,11 @@ namespace Azure.Communication.CallAutomation
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeChoiceOptions.SpeechLanguage;
                 }
 
+                if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechModelEndpointId))
+                {
+                    recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeChoiceOptions.SpeechModelEndpointId;
+                }
+
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeChoiceOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeChoiceOptions.Prompt);
@@ -458,6 +463,11 @@ namespace Azure.Communication.CallAutomation
                 if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechLanguage))
                 {
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOptions.SpeechLanguage;
+                }
+
+                if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechModelEndpointId))
+                {
+                    recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeSpeechOptions.SpeechModelEndpointId;
                 }
 
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOptions.InputType, recognizeConfigurationsInternal);
@@ -495,6 +505,11 @@ namespace Azure.Communication.CallAutomation
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOrDtmfOptions.SpeechLanguage;
                 }
 
+                if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechModelEndpointId))
+                {
+                    recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeSpeechOrDtmfOptions.SpeechModelEndpointId;
+                }
+
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOrDtmfOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOrDtmfOptions.Prompt);
@@ -527,6 +542,7 @@ namespace Azure.Communication.CallAutomation
                 sourceInternal.TextSource.SourceLocale = textSource.SourceLocale ?? null;
                 sourceInternal.TextSource.VoiceGender = textSource.VoiceGender ?? GenderType.Male;
                 sourceInternal.TextSource.VoiceName = textSource.VoiceName ?? null;
+                sourceInternal.TextSource.CustomVoiceEndpointId = textSource.CustomVoiceEndpointId ?? null;
                 sourceInternal.PlaySourceId = textSource.PlaySourceId;
                 return sourceInternal;
             }
@@ -534,6 +550,7 @@ namespace Azure.Communication.CallAutomation
             {
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Ssml);
                 sourceInternal.SsmlSource = new SsmlSourceInternal(ssmlSource.SsmlText);
+                sourceInternal.SsmlSource.CustomVoiceEndpointId = ssmlSource.CustomVoiceEndpointId ?? null;
                 sourceInternal.PlaySourceId = ssmlSource.PlaySourceId;
                 return sourceInternal;
             }
