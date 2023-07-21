@@ -59,7 +59,7 @@ function ValidatePackage($package) {
     return $true
   }
 
-  # TODO: Ensure parameters are correct here
+  # TODO: Ensure parameters are correct here across all languages
   return &$ValidateDocsMsPackagesFn $package
 }
 
@@ -108,6 +108,7 @@ foreach ($moniker in $MONIKERS) {
   } catch {
     Write-Host "Error onboarding packages for moniker: $moniker"
     Write-Host "Error: $_"
+    Write-Host "Stacktrace: $($_.ScriptStackTrace)"
     Write-Error $_
   }
 }
