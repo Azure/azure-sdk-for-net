@@ -280,7 +280,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var serializer = new SchemaRegistrySerializer(client, groupName, new ValidateThrowsGenerator());
 
             Assert.That(
-                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }), Throws.InstanceOf<Exception>().And.Property(nameof(Exception.InnerException)).InstanceOf<AggregateException>());
+                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }), Throws.InstanceOf<AggregateException>());
         }
 
         [RecordedTest]
