@@ -12,7 +12,7 @@ Use the client library for Azure Service Bus to:
 
 - Implement complex workflows: message sessions support scenarios that require message ordering or message deferral.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus) | [Product documentation](https://docs.microsoft.com/azure/service-bus/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md) | [Troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus) | [Product documentation](https://docs.microsoft.com/azure/service-bus/) | [Migration guide (Microsoft.Azure.ServiceBus)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md) | [Migration guide (WindowsAzure.ServiceBus)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide_WindowsAzureServiceBus.md) | [Troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md)
 
 ## Getting started
 
@@ -111,17 +111,30 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-* [Send and receive a message](#send-and-receive-a-message)
-* [Sending a batch of messages](#sending-a-batch-of-messages)
-* [Receiving a batch of messages](#receiving-a-batch-of-messages)
-* [Complete a message](#complete-a-message)
-* [Abandon a message](#abandon-a-message)
-* [Defer a message](#defer-a-message)
-* [Dead letter a message](#dead-letter-a-message)
-* [Using the processor](#using-the-processor)
-* [Authenticating with Azure.Identity](#authenticating-with-azureidentity)
-* [Working with sessions](#working-with-sessions)
-* [More samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/README.md)
+- [Azure Service Bus client library for .NET](#azure-service-bus-client-library-for-net)
+  - [Getting started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Install the package](#install-the-package)
+    - [Authenticate the client](#authenticate-the-client)
+  - [Key concepts](#key-concepts)
+    - [Client lifetime](#client-lifetime)
+    - [Thread safety](#thread-safety)
+    - [Additional concepts](#additional-concepts)
+  - [Examples](#examples)
+    - [Send and receive a message](#send-and-receive-a-message)
+    - [Sending a batch of messages](#sending-a-batch-of-messages)
+    - [Receiving a batch of messages](#receiving-a-batch-of-messages)
+    - [Complete a message](#complete-a-message)
+    - [Abandon a message](#abandon-a-message)
+    - [Defer a message](#defer-a-message)
+    - [Dead letter a message](#dead-letter-a-message)
+    - [Using the Processor](#using-the-processor)
+    - [Authenticating with Azure.Identity](#authenticating-with-azureidentity)
+    - [Registering with ASP.NET Core dependency injection](#registering-with-aspnet-core-dependency-injection)
+    - [Working with Sessions](#working-with-sessions)
+  - [Troubleshooting](#troubleshooting)
+  - [Next steps](#next-steps)
+  - [Contributing](#contributing)
 
 ### Send and receive a message
 
