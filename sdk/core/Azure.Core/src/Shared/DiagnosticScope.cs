@@ -16,8 +16,6 @@ namespace Azure.Core.Pipeline
 {
     internal readonly struct DiagnosticScope : IDisposable
     {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
         private const string AzureSdkScopeLabel = "az.sdk.scope";
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
         internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.17.0";
@@ -26,20 +24,32 @@ namespace Azure.Core.Pipeline
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
 
+#if NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
+#else
         internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, ActivitySource? activitySource, System.Diagnostics.ActivityKind kind, bool suppressNestedClientActivities)
+#endif
         {
+#if NETCOREAPP2_1 // Activity Kind support is not available on netcoreapp2.1
+            _suppressNestedClientActivities = suppressNestedClientActivities;
+#else
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
             _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == System.Diagnostics.ActivityKind.Internal) ? suppressNestedClientActivities : false;
+#endif
 
             // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
-            bool hasListeners;
+            bool hasListeners = false;
+#if !NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
             hasListeners = activitySource?.HasListeners() ?? false;
+#endif
             IsEnabled = source.IsEnabled() || hasListeners;
 
+#if !NETCOREAPP2_1 // Activity.Current.GetCustomProperty is not available in netcoreapp2.1
             if (_suppressNestedClientActivities)
             {
                 IsEnabled &= !AzureSdkScopeValue.Equals(Activity.Current?.GetCustomProperty(AzureSdkScopeLabel));
             }
+#endif
 
             _activityAdapter = IsEnabled ? new ActivityAdapter(
                                                     activitySource: activitySource,
@@ -48,24 +58,17 @@ namespace Azure.Core.Pipeline
                                                     kind: kind,
                                                     diagnosticSourceArgs: diagnosticSourceArgs) : null;
         }
-#endif
 
         public bool IsEnabled { get; }
 
         public void AddAttribute(string name, string value)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             _activityAdapter?.AddTag(name, value);
-#endif
         }
 
         public void AddIntegerAttribute(string name, int value)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             _activityAdapter?.AddTag(name, value);
-#endif
         }
 
         public void AddAttribute<T>(string name,
@@ -79,14 +82,11 @@ namespace Azure.Core.Pipeline
 
         public void AddAttribute<T>(string name, T value, Func<T, string> format)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             if (_activityAdapter != null)
             {
                 var formattedValue = format(value);
                 _activityAdapter.AddTag(name, formattedValue);
             }
-#endif
         }
 
         /// <summary>
@@ -97,35 +97,25 @@ namespace Azure.Core.Pipeline
         /// <param name="attributes">Optional attributes to associate with the link.</param>
         public void AddLink(string traceparent, string? tracestate, IDictionary<string, string>? attributes = null)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             _activityAdapter?.AddLink(traceparent, tracestate, attributes);
-#endif
         }
 
         public void Start()
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             Activity? started = _activityAdapter?.Start();
+#if !NETCOREAPP2_1 // SetCustomProperty is not available in netcoreapp2.1
             started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
 #endif
         }
 
         public void SetDisplayName(string displayName)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             _activityAdapter?.SetDisplayName(displayName);
-#endif
         }
 
         public void SetStartTime(DateTime dateTime)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             _activityAdapter?.SetStartTime(dateTime);
-#endif
         }
 
         /// <summary>
@@ -135,19 +125,13 @@ namespace Azure.Core.Pipeline
         /// <param name="tracestate">The trace state to set for the current scope.</param>
         public void SetTraceContext(string traceparent, string? tracestate = default)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             _activityAdapter?.SetTraceContext(traceparent, tracestate);
-#endif
         }
 
         public void Dispose()
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             // Reverse the Start order
             _activityAdapter?.Dispose();
-#endif
         }
 
         /// <summary>
@@ -156,11 +140,42 @@ namespace Azure.Core.Pipeline
         /// <param name="exception">The exception to associate with the failed scope.</param>
         public void Failed(Exception? exception = default)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             _activityAdapter?.MarkFailed(exception);
-#endif
         }
+
+#if NETCOREAPP2_1 // System.Diagnostics.ActivityKind is not available in netcoreapp2.1
+        /// <summary>
+        /// Kind describes the relationship between the Activity, its parents, and its children in a Trace.
+        /// </summary>
+        public enum ActivityKind
+        {
+            /// <summary>
+            /// Default value.
+            /// Indicates that the Activity represents an internal operation within an application, as opposed to an operations with remote parents or children.
+            /// </summary>
+            Internal = 0,
+
+            /// <summary>
+            /// Server activity represents request incoming from external component.
+            /// </summary>
+            Server = 1,
+
+            /// <summary>
+            /// Client activity represents outgoing request to the external component.
+            /// </summary>
+            Client = 2,
+
+            /// <summary>
+            /// Producer activity represents output provided to external components.
+            /// </summary>
+            Producer = 3,
+
+            /// <summary>
+            /// Consumer activity represents output received from an external component.
+            /// </summary>
+            Consumer = 4,
+        }
+#endif
 
         private class DiagnosticActivity : Activity
         {
@@ -173,29 +188,41 @@ namespace Azure.Core.Pipeline
             }
         }
 
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
         private class ActivityAdapter : IDisposable
         {
+#if !NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
             private readonly ActivitySource? _activitySource;
+#endif
             private readonly DiagnosticSource _diagnosticSource;
             private readonly string _activityName;
+#if NETCOREAPP2_1 // Activity Kind support is not available on netcoreapp2.1
+            private readonly ActivityKind _kind;
+#else
             private readonly System.Diagnostics.ActivityKind _kind;
+#endif
             private readonly object? _diagnosticSourceArgs;
 
             private Activity? _currentActivity;
             private Activity? _sampleOutActivity;
 
+#if !NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
             private ActivityTagsCollection? _tagCollection;
+#endif
             private DateTimeOffset _startTime;
             private List<Activity>? _links;
             private string? _traceparent;
             private string? _tracestate;
             private string? _displayName;
 
+#if NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
+            public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
+#else
             public ActivityAdapter(ActivitySource? activitySource, DiagnosticSource diagnosticSource, string activityName, System.Diagnostics.ActivityKind kind, object? diagnosticSourceArgs)
+#endif
             {
+#if !NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
                 _activitySource = activitySource;
+#endif
                 _diagnosticSource = diagnosticSource;
                 _activityName = activityName;
                 _kind = kind;
@@ -204,6 +231,7 @@ namespace Azure.Core.Pipeline
 
             public void AddTag(string name, object value)
             {
+#if !NETCOREAPP2_1 // ActivityTagCollection support is not available on netcoreapp2.1
                 if (_currentActivity == null)
                 {
                     // Activity is not started yet, add the value to the collection
@@ -215,8 +243,10 @@ namespace Azure.Core.Pipeline
                 {
                     _currentActivity?.AddTag(name, value);
                 }
+#endif
             }
 
+#if !NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
             private List<ActivityLink>? GetActivitySourceLinkCollection()
             {
                 if (_links == null)
@@ -240,10 +270,10 @@ namespace Azure.Core.Pipeline
                         var link = new ActivityLink(context, linkTagsCollection);
                         linkCollection.Add(link);
                     }
-            }
-
+                }
                 return linkCollection;
             }
+#endif
 
             public void AddLink(string traceparent, string? tracestate, IDictionary<string, string>? attributes)
             {
@@ -269,6 +299,7 @@ namespace Azure.Core.Pipeline
                 _currentActivity = StartActivitySourceActivity();
                 if (_currentActivity != null)
                 {
+#if !NETCOREAPP2_1 // Activity.IsAllDataRequested is not available in netcoreapp2.1
                     if (!_currentActivity.IsAllDataRequested)
                     {
                         _sampleOutActivity = _currentActivity;
@@ -276,7 +307,7 @@ namespace Azure.Core.Pipeline
 
                         return null;
                     }
-
+#endif
                     _currentActivity.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
                 }
                 else
@@ -316,6 +347,7 @@ namespace Azure.Core.Pipeline
                         _currentActivity.SetStartTime(_startTime.UtcDateTime);
                     }
 
+#if !NETCOREAPP2_1 // Activity Tag Collection support is not available on netcoreapp2.1
                     if (_tagCollection != null)
                     {
                         foreach (var tag in _tagCollection)
@@ -323,6 +355,7 @@ namespace Azure.Core.Pipeline
                             _currentActivity.AddTag(tag.Key, tag.Value);
                         }
                     }
+#endif
 
                     if (_traceparent != null)
                     {
@@ -339,25 +372,32 @@ namespace Azure.Core.Pipeline
 
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
+#if !NETCOREAPP2_1 // Activity.DisplayName support is not available on netcoreapp2.1
                 if (_displayName != null)
                 {
                     _currentActivity.DisplayName = _displayName;
                 }
+#endif
 
                 return _currentActivity;
             }
 
             public void SetDisplayName(string displayName)
             {
+#if !NETCOREAPP2_1 // Activity.DisplayName is not available in netcoreapp2.1
                 _displayName = displayName;
                 if (_currentActivity != null)
                 {
                     _currentActivity.DisplayName = _displayName;
                 }
+#endif
             }
 
             private Activity? StartActivitySourceActivity()
             {
+#if NETCOREAPP2_1 // Activity Source support is not available in netcoreapp2.1
+                return null;
+#else
                 if (_activitySource == null)
                 {
                     return null;
@@ -373,6 +413,7 @@ namespace Azure.Core.Pipeline
                 }
                 var activity = _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
                 return activity;
+#endif
             }
 
             public void SetStartTime(DateTime startTime)
@@ -415,19 +456,20 @@ namespace Azure.Core.Pipeline
                     activity.SetEndTime(DateTime.UtcNow);
 
                 _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
+#if NETCOREAPP2_1 // Activity is not disposable in netcoreapp2.1
+                activity.Stop();
+#else
                 activity.Dispose();
+#endif
             }
         }
-#endif
-    }
+            }
 
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
 #pragma warning disable SA1507 // File can not contain multiple types
-    /// <summary>
-    /// Until Activity Source is no longer considered experimental.
-    /// </summary>
-    internal static class ActivityExtensions
+            /// <summary>
+            /// Until Activity Source is no longer considered experimental.
+            /// </summary>
+            internal static class ActivityExtensions
     {
         public static bool SupportsActivitySource { get; private set; }
 
@@ -438,5 +480,4 @@ namespace Azure.Core.Pipeline
                 "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE");
         }
     }
-#endif
 }

@@ -61,12 +61,13 @@ namespace Azure.Core.Shared
         /// <returns>The created diagnostic scope containing the common set of messaging attributes that are knowable upon creation.</returns>
         public DiagnosticScope CreateScope(
             string activityName,
+#if NETCOREAPP2_1
+            DiagnosticScope.ActivityKind kind,
+#else
             ActivityKind kind,
+#endif
             MessagingDiagnosticOperation operation = default)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-            return default;
-#else
             DiagnosticScope scope = _scopeFactory.CreateScope(activityName, kind);
             if (ActivityExtensions.SupportsActivitySource)
             {
@@ -87,7 +88,6 @@ namespace Azure.Core.Shared
             }
 
             return scope;
-#endif
         }
 
         /// <summary>
@@ -100,8 +100,6 @@ namespace Azure.Core.Shared
         /// <returns><c>true</c> if the message properties contained the diagnostic id; otherwise, <c>false</c>.</returns>
         public static bool TryExtractTraceContext(IReadOnlyDictionary<string, object> properties, out string? traceparent, out string? tracestate)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             traceparent = null;
             tracestate = null;
 
@@ -121,7 +119,6 @@ namespace Azure.Core.Shared
                 traceparent = diagnosticIdString;
                 return true;
             }
-#endif
             return false;
         }
 
@@ -135,8 +132,6 @@ namespace Azure.Core.Shared
         /// <returns><c>true</c> if the message properties contained the diagnostic id; otherwise, <c>false</c>.</returns>
         public static bool TryExtractTraceContext(IDictionary<string, object> properties, out string? traceparent, out string? tracestate)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             traceparent = null;
             tracestate = null;
 
@@ -156,7 +151,6 @@ namespace Azure.Core.Shared
                 traceparent = diagnosticIdString;
                 return true;
             }
-#endif
             return false;
         }
 
@@ -170,8 +164,6 @@ namespace Azure.Core.Shared
         /// <param name="tracestate">The tracestate that was either added, or that already existed in the message properties.</param>
         public void InstrumentMessage(IDictionary<string, object> properties, string activityName, out string? traceparent, out string? tracestate)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
             traceparent = null;
             tracestate = null;
 
@@ -179,7 +171,11 @@ namespace Azure.Core.Shared
             {
                 using DiagnosticScope messageScope = CreateScope(
                     activityName,
+#if NETCOREAPP2_1
+                    DiagnosticScope.ActivityKind.Producer);
+#else
                     ActivityKind.Producer);
+#endif
                 messageScope.Start();
 
                 Activity? activity = Activity.Current;
@@ -202,7 +198,6 @@ namespace Azure.Core.Shared
             {
                 TryExtractTraceContext(properties, out traceparent, out tracestate);
             }
-#endif
         }
     }
 }

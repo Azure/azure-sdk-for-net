@@ -15,20 +15,16 @@ namespace Azure.Core.Pipeline
     internal class DiagnosticScopeFactory
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
         private static Dictionary<string, DiagnosticListener>? _listeners;
         private readonly string? _resourceProviderNamespace;
         private readonly DiagnosticListener? _source;
         private readonly bool _suppressNestedClientActivities;
+#if !NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
         private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
 #endif
 
         public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities)
         {
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-            IsActivityEnabled = false;
-#else
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;
             _suppressNestedClientActivities = suppressNestedClientActivities;
@@ -46,24 +42,30 @@ namespace Azure.Core.Pipeline
                     }
                 }
             }
-#endif
         }
 
         public bool IsActivityEnabled { get; }
 
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-        public DiagnosticScope CreateScope(string name, object? kind = null)
-        {
-             return default;
-        }
+#if NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
+        public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal)
 #else
         public DiagnosticScope CreateScope(string name, System.Diagnostics.ActivityKind kind = ActivityKind.Internal)
+#endif
         {
             if (_source == null)
             {
                 return default;
             }
 
+#if NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
+            var scope = new DiagnosticScope(
+                                scopeName: name,
+                                source: _source,
+                                diagnosticSourceArgs: null,
+                                activitySource: null,
+                                kind: kind,
+                                suppressNestedClientActivities: _suppressNestedClientActivities);
+#else
             var scope = new DiagnosticScope(
                                 scopeName: name,
                                 source: _source,
@@ -71,6 +73,7 @@ namespace Azure.Core.Pipeline
                                 activitySource: GetActivitySource(_source.Name, name),
                                 kind: kind,
                                 suppressNestedClientActivities: _suppressNestedClientActivities);
+#endif
 
             if (_resourceProviderNamespace != null)
             {
@@ -78,10 +81,8 @@ namespace Azure.Core.Pipeline
             }
             return scope;
         }
-#endif
 
-#if NETCOREAPP2_1 // Tracing is disabled in netcoreapp2.1
-#else
+#if !NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
         /// <summary>
         /// This method combines client namespace and operation name into an ActivitySource name and creates the activity source.
         /// For example:
