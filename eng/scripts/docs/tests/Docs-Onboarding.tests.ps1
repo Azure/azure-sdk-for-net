@@ -68,3 +68,13 @@ Describe 'GetCiConfigPath' {
         $result | Should -Be './bundlepackages/azure-dotnet.csv'
     }
 }
+
+Describe 'GetPackageId' { 
+    It 'returns <expected> when given <inputValue>' -ForEach @(
+        @{ inputValue = 'Name.With.Dot.Separators'; expected = 'namewithdotseparators' },
+        @{ inputValue = 'Name.With.Dots-and-dashes'; expected = 'namewithdots-and-dashes' }
+    ) {
+        $result = GetPackageId $inputValue
+        $result | Should -Be $expected
+    }
+}

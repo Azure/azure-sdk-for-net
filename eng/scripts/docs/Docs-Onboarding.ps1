@@ -10,7 +10,7 @@ function GetPropertyString($docsCiConfigProperties) {
     return $propertyArray -join ';'
 }
 
-function Get-DocsCiLine2 ($item) {
+function Get-DocsCiLine2($item) {
     $line = ''
     if ($item.ContainsKey('DocsCiConfigProperties') -and $item['DocsCiConfigProperties'].Count -gt 0) {
         $line = "$($item['Id']),[$(GetPropertyString $item['DocsCiConfigProperties'])]$($item['Name'])"
@@ -26,11 +26,13 @@ function Get-DocsCiLine2 ($item) {
 }
 
 function SetDocsCiConfigProperties($item, $moniker, $packageSourceOverride) {
+    # Order properties so that output is deterministic (more simple diffs)
     $properties = [ordered]@{}
     if ($item.ContainsKey('DocsCiConfigProperties')) {
-        $properties = $item.DocsCiConfigProperties
+        $properties = $item['DocsCiConfigProperties']
     }
 
+    # When in the preview moniker, always set isPrerelease to true
     if ($moniker -eq 'preview') {
         $properties['isPrerelease'] = 'true'
     }
@@ -55,11 +57,15 @@ function GetCiConfigPath($docRepoLocation, $moniker) {
     return $csvPath
 }
 
+function GetPackageId($packageName) { 
+    return $packageName.Replace('.', '').ToLower()
+}
+
 # $SetDocsPackageOnboarding = "Set-${Language}-DocsPackageOnboarding"
-function Set-dotnet-DocsPackageOnboarding ($moniker, $metadata, $docRepoLocation, $packageSourceOverride) {
+function Set-dotnet-DocsPackageOnboarding($moniker, $metadata, $docRepoLocation, $packageSourceOverride) {
     $lines = @()
     foreach ($package in $metadata) {
-        $package.Id = $package.Name.Replace('.', '').ToLower()
+        $package.Id = GetPackageId $package.Name
         $package = SetDocsCiConfigProperties $package $moniker $packageSourceOverride
 
         $line = Get-DocsCiLine2 $package
