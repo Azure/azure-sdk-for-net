@@ -10,10 +10,11 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class Test : IUtf8JsonSerializable
+    public partial class Test : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -83,11 +84,6 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal void WritePatch(Stream stream)
-        {
-            _element.WriteTo(stream, 'P');
-        }
-
         internal static Test DeserializeTest(JsonElement element)
         {
             // TODO: Get the raw bytes instead of a JsonElement to avoid the
@@ -119,6 +115,29 @@ namespace Azure.Developer.LoadTesting.Models
             }
 
             return bytes;
+        }
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            // TODO: it would be nice to standardize on the type of Format.
+            if (options.Format == "P")
+            {
+                _element.WriteTo(writer, 'P');
+                return;
+            }
+
+            ((IUtf8JsonSerializable)this).Write(writer);
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTest(doc.RootElement);
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            return DeserializeTest(data);
         }
     }
 }

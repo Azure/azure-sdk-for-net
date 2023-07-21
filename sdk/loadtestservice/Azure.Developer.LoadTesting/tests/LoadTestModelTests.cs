@@ -3,7 +3,9 @@
 
 using System;
 using System.IO;
+using System.Text.Json;
 using Azure.Core.Json;
+using Azure.Core.Serialization;
 using Azure.Developer.LoadTesting.Models;
 using NUnit.Framework;
 
@@ -40,7 +42,9 @@ namespace Azure.Developer.LoadTesting.Tests
             BinaryData utf8;
             using (MemoryStream stream = new())
             {
-                test.WritePatch(stream);
+                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+                ((IJsonModelSerializable)test).Serialize(writer, new ModelSerializerOptions("P"));
+                writer.Flush();
                 stream.Position = 0;
                 utf8 = BinaryData.FromStream(stream);
             }
@@ -59,7 +63,9 @@ namespace Azure.Developer.LoadTesting.Tests
             BinaryData utf8;
             using (MemoryStream stream = new())
             {
-                test.WritePatch(stream);
+                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+                ((IJsonModelSerializable)test).Serialize(writer, new ModelSerializerOptions("P"));
+                writer.Flush();
                 stream.Position = 0;
                 utf8 = BinaryData.FromStream(stream);
             }
@@ -78,7 +84,9 @@ namespace Azure.Developer.LoadTesting.Tests
             BinaryData utf8;
             using (MemoryStream stream = new())
             {
-                test.WritePatch(stream);
+                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+                ((IJsonModelSerializable)test).Serialize(writer, new ModelSerializerOptions("P"));
+                writer.Flush();
                 stream.Position = 0;
                 utf8 = BinaryData.FromStream(stream);
             }
@@ -107,7 +115,9 @@ namespace Azure.Developer.LoadTesting.Tests
             BinaryData utf8;
             using (MemoryStream stream = new())
             {
-                test.WritePatch(stream);
+                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+                ((IJsonModelSerializable)test).Serialize(writer, new ModelSerializerOptions("P"));
+                writer.Flush();
                 stream.Position = 0;
                 utf8 = BinaryData.FromStream(stream);
             }

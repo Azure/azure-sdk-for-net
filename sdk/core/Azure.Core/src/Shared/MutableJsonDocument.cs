@@ -54,8 +54,7 @@ namespace Azure.Core.Json
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            if (format != default &&
-                (format.Symbol != 'J' && format.Symbol != 'P'))
+            if (format != default && format.Symbol != 'J' && format.Symbol != 'P')
             {
                 throw new FormatException($"Unsupported format {format.Symbol}. Supported formats are: 'J' - JSON, 'P' - JSON Merge Patch.");
             }

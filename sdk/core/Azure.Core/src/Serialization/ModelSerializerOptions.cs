@@ -44,7 +44,10 @@ namespace Azure.Core.Serialization
 
         private string ValidateFormat(string x)
         {
-            if (x != ModelSerializerFormat.Data && x != ModelSerializerFormat.Wire)
+            if (x != ModelSerializerFormat.Data &&
+                x != ModelSerializerFormat.Wire &&
+                // TODO: standardized an allow JSON Merge PATCH
+                x != "P")
             {
                 throw new ArgumentException($"Format must be either '{ModelSerializerFormat.Data}' or '{ModelSerializerFormat.Wire}'.");
             }

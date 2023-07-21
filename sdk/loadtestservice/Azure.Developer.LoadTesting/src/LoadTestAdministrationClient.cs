@@ -3,9 +3,11 @@
 
 using System;
 using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Developer.LoadTesting.Models;
 
 namespace Azure.Developer.LoadTesting
@@ -137,10 +139,14 @@ namespace Azure.Developer.LoadTesting
         /// <returns></returns>
         public virtual async Task<Response<Test>> CreateOrUpdateTestAsync(Test test, CancellationToken cancellationToken = default)
         {
-            // TODO: Add WritePatchAsync?
-            // TODO: Use Utf8JsonWriter instead of Stream?
             using Stream stream = new MemoryStream();
-            test.WritePatch(stream);
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            if (test is not IJsonModelSerializable serializable)
+            {
+                throw new InvalidCastException("model is not serializable");
+            }
+
+            serializable.Serialize(writer, new ModelSerializerOptions("P"));
 
             // TODO: remove if not needed
             stream.Position = 0;
@@ -162,9 +168,14 @@ namespace Azure.Developer.LoadTesting
         /// <returns></returns>
         public virtual Response<Test> CreateOrUpdateTest(Test test, CancellationToken cancellationToken = default)
         {
-            // TODO: Use Utf8JsonWriter instead of Stream?
             using Stream stream = new MemoryStream();
-            test.WritePatch(stream);
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            if (test is not IJsonModelSerializable serializable)
+            {
+                throw new InvalidCastException("model is not serializable");
+            }
+
+            serializable.Serialize(writer, new ModelSerializerOptions("P"));
 
             // TODO: remove if not needed
             stream.Position = 0;
