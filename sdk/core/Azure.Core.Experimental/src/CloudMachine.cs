@@ -111,26 +111,6 @@ namespace Azure
             }
         }
 
-        /// <summary>
-        /// Loads CloudMachine settings from configuration system
-        /// </summary>
-        public CloudMachine(IConfiguration configuration)
-        {
-            try {
-                Id = ReadString(configuration, "CloudMachine:id");
-                SubscriptionId = ReadString(configuration, "CloudMachine:subscriptionId");
-                Region = ReadString(configuration, "CloudMachine:region");
-                DisplayName = ReadString(configuration, "CloudMachine:name");
-                Version = ReadInt32(configuration, "CloudMachine:version");
-            }
-            catch (InvalidCloudMachineConfigurationException) {
-                throw;
-            }
-            catch (Exception e) {
-                throw new InvalidCloudMachineConfigurationException(nameof(IConfiguration), setting: null, e);
-            }
-        }
-
         private CloudMachine(string id, string displayName, string subscriptionId, string region, int version)
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentNullException(nameof(id));
@@ -200,39 +180,12 @@ namespace Azure
             }
         }
 
-        private static string ReadString(IConfiguration configuration, string key)
-        {
-            var value = configuration[key]!;
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(key);
-            return value;
-        }
-        private static int ReadInt32(IConfiguration configuration, string key)
-        {
-            var valueText = configuration[key];
-            if (string.IsNullOrEmpty(valueText)) throw new ArgumentNullException(key);
-            var value = int.Parse(valueText);
-            return value;
-        }
-
         private static string GenerateCloudMachineId()
         {
             var guid = Guid.NewGuid();
             var guidString = guid.ToString("N");
             var cnId = "cm" + guidString.Substring(0, 15); // we can increase it to 20, but the template name cannot be that long
             return cnId;
-        }
-
-        // helper to to throw the right exception
-        private static Stream OpenStream(string configurationFile)
-        {
-            try
-            {
-                return File.OpenRead(configurationFile);
-            }
-            catch (Exception e)
-            {
-                throw new InvalidCloudMachineConfigurationException(configurationFile, setting: null, e);
-            }
         }
 
         internal class InvalidCloudMachineConfigurationException : InvalidOperationException

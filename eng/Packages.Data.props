@@ -79,7 +79,6 @@
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Identity" Version="1.2.0" />
