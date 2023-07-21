@@ -102,3 +102,14 @@ function Get-dotnet-DocsPackagesAlreadyOnboarded($docRepoLocation, $moniker) {
     }
     return $onboardedPackageHash
 }
+
+# This method ensures that "DocsCiConfigProperties" is set when a new package is
+# published. The default value today is 'tfm=netstandard2.0'.
+# $UpdatePackageMetadata = "Update-${Language}-PackageMetadata"
+function Update-dotnet-PackageMetadata($packageInfo) { 
+    if (!$packageInfo.PSObject.Properties.Name.Contains('DocsCiConfigProperties')) {
+        $packageInfo | Add-Member -MemberType NoteProperty -Name DocsCiConfigProperties -Value @{ tfm = 'netstandard2.0' }
+    }
+
+    return $packageInfo
+}
