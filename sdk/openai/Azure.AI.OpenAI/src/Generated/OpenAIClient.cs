@@ -37,47 +37,12 @@ namespace Azure.AI.OpenAI
         {
         }
 
-        /// <summary> Starts the generation of a batch of images from a text caption. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="imageGenerationOptions"> Represents the request data used to generate images. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageGenerationOptions"/> is null. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)']/*" />
-        internal virtual async Task<Operation<BatchImageGenerationOperationResponse>> BeginAzureBatchImageGenerationAsync(WaitUntil waitUntil, ImageGenerationOptions imageGenerationOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, imageGenerationOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
-        }
-
-        /// <summary> Starts the generation of a batch of images from a text caption. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="imageGenerationOptions"> Represents the request data used to generate images. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageGenerationOptions"/> is null. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGeneration(WaitUntil,ImageGenerationOptions,CancellationToken)']/*" />
-        internal virtual Operation<BatchImageGenerationOperationResponse> BeginAzureBatchImageGeneration(WaitUntil waitUntil, ImageGenerationOptions imageGenerationOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, imageGenerationOptions.ToRequestContent(), context);
-            return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
-        }
-
         /// <summary>
         /// [Protocol Method] Starts the generation of a batch of images from a text caption
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -113,11 +78,6 @@ namespace Azure.AI.OpenAI
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BeginAzureBatchImageGeneration(WaitUntil,ImageGenerationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
