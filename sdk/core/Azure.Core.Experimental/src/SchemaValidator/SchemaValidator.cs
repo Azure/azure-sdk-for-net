@@ -39,7 +39,7 @@ namespace Azure.Core
         {
             if (!TryValidate(data, dataType, schemaDefinition, out var errors))
             {
-                throw new AggregateException(errors);
+                throw new AggregateException("The validate method determined the object was invalid according to the schema.", errors);
             }
         }
 
