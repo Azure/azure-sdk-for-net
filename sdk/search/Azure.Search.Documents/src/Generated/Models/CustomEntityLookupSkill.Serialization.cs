@@ -172,7 +172,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        inlineEntitiesDefinition = null;
                         continue;
                     }
                     List<CustomEntity> array = new List<CustomEntity>();

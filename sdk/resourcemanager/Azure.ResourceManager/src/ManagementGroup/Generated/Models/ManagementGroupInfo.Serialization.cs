@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        path = null;
                         continue;
                     }
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        managementGroupAncestors = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -95,7 +93,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        managementGroupAncestorsChain = null;
                         continue;
                     }
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
