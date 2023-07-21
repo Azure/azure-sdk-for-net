@@ -1101,7 +1101,6 @@ namespace Azure.Core.Json
             }
 
             // Use custom serialization for an Azure model type.
-            // TODO: replace this with IUtf8JsonSerializable if needed short term.
             if (value is IJsonModelSerializable model)
             {
                 using MemoryStream stream = new();
