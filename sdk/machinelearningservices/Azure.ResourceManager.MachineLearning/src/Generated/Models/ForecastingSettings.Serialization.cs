@@ -268,7 +268,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        timeSeriesIdColumnNames = null;
                         continue;
                     }
                     List<string> array = new List<string>();
