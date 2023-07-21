@@ -30,11 +30,11 @@ namespace Azure.Core.Pipeline
         internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, ActivitySource? activitySource, System.Diagnostics.ActivityKind kind, bool suppressNestedClientActivities)
 #endif
         {
-#if NETCOREAPP2_1 // Activity Kind support is not available on netcoreapp2.1
-            _suppressNestedClientActivities = suppressNestedClientActivities;
+#if NETCOREAPP2_1
+           _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
 #else
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
-            _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == System.Diagnostics.ActivityKind.Internal) ? suppressNestedClientActivities : false;
+            _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
 #endif
 
             // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
