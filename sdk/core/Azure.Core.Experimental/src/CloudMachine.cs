@@ -72,7 +72,7 @@ namespace Azure
                 SubscriptionId = ReadString(json, "subscriptionId", configurationFile);
                 Region = ReadString(json, "region", configurationFile);
                 DisplayName = ReadString(json, "name", configurationFile);
-                Version = ReaderInt32(json, "version", configurationFile);
+                Version = ReadInt32(json, "version", configurationFile);
             }
             catch (Exception e) when (e is not InvalidCloudMachineConfigurationException)
             {
@@ -96,7 +96,7 @@ namespace Azure
                 SubscriptionId = ReadString(json, "subscriptionId", nameof(configurationContent));
                 Region = ReadString(json, "region", nameof(configurationContent));
                 DisplayName = ReadString(json, "name", nameof(configurationContent));
-                Version = ReaderInt32(json, "version", nameof(configurationContent));
+                Version = ReadInt32(json, "version", nameof(configurationContent));
             }
             catch (Exception e) when (e is not InvalidCloudMachineConfigurationException)
             {
@@ -162,7 +162,7 @@ namespace Azure
                 throw new InvalidCloudMachineConfigurationException(configurationStoreDisplayName, key, e);
             }
         }
-        private static int ReaderInt32(JsonElement json, string key, string configurationStoreDisplayName)
+        private static int ReadInt32(JsonElement json, string key, string configurationStoreDisplayName)
         {
             try {
                 var value = json.GetProperty(key).GetInt32();
