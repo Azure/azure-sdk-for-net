@@ -18,6 +18,7 @@ using Xunit;
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.ManagedServiceIdentity;
 using ApiManagementManagement.Tests.Helpers;
+using Microsoft.Azure.Management.Resources.Models;
 
 namespace ApiManagement.Tests
 {
@@ -59,7 +60,6 @@ namespace ApiManagement.Tests
 
         public ApiManagementTestBase(MockContext context)
         {
-
             this.client = context.GetServiceClient<ApiManagementClient>();
             this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
             this.storageClient = context.GetServiceClient<StorageManagementClient>();
@@ -74,7 +74,7 @@ namespace ApiManagement.Tests
         {
             var testEnv = TestEnvironmentFactory.GetTestEnvironment();
 
-            tags = new Dictionary<string, string> { { "DateCreated", $"{DateTime.UtcNow.ToString()}" }, { "apiversion", $"{client.ApiVersion}" } };
+            tags = new Dictionary<string, string> { { "apiversion", $"{client.ApiVersion}" } };
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
@@ -231,7 +231,7 @@ namespace ApiManagement.Tests
             var rg = resourcesClient.ResourceGroups.CheckExistence(rgName);
             if (!rg)
             {
-                resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = this.location, Tags = tags });
+                resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new Microsoft.Azure.Management.ResourceManager.Models.ResourceGroup { Location = this.location, Tags = tags });
             }
         }
 
