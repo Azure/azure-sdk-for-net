@@ -35,7 +35,6 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        readResults = null;
                         continue;
                     }
                     List<ReadResult> array = new List<ReadResult>();
@@ -50,7 +49,6 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        pageResults = null;
                         continue;
                     }
                     List<PageResult> array = new List<PageResult>();
@@ -65,7 +63,6 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        documentResults = null;
                         continue;
                     }
                     List<DocumentResult> array = new List<DocumentResult>();
