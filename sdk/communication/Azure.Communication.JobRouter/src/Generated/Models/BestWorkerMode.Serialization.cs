@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -74,7 +75,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scoringRuleOptions = JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
+                    scoringRuleOptions = Models.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

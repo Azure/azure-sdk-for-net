@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> The version of a server. </summary>
     public readonly partial struct MySqlServerVersion : IEquatable<MySqlServerVersion>
     {
-#pragma warning disable CA1707
         /// <summary> 5.6. </summary>
         [CodeGenMember("FivePointSix")]
         public static MySqlServerVersion Ver5_6 { get; } = new MySqlServerVersion(Ver5_6Value);
@@ -21,6 +20,5 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> 8.0. </summary>
         [CodeGenMember("EightPointZero")]
         public static MySqlServerVersion Ver8_0 { get; } = new MySqlServerVersion(Ver8_0Value);
-#pragma warning restore CA1707
     }
 }

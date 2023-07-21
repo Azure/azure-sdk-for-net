@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Supported private endpoints for ElasticSan
+
 ### Breaking Changes
 
 ### Bugs Fixed
