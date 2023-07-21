@@ -117,7 +117,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dependsOn = null;
                         continue;
                     }
                     List<string> array = new List<string>();
