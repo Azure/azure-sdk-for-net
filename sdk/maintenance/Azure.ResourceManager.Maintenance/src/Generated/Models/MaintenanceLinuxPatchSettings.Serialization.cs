@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class InputLinuxParameters : IUtf8JsonSerializable
+    public partial class MaintenanceLinuxPatchSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             writer.WriteEndObject();
         }
 
-        internal static InputLinuxParameters DeserializeInputLinuxParameters(JsonElement element)
+        internal static MaintenanceLinuxPatchSettings DeserializeMaintenanceLinuxPatchSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     continue;
                 }
             }
-            return new InputLinuxParameters(Optional.ToList(packageNameMasksToExclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(classificationsToInclude));
+            return new MaintenanceLinuxPatchSettings(Optional.ToList(packageNameMasksToExclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(classificationsToInclude));
         }
     }
 }

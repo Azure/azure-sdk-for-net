@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> The status. </summary>
+    /// <summary>
+    /// The status
+    /// Serialized Name: UpdateStatus
+    /// </summary>
     public readonly partial struct MaintenanceUpdateStatus : IEquatable<MaintenanceUpdateStatus>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Maintenance.Models
         private const string RetryNowValue = "RetryNow";
         private const string RetryLaterValue = "RetryLater";
 
-        /// <summary> There are pending updates to be installed. </summary>
+        /// <summary>
+        /// There are pending updates to be installed.
+        /// Serialized Name: UpdateStatus.Pending
+        /// </summary>
         public static MaintenanceUpdateStatus Pending { get; } = new MaintenanceUpdateStatus(PendingValue);
-        /// <summary> Updates installation are in progress. </summary>
+        /// <summary>
+        /// Updates installation are in progress.
+        /// Serialized Name: UpdateStatus.InProgress
+        /// </summary>
         public static MaintenanceUpdateStatus InProgress { get; } = new MaintenanceUpdateStatus(InProgressValue);
-        /// <summary> All updates are successfully applied. </summary>
+        /// <summary>
+        /// All updates are successfully applied.
+        /// Serialized Name: UpdateStatus.Completed
+        /// </summary>
         public static MaintenanceUpdateStatus Completed { get; } = new MaintenanceUpdateStatus(CompletedValue);
-        /// <summary> Updates installation failed but are ready to retry again. </summary>
+        /// <summary>
+        /// Updates installation failed but are ready to retry again.
+        /// Serialized Name: UpdateStatus.RetryNow
+        /// </summary>
         public static MaintenanceUpdateStatus RetryNow { get; } = new MaintenanceUpdateStatus(RetryNowValue);
-        /// <summary> Updates installation failed and should be retried later. </summary>
+        /// <summary>
+        /// Updates installation failed and should be retried later.
+        /// Serialized Name: UpdateStatus.RetryLater
+        /// </summary>
         public static MaintenanceUpdateStatus RetryLater { get; } = new MaintenanceUpdateStatus(RetryLaterValue);
         /// <summary> Determines if two <see cref="MaintenanceUpdateStatus"/> values are the same. </summary>
         public static bool operator ==(MaintenanceUpdateStatus left, MaintenanceUpdateStatus right) => left.Equals(right);

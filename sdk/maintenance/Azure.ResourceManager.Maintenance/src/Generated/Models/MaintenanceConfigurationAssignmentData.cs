@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Configuration Assignment. </summary>
+    /// <summary>
+    /// Configuration Assignment
+    /// Serialized Name: ConfigurationAssignment
+    /// </summary>
     public partial class MaintenanceConfigurationAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentData. </summary>
@@ -23,11 +26,23 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Location of the resource. </param>
-        /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
-        /// <param name="resourceId"> The unique resourceId. </param>
-        /// <param name="filter"> Properties of the configuration assignment. </param>
-        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId, ConfigurationAssignmentFilterProperties filter) : base(id, name, resourceType, systemData)
+        /// <param name="location">
+        /// Location of the resource
+        /// Serialized Name: ConfigurationAssignment.location
+        /// </param>
+        /// <param name="maintenanceConfigurationId">
+        /// The maintenance configuration Id
+        /// Serialized Name: ConfigurationAssignment.properties.maintenanceConfigurationId
+        /// </param>
+        /// <param name="resourceId">
+        /// The unique resourceId
+        /// Serialized Name: ConfigurationAssignment.properties.resourceId
+        /// </param>
+        /// <param name="filter">
+        /// Properties of the configuration assignment
+        /// Serialized Name: ConfigurationAssignment.properties.filter
+        /// </param>
+        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId, MaintenanceConfigurationAssignmentFilter filter) : base(id, name, resourceType, systemData)
         {
             Location = location;
             MaintenanceConfigurationId = maintenanceConfigurationId;
@@ -35,13 +50,25 @@ namespace Azure.ResourceManager.Maintenance.Models
             Filter = filter;
         }
 
-        /// <summary> Location of the resource. </summary>
+        /// <summary>
+        /// Location of the resource
+        /// Serialized Name: ConfigurationAssignment.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> The maintenance configuration Id. </summary>
+        /// <summary>
+        /// The maintenance configuration Id
+        /// Serialized Name: ConfigurationAssignment.properties.maintenanceConfigurationId
+        /// </summary>
         public ResourceIdentifier MaintenanceConfigurationId { get; set; }
-        /// <summary> The unique resourceId. </summary>
+        /// <summary>
+        /// The unique resourceId
+        /// Serialized Name: ConfigurationAssignment.properties.resourceId
+        /// </summary>
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> Properties of the configuration assignment. </summary>
-        public ConfigurationAssignmentFilterProperties Filter { get; set; }
+        /// <summary>
+        /// Properties of the configuration assignment
+        /// Serialized Name: ConfigurationAssignment.properties.filter
+        /// </summary>
+        public MaintenanceConfigurationAssignmentFilter Filter { get; set; }
     }
 }

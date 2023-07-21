@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Maintenance update on a resource. </summary>
+    /// <summary>
+    /// Maintenance update on a resource
+    /// Serialized Name: Update
+    /// </summary>
     public partial class MaintenanceUpdate
     {
         /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
@@ -19,12 +22,30 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
-        /// <param name="maintenanceScope"> The impact area. </param>
-        /// <param name="impactType"> The impact type. </param>
-        /// <param name="status"> The status. </param>
-        /// <param name="impactDurationInSec"> Duration of impact in seconds. </param>
-        /// <param name="notBefore"> Time when Azure will start force updates if not self-updated by customer before this time. </param>
-        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="maintenanceScope">
+        /// The impact area
+        /// Serialized Name: Update.maintenanceScope
+        /// </param>
+        /// <param name="impactType">
+        /// The impact type
+        /// Serialized Name: Update.impactType
+        /// </param>
+        /// <param name="status">
+        /// The status
+        /// Serialized Name: Update.status
+        /// </param>
+        /// <param name="impactDurationInSec">
+        /// Duration of impact in seconds
+        /// Serialized Name: Update.impactDurationInSec
+        /// </param>
+        /// <param name="notBefore">
+        /// Time when Azure will start force updates if not self-updated by customer before this time
+        /// Serialized Name: Update.notBefore
+        /// </param>
+        /// <param name="resourceId">
+        /// The resourceId
+        /// Serialized Name: Update.properties.resourceId
+        /// </param>
         internal MaintenanceUpdate(MaintenanceScope? maintenanceScope, MaintenanceImpactType? impactType, MaintenanceUpdateStatus? status, int? impactDurationInSec, DateTimeOffset? notBefore, ResourceIdentifier resourceId)
         {
             MaintenanceScope = maintenanceScope;
@@ -35,17 +56,35 @@ namespace Azure.ResourceManager.Maintenance.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> The impact area. </summary>
+        /// <summary>
+        /// The impact area
+        /// Serialized Name: Update.maintenanceScope
+        /// </summary>
         public MaintenanceScope? MaintenanceScope { get; }
-        /// <summary> The impact type. </summary>
+        /// <summary>
+        /// The impact type
+        /// Serialized Name: Update.impactType
+        /// </summary>
         public MaintenanceImpactType? ImpactType { get; }
-        /// <summary> The status. </summary>
+        /// <summary>
+        /// The status
+        /// Serialized Name: Update.status
+        /// </summary>
         public MaintenanceUpdateStatus? Status { get; }
-        /// <summary> Duration of impact in seconds. </summary>
+        /// <summary>
+        /// Duration of impact in seconds
+        /// Serialized Name: Update.impactDurationInSec
+        /// </summary>
         public int? ImpactDurationInSec { get; }
-        /// <summary> Time when Azure will start force updates if not self-updated by customer before this time. </summary>
+        /// <summary>
+        /// Time when Azure will start force updates if not self-updated by customer before this time
+        /// Serialized Name: Update.notBefore
+        /// </summary>
         public DateTimeOffset? NotBefore { get; }
-        /// <summary> The resourceId. </summary>
+        /// <summary>
+        /// The resourceId
+        /// Serialized Name: Update.properties.resourceId
+        /// </summary>
         public ResourceIdentifier ResourceId { get; }
     }
 }

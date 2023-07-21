@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class ConfigurationAssignmentFilterProperties : IUtf8JsonSerializable
+    public partial class MaintenanceConfigurationAssignmentFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Maintenance.Models
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationAssignmentFilterProperties DeserializeConfigurationAssignmentFilterProperties(JsonElement element)
+        internal static MaintenanceConfigurationAssignmentFilter DeserializeMaintenanceConfigurationAssignmentFilter(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> resourceTypes = default;
+            Optional<IList<ResourceType>> resourceTypes = default;
             Optional<IList<string>> resourceGroups = default;
             Optional<IList<string>> osTypes = default;
-            Optional<IList<string>> locations = default;
-            Optional<TagSettingsProperties> tagSettings = default;
+            Optional<IList<AzureLocation>> locations = default;
+            Optional<VmTagSettings> tagSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceTypes"u8))
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceType> array = new List<ResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceType(item.GetString()));
                     }
                     resourceTypes = array;
                     continue;
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    tagSettings = TagSettingsProperties.DeserializeTagSettingsProperties(property.Value);
+                    tagSettings = VmTagSettings.DeserializeVmTagSettings(property.Value);
                     continue;
                 }
             }
-            return new ConfigurationAssignmentFilterProperties(Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(osTypes), Optional.ToList(locations), tagSettings.Value);
+            return new MaintenanceConfigurationAssignmentFilter(Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(osTypes), Optional.ToList(locations), tagSettings.Value);
         }
     }
 }

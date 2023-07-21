@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class InputPatchConfiguration : IUtf8JsonSerializable
+    public partial class MaintenancePatchConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Maintenance.Models
             writer.WriteEndObject();
         }
 
-        internal static InputPatchConfiguration DeserializeInputPatchConfiguration(JsonElement element)
+        internal static MaintenancePatchConfiguration DeserializeMaintenancePatchConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<RebootOption> rebootSetting = default;
-            Optional<InputWindowsParameters> windowsParameters = default;
-            Optional<InputLinuxParameters> linuxParameters = default;
+            Optional<MaintenanceRebootOption> rebootSetting = default;
+            Optional<MaintenanceWindowsPatchSettings> windowsParameters = default;
+            Optional<MaintenanceLinuxPatchSettings> linuxParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rebootSetting"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    rebootSetting = new RebootOption(property.Value.GetString());
+                    rebootSetting = new MaintenanceRebootOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("windowsParameters"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    windowsParameters = InputWindowsParameters.DeserializeInputWindowsParameters(property.Value);
+                    windowsParameters = MaintenanceWindowsPatchSettings.DeserializeMaintenanceWindowsPatchSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linuxParameters"u8))
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    linuxParameters = InputLinuxParameters.DeserializeInputLinuxParameters(property.Value);
+                    linuxParameters = MaintenanceLinuxPatchSettings.DeserializeMaintenanceLinuxPatchSettings(property.Value);
                     continue;
                 }
             }
-            return new InputPatchConfiguration(Optional.ToNullable(rebootSetting), windowsParameters.Value, linuxParameters.Value);
+            return new MaintenancePatchConfiguration(Optional.ToNullable(rebootSetting), windowsParameters.Value, linuxParameters.Value);
         }
     }
 }

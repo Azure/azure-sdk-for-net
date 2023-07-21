@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Maintenance.Samples
             MaintenanceConfigurationAssignmentData data = new MaintenanceConfigurationAssignmentData()
             {
                 MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/examplerg/providers/Microsoft.Maintenance/maintenanceConfigurations/configuration1"),
-                Filter = new ConfigurationAssignmentFilterProperties()
+                Filter = new MaintenanceConfigurationAssignmentFilter()
                 {
                     ResourceTypes =
 {
-"Microsoft.HybridCompute/machines","Microsoft.Compute/virtualMachines"
+new ResourceType("Microsoft.HybridCompute/machines"),new ResourceType("Microsoft.Compute/virtualMachines")
 },
                     ResourceGroups =
 {
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.Maintenance.Samples
 },
                     Locations =
 {
-"Japan East","UK South"
+new AzureLocation("Japan East"),new AzureLocation("UK South")
 },
-                    TagSettings = new TagSettingsProperties()
+                    TagSettings = new VmTagSettings()
                     {
                         Tags =
 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 "tag2Value1","tag2Value2","tag2Value3"
 },
 },
-                        FilterOperator = TagOperator.Any,
+                        FilterOperator = VmTagOperator.Any,
                     },
                 },
             };
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.Maintenance.Samples
             MaintenanceConfigurationAssignmentData data = new MaintenanceConfigurationAssignmentData()
             {
                 MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/examplerg/providers/Microsoft.Maintenance/maintenanceConfigurations/configuration1"),
-                Filter = new ConfigurationAssignmentFilterProperties()
+                Filter = new MaintenanceConfigurationAssignmentFilter()
                 {
                     ResourceTypes =
 {
-"Microsoft.HybridCompute/machines","Microsoft.Compute/virtualMachines"
+new ResourceType("Microsoft.HybridCompute/machines"),new ResourceType("Microsoft.Compute/virtualMachines")
 },
                     ResourceGroups =
 {
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.Maintenance.Samples
 },
                     Locations =
 {
-"Japan East","UK South"
+new AzureLocation("Japan East"),new AzureLocation("UK South")
 },
-                    TagSettings = new TagSettingsProperties()
+                    TagSettings = new VmTagSettings()
                     {
                         Tags =
 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 "tag2Value1","tag2Value2","tag2Value3"
 },
 },
-                        FilterOperator = TagOperator.Any,
+                        FilterOperator = VmTagOperator.Any,
                     },
                 },
             };

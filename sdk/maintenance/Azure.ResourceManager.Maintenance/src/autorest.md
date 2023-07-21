@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -24,10 +27,12 @@ format-by-name-rules:
   '*Uris': 'Uri'
 
 rename-mapping:
-  ApplyUpdate: MaintenanceApplyUpdate
-  Update: MaintenanceUpdate
-  ImpactType: MaintenanceImpactType
   ConfigurationAssignment: MaintenanceConfigurationAssignmentData
+  ConfigurationAssignmentFilterProperties: MaintenanceConfigurationAssignmentFilter
+  ConfigurationAssignmentFilterProperties.resourceTypes: -|resource-type
+  ConfigurationAssignmentFilterProperties.locations: -|azure-location
+  TagOperators: VmTagOperator
+  TagSettingsProperties: VmTagSettings
   ApplyUpdate.properties.resourceId: -|arm-id
   ConfigurationAssignment.properties.resourceId: -|arm-id
   Update.properties.resourceId: -|arm-id
@@ -38,10 +43,20 @@ rename-mapping:
   ListUpdatesResult: MaintenanceUpdateListResult
   ListMaintenanceConfigurationsResult: MaintenanceConfigurationListResult
   ListConfigurationAssignmentsResult: MaintenanceConfigurationAssignmentListResult
-  UpdateStatus: MaintenanceUpdateStatus
   Visibility: MaintenanceConfigurationVisibility
   ApplyUpdate.properties.lastUpdateTime: LastUpdatedOn
+  InputPatchConfiguration: MaintenancePatchConfiguration
+  InputWindowsParameters: MaintenanceWindowsPatchSettings
+  InputWindowsParameters.excludeKbsRequiringReboot: IsExcludeKbsRebootRequired
+  InputLinuxParameters: MaintenanceLinuxPatchSettings
 
+prepend-rp-prefix:
+  - ApplyUpdate
+  - ImpactType
+  - RebootOptions
+  - Update
+  - UpdateStatus
+  
 override-operation-name:
   ApplyUpdates_GetParent: GetApplyUpdatesByParent
   ApplyUpdates_CreateOrUpdateParent: CreateOrUpdateApplyUpdateByParent

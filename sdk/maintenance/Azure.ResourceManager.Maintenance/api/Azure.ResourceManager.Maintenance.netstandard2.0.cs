@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maintenance
         public System.TimeSpan? Duration { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ExtensionProperties { get { throw null; } }
-        public Azure.ResourceManager.Maintenance.Models.InputPatchConfiguration InstallPatches { get { throw null; } set { } }
+        public Azure.ResourceManager.Maintenance.Models.MaintenancePatchConfiguration InstallPatches { get { throw null; } set { } }
         public Azure.ResourceManager.Maintenance.Models.MaintenanceScope? MaintenanceScope { get { throw null; } set { } }
         public string Namespace { get { throw null; } set { } }
         public string RecurEvery { get { throw null; } set { } }
@@ -174,48 +174,26 @@ namespace Azure.ResourceManager.Maintenance.Models
     public static partial class ArmMaintenanceModelFactory
     {
         public static Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData MaintenanceApplyUpdateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus? status = default(Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus?), Azure.Core.ResourceIdentifier resourceId = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Maintenance.Models.ConfigurationAssignmentFilterProperties filter = null) { throw null; }
-        public static Azure.ResourceManager.Maintenance.MaintenanceConfigurationData MaintenanceConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string @namespace = null, System.Collections.Generic.IDictionary<string, string> extensionProperties = null, Azure.ResourceManager.Maintenance.Models.MaintenanceScope? maintenanceScope = default(Azure.ResourceManager.Maintenance.Models.MaintenanceScope?), Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility? visibility = default(Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility?), Azure.ResourceManager.Maintenance.Models.InputPatchConfiguration installPatches = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), string timeZone = null, string recurEvery = null) { throw null; }
+        public static Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentFilter filter = null) { throw null; }
+        public static Azure.ResourceManager.Maintenance.MaintenanceConfigurationData MaintenanceConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string @namespace = null, System.Collections.Generic.IDictionary<string, string> extensionProperties = null, Azure.ResourceManager.Maintenance.Models.MaintenanceScope? maintenanceScope = default(Azure.ResourceManager.Maintenance.Models.MaintenanceScope?), Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility? visibility = default(Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility?), Azure.ResourceManager.Maintenance.Models.MaintenancePatchConfiguration installPatches = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), string timeZone = null, string recurEvery = null) { throw null; }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdate MaintenanceUpdate(Azure.ResourceManager.Maintenance.Models.MaintenanceScope? maintenanceScope = default(Azure.ResourceManager.Maintenance.Models.MaintenanceScope?), Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType? impactType = default(Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType?), Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus? status = default(Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus?), int? impactDurationInSec = default(int?), System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
-    }
-    public partial class ConfigurationAssignmentFilterProperties
-    {
-        public ConfigurationAssignmentFilterProperties() { }
-        public System.Collections.Generic.IList<string> Locations { get { throw null; } }
-        public System.Collections.Generic.IList<string> OSTypes { get { throw null; } }
-        public System.Collections.Generic.IList<string> ResourceGroups { get { throw null; } }
-        public System.Collections.Generic.IList<string> ResourceTypes { get { throw null; } }
-        public Azure.ResourceManager.Maintenance.Models.TagSettingsProperties TagSettings { get { throw null; } set { } }
-    }
-    public partial class InputLinuxParameters
-    {
-        public InputLinuxParameters() { }
-        public System.Collections.Generic.IList<string> ClassificationsToInclude { get { throw null; } }
-        public System.Collections.Generic.IList<string> PackageNameMasksToExclude { get { throw null; } }
-        public System.Collections.Generic.IList<string> PackageNameMasksToInclude { get { throw null; } }
-    }
-    public partial class InputPatchConfiguration
-    {
-        public InputPatchConfiguration() { }
-        public Azure.ResourceManager.Maintenance.Models.InputLinuxParameters LinuxParameters { get { throw null; } set { } }
-        public Azure.ResourceManager.Maintenance.Models.RebootOption? RebootSetting { get { throw null; } set { } }
-        public Azure.ResourceManager.Maintenance.Models.InputWindowsParameters WindowsParameters { get { throw null; } set { } }
-    }
-    public partial class InputWindowsParameters
-    {
-        public InputWindowsParameters() { }
-        public System.Collections.Generic.IList<string> ClassificationsToInclude { get { throw null; } }
-        public bool? ExcludeKbsRequiringReboot { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> KbNumbersToExclude { get { throw null; } }
-        public System.Collections.Generic.IList<string> KbNumbersToInclude { get { throw null; } }
     }
     public partial class MaintenanceConfigurationAssignmentData : Azure.ResourceManager.Models.ResourceData
     {
         public MaintenanceConfigurationAssignmentData() { }
-        public Azure.ResourceManager.Maintenance.Models.ConfigurationAssignmentFilterProperties Filter { get { throw null; } set { } }
+        public Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentFilter Filter { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+    }
+    public partial class MaintenanceConfigurationAssignmentFilter
+    {
+        public MaintenanceConfigurationAssignmentFilter() { }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> Locations { get { throw null; } }
+        public System.Collections.Generic.IList<string> OSTypes { get { throw null; } }
+        public System.Collections.Generic.IList<string> ResourceGroups { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceType> ResourceTypes { get { throw null; } }
+        public Azure.ResourceManager.Maintenance.Models.VmTagSettings TagSettings { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MaintenanceConfigurationVisibility : System.IEquatable<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility>
@@ -253,6 +231,39 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static bool operator ==(Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType left, Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType left, Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MaintenanceLinuxPatchSettings
+    {
+        public MaintenanceLinuxPatchSettings() { }
+        public System.Collections.Generic.IList<string> ClassificationsToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> PackageNameMasksToExclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> PackageNameMasksToInclude { get { throw null; } }
+    }
+    public partial class MaintenancePatchConfiguration
+    {
+        public MaintenancePatchConfiguration() { }
+        public Azure.ResourceManager.Maintenance.Models.MaintenanceLinuxPatchSettings LinuxParameters { get { throw null; } set { } }
+        public Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption? RebootSetting { get { throw null; } set { } }
+        public Azure.ResourceManager.Maintenance.Models.MaintenanceWindowsPatchSettings WindowsParameters { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MaintenanceRebootOption : System.IEquatable<Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MaintenanceRebootOption(string value) { throw null; }
+        public static Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption Always { get { throw null; } }
+        public static Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption IfRequired { get { throw null; } }
+        public static Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption Never { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption left, Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption left, Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -309,24 +320,13 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static bool operator !=(Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus left, Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RebootOption : System.IEquatable<Azure.ResourceManager.Maintenance.Models.RebootOption>
+    public partial class MaintenanceWindowsPatchSettings
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RebootOption(string value) { throw null; }
-        public static Azure.ResourceManager.Maintenance.Models.RebootOption Always { get { throw null; } }
-        public static Azure.ResourceManager.Maintenance.Models.RebootOption IfRequired { get { throw null; } }
-        public static Azure.ResourceManager.Maintenance.Models.RebootOption Never { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Maintenance.Models.RebootOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Maintenance.Models.RebootOption left, Azure.ResourceManager.Maintenance.Models.RebootOption right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Maintenance.Models.RebootOption (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Maintenance.Models.RebootOption left, Azure.ResourceManager.Maintenance.Models.RebootOption right) { throw null; }
-        public override string ToString() { throw null; }
+        public MaintenanceWindowsPatchSettings() { }
+        public System.Collections.Generic.IList<string> ClassificationsToInclude { get { throw null; } }
+        public bool? IsExcludeKbsRebootRequired { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> KbNumbersToExclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> KbNumbersToInclude { get { throw null; } }
     }
     public partial class ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions
     {
@@ -369,15 +369,15 @@ namespace Azure.ResourceManager.Maintenance.Models
         public string ResourceParentType { get { throw null; } }
         public string ResourceType { get { throw null; } }
     }
-    public enum TagOperator
+    public enum VmTagOperator
     {
         All = 0,
         Any = 1,
     }
-    public partial class TagSettingsProperties
+    public partial class VmTagSettings
     {
-        public TagSettingsProperties() { }
-        public Azure.ResourceManager.Maintenance.Models.TagOperator? FilterOperator { get { throw null; } set { } }
+        public VmTagSettings() { }
+        public Azure.ResourceManager.Maintenance.Models.VmTagOperator? FilterOperator { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Tags { get { throw null; } }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class TagSettingsProperties : IUtf8JsonSerializable
+    public partial class VmTagSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Maintenance.Models
             writer.WriteEndObject();
         }
 
-        internal static TagSettingsProperties DeserializeTagSettingsProperties(JsonElement element)
+        internal static VmTagSettings DeserializeVmTagSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IDictionary<string, IList<string>>> tags = default;
-            Optional<TagOperator> filterOperator = default;
+            Optional<VmTagOperator> filterOperator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    filterOperator = property.Value.GetString().ToTagOperator();
+                    filterOperator = property.Value.GetString().ToVmTagOperator();
                     continue;
                 }
             }
-            return new TagSettingsProperties(Optional.ToDictionary(tags), Optional.ToNullable(filterOperator));
+            return new VmTagSettings(Optional.ToDictionary(tags), Optional.ToNullable(filterOperator));
         }
     }
 }

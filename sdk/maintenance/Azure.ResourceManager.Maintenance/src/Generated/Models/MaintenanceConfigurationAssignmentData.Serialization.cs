@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<ConfigurationAssignmentFilterProperties> filter = default;
+            Optional<MaintenanceConfigurationAssignmentFilter> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                             {
                                 continue;
                             }
-                            filter = ConfigurationAssignmentFilterProperties.DeserializeConfigurationAssignmentFilterProperties(property0.Value);
+                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value);
                             continue;
                         }
                     }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Response for Updates list. </summary>
+    /// <summary>
+    /// Response for Updates list
+    /// Serialized Name: ListUpdatesResult
+    /// </summary>
     internal partial class MaintenanceUpdateListResult
     {
         /// <summary> Initializes a new instance of MaintenanceUpdateListResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> Initializes a new instance of MaintenanceUpdateListResult. </summary>
-        /// <param name="value"> The pending updates. </param>
+        /// <param name="value">
+        /// The pending updates
+        /// Serialized Name: ListUpdatesResult.value
+        /// </param>
         internal MaintenanceUpdateListResult(IReadOnlyList<MaintenanceUpdate> value)
         {
             Value = value;
         }
 
-        /// <summary> The pending updates. </summary>
+        /// <summary>
+        /// The pending updates
+        /// Serialized Name: ListUpdatesResult.value
+        /// </summary>
         public IReadOnlyList<MaintenanceUpdate> Value { get; }
     }
 }

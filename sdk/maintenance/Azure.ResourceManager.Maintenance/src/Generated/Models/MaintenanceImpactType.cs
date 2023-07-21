@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> The impact type. </summary>
+    /// <summary>
+    /// The impact type
+    /// Serialized Name: ImpactType
+    /// </summary>
     public readonly partial struct MaintenanceImpactType : IEquatable<MaintenanceImpactType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Maintenance.Models
         private const string RestartValue = "Restart";
         private const string RedeployValue = "Redeploy";
 
-        /// <summary> Pending updates has no impact on resource. </summary>
+        /// <summary>
+        /// Pending updates has no impact on resource.
+        /// Serialized Name: ImpactType.None
+        /// </summary>
         public static MaintenanceImpactType None { get; } = new MaintenanceImpactType(NoneValue);
-        /// <summary> Pending updates can freeze network or disk io operation on resource. </summary>
+        /// <summary>
+        /// Pending updates can freeze network or disk io operation on resource.
+        /// Serialized Name: ImpactType.Freeze
+        /// </summary>
         public static MaintenanceImpactType Freeze { get; } = new MaintenanceImpactType(FreezeValue);
-        /// <summary> Pending updates can cause resource to restart. </summary>
+        /// <summary>
+        /// Pending updates can cause resource to restart.
+        /// Serialized Name: ImpactType.Restart
+        /// </summary>
         public static MaintenanceImpactType Restart { get; } = new MaintenanceImpactType(RestartValue);
-        /// <summary> Pending updates can redeploy resource. </summary>
+        /// <summary>
+        /// Pending updates can redeploy resource.
+        /// Serialized Name: ImpactType.Redeploy
+        /// </summary>
         public static MaintenanceImpactType Redeploy { get; } = new MaintenanceImpactType(RedeployValue);
         /// <summary> Determines if two <see cref="MaintenanceImpactType"/> values are the same. </summary>
         public static bool operator ==(MaintenanceImpactType left, MaintenanceImpactType right) => left.Equals(right);

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Maintenance
             Optional<IDictionary<string, string>> extensionProperties = default;
             Optional<MaintenanceScope> maintenanceScope = default;
             Optional<MaintenanceConfigurationVisibility> visibility = default;
-            Optional<InputPatchConfiguration> installPatches = default;
+            Optional<MaintenancePatchConfiguration> installPatches = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             Optional<TimeSpan> duration = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Maintenance
                             {
                                 continue;
                             }
-                            installPatches = InputPatchConfiguration.DeserializeInputPatchConfiguration(property0.Value);
+                            installPatches = MaintenancePatchConfiguration.DeserializeMaintenancePatchConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Gets or sets maintenanceScope of the configuration. </summary>
+    /// <summary>
+    /// Gets or sets maintenanceScope of the configuration
+    /// Serialized Name: MaintenanceScope
+    /// </summary>
     public readonly partial struct MaintenanceScope : IEquatable<MaintenanceScope>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.Maintenance.Models
         private const string SqlDBValue = "SQLDB";
         private const string SqlManagedInstanceValue = "SQLManagedInstance";
 
-        /// <summary> This maintenance scope controls installation of azure platform updates i.e. services on physical nodes hosting customer VMs. </summary>
+        /// <summary>
+        /// This maintenance scope controls installation of azure platform updates i.e. services on physical nodes hosting customer VMs.
+        /// Serialized Name: MaintenanceScope.Host
+        /// </summary>
         public static MaintenanceScope Host { get; } = new MaintenanceScope(HostValue);
-        /// <summary> This maintenance scope controls the default update maintenance of the Azure Resource. </summary>
+        /// <summary>
+        /// This maintenance scope controls the default update maintenance of the Azure Resource
+        /// Serialized Name: MaintenanceScope.Resource
+        /// </summary>
         public static MaintenanceScope Resource { get; } = new MaintenanceScope(ResourceValue);
-        /// <summary> This maintenance scope controls os image installation on VM/VMSS. </summary>
+        /// <summary>
+        /// This maintenance scope controls os image installation on VM/VMSS
+        /// Serialized Name: MaintenanceScope.OSImage
+        /// </summary>
         public static MaintenanceScope OSImage { get; } = new MaintenanceScope(OSImageValue);
-        /// <summary> This maintenance scope controls extension installation on VM/VMSS. </summary>
+        /// <summary>
+        /// This maintenance scope controls extension installation on VM/VMSS
+        /// Serialized Name: MaintenanceScope.Extension
+        /// </summary>
         public static MaintenanceScope Extension { get; } = new MaintenanceScope(ExtensionValue);
-        /// <summary> This maintenance scope controls installation of windows and linux packages on VM/VMSS. </summary>
+        /// <summary>
+        /// This maintenance scope controls installation of windows and linux packages on VM/VMSS
+        /// Serialized Name: MaintenanceScope.InGuestPatch
+        /// </summary>
         public static MaintenanceScope InGuestPatch { get; } = new MaintenanceScope(InGuestPatchValue);
-        /// <summary> This maintenance scope controls installation of SQL server platform updates. </summary>
+        /// <summary>
+        /// This maintenance scope controls installation of SQL server platform updates.
+        /// Serialized Name: MaintenanceScope.SQLDB
+        /// </summary>
         public static MaintenanceScope SqlDB { get; } = new MaintenanceScope(SqlDBValue);
-        /// <summary> This maintenance scope controls installation of SQL managed instance platform update. </summary>
+        /// <summary>
+        /// This maintenance scope controls installation of SQL managed instance platform update.
+        /// Serialized Name: MaintenanceScope.SQLManagedInstance
+        /// </summary>
         public static MaintenanceScope SqlManagedInstance { get; } = new MaintenanceScope(SqlManagedInstanceValue);
         /// <summary> Determines if two <see cref="MaintenanceScope"/> values are the same. </summary>
         public static bool operator ==(MaintenanceScope left, MaintenanceScope right) => left.Equals(right);

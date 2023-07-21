@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class InputWindowsParameters : IUtf8JsonSerializable
+    public partial class MaintenanceWindowsPatchSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExcludeKbsRequiringReboot))
+            if (Optional.IsDefined(IsExcludeKbsRebootRequired))
             {
                 writer.WritePropertyName("excludeKbsRequiringReboot"u8);
-                writer.WriteBooleanValue(ExcludeKbsRequiringReboot.Value);
+                writer.WriteBooleanValue(IsExcludeKbsRebootRequired.Value);
             }
             writer.WriteEndObject();
         }
 
-        internal static InputWindowsParameters DeserializeInputWindowsParameters(JsonElement element)
+        internal static MaintenanceWindowsPatchSettings DeserializeMaintenanceWindowsPatchSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     continue;
                 }
             }
-            return new InputWindowsParameters(Optional.ToList(kbNumbersToExclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(classificationsToInclude), Optional.ToNullable(excludeKbsRequiringReboot));
+            return new MaintenanceWindowsPatchSettings(Optional.ToList(kbNumbersToExclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(classificationsToInclude), Optional.ToNullable(excludeKbsRequiringReboot));
         }
     }
 }

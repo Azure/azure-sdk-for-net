@@ -23,18 +23,48 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="namespace"> Gets or sets namespace of the resource. </param>
-        /// <param name="extensionProperties"> Gets or sets extensionProperties of the maintenanceConfiguration. </param>
-        /// <param name="maintenanceScope"> Gets or sets maintenanceScope of the configuration. </param>
-        /// <param name="visibility"> Gets or sets the visibility of the configuration. The default value is 'Custom'. </param>
-        /// <param name="installPatches"> The input parameters to be passed to the patch run operation. </param>
-        /// <param name="startOn"> Effective start date of the maintenance window in YYYY-MM-DD hh:mm format. The start date can be set to either the current date or future date. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. </param>
-        /// <param name="expireOn"> Effective expiration date of the maintenance window in YYYY-MM-DD hh:mm format. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. Expiration date must be set to a future date. If not provided, it will be set to the maximum datetime 9999-12-31 23:59:59. </param>
-        /// <param name="duration"> Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00. </param>
-        /// <param name="timeZone"> Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time. </param>
-        /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)]. Offset value must be between -6 to 6 inclusive. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6. </param>
+        /// <param name="namespace">
+        /// Gets or sets namespace of the resource
+        /// Serialized Name: MaintenanceConfiguration.properties.namespace
+        /// </param>
+        /// <param name="extensionProperties">
+        /// Gets or sets extensionProperties of the maintenanceConfiguration
+        /// Serialized Name: MaintenanceConfiguration.properties.extensionProperties
+        /// </param>
+        /// <param name="maintenanceScope">
+        /// Gets or sets maintenanceScope of the configuration
+        /// Serialized Name: MaintenanceConfiguration.properties.maintenanceScope
+        /// </param>
+        /// <param name="visibility">
+        /// Gets or sets the visibility of the configuration. The default value is 'Custom'
+        /// Serialized Name: MaintenanceConfiguration.properties.visibility
+        /// </param>
+        /// <param name="installPatches">
+        /// The input parameters to be passed to the patch run operation.
+        /// Serialized Name: MaintenanceConfiguration.properties.installPatches
+        /// </param>
+        /// <param name="startOn">
+        /// Effective start date of the maintenance window in YYYY-MM-DD hh:mm format. The start date can be set to either the current date or future date. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone.
+        /// Serialized Name: MaintenanceConfiguration.properties.maintenanceWindow.startDateTime
+        /// </param>
+        /// <param name="expireOn">
+        /// Effective expiration date of the maintenance window in YYYY-MM-DD hh:mm format. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. Expiration date must be set to a future date. If not provided, it will be set to the maximum datetime 9999-12-31 23:59:59.
+        /// Serialized Name: MaintenanceConfiguration.properties.maintenanceWindow.expirationDateTime
+        /// </param>
+        /// <param name="duration">
+        /// Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00.
+        /// Serialized Name: MaintenanceConfiguration.properties.maintenanceWindow.duration
+        /// </param>
+        /// <param name="timeZone">
+        /// Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time.
+        /// Serialized Name: MaintenanceConfiguration.properties.maintenanceWindow.timeZone
+        /// </param>
+        /// <param name="recurEvery">
+        /// Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)]. Offset value must be between -6 to 6 inclusive. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6.
+        /// Serialized Name: MaintenanceConfiguration.properties.maintenanceWindow.recurEvery
+        /// </param>
         /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationData"/> instance for mocking. </returns>
-        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string @namespace = null, IDictionary<string, string> extensionProperties = null, MaintenanceScope? maintenanceScope = null, MaintenanceConfigurationVisibility? visibility = null, InputPatchConfiguration installPatches = null, DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, TimeSpan? duration = null, string timeZone = null, string recurEvery = null)
+        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string @namespace = null, IDictionary<string, string> extensionProperties = null, MaintenanceScope? maintenanceScope = null, MaintenanceConfigurationVisibility? visibility = null, MaintenancePatchConfiguration installPatches = null, DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, TimeSpan? duration = null, string timeZone = null, string recurEvery = null)
         {
             tags ??= new Dictionary<string, string>();
             extensionProperties ??= new Dictionary<string, string>();
@@ -47,9 +77,18 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The status. </param>
-        /// <param name="resourceId"> The resourceId. </param>
-        /// <param name="lastUpdatedOn"> Last Update time. </param>
+        /// <param name="status">
+        /// The status
+        /// Serialized Name: ApplyUpdate.properties.status
+        /// </param>
+        /// <param name="resourceId">
+        /// The resourceId
+        /// Serialized Name: ApplyUpdate.properties.resourceId
+        /// </param>
+        /// <param name="lastUpdatedOn">
+        /// Last Update time
+        /// Serialized Name: ApplyUpdate.properties.lastUpdateTime
+        /// </param>
         /// <returns> A new <see cref="Maintenance.MaintenanceApplyUpdateData"/> instance for mocking. </returns>
         public static MaintenanceApplyUpdateData MaintenanceApplyUpdateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MaintenanceUpdateStatus? status = null, ResourceIdentifier resourceId = null, DateTimeOffset? lastUpdatedOn = null)
         {
@@ -61,23 +100,53 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Location of the resource. </param>
-        /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
-        /// <param name="resourceId"> The unique resourceId. </param>
-        /// <param name="filter"> Properties of the configuration assignment. </param>
+        /// <param name="location">
+        /// Location of the resource
+        /// Serialized Name: ConfigurationAssignment.location
+        /// </param>
+        /// <param name="maintenanceConfigurationId">
+        /// The maintenance configuration Id
+        /// Serialized Name: ConfigurationAssignment.properties.maintenanceConfigurationId
+        /// </param>
+        /// <param name="resourceId">
+        /// The unique resourceId
+        /// Serialized Name: ConfigurationAssignment.properties.resourceId
+        /// </param>
+        /// <param name="filter">
+        /// Properties of the configuration assignment
+        /// Serialized Name: ConfigurationAssignment.properties.filter
+        /// </param>
         /// <returns> A new <see cref="Models.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
-        public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier maintenanceConfigurationId = null, ResourceIdentifier resourceId = null, ConfigurationAssignmentFilterProperties filter = null)
+        public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier maintenanceConfigurationId = null, ResourceIdentifier resourceId = null, MaintenanceConfigurationAssignmentFilter filter = null)
         {
             return new MaintenanceConfigurationAssignmentData(id, name, resourceType, systemData, location, maintenanceConfigurationId, resourceId, filter);
         }
 
         /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
-        /// <param name="maintenanceScope"> The impact area. </param>
-        /// <param name="impactType"> The impact type. </param>
-        /// <param name="status"> The status. </param>
-        /// <param name="impactDurationInSec"> Duration of impact in seconds. </param>
-        /// <param name="notBefore"> Time when Azure will start force updates if not self-updated by customer before this time. </param>
-        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="maintenanceScope">
+        /// The impact area
+        /// Serialized Name: Update.maintenanceScope
+        /// </param>
+        /// <param name="impactType">
+        /// The impact type
+        /// Serialized Name: Update.impactType
+        /// </param>
+        /// <param name="status">
+        /// The status
+        /// Serialized Name: Update.status
+        /// </param>
+        /// <param name="impactDurationInSec">
+        /// Duration of impact in seconds
+        /// Serialized Name: Update.impactDurationInSec
+        /// </param>
+        /// <param name="notBefore">
+        /// Time when Azure will start force updates if not self-updated by customer before this time
+        /// Serialized Name: Update.notBefore
+        /// </param>
+        /// <param name="resourceId">
+        /// The resourceId
+        /// Serialized Name: Update.properties.resourceId
+        /// </param>
         /// <returns> A new <see cref="Models.MaintenanceUpdate"/> instance for mocking. </returns>
         public static MaintenanceUpdate MaintenanceUpdate(MaintenanceScope? maintenanceScope = null, MaintenanceImpactType? impactType = null, MaintenanceUpdateStatus? status = null, int? impactDurationInSec = null, DateTimeOffset? notBefore = null, ResourceIdentifier resourceId = null)
         {
