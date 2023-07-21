@@ -205,7 +205,9 @@ namespace Azure.Core.Pipeline
             private Activity? _currentActivity;
             private Activity? _sampleOutActivity;
 
-#if !NETCOREAPP2_1 // Activity Source support is not available on netcoreapp2.1
+#if NETCOREAPP2_1
+            private ICollection<KeyValuePair<string,object>>? _tagCollection;
+#else
             private ActivityTagsCollection? _tagCollection;
 #endif
             private DateTimeOffset _startTime;
@@ -231,7 +233,20 @@ namespace Azure.Core.Pipeline
 
             public void AddTag(string name, object value)
             {
-#if !NETCOREAPP2_1 // ActivityTagCollection support is not available on netcoreapp2.1
+#if NETCOREAPP2_1
+                if (_currentActivity == null)
+                {
+                    _tagCollection ??= new List<KeyValuePair<string, object>>();
+                    _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
+                }
+                else
+                {
+                    // If the object overload is not available, fall back to the string overload. The assumption is that the object overload
+                    // not being available means that we cannot be using activity source, so the string cast should never fail because we will always
+                    // be passing a string value.
+                    _currentActivity?.AddTag(name, (string)value);
+                }
+#else
                 if (_currentActivity == null)
                 {
                     // Activity is not started yet, add the value to the collection
@@ -347,15 +362,20 @@ namespace Azure.Core.Pipeline
                         _currentActivity.SetStartTime(_startTime.UtcDateTime);
                     }
 
-#if !NETCOREAPP2_1 // Activity Tag Collection support is not available on netcoreapp2.1
                     if (_tagCollection != null)
                     {
                         foreach (var tag in _tagCollection)
                         {
+#if NETCOREAPP2_1
+                            // If the object overload is not available, fall back to the string overload. The assumption is that the object overload
+                            // not being available means that we cannot be using activity source, so the string cast should never fail because we will always
+                            // be passing a string value.
+                            _currentActivity?.AddTag(tag.Key, (string)tag.Value);
+#else
                             _currentActivity.AddTag(tag.Key, tag.Value);
+#endif
                         }
                     }
-#endif
 
                     if (_traceparent != null)
                     {
