@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
+using Azure.Core;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure
@@ -67,17 +68,13 @@ namespace Azure
                 var document = JsonDocument.Parse(configurationContent);
                 JsonElement json = document.RootElement.GetProperty("CloudMachine");
 
-                Id = ReaderString(json, "id", configurationFile);
-                SubscriptionId = ReaderString(json, "subscriptionId", configurationFile);
-                Region = ReaderString(json, "region", configurationFile);
-                DisplayName = ReaderString(json, "name", configurationFile);
+                Id = ReadString(json, "id", configurationFile);
+                SubscriptionId = ReadString(json, "subscriptionId", configurationFile);
+                Region = ReadString(json, "region", configurationFile);
+                DisplayName = ReadString(json, "name", configurationFile);
                 Version = ReaderInt32(json, "version", configurationFile);
             }
-            catch (InvalidCloudMachineConfigurationException)
-            {
-                throw;
-            }
-            catch (Exception e)
+            catch (Exception e) when (e is not InvalidCloudMachineConfigurationException)
             {
                 throw new InvalidCloudMachineConfigurationException(configurationFile, setting: null, e);
             }
@@ -95,17 +92,13 @@ namespace Azure
                 var document = JsonDocument.Parse(configurationContent);
                 JsonElement json = document.RootElement.GetProperty("CloudMachine");
 
-                Id = ReaderString(json, "id", nameof(configurationContent));
-                SubscriptionId = ReaderString(json, "subscriptionId", nameof(configurationContent));
-                Region = ReaderString(json, "region", nameof(configurationContent));
-                DisplayName = ReaderString(json, "name", nameof(configurationContent));
+                Id = ReadString(json, "id", nameof(configurationContent));
+                SubscriptionId = ReadString(json, "subscriptionId", nameof(configurationContent));
+                Region = ReadString(json, "region", nameof(configurationContent));
+                DisplayName = ReadString(json, "name", nameof(configurationContent));
                 Version = ReaderInt32(json, "version", nameof(configurationContent));
             }
-            catch (InvalidCloudMachineConfigurationException)
-            {
-                throw;
-            }
-            catch (Exception e)
+            catch (Exception e) when (e is not InvalidCloudMachineConfigurationException)
             {
                 throw new InvalidCloudMachineConfigurationException(nameof(configurationContent), setting: null, e);
             }
@@ -113,11 +106,11 @@ namespace Azure
 
         private CloudMachine(string id, string displayName, string subscriptionId, string region, int version)
         {
-            if (string.IsNullOrEmpty(id)) throw new ArgumentNullException(nameof(id));
-            if (string.IsNullOrEmpty(displayName)) throw new ArgumentNullException(nameof(displayName));
-            if (string.IsNullOrEmpty(subscriptionId)) throw new ArgumentNullException(nameof(subscriptionId));
-            if (string.IsNullOrEmpty(region)) throw new ArgumentNullException(nameof(region));
-            if (version<0) throw new ArgumentOutOfRangeException(nameof(version));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(displayName, nameof(displayName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertInRange(version, 0, int.MaxValue, nameof(version));
 
             Id = id;
             DisplayName = displayName;
@@ -148,7 +141,7 @@ namespace Azure
         }
 
         /// <summary>
-        /// Save CloudMachine configuration to a file
+        /// Save CloudMachine configuration to a file.
         /// </summary>
         /// <param name="filepath"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -158,7 +151,7 @@ namespace Azure
             Save(stream);
         }
 
-        private static string ReaderString(JsonElement json, string key, string configurationStoreDisplayName)
+        private static string ReadString(JsonElement json, string key, string configurationStoreDisplayName)
         {
             try {
                 var value = json.GetProperty(key).GetString()!;
