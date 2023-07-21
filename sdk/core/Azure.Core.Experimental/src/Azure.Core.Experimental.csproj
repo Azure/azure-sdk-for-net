@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
   </ItemGroup>
 
   <ItemGroup>

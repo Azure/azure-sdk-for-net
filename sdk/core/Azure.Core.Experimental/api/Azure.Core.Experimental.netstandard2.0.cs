@@ -1,5 +1,20 @@
 namespace Azure
 {
+    public partial class CloudMachine
+    {
+        public CloudMachine(Microsoft.Extensions.Configuration.IConfiguration configuration) { }
+        public CloudMachine(System.IO.Stream configurationContent) { }
+        public CloudMachine(string configurationFile = ".\\cloudconfig.json") { }
+        public string DisplayName { get { throw null; } set { } }
+        public string Id { get { throw null; } }
+        public string Region { get { throw null; } }
+        public string SubscriptionId { get { throw null; } }
+        public static Azure.CloudMachine Create(string subscriptionId, string region) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void Save(System.IO.Stream stream) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void Save(string filepath) { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Value
     {
@@ -104,5 +119,14 @@ namespace Azure
         public static implicit operator Azure.Value (uint value) { throw null; }
         public static implicit operator Azure.Value (ulong value) { throw null; }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool TryGetValue<T>(out T value) { throw null; }
+    }
+}
+namespace Azure.Core
+{
+    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class, Inherited=false, AllowMultiple=true)]
+    public partial class ProvisionableTemplateAttribute : System.Attribute
+    {
+        public ProvisionableTemplateAttribute(string resourceName) { }
+        public string ResourceName { get { throw null; } }
     }
 }
