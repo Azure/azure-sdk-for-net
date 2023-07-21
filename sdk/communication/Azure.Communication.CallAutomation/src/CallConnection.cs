@@ -102,13 +102,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (forEveryone)
                 {
-                    var repeatabilityHeaders = new RepeatabilityHeaders();
-                    return await RestClient.TerminateCallAsync(
-                        CallConnectionId,
-                        repeatabilityHeaders.RepeatabilityRequestId,
-                        repeatabilityHeaders.RepeatabilityFirstSent,
-                        cancellationToken
-                        ).ConfigureAwait(false);
+                    return await RestClient.TerminateCallAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
@@ -137,13 +131,7 @@ namespace Azure.Communication.CallAutomation
             {
                 if (forEveryone)
                 {
-                    var repeatabilityHeaders = new RepeatabilityHeaders();
-                    return RestClient.TerminateCall(
-                        CallConnectionId,
-                        repeatabilityHeaders.RepeatabilityRequestId,
-                        repeatabilityHeaders.RepeatabilityFirstSent,
-                        cancellationToken
-                        );
+                    return RestClient.TerminateCall(CallConnectionId, cancellationToken);
                 }
                 else
                 {
@@ -208,15 +196,8 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = await RestClient.TransferToParticipantAsync(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken
-                    ).ConfigureAwait(false);
+                var response = await RestClient.TransferToParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = response.Value;
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -278,15 +259,8 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = RestClient.TransferToParticipant(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken
-                    );
+                var response = RestClient.TransferToParticipant(CallConnectionId, request, cancellationToken);
 
                 var result = response.Value;
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -316,7 +290,7 @@ namespace Azure.Communication.CallAutomation
             {
                 request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
             }
-
+            request.CallbackUriOverride = options.CallbackUriOverride;
             return request;
         }
 
@@ -348,15 +322,8 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 AddParticipantRequestInternal request = CreateAddParticipantRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = await RestClient.AddParticipantAsync(
-                    callConnectionId: CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
+                var response = await RestClient.AddParticipantAsync(callConnectionId: CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var result = new AddParticipantResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -396,15 +363,8 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 AddParticipantRequestInternal request = CreateAddParticipantRequest(options);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = RestClient.AddParticipant(
-                    callConnectionId: CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken: cancellationToken
-                    );
+                var response = RestClient.AddParticipant(callConnectionId: CallConnectionId, request, cancellationToken: cancellationToken);
 
                 var result = new AddParticipantResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -442,7 +402,7 @@ namespace Azure.Communication.CallAutomation
             {
                 request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
             }
-
+            request.CallbackUriOverride = options.CallbackUriOverride;
             request.CustomContext = new CustomContextInternal(
                 options.ParticipantToAdd.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.SipHeaders,
                 options.ParticipantToAdd.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.VoipHeaders);
@@ -590,7 +550,6 @@ namespace Azure.Communication.CallAutomation
                 Argument.AssertNotNull(options.ParticipantToRemove, nameof(options.ParticipantToRemove));
 
                 RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
-                var repeatabilityHeaders = new RepeatabilityHeaders();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
                     throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
@@ -599,13 +558,8 @@ namespace Azure.Communication.CallAutomation
                 {
                     request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
-
-                var response = await RestClient.RemoveParticipantAsync(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken).ConfigureAwait(false);
+                request.CallbackUriOverride = options.CallbackUriOverride;
+                var response = await RestClient.RemoveParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = new RemoveParticipantResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -650,7 +604,6 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
@@ -660,13 +613,8 @@ namespace Azure.Communication.CallAutomation
                 {
                     options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
-
-                var response = RestClient.RemoveParticipant(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken);
+                request.CallbackUriOverride = options.CallbackUriOverride;
+                var response = RestClient.RemoveParticipant(CallConnectionId, request, cancellationToken);
 
                 var result = new RemoveParticipantResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
@@ -752,7 +700,6 @@ namespace Azure.Communication.CallAutomation
 
                 MuteParticipantsRequestInternal request = new MuteParticipantsRequestInternal(
                     options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
@@ -763,12 +710,7 @@ namespace Azure.Communication.CallAutomation
                     request.OperationContext = options.OperationContext;
                 }
 
-                return RestClient.Mute(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken);
+                return RestClient.Mute(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -814,7 +756,6 @@ namespace Azure.Communication.CallAutomation
             {
                 UnmuteParticipantsRequestInternal request = new UnmuteParticipantsRequestInternal(
                     options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)).ToList());
-                var repeatabilityHeaders = new RepeatabilityHeaders();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
                     throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
@@ -824,12 +765,7 @@ namespace Azure.Communication.CallAutomation
                     request.OperationContext = options.OperationContext;
                 }
 
-                return RestClient.Unmute(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken);
+                return RestClient.Unmute(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -877,7 +813,6 @@ namespace Azure.Communication.CallAutomation
 
                 MuteParticipantsRequestInternal request = new MuteParticipantsRequestInternal(
                     options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
-                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
@@ -888,12 +823,7 @@ namespace Azure.Communication.CallAutomation
                     request.OperationContext = options.OperationContext;
                 }
 
-                return await RestClient.MuteAsync(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken).ConfigureAwait(false);
+                return await RestClient.MuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -939,7 +869,6 @@ namespace Azure.Communication.CallAutomation
             {
                 UnmuteParticipantsRequestInternal request = new UnmuteParticipantsRequestInternal(
                     options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)).ToList());
-                var repeatabilityHeaders = new RepeatabilityHeaders();
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
                     throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
@@ -949,12 +878,7 @@ namespace Azure.Communication.CallAutomation
                     request.OperationContext = options.OperationContext;
                 }
 
-                return await RestClient.UnmuteAsync(
-                    CallConnectionId,
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken).ConfigureAwait(false);
+                return await RestClient.UnmuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

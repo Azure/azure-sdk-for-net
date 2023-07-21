@@ -45,5 +45,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> Used by customer to send custom context to targets. </summary>
         public CustomContextInternal CustomContext { get; set; }
+        /// <summary> The callback URI override. </summary>
+        public string CallbackUriOverride { get; set; }
     }
 }

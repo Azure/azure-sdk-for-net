@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// A note attached to a job
@@ -16,8 +16,8 @@ namespace Azure.Communication.JobRouter.Models
         public string Message { get; set; }
 
         /// <summary>
-        /// The time at which the note was added. If not provided, will default to the current time.
+        /// The time at which the note was added in UTC. If not provided, will default to the current time.
         /// </summary>
-        public DateTimeOffset? AddedAtUtc { get; set; }
+        public DateTimeOffset? AddedAt { get; set; }
     }
 }

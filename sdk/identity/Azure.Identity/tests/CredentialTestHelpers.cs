@@ -17,6 +17,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
+using Castle.DynamicProxy;
 
 namespace Azure.Identity.Tests
 {
@@ -515,6 +516,23 @@ namespace Azure.Identity.Tests
             var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
             var additionallyAllowedTenantIds = (string[])targetCred.GetType().GetProperty("AdditionallyAllowedTenantIds", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(targetCred);
             return additionallyAllowedTenantIds;
+        }
+
+        public static bool TryGetConfiguredTenantIdForMsalCredential(TokenCredential cred, out string tenantID)
+        {
+            var targetCred = cred is EnvironmentCredential environmentCredential ? environmentCredential.Credential : cred;
+            object clientObject = targetCred.GetType().GetProperty("Client", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(targetCred);
+            tenantID = clientObject switch
+            {
+                MsalPublicClient msalPub => msalPub?.TenantId,
+                MsalConfidentialClient msalConf => msalConf?.TenantId,
+                _ => null
+            };
+            if (tenantID == null)
+            {
+                tenantID = targetCred.GetType().GetProperty("TenantId", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(targetCred) as string;
+            }
+            return tenantID != null;
         }
 
         public static bool IsMsalCredential(TokenCredential cred)

@@ -55,6 +55,6 @@ namespace Azure.Communication.JobRouter
         public IDictionary<string, ChannelConfiguration> ChannelConfigurations { get; } = new Dictionary<string, ChannelConfiguration>();
 
         /// <summary> The queue(s) that this worker can receive work from. </summary>
-        public IDictionary<string, RouterQueueAssignment> QueueIds { get; } = new Dictionary<string, RouterQueueAssignment>();
+        public IDictionary<string, RouterQueueAssignment> QueueAssignments { get; } = new Dictionary<string, RouterQueueAssignment>();
     }
 }

@@ -13,10 +13,6 @@ namespace Azure.AI.OpenAI
     /// <summary> Representation of the manner in which a completions response concluded. </summary>
     public readonly partial struct CompletionsFinishReason
     {
-        private const string StoppedValue = "stop";
-        private const string TokenLimitReachedValue = "length";
-        private const string ContentFilteredValue = "content_filter";
-
         /// <summary> Initializes a new instance of <see cref="CompletionsFinishReason"/>. </summary>
         public CompletionsFinishReason(string value)
         {
