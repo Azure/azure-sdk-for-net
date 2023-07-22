@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // required - HTTP V2
             SemanticConventions.AttributeHttpRequestMethod,
             SemanticConventions.AttributeHttpResponseStatusCode,
-            SemanticConventions.AttributeNetworkProtocolVersion,
+            //SemanticConventions.AttributeNetworkProtocolVersion, // this needs to be removed to add to UnMappedTags and have the same behavior as V1
             SemanticConventions.AttributeServerAddress,
             SemanticConventions.AttributeServerPort,
             SemanticConventions.AttributeUrlFull,

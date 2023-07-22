@@ -11,6 +11,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Trace;
 
@@ -32,8 +33,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
         /// A TelemetryItem is created matching that request.
         /// </summary>
-        [Fact]
-        public async Task VerifyRequestTelemetry()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task VerifyRequestTelemetry(bool testNewSemanticConventions)
         {
             string testValue = Guid.NewGuid().ToString();
 
@@ -41,6 +44,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
             var builder = WebApplication.CreateBuilder();
+
+            if (testNewSemanticConventions)
+            {
+                //Environment.SetEnvironmentVariable("OTEL_SEMCONV_STABILITY_OPT_IN", "HTTP");
+
+                builder.Configuration.AddInMemoryCollection(new[] { new KeyValuePair<string, string?>("OTEL_SEMCONV_STABILITY_OPT_IN", "HTTP") });
+            }
+
             builder.Services.AddOpenTelemetry()
                 .WithTracing(builder => builder
                     .AddAspNetCoreInstrumentation()
@@ -72,7 +83,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             AssertRequestTelemetry(
                 telemetryItem: telemetryItem,
                 expectedResponseCode: "200",
-                expectedUrl: TestServerUrl);
+                expectedUrl: TestServerUrl,
+                isNewSemConv: testNewSemanticConventions);
         }
 #endif
     }

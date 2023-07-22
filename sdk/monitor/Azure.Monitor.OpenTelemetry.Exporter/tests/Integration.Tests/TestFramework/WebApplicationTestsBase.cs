@@ -44,11 +44,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
             Assert.True(result, $"{nameof(WaitForActivityExport)} failed.");
         }
 
-        internal void AssertRequestTelemetry(TelemetryItem telemetryItem, string expectedResponseCode, string expectedUrl)
+        internal void AssertRequestTelemetry(TelemetryItem telemetryItem, string expectedResponseCode, string expectedUrl, bool isNewSemConv)
         {
             Assert.Equal("Request", telemetryItem.Name);
 
             // Tags
+            Assert.Equal(5, telemetryItem.Tags.Count);
             Assert.Contains("ai.operation.id", telemetryItem.Tags.Keys);
             Assert.Contains("ai.operation.name", telemetryItem.Tags.Keys);
             Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
@@ -60,6 +61,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
             var requestData = (RequestData)telemetryItem.Data.BaseData;
             Assert.Equal(expectedResponseCode, requestData.ResponseCode);
             Assert.Equal(expectedUrl, requestData.Url);
+            Assert.Null(requestData.Source);
+            Assert.True(requestData.Success);
+
+            Assert.Empty(requestData.AdditionalProperties);
+
+            Assert.Empty(requestData.Measurements);
+
+            Assert.Equal(1, requestData.Properties.Count);
+
+            if (isNewSemConv)
+            {
+                Assert.Contains("network.protocol.version", requestData.Properties.Keys);
+            }
+            else
+            {
+                Assert.Contains("http.flavor", requestData.Properties.Keys);
+            }
         }
     }
 }
