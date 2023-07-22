@@ -84,18 +84,10 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal static Test DeserializeTest(JsonElement element)
+        internal static Test DeserializeTest(BinaryData utf8Json, ModelSerializerOptions options)
         {
-            // TODO: Get the raw bytes instead of a JsonElement to avoid the
-            // cost of a conversion.
-            BinaryData utf8Json = GetBytes(element);
-            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
+            // TODO: use ObjectSerializers from options?
 
-            return new Test(mje);
-        }
-
-        internal static Test DeserializeTest(BinaryData utf8Json)
-        {
             MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
             return new Test(mje);
         }
@@ -131,13 +123,15 @@ namespace Azure.Developer.LoadTesting.Models
 
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
+            // TODO: reimplement this so it doesn't read the buffer twice
             JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeTest(doc.RootElement);
+            BinaryData utf8Json = GetBytes(doc.RootElement);
+            return DeserializeTest(utf8Json, options);
         }
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            return DeserializeTest(data);
+            return DeserializeTest(data, options);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of LoadTestConfiguration. </summary>
         public LoadTestConfiguration()
         {
-            _element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
+            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
         }
 
         internal LoadTestConfiguration(MutableJsonElement element)

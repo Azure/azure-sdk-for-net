@@ -15,6 +15,8 @@ namespace Azure.Core.Json
 {
     internal readonly struct MutableJsonDictionary<T> : IDictionary<string, T>
     {
+        private static JsonElement Empty = JsonDocument.Parse("{}"u8.ToArray()).RootElement;
+
         private readonly MutableJsonElement _element;
 
         public MutableJsonDictionary(MutableJsonElement element)
@@ -58,9 +60,7 @@ namespace Azure.Core.Json
 
         public void Add(KeyValuePair<string, T> item) => Add(item.Key, item.Value);
 
-        // TODO: use static value for empty object
-        // TODO: add test case
-        public void Clear() => _element.Set(JsonDocument.Parse("{}"u8.ToArray()));
+        public void Clear() => _element.Set(Empty);
 
         public bool Contains(KeyValuePair<string, T> item) => _element.TryGetProperty(item.Key, out _);
 

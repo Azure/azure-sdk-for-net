@@ -19,7 +19,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of PassFailCriteria. </summary>
         public PassFailCriteria()
         {
-            _element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
+            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
         }
 
         internal PassFailCriteria(MutableJsonElement element)

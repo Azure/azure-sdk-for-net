@@ -19,7 +19,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of TestInputArtifacts. </summary>
         internal TestInputArtifacts()
         {
-            _element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
+            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
 
             AdditionalFileInfo = new MutableJsonReadOnlyList<FileInfo>(_element.GetProperty("additionalFileInfo"));
         }

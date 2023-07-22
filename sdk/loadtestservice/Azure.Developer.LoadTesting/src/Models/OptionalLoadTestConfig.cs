@@ -18,7 +18,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of OptionalLoadTestConfig. </summary>
         public OptionalLoadTestConfig()
         {
-            _element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
+            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
         }
 
         internal OptionalLoadTestConfig(MutableJsonElement element)

@@ -18,7 +18,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of FileInfo. </summary>
         internal FileInfo()
         {
-            _element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
+            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
         }
 
         internal FileInfo(MutableJsonElement element)

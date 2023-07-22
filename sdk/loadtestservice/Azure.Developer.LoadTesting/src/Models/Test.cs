@@ -20,7 +20,7 @@ namespace Azure.Developer.LoadTesting.Models
         public Test()
         {
             // TODO: Store a way to make an empty MJD - avoid the ToArray() allocation below.
-            _element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
+            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
 
             // TODO: If we are suggesting a wholesale replacement of ChangeTrackingDictionary,
             // we will need to confirm that MJD provides the complete set of features this type provides.
