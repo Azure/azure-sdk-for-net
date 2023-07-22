@@ -4,6 +4,7 @@
 using System;
 using Azure;
 using Azure.Communication.Email;
+using Azure.Core;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
@@ -29,6 +30,14 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<EmailClient, EmailClientOptions>(options => new EmailClient(serviceUri, azureKeyCredential, options));
+        }
+
+        /// <summary>
+        /// Registers a <see cref="EmailClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="azureTokenCredential"/>
+        /// </summary>
+        public static IAzureClientBuilder<EmailClient, EmailClientOptions> AddEmailClient<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential azureTokenCredential) where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory((EmailClientOptions options) => new EmailClient(serviceUri, azureTokenCredential, options));
         }
 
         /// <summary>
