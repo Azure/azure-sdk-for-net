@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets or sets the source.</summary>
         /// <value>The source.</value>
         [JsonPropertyName("source")]
-        [RequireNonDefault]
+        [NotNull]
         public string Source { get; set; }
 
         /// <summary>Gets or sets the cloud event data type.</summary>
