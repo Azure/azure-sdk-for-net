@@ -10,8 +10,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.DataMovement.JobPlan;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -90,7 +89,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Check the transfer files made and the source and destination
             JobPartPlanFileName checkpointerFileName = new JobPartPlanFileName(
@@ -148,22 +147,17 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions).ConfigureAwait(false);
 
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Act/Assert - resume transfer with wrong source resource.
             BlockBlobClient newSourceBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
             StorageResourceSingle wrongSourceResource = new BlockBlobStorageResource(newSourceBlob);
 
-            TransferOptions resumeTransferOptions = new TransferOptions()
-            {
-                ResumeFromCheckpointId = transfer.Id
-            };
-
             Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
+                async () => await transferManager.ResumeTransferAsync(
+                    transfer.Id,
                     wrongSourceResource,
-                    destinationResource,
-                    resumeTransferOptions),
+                    destinationResource),
                 Errors.MismatchResumeTransferArguments(
                     "SourcePath",
                     sourceResource.Uri.AbsoluteUri,
@@ -207,22 +201,17 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions).ConfigureAwait(false);
 
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Act/Assert - resume transfer with wrong destination resource.
             BlockBlobClient newDestinationBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
             StorageResourceSingle wrongDestinationResource = new BlockBlobStorageResource(newDestinationBlob);
 
-            TransferOptions resumeTransferOptions = new TransferOptions()
-            {
-                ResumeFromCheckpointId = transfer.Id
-            };
-
             Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
+                async () => await transferManager.ResumeTransferAsync(
+                    transfer.Id,
                     sourceResource,
-                    wrongDestinationResource,
-                    resumeTransferOptions),
+                    wrongDestinationResource),
                 Errors.MismatchResumeTransferArguments(
                     "DestinationPath",
                     destinationResource.Uri.AbsoluteUri,
@@ -266,17 +255,17 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions).ConfigureAwait(false);
 
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Act/Assert - resume transfer with wrong CreateMode Resource
             TransferOptions resumeTransferOptions = new TransferOptions()
             {
                 CreateMode = StorageResourceCreateMode.Overwrite,
-                ResumeFromCheckpointId = transfer.Id
             };
 
             Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
+                async () => await transferManager.ResumeTransferAsync(
+                    transfer.Id,
                     sourceResource,
                     destinationResource,
                     resumeTransferOptions),

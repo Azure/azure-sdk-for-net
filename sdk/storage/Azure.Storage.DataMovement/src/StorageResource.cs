@@ -13,12 +13,14 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The protected constructor for the abstract StorageResource class (to allow for mocking).
         /// </summary>
-        protected StorageResource() { }
+        protected StorageResource()
+        {
+        }
 
         /// <summary>
-        /// Defines whether we can produce a Uri.
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public abstract ProduceUriType CanProduceUri { get; }
+        protected internal abstract bool CanProduceUri { get; }
 
         /// <summary>
         /// Gets the Uri.
@@ -33,6 +35,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines whether the storage resource is a container.
         /// </summary>
-        public abstract bool IsContainer { get; }
+        protected internal abstract bool IsContainer { get; }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.GraphServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_CreateOrUpdateAccountResource()
         {
-            // Generated from example definition: specification/graphservicesprod/resource-manager/Microsoft.GraphServices/preview/2022-09-22-preview/examples/Accounts_List.json
+            // Generated from example definition: specification/graphservicesprod/resource-manager/Microsoft.GraphServices/stable/2023-04-13/examples/Accounts_List.json
             // this example is just showing the usage of "Accounts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.GraphServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAccounts()
         {
-            // Generated from example definition: specification/graphservicesprod/resource-manager/Microsoft.GraphServices/preview/2022-09-22-preview/examples/Accounts_Get.json
-            // this example is just showing the usage of "Account_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/graphservicesprod/resource-manager/Microsoft.GraphServices/stable/2023-04-13/examples/Accounts_Get.json
+            // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.GraphServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAccounts()
         {
-            // Generated from example definition: specification/graphservicesprod/resource-manager/Microsoft.GraphServices/preview/2022-09-22-preview/examples/Accounts_Get.json
-            // this example is just showing the usage of "Account_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/graphservicesprod/resource-manager/Microsoft.GraphServices/stable/2023-04-13/examples/Accounts_Get.json
+            // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.GraphServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAccountResource()
         {
-            // Generated from example definition: specification/graphservicesprod/resource-manager/Microsoft.GraphServices/preview/2022-09-22-preview/examples/Accounts_Create.json
-            // this example is just showing the usage of "Account_CreateAndUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/graphservicesprod/resource-manager/Microsoft.GraphServices/stable/2023-04-13/examples/Accounts_Create.json
+            // this example is just showing the usage of "Accounts_CreateAndUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -144,14 +144,7 @@ namespace Azure.ResourceManager.GraphServices.Samples
 
             // invoke the operation
             string resourceName = "11111111-aaaa-1111-bbbb-1111111111111";
-            GraphServicesAccountResourceData data = new GraphServicesAccountResourceData(new AzureLocation("placeholder"), new GraphServicesAccountResourceProperties("11111111-aaaa-1111-bbbb-111111111111"))
-            {
-                Tags =
-{
-["tag1"] = "value1",
-["tag2"] = "value2",
-},
-            };
+            GraphServicesAccountResourceData data = new GraphServicesAccountResourceData(new AzureLocation("placeholder"), new GraphServicesAccountResourceProperties("11111111-aaaa-1111-bbbb-111111111111"));
             ArmOperation<GraphServicesAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             GraphServicesAccountResource result = lro.Value;
 

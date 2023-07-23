@@ -96,6 +96,8 @@ namespace Azure.Maps.Rendering
         protected MapsRenderingClient() { }
         public MapsRenderingClient(Azure.AzureKeyCredential credential) { }
         public MapsRenderingClient(Azure.AzureKeyCredential credential, Azure.Maps.Rendering.MapsRenderingClientOptions options) { }
+        public MapsRenderingClient(Azure.AzureSasCredential credential) { }
+        public MapsRenderingClient(Azure.AzureSasCredential credential, Azure.Maps.Rendering.MapsRenderingClientOptions options) { }
         public MapsRenderingClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsRenderingClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Rendering.MapsRenderingClientOptions options) { }
         public virtual Azure.Response<Azure.Maps.Rendering.CopyrightCaption> GetCopyrightCaption(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -250,7 +250,7 @@ namespace Azure.Identity.Tests
                     DisableInstanceDiscovery = true,
                     TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
                     AuthorityHost = AzureAuthorityHosts.AzureChina,
-                    IsLoggingPIIEnabled = true,
+                    IsSupportLoggingEnabled = true,
                     Retry =
                     {
                         MaxRetries = 15,

@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
             Optional<ResultInformation> resultInformation = default;
             Optional<DialogInputType> dialogInputType = default;
             Optional<string> dialogId = default;
-            Optional<SensitiveFlag> sensitiveFlag = default;
+            Optional<bool> sensitiveMask = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -72,17 +72,17 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     dialogId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sensitiveFlag"u8))
+                if (property.NameEquals("sensitiveMask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sensitiveFlag = SensitiveFlag.DeserializeSensitiveFlag(property.Value);
+                    sensitiveMask = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new DialogSensitivityUpdateInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, sensitiveFlag.Value);
+            return new DialogSensitivityUpdateInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, Optional.ToNullable(sensitiveMask));
         }
     }
 }

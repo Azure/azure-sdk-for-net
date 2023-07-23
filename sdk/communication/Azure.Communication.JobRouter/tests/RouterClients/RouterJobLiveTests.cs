@@ -52,7 +52,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Notes =
                     {
-                        new RouterJobNote { AddedAtUtc = updateNoteTimeStamp, Message = "Fake notes attached to job with update" }
+                        new RouterJobNote { AddedAt = updateNoteTimeStamp, Message = "Fake notes attached to job with update" }
                     }
                 });
             }
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Notes =
                     {
-                        new RouterJobNote { AddedAtUtc = updateNoteTimeStamp, Message = "Fake notes attached to job with update" }
+                        new RouterJobNote { AddedAt = updateNoteTimeStamp, Message = "Fake notes attached to job with update" }
                     }
                 });
             }

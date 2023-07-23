@@ -3,13 +3,13 @@
   <members>
     <member name="GetAccountPropertiesAsync(RequestContext)">
 <example>
-This sample shows how to call GetAccountPropertiesAsync and parse the result.
+This sample shows how to call GetAccountPropertiesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-Response response = await client.GetAccountPropertiesAsync();
+Response response = await client.GetAccountPropertiesAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -55,13 +55,13 @@ Console.WriteLine(result.GetProperty("type").ToString());
     </member>
     <member name="GetAccountProperties(RequestContext)">
 <example>
-This sample shows how to call GetAccountProperties and parse the result.
+This sample shows how to call GetAccountProperties with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-Response response = client.GetAccountProperties();
+Response response = client.GetAccountProperties(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -245,13 +245,13 @@ Console.WriteLine(result.GetProperty("type").ToString());
     </member>
     <member name="GetAccessKeysAsync(RequestContext)">
 <example>
-This sample shows how to call GetAccessKeysAsync and parse the result.
+This sample shows how to call GetAccessKeysAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-Response response = await client.GetAccessKeysAsync();
+Response response = await client.GetAccessKeysAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
@@ -261,13 +261,13 @@ Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
     </member>
     <member name="GetAccessKeys(RequestContext)">
 <example>
-This sample shows how to call GetAccessKeys and parse the result.
+This sample shows how to call GetAccessKeys with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-Response response = client.GetAccessKeys();
+Response response = client.GetAccessKeys(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
@@ -343,25 +343,13 @@ Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
     </member>
     <member name="GetCollectionsAsync(string,RequestContext)">
 <example>
-This sample shows how to call GetCollectionsAsync and parse the result.
+This sample shows how to call GetCollectionsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-await foreach (var item in client.GetCollectionsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetCollectionsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential);
-
-await foreach (var item in client.GetCollectionsAsync("<skipToken>"))
+await foreach (var item in client.GetCollectionsAsync("<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
@@ -382,25 +370,13 @@ await foreach (var item in client.GetCollectionsAsync("<skipToken>"))
     </member>
     <member name="GetCollections(string,RequestContext)">
 <example>
-This sample shows how to call GetCollections and parse the result.
+This sample shows how to call GetCollections with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-foreach (var item in client.GetCollections())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetCollections with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential);
-
-foreach (var item in client.GetCollections("<skipToken>"))
+foreach (var item in client.GetCollections("<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
@@ -421,25 +397,13 @@ foreach (var item in client.GetCollections("<skipToken>"))
     </member>
     <member name="GetResourceSetRulesAsync(string,RequestContext)">
 <example>
-This sample shows how to call GetResourceSetRulesAsync and parse the result.
+This sample shows how to call GetResourceSetRulesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-await foreach (var item in client.GetResourceSetRulesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetResourceSetRulesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential);
-
-await foreach (var item in client.GetResourceSetRulesAsync("<skipToken>"))
+await foreach (var item in client.GetResourceSetRulesAsync("<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
@@ -533,25 +497,13 @@ await foreach (var item in client.GetResourceSetRulesAsync("<skipToken>"))
     </member>
     <member name="GetResourceSetRules(string,RequestContext)">
 <example>
-This sample shows how to call GetResourceSetRules and parse the result.
+This sample shows how to call GetResourceSetRules with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-foreach (var item in client.GetResourceSetRules())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetResourceSetRules with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewAccountClient(endpoint, credential);
-
-foreach (var item in client.GetResourceSetRules("<skipToken>"))
+foreach (var item in client.GetResourceSetRules("<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());

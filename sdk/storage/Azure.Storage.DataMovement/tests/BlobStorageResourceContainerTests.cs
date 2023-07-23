@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Tests;
 using NUnit.Framework;
 
@@ -71,7 +70,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Assert
             Assert.AreEqual(uri, storageResource.Uri);
             Assert.AreEqual(directoryName, storageResource.Path);
-            Assert.AreEqual(ProduceUriType.ProducesUri, storageResource.CanProduceUri);
+            Assert.IsTrue(storageResource.CanProduceUri);
         }
 
         [RecordedTest]

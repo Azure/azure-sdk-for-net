@@ -12,7 +12,6 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
@@ -50,7 +49,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure
             };
 
             destinationPrefix ??= "foo";
@@ -68,7 +67,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-            await transfer.AwaitCompletion(tokenSource.Token);
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             await testEventsRaised.AssertContainerCompletedCheck(files.Count);
             Assert.IsTrue(transfer.HasCompleted);
@@ -161,7 +160,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task LocalToBlockBlobDirectory_SmallChunks()
         {
             long blobSize = Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
@@ -195,10 +194,10 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             long blobSize = 2 * Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.StopOnAllFailures,
+                ErrorHandling = ErrorHandlingBehavior.StopOnAllFailures,
                 MaximumConcurrency = 3,
             };
             TransferOptions options = new TransferOptions()
@@ -254,7 +253,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                ErrorHandling = ErrorHandlingBehavior.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             TransferManager transferManager = new TransferManager(managerOptions);
@@ -265,7 +264,7 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(tokenSource.Token);
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
             // Assert
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
@@ -531,7 +530,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, containerOptions);
-            await transfer.AwaitCompletion();
+            await transfer.WaitForCompletionAsync();
 
             // Assert
             AsyncPageable<BlobItem> blobs = test.Container.GetBlobsAsync(prefix: destinationPrefix);
@@ -581,7 +580,7 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
 
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(tokenSource.Token);
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             IEnumerable<string> destinationFiles =
                 (await destination.Container.GetBlobsAsync().ToEnumerableAsync()).Select(b => b.Name);
@@ -594,9 +593,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        [TestCase(ErrorHandlingOptions.ContinueOnFailure)]
-        [TestCase(ErrorHandlingOptions.StopOnAllFailures)]
-        public async Task DirectoryUpload_ErrorHandling(ErrorHandlingOptions errorHandling)
+        [TestCase(ErrorHandlingBehavior.ContinueOnFailure)]
+        [TestCase(ErrorHandlingBehavior.StopOnAllFailures)]
+        public async Task DirectoryUpload_ErrorHandling(ErrorHandlingBehavior errorHandling)
         {
             // Arrange
             using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
@@ -629,13 +628,13 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(tokenSource.Token);
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             // Assert
             IEnumerable<string> destinationFiles =
                 (await destination.Container.GetBlobsAsync().ToEnumerableAsync()).Select(b => b.Name);
 
-            if (errorHandling == ErrorHandlingOptions.ContinueOnFailure)
+            if (errorHandling == ErrorHandlingBehavior.ContinueOnFailure)
             {
                 await testEventsRaised.AssertContainerCompletedWithFailedCheckContinue(1);
 
@@ -645,7 +644,7 @@ namespace Azure.Storage.DataMovement.Tests
                     .OrderBy(f => f)
                     .SequenceEqual(destinationFiles.OrderBy(f => f)));
             }
-            else if (errorHandling == ErrorHandlingOptions.StopOnAllFailures)
+            else if (errorHandling == ErrorHandlingBehavior.StopOnAllFailures)
             {
                 await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
 
@@ -730,7 +729,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);
@@ -763,7 +762,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
@@ -798,7 +797,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
