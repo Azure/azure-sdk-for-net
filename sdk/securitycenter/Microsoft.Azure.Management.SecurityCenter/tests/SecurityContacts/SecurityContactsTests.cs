@@ -92,7 +92,7 @@ namespace SecurityCenter.Tests
 
         #region Validations
 
-        private void ValidateSecurityContacts(IList<SecurityContact> securityContactPage)
+        private void ValidateSecurityContacts(IPage<SecurityContact> securityContactPage)
         {
             Assert.True(securityContactPage.IsAny());
 
