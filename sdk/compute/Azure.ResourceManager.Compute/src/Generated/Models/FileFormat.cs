@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string VHDValue = "VHD";
+        private const string VhdValue = "VHD";
         private const string VhdxValue = "VHDX";
 
         /// <summary> A VHD file is a disk image file in the Virtual Hard Disk file format. </summary>
-        public static FileFormat VHD { get; } = new FileFormat(VHDValue);
+        public static FileFormat Vhd { get; } = new FileFormat(VhdValue);
         /// <summary> A VHDX file is a disk image file in the Virtual Hard Disk v2 file format. </summary>
         public static FileFormat Vhdx { get; } = new FileFormat(VhdxValue);
         /// <summary> Determines if two <see cref="FileFormat"/> values are the same. </summary>

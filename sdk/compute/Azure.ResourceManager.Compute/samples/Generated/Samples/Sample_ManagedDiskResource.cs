@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Compute.Samples
             // invoke the operation
             GrantAccessData data = new GrantAccessData(AccessLevel.Read, 300)
             {
-                FileFormat = FileFormat.VHD,
+                FileFormat = FileFormat.Vhd,
             };
             ArmOperation<AccessUri> lro = await managedDisk.GrantAccessAsync(WaitUntil.Completed, data);
             AccessUri result = lro.Value;
