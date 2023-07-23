@@ -22,199 +22,244 @@ namespace Microsoft.Azure.Management.Security
     public static partial class GovernanceRulesOperationsExtensions
     {
             /// <summary>
-            /// Get a specific governanceRule for the requested scope by ruleId
+            /// Get a list of all relevant governance rules over a scope
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
-            public static GovernanceRule Get(this IGovernanceRulesOperations operations, string ruleId)
+            public static IPage<GovernanceRule> List(this IGovernanceRulesOperations operations, string scope)
             {
-                return operations.GetAsync(ruleId).GetAwaiter().GetResult();
+                return operations.ListAsync(scope).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get a specific governanceRule for the requested scope by ruleId
+            /// Get a list of all relevant governance rules over a scope
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GovernanceRule> GetAsync(this IGovernanceRulesOperations operations, string ruleId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GovernanceRule>> ListAsync(this IGovernanceRulesOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(ruleId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates or update a security GovernanceRule on the given subscription.
+            /// Get a specific governance rule for the requested scope by ruleId
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+            /// </param>
             /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
             /// </param>
-            /// <param name='governanceRule'>
-            /// GovernanceRule over a subscription scope
-            /// </param>
-            public static GovernanceRule CreateOrUpdate(this IGovernanceRulesOperations operations, string ruleId, GovernanceRule governanceRule)
+            public static GovernanceRule Get(this IGovernanceRulesOperations operations, string scope, string ruleId)
             {
-                return operations.CreateOrUpdateAsync(ruleId, governanceRule).GetAwaiter().GetResult();
+                return operations.GetAsync(scope, ruleId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or update a security GovernanceRule on the given subscription.
+            /// Get a specific governance rule for the requested scope by ruleId
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
-            /// <param name='governanceRule'>
-            /// GovernanceRule over a subscription scope
+            /// <param name='ruleId'>
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GovernanceRule> CreateOrUpdateAsync(this IGovernanceRulesOperations operations, string ruleId, GovernanceRule governanceRule, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GovernanceRule> GetAsync(this IGovernanceRulesOperations operations, string scope, string ruleId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(ruleId, governanceRule, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(scope, ruleId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete a GovernanceRule over a given scope
+            /// Creates or updates a governance rule over a given scope
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
-            public static void Delete(this IGovernanceRulesOperations operations, string ruleId)
+            /// <param name='ruleId'>
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
+            /// </param>
+            /// <param name='governanceRule'>
+            /// Governance rule over a given scope
+            /// </param>
+            public static GovernanceRule CreateOrUpdate(this IGovernanceRulesOperations operations, string scope, string ruleId, GovernanceRule governanceRule)
             {
-                operations.DeleteAsync(ruleId).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(scope, ruleId, governanceRule).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete a GovernanceRule over a given scope
+            /// Creates or updates a governance rule over a given scope
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+            /// </param>
             /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
+            /// </param>
+            /// <param name='governanceRule'>
+            /// Governance rule over a given scope
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IGovernanceRulesOperations operations, string ruleId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GovernanceRule> CreateOrUpdateAsync(this IGovernanceRulesOperations operations, string scope, string ruleId, GovernanceRule governanceRule, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(ruleId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, ruleId, governanceRule, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
-            /// Execute a security GovernanceRule on the given subscription.
+            /// Delete a Governance rule over a given scope
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+            /// </param>
             /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
             /// </param>
-            /// <param name='overrideParameter'>
-            /// Describe if governance rule should be override
-            /// </param>
-            public static GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders RuleIdExecuteSingleSubscription(this IGovernanceRulesOperations operations, string ruleId, bool? overrideParameter = default(bool?))
+            public static GovernanceRulesDeleteHeaders Delete(this IGovernanceRulesOperations operations, string scope, string ruleId)
             {
-                return operations.RuleIdExecuteSingleSubscriptionAsync(ruleId, overrideParameter).GetAwaiter().GetResult();
+                return operations.DeleteAsync(scope, ruleId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Execute a security GovernanceRule on the given subscription.
+            /// Delete a Governance rule over a given scope
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
-            /// <param name='overrideParameter'>
-            /// Describe if governance rule should be override
+            /// <param name='ruleId'>
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders> RuleIdExecuteSingleSubscriptionAsync(this IGovernanceRulesOperations operations, string ruleId, bool? overrideParameter = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GovernanceRulesDeleteHeaders> DeleteAsync(this IGovernanceRulesOperations operations, string scope, string ruleId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RuleIdExecuteSingleSubscriptionWithHttpMessagesAsync(ruleId, overrideParameter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, ruleId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
             }
 
             /// <summary>
-            /// Execute a security GovernanceRule on the given security connector.
+            /// Execute a governance rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='securityConnectorName'>
-            /// The security connector name.
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
             /// </param>
             /// <param name='overrideParameter'>
             /// Describe if governance rule should be override
             /// </param>
-            public static GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders RuleIdExecuteSingleSecurityConnector(this IGovernanceRulesOperations operations, string resourceGroupName, string securityConnectorName, string ruleId, bool? overrideParameter = default(bool?))
+            public static GovernanceRulesExecuteHeaders Execute(this IGovernanceRulesOperations operations, string scope, string ruleId, bool? overrideParameter = default(bool?))
             {
-                return operations.RuleIdExecuteSingleSecurityConnectorAsync(resourceGroupName, securityConnectorName, ruleId, overrideParameter).GetAwaiter().GetResult();
+                return operations.ExecuteAsync(scope, ruleId, overrideParameter).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Execute a security GovernanceRule on the given security connector.
+            /// Execute a governance rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='securityConnectorName'>
-            /// The security connector name.
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
             /// </param>
             /// <param name='overrideParameter'>
             /// Describe if governance rule should be override
@@ -222,97 +267,163 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders> RuleIdExecuteSingleSecurityConnectorAsync(this IGovernanceRulesOperations operations, string resourceGroupName, string securityConnectorName, string ruleId, bool? overrideParameter = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GovernanceRulesExecuteHeaders> ExecuteAsync(this IGovernanceRulesOperations operations, string scope, string ruleId, bool? overrideParameter = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RuleIdExecuteSingleSecurityConnectorWithHttpMessagesAsync(resourceGroupName, securityConnectorName, ruleId, overrideParameter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ExecuteWithHttpMessagesAsync(scope, ruleId, overrideParameter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
             }
 
             /// <summary>
-            /// Execute a security GovernanceRule on the given subscription.
+            /// Get governance rules long run operation result for the requested scope by
+            /// ruleId and operationId
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+            /// </param>
             /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
             /// </param>
-            /// <param name='overrideParameter'>
-            /// Describe if governance rule should be override
+            /// <param name='operationId'>
+            /// The governance rule long running operation unique key
             /// </param>
-            public static GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders BeginRuleIdExecuteSingleSubscription(this IGovernanceRulesOperations operations, string ruleId, bool? overrideParameter = default(bool?))
+            public static OperationResult1 OperationResults(this IGovernanceRulesOperations operations, string scope, string ruleId, string operationId)
             {
-                return operations.BeginRuleIdExecuteSingleSubscriptionAsync(ruleId, overrideParameter).GetAwaiter().GetResult();
+                return operations.OperationResultsAsync(scope, ruleId, operationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Execute a security GovernanceRule on the given subscription.
+            /// Get governance rules long run operation result for the requested scope by
+            /// ruleId and operationId
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
-            /// <param name='overrideParameter'>
-            /// Describe if governance rule should be override
+            /// <param name='ruleId'>
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
+            /// </param>
+            /// <param name='operationId'>
+            /// The governance rule long running operation unique key
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders> BeginRuleIdExecuteSingleSubscriptionAsync(this IGovernanceRulesOperations operations, string ruleId, bool? overrideParameter = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationResult1> OperationResultsAsync(this IGovernanceRulesOperations operations, string scope, string ruleId, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginRuleIdExecuteSingleSubscriptionWithHttpMessagesAsync(ruleId, overrideParameter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.OperationResultsWithHttpMessagesAsync(scope, ruleId, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a Governance rule over a given scope
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+            /// </param>
+            /// <param name='ruleId'>
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
+            /// </param>
+            public static GovernanceRulesDeleteHeaders BeginDelete(this IGovernanceRulesOperations operations, string scope, string ruleId)
+            {
+                return operations.BeginDeleteAsync(scope, ruleId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a Governance rule over a given scope
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+            /// </param>
+            /// <param name='ruleId'>
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GovernanceRulesDeleteHeaders> BeginDeleteAsync(this IGovernanceRulesOperations operations, string scope, string ruleId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(scope, ruleId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
             }
 
             /// <summary>
-            /// Execute a security GovernanceRule on the given security connector.
+            /// Execute a governance rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='securityConnectorName'>
-            /// The security connector name.
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
             /// </param>
             /// <param name='overrideParameter'>
             /// Describe if governance rule should be override
             /// </param>
-            public static GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders BeginRuleIdExecuteSingleSecurityConnector(this IGovernanceRulesOperations operations, string resourceGroupName, string securityConnectorName, string ruleId, bool? overrideParameter = default(bool?))
+            public static GovernanceRulesExecuteHeaders BeginExecute(this IGovernanceRulesOperations operations, string scope, string ruleId, bool? overrideParameter = default(bool?))
             {
-                return operations.BeginRuleIdExecuteSingleSecurityConnectorAsync(resourceGroupName, securityConnectorName, ruleId, overrideParameter).GetAwaiter().GetResult();
+                return operations.BeginExecuteAsync(scope, ruleId, overrideParameter).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Execute a security GovernanceRule on the given security connector.
+            /// Execute a governance rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='securityConnectorName'>
-            /// The security connector name.
+            /// <param name='scope'>
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='ruleId'>
-            /// The security GovernanceRule key - unique key for the standard
-            /// GovernanceRule
+            /// The governance rule key - unique key for the standard governance rule
+            /// (GUID)
             /// </param>
             /// <param name='overrideParameter'>
             /// Describe if governance rule should be override
@@ -320,11 +431,45 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders> BeginRuleIdExecuteSingleSecurityConnectorAsync(this IGovernanceRulesOperations operations, string resourceGroupName, string securityConnectorName, string ruleId, bool? overrideParameter = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GovernanceRulesExecuteHeaders> BeginExecuteAsync(this IGovernanceRulesOperations operations, string scope, string ruleId, bool? overrideParameter = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginRuleIdExecuteSingleSecurityConnectorWithHttpMessagesAsync(resourceGroupName, securityConnectorName, ruleId, overrideParameter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginExecuteWithHttpMessagesAsync(scope, ruleId, overrideParameter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Get a list of all relevant governance rules over a scope
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<GovernanceRule> ListNext(this IGovernanceRulesOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a list of all relevant governance rules over a scope
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<GovernanceRule>> ListNextAsync(this IGovernanceRulesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
                 }
             }
 

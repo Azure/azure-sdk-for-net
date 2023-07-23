@@ -22,15 +22,17 @@ namespace Microsoft.Azure.Management.Security
     public static partial class GovernanceAssignmentsOperationsExtensions
     {
             /// <summary>
-            /// Get security governanceAssignments on all your resources inside a scope
+            /// Get governance assignments on all of your resources inside a scope
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='assessmentName'>
             /// The Assessment Key - Unique key for the assessment type
@@ -41,15 +43,17 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Get security governanceAssignments on all your resources inside a scope
+            /// Get governance assignments on all of your resources inside a scope
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='assessmentName'>
             /// The Assessment Key - Unique key for the assessment type
@@ -73,15 +77,17 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='assessmentName'>
             /// The Assessment Key - Unique key for the assessment type
             /// </param>
             /// <param name='assignmentKey'>
-            /// The security governance assignment key - the assessment key of the required
+            /// The governance assignment key - the assessment key of the required
             /// governance assignment
             /// </param>
             public static GovernanceAssignment Get(this IGovernanceAssignmentsOperations operations, string scope, string assessmentName, string assignmentKey)
@@ -97,15 +103,17 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='assessmentName'>
             /// The Assessment Key - Unique key for the assessment type
             /// </param>
             /// <param name='assignmentKey'>
-            /// The security governance assignment key - the assessment key of the required
+            /// The governance assignment key - the assessment key of the required
             /// governance assignment
             /// </param>
             /// <param name='cancellationToken'>
@@ -120,26 +128,27 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Creates or update a security GovernanceAssignment on the given
-            /// subscription.
+            /// Creates or updates a governance assignment on the given subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='assessmentName'>
             /// The Assessment Key - Unique key for the assessment type
             /// </param>
             /// <param name='assignmentKey'>
-            /// The security governance assignment key - the assessment key of the required
+            /// The governance assignment key - the assessment key of the required
             /// governance assignment
             /// </param>
             /// <param name='governanceAssignment'>
-            /// GovernanceAssignment over a subscription scope
+            /// Governance assignment over a subscription scope
             /// </param>
             public static GovernanceAssignment CreateOrUpdate(this IGovernanceAssignmentsOperations operations, string scope, string assessmentName, string assignmentKey, GovernanceAssignment governanceAssignment)
             {
@@ -147,26 +156,27 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Creates or update a security GovernanceAssignment on the given
-            /// subscription.
+            /// Creates or updates a governance assignment on the given subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='assessmentName'>
             /// The Assessment Key - Unique key for the assessment type
             /// </param>
             /// <param name='assignmentKey'>
-            /// The security governance assignment key - the assessment key of the required
+            /// The governance assignment key - the assessment key of the required
             /// governance assignment
             /// </param>
             /// <param name='governanceAssignment'>
-            /// GovernanceAssignment over a subscription scope
+            /// Governance assignment over a subscription scope
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -186,15 +196,17 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='assessmentName'>
             /// The Assessment Key - Unique key for the assessment type
             /// </param>
             /// <param name='assignmentKey'>
-            /// The security governance assignment key - the assessment key of the required
+            /// The governance assignment key - the assessment key of the required
             /// governance assignment
             /// </param>
             public static void Delete(this IGovernanceAssignmentsOperations operations, string scope, string assessmentName, string assignmentKey)
@@ -209,15 +221,17 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='assessmentName'>
             /// The Assessment Key - Unique key for the assessment type
             /// </param>
             /// <param name='assignmentKey'>
-            /// The security governance assignment key - the assessment key of the required
+            /// The governance assignment key - the assessment key of the required
             /// governance assignment
             /// </param>
             /// <param name='cancellationToken'>
@@ -229,7 +243,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Get security governanceAssignments on all your resources inside a scope
+            /// Get governance assignments on all of your resources inside a scope
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -243,7 +257,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Get security governanceAssignments on all your resources inside a scope
+            /// Get governance assignments on all of your resources inside a scope
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

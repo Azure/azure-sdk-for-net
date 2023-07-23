@@ -28,9 +28,11 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             public static IPage<Compliance> List(this ICompliancesOperations operations, string scope)
             {
@@ -44,9 +46,11 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -66,9 +70,11 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='complianceName'>
             /// name of the Compliance
@@ -85,9 +91,11 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName).
+            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+            /// or management group
+            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+            /// connector scope: (format:
+            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
             /// </param>
             /// <param name='complianceName'>
             /// name of the Compliance

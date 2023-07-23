@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// days after upgrading to payed offerings.</param>
         /// <param name="environmentName">The multi cloud resource's cloud
         /// name. Possible values include: 'Azure', 'AWS', 'GCP', 'Github',
-        /// 'AzureDevOps'</param>
+        /// 'AzureDevOps', 'GitLab'</param>
         /// <param name="offerings">A collection of offerings for the security
         /// connector.</param>
         /// <param name="environmentData">The security connector environment
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// Gets or sets the multi cloud resource's cloud name. Possible values
-        /// include: 'Azure', 'AWS', 'GCP', 'Github', 'AzureDevOps'
+        /// include: 'Azure', 'AWS', 'GCP', 'Github', 'AzureDevOps', 'GitLab'
         /// </summary>
         [JsonProperty(PropertyName = "properties.environmentName")]
         public string EnvironmentName { get; set; }

@@ -73,17 +73,8 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='pricingName'>
         /// name of the pricing configuration
         /// </param>
-        /// <param name='pricingTier'>
-        /// The pricing tier value. Microsoft Defender for Cloud is provided in
-        /// two pricing tiers: free and standard, with the standard tier
-        /// available with a trial period. The standard tier offers advanced
-        /// security capabilities, while the free tier offers basic security
-        /// features. Possible values include: 'Free', 'Standard'
-        /// </param>
-        /// <param name='subPlan'>
-        /// The sub-plan selected for a Standard pricing configuration, when
-        /// more than one sub-plan is available. Each sub-plan enables a set of
-        /// security features. When not specified, full plan is applied.
+        /// <param name='pricing'>
+        /// Pricing object
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -100,6 +91,6 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Pricing>> UpdateWithHttpMessagesAsync(string pricingName, string pricingTier, string subPlan = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Pricing>> UpdateWithHttpMessagesAsync(string pricingName, Pricing pricing, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

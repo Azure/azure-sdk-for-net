@@ -28,9 +28,11 @@ namespace Microsoft.Azure.Management.Security
         /// subscription scope
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management
-        /// group (/providers/Microsoft.Management/managementGroups/mgName).
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -53,9 +55,11 @@ namespace Microsoft.Azure.Management.Security
         /// scope
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management
-        /// group (/providers/Microsoft.Management/managementGroups/mgName).
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </param>
         /// <param name='assessmentName'>
         /// The Assessment Key - Unique key for the assessment type
@@ -80,9 +84,11 @@ namespace Microsoft.Azure.Management.Security
         /// Get a security sub-assessment on your scanned resource
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management
-        /// group (/providers/Microsoft.Management/managementGroups/mgName).
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </param>
         /// <param name='assessmentName'>
         /// The Assessment Key - Unique key for the assessment type

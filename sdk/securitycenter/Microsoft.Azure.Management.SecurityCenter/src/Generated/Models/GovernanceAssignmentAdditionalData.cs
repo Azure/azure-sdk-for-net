@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Describe the additional data of GovernanceAssignment - optional
+    /// Describe the additional data of governance assignment - optional
     /// </summary>
     public partial class GovernanceAssignmentAdditionalData
     {
@@ -33,11 +33,11 @@ namespace Microsoft.Azure.Management.Security.Models
         /// GovernanceAssignmentAdditionalData class.
         /// </summary>
         /// <param name="ticketNumber">Ticket number associated with this
-        /// GovernanceAssignment</param>
+        /// governance assignment</param>
         /// <param name="ticketLink">Ticket link associated with this
-        /// GovernanceAssignment - for example: https://snow.com</param>
+        /// governance assignment - for example: https://snow.com</param>
         /// <param name="ticketStatus">The ticket status associated with this
-        /// GovernanceAssignment - for example: Active</param>
+        /// governance assignment - for example: Active</param>
         public GovernanceAssignmentAdditionalData(int? ticketNumber = default(int?), string ticketLink = default(string), string ticketStatus = default(string))
         {
             TicketNumber = ticketNumber;
@@ -52,22 +52,22 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets ticket number associated with this
-        /// GovernanceAssignment
+        /// Gets or sets ticket number associated with this governance
+        /// assignment
         /// </summary>
         [JsonProperty(PropertyName = "ticketNumber")]
         public int? TicketNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets ticket link associated with this GovernanceAssignment
+        /// Gets or sets ticket link associated with this governance assignment
         /// - for example: https://snow.com
         /// </summary>
         [JsonProperty(PropertyName = "ticketLink")]
         public string TicketLink { get; set; }
 
         /// <summary>
-        /// Gets or sets the ticket status associated with this
-        /// GovernanceAssignment - for example: Active
+        /// Gets or sets the ticket status associated with this governance
+        /// assignment - for example: Active
         /// </summary>
         [JsonProperty(PropertyName = "ticketStatus")]
         public string TicketStatus { get; set; }

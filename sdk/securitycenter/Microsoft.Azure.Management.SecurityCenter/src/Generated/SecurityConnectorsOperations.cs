@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            string apiVersion = "2022-08-01-preview";
+            string apiVersion = "2023-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            string apiVersion = "2022-08-01-preview";
+            string apiVersion = "2023-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -512,7 +512,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "securityConnectorName");
             }
-            string apiVersion = "2022-08-01-preview";
+            string apiVersion = "2023-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -738,7 +738,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "securityConnector");
             }
-            string apiVersion = "2022-08-01-preview";
+            string apiVersion = "2023-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -987,7 +987,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "securityConnector");
             }
-            string apiVersion = "2022-08-01-preview";
+            string apiVersion = "2023-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1208,7 +1208,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "securityConnectorName");
             }
-            string apiVersion = "2022-08-01-preview";
+            string apiVersion = "2023-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

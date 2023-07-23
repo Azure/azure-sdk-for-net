@@ -11,10 +11,12 @@
 namespace Microsoft.Azure.Management.Security.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The aws connector environment data
+    /// The AWS connector environment data
     /// </summary>
     [Newtonsoft.Json.JsonObject("AwsAccount")]
     public partial class AwsEnvironmentData : EnvironmentData
@@ -32,9 +34,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         /// <param name="organizationalData">The AWS account's organizational
         /// data</param>
-        public AwsEnvironmentData(AwsOrganizationalData organizationalData = default(AwsOrganizationalData))
+        /// <param name="regions">list of regions to scan</param>
+        /// <param name="accountName">The AWS account name</param>
+        public AwsEnvironmentData(AwsOrganizationalData organizationalData = default(AwsOrganizationalData), IList<string> regions = default(IList<string>), string accountName = default(string))
         {
             OrganizationalData = organizationalData;
+            Regions = regions;
+            AccountName = accountName;
             CustomInit();
         }
 
@@ -48,6 +54,18 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "organizationalData")]
         public AwsOrganizationalData OrganizationalData { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of regions to scan
+        /// </summary>
+        [JsonProperty(PropertyName = "regions")]
+        public IList<string> Regions { get; set; }
+
+        /// <summary>
+        /// Gets the AWS account name
+        /// </summary>
+        [JsonProperty(PropertyName = "accountName")]
+        public string AccountName { get; private set; }
 
     }
 }

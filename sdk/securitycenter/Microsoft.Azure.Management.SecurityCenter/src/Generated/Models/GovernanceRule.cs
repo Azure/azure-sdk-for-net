@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Security GovernanceRule over a given scope
+    /// Governance rule over a given scope
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class GovernanceRule : Resource
@@ -34,22 +34,24 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the GovernanceRule class.
         /// </summary>
-        /// <param name="displayName">display name of the
-        /// governanceRule</param>
+        /// <param name="displayName">Display name of the governance
+        /// rule</param>
         /// <param name="rulePriority">The governance rule priority, priority
-        /// to the lower number. Rules with the same priority on the same
-        /// subscription will not be allowed</param>
+        /// to the lower number. Rules with the same priority on the same scope
+        /// will not be allowed</param>
         /// <param name="ruleType">The rule type of the governance rule,
         /// defines the source of the rule e.g. Integrated. Possible values
         /// include: 'Integrated', 'ServiceNow'</param>
         /// <param name="conditionSets">The governance rule conditionSets - see
         /// examples</param>
-        /// <param name="ownerSource">The Owner source for the governance rule
+        /// <param name="ownerSource">The owner source for the governance rule
         /// - e.g. Manually by user@contoso.com - see example</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="description">description of the governanceRule</param>
+        /// <param name="tenantId">The tenantId (GUID)</param>
+        /// <param name="description">Description of the governance
+        /// rule</param>
         /// <param name="remediationTimeframe">Governance rule remediation
         /// timeframe - this is the time that will affect on the grace-period
         /// duration e.g. 7.00:00:00 - means 7 days</param>
@@ -57,12 +59,18 @@ namespace Microsoft.Azure.Management.Security.Models
         /// on the governance rule</param>
         /// <param name="isDisabled">Defines whether the rule is
         /// active/inactive</param>
+        /// <param name="excludedScopes">Excluded scopes, filter out the
+        /// descendants of the scope (on management scopes)</param>
+        /// <param name="includeMemberScopes">Defines whether the rule is
+        /// management scope rule (master connector as a single scope or
+        /// management scope)</param>
         /// <param name="governanceEmailNotification">The email notifications
         /// settings for the governance rule, states whether to disable
         /// notifications for mangers and owners</param>
-        public GovernanceRule(string displayName, int rulePriority, string ruleType, IList<object> conditionSets, GovernanceRuleOwnerSource ownerSource, string id = default(string), string name = default(string), string type = default(string), string description = default(string), string remediationTimeframe = default(string), bool? isGracePeriod = default(bool?), bool? isDisabled = default(bool?), GovernanceRuleEmailNotification governanceEmailNotification = default(GovernanceRuleEmailNotification))
+        public GovernanceRule(string displayName, int rulePriority, string ruleType, IList<object> conditionSets, GovernanceRuleOwnerSource ownerSource, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string description = default(string), string remediationTimeframe = default(string), bool? isGracePeriod = default(bool?), bool? isDisabled = default(bool?), IList<string> excludedScopes = default(IList<string>), bool? includeMemberScopes = default(bool?), GovernanceRuleEmailNotification governanceEmailNotification = default(GovernanceRuleEmailNotification), GovernanceRuleMetadata metadata = default(GovernanceRuleMetadata))
             : base(id, name, type)
         {
+            TenantId = tenantId;
             DisplayName = displayName;
             Description = description;
             RemediationTimeframe = remediationTimeframe;
@@ -70,9 +78,12 @@ namespace Microsoft.Azure.Management.Security.Models
             RulePriority = rulePriority;
             IsDisabled = isDisabled;
             RuleType = ruleType;
+            ExcludedScopes = excludedScopes;
             ConditionSets = conditionSets;
+            IncludeMemberScopes = includeMemberScopes;
             OwnerSource = ownerSource;
             GovernanceEmailNotification = governanceEmailNotification;
+            Metadata = metadata;
             CustomInit();
         }
         /// <summary>
@@ -89,13 +100,19 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets display name of the governanceRule
+        /// Gets the tenantId (GUID)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tenantId")]
+        public string TenantId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets display name of the governance rule
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets description of the governanceRule
+        /// Gets or sets description of the governance rule
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
@@ -117,8 +134,8 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// Gets or sets the governance rule priority, priority to the lower
-        /// number. Rules with the same priority on the same subscription will
-        /// not be allowed
+        /// number. Rules with the same priority on the same scope will not be
+        /// allowed
         /// </summary>
         [JsonProperty(PropertyName = "properties.rulePriority")]
         public int RulePriority { get; set; }
@@ -138,13 +155,27 @@ namespace Microsoft.Azure.Management.Security.Models
         public string RuleType { get; set; }
 
         /// <summary>
+        /// Gets or sets excluded scopes, filter out the descendants of the
+        /// scope (on management scopes)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.excludedScopes")]
+        public IList<string> ExcludedScopes { get; set; }
+
+        /// <summary>
         /// Gets or sets the governance rule conditionSets - see examples
         /// </summary>
         [JsonProperty(PropertyName = "properties.conditionSets")]
         public IList<object> ConditionSets { get; set; }
 
         /// <summary>
-        /// Gets or sets the Owner source for the governance rule - e.g.
+        /// Gets or sets defines whether the rule is management scope rule
+        /// (master connector as a single scope or management scope)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.includeMemberScopes")]
+        public bool? IncludeMemberScopes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the owner source for the governance rule - e.g.
         /// Manually by user@contoso.com - see example
         /// </summary>
         [JsonProperty(PropertyName = "properties.ownerSource")]
@@ -157,6 +188,11 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.governanceEmailNotification")]
         public GovernanceRuleEmailNotification GovernanceEmailNotification { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.metadata")]
+        public GovernanceRuleMetadata Metadata { get; set; }
 
         /// <summary>
         /// The governance rule source, what the rule affects, e.g. Assessments
@@ -187,6 +223,13 @@ namespace Microsoft.Azure.Management.Security.Models
             if (OwnerSource == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "OwnerSource");
+            }
+            if (RemediationTimeframe != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(RemediationTimeframe, "^[0-9]+\\.[0-9]{2}:[0-9]{2}:[0-9]{2}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "RemediationTimeframe", "^[0-9]+\\.[0-9]{2}:[0-9]{2}:[0-9]{2}$");
+                }
             }
             if (RulePriority > 1000)
             {

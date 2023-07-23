@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// The awsOrganization data for the member account
+    /// The AWS organization data for the member account
     /// </summary>
     [Newtonsoft.Json.JsonObject("Member")]
     public partial class AwsOrganizationalDataMember : AwsOrganizationalData

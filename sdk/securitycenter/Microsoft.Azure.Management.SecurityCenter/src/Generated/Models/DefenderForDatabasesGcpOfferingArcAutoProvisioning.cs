@@ -32,9 +32,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// DefenderForDatabasesGcpOfferingArcAutoProvisioning class.
         /// </summary>
         /// <param name="enabled">Is arc auto provisioning enabled</param>
-        public DefenderForDatabasesGcpOfferingArcAutoProvisioning(bool? enabled = default(bool?))
+        /// <param name="configuration">Configuration for servers Arc auto
+        /// provisioning</param>
+        public DefenderForDatabasesGcpOfferingArcAutoProvisioning(bool? enabled = default(bool?), DefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration configuration = default(DefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration))
         {
             Enabled = enabled;
+            Configuration = configuration;
             CustomInit();
         }
 
@@ -48,6 +51,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets configuration for servers Arc auto provisioning
+        /// </summary>
+        [JsonProperty(PropertyName = "configuration")]
+        public DefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration Configuration { get; set; }
 
     }
 }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         /// <param name="cloudRoleArn">The cloud role ARN in AWS for this
         /// feature</param>
-        /// <param name="scanningMode">The scanning mode for the vm scan.
+        /// <param name="scanningMode">The scanning mode for the VM scan.
         /// Possible values include: 'Default'</param>
         /// <param name="exclusionTags">VM tags that indicates that VM should
         /// not be scanned</param>
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Security.Models
         public string CloudRoleArn { get; set; }
 
         /// <summary>
-        /// Gets or sets the scanning mode for the vm scan. Possible values
+        /// Gets or sets the scanning mode for the VM scan. Possible values
         /// include: 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "scanningMode")]

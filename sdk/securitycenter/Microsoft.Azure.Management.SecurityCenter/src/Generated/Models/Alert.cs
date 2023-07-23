@@ -84,8 +84,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="timeGeneratedUtc">The UTC time the alert was generated
         /// in ISO8601 format.</param>
         /// <param name="productName">The name of the product which published
-        /// this alert (Azure Security Center, Azure ATP, Microsoft Defender
-        /// ATP, O365 ATP, MCAS, and so on).</param>
+        /// this alert (Microsoft Sentinel, Microsoft Defender for Identity,
+        /// Microsoft Defender for Endpoint, Microsoft Defender for Office,
+        /// Microsoft Defender for Cloud Apps, and so on).</param>
         /// <param name="processingEndTimeUtc">The UTC processing end time of
         /// the alert in ISO8601 format.</param>
         /// <param name="entities">A list of entities related to the
@@ -264,9 +265,10 @@ namespace Microsoft.Azure.Management.Security.Models
         public System.DateTime? TimeGeneratedUtc { get; private set; }
 
         /// <summary>
-        /// Gets the name of the product which published this alert (Azure
-        /// Security Center, Azure ATP, Microsoft Defender ATP, O365 ATP, MCAS,
-        /// and so on).
+        /// Gets the name of the product which published this alert (Microsoft
+        /// Sentinel, Microsoft Defender for Identity, Microsoft Defender for
+        /// Endpoint, Microsoft Defender for Office, Microsoft Defender for
+        /// Cloud Apps, and so on).
         /// </summary>
         [JsonProperty(PropertyName = "properties.productName")]
         public string ProductName { get; private set; }

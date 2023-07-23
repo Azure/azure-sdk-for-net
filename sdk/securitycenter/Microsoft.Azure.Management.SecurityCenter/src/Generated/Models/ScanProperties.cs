@@ -53,7 +53,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// assessed.</param>
         /// <param name="isBaselineApplied">Baseline created for this database,
         /// and has one or more rules.</param>
-        public ScanProperties(string triggerType = default(string), string state = default(string), string server = default(string), string database = default(string), string sqlVersion = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? highSeverityFailedRulesCount = default(int?), int? mediumSeverityFailedRulesCount = default(int?), int? lowSeverityFailedRulesCount = default(int?), int? totalPassedRulesCount = default(int?), int? totalFailedRulesCount = default(int?), int? totalRulesCount = default(int?), bool? isBaselineApplied = default(bool?))
+        /// <param name="lastScanTime">Last scan time.</param>
+        public ScanProperties(string triggerType = default(string), string state = default(string), string server = default(string), string database = default(string), string sqlVersion = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? highSeverityFailedRulesCount = default(int?), int? mediumSeverityFailedRulesCount = default(int?), int? lowSeverityFailedRulesCount = default(int?), int? totalPassedRulesCount = default(int?), int? totalFailedRulesCount = default(int?), int? totalRulesCount = default(int?), bool? isBaselineApplied = default(bool?), System.DateTime? lastScanTime = default(System.DateTime?))
         {
             TriggerType = triggerType;
             State = state;
@@ -69,6 +70,7 @@ namespace Microsoft.Azure.Management.Security.Models
             TotalFailedRulesCount = totalFailedRulesCount;
             TotalRulesCount = totalRulesCount;
             IsBaselineApplied = isBaselineApplied;
+            LastScanTime = lastScanTime;
             CustomInit();
         }
 
@@ -162,6 +164,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "isBaselineApplied")]
         public bool? IsBaselineApplied { get; set; }
+
+        /// <summary>
+        /// Gets or sets last scan time.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastScanTime")]
+        public System.DateTime? LastScanTime { get; set; }
 
     }
 }

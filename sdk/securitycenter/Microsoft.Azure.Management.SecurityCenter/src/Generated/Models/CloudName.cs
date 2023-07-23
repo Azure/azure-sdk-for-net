@@ -21,5 +21,6 @@ namespace Microsoft.Azure.Management.Security.Models
         public const string GCP = "GCP";
         public const string Github = "Github";
         public const string AzureDevOps = "AzureDevOps";
+        public const string GitLab = "GitLab";
     }
 }

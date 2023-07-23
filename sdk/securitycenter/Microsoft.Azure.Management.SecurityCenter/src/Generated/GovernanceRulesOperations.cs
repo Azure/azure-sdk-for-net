@@ -51,11 +51,14 @@ namespace Microsoft.Azure.Management.Security
         public SecurityCenterClient Client { get; private set; }
 
         /// <summary>
-        /// Get a specific governanceRule for the requested scope by ruleId
+        /// Get a list of all relevant governance rules over a scope
         /// </summary>
-        /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -78,18 +81,199 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<GovernanceRule>> GetWithHttpMessagesAsync(string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<GovernanceRule>>> ListWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (scope == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            if (Client.SubscriptionId != null)
+            string apiVersion = "2022-01-01-preview";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("scope", scope);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Security/governanceRules").ToString();
+            _url = _url.Replace("{scope}", scope);
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
+                    _httpRequest.Headers.Remove("accept-language");
                 }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<GovernanceRule>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<GovernanceRule>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Get a specific governance rule for the requested scope by ruleId
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
+        /// <param name='ruleId'>
+        /// The governance rule key - unique key for the standard governance rule
+        /// (GUID)
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<GovernanceRule>> GetWithHttpMessagesAsync(string scope, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (scope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
             if (ruleId == null)
             {
@@ -104,14 +288,15 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("scope", scope);
                 tracingParameters.Add("ruleId", ruleId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Security/governanceRules/{ruleId}").ToString();
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{ruleId}", System.Uri.EscapeDataString(ruleId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -244,14 +429,21 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Creates or update a security GovernanceRule on the given subscription.
+        /// Creates or updates a governance rule over a given scope
         /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
         /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
+        /// The governance rule key - unique key for the standard governance rule
+        /// (GUID)
         /// </param>
         /// <param name='governanceRule'>
-        /// GovernanceRule over a subscription scope
+        /// Governance rule over a given scope
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -274,18 +466,11 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<GovernanceRule>> CreateOrUpdateWithHttpMessagesAsync(string ruleId, GovernanceRule governanceRule, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GovernanceRule>> CreateOrUpdateWithHttpMessagesAsync(string scope, string ruleId, GovernanceRule governanceRule, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (scope == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.SubscriptionId != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
             if (ruleId == null)
             {
@@ -308,6 +493,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("scope", scope);
                 tracingParameters.Add("ruleId", ruleId);
                 tracingParameters.Add("governanceRule", governanceRule);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -315,8 +501,8 @@ namespace Microsoft.Azure.Management.Security
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Security/governanceRules/{ruleId}").ToString();
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{ruleId}", System.Uri.EscapeDataString(ruleId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -473,11 +659,292 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Delete a GovernanceRule over a given scope
+        /// Delete a Governance rule over a given scope
         /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
         /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
+        /// The governance rule key - unique key for the standard governance rule
+        /// (GUID)
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationHeaderResponse<GovernanceRulesDeleteHeaders>> DeleteWithHttpMessagesAsync(string scope, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationHeaderResponse<GovernanceRulesDeleteHeaders> _response = await BeginDeleteWithHttpMessagesAsync(scope, ruleId, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Execute a governance rule
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
+        /// <param name='ruleId'>
+        /// The governance rule key - unique key for the standard governance rule
+        /// (GUID)
+        /// </param>
+        /// <param name='overrideParameter'>
+        /// Describe if governance rule should be override
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationHeaderResponse<GovernanceRulesExecuteHeaders>> ExecuteWithHttpMessagesAsync(string scope, string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationHeaderResponse<GovernanceRulesExecuteHeaders> _response = await BeginExecuteWithHttpMessagesAsync(scope, ruleId, overrideParameter, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get governance rules long run operation result for the requested scope by
+        /// ruleId and operationId
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
+        /// <param name='ruleId'>
+        /// The governance rule key - unique key for the standard governance rule
+        /// (GUID)
+        /// </param>
+        /// <param name='operationId'>
+        /// The governance rule long running operation unique key
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<OperationResult1,GovernanceRulesOperationResultsHeaders>> OperationResultsWithHttpMessagesAsync(string scope, string ruleId, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (scope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+            }
+            if (ruleId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ruleId");
+            }
+            if (operationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
+            }
+            string apiVersion = "2022-01-01-preview";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("scope", scope);
+                tracingParameters.Add("ruleId", ruleId);
+                tracingParameters.Add("operationId", operationId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "OperationResults", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Security/governanceRules/{ruleId}/operationResults/{operationId}").ToString();
+            _url = _url.Replace("{scope}", scope);
+            _url = _url.Replace("{ruleId}", System.Uri.EscapeDataString(ruleId));
+            _url = _url.Replace("{operationId}", System.Uri.EscapeDataString(operationId));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<OperationResult1,GovernanceRulesOperationResultsHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationResult1>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GovernanceRulesOperationResultsHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Delete a Governance rule over a given scope
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
+        /// <param name='ruleId'>
+        /// The governance rule key - unique key for the standard governance rule
+        /// (GUID)
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -497,18 +964,11 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<GovernanceRulesDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string scope, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (scope == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.SubscriptionId != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
             if (ruleId == null)
             {
@@ -523,14 +983,15 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("scope", scope);
                 tracingParameters.Add("ruleId", ruleId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Security/governanceRules/{ruleId}").ToString();
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{ruleId}", System.Uri.EscapeDataString(ruleId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -595,7 +1056,7 @@ namespace Microsoft.Azure.Management.Security
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -630,12 +1091,25 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationHeaderResponse<GovernanceRulesDeleteHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GovernanceRulesDeleteHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -645,64 +1119,18 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Execute a security GovernanceRule on the given subscription.
+        /// Execute a governance rule
         /// </summary>
-        /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
-        /// </param>
-        /// <param name='overrideParameter'>
-        /// Describe if governance rule should be override
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders>> RuleIdExecuteSingleSubscriptionWithHttpMessagesAsync(string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders> _response = await BeginRuleIdExecuteSingleSubscriptionWithHttpMessagesAsync(ruleId, overrideParameter, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Execute a security GovernanceRule on the given security connector.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
-        /// </param>
-        /// <param name='securityConnectorName'>
-        /// The security connector name.
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </param>
         /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
-        /// </param>
-        /// <param name='overrideParameter'>
-        /// Describe if governance rule should be override
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders>> RuleIdExecuteSingleSecurityConnectorWithHttpMessagesAsync(string resourceGroupName, string securityConnectorName, string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders> _response = await BeginRuleIdExecuteSingleSecurityConnectorWithHttpMessagesAsync(resourceGroupName, securityConnectorName, ruleId, overrideParameter, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Execute a security GovernanceRule on the given subscription.
-        /// </summary>
-        /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
+        /// The governance rule key - unique key for the standard governance rule
+        /// (GUID)
         /// </param>
         /// <param name='overrideParameter'>
         /// Describe if governance rule should be override
@@ -725,18 +1153,11 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders>> BeginRuleIdExecuteSingleSubscriptionWithHttpMessagesAsync(string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<GovernanceRulesExecuteHeaders>> BeginExecuteWithHttpMessagesAsync(string scope, string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (scope == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.SubscriptionId != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
             if (ruleId == null)
             {
@@ -757,15 +1178,16 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("scope", scope);
                 tracingParameters.Add("ruleId", ruleId);
                 tracingParameters.Add("executeGovernanceRuleParams", executeGovernanceRuleParams);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginRuleIdExecuteSingleSubscription", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginExecute", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}/execute").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Security/governanceRules/{ruleId}/execute").ToString();
+            _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{ruleId}", System.Uri.EscapeDataString(ruleId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -871,7 +1293,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders>();
+            var _result = new AzureOperationHeaderResponse<GovernanceRulesExecuteHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -880,7 +1302,7 @@ namespace Microsoft.Azure.Management.Security
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GovernanceRulesExecuteHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -899,21 +1321,10 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Execute a security GovernanceRule on the given security connector.
+        /// Get a list of all relevant governance rules over a scope
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
-        /// </param>
-        /// <param name='securityConnectorName'>
-        /// The security connector name.
-        /// </param>
-        /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
-        /// </param>
-        /// <param name='overrideParameter'>
-        /// Describe if governance rule should be override
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -924,6 +1335,9 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -933,52 +1347,11 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders>> BeginRuleIdExecuteSingleSecurityConnectorWithHttpMessagesAsync(string resourceGroupName, string securityConnectorName, string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<GovernanceRule>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.SubscriptionId != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            if (securityConnectorName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "securityConnectorName");
-            }
-            if (ruleId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ruleId");
-            }
-            string apiVersion = "2022-01-01-preview";
-            ExecuteGovernanceRuleParams executeGovernanceRuleParams = default(ExecuteGovernanceRuleParams);
-            if (overrideParameter != null)
-            {
-                executeGovernanceRuleParams = new ExecuteGovernanceRuleParams();
-                executeGovernanceRuleParams.OverrideProperty = overrideParameter;
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -987,26 +1360,14 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("securityConnectorName", securityConnectorName);
-                tracingParameters.Add("ruleId", ruleId);
-                tracingParameters.Add("executeGovernanceRuleParams", executeGovernanceRuleParams);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginRuleIdExecuteSingleSecurityConnector", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/governanceRules/{ruleId}/execute").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{securityConnectorName}", System.Uri.EscapeDataString(securityConnectorName));
-            _url = _url.Replace("{ruleId}", System.Uri.EscapeDataString(ruleId));
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -1014,7 +1375,7 @@ namespace Microsoft.Azure.Management.Security
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -1045,12 +1406,6 @@ namespace Microsoft.Azure.Management.Security
 
             // Serialize Request
             string _requestContent = null;
-            if(executeGovernanceRuleParams != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(executeGovernanceRuleParams, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -1071,7 +1426,7 @@ namespace Microsoft.Azure.Management.Security
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1106,25 +1461,30 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders>();
+            var _result = new AzureOperationResponse<IPage<GovernanceRule>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            try
+            // Deserialize Response
+            if ((int)_statusCode == 200)
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
                 {
-                    _httpResponse.Dispose();
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<GovernanceRule>>(_responseContent, Client.DeserializationSettings);
                 }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {

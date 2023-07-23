@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// The CSPM P1 for Aws offering
+    /// The CSPM P1 for AWS offering
     /// </summary>
     [Newtonsoft.Json.JsonObject("DefenderCspmAws")]
     public partial class DefenderCspmAwsOffering : CloudOffering
@@ -33,10 +33,16 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="description">The offering description.</param>
         /// <param name="vmScanners">The Microsoft Defender for Server VM
         /// scanning configuration</param>
-        public DefenderCspmAwsOffering(string description = default(string), DefenderCspmAwsOfferingVmScanners vmScanners = default(DefenderCspmAwsOfferingVmScanners))
+        /// <param name="dataSensitivityDiscovery">The Microsoft Defender Data
+        /// Sensitivity discovery configuration</param>
+        /// <param name="databasesDspm">The databases DSPM
+        /// configuration</param>
+        public DefenderCspmAwsOffering(string description = default(string), DefenderCspmAwsOfferingVmScanners vmScanners = default(DefenderCspmAwsOfferingVmScanners), DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default(DefenderCspmAwsOfferingDataSensitivityDiscovery), DefenderCspmAwsOfferingDatabasesDspm databasesDspm = default(DefenderCspmAwsOfferingDatabasesDspm))
             : base(description)
         {
             VmScanners = vmScanners;
+            DataSensitivityDiscovery = dataSensitivityDiscovery;
+            DatabasesDspm = databasesDspm;
             CustomInit();
         }
 
@@ -51,6 +57,19 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmScanners")]
         public DefenderCspmAwsOfferingVmScanners VmScanners { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Microsoft Defender Data Sensitivity discovery
+        /// configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "dataSensitivityDiscovery")]
+        public DefenderCspmAwsOfferingDataSensitivityDiscovery DataSensitivityDiscovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets the databases DSPM configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "databasesDspm")]
+        public DefenderCspmAwsOfferingDatabasesDspm DatabasesDspm { get; set; }
 
     }
 }

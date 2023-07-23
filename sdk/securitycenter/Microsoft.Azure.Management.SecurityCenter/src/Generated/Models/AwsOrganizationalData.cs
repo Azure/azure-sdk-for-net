@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// The awsOrganization data
+    /// The AWS organization data
     /// </summary>
     public partial class AwsOrganizationalData
     {

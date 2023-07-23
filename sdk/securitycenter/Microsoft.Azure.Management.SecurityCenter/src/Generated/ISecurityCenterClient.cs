@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.Security
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// API spec for Microsoft.Security (Azure Security Center) resource
@@ -42,15 +46,15 @@ namespace Microsoft.Azure.Management.Security
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Azure subscription ID
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The location where ASC stores the data of the subscription. can be
         /// retrieved from Get locations
         /// </summary>
         string AscLocation { get; set; }
+
+        /// <summary>
+        /// Azure subscription ID
+        /// </summary>
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -70,61 +74,6 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
-
-        /// <summary>
-        /// Gets the IMdeOnboardingsOperations.
-        /// </summary>
-        IMdeOnboardingsOperations MdeOnboardings { get; }
-
-        /// <summary>
-        /// Gets the ICustomAssessmentAutomationsOperations.
-        /// </summary>
-        ICustomAssessmentAutomationsOperations CustomAssessmentAutomations { get; }
-
-        /// <summary>
-        /// Gets the ICustomEntityStoreAssignmentsOperations.
-        /// </summary>
-        ICustomEntityStoreAssignmentsOperations CustomEntityStoreAssignments { get; }
-
-        /// <summary>
-        /// Gets the IComplianceResultsOperations.
-        /// </summary>
-        IComplianceResultsOperations ComplianceResults { get; }
-
-        /// <summary>
-        /// Gets the IPricingsOperations.
-        /// </summary>
-        IPricingsOperations Pricings { get; }
-
-        /// <summary>
-        /// Gets the IAdvancedThreatProtectionOperations.
-        /// </summary>
-        IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
-
-        /// <summary>
-        /// Gets the IDeviceSecurityGroupsOperations.
-        /// </summary>
-        IDeviceSecurityGroupsOperations DeviceSecurityGroups { get; }
-
-        /// <summary>
-        /// Gets the IIotSecuritySolutionOperations.
-        /// </summary>
-        IIotSecuritySolutionOperations IotSecuritySolution { get; }
-
-        /// <summary>
-        /// Gets the IIotSecuritySolutionAnalyticsOperations.
-        /// </summary>
-        IIotSecuritySolutionAnalyticsOperations IotSecuritySolutionAnalytics { get; }
-
-        /// <summary>
-        /// Gets the IIotSecuritySolutionsAnalyticsAggregatedAlertOperations.
-        /// </summary>
-        IIotSecuritySolutionsAnalyticsAggregatedAlertOperations IotSecuritySolutionsAnalyticsAggregatedAlert { get; }
-
-        /// <summary>
-        /// Gets the IIotSecuritySolutionsAnalyticsRecommendationOperations.
-        /// </summary>
-        IIotSecuritySolutionsAnalyticsRecommendationOperations IotSecuritySolutionsAnalyticsRecommendation { get; }
 
         /// <summary>
         /// Gets the ILocationsOperations.
@@ -157,14 +106,19 @@ namespace Microsoft.Azure.Management.Security
         IInformationProtectionPoliciesOperations InformationProtectionPolicies { get; }
 
         /// <summary>
-        /// Gets the ISecurityContactsOperations.
-        /// </summary>
-        ISecurityContactsOperations SecurityContacts { get; }
-
-        /// <summary>
         /// Gets the IWorkspaceSettingsOperations.
         /// </summary>
         IWorkspaceSettingsOperations WorkspaceSettings { get; }
+
+        /// <summary>
+        /// Gets the IAlertsSuppressionRulesOperations.
+        /// </summary>
+        IAlertsSuppressionRulesOperations AlertsSuppressionRules { get; }
+
+        /// <summary>
+        /// Gets the IAutomationsOperations.
+        /// </summary>
+        IAutomationsOperations Automations { get; }
 
         /// <summary>
         /// Gets the IRegulatoryComplianceStandardsOperations.
@@ -187,34 +141,159 @@ namespace Microsoft.Azure.Management.Security
         ISubAssessmentsOperations SubAssessments { get; }
 
         /// <summary>
-        /// Gets the IAutomationsOperations.
+        /// Gets the IConnectorsOperations.
         /// </summary>
-        IAutomationsOperations Automations { get; }
+        IConnectorsOperations Connectors { get; }
 
         /// <summary>
-        /// Gets the IAlertsSuppressionRulesOperations.
+        /// Gets the ISecurityContactsOperations.
         /// </summary>
-        IAlertsSuppressionRulesOperations AlertsSuppressionRules { get; }
+        ISecurityContactsOperations SecurityContacts { get; }
 
         /// <summary>
-        /// Gets the IServerVulnerabilityAssessmentOperations.
+        /// Gets the IIngestionSettingsOperations.
         /// </summary>
-        IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; }
+        IIngestionSettingsOperations IngestionSettings { get; }
 
         /// <summary>
-        /// Gets the IAssessmentsMetadataOperations.
+        /// Gets the ISoftwareInventoriesOperations.
         /// </summary>
-        IAssessmentsMetadataOperations AssessmentsMetadata { get; }
+        ISoftwareInventoriesOperations SoftwareInventories { get; }
 
         /// <summary>
-        /// Gets the IAssessmentsOperations.
+        /// Gets the ICustomAssessmentAutomationsOperations.
         /// </summary>
-        IAssessmentsOperations Assessments { get; }
+        ICustomAssessmentAutomationsOperations CustomAssessmentAutomations { get; }
 
         /// <summary>
-        /// Gets the IAdaptiveApplicationControlsOperations.
+        /// Gets the ICustomEntityStoreAssignmentsOperations.
         /// </summary>
-        IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; }
+        ICustomEntityStoreAssignmentsOperations CustomEntityStoreAssignments { get; }
+
+        /// <summary>
+        /// Gets the IMdeOnboardingsOperations.
+        /// </summary>
+        IMdeOnboardingsOperations MdeOnboardings { get; }
+
+        /// <summary>
+        /// Gets the IGovernanceAssignmentsOperations.
+        /// </summary>
+        IGovernanceAssignmentsOperations GovernanceAssignments { get; }
+
+        /// <summary>
+        /// Gets the IGovernanceRulesOperations.
+        /// </summary>
+        IGovernanceRulesOperations GovernanceRules { get; }
+
+        /// <summary>
+        /// Gets the IApplicationsOperations.
+        /// </summary>
+        IApplicationsOperations Applications { get; }
+
+        /// <summary>
+        /// Gets the IApplicationOperations.
+        /// </summary>
+        IApplicationOperations Application { get; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorApplicationsOperations.
+        /// </summary>
+        ISecurityConnectorApplicationsOperations SecurityConnectorApplications { get; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorApplicationOperations.
+        /// </summary>
+        ISecurityConnectorApplicationOperations SecurityConnectorApplication { get; }
+
+        /// <summary>
+        /// Gets the IAPICollectionOperations.
+        /// </summary>
+        IAPICollectionOperations APICollection { get; }
+
+        /// <summary>
+        /// Gets the IAPICollectionOnboardingOperations.
+        /// </summary>
+        IAPICollectionOnboardingOperations APICollectionOnboarding { get; }
+
+        /// <summary>
+        /// Gets the IAPICollectionOffboardingOperations.
+        /// </summary>
+        IAPICollectionOffboardingOperations APICollectionOffboarding { get; }
+
+        /// <summary>
+        /// Gets the IDefenderForStorageOperations.
+        /// </summary>
+        IDefenderForStorageOperations DefenderForStorage { get; }
+
+        /// <summary>
+        /// Gets the ISecurityOperatorsOperations.
+        /// </summary>
+        ISecurityOperatorsOperations SecurityOperators { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentBaselineRulesOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentBaselineRulesOperations SqlVulnerabilityAssessmentBaselineRules { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentScansOperations SqlVulnerabilityAssessmentScans { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScanResultsOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentScanResultsOperations SqlVulnerabilityAssessmentScanResults { get; }
+
+        /// <summary>
+        /// Gets the ISensitivitySettingsOperations.
+        /// </summary>
+        ISensitivitySettingsOperations SensitivitySettings { get; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorsOperations.
+        /// </summary>
+        ISecurityConnectorsOperations SecurityConnectors { get; }
+
+        /// <summary>
+        /// Gets the IHealthReportsOperations.
+        /// </summary>
+        IHealthReportsOperations HealthReports { get; }
+
+        /// <summary>
+        /// Gets the IComplianceResultsOperations.
+        /// </summary>
+        IComplianceResultsOperations ComplianceResults { get; }
+
+        /// <summary>
+        /// Gets the IAdvancedThreatProtectionOperations.
+        /// </summary>
+        IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
+
+        /// <summary>
+        /// Gets the IDeviceSecurityGroupsOperations.
+        /// </summary>
+        IDeviceSecurityGroupsOperations DeviceSecurityGroups { get; }
+
+        /// <summary>
+        /// Gets the IIotSecuritySolutionAnalyticsOperations.
+        /// </summary>
+        IIotSecuritySolutionAnalyticsOperations IotSecuritySolutionAnalytics { get; }
+
+        /// <summary>
+        /// Gets the IIotSecuritySolutionsAnalyticsAggregatedAlertOperations.
+        /// </summary>
+        IIotSecuritySolutionsAnalyticsAggregatedAlertOperations IotSecuritySolutionsAnalyticsAggregatedAlert { get; }
+
+        /// <summary>
+        /// Gets the IIotSecuritySolutionsAnalyticsRecommendationOperations.
+        /// </summary>
+        IIotSecuritySolutionsAnalyticsRecommendationOperations IotSecuritySolutionsAnalyticsRecommendation { get; }
+
+        /// <summary>
+        /// Gets the IIotSecuritySolutionOperations.
+        /// </summary>
+        IIotSecuritySolutionOperations IotSecuritySolution { get; }
 
         /// <summary>
         /// Gets the IAdaptiveNetworkHardeningsOperations.
@@ -227,14 +306,9 @@ namespace Microsoft.Azure.Management.Security
         IAllowedConnectionsOperations AllowedConnections { get; }
 
         /// <summary>
-        /// Gets the ITopologyOperations.
+        /// Gets the IAdaptiveApplicationControlsOperations.
         /// </summary>
-        ITopologyOperations Topology { get; }
-
-        /// <summary>
-        /// Gets the IJitNetworkAccessPoliciesOperations.
-        /// </summary>
-        IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
+        IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; }
 
         /// <summary>
         /// Gets the IDiscoveredSecuritySolutionsOperations.
@@ -242,14 +316,14 @@ namespace Microsoft.Azure.Management.Security
         IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; }
 
         /// <summary>
-        /// Gets the ISecuritySolutionsReferenceDataOperations.
-        /// </summary>
-        ISecuritySolutionsReferenceDataOperations SecuritySolutionsReferenceData { get; }
-
-        /// <summary>
         /// Gets the IExternalSecuritySolutionsOperations.
         /// </summary>
         IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; }
+
+        /// <summary>
+        /// Gets the IJitNetworkAccessPoliciesOperations.
+        /// </summary>
+        IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
 
         /// <summary>
         /// Gets the ISecureScoresOperations.
@@ -272,24 +346,29 @@ namespace Microsoft.Azure.Management.Security
         ISecuritySolutionsOperations SecuritySolutions { get; }
 
         /// <summary>
-        /// Gets the IConnectorsOperations.
+        /// Gets the ISecuritySolutionsReferenceDataOperations.
         /// </summary>
-        IConnectorsOperations Connectors { get; }
+        ISecuritySolutionsReferenceDataOperations SecuritySolutionsReferenceData { get; }
 
         /// <summary>
-        /// Gets the ISqlVulnerabilityAssessmentScansOperations.
+        /// Gets the IServerVulnerabilityAssessmentOperations.
         /// </summary>
-        ISqlVulnerabilityAssessmentScansOperations SqlVulnerabilityAssessmentScans { get; }
+        IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; }
 
         /// <summary>
-        /// Gets the ISqlVulnerabilityAssessmentScanResultsOperations.
+        /// Gets the ITopologyOperations.
         /// </summary>
-        ISqlVulnerabilityAssessmentScanResultsOperations SqlVulnerabilityAssessmentScanResults { get; }
+        ITopologyOperations Topology { get; }
 
         /// <summary>
-        /// Gets the ISqlVulnerabilityAssessmentBaselineRulesOperations.
+        /// Gets the IAssessmentsMetadataOperations.
         /// </summary>
-        ISqlVulnerabilityAssessmentBaselineRulesOperations SqlVulnerabilityAssessmentBaselineRules { get; }
+        IAssessmentsMetadataOperations AssessmentsMetadata { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsOperations.
+        /// </summary>
+        IAssessmentsOperations Assessments { get; }
 
         /// <summary>
         /// Gets the IAlertsOperations.
@@ -302,74 +381,39 @@ namespace Microsoft.Azure.Management.Security
         ISettingsOperations Settings { get; }
 
         /// <summary>
-        /// Gets the IIngestionSettingsOperations.
+        /// Gets the IPricingsOperations.
         /// </summary>
-        IIngestionSettingsOperations IngestionSettings { get; }
+        IPricingsOperations Pricings { get; }
 
         /// <summary>
-        /// Gets the ISoftwareInventoriesOperations.
+        /// Gets the IServerVulnerabilityAssessmentsSettingsOperations.
         /// </summary>
-        ISoftwareInventoriesOperations SoftwareInventories { get; }
+        IServerVulnerabilityAssessmentsSettingsOperations ServerVulnerabilityAssessmentsSettings { get; }
 
         /// <summary>
-        /// Gets the ISecurityConnectorsOperations.
+        /// Updates data sensitivity settings for sensitive data discovery
         /// </summary>
-        ISecurityConnectorsOperations SecurityConnectors { get; }
+        /// <param name='sensitivitySettings'>
+        /// The data sensitivity settings to update
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<GetSensitivitySettingsResponse>> UpdateSensitivitySettingsWithHttpMessagesAsync(UpdateSensitivitySettingsRequest sensitivitySettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Gets the IGovernanceRuleOperations.
+        /// Gets data sensitivity settings for sensitive data discovery
         /// </summary>
-        IGovernanceRuleOperations GovernanceRule { get; }
-
-        /// <summary>
-        /// Gets the IGovernanceRulesOperations.
-        /// </summary>
-        IGovernanceRulesOperations GovernanceRules { get; }
-
-        /// <summary>
-        /// Gets the ISecurityConnectorGovernanceRuleOperations.
-        /// </summary>
-        ISecurityConnectorGovernanceRuleOperations SecurityConnectorGovernanceRule { get; }
-
-        /// <summary>
-        /// Gets the ISecurityConnectorGovernanceRulesOperations.
-        /// </summary>
-        ISecurityConnectorGovernanceRulesOperations SecurityConnectorGovernanceRules { get; }
-
-        /// <summary>
-        /// Gets the ISubscriptionGovernanceRulesExecuteStatusOperations.
-        /// </summary>
-        ISubscriptionGovernanceRulesExecuteStatusOperations SubscriptionGovernanceRulesExecuteStatus { get; }
-
-        /// <summary>
-        /// Gets the ISecurityConnectorGovernanceRulesExecuteStatusOperations.
-        /// </summary>
-        ISecurityConnectorGovernanceRulesExecuteStatusOperations SecurityConnectorGovernanceRulesExecuteStatus { get; }
-
-        /// <summary>
-        /// Gets the IGovernanceAssignmentsOperations.
-        /// </summary>
-        IGovernanceAssignmentsOperations GovernanceAssignments { get; }
-
-        /// <summary>
-        /// Gets the IApplicationsOperations.
-        /// </summary>
-        IApplicationsOperations Applications { get; }
-
-        /// <summary>
-        /// Gets the IApplicationOperations.
-        /// </summary>
-        IApplicationOperations Application { get; }
-
-        /// <summary>
-        /// Gets the ISecurityConnectorApplicationsOperations.
-        /// </summary>
-        ISecurityConnectorApplicationsOperations SecurityConnectorApplications { get; }
-
-        /// <summary>
-        /// Gets the ISecurityConnectorApplicationOperations.
-        /// </summary>
-        ISecurityConnectorApplicationOperations SecurityConnectorApplication { get; }
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<GetSensitivitySettingsResponse>> GetSensitivitySettingsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

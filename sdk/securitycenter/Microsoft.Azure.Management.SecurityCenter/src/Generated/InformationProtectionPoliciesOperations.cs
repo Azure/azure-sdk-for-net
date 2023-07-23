@@ -54,9 +54,11 @@ namespace Microsoft.Azure.Management.Security
         /// Details of the information protection policy.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-        /// (/providers/Microsoft.Management/managementGroups/mgName).
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </param>
         /// <param name='informationProtectionPolicyName'>
         /// Name of the information protection policy. Possible values include:
@@ -246,9 +248,11 @@ namespace Microsoft.Azure.Management.Security
         /// Details of the information protection policy.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-        /// (/providers/Microsoft.Management/managementGroups/mgName).
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </param>
         /// <param name='informationProtectionPolicyName'>
         /// Name of the information protection policy. Possible values include:
@@ -475,9 +479,11 @@ namespace Microsoft.Azure.Management.Security
         /// Information protection policies of a specific management group.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
-        /// (/providers/Microsoft.Management/managementGroups/mgName).
+        /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
+        /// or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
+        /// connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// The governance email weekly notification configuration.
+    /// The governance email weekly notification configuration
     /// </summary>
     public partial class GovernanceRuleEmailNotification
     {
@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// class.
         /// </summary>
         /// <param name="disableManagerEmailNotification">Defines whether
-        /// manager email notifications are disabled.</param>
+        /// manager email notifications are disabled</param>
         /// <param name="disableOwnerEmailNotification">Defines whether owner
-        /// email notifications are disabled.</param>
+        /// email notifications are disabled</param>
         public GovernanceRuleEmailNotification(bool? disableManagerEmailNotification = default(bool?), bool? disableOwnerEmailNotification = default(bool?))
         {
             DisableManagerEmailNotification = disableManagerEmailNotification;
@@ -49,14 +49,13 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// Gets or sets defines whether manager email notifications are
-        /// disabled.
+        /// disabled
         /// </summary>
         [JsonProperty(PropertyName = "disableManagerEmailNotification")]
         public bool? DisableManagerEmailNotification { get; set; }
 
         /// <summary>
-        /// Gets or sets defines whether owner email notifications are
-        /// disabled.
+        /// Gets or sets defines whether owner email notifications are disabled
         /// </summary>
         [JsonProperty(PropertyName = "disableOwnerEmailNotification")]
         public bool? DisableOwnerEmailNotification { get; set; }

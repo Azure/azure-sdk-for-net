@@ -97,21 +97,12 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='pricingName'>
             /// name of the pricing configuration
             /// </param>
-            /// <param name='pricingTier'>
-            /// The pricing tier value. Microsoft Defender for Cloud is provided in two
-            /// pricing tiers: free and standard, with the standard tier available with a
-            /// trial period. The standard tier offers advanced security capabilities,
-            /// while the free tier offers basic security features. Possible values
-            /// include: 'Free', 'Standard'
+            /// <param name='pricing'>
+            /// Pricing object
             /// </param>
-            /// <param name='subPlan'>
-            /// The sub-plan selected for a Standard pricing configuration, when more than
-            /// one sub-plan is available. Each sub-plan enables a set of security
-            /// features. When not specified, full plan is applied.
-            /// </param>
-            public static Pricing Update(this IPricingsOperations operations, string pricingName, string pricingTier, string subPlan = default(string))
+            public static Pricing Update(this IPricingsOperations operations, string pricingName, Pricing pricing)
             {
-                return operations.UpdateAsync(pricingName, pricingTier, subPlan).GetAwaiter().GetResult();
+                return operations.UpdateAsync(pricingName, pricing).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -124,24 +115,15 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='pricingName'>
             /// name of the pricing configuration
             /// </param>
-            /// <param name='pricingTier'>
-            /// The pricing tier value. Microsoft Defender for Cloud is provided in two
-            /// pricing tiers: free and standard, with the standard tier available with a
-            /// trial period. The standard tier offers advanced security capabilities,
-            /// while the free tier offers basic security features. Possible values
-            /// include: 'Free', 'Standard'
-            /// </param>
-            /// <param name='subPlan'>
-            /// The sub-plan selected for a Standard pricing configuration, when more than
-            /// one sub-plan is available. Each sub-plan enables a set of security
-            /// features. When not specified, full plan is applied.
+            /// <param name='pricing'>
+            /// Pricing object
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Pricing> UpdateAsync(this IPricingsOperations operations, string pricingName, string pricingTier, string subPlan = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Pricing> UpdateAsync(this IPricingsOperations operations, string pricingName, Pricing pricing, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(pricingName, pricingTier, subPlan, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(pricingName, pricing, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

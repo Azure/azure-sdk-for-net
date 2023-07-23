@@ -24,11 +24,14 @@ namespace Microsoft.Azure.Management.Security
     public partial interface IGovernanceRulesOperations
     {
         /// <summary>
-        /// Get a specific governanceRule for the requested scope by ruleId
+        /// Get a list of all relevant governance rules over a scope
         /// </summary>
-        /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -45,17 +48,53 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<GovernanceRule>> GetWithHttpMessagesAsync(string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GovernanceRule>>> ListWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or update a security GovernanceRule on the given
-        /// subscription.
+        /// Get a specific governance rule for the requested scope by ruleId
         /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
         /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
+        /// The governance rule key - unique key for the standard governance
+        /// rule (GUID)
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<GovernanceRule>> GetWithHttpMessagesAsync(string scope, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates or updates a governance rule over a given scope
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
+        /// <param name='ruleId'>
+        /// The governance rule key - unique key for the standard governance
+        /// rule (GUID)
         /// </param>
         /// <param name='governanceRule'>
-        /// GovernanceRule over a subscription scope
+        /// Governance rule over a given scope
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,13 +111,20 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<GovernanceRule>> CreateOrUpdateWithHttpMessagesAsync(string ruleId, GovernanceRule governanceRule, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GovernanceRule>> CreateOrUpdateWithHttpMessagesAsync(string scope, string ruleId, GovernanceRule governanceRule, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete a GovernanceRule over a given scope
+        /// Delete a Governance rule over a given scope
         /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
         /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
+        /// The governance rule key - unique key for the standard governance
+        /// rule (GUID)
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -92,13 +138,20 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<GovernanceRulesDeleteHeaders>> DeleteWithHttpMessagesAsync(string scope, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute a security GovernanceRule on the given subscription.
+        /// Execute a governance rule
         /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
         /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
+        /// The governance rule key - unique key for the standard governance
+        /// rule (GUID)
         /// </param>
         /// <param name='overrideParameter'>
         /// Describe if governance rule should be override
@@ -115,20 +168,81 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders>> RuleIdExecuteSingleSubscriptionWithHttpMessagesAsync(string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<GovernanceRulesExecuteHeaders>> ExecuteWithHttpMessagesAsync(string scope, string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute a security GovernanceRule on the given security connector.
+        /// Get governance rules long run operation result for the requested
+        /// scope by ruleId and operationId
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='securityConnectorName'>
-        /// The security connector name.
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </param>
         /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
+        /// The governance rule key - unique key for the standard governance
+        /// rule (GUID)
+        /// </param>
+        /// <param name='operationId'>
+        /// The governance rule long running operation unique key
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<OperationResult1,GovernanceRulesOperationResultsHeaders>> OperationResultsWithHttpMessagesAsync(string scope, string ruleId, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete a Governance rule over a given scope
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
+        /// <param name='ruleId'>
+        /// The governance rule key - unique key for the standard governance
+        /// rule (GUID)
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<GovernanceRulesDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string scope, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Execute a governance rule
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query. can be subscription
+        /// (/subscriptions/{subscriptionId}) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
+        /// security connector scope: (format:
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// </param>
+        /// <param name='ruleId'>
+        /// The governance rule key - unique key for the standard governance
+        /// rule (GUID)
         /// </param>
         /// <param name='overrideParameter'>
         /// Describe if governance rule should be override
@@ -145,16 +259,12 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders>> RuleIdExecuteSingleSecurityConnectorWithHttpMessagesAsync(string resourceGroupName, string securityConnectorName, string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<GovernanceRulesExecuteHeaders>> BeginExecuteWithHttpMessagesAsync(string scope, string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Execute a security GovernanceRule on the given subscription.
+        /// Get a list of all relevant governance rules over a scope
         /// </summary>
-        /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
-        /// </param>
-        /// <param name='overrideParameter'>
-        /// Describe if governance rule should be override
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -165,39 +275,12 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSubscriptionHeaders>> BeginRuleIdExecuteSingleSubscriptionWithHttpMessagesAsync(string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Execute a security GovernanceRule on the given security connector.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='securityConnectorName'>
-        /// The security connector name.
-        /// </param>
-        /// <param name='ruleId'>
-        /// The security GovernanceRule key - unique key for the standard
-        /// GovernanceRule
-        /// </param>
-        /// <param name='overrideParameter'>
-        /// Describe if governance rule should be override
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<GovernanceRulesRuleIdExecuteSingleSecurityConnectorHeaders>> BeginRuleIdExecuteSingleSecurityConnectorWithHttpMessagesAsync(string resourceGroupName, string securityConnectorName, string ruleId, bool? overrideParameter = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GovernanceRule>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

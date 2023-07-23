@@ -36,11 +36,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="arcAutoProvisioning">The ARC autoprovisioning
         /// configuration</param>
         /// <param name="rds">The RDS configuration</param>
-        public DefenderFoDatabasesAwsOffering(string description = default(string), DefenderFoDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = default(DefenderFoDatabasesAwsOfferingArcAutoProvisioning), DefenderFoDatabasesAwsOfferingRds rds = default(DefenderFoDatabasesAwsOfferingRds))
+        /// <param name="databasesDspm">The databases data security posture
+        /// management (DSPM) configuration</param>
+        public DefenderFoDatabasesAwsOffering(string description = default(string), DefenderFoDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = default(DefenderFoDatabasesAwsOfferingArcAutoProvisioning), DefenderFoDatabasesAwsOfferingRds rds = default(DefenderFoDatabasesAwsOfferingRds), DefenderFoDatabasesAwsOfferingDatabasesDspm databasesDspm = default(DefenderFoDatabasesAwsOfferingDatabasesDspm))
             : base(description)
         {
             ArcAutoProvisioning = arcAutoProvisioning;
             Rds = rds;
+            DatabasesDspm = databasesDspm;
             CustomInit();
         }
 
@@ -60,6 +63,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "rds")]
         public DefenderFoDatabasesAwsOfferingRds Rds { get; set; }
+
+        /// <summary>
+        /// Gets or sets the databases data security posture management (DSPM)
+        /// configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "databasesDspm")]
+        public DefenderFoDatabasesAwsOfferingDatabasesDspm DatabasesDspm { get; set; }
 
     }
 }

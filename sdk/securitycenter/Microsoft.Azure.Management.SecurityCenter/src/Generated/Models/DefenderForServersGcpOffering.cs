@@ -43,7 +43,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Endpoint autoprovisioning configuration</param>
         /// <param name="subPlan">configuration for the servers offering
         /// subPlan</param>
-        public DefenderForServersGcpOffering(string description = default(string), DefenderForServersGcpOfferingDefenderForServers defenderForServers = default(DefenderForServersGcpOfferingDefenderForServers), DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning = default(DefenderForServersGcpOfferingArcAutoProvisioning), DefenderForServersGcpOfferingVaAutoProvisioning vaAutoProvisioning = default(DefenderForServersGcpOfferingVaAutoProvisioning), DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning = default(DefenderForServersGcpOfferingMdeAutoProvisioning), DefenderForServersGcpOfferingSubPlan subPlan = default(DefenderForServersGcpOfferingSubPlan))
+        /// <param name="vmScanners">The Microsoft Defender for Server VM
+        /// scanning configuration</param>
+        public DefenderForServersGcpOffering(string description = default(string), DefenderForServersGcpOfferingDefenderForServers defenderForServers = default(DefenderForServersGcpOfferingDefenderForServers), DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning = default(DefenderForServersGcpOfferingArcAutoProvisioning), DefenderForServersGcpOfferingVaAutoProvisioning vaAutoProvisioning = default(DefenderForServersGcpOfferingVaAutoProvisioning), DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning = default(DefenderForServersGcpOfferingMdeAutoProvisioning), DefenderForServersGcpOfferingSubPlan subPlan = default(DefenderForServersGcpOfferingSubPlan), DefenderForServersGcpOfferingVmScanners vmScanners = default(DefenderForServersGcpOfferingVmScanners))
             : base(description)
         {
             DefenderForServers = defenderForServers;
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Management.Security.Models
             VaAutoProvisioning = vaAutoProvisioning;
             MdeAutoProvisioning = mdeAutoProvisioning;
             SubPlan = subPlan;
+            VmScanners = vmScanners;
             CustomInit();
         }
 
@@ -90,6 +93,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "subPlan")]
         public DefenderForServersGcpOfferingSubPlan SubPlan { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Microsoft Defender for Server VM scanning
+        /// configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "vmScanners")]
+        public DefenderForServersGcpOfferingVmScanners VmScanners { get; set; }
 
     }
 }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Security GovernanceAssignment over a given scope
+    /// Governance assignment over a given scope
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class GovernanceAssignment : Resource

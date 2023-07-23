@@ -19,9 +19,8 @@ namespace Microsoft.Azure.Management.Security.Models
 
     /// <summary>
     /// Microsoft Defender for Cloud is provided in two pricing tiers: free and
-    /// standard, with the standard tier available with a trial period. The
-    /// standard tier offers advanced security capabilities, while the free
-    /// tier offers basic security features.
+    /// standard. The standard tier offers advanced security capabilities,
+    /// while the free tier offers basic security features.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Pricing : Resource
@@ -39,10 +38,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         /// <param name="pricingTier">The pricing tier value. Microsoft
         /// Defender for Cloud is provided in two pricing tiers: free and
-        /// standard, with the standard tier available with a trial period. The
-        /// standard tier offers advanced security capabilities, while the free
-        /// tier offers basic security features. Possible values include:
-        /// 'Free', 'Standard'</param>
+        /// standard. The standard tier offers advanced security capabilities,
+        /// while the free tier offers basic security features. Possible values
+        /// include: 'Free', 'Standard'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
@@ -53,19 +51,27 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="freeTrialRemainingTime">The duration left for the
         /// subscriptions free trial period - in ISO 8601 format (e.g.
         /// P3Y6M4DT12H30M5S).</param>
+        /// <param name="enablementTime">Optional. If `pricingTier` is
+        /// `Standard` then this property holds the date of the last time the
+        /// `pricingTier` was set to `Standard`, when available (e.g
+        /// 2023-03-01T12:42:42.1921106Z).</param>
         /// <param name="deprecated">Optional. True if the plan is deprecated.
         /// If there are replacing plans they will appear in `replacedBy`
         /// property</param>
         /// <param name="replacedBy">Optional. List of plans that replace this
         /// plan. This property exists only if this plan is deprecated.</param>
-        public Pricing(string pricingTier, string id = default(string), string name = default(string), string type = default(string), string subPlan = default(string), System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?), bool? deprecated = default(bool?), IList<string> replacedBy = default(IList<string>))
+        /// <param name="extensions">Optional. List of extensions offered under
+        /// a plan.</param>
+        public Pricing(string pricingTier, string id = default(string), string name = default(string), string type = default(string), string subPlan = default(string), System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?), System.DateTime? enablementTime = default(System.DateTime?), bool? deprecated = default(bool?), IList<string> replacedBy = default(IList<string>), IList<Extension> extensions = default(IList<Extension>))
             : base(id, name, type)
         {
             PricingTier = pricingTier;
             SubPlan = subPlan;
             FreeTrialRemainingTime = freeTrialRemainingTime;
+            EnablementTime = enablementTime;
             Deprecated = deprecated;
             ReplacedBy = replacedBy;
+            Extensions = extensions;
             CustomInit();
         }
 
@@ -76,10 +82,9 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// Gets or sets the pricing tier value. Microsoft Defender for Cloud
-        /// is provided in two pricing tiers: free and standard, with the
-        /// standard tier available with a trial period. The standard tier
-        /// offers advanced security capabilities, while the free tier offers
-        /// basic security features. Possible values include: 'Free',
+        /// is provided in two pricing tiers: free and standard. The standard
+        /// tier offers advanced security capabilities, while the free tier
+        /// offers basic security features. Possible values include: 'Free',
         /// 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "properties.pricingTier")]
@@ -102,6 +107,14 @@ namespace Microsoft.Azure.Management.Security.Models
         public System.TimeSpan? FreeTrialRemainingTime { get; private set; }
 
         /// <summary>
+        /// Gets optional. If `pricingTier` is `Standard` then this property
+        /// holds the date of the last time the `pricingTier` was set to
+        /// `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enablementTime")]
+        public System.DateTime? EnablementTime { get; private set; }
+
+        /// <summary>
         /// Gets optional. True if the plan is deprecated. If there are
         /// replacing plans they will appear in `replacedBy` property
         /// </summary>
@@ -116,6 +129,12 @@ namespace Microsoft.Azure.Management.Security.Models
         public IList<string> ReplacedBy { get; private set; }
 
         /// <summary>
+        /// Gets or sets optional. List of extensions offered under a plan.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.extensions")]
+        public IList<Extension> Extensions { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -126,6 +145,16 @@ namespace Microsoft.Azure.Management.Security.Models
             if (PricingTier == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PricingTier");
+            }
+            if (Extensions != null)
+            {
+                foreach (var element in Extensions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }
