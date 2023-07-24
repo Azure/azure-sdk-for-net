@@ -500,7 +500,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 receiveActions,
                                 _client.Value);
 
-                            await TriggerWithMessagesInternal(messagesArray, input, receiver, receiveActions, messageActions, cancellationToken).ConfigureAwait(false);
+                            await TriggerWithMessagesInternal(messagesArray, input, receiver, receiveActions, messageActions, CancellationToken.None).ConfigureAwait(false);
                         }
 
                         if (_supportMinBatchSize && _cachedMessagesManager.HasCachedMessages)
