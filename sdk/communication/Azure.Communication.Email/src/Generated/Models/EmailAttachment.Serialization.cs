@@ -20,7 +20,7 @@ namespace Azure.Communication.Email
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType);
             writer.WritePropertyName("contentInBase64"u8);
-            writer.WriteStringValue(ContentInBase64);
+            writer.WriteBase64StringValue(Content.ToArray(), "D");
             writer.WriteEndObject();
         }
     }

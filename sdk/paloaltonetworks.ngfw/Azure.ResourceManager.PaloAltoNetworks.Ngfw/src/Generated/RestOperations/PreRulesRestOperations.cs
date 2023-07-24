@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-29-preview";
+            _apiVersion = apiVersion ?? "2022-08-29";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PreRulesResourceData>> GetAsync(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
+        public async Task<Response<PreRulestackRuleData>> GetAsync(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        PreRulesResourceData value = default;
+                        PreRulestackRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PreRulesResourceData.DeserializePreRulesResourceData(document.RootElement);
+                        value = PreRulestackRuleData.DeserializePreRulestackRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PreRulesResourceData)null, message.Response);
+                    return Response.FromValue((PreRulestackRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PreRulesResourceData> Get(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
+        public Response<PreRulestackRuleData> Get(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -168,19 +168,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        PreRulesResourceData value = default;
+                        PreRulestackRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PreRulesResourceData.DeserializePreRulesResourceData(document.RootElement);
+                        value = PreRulestackRuleData.DeserializePreRulestackRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PreRulesResourceData)null, message.Response);
+                    return Response.FromValue((PreRulestackRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, string priority, PreRulesResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, string priority, PreRulestackRuleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/>, <paramref name="priority"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string globalRulestackName, string priority, PreRulesResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string globalRulestackName, string priority, PreRulestackRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/>, <paramref name="priority"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string globalRulestackName, string priority, PreRulesResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string globalRulestackName, string priority, PreRulestackRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RuleCounter>> GetCountersAsync(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FirewallRuleCounter>> GetCountersAsync(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -359,9 +359,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        RuleCounter value = default;
+                        FirewallRuleCounter value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RuleCounter.DeserializeRuleCounter(document.RootElement);
+                        value = FirewallRuleCounter.DeserializeFirewallRuleCounter(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RuleCounter> GetCounters(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
+        public Response<FirewallRuleCounter> GetCounters(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -387,9 +387,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        RuleCounter value = default;
+                        FirewallRuleCounter value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RuleCounter.DeserializeRuleCounter(document.RootElement);
+                        value = FirewallRuleCounter.DeserializeFirewallRuleCounter(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RuleCounterReset>> ResetCountersAsync(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -507,9 +507,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        RuleCounterReset value = default;
+                        FirewallRuleResetConter value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RuleCounterReset.DeserializeRuleCounterReset(document.RootElement);
+                        value = FirewallRuleResetConter.DeserializeFirewallRuleResetConter(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RuleCounterReset> ResetCounters(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
+        public Response<FirewallRuleResetConter> ResetCounters(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(priority, nameof(priority));
@@ -535,9 +535,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        RuleCounterReset value = default;
+                        FirewallRuleResetConter value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RuleCounterReset.DeserializeRuleCounterReset(document.RootElement);
+                        value = FirewallRuleResetConter.DeserializeFirewallRuleResetConter(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

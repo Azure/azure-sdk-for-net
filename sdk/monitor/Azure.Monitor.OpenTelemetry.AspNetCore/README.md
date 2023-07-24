@@ -180,6 +180,24 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor();
 builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddGrpcClientInstrumentation());
 ```
 
+#### Enable Azure SDK Instrumentation
+
+Azure SDK instrumentation is supported under the experimental feature flag which can be enabled using one of the following ways:
+
+* Set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable to `true`.
+
+* Set the Azure.Experimental.EnableActivitySource context switch to true in your app’s code:
+    ```csharp
+    AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+    ```
+
+* Add the RuntimeHostConfigurationOption setting to your project file:
+    ```csharp
+    <ItemGroup>
+        <RuntimeHostConfigurationOption Include="Azure.Experimental.EnableActivitySource" Value="true" />
+    </ItemGroup>
+    ```
+
 #### Adding Another Exporter
 
 Azure Monitor Distro uses the Azure Monitor exporter to send data to Application Insights. However, if you need to send data to other services, including Application Insights, you can add another exporter. For example, to add the Console exporter, you can install the [OpenTelemetry.Exporter.Console](https://www.nuget.org/packages/OpenTelemetry.Exporter.Console) package and use the following code:
@@ -205,7 +223,6 @@ environmental variables:
 | -------------------------- | -------------------------------------------------- |
 | `OTEL_RESOURCE_ATTRIBUTES` | Key-value pairs to be used as resource attributes. See the [Resource SDK specification](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.5.0/specification/resource/sdk.md#specifying-resource-information-via-an-environment-variable) for more details. |
 | `OTEL_SERVICE_NAME`        | Sets the value of the `service.name` resource attribute. If `service.name` is also provided in `OTEL_RESOURCE_ATTRIBUTES`, then `OTEL_SERVICE_NAME` takes precedence. |
-
 
 ## Key concepts
 

@@ -140,7 +140,7 @@ public void ConfigureServices(IServiceCollection services)
     {
         builder.AddSearchClient(Configuration.GetSection("SearchClient"));
     });
-  
+
     services.AddControllers();
 }
 ```
@@ -235,7 +235,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -256,7 +256,7 @@ much more.
 * [Async APIs](#async-apis)
 
 ### Advanced authentication
- 
+
 - [Create a client that can authenticate in a national cloud](#authenticate-in-a-national-cloud)
 
 ### Querying

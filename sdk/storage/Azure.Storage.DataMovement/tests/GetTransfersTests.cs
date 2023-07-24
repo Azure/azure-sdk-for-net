@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -43,6 +42,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             return new DataTransfer(
                 id: Guid.NewGuid().ToString(),
+                transferManager: new(),
                 status: status);
         }
 
@@ -231,11 +231,11 @@ namespace Azure.Storage.DataMovement.Tests
             // Build expected results first to use to populate checkpointer
             DataTransferProperties[] expectedResults = new DataTransferProperties[]
             {
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "LocalFile", SourcePath = parentLocalPath1 + "file1", DestinationScheme = "BlockBlob", DestinationPath = parentRemotePath + "file1", IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "BlockBlob", SourcePath = parentRemotePath + "file2/", DestinationScheme = "LocalFile", DestinationPath = parentLocalPath1 + "file2/", IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "BlockBlob", SourcePath = parentRemotePath + "file3", DestinationScheme = "BlockBlob", DestinationPath = parentRemotePath + "file3", IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "BlockBlob", SourcePath = parentRemotePath, DestinationScheme = "LocalFile", DestinationPath = parentLocalPath1, IsContainer = true },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "LocalFile", SourcePath = parentLocalPath2, DestinationScheme = "AppendBlob", DestinationPath = parentRemotePath, IsContainer = true },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "LocalFile", SourcePath = parentLocalPath1 + "file1", DestinationTypeId = "BlockBlob", DestinationPath = parentRemotePath + "file1", IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath + "file2/", DestinationTypeId = "LocalFile", DestinationPath = parentLocalPath1 + "file2/", IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath + "file3", DestinationTypeId = "BlockBlob", DestinationPath = parentRemotePath + "file3", IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath, DestinationTypeId = "LocalFile", DestinationPath = parentLocalPath1, IsContainer = true },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "LocalFile", SourcePath = parentLocalPath2, DestinationTypeId = "AppendBlob", DestinationPath = parentRemotePath, IsContainer = true },
             };
 
             // Add a transfer for each expected result
@@ -329,8 +329,8 @@ namespace Azure.Storage.DataMovement.Tests
                     StorageTransferStatus.InProgress,
                     sourcePaths,
                     destinationPaths,
-                    sourceResourceId: properties.SourceScheme,
-                    destinationResourceId: properties.DestinationScheme);
+                    sourceResourceId: properties.SourceTypeId,
+                    destinationResourceId: properties.DestinationTypeId);
             }
             else
             {
@@ -341,17 +341,17 @@ namespace Azure.Storage.DataMovement.Tests
                     StorageTransferStatus.InProgress,
                     new List<string> { properties.SourcePath },
                     new List<string> { properties.DestinationPath },
-                    sourceResourceId: properties.SourceScheme,
-                    destinationResourceId: properties.DestinationScheme);
+                    sourceResourceId: properties.SourceTypeId,
+                    destinationResourceId: properties.DestinationTypeId);
             }
         }
 
         private void AssertTransferProperties(DataTransferProperties expected, DataTransferProperties actual)
         {
             Assert.AreEqual(expected.TransferId, actual.TransferId);
-            Assert.AreEqual(expected.SourceScheme, actual.SourceScheme);
+            Assert.AreEqual(expected.SourceTypeId, actual.SourceTypeId);
             Assert.AreEqual(expected.SourcePath.TrimEnd('\\', '/'), actual.SourcePath.TrimEnd('\\', '/'));
-            Assert.AreEqual(expected.DestinationScheme, actual.DestinationScheme);
+            Assert.AreEqual(expected.DestinationTypeId, actual.DestinationTypeId);
             Assert.AreEqual(expected.DestinationPath.TrimEnd('\\', '/'), actual.DestinationPath.TrimEnd('\\', '/'));
             Assert.AreEqual(expected.IsContainer, actual.IsContainer);
         }

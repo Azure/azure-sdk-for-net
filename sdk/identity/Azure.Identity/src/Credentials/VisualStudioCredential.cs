@@ -34,6 +34,7 @@ namespace Azure.Identity
         private readonly IProcessService _processService;
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
+        internal bool _isChainedCredential;
 
         internal TimeSpan ProcessTimeout { get; private set; }
 
@@ -52,7 +53,7 @@ namespace Azure.Identity
 
         internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
         {
-            _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logPII = options?.IsSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             TenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
@@ -60,6 +61,7 @@ namespace Azure.Identity
             _processService = processService ?? ProcessService.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(30);
+            _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <inheritdoc />
@@ -102,13 +104,9 @@ namespace Azure.Identity
 
                 return scope.Succeeded(accessToken);
             }
-            catch (CredentialUnavailableException e)
-            {
-                throw scope.FailWrapAndThrow(e);
-            }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: true);
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
             }
         }
 
@@ -164,7 +162,14 @@ namespace Azure.Identity
                 }
                 catch (Exception exception) when (!(exception is OperationCanceledException))
                 {
-                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed with unexpected error: {exception.Message}.", exception));
+                    if (_isChainedCredential)
+                    {
+                        exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed with unexpected error: {exception.Message}.", exception));
+                    }
+                    else
+                    {
+                        exceptions.Add(new AuthenticationFailedException($"Process \"{processStartInfo.FileName}\" has failed with unexpected error: {exception.Message}.", exception));
+                    }
                 }
             }
 

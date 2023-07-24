@@ -41,11 +41,26 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ```
 
 ### Authenticate the client
-The Azure.Storage.DataMovement.Blobs library uses clients from the Azure.Storage.Blobs package to communicate with the Azure Blob Storage service. For more information see the Azure.Storage.Blobs [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs#authenticate-the-client). 
+The Azure.Storage.DataMovement.Blobs library uses clients from the Azure.Storage.Blobs package to communicate with the Azure Blob Storage service. For more information see the Azure.Storage.Blobs [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs#authenticate-the-client).
 
 ## Key concepts
 
-***TODO***
+The Azure Storage Common client library contains shared infrastructure like
+[authentication credentials][auth_credentials] and [RequestFailedException][RequestFailedException].
+
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 
@@ -66,14 +81,14 @@ Upload a local directory to the root of the container
 ```C# Snippet:ExtensionMethodSimpleUploadToRoot
 DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
 
-await transfer.AwaitCompletion();
+await transfer.WaitForCompletionAsync();
 ```
 
 Upload a local directory to a virtual directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
 DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
 
-await transfer.AwaitCompletion();
+await transfer.WaitForCompletionAsync();
 ```
 
 Upload a local directory to a virtual directory in the container specifying more advanced options
@@ -92,21 +107,21 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 
 DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, options);
 
-await transfer.AwaitCompletion();
+await transfer.WaitForCompletionAsync();
 ```
 
 Download the entire container to a local directory
 ```C# Snippet:ExtensionMethodSimpleDownloadContainer
 DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
 
-await transfer.AwaitCompletion();
+await transfer.WaitForCompletionAsync();
 ```
 
 Download a directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
 DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
 
-await tranfer.AwaitCompletion();
+await tranfer.WaitForCompletionAsync();
 ```
 
 Download from the container specifying more advanced options
@@ -125,7 +140,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 
 DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
 
-await tranfer.AwaitCompletion();
+await tranfer.WaitForCompletionAsync();
 ```
 
 ### Initializing Blob Storage `StorageResource`
@@ -204,7 +219,7 @@ BlockBlobClient destinationBlob;
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: new LocalFileStorageResource(sourceLocalPath),
     destinationResource: new BlockBlobStorageResource(destinationBlob));
-await dataTransfer.AwaitCompletion();
+await dataTransfer.WaitForCompletionAsync();
 ```
 
 Upload a directory as a specific blob type.
