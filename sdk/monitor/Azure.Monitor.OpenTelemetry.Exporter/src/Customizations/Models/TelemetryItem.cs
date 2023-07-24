@@ -83,7 +83,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()];
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
             InstrumentationKey = telemetryItem.InstrumentationKey;
-            SampleRate = telemetryItem.SampleRate;
+
+            if (telemetryItem.SampleRate != 100f)
+            {
+                SampleRate = telemetryItem.SampleRate;
+            }
         }
 
         public TelemetryItem (LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :
