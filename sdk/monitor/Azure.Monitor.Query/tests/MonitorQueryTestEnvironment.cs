@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core.TestFramework;
 
 namespace Azure.Monitor.Query.Tests
@@ -20,5 +21,28 @@ namespace Azure.Monitor.Query.Tests
         public string ResourceId => GetRecordedVariable("RESOURCE_ID");
         public string WorkspacePrimaryResourceId => GetRecordedVariable("WORKSPACE_PRIMARY_RESOURCE_ID");
         public string WorkspaceSecondaryResourceId => GetRecordedVariable("WORKSPACE_SECONDARY_RESOURCE_ID");
+        public Uri LogsEndpoint => new(GetEndpoint());
+
+        private Dictionary<string, string> regions = new Dictionary<string, string>()
+        {
+            { "AzureCloud", "https://api.loganalytics.io/v1" },
+            { "AzureChinaCloud", "https://api.loganalytics.azure.cn/v1" },
+            { "AzureGovernmentCloud", "https://api.loganalytics.us/v1" }
+        };
+
+        private string ENV_MONITOR_ENVIRONMENT = "MONITOR_ENVIRONMENT";
+        private string GetEndpoint()
+        {
+            string endpoint = "";
+            if (regions.TryGetValue(Environment.GetEnvironmentVariable(ENV_MONITOR_ENVIRONMENT), out string region))
+            {
+                endpoint = region;
+            }
+            else
+            {
+                endpoint = regions["AzureCloud"];
+            }
+            return endpoint;
+        }
     }
 }
