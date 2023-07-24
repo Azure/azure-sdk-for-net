@@ -20,24 +20,34 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of Choice. </summary>
         /// <param name="text"> The generated text for a given completions prompt. </param>
         /// <param name="index"> The ordered index associated with this completions choice. </param>
+        /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
+        /// <param name="finishReason"> Reason for finishing. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        internal Choice(string text, int index)
+        internal Choice(string text, int index, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason? finishReason)
         {
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             Index = index;
+            LogProbabilityModel = logProbabilityModel;
+            FinishReason = finishReason;
         }
 
         /// <summary> Initializes a new instance of Choice. </summary>
         /// <param name="text"> The generated text for a given completions prompt. </param>
         /// <param name="index"> The ordered index associated with this completions choice. </param>
+        /// <param name="contentFilterResults">
+        /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
+        /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
+        /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
+        /// </param>
         /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
         /// <param name="finishReason"> Reason for finishing. </param>
-        internal Choice(string text, int index, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason? finishReason)
+        internal Choice(string text, int index, ContentFilterResults contentFilterResults, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason? finishReason)
         {
             Text = text;
             Index = index;
+            ContentFilterResults = contentFilterResults;
             LogProbabilityModel = logProbabilityModel;
             FinishReason = finishReason;
         }
@@ -46,6 +56,12 @@ namespace Azure.AI.OpenAI
         public string Text { get; }
         /// <summary> The ordered index associated with this completions choice. </summary>
         public int Index { get; }
+        /// <summary>
+        /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
+        /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
+        /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
+        /// </summary>
+        public ContentFilterResults ContentFilterResults { get; }
         /// <summary> The log probabilities model for tokens associated with this completions choice. </summary>
         public CompletionsLogProbabilityModel LogProbabilityModel { get; }
         /// <summary> Reason for finishing. </summary>

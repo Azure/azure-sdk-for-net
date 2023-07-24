@@ -64,36 +64,32 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <summary> Create Trial Matcher job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="trialMatcherData"> The body of the Trial Matcher request. </param>
-        /// <param name="repeatabilityRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
-        /// <param name="repeatabilityFirstSent"> Specifies the date and time at which the request was first created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
-        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Operation<TrialMatcherResult>> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData trialMatcherData, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
+        public virtual async Task<Operation<TrialMatcherResult>> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, trialMatcherData.ToRequestContent(), repeatabilityRequestId, repeatabilityFirstSent, context).ConfigureAwait(false);
+            Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, trialMatcherData.ToRequestContent(), context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
         /// <summary> Create Trial Matcher job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="trialMatcherData"> The body of the Trial Matcher request. </param>
-        /// <param name="repeatabilityRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
-        /// <param name="repeatabilityFirstSent"> Specifies the date and time at which the request was first created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
-        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Operation<TrialMatcherResult> MatchTrials(WaitUntil waitUntil, TrialMatcherData trialMatcherData, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
+        public virtual Operation<TrialMatcherResult> MatchTrials(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = MatchTrials(waitUntil, trialMatcherData.ToRequestContent(), repeatabilityRequestId, repeatabilityFirstSent, context);
+            Operation<BinaryData> response = MatchTrials(waitUntil, trialMatcherData.ToRequestContent(), context);
             return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
@@ -107,21 +103,19 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="MatchTrialsAsync(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="repeatabilityRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
-        /// <param name="repeatabilityFirstSent"> Specifies the date and time at which the request was first created. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> MatchTrialsAsync(WaitUntil waitUntil, RequestContent content, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, RequestContext context = null)
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> MatchTrialsAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -129,7 +123,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             scope.Start();
             try
             {
-                using HttpMessage message = CreateMatchTrialsRequest(content, repeatabilityRequestId, repeatabilityFirstSent, context);
+                using HttpMessage message = CreateMatchTrialsRequest(content, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -149,21 +143,19 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="MatchTrials(WaitUntil,TrialMatcherData,string,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="repeatabilityRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
-        /// <param name="repeatabilityFirstSent"> Specifies the date and time at which the request was first created. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,RequestContent,string,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Operation<BinaryData> MatchTrials(WaitUntil waitUntil, RequestContent content, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, RequestContext context = null)
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> MatchTrials(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -171,7 +163,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             scope.Start();
             try
             {
-                using HttpMessage message = CreateMatchTrialsRequest(content, repeatabilityRequestId, repeatabilityFirstSent, context);
+                using HttpMessage message = CreateMatchTrialsRequest(content, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -181,7 +173,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
         }
 
-        internal HttpMessage CreateMatchTrialsRequest(RequestContent content, string repeatabilityRequestId, DateTimeOffset? repeatabilityFirstSent, RequestContext context)
+        internal HttpMessage CreateMatchTrialsRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
@@ -192,15 +184,9 @@ namespace Azure.Health.Insights.ClinicalMatching
             uri.AppendPath("/trialmatcher/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestId != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestId);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "O");
-            }
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

@@ -25,5 +25,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Ssml string for the cognitive service to be played. </summary>
         public string SsmlText { get; }
+        /// <summary> Endpoint where the custom voice was deployed. </summary>
+        public string CustomVoiceEndpointId { get; set; }
     }
 }

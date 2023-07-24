@@ -18,8 +18,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task SimpleDistribution_LongestIdle()
         {
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+            JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_LongestIdle
             // In this scenario, we are going to demonstrate how to use the longest idle distribution mode
@@ -37,11 +37,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Create distribution policy
             string distributionPolicyId = "distribution-policy-id-5";
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
-                options: new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId, offerTtl: TimeSpan.FromMinutes(5), mode: new LongestIdleMode()) { Name = "Simple longest idle" });
+                options: new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId, offerExpiresAfter: TimeSpan.FromMinutes(5), mode: new LongestIdleMode()) { Name = "Simple longest idle" });
 
             // Create queue
             string queueId = "queue-id-1";
-            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: queueId,
                 distributionPolicyId: distributionPolicyId));
 
@@ -52,20 +52,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
-                    ChannelConfigurations =
-                        new Dictionary<string, ChannelConfiguration>()
-                        {
-                            ["general"] = new ChannelConfiguration(10),
-                        },
-                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
+                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                 });
 
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
-                    ChannelConfigurations =
-                        new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
+                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                 });
 
             // Register worker1
@@ -106,8 +101,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task SimpleDistribution_RoundRobin()
         {
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+            JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_RoundRobin
             // In this scenario, we are going to demonstrate how to use the round robin distribution mode
@@ -128,12 +123,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 options: new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
-                    offerTtl: TimeSpan.FromMinutes(5),
+                    offerExpiresAfter: TimeSpan.FromMinutes(5),
                     mode: new RoundRobinMode()) { Name = "Simple round robin" });
 
             // Create queue
             string queueId = "queue-id-1";
-            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
+            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
 
             // Setting up 2 identical workers
             string worker1Id = "worker-id-1";
@@ -142,22 +137,17 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
-                    ChannelConfigurations =
-                        new Dictionary<string, ChannelConfiguration>()
-                        {
-                            ["general"] = new ChannelConfiguration(5),
-                        },
-                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-                    AvailableForOffers = true,  // register worker upon creation
+                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(5), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
+                    AvailableForOffers = true
                 });
 
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
-                    ChannelConfigurations =
-                        new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(5), },
-                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-                    AvailableForOffers = true,  // register worker upon creation
+                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(5), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
+                    AvailableForOffers = true, // register worker upon creation
                 });
 
             // Setting up two identical jobs
@@ -194,8 +184,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task SimpleDistribution_DefaultBestWorker()
         {
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+            JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_DefaultBestWorker
             // In this scenario, we are going to demonstrate how to use the default best worker distribution mode
@@ -225,12 +215,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 options: new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
-                    offerTtl: TimeSpan.FromMinutes(5),
+                    offerExpiresAfter: TimeSpan.FromMinutes(5),
                     mode: new BestWorkerMode()) { Name = "Default best worker mode" });
 
             // Create queue
             string queueId = "queue-id-1";
-            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: queueId,
                 distributionPolicyId: distributionPolicyId));
 
@@ -242,13 +232,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
-                    ChannelConfigurations =
-                        new Dictionary<string, ChannelConfiguration>()
-                        {
-                            ["general"] = new ChannelConfiguration(10),
-                        },
-                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-                    Labels = new Dictionary<string, LabelValue>()
+                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
+                    Labels =
                     {
                         ["Location"] = new LabelValue("United States"),
                         ["Language"] = new LabelValue("en-us"),
@@ -262,10 +248,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
-                    ChannelConfigurations =
-                        new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-                    Labels = new Dictionary<string, LabelValue>()
+                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
+                    Labels =
                     {
                         ["Location"] = new LabelValue("United States"),
                         ["Language"] = new LabelValue("en-us"),
@@ -279,10 +264,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker3 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker3Id, totalCapacity: 10)
                 {
-                    ChannelConfigurations =
-                        new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-                    Labels = new Dictionary<string, LabelValue>()
+                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
+                    Labels =
                     {
                         ["Location"] = new LabelValue("United States"),
                         ["Language"] = new LabelValue("en-us"),
@@ -297,7 +281,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterJob> job = await routerClient.CreateJobAsync(
                 options: new CreateJobOptions(jobId: jobId, channelId: "general", queueId: queueId)
                 {
-                    Labels = new Dictionary<string, LabelValue>()
+                    Labels =
                     {
                         ["Location"] = new LabelValue("United States"),
                         ["Language"] = new LabelValue("en-us"),
@@ -305,9 +289,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                         ["Hardware_Support"] = new LabelValue(true),
                         ["Hardware_Support_SurfaceLaptop"] = new LabelValue(true),
                     },
-                    RequestedWorkerSelectors = new List<WorkerSelector>()
+                    RequestedWorkerSelectors =
                     {
-                        new WorkerSelector("Language_Skill_Level_EN_US", LabelOperator.GreaterThanEqual, new LabelValue(0)),
+                        new RouterWorkerSelector("Language_Skill_Level_EN_US", LabelOperator.GreaterThanEqual, new LabelValue(0)),
                     }
                 });
 
@@ -338,8 +322,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task SimpleDistribution_ConcurrentOffers_ModeAgnostic()
         {
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+            JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_ConcurrentOffers_ModeAgnostic
             // In this scenario, we are going to demonstrate how to set up concurrent offers so that multiple workers
@@ -356,15 +340,19 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create distribution policy
             string distributionPolicyId = "distribution-policy-id-8";
-            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
-                options: new CreateDistributionPolicyOptions(
-                    distributionPolicyId: distributionPolicyId,
-                    offerTtl: TimeSpan.FromMinutes(5),
-                    mode: new LongestIdleMode(minConcurrentOffers: 1, maxConcurrentOffers: 2)) { Name = "Simple longest idle" });
+            Response<DistributionPolicy> distributionPolicy =
+                await routerAdministrationClient.CreateDistributionPolicyAsync(
+                    options: new CreateDistributionPolicyOptions(
+                        distributionPolicyId: distributionPolicyId,
+                        offerExpiresAfter: TimeSpan.FromMinutes(5),
+                        mode: new LongestIdleMode { MinConcurrentOffers = 1, MaxConcurrentOffers = 2 })
+                    {
+                        Name = "Simple longest idle"
+                    });
 
             // Create queue
             string queueId = "queue-id-1";
-            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: queueId,
                 distributionPolicyId: distributionPolicyId));
 
@@ -375,21 +363,16 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
-                    ChannelConfigurations =
-                        new Dictionary<string, ChannelConfiguration>()
-                        {
-                            ["general"] = new ChannelConfiguration(10),
-                        },
-                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
+                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     AvailableForOffers = true,
                 });
 
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
-                    ChannelConfigurations =
-                        new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
+                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     AvailableForOffers = true,
                 });
 

@@ -13,7 +13,6 @@ namespace Azure.Data.SchemaRegistry
     /// <summary> The ContentType. </summary>
     internal readonly partial struct ContentType : IEquatable<ContentType>
     {
-
         /// <summary> Initializes a new instance of <see cref="ContentType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContentType(string value)

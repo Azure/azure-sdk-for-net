@@ -17,8 +17,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             new CommunicationUserIdentifier("id")
         };
         private static readonly FileSource _fileSource = new FileSource(new System.Uri("file://path/to/file"));
-        private static readonly TextSource _textSource = new TextSource("PlayTTS test text.", "en-US-ElizabethNeural");
-        private static readonly SsmlSource _ssmlSource = new SsmlSource("<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\"><voice name=\"en-US-JennyNeural\">Recognize Choice Completed, played through SSML source.</voice></speak>");
+        private static readonly TextSource _textSource = new TextSource("PlayTTS test text.", "en-US-ElizabethNeural")
+        {
+            CustomVoiceEndpointId = "customVoiceEndpointId"
+        };
+        private static readonly SsmlSource _ssmlSource = new SsmlSource("<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\"><voice name=\"en-US-JennyNeural\">Recognize Choice Completed, played through SSML source.</voice></speak>")
+        {
+            CustomVoiceEndpointId = "customVoiceEndpointId"
+        };
 
         private static readonly PlayOptions _fileOptions = new PlayOptions(_fileSource, _target)
         {
@@ -96,6 +102,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
+            SpeechModelEndpointId = "customModelEndpointId"
         };
 
         private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"))
@@ -112,6 +119,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
+            SpeechModelEndpointId = "customModelEndpointId"
         };
 
         private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10)
@@ -128,6 +136,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceName = "LULU"
             },
             SpeechLanguage= "en-US",
+            SpeechModelEndpointId = "customModelEndpointId"
         };
 
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);

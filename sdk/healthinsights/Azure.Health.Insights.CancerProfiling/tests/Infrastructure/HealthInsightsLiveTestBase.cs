@@ -18,6 +18,8 @@ namespace Azure.Health.Insights.CancerProfiling.Tests.Infrastructure
             JsonPathSanitizers.Add("$..accessToken");
             JsonPathSanitizers.Add("$..source");
             SanitizedHeaders.Add(Constants.AuthorizationHeader);
+            IgnoredHeaders.Add("Repeatability-Request-ID");
+            IgnoredHeaders.Add("Repeatability-First-Sent");
         }
 
         /// <summary>

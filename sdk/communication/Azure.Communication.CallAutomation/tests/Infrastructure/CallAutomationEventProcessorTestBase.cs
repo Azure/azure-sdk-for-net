@@ -23,6 +23,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string CorelationId = "someCorelationId";
         protected const string SourceUser = "SOURCE_USER_ID";
         protected const string TargetUser = "TARGET_USER_ID";
+        protected const string TransfereeUser = "TRANSFEREE_USER_ID";
         protected const int defaultTestTimeout = 3;
         private const string NoneMediaSubscriptionId = "null";
         private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
@@ -76,7 +77,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected CallConnection CreateMoakCallConnection(string? callConnectionId = default)
         {
-            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null);
+            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null, null);
 
             return callconn;
         }

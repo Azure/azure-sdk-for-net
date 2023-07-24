@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -43,6 +42,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             return new DataTransfer(
                 id: Guid.NewGuid().ToString(),
+                transferManager: new(),
                 status: status);
         }
 
@@ -215,6 +215,145 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.AreEqual(checkpointerTransfers, result.Select(d => d.Id).ToList());
+        }
+
+        [Test]
+        public async Task GetResumableTransfers_LocalCheckpointer()
+        {
+            // Arrange
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            string parentRemotePath = "https://account.blob.core.windows.net/resume-test/";
+            string parentLocalPath1 = "/resume-test/";
+            string parentLocalPath2 = @"C:\Windows\Path\";
+
+            LocalTransferCheckpointerFactory factory = new LocalTransferCheckpointerFactory(test.DirectoryPath);
+
+            // Build expected results first to use to populate checkpointer
+            DataTransferProperties[] expectedResults = new DataTransferProperties[]
+            {
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "LocalFile", SourcePath = parentLocalPath1 + "file1", DestinationTypeId = "BlockBlob", DestinationPath = parentRemotePath + "file1", IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath + "file2/", DestinationTypeId = "LocalFile", DestinationPath = parentLocalPath1 + "file2/", IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath + "file3", DestinationTypeId = "BlockBlob", DestinationPath = parentRemotePath + "file3", IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "BlockBlob", SourcePath = parentRemotePath, DestinationTypeId = "LocalFile", DestinationPath = parentLocalPath1, IsContainer = true },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceTypeId = "LocalFile", SourcePath = parentLocalPath2, DestinationTypeId = "AppendBlob", DestinationPath = parentRemotePath, IsContainer = true },
+            };
+
+            // Add a transfer for each expected result
+            foreach (DataTransferProperties props in expectedResults)
+            {
+                AddTransferFromDataTransferProperties(factory, test.DirectoryPath, props);
+            }
+
+            // Build TransferManager with the stored transfers
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointerOptions = new TransferCheckpointerOptions(test.DirectoryPath)
+            };
+            TransferManager manager = new TransferManager(options);
+
+            // Act
+            IList<DataTransferProperties> result = await manager.GetResumableTransfersAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(5, result.Count);
+            foreach (DataTransferProperties props in result)
+            {
+                DataTransferProperties expected = expectedResults.Where(p => p.TransferId == props.TransferId).First();
+                AssertTransferProperties(expected, props);
+            }
+        }
+
+        [Test]
+        public async Task GetResumableTransfers_IgnoresCompleted()
+        {
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            LocalTransferCheckpointerFactory factory = new LocalTransferCheckpointerFactory(test.DirectoryPath);
+
+            string transferId1 = Guid.NewGuid().ToString();
+            factory.CreateStubJobPartPlanFilesAsync(
+                test.DirectoryPath,
+                transferId1,
+                3 /* jobPartCount */,
+                StorageTransferStatus.Completed);
+
+            string transferId2 = Guid.NewGuid().ToString();
+            factory.CreateStubJobPartPlanFilesAsync(
+                test.DirectoryPath,
+                transferId2,
+                3 /* jobPartCount */,
+                StorageTransferStatus.Queued);
+
+            // Build TransferManager with the stored transfers
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointerOptions = new TransferCheckpointerOptions(test.DirectoryPath)
+            };
+            TransferManager manager = new TransferManager(options);
+
+            // Act
+            IList<DataTransferProperties> result = await manager.GetResumableTransfersAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(transferId2, result.First().TransferId);
+        }
+
+        private void AddTransferFromDataTransferProperties(
+            LocalTransferCheckpointerFactory factory,
+            string checkpointerPath,
+            DataTransferProperties properties)
+        {
+            if (properties.IsContainer)
+            {
+                int numParts = 3;
+                List<string> sourcePaths = new List<string>();
+                List<string> destinationPaths = new List<string>();
+                for (int i = 0; i < numParts; i++)
+                {
+                    // Put extra slash on end of last part for testing
+                    if (i == numParts - 1)
+                    {
+                        sourcePaths.Add(properties.SourcePath + $"file{i}/");
+                        destinationPaths.Add(properties.DestinationPath + $"file{i}/");
+                        continue;
+                    }
+
+                    sourcePaths.Add(properties.SourcePath + $"file{i}");
+                    destinationPaths.Add(properties.DestinationPath + $"file{i}");
+                }
+
+                factory.CreateStubJobPartPlanFilesAsync(
+                    checkpointerPath,
+                    properties.TransferId,
+                    numParts, /* jobPartCount */
+                    StorageTransferStatus.InProgress,
+                    sourcePaths,
+                    destinationPaths,
+                    sourceResourceId: properties.SourceTypeId,
+                    destinationResourceId: properties.DestinationTypeId);
+            }
+            else
+            {
+                factory.CreateStubJobPartPlanFilesAsync(
+                    checkpointerPath,
+                    properties.TransferId,
+                    1, /* jobPartCount */
+                    StorageTransferStatus.InProgress,
+                    new List<string> { properties.SourcePath },
+                    new List<string> { properties.DestinationPath },
+                    sourceResourceId: properties.SourceTypeId,
+                    destinationResourceId: properties.DestinationTypeId);
+            }
+        }
+
+        private void AssertTransferProperties(DataTransferProperties expected, DataTransferProperties actual)
+        {
+            Assert.AreEqual(expected.TransferId, actual.TransferId);
+            Assert.AreEqual(expected.SourceTypeId, actual.SourceTypeId);
+            Assert.AreEqual(expected.SourcePath.TrimEnd('\\', '/'), actual.SourcePath.TrimEnd('\\', '/'));
+            Assert.AreEqual(expected.DestinationTypeId, actual.DestinationTypeId);
+            Assert.AreEqual(expected.DestinationPath.TrimEnd('\\', '/'), actual.DestinationPath.TrimEnd('\\', '/'));
+            Assert.AreEqual(expected.IsContainer, actual.IsContainer);
         }
     }
 }

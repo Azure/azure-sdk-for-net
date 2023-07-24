@@ -21,8 +21,7 @@ ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new Azur
 You can download our [sample data](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety/tests/Samples/sample_data), read in the text and initialize `AnalyzeTextOptions` with it. Then call `AnalyzeText` to get analysis result.
 
 ```C# Snippet:Azure_AI_ContentSafety_AnalyzeText
-string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "text.txt");
-string text = File.ReadAllText(datapath);
+string text = "You are an idiot";
 
 var request = new AnalyzeTextOptions(text);
 

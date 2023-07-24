@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
-                writer.WriteObjectValue(CatalogAdminPassword);
+                JsonSerializer.Serialize(writer, CatalogAdminPassword);
             }
             if (Optional.IsDefined(CatalogPricingTier))
             {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             Optional<string> catalogServerEndpoint = default;
             Optional<string> catalogAdminUserName = default;
-            Optional<FactorySecretString> catalogAdminPassword = default;
+            Optional<DataFactorySecretString> catalogAdminPassword = default;
             Optional<IntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
             Optional<string> dualStandbyPairName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    catalogAdminPassword = FactorySecretString.DeserializeFactorySecretString(property.Value);
+                    catalogAdminPassword = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("catalogPricingTier"u8))
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword.Value, Optional.ToNullable(catalogPricingTier), dualStandbyPairName.Value, additionalProperties);
+            return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword, Optional.ToNullable(catalogPricingTier), dualStandbyPairName.Value, additionalProperties);
         }
     }
 }

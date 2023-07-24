@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
         /// <summary>
         /// Get or sets the value of <see cref="TokenCredential" />.
-        /// If <see cref="TokenCredential" /> is not set, AAD authenication is disabled
+        /// If <see cref="TokenCredential" /> is not set, AAD authentication is disabled
         /// and Instrumentation Key from the Connection String will be used.
         /// </summary>
         /// <remarks>

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Dynamic;
 using Azure.Core.Serialization;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
@@ -25,6 +24,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanConvertObjectToModel()
         {
             dynamic data = BinaryData.FromString(
@@ -33,7 +33,7 @@ namespace Azure.Core.Tests.Public
                     "message": "Hi",
                     "number" : 5
                 }
-                """).ToDynamicFromJson(PropertyNameFormat.CamelCase);
+                """).ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }

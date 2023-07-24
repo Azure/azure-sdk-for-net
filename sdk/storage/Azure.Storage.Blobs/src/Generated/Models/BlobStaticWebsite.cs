@@ -10,7 +10,6 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The properties that enable an account to host a static website. </summary>
     public partial class BlobStaticWebsite
     {
-
         /// <summary> Initializes a new instance of BlobStaticWebsite. </summary>
         /// <param name="enabled"> Indicates whether this account is hosting a static website. </param>
         /// <param name="indexDocument"> The default name of the index page under each directory. </param>
