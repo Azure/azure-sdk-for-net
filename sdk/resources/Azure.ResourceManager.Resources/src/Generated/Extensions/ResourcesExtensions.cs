@@ -111,7 +111,13 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ArmApplicationResource" /> object. </returns>
         public static ArmApplicationResource GetArmApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            //return client.GetResourceClient(() =>
+            //{
+            //    ArmApplicationResource.ValidateResourceId(id);
+            //    return new ArmApplicationResource(client, id);
+            //}
+            //);
+            return client.GetCachedClient(id, (id) =>
             {
                 ArmApplicationResource.ValidateResourceId(id);
                 return new ArmApplicationResource(client, id);

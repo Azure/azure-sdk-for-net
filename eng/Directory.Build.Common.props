@@ -132,7 +132,9 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
-    <PackageReference Include="Azure.ResourceManager" />
+    <!-- <PackageReference Include="Azure.ResourceManager" /> -->
+    <!-- This is temporary, change the resourcemanager into project reference so that we could get the latest change there -->
+    <ProjectReference Include="C:\Users\dapzhang\Documents\workspace\azure-sdk-for-net\sdk\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
