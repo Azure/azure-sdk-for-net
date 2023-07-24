@@ -180,7 +180,6 @@ output WORKSPACE_KEY string = listKeys(primaryWorkspace.id, '2020-10-01').primar
 output SECONDARY_WORKSPACE_KEY string = listKeys(secondaryWorkspace.id, '2020-10-01').primarySharedKey
 output METRICS_RESOURCE_ID string = primaryWorkspace.id
 output METRICS_RESOURCE_NAMESPACE string = 'Microsoft.OperationalInsights/workspaces'
-output LOGS_ENDPOINT string =  'https://api.loganalytics.io'
 output MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT string = dataCollectionEndpoint.properties.logsIngestion.endpoint
 output INGESTION_STREAM_NAME string = streamName
 output INGESTION_TABLE_NAME string = table.name

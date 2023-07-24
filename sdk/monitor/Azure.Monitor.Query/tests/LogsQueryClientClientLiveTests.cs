@@ -18,6 +18,15 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
+        private Dictionary<string, string> regions = new Dictionary<string, string>()
+        {
+            { "AzureCloud", "https://api.loganalytics.io/v1" },
+            { "AzureChinaCloud", "https://api.loganalytics.azure.cn/v1" },
+            { "AzureGovernmentCloud", "https://api.loganalytics.us/v1" }
+        };
+
+        private string ENV_MONITOR_ENVIRONMENT = "MONITOR_ENVIRONMENT";
+
         public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -31,8 +40,18 @@ namespace Azure.Monitor.Query.Tests
 
         private LogsQueryClient CreateClient()
         {
+            string endpoint = "";
+            if (regions.TryGetValue(Environment.GetEnvironmentVariable(ENV_MONITOR_ENVIRONMENT), out string region))
+            {
+                endpoint = region;
+            }
+            else
+            {
+                endpoint = regions["AzureCloud"];
+            }
+
             return InstrumentClient(new LogsQueryClient(
-                TestEnvironment.LogsEndpoint,
+                new Uri(endpoint),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new LogsQueryClientOptions()
                 {
