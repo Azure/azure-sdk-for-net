@@ -552,6 +552,7 @@ using Azure.Core.Pipeline;
             {
                 var response = await RestClient.ReclassifyJobActionAsync(
                     id: jobId,
+                    new ReclassifyJobRequest(),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.GetRawResponse();
             }
@@ -579,6 +580,7 @@ using Azure.Core.Pipeline;
             {
                 var response = RestClient.ReclassifyJobAction(
                     id: jobId,
+                    new ReclassifyJobRequest(),
                     cancellationToken: cancellationToken);
                 return response.GetRawResponse();
             }
