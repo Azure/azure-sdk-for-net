@@ -512,17 +512,6 @@ namespace Azure.Core
         public int RetryNumber { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
     }
-    public sealed partial class MultiBufferRequestContent : Azure.Core.RequestContent, System.Buffers.IBufferWriter<byte>
-    {
-        public MultiBufferRequestContent(int bufferSize = 4096) { }
-        public void Advance(int bytesWritten) { }
-        public override void Dispose() { }
-        public System.Memory<byte> GetMemory(int sizeHint = 0) { throw null; }
-        public System.Span<byte> GetSpan(int sizeHint = 0) { throw null; }
-        public override bool TryComputeLength(out long length) { throw null; }
-        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
-        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
-    }
     public static partial class MultipartResponse
     {
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -548,6 +537,7 @@ namespace Azure.Core
     public abstract partial class RequestContent : System.IDisposable
     {
         protected RequestContent() { }
+        public static Azure.Core.RequestContent Create(Azure.Core.SequenceWriter writer) { throw null; }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.BinaryData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
@@ -727,6 +717,16 @@ namespace Azure.Core
         public int MaxRetries { get { throw null; } set { } }
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
+    }
+    public sealed partial class SequenceWriter : System.Buffers.IBufferWriter<byte>, System.IDisposable
+    {
+        public SequenceWriter(int bufferSize = 4096) { }
+        public void Advance(int bytesWritten) { }
+        public void Dispose() { }
+        public System.Memory<byte> GetMemory(int sizeHint = 0) { throw null; }
+        public System.Buffers.ReadOnlySequence<byte> GetReadOnlySequence() { throw null; }
+        public System.Span<byte> GetSpan(int sizeHint = 0) { throw null; }
+        public bool TryComputeLength(out long length) { throw null; }
     }
     public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
     {
