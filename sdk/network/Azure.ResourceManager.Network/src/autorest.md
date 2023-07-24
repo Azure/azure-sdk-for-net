@@ -175,6 +175,8 @@ rename-mapping:
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
   ExpressRouteGateway.properties.expressRouteConnections: ExpressRouteConnectionList
   AdminState: ExpressRouteGatewayAdminState
+  SyncMode: BackendAddressSyncMode
+  MigratedPools: MigrateLoadBalancerToIPBasedResult
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -266,6 +268,7 @@ override-operation-name:
   VirtualHubs_GetEffectiveVirtualHubRoutes: GetVirtualHubEffectiveRoutes
   VirtualHubs_GetOutboundRoutes: GetVirtualHubOutboundRoutes
   VirtualHubs_GetInboundRoutes: GetVirtualHubInboundRoutes
+  generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
 
 directive:
   - remove-operation: 'PutBastionShareableLink'

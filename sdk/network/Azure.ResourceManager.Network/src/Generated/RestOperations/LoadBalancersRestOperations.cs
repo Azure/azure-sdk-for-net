@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MigratedPools>> MigrateToIPBasedAsync(string subscriptionId, string groupName, string loadBalancerName, MigrateLoadBalancerToIPBasedContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MigrateLoadBalancerToIPBasedResult>> MigrateToIPBasedAsync(string subscriptionId, string groupName, string loadBalancerName, MigrateLoadBalancerToIPBasedContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -705,9 +705,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        MigratedPools value = default;
+                        MigrateLoadBalancerToIPBasedResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MigratedPools.DeserializeMigratedPools(document.RootElement);
+                        value = MigrateLoadBalancerToIPBasedResult.DeserializeMigrateLoadBalancerToIPBasedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MigratedPools> MigrateToIPBased(string subscriptionId, string groupName, string loadBalancerName, MigrateLoadBalancerToIPBasedContent content = null, CancellationToken cancellationToken = default)
+        public Response<MigrateLoadBalancerToIPBasedResult> MigrateToIPBased(string subscriptionId, string groupName, string loadBalancerName, MigrateLoadBalancerToIPBasedContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
@@ -735,9 +735,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        MigratedPools value = default;
+                        MigrateLoadBalancerToIPBasedResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MigratedPools.DeserializeMigratedPools(document.RootElement);
+                        value = MigrateLoadBalancerToIPBasedResult.DeserializeMigrateLoadBalancerToIPBasedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

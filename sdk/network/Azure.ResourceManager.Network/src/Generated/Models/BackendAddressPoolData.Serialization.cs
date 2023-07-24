@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<int> drainPeriodInSeconds = default;
             Optional<WritableSubResource> virtualNetwork = default;
-            Optional<SyncMode> syncMode = default;
+            Optional<BackendAddressSyncMode> syncMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            syncMode = new SyncMode(property0.Value.GetString());
+                            syncMode = new BackendAddressSyncMode(property0.Value.GetString());
                             continue;
                         }
                     }

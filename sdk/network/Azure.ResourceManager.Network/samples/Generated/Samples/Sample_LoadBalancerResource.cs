@@ -249,7 +249,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
 "pool1","pool2"
 },
             };
-            MigratedPools result = await loadBalancer.MigrateToIPBasedAsync(content: content);
+            MigrateLoadBalancerToIPBasedResult result = await loadBalancer.MigrateToIPBasedAsync(content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

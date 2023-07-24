@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualNetworkId"> A reference to a virtual network. </param>
         /// <param name="syncMode"> Backend address synchronous mode for the backend pool. </param>
         /// <returns> A new <see cref="Network.BackendAddressPoolData"/> instance for mocking. </returns>
-        public static BackendAddressPoolData BackendAddressPoolData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, AzureLocation? location = null, IEnumerable<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = null, IEnumerable<LoadBalancerBackendAddress> loadBalancerBackendAddresses = null, IEnumerable<NetworkInterfaceIPConfigurationData> backendIPConfigurations = null, IEnumerable<WritableSubResource> loadBalancingRules = null, ResourceIdentifier outboundRuleId = null, IEnumerable<WritableSubResource> outboundRules = null, IEnumerable<WritableSubResource> inboundNatRules = null, NetworkProvisioningState? provisioningState = null, int? drainPeriodInSeconds = null, ResourceIdentifier virtualNetworkId = null, SyncMode? syncMode = null)
+        public static BackendAddressPoolData BackendAddressPoolData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, AzureLocation? location = null, IEnumerable<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = null, IEnumerable<LoadBalancerBackendAddress> loadBalancerBackendAddresses = null, IEnumerable<NetworkInterfaceIPConfigurationData> backendIPConfigurations = null, IEnumerable<WritableSubResource> loadBalancingRules = null, ResourceIdentifier outboundRuleId = null, IEnumerable<WritableSubResource> outboundRules = null, IEnumerable<WritableSubResource> inboundNatRules = null, NetworkProvisioningState? provisioningState = null, int? drainPeriodInSeconds = null, ResourceIdentifier virtualNetworkId = null, BackendAddressSyncMode? syncMode = null)
         {
             tunnelInterfaces ??= new List<GatewayLoadBalancerTunnelInterface>();
             loadBalancerBackendAddresses ??= new List<LoadBalancerBackendAddress>();
@@ -2536,14 +2536,14 @@ namespace Azure.ResourceManager.Network.Models
             return new InboundNatRulePortMapping(inboundNatRuleName, protocol, frontendPort, backendPort);
         }
 
-        /// <summary> Initializes a new instance of MigratedPools. </summary>
-        /// <param name="migratedPoolsValue"> A list of pools migrated from Nic based to IP based pool. </param>
-        /// <returns> A new <see cref="Models.MigratedPools"/> instance for mocking. </returns>
-        public static MigratedPools MigratedPools(IEnumerable<string> migratedPoolsValue = null)
+        /// <summary> Initializes a new instance of MigrateLoadBalancerToIPBasedResult. </summary>
+        /// <param name="migratedPools"> A list of pools migrated from Nic based to IP based pool. </param>
+        /// <returns> A new <see cref="Models.MigrateLoadBalancerToIPBasedResult"/> instance for mocking. </returns>
+        public static MigrateLoadBalancerToIPBasedResult MigrateLoadBalancerToIPBasedResult(IEnumerable<string> migratedPools = null)
         {
-            migratedPoolsValue ??= new List<string>();
+            migratedPools ??= new List<string>();
 
-            return new MigratedPools(migratedPoolsValue?.ToList());
+            return new MigrateLoadBalancerToIPBasedResult(migratedPools?.ToList());
         }
 
         /// <summary> Initializes a new instance of EffectiveRouteListResult. </summary>

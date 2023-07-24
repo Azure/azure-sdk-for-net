@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="content"> Parameters supplied to the migrateToIpBased Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MigratedPools>> MigrateToIPBasedAsync(MigrateLoadBalancerToIPBasedContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrateLoadBalancerToIPBasedResult>> MigrateToIPBasedAsync(MigrateLoadBalancerToIPBasedContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerResource.MigrateToIPBased");
             scope.Start();
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="content"> Parameters supplied to the migrateToIpBased Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MigratedPools> MigrateToIPBased(MigrateLoadBalancerToIPBasedContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<MigrateLoadBalancerToIPBasedResult> MigrateToIPBased(MigrateLoadBalancerToIPBasedContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerResource.MigrateToIPBased");
             scope.Start();

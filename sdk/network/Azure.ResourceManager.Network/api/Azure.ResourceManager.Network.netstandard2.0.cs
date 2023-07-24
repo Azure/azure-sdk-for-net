@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network
         public Azure.Core.ResourceIdentifier OutboundRuleId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> OutboundRules { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.SyncMode? SyncMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.BackendAddressSyncMode? SyncMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterface> TunnelInterfaces { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
     }
@@ -2031,8 +2031,8 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.Response<Azure.ResourceManager.Network.ProbeResource> GetProbe(string probeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ProbeResource>> GetProbeAsync(string probeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Network.ProbeCollection GetProbes() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Network.Models.MigratedPools> MigrateToIPBased(Azure.ResourceManager.Network.Models.MigrateLoadBalancerToIPBasedContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.MigratedPools>> MigrateToIPBasedAsync(Azure.ResourceManager.Network.Models.MigrateLoadBalancerToIPBasedContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Network.Models.MigrateLoadBalancerToIPBasedResult> MigrateToIPBased(Azure.ResourceManager.Network.Models.MigrateLoadBalancerToIPBasedContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.MigrateLoadBalancerToIPBasedResult>> MigrateToIPBasedAsync(Azure.ResourceManager.Network.Models.MigrateLoadBalancerToIPBasedContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.LoadBalancerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.LoadBalancerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.LoadBalancerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -5096,8 +5096,14 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation DownloadVpnSitesConfiguration(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.GetVpnSitesConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DownloadVpnSitesConfigurationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.GetVpnSitesConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnProfileResponse> Generatevirtualwanvpnserverconfigurationvpnprofile(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualWanVpnProfileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnProfileResponse> GenerateVirtualWanVpnServerConfigurationVpnProfile(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualWanVpnProfileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualWanVpnProfileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnProfileResponse>> GenerateVirtualWanVpnServerConfigurationVpnProfileAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.VirtualWanVpnProfileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.VirtualWanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.VirtualWanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.VpnServerConfigurationsResponse> GetVpnServerConfigurationsAssociatedWithVirtualWan(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -6669,7 +6675,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.AzureReachabilityReportLatencyInfo AzureReachabilityReportLatencyInfo(System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), int? score = default(int?)) { throw null; }
         public static Azure.ResourceManager.Network.AzureWebCategoryData AzureWebCategoryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string group = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.BackendAddressInboundNatRulePortMappings BackendAddressInboundNatRulePortMappings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.InboundNatRulePortMapping> inboundNatRulePortMappings = null) { throw null; }
-        public static Azure.ResourceManager.Network.BackendAddressPoolData BackendAddressPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterface> tunnelInterfaces = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.LoadBalancerBackendAddress> loadBalancerBackendAddresses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> backendIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> loadBalancingRules = null, Azure.Core.ResourceIdentifier outboundRuleId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> outboundRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundNatRules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), int? drainPeriodInSeconds = default(int?), Azure.Core.ResourceIdentifier virtualNetworkId = null, Azure.ResourceManager.Network.Models.SyncMode? syncMode = default(Azure.ResourceManager.Network.Models.SyncMode?)) { throw null; }
+        public static Azure.ResourceManager.Network.BackendAddressPoolData BackendAddressPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.GatewayLoadBalancerTunnelInterface> tunnelInterfaces = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.LoadBalancerBackendAddress> loadBalancerBackendAddresses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> backendIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> loadBalancingRules = null, Azure.Core.ResourceIdentifier outboundRuleId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> outboundRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> inboundNatRules = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), int? drainPeriodInSeconds = default(int?), Azure.Core.ResourceIdentifier virtualNetworkId = null, Azure.ResourceManager.Network.Models.BackendAddressSyncMode? syncMode = default(Azure.ResourceManager.Network.Models.BackendAddressSyncMode?)) { throw null; }
         public static Azure.ResourceManager.Network.BaseAdminRuleData BaseAdminRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = "Unknown", Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Network.BastionHostData BastionHostData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Network.Models.BastionHostSkuName? skuName = default(Azure.ResourceManager.Network.Models.BastionHostSkuName?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.BastionHostIPConfiguration> ipConfigurations = null, string dnsName = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), int? scaleUnits = default(int?), bool? disableCopyPaste = default(bool?), bool? enableFileCopy = default(bool?), bool? enableIPConnect = default(bool?), bool? enableShareableLink = default(bool?), bool? enableTunneling = default(bool?), bool? enableKerberos = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.BastionHostIPConfiguration BastionHostIPConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier subnetId = null, Azure.Core.ResourceIdentifier publicIPAddressId = null, Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod? privateIPAllocationMethod = default(Azure.ResourceManager.Network.Models.NetworkIPAllocationMethod?)) { throw null; }
@@ -6759,7 +6765,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.LoadBalancingRuleData LoadBalancingRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.Core.ResourceIdentifier backendAddressPoolId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> backendAddressPools = null, Azure.Core.ResourceIdentifier probeId = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol?), Azure.ResourceManager.Network.Models.LoadDistribution? loadDistribution = default(Azure.ResourceManager.Network.Models.LoadDistribution?), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), bool? disableOutboundSnat = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.LocalNetworkGatewayData LocalNetworkGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> localNetworkAddressPrefixes = null, string gatewayIPAddress = null, string fqdn = null, Azure.ResourceManager.Network.Models.BgpSettings bgpSettings = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.MatchedRule MatchedRule(string ruleName = null, string action = null) { throw null; }
-        public static Azure.ResourceManager.Network.Models.MigratedPools MigratedPools(System.Collections.Generic.IEnumerable<string> migratedPoolsValue = null) { throw null; }
+        public static Azure.ResourceManager.Network.Models.MigrateLoadBalancerToIPBasedResult MigrateLoadBalancerToIPBasedResult(System.Collections.Generic.IEnumerable<string> migratedPools = null) { throw null; }
         public static Azure.ResourceManager.Network.NatGatewayData NatGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Network.Models.NatGatewaySkuName? skuName = default(Azure.ResourceManager.Network.Models.NatGatewaySkuName?), System.Collections.Generic.IEnumerable<string> zones = null, Azure.ETag? etag = default(Azure.ETag?), int? idleTimeoutInMinutes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPAddresses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> publicIPPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> subnets = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.NatRulePortMapping NatRulePortMapping(string inboundNatRuleName = null, int? frontendPort = default(int?), int? backendPort = default(int?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.NetworkAdminRule NetworkAdminRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string description = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol? protocol = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleProtocol?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> sources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.AddressPrefixItem> destinations = null, System.Collections.Generic.IEnumerable<string> sourcePortRanges = null, System.Collections.Generic.IEnumerable<string> destinationPortRanges = null, Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess? access = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleAccess?), int? priority = default(int?), Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection? direction = default(Azure.ResourceManager.Network.Models.SecurityConfigurationRuleDirection?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
@@ -7319,6 +7325,24 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal BackendAddressInboundNatRulePortMappings() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.InboundNatRulePortMapping> InboundNatRulePortMappings { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackendAddressSyncMode : System.IEquatable<Azure.ResourceManager.Network.Models.BackendAddressSyncMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackendAddressSyncMode(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.BackendAddressSyncMode Automatic { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.BackendAddressSyncMode Manual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.BackendAddressSyncMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.BackendAddressSyncMode left, Azure.ResourceManager.Network.Models.BackendAddressSyncMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.BackendAddressSyncMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.BackendAddressSyncMode left, Azure.ResourceManager.Network.Models.BackendAddressSyncMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BastionHostIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
@@ -9810,15 +9834,15 @@ namespace Azure.ResourceManager.Network.Models
         public string Selector { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.WebApplicationFirewallMatchVariable VariableName { get { throw null; } set { } }
     }
-    public partial class MigratedPools
-    {
-        internal MigratedPools() { }
-        public System.Collections.Generic.IReadOnlyList<string> MigratedPoolsValue { get { throw null; } }
-    }
     public partial class MigrateLoadBalancerToIPBasedContent
     {
         public MigrateLoadBalancerToIPBasedContent() { }
         public System.Collections.Generic.IList<string> Pools { get { throw null; } }
+    }
+    public partial class MigrateLoadBalancerToIPBasedResult
+    {
+        internal MigrateLoadBalancerToIPBasedResult() { }
+        public System.Collections.Generic.IReadOnlyList<string> MigratedPools { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NatGatewaySkuName : System.IEquatable<Azure.ResourceManager.Network.Models.NatGatewaySkuName>
@@ -11755,24 +11779,6 @@ namespace Azure.ResourceManager.Network.Models
     {
         Production = 0,
         Staging = 1,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SyncMode : System.IEquatable<Azure.ResourceManager.Network.Models.SyncMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SyncMode(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.SyncMode Automatic { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.SyncMode Manual { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.SyncMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.SyncMode left, Azure.ResourceManager.Network.Models.SyncMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.SyncMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.SyncMode left, Azure.ResourceManager.Network.Models.SyncMode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SyncRemoteAddressSpace : System.IEquatable<Azure.ResourceManager.Network.Models.SyncRemoteAddressSpace>

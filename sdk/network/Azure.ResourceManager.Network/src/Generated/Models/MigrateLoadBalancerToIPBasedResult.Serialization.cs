@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class MigratedPools
+    public partial class MigrateLoadBalancerToIPBasedResult
     {
-        internal static MigratedPools DeserializeMigratedPools(JsonElement element)
+        internal static MigrateLoadBalancerToIPBasedResult DeserializeMigrateLoadBalancerToIPBasedResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new MigratedPools(Optional.ToList(migratedPools));
+            return new MigrateLoadBalancerToIPBasedResult(Optional.ToList(migratedPools));
         }
     }
 }

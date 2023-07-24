@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="drainPeriodInSeconds"> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </param>
         /// <param name="virtualNetwork"> A reference to a virtual network. </param>
         /// <param name="syncMode"> Backend address synchronous mode for the backend pool. </param>
-        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, WritableSubResource virtualNetwork, SyncMode? syncMode) : base(id, name, resourceType)
+        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, WritableSubResource virtualNetwork, BackendAddressSyncMode? syncMode) : base(id, name, resourceType)
         {
             ETag = etag;
             Location = location;
@@ -107,6 +107,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Backend address synchronous mode for the backend pool. </summary>
-        public SyncMode? SyncMode { get; set; }
+        public BackendAddressSyncMode? SyncMode { get; set; }
     }
 }

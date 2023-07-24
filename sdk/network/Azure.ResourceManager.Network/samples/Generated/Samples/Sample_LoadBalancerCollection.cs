@@ -956,7 +956,7 @@ Name = "fe-lb",
 new BackendAddressPoolData()
 {
 VirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb"),
-SyncMode = SyncMode.Automatic,
+SyncMode = BackendAddressSyncMode.Automatic,
 Name = "be-lb",
 }
 },
