@@ -230,7 +230,6 @@ namespace Azure.ResourceManager.Resources.Tests
         [Test]
         public void MockingGetMultipleResourcesOnArmClient_WithoutAzureMock_FixedByGetCachedClient()
         {
-            // TODO -- this cannot pass now, until we fix GetResourceClient
             // the data we use
             var subscriptionId = Guid.NewGuid().ToString();
             var appId1 = ArmApplicationResource.CreateResourceIdentifier(subscriptionId, "myRg", "myApp1");
@@ -244,10 +243,8 @@ namespace Azure.ResourceManager.Resources.Tests
             var armClientMock = new Mock<ArmClient>();
             var appMock1 = new Mock<ArmApplicationResource>();
             var appMock2 = new Mock<ArmApplicationResource>();
-            // COMMENT: this is a real big issue when we mock GetResourceClient, its signature does not take a resource therefore we cannot easily make it to return two different instances with different ids.
             armClientMock.Setup(client => client.GetCachedClient(appId1, It.IsAny<Func<ResourceIdentifier, ArmApplicationResource>>())).Returns(appMock1.Object);
             appMock1.Setup(app => app.Id).Returns(appId1);
-            // COMMENT: but since it takes a generic parameter, it is possible to return different type of instances.
             armClientMock.Setup(client => client.GetCachedClient(appId2, It.IsAny<Func<ResourceIdentifier, ArmApplicationResource>>())).Returns(appMock2.Object);
             appMock2.Setup(ad => ad.Id).Returns(appId2);
 
