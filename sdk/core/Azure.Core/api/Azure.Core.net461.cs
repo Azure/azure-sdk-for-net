@@ -1189,7 +1189,6 @@ namespace Azure.Core.Serialization
     {
         private object _dummy;
         private int _dummyPrimitive;
-        public static readonly Azure.Core.Serialization.ModelSerializerOptions AzureServiceDefault;
         public Azure.Core.Serialization.ModelSerializerFormat Format;
         public ModelSerializerOptions() { throw null; }
         public ModelSerializerOptions(string format = "D") { throw null; }
