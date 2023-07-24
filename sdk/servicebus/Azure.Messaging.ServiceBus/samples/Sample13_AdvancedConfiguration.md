@@ -80,7 +80,7 @@ ServiceBusProcessor processor = client.CreateProcessor("<queue-name>", new Servi
 The processor allows for automatic lock renewal based on the configured 
 `MaxAutoLockRenewalDuration` property. However, there are times when the lock may be lost due to 
 a transient network issue. The lock can also be considered lost if the processing time exceeds 
-the `MaxAutoLockRenewalDuration`. For these cases, the processor allows you to register an event 
+the `MaxAutoLockRenewalDuration`. For these cases, the processor allows you to register a
 handler for an event that is raised when the lock is lost. In the below examples, we show how 
 the overall processing token can be linked to the lock lost event handler so that you can avoid 
 expensive processing when you know the processor is shutting down or the message/session lock 
