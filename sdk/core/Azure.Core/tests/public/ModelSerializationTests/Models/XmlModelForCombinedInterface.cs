@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text.Json;
+using System.Collections.Generic;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteStartElement("Value");
             writer.WriteValue(Value);
             writer.WriteEndElement();
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 writer.WriteStartElement("ReadOnlyProperty");
                 writer.WriteValue(ReadOnlyProperty);
@@ -81,16 +82,83 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndElement();
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            MemoryStream stream = new MemoryStream();
-            XmlWriter writer = XmlWriter.Create(stream);
-            Serialize(writer, options);
-            writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
+            writer.WriteStartObject();
+            writer.WritePropertyName("key"u8);
+            writer.WriteStringValue(Key);
+            writer.WritePropertyName("value"u8);
+            writer.WriteStringValue(Value);
+            if (options.Format == ModelSerializerFormat.Json)
+            {
+                writer.WritePropertyName("readOnlyProperty"u8);
+                writer.WriteStringValue(ReadOnlyProperty);
+            }
+            writer.WriteEndObject();
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(XElement.Load(data.ToStream()), options);
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            if (options.Format == ModelSerializerFormat.Json)
+            {
+                MemoryStream stream = new MemoryStream();
+                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+                Serialize(writer, options);
+                writer.Flush();
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+            if (options.Format == ModelSerializerFormat.Wire)
+            {
+                MemoryStream stream = new MemoryStream();
+                XmlWriter writer = XmlWriter.Create(stream);
+                Serialize(writer, options);
+                writer.Flush();
+                stream.Position = 0;
+                return new BinaryData(stream.ToArray());
+            }
+            throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
+        }
+
+        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelSerializerOptions options)
+        {
+            string key = default;
+            string value = default;
+            string readOnlyProperty = default;
+
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("key"u8))
+                {
+                    key = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("value"u8))
+                {
+                    value = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("readOnlyProperty"u8))
+                {
+                    readOnlyProperty = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            if (options.Format == ModelSerializerFormat.Json)
+            {
+                using var doc = JsonDocument.Parse(data);
+                return DeserializeXmlModelForCombinedInterface(doc.RootElement, options);
+            }
+            if (options.Format == ModelSerializerFormat.Wire)
+            {
+                return DeserializeXmlModelForCombinedInterface(XElement.Load(data.ToStream()), options);
+            }
+            throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
+        }
     }
 }
