@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
     [JsonConverter(typeof(WritableSubResourceConverter))]
     public partial class WritableSubResource : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
         /// <summary>
         /// Serialize the input WritableSubResource object.
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
         /// <returns>Deserialized WritableSubResource object.</returns>
         internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.AzureServiceDefault;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())

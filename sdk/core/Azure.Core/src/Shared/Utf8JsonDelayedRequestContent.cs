@@ -24,7 +24,7 @@ namespace Azure.Core
         public Utf8JsonDelayedRequestContent(IJsonModelSerializable model, ModelSerializerOptions? options = default)
         {
             _model = model;
-            _serializerOptions = options ?? ModelSerializerOptions.AzureServiceDefault;
+            _serializerOptions = options ?? new ModelSerializerOptions(ModelSerializerFormat.Wire);
         }
 
         private SequenceWriter SequenceWriter => _sequenceWriter ??= new SequenceWriter();

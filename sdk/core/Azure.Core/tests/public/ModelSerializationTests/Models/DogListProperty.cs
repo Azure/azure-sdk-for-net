@@ -46,7 +46,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         internal static DogListProperty DeserializeDogListProperty(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.AzureServiceDefault;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             double weight = default;
             string name = "";
@@ -161,7 +161,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                return modelConverter is not null ? modelConverter.Options : ModelSerializerOptions.AzureServiceDefault;
+                return modelConverter is not null ? modelConverter.Options : new ModelSerializerOptions(ModelSerializerFormat.Wire);
             }
         }
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)

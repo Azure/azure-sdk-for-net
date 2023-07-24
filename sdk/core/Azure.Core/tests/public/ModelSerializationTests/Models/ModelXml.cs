@@ -46,7 +46,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public ChildModelXml RenamedChildModelXml { get; set; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelSerializerOptions.AzureServiceDefault, nameHint);
+            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
 
         void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
             => Serialize(writer, options, null);
