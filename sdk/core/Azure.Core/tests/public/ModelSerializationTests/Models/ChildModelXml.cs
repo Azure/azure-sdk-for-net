@@ -37,7 +37,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
+            Serialize(writer, ModelSerializerOptions.AzureServiceDefault, nameHint);
 
         void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
             => Serialize(writer, options, null);

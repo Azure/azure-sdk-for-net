@@ -11,7 +11,10 @@ namespace Azure.Core.Serialization
     /// </summary>
     public struct ModelSerializerOptions
     {
-        private Dictionary<Type, ObjectSerializer>? _serializers;
+        /// <summary>
+        /// .
+        /// </summary>
+        public static readonly ModelSerializerOptions AzureServiceDefault = new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class. Defaults to Data format "D".
@@ -26,6 +29,7 @@ namespace Azure.Core.Serialization
         {
             //throw ArgumentException if not "D" or "W"
             Format = ValidateFormat(format);
+            Serializers = new Dictionary<Type, ObjectSerializer>();
         }
 
         /// <summary>
@@ -36,11 +40,7 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// Dictionary that holds all the serializers for the different model types.
         /// </summary>
-        public Dictionary<Type, ObjectSerializer> Serializers
-        {
-            get { return _serializers ??= new Dictionary<Type, ObjectSerializer>(); }
-            internal set { _serializers = value; }
-        }
+        public Dictionary<Type, ObjectSerializer> Serializers { get; internal set; }
 
         private string ValidateFormat(string x)
         {

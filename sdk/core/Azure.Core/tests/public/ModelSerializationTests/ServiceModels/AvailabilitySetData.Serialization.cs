@@ -23,7 +23,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -94,7 +94,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 
         public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.AzureServiceDefault;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

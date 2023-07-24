@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {

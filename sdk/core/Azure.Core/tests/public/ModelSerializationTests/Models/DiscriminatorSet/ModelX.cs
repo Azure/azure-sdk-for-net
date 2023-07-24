@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public int XProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
 
         public static implicit operator RequestContent(ModelX modelX)
         {
@@ -73,7 +73,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.AzureServiceDefault;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
