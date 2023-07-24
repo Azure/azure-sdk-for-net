@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Properties of a Blob.
@@ -26,11 +26,6 @@ namespace Azure.Storage.DataMovement.Models
         /// Metadata.
         /// </summary>
         internal IDictionary<string, string> Metadata { get; }
-
-        /// <summary>
-        /// Storage Resource Type
-        /// </summary>
-        public StorageResourceType ResourceType { get; }
 
         /// <summary>
         /// Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob.
@@ -71,15 +66,6 @@ namespace Azure.Storage.DataMovement.Models
         /// Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List.
         /// </summary>
         internal Uri CopySource { get; }
-
-        /// <summary>
-        /// State of the most recent copy operation identified by x-ms-copy-id, if any.
-        ///
-        /// TODO: this might be needed in a different callback, but double check if
-        /// copy blob status and file blob status is the same. All we need is
-        /// pending, failed, and completed
-        /// </summary>
-        internal ServiceCopyStatus? CopyStatus { get; }
 
         /// <summary>
         /// The number of bytes present in the response body.
@@ -175,7 +161,6 @@ namespace Azure.Storage.DataMovement.Models
             string copyId,
             string copyProgress,
             Uri copySource,
-            ServiceCopyStatus? copyStatus,
             long contentLength,
             string contentType,
             ETag eTag,
@@ -188,8 +173,7 @@ namespace Azure.Storage.DataMovement.Models
             string versionId,
             bool isLatestVersion,
             DateTimeOffset expiresOn,
-            DateTimeOffset lastAccessed,
-            StorageResourceType resourceType)
+            DateTimeOffset lastAccessed)
         {
             LastModified = lastModified;
             ContentLength = contentLength;
@@ -198,7 +182,6 @@ namespace Azure.Storage.DataMovement.Models
             BlobSequenceNumber = blobSequenceNumber;
             BlobCommittedBlockCount = blobCommittedBlockCount;
             IsServerEncrypted = isServerEncrypted;
-            CopyStatus = copyStatus;
             EncryptionKeySha256 = encryptionKeySha256;
             CopySource = copySource;
             EncryptionScope = encryptionScope;
@@ -213,7 +196,6 @@ namespace Azure.Storage.DataMovement.Models
             CreatedOn = createdOn;
             ContentHash = contentHash;
             LastAccessed = lastAccessed;
-            ResourceType = resourceType;
         }
 
         /// <summary>
@@ -223,14 +205,12 @@ namespace Azure.Storage.DataMovement.Models
             DateTimeOffset lastModified,
             DateTimeOffset createdOn,
             long contentLength,
-            DateTimeOffset lastAccessed,
-            StorageResourceType resourceType)
+            DateTimeOffset lastAccessed)
         {
             LastModified = lastModified;
             ContentLength = contentLength;
             CreatedOn = createdOn;
             LastAccessed = lastAccessed;
-            ResourceType = resourceType;
         }
     }
 }

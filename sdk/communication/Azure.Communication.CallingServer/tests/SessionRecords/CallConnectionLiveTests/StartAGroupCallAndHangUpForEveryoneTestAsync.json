@@ -45,6 +45,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "332",
         "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Fri, 14 Jul 2023 06:39:05 GMT",
+        "Repeatability-Request-ID": "7ee666e4-4631-467b-841e-788b8e59a4fa",
         "traceparent": "00-6a533cb766482342b616a6e55667849b-3e7415f02f062845-00",
         "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20220823.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
         "x-ms-client-request-id": "700944abf1deddd354e9e4bc44be7913",
@@ -248,6 +250,8 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "Repeatability-First-Sent": "Fri, 14 Jul 2023 06:39:05 GMT",
+        "Repeatability-Request-ID": "7ee666e4-4631-467b-841e-788b8e59a4fa",
         "User-Agent": "azsdk-net-Communication.CallingServer/1.0.0-alpha.20220823.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
         "x-ms-client-request-id": "14f3be37626308c754ca294e49d3a060",
         "x-ms-content-sha256": "Sanitized",

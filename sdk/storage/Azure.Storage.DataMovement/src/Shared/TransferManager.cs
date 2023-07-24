@@ -11,8 +11,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
@@ -230,21 +229,6 @@ namespace Azure.Storage.DataMovement
 
         #region Transfer Job Management
         /// <summary>
-        /// Attempts to pause the transfer of the respective <see cref="DataTransfer"></see>.
-        /// </summary>
-        /// <param name="transfer">The <see cref="DataTransfer"></see> for the transfer to pause.</param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Return true once the transfer has been successfully paused or false if the transfer
-        /// was already completed.
-        /// </returns>
-        public virtual Task PauseTransferIfRunningAsync(DataTransfer transfer, CancellationToken cancellationToken = default)
-            => PauseTransferIfRunningAsync(transfer.Id, cancellationToken);
-
-        /// <summary>
         /// Attempts to pause the transfer of the respective id.
         /// </summary>
         /// <param name="transferId">The id of the transfer to pause.</param>
@@ -335,9 +319,9 @@ namespace Azure.Storage.DataMovement
                 yield return new DataTransferProperties
                 {
                     TransferId = transferId,
-                    SourceScheme = sourceResourceId,
+                    SourceTypeId = sourceResourceId,
                     SourcePath = sourcePath,
-                    DestinationScheme = destResourceId,
+                    DestinationTypeId = destResourceId,
                     DestinationPath = destPath,
                     IsContainer = isContainer,
                     Checkpointer = _checkpointerOptions,

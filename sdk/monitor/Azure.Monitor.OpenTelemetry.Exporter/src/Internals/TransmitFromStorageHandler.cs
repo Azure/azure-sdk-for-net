@@ -18,12 +18,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal PersistentBlobProvider _blobProvider;
         private readonly TransmissionStateManager _transmissionStateManager;
         private readonly System.Timers.Timer _transmitFromStorageTimer;
+        private readonly bool _isAadEnabled;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
             _connectionVars = connectionVars;
+            _isAadEnabled = isAadEnabled;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
             _transmitFromStorageTimer = new System.Timers.Timer();
@@ -31,6 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _transmitFromStorageTimer.AutoReset = true;
             _transmitFromStorageTimer.Interval = 120000;
             _transmitFromStorageTimer.Start();
+            _isAadEnabled = isAadEnabled;
         }
 
         internal void TransmitFromStorage(object? sender, ElapsedEventArgs? e)
@@ -54,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             _transmissionStateManager.ResetConsecutiveErrors();
                             _transmissionStateManager.CloseTransmission();
 
-                            AzureMonitorExporterEventSource.Log.TransmitFromStorageSuccess(_connectionVars.InstrumentationKey);
+                            AzureMonitorExporterEventSource.Log.TransmitFromStorageSuccess(_isAadEnabled, _connectionVars.InstrumentationKey);
 
                             // In case if the delete fails, there is a possibility
                             // that the current batch will be transmitted more than once resulting in duplicates.
@@ -64,13 +67,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         else
                         {
                             _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                            HttpPipelineHelper.HandleFailures(httpMessage, blob, _blobProvider, _connectionVars);
+                            HttpPipelineHelper.HandleFailures(httpMessage, blob, _blobProvider, _connectionVars, _isAadEnabled);
                             break;
                         }
                     }
                     catch (Exception ex)
                     {
-                        AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_connectionVars.InstrumentationKey, ex);
+                        AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
                     }
                 }
                 else
