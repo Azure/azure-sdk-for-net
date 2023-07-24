@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ResourceManager.Compute;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
@@ -34,6 +36,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("D")]
         public void JsonReaderTest(string format) =>
             RoundTripTest(format, SerializeWithModelSerializer, DeserializeWithJsonReader);
+
+        [TestCase("W")]
+        [TestCase("D")]
+        public void UsingSequence(string format) =>
+            RoundTripTest(format, SerializeWithModelSerializer, DeserializeWithSequence);
 
         private void RoundTripTest(string format, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize, Func<string, ModelSerializerOptions, AvailabilitySetData> deserialize = default)
         {
@@ -68,6 +75,31 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return (AvailabilitySetData)model.Deserialize(ref reader, options);
         }
 
+        private AvailabilitySetData DeserializeWithSequence(string json, ModelSerializerOptions options)
+        {
+            using MultiBufferRequestContent content = WriteStringToBuffer(json);
+            var sequence = content.GetReadOnlySequence();
+            using var doc = JsonDocument.Parse(content.GetReadOnlySequence());
+            return AvailabilitySetData.DeserializeAvailabilitySetData(doc.RootElement);
+        }
+
+        private MultiBufferRequestContent WriteStringToBuffer(string json)
+        {
+            MultiBufferRequestContent content = new MultiBufferRequestContent();
+            var bytes = Encoding.UTF8.GetBytes(json);
+            int fullBuffers = bytes.Length / 4096;
+            for (int i = 0; i < fullBuffers; i++)
+            {
+                int index = i * 4096;
+                bytes.AsSpan(index, 4096).CopyTo(content.GetSpan(4096));
+                content.Advance(4096);
+            }
+            var remainder = bytes.Length % 4096;
+            bytes.AsSpan(fullBuffers * 4096, remainder).CopyTo(content.GetSpan(remainder));
+            content.Advance(remainder);
+            return content;
+        }
+
         private string SerializeWithImplicitCast(AvailabilitySetData model, ModelSerializerOptions options)
         {
             RequestContent content = model;
@@ -82,7 +114,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private string SerializeWithBuffer(AvailabilitySetData model, ModelSerializerOptions options)
         {
-            using var content = new MultiBufferRequestContent(bufferSize: 4048);
+            using var content = new MultiBufferRequestContent();
             using var writer = new Utf8JsonWriter(content);
             ((IJsonModelSerializable)model).Serialize(writer, options);
             writer.Flush();
@@ -124,5 +156,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(3, model.PlatformFaultDomainCount);
             Assert.AreEqual("Classic", model.Sku.Name);
         }
+
+        //[Test]
+        //public void ConvertReaderToSpan()
+        //{
+        //    var bytes = Encoding.UTF8.GetBytes(_serviceResponse);
+        //    Utf8JsonReader reader = new Utf8JsonReader(bytes);
+        //    using MultiBufferRequestContent content = reader.GetRawBytes();
+        //    content.TryComputeLength(out var length);
+
+        //    using var stream = new MemoryStream((int)length);
+        //    content.WriteTo(stream, default);
+
+        //    var convertedBytes = stream.GetBuffer().AsMemory(0, (int)stream.Position);
+
+        //    Assert.AreEqual(bytes.Length, convertedBytes.Length);
+        //    CollectionAssert.AreEqual(bytes, convertedBytes.ToArray());
+        //}
     }
 }

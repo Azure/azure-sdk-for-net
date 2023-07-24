@@ -144,5 +144,42 @@ namespace Azure.Core
                 await stream.WriteAsync(buffer.Array, 0, buffer.Written).ConfigureAwait(false);
             }
         }
+
+        private class MultiBufferSegment : ReadOnlySequenceSegment<byte>
+        {
+            public MultiBufferSegment(byte[] array, int length, long runningIndex)
+            {
+                Memory = new Memory<byte>(array, 0, length);
+                RunningIndex = runningIndex;
+            }
+
+            public void Add(byte[] array, int length)
+            {
+                Next = new MultiBufferSegment(array, length, RunningIndex + Memory.Length);
+            }
+        }
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <returns></returns>
+        public ReadOnlySequence<byte> GetReadOnlySequence()
+        {
+            if (_count == 0)
+                return ReadOnlySequence<byte>.Empty;
+
+            if (_count == 1)
+                return new ReadOnlySequence<byte>(_buffers[0].Array, 0, _buffers[0].Written);
+
+            MultiBufferSegment first = new MultiBufferSegment(_buffers[0].Array, _buffers[0].Written, 0);
+            MultiBufferSegment previous = first;
+            for (int i = 1; i < _count; i++)
+            {
+                previous!.Add(_buffers[i].Array, _buffers[i].Written);
+                previous = (MultiBufferSegment)previous.Next!;
+            }
+
+            return new ReadOnlySequence<byte>(first, 0, previous, previous.Memory.Length);
+        }
     }
 }
