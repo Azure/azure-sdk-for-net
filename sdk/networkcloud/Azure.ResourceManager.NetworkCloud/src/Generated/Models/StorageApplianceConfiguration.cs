@@ -11,14 +11,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> StorageApplianceConfigurationData represents configuration for the storage application. </summary>
-    public partial class StorageApplianceConfigurationData
+    public partial class StorageApplianceConfiguration
     {
-        /// <summary> Initializes a new instance of StorageApplianceConfigurationData. </summary>
+        /// <summary> Initializes a new instance of StorageApplianceConfiguration. </summary>
         /// <param name="adminCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackSlot"> The slot that storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the appliance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminCredentials"/> or <paramref name="serialNumber"/> is null. </exception>
-        public StorageApplianceConfigurationData(AdministrativeCredentials adminCredentials, long rackSlot, string serialNumber)
+        public StorageApplianceConfiguration(AdministrativeCredentials adminCredentials, long rackSlot, string serialNumber)
         {
             Argument.AssertNotNull(adminCredentials, nameof(adminCredentials));
             Argument.AssertNotNull(serialNumber, nameof(serialNumber));
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             SerialNumber = serialNumber;
         }
 
-        /// <summary> Initializes a new instance of StorageApplianceConfigurationData. </summary>
+        /// <summary> Initializes a new instance of StorageApplianceConfiguration. </summary>
         /// <param name="adminCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackSlot"> The slot that storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the appliance. </param>
         /// <param name="storageApplianceName"> The user-provided name for the storage appliance that will be created from this specification. </param>
-        internal StorageApplianceConfigurationData(AdministrativeCredentials adminCredentials, long rackSlot, string serialNumber, string storageApplianceName)
+        internal StorageApplianceConfiguration(AdministrativeCredentials adminCredentials, long rackSlot, string serialNumber, string storageApplianceName)
         {
             AdminCredentials = adminCredentials;
             RackSlot = rackSlot;

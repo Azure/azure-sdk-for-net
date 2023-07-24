@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: NetworkCloud
 namespace: Azure.ResourceManager.NetworkCloud
-require: https://github.com/Azure/azure-rest-api-specs/blob/f7ab2a992ff6a3a51a8f0bc82f2d7beebf61d90b/specification/networkcloud/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ed9bde6a3db71b84fdba076ba0546213bcce56ee/specification/networkcloud/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -23,6 +23,54 @@ format-by-name-rules:
 
 rename-mapping:
   ImageRepositoryCredentials.registryUrl: registryUriString
+  BareMetalMachineConfigurationData: BareMetalMachineConfiguration 
+  ClusterMetricsConfigurationData.collectionInterval: collectionIntervalInSeconds
+  StorageApplianceConfigurationData: StorageApplianceConfiguration 
+  AgentOptions: AgentConfig
+  # The supportExpiryDate in cluster response does not conform to date-time format. This field will continue to be a string in the current stable api version.
+  # ClusterAvailableUpgradeVersion.supportExpiryDate: -|date-time
+  # ClusterAvailableVersion.supportExpiryDate: -|date-time
+  ClusterData.supportExpiryDate: -|date-time 
+  BareMetalMachineData.clusterId: -|arm-id
+  BareMetalMachineData.machineSkuId: -|arm-id
+  BareMetalMachineData.rackId: -|arm-id
+  BareMetalMachineKeySetData.azureGroupId: -|arm-id
+  BmcKeySetData.azureGroupId: -|arm-id
+  CloudServicesNetworkData.clusterId: -|arm-id 
+  CloudServicesNetworkData.hybridAksClustersAssociatedIds: -|arm-id 
+  ClusterData.analyticsWorkspaceId: -|arm-id 
+  ClusterData.clusterManagerId: -|arm-id 
+  ClusterData.networkFabricId: -|arm-id 
+  ClusterManagerData.analyticsWorkspaceId: -|arm-id 
+  ClusterManagerData.fabricControllerId: -|arm-id 
+  ConsoleData.virtualMachineAccessId: -|arm-id 
+  KubernetesClusterData.clusterId: -|arm-id 
+  KubernetesClusterData.connectedClusterId: -|arm-id 
+  L2NetworkData.associatedResourceIds: -|arm-id 
+  L2NetworkData.clusterId: -|arm-id 
+  L2NetworkData.l2IsolationDomainId: -|arm-id 
+  L3NetworkData.clusterId: -|arm-id 
+  RackData.clusterId: -|arm-id 
+  RackData.rackSkuId: -|arm-id 
+  StorageApplianceData.clusterId: -|arm-id 
+  StorageApplianceData.rackId: -|arm-id 
+  StorageApplianceData.storageApplianceSkuId: -|arm-id 
+  TrunkedNetworkData.clusterId: -|arm-id 
+  TrunkedNetworkData.isolationDomainIds: -|arm-id 
+  VirtualMachineData.bareMetalMachineId: -|arm-id 
+  VirtualMachineData.clusterId: -|arm-id 
+  L2NetworkAttachmentConfiguration.networkId: -|arm-id 
+  L3NetworkAttachmentConfiguration.networkId: -|arm-id 
+  NetworkConfiguration.cloudServicesNetworkId: -|arm-id 
+  NetworkConfiguration.cniNetworkId: -|arm-id 
+  RackDefinition.networkRackId: -|arm-id 
+  TrunkedNetworkAttachmentConfiguration.networkId: -|arm-id 
+  # 'applicationId','principalId','tenantId' cannot be used globally as it break our list clusters API where tenantId,applicationId,principalId are sometimes an empty string
+  # ServicePrincipalInformation.applicationId: -|uuid
+  # ServicePrincipalInformation.principalId: -|uuid 
+  # ServicePrincipalInformation.tenantId: -|uuid
+
+
 
 rename-rules:
   CPU: Cpu

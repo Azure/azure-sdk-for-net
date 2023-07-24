@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     new SshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key")
                     },
                 },
-                AgentOptions = new AgentOptions(12)
+                AgentOptions = new AgentConfig(12)
                 {
                     HugepagesSize = HugepagesSize.TwoM,
                 },
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 {
                     L3Networks =
                     {
-                        new L3NetworkAttachmentConfiguration(TestEnvironment.L3NAttachmentId)
+                        new L3NetworkAttachmentConfiguration(new ResourceIdentifier(TestEnvironment.L3NAttachmentId))
                         {
                             IpamEnabled = L3NetworkConfigurationIpamEnabled.False,
                             PluginType = KubernetesPluginType.Sriov,

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Optional<AgentOptions> agentOptions = default;
+            Optional<AgentConfig> agentOptions = default;
             Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
             Optional<IList<string>> availabilityZones = default;
             long count = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            agentOptions = AgentOptions.DeserializeAgentOptions(property0.Value);
+                            agentOptions = AgentConfig.DeserializeAgentConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("attachedNetworkConfiguration"u8))

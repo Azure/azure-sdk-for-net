@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class StorageApplianceConfigurationData : IUtf8JsonSerializable
+    public partial class StorageApplianceConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteEndObject();
         }
 
-        internal static StorageApplianceConfigurationData DeserializeStorageApplianceConfigurationData(JsonElement element)
+        internal static StorageApplianceConfiguration DeserializeStorageApplianceConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new StorageApplianceConfigurationData(adminCredentials, rackSlot, serialNumber, storageApplianceName.Value);
+            return new StorageApplianceConfiguration(adminCredentials, rackSlot, serialNumber, storageApplianceName.Value);
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class BareMetalMachineConfigurationData : IUtf8JsonSerializable
+    public partial class BareMetalMachineConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteEndObject();
         }
 
-        internal static BareMetalMachineConfigurationData DeserializeBareMetalMachineConfigurationData(JsonElement element)
+        internal static BareMetalMachineConfiguration DeserializeBareMetalMachineConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new BareMetalMachineConfigurationData(bmcConnectionString.Value, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails.Value, machineName.Value, rackSlot, serialNumber);
+            return new BareMetalMachineConfiguration(bmcConnectionString.Value, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails.Value, machineName.Value, rackSlot, serialNumber);
         }
     }
 }

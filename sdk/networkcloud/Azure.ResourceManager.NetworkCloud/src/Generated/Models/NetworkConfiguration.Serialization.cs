@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
             Optional<BgpServiceLoadBalancerConfiguration> bgpServiceLoadBalancerConfiguration = default;
-            string cloudServicesNetworkId = default;
-            string cniNetworkId = default;
+            ResourceIdentifier cloudServicesNetworkId = default;
+            ResourceIdentifier cniNetworkId = default;
             Optional<string> dnsServiceIP = default;
             Optional<IList<string>> podCidrs = default;
             Optional<IList<string>> serviceCidrs = default;
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("cloudServicesNetworkId"u8))
                 {
-                    cloudServicesNetworkId = property.Value.GetString();
+                    cloudServicesNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cniNetworkId"u8))
                 {
-                    cniNetworkId = property.Value.GetString();
+                    cniNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dnsServiceIp"u8))

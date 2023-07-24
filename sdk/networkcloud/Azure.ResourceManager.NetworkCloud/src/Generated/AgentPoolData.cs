@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="taints"> The taints applied to the nodes in this agent pool. </param>
         /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
-        internal AgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, AgentOptions agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IList<KubernetesLabel> labels, AgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName) : base(id, name, resourceType, systemData, tags, location)
+        internal AgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, AgentConfig agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IList<KubernetesLabel> labels, AgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             AdministratorConfiguration = administratorConfiguration;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> The administrator credentials to be used for the nodes in this agent pool. </summary>
         public AdministratorConfiguration AdministratorConfiguration { get; set; }
         /// <summary> The configurations that will be applied to each agent in this agent pool. </summary>
-        public AgentOptions AgentOptions { get; set; }
+        public AgentConfig AgentOptions { get; set; }
         /// <summary> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </summary>
         public AttachedNetworkConfiguration AttachedNetworkConfiguration { get; set; }
         /// <summary> The list of availability zones of the Network Cloud cluster used for the provisioning of nodes in this agent pool. If not specified, all availability zones will be used. </summary>

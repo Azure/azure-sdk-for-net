@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 new SshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm")
 },
                 },
-                AgentOptions = new AgentOptions(96)
+                AgentOptions = new AgentConfig(96)
                 {
                     HugepagesSize = HugepagesSize.OneG,
                 },
@@ -166,14 +166,14 @@ new SshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQU
                 {
                     L2Networks =
 {
-new L2NetworkAttachmentConfiguration("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/l2Networks/l2NetworkName")
+new L2NetworkAttachmentConfiguration(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/l2Networks/l2NetworkName"))
 {
 PluginType = KubernetesPluginType.Dpdk,
 }
 },
                     L3Networks =
 {
-new L3NetworkAttachmentConfiguration("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/l3Networks/l3NetworkName")
+new L3NetworkAttachmentConfiguration(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/l3Networks/l3NetworkName"))
 {
 IpamEnabled = L3NetworkConfigurationIpamEnabled.False,
 PluginType = KubernetesPluginType.Sriov,
@@ -181,7 +181,7 @@ PluginType = KubernetesPluginType.Sriov,
 },
                     TrunkedNetworks =
 {
-new TrunkedNetworkAttachmentConfiguration("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/trunkedNetworks/trunkedNetworkName")
+new TrunkedNetworkAttachmentConfiguration(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/trunkedNetworks/trunkedNetworkName"))
 {
 PluginType = KubernetesPluginType.Macvlan,
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             (
                 new AzureLocation(TestEnvironment.Location),
                 new ExtendedLocation(TestEnvironment.ManagerExtendedLocation, "CustomLocation"),
-                new RackDefinition(TestEnvironment.SubnetId, "aa1234", "/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Aggregator_sim")
+                new RackDefinition(new ResourceIdentifier(TestEnvironment.SubnetId), "aa1234", "/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Aggregator_sim")
                 {
                     RackLocation = "Foo Datacenter, Floor 3, Aisle 9, Rack 2",
                     AvailabilityZone = "A"
@@ -46,31 +46,31 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90),
                 ComputeRackDefinitions =
                 {
-                    new RackDefinition(TestEnvironment.SubnetId, "b37m15r1", "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Compute_DellR750_3C2M_sim")
+                 new RackDefinition(new ResourceIdentifier(TestEnvironment.SubnetId), "b37m15r1", "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Compute_DellR750_3C2M_sim")
                     {
                         BareMetalMachineConfigurationData =
                         {
-                            new BareMetalMachineConfigurationData(createCreds,"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
+                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1,"BM1219XXX")
                             {
                                 MachineDetails = "extraDetails",
                                 MachineName = "compute1",
                             },
-                            new BareMetalMachineConfigurationData(createCreds,"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
+                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2,"BM1219YYY")
                             {
                                 MachineDetails = "extraDetails",
                                 MachineName = "compute2",
                             },
-                            new BareMetalMachineConfigurationData(createCreds,"AA:BB:CC:DD:EE:F0","00:BB:CC:DD:EE:F0",3,"BM1219XX0")
+                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:F0","00:BB:CC:DD:EE:F0",3,"BM1219XX0")
                             {
                                 MachineDetails = "extraDetails",
                                 MachineName = "compute3",
                             },
-                            new BareMetalMachineConfigurationData(createCreds,"AA:BB:CC:DD:EE:01","00:BB:CC:DD:EE:01",4,"BM1219YY1")
+                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:01","00:BB:CC:DD:EE:01",4,"BM1219YY1")
                             {
                                 MachineDetails = "extraDetails",
                                 MachineName = "control1",
                             },
-                            new BareMetalMachineConfigurationData(createCreds,"AA:BB:CC:DD:EE:F1","00:BB:CC:DD:EE:F1",5,"BM1219XX1")
+                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:F1","00:BB:CC:DD:EE:F1",5,"BM1219XX1")
                             {
                                 MachineDetails = "extraDetails",
                                 MachineName = "control2",

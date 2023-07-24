@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="rackSerialNumber"> The unique identifier for the rack within Network Cloud cluster. An alternate unique alphanumeric value other than a serial number may be provided if desired. </param>
         /// <param name="rackSkuId"> The resource ID of the sku for the rack being added. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackId"/>, <paramref name="rackSerialNumber"/> or <paramref name="rackSkuId"/> is null. </exception>
-        public RackDefinition(string networkRackId, string rackSerialNumber, string rackSkuId)
+        public RackDefinition(ResourceIdentifier networkRackId, string rackSerialNumber, string rackSkuId)
         {
             Argument.AssertNotNull(networkRackId, nameof(networkRackId));
             Argument.AssertNotNull(rackSerialNumber, nameof(rackSerialNumber));
             Argument.AssertNotNull(rackSkuId, nameof(rackSkuId));
 
-            BareMetalMachineConfigurationData = new ChangeTrackingList<BareMetalMachineConfigurationData>();
+            BareMetalMachineConfigurationData = new ChangeTrackingList<BareMetalMachineConfiguration>();
             NetworkRackId = networkRackId;
             RackSerialNumber = rackSerialNumber;
             RackSkuId = rackSkuId;
-            StorageApplianceConfigurationData = new ChangeTrackingList<StorageApplianceConfigurationData>();
+            StorageApplianceConfigurationData = new ChangeTrackingList<StorageApplianceConfiguration>();
         }
 
         /// <summary> Initializes a new instance of RackDefinition. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="rackSerialNumber"> The unique identifier for the rack within Network Cloud cluster. An alternate unique alphanumeric value other than a serial number may be provided if desired. </param>
         /// <param name="rackSkuId"> The resource ID of the sku for the rack being added. </param>
         /// <param name="storageApplianceConfigurationData"> The list of storage appliance configuration data for this rack. </param>
-        internal RackDefinition(string availabilityZone, IList<BareMetalMachineConfigurationData> bareMetalMachineConfigurationData, string networkRackId, string rackLocation, string rackSerialNumber, string rackSkuId, IList<StorageApplianceConfigurationData> storageApplianceConfigurationData)
+        internal RackDefinition(string availabilityZone, IList<BareMetalMachineConfiguration> bareMetalMachineConfigurationData, ResourceIdentifier networkRackId, string rackLocation, string rackSerialNumber, string rackSkuId, IList<StorageApplianceConfiguration> storageApplianceConfigurationData)
         {
             AvailabilityZone = availabilityZone;
             BareMetalMachineConfigurationData = bareMetalMachineConfigurationData;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The zone name used for this rack when created. Availability zones are used for workload placement. </summary>
         public string AvailabilityZone { get; set; }
         /// <summary> The unordered list of bare metal machine configuration. </summary>
-        public IList<BareMetalMachineConfigurationData> BareMetalMachineConfigurationData { get; }
+        public IList<BareMetalMachineConfiguration> BareMetalMachineConfigurationData { get; }
         /// <summary> The resource ID of the network rack that matches this rack definition. </summary>
-        public string NetworkRackId { get; set; }
+        public ResourceIdentifier NetworkRackId { get; set; }
         /// <summary> The free-form description of the rack's location. </summary>
         public string RackLocation { get; set; }
         /// <summary> The unique identifier for the rack within Network Cloud cluster. An alternate unique alphanumeric value other than a serial number may be provided if desired. </summary>
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The resource ID of the sku for the rack being added. </summary>
         public string RackSkuId { get; set; }
         /// <summary> The list of storage appliance configuration data for this rack. </summary>
-        public IList<StorageApplianceConfigurationData> StorageApplianceConfigurationData { get; }
+        public IList<StorageApplianceConfiguration> StorageApplianceConfigurationData { get; }
     }
 }

@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> availabilityZone = default;
-            Optional<IList<BareMetalMachineConfigurationData>> bareMetalMachineConfigurationData = default;
-            string networkRackId = default;
+            Optional<IList<BareMetalMachineConfiguration>> bareMetalMachineConfigurationData = default;
+            ResourceIdentifier networkRackId = default;
             Optional<string> rackLocation = default;
             string rackSerialNumber = default;
             string rackSkuId = default;
-            Optional<IList<StorageApplianceConfigurationData>> storageApplianceConfigurationData = default;
+            Optional<IList<StorageApplianceConfiguration>> storageApplianceConfigurationData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityZone"u8))
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<BareMetalMachineConfigurationData> array = new List<BareMetalMachineConfigurationData>();
+                    List<BareMetalMachineConfiguration> array = new List<BareMetalMachineConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.BareMetalMachineConfigurationData.DeserializeBareMetalMachineConfigurationData(item));
+                        array.Add(BareMetalMachineConfiguration.DeserializeBareMetalMachineConfiguration(item));
                     }
                     bareMetalMachineConfigurationData = array;
                     continue;
                 }
                 if (property.NameEquals("networkRackId"u8))
                 {
-                    networkRackId = property.Value.GetString();
+                    networkRackId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rackLocation"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<StorageApplianceConfigurationData> array = new List<StorageApplianceConfigurationData>();
+                    List<StorageApplianceConfiguration> array = new List<StorageApplianceConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.StorageApplianceConfigurationData.DeserializeStorageApplianceConfigurationData(item));
+                        array.Add(StorageApplianceConfiguration.DeserializeStorageApplianceConfiguration(item));
                     }
                     storageApplianceConfigurationData = array;
                     continue;

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         {
             string resourceGroupName = TestEnvironment.ResourceGroup;
             string subscriptionId = TestEnvironment.SubscriptionId;
-            string l3NetworkId = TestEnvironment.L3IsolationDomainId;
-            string cloudServicesNetworkId = TestEnvironment.CloudServicesNetworkId;
+            ResourceIdentifier l3NetworkId = new ResourceIdentifier(TestEnvironment.L3IsolationDomainId);
+            ResourceIdentifier cloudServicesNetworkId = new ResourceIdentifier(TestEnvironment.CloudServicesNetworkId);
 
             string kubernetesClusterName = Recording.GenerateAssetName("kubernetesCluster");
             string SshPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjxBjt9iSrZqTJOp+LqGLJN/6x5BhbkReh1F9WtKY5I30NMm8NyJpoTef5tRKWJOFenyhHv92Q1CVbjIOfToM1o+0omzruJnWvzNOIqRfktBgpaAvI3NBW8jyP88dU370R79pCcHS258sEsYZu7Pt3bPHWnJynqqpi3e/icJ902gwR0ZCHWkLS+Kojn6+60TdxnPBlACi/QDQcXE9BtuEO6O9Owtzd9j9q2WdaQTElZHyrjBudDcv8DGVErOl2yPRD9a2kGF3zE9OFemq75UH4YeXDb0FgUdgxq9vvXWlWSm7banZ681MgdMYksYUDuSfvtrnwQl9LBcxvk+Z3eHCaAcHHQ/S5h/lAG5xbGaeE6A9woTMKrnqzXvL/XCg02gM01smgUxO7aIIcMquPaTJBc8rSd4wSihg1iRY93OAMVvj4U8ZqLwIt03Z8aIhrVvAmzkmlZ9YwvSXYBDg0KdMNKG4zrnRqWP7ge7ayb+hPxN6UZ0E7Z3VoVw+2R2NxjHE= fakesuser@fakehost";
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 new InitialAgentPoolConfiguration(1, AgentPoolMode.System, "agentPoolConfig", "NC_G4_v1")
                 {
-                    AgentOptions = new AgentOptions(4)
+                    AgentOptions = new AgentConfig(4)
                     {
                         HugepagesSize = HugepagesSize.OneG,
                     },

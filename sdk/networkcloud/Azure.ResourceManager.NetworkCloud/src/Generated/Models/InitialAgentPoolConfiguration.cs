@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="taints"> The taints applied to the nodes in this agent pool. </param>
         /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
-        internal InitialAgentPoolConfiguration(AdministratorConfiguration administratorConfiguration, AgentOptions agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, IList<KubernetesLabel> labels, AgentPoolMode mode, string name, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName)
+        internal InitialAgentPoolConfiguration(AdministratorConfiguration administratorConfiguration, AgentConfig agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, IList<KubernetesLabel> labels, AgentPoolMode mode, string name, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName)
         {
             AdministratorConfiguration = administratorConfiguration;
             AgentOptions = agentOptions;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The administrator credentials to be used for the nodes in this agent pool. </summary>
         public AdministratorConfiguration AdministratorConfiguration { get; set; }
         /// <summary> The configurations that will be applied to each agent in this agent pool. </summary>
-        public AgentOptions AgentOptions { get; set; }
+        public AgentConfig AgentOptions { get; set; }
         /// <summary> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </summary>
         public AttachedNetworkConfiguration AttachedNetworkConfiguration { get; set; }
         /// <summary> The list of availability zones of the Network Cloud cluster used for the provisioning of nodes in this agent pool. If not specified, all availability zones will be used. </summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class AgentOptions : IUtf8JsonSerializable
+    public partial class AgentConfig : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteEndObject();
         }
 
-        internal static AgentOptions DeserializeAgentOptions(JsonElement element)
+        internal static AgentConfig DeserializeAgentConfig(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new AgentOptions(hugepagesCount, Optional.ToNullable(hugepagesSize));
+            return new AgentConfig(hugepagesCount, Optional.ToNullable(hugepagesSize));
         }
     }
 }
