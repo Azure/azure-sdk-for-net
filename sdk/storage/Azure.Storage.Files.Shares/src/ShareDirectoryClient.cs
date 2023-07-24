@@ -343,6 +343,39 @@ namespace Azure.Storage.Files.Shares
         /// name of the account, the name of the share, and the path of the
         /// directory.
         /// </param>
+        /// <param name="diagnostics">
+        /// The diagnostics from the parent client.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal ShareDirectoryClient(
+            Uri directoryUri,
+            ClientDiagnostics diagnostics,
+            ShareClientOptions options)
+        {
+            Argument.AssertNotNull(directoryUri, nameof(directoryUri));
+            options ??= new ShareClientOptions();
+            _uri = directoryUri;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(),
+                sharedKeyCredential: default,
+                clientDiagnostics: diagnostics,
+                clientOptions: options);
+            _directoryRestClient = BuildDirectoryRestClient(directoryUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
+        /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
         /// </param>
@@ -2559,7 +2592,8 @@ namespace Azure.Storage.Files.Shares
                             // Create the destination path with the destination SAS
                             destDirectoryClient = new ShareDirectoryClient(
                                 destUriBuilder.ToUri(),
-                                ClientConfiguration);
+                                ClientConfiguration.ClientDiagnostics,
+                                ClientConfiguration.ClientOptions);
                         }
                     }
                     else

@@ -351,6 +351,41 @@ namespace Azure.Storage.Files.Shares
         /// name of the account, the name of the share, and the path of the
         /// file.
         /// </param>
+        /// <param name="diagnostics">
+        /// The diagnostics from the parent client.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal ShareFileClient(
+            Uri fileUri,
+            ClientDiagnostics diagnostics,
+            ShareClientOptions options)
+        {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
+            options ??= new ShareClientOptions();
+            _uri = fileUri;
+
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(),
+                sharedKeyCredential: default,
+                clientDiagnostics: diagnostics,
+                clientOptions: options);
+
+            _fileRestClient = BuildFileRestClient(fileUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
         /// </param>
@@ -6255,7 +6290,8 @@ namespace Azure.Storage.Files.Shares
                             // Create the destination path with the destination SAS
                             destFileClient = new ShareFileClient(
                                 destUriBuilder.ToUri(),
-                                ClientConfiguration);
+                                ClientConfiguration.ClientDiagnostics,
+                                ClientConfiguration.ClientOptions);
                         }
                     }
                     else
@@ -6584,7 +6620,7 @@ namespace Azure.Storage.Files.Shares
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
 
-            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
+            // Deep copy of builder so we don't modify the user's original ShareSasBuilder.
             builder = ShareSasBuilder.DeepCopy(builder);
 
             // Assign builder's ShareName and Path, if they are null.
