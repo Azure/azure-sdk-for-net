@@ -12,6 +12,9 @@
 
 ### Bugs Fixed
 
+* Fixed an issue causing no telemetry if SDK Version string exceeds spec length.
+  ([#37807](https://github.com/Azure/azure-sdk-for-net/pull/37807))
+
 ### Other Changes
 
 ## 1.0.0-beta.13 (2023-07-13)
