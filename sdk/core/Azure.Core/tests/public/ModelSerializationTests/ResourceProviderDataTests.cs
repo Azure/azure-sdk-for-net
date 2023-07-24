@@ -27,6 +27,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void JsonReaderTest() =>
             RoundTripTest(SerializeWithModelSerializer, DeserializeWithJsonReader);
 
+        [Test]
+        public void UsingSequence() =>
+            RoundTripTest(SerializeWithModelSerializer, DeserializeWithSequence);
+
         private void RoundTripTest(Func<ResourceProviderData, string> serialize, Func<string, ResourceProviderData> deserialize = default)
         {
             string serviceResponse = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ResourceProviderData.json")).TrimEnd();
@@ -49,6 +53,23 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return (ResourceProviderData)model.Deserialize(ref reader, new ModelSerializerOptions());
         }
 
+        private ResourceProviderData DeserializeWithSequence(string json)
+        {
+            using var content = WriteStringToBuffer(json, new ModelSerializerOptions());
+            using var doc = JsonDocument.Parse(content.GetReadOnlySequence());
+            return ResourceProviderData.DeserializeResourceProviderData(doc.RootElement);
+        }
+
+        private MultiBufferRequestContent WriteStringToBuffer(string json, ModelSerializerOptions options)
+        {
+            var model = ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(json)));
+            MultiBufferRequestContent content = new MultiBufferRequestContent();
+            using var writer = new Utf8JsonWriter(content);
+            ((IJsonModelSerializable)model).Serialize(writer, options);
+            writer.Flush();
+            return content;
+        }
+
         private string SerializeWithModelSerializer(ResourceProviderData model)
         {
             var data = ModelSerializer.Serialize(model);
@@ -68,5 +89,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             using var reader = new StreamReader(stream);
             return reader.ReadToEnd();
         }
+
+        //[Test]
+        //public void ConvertReaderToSpan()
+        //{
+        //    var bytes = Encoding.UTF8.GetBytes(File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ResourceProviderData.json")).TrimEnd());
+        //    Utf8JsonReader reader = new Utf8JsonReader(bytes);
+        //    using MultiBufferRequestContent content = reader.GetRawBytes();
+        //    content.TryComputeLength(out var length);
+
+        //    using var stream = new MemoryStream((int)length);
+        //    content.WriteTo(stream, default);
+
+        //    var convertedBytes = stream.GetBuffer().AsMemory(0, (int)stream.Position);
+
+        //    //Assert.AreEqual(bytes.Length, convertedBytes.Length);
+        //    CollectionAssert.AreEqual(bytes, convertedBytes.ToArray());
+        //}
     }
 }

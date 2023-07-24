@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -15,7 +16,6 @@ namespace Azure.Core.Perf
 {
     [MemoryDiagnoser]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    [InProcess]
     public abstract class SerializationBenchmark<T> where T : class, IJsonModelSerializable
     {
         private string _json;
@@ -23,6 +23,9 @@ namespace Azure.Core.Perf
         protected Response _response;
         private ModelSerializerOptions _options;
         private BinaryData _data;
+        private MultiBufferRequestContent _content;
+        private ReadOnlySequence<byte> _sequence;
+        private byte[] _buffer;
 
         protected abstract T Deserialize(JsonElement jsonElement);
 
@@ -43,6 +46,12 @@ namespace Azure.Core.Perf
             _response = new MockResponse(200);
             _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
             _options = ModelSerializerOptions.AzureServiceDefault;
+            _content = new MultiBufferRequestContent();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
+            _model.Serialize(writer, new ModelSerializerOptions());
+            writer.Flush();
+            _sequence = _content.GetReadOnlySequence();
+            _buffer = new byte[2000];
         }
 
         [Benchmark]
@@ -169,11 +178,55 @@ namespace Azure.Core.Perf
         }
 
         [Benchmark]
-        [BenchmarkCategory("PublicInterface")]
-        public object Deserialize_Utf8JsonReaderFromString()
+        [BenchmarkCategory("JsonDocument")]
+        public ReadOnlySequence<byte> GetSequence()
+        {
+            return _content.GetReadOnlySequence();
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonDocument")]
+        public void JsonDocumentFromSequence()
+        {
+            using var doc = JsonDocument.Parse(_sequence);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonDocument")]
+        public void JsonDocumentFromReader()
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
-            return _model.Deserialize(ref reader, _options);
+            using var doc = JsonDocument.ParseValue(ref reader);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonDocument")]
+        public void JsonDocumentFromBinaryData()
+        {
+            using var doc = JsonDocument.Parse(_data);
+        }
+
+        public class MultiBufferSegment : ReadOnlySequenceSegment<byte>
+        {
+            public MultiBufferSegment(byte[] array, int length, long runningIndex)
+            {
+                Memory = new Memory<byte>(array, 0, length);
+                RunningIndex = runningIndex;
+            }
+
+            public void Add(byte[] array, int length)
+            {
+                Next = new MultiBufferSegment(array, length, RunningIndex + Memory.Length);
+            }
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("SequenceCreation")]
+        public ReadOnlySequence<byte> AllocationSegment()
+        {
+            var first = new MultiBufferSegment(_buffer, _buffer.Length, 0);
+            first.Add(_buffer, 2000);
+            return new ReadOnlySequence<byte>(first, 0, first, 2000);
         }
     }
 }
