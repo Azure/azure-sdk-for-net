@@ -110,7 +110,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             async Task MessageHandler(ProcessMessageEventArgs args)
             {
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken);
-                args.MessageLockLostAsync += MessageLockLostHandler;
+
+                try
+                {
+                    args.MessageLockLostAsync += MessageLockLostHandler;
+
+                    // We thread our linked token through to our expensive processing so that we can cancel it in the event of a lock lost exception,
+                    // or when the processor is being stopped.
+                    await SomeExpensiveProcessingAsync(args.Message, cts.Token);
+                }
+                finally
+                {
+                    // Finally, we remove the handler to avoid a memory leak.
+                    args.MessageLockLostAsync -= MessageLockLostHandler;
+                }
 
                 Task MessageLockLostHandler(MessageLockLostEventArgs lockLostArgs)
                 {
@@ -120,13 +133,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     cts.Cancel();
                     return Task.CompletedTask;
                 }
-
-                // We thread our linked token through to our expensive processing so that we can cancel it in the event of a lock lost exception,
-                // or when the processor is being stopped.
-                await SomeExpensiveProcessingAsync(args.Message, cts.Token);
-
-                // Finally, we remove the handler to avoid a memory leak.
-                args.MessageLockLostAsync -= MessageLockLostHandler;
             }
 
             Task ErrorHandler(ProcessErrorEventArgs args)
@@ -170,7 +176,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             async Task MessageHandler(ProcessSessionMessageEventArgs args)
             {
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken);
-                args.SessionLockLostAsync += SessionLockLostHandler;
+
+                try
+                {
+                    args.SessionLockLostAsync += SessionLockLostHandler;
+
+                    // We thread our linked token through to our expensive processing so that we can cancel it in the event of a lock lost exception,
+                    // or when the processor is being stopped.
+                    await SomeExpensiveProcessingAsync(args.Message, cts.Token);
+                }
+                finally
+                {
+                    // Finally, we remove the handler to avoid a memory leak.
+                    args.SessionLockLostAsync -= SessionLockLostHandler;
+                }
 
                 Task SessionLockLostHandler(SessionLockLostEventArgs lockLostArgs)
                 {
@@ -180,13 +199,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     cts.Cancel();
                     return Task.CompletedTask;
                 }
-
-                // We thread our linked token through to our expensive processing so that we can cancel it in the event of a lock lost exception,
-                // or when the processor is being stopped.
-                await SomeExpensiveProcessingAsync(args.Message, cts.Token);
-
-                // Finally, we remove the handler to avoid a memory leak.
-                args.SessionLockLostAsync -= SessionLockLostHandler;
             }
 
             Task ErrorHandler(ProcessErrorEventArgs args)
