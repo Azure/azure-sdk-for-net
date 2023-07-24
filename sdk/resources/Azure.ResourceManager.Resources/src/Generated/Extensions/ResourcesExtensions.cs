@@ -35,6 +35,14 @@ namespace Azure.ResourceManager.Resources
             });
         }
 
+        private static ArmClientExtensionClient GetArmClientExtensionClient(ArmClient client)
+        {
+            return client.GetCachedClient((c) =>
+            {
+                return new ArmClientExtensionClient(c);
+            });
+        }
+
         private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
@@ -212,12 +220,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="TemplateSpecResource" /> object. </returns>
         public static TemplateSpecResource GetTemplateSpecResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TemplateSpecResource.ValidateResourceId(id);
-                return new TemplateSpecResource(client, id);
-            }
-            );
+            return GetArmClientExtensionClient(client).GetTemplateSpecResource(id);
         }
         #endregion
 
@@ -231,12 +234,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="TemplateSpecVersionResource" /> object. </returns>
         public static TemplateSpecVersionResource GetTemplateSpecVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TemplateSpecVersionResource.ValidateResourceId(id);
-                return new TemplateSpecVersionResource(client, id);
-            }
-            );
+            return GetArmClientExtensionClient(client).GetTemplateSpecVersionResource(id);
         }
         #endregion
 

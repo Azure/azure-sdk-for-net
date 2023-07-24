@@ -260,5 +260,47 @@ namespace Azure.ResourceManager.Resources.Tests
 
             Assert.IsFalse(appResource1 == appResource2);
         }
+
+        /// <summary>
+        /// This scenario is starting from ArmClient
+        /// 1. Get the first instance of TemplateSpecResource using the first id from the client
+        /// 2. Get the second instance of TemplateSpecResource using the second id from the client
+        /// 3. Call ExportTemplateAsync on both of them
+        /// </summary>
+        [Test]
+        public void MockingGetMultipleResourcesOnArmClient_WithoutAzureMock_FixedByArmClientExtensionClient()
+        {
+            // the data we use
+            var subscriptionId = Guid.NewGuid().ToString();
+            var specId1 = TemplateSpecResource.CreateResourceIdentifier(subscriptionId, "myRg", "mySpec1");
+            var specId2 = TemplateSpecResource.CreateResourceIdentifier(subscriptionId, "myRg", "mySpec2");
+
+            // setup the mocking
+            // the ArmClient
+            var armClientMock = new Mock<ArmClient>();
+            var specMock1 = new Mock<TemplateSpecResource>();
+            var specMock2 = new Mock<TemplateSpecResource>();
+            // setup the Ids
+            specMock1.Setup(spec => spec.Id).Returns(specId1);
+            specMock2.Setup(spec => spec.Id).Returns(specId2);
+            // mock the corresponding extension client
+            var armClientExtension = new Mock<ArmClientExtensionClient>();
+            // mock the GetCachedClient method on the extendee
+            armClientMock.Setup(client => client.GetCachedClient(It.IsAny<Func<ArmClient, ArmClientExtensionClient>>())).Returns(armClientExtension.Object);
+            // mock the same method on the extension client instead
+            armClientExtension.Setup(e => e.GetTemplateSpecResource(specId1)).Returns(specMock1.Object);
+            armClientExtension.Setup(e => e.GetTemplateSpecResource(specId2)).Returns(specMock2.Object);
+
+            var client = armClientMock.Object;
+            var specResource1 = client.GetTemplateSpecResource(specId1);
+
+            Assert.AreEqual(specId1, specResource1.Id);
+
+            var specResource2 = client.GetTemplateSpecResource(specId2);
+
+            Assert.AreEqual(specId2, specResource2.Id);
+
+            Assert.IsFalse(specResource1 == specResource2);
+        }
     }
 }
