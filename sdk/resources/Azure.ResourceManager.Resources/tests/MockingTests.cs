@@ -213,6 +213,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             var deploymentResource2 = client.GetArmDeploymentResource(armDeploymentId2);
 
+            // this will fail
             Assert.AreEqual(armDeploymentId2, deploymentResource2.Id);
 
             var result2 = await deploymentResource2.ExportTemplateAsync();
