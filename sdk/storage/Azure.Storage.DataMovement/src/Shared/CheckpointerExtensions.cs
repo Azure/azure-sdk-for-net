@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.DataMovement.Models;
-
 namespace Azure.Storage.DataMovement
 {
     internal static class CheckpointerExtensions

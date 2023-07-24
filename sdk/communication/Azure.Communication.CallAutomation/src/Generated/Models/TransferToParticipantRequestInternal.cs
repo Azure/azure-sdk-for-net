@@ -30,6 +30,8 @@ namespace Azure.Communication.CallAutomation
         public CustomContextInternal CustomContext { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
+        /// <summary> Transferee is the participant who is transferring the call. </summary>
+        public CommunicationIdentifierModel Transferee { get; set; }
         /// <summary> The callback URI override. </summary>
         public string CallbackUriOverride { get; set; }
     }
