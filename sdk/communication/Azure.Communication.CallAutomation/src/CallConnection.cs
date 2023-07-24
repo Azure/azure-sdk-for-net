@@ -391,7 +391,6 @@ namespace Azure.Communication.CallAutomation
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext
             };
 
-
             request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
             request.CallbackUriOverride = options.CallbackUriOverride;
 
