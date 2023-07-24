@@ -60,7 +60,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             SetAuthenticatedUserId(ref activityTagsProcessor);
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
-            SampleRate = sampleRate;
+
+            if (sampleRate != 100f)
+            {
+                SampleRate = sampleRate;
+            }
         }
 
         public TelemetryItem(string name, TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp) :
