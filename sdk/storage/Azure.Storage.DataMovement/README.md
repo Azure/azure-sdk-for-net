@@ -67,9 +67,8 @@ This section demonstrates usage of Data Movement regardless of extension package
 
 Singleton usage of `TransferManager` is recommended. Providing `TransferManagerOptions` is optional.
 
-```csharp
-TransferManagerOptions options = new();
-TransferManger transferManager = new TransferManager(options);
+```C# Snippet:CreateTransferManagerSimple
+TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 ```
 
 ### Starting New Transfers
@@ -78,20 +77,19 @@ Transfers are defined by a source and destination `StorageResource`. There are t
 
 Configurations for accessing data are configured on the `StorageResource`. See further documentation for setting up and configuring your `StorageResource` objects.
 
-```csharp
-// provide these resources
-StorageResource sourceResource, destinationResource;
-// optionally configure options for this individual transfer
-TransferOptions transferOptions = new();
-// optional cancellation token for transfer startup
-// not for cancelling the transfer once started!
-CancellationToken cancellationToken;
+A function that starts a transfer and then awaits it's completion:
 
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource,
-    destinationResource,
-    transferOptions,
-    cancellationToken);
+```C# Snippet:SimpleBlobUpload
+async Task TransferAsync(StorageResource source, StorageResource destination,
+    TransferOptions transferOptions = default, CancellationToken cancellationToken = default)
+{
+    DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+        source,
+        destination,
+        transferOptions,
+        cancellationToken);
+    await dataTransfer.WaitForCompletionAsync(cancellationToken);
+}
 ```
 
 ### Monitoring Transfers
@@ -102,82 +100,82 @@ Transfers can be observed through several mechanisms, depending on your needs.
 
 Simple observation can be done through a `DataTransfer` instance representing an individual transfer. This is obtained on transfer start. You can also enumerate through all transfers on a `TransferManager`.
 
-```csharp
-TransferManager transferManager;
+A function that writes the status of each transfer to console:
 
-await foreach (DataTransfer transfer in transferManager.GetTransfersAsync()) {
-    // do something with transfer
+```C# Snippet:EnumerateTransfers
+async Task CheckTransfersAsync(TransferManager transferManager)
+{
+    await foreach (DataTransfer transfer in transferManager.GetTransfersAsync())
+    {
+        using StreamWriter logStream = File.AppendText(logFile);
+        logStream.WriteLine(Enum.GetName(typeof(StorageTransferStatus), transfer.TransferStatus));
+    }
 }
 ```
 
 `DataTransfer` contains property `TransferStatus`. You can read this to determine the state of the transfer. States include queued for transfer, in progress, paused, completed, and more.
 
-`DataTransfer` also exposes a task for transfer completion that can be awaited.
-
-```csharp
-DataTransfer dataTransfer;
-
-await dataTransfer.AwaitCompletion(cancellationToken);
-```
+`DataTransfer` also exposes a task for transfer completion, shown in [Starting New Transfers](#starting-new-transfers).
 
 #### With Events via `TransferOptions`
 
 When starting a transfer, `TransferOptions` contains multiple events that can be listened to for observation. Below demonstrates listening to the event for individual file completion and logging the result.
 
-```csharp
-TransferManager transferManager;
-StorageResource sourceResource;
-StorageResource destinationResource;
+A function that listens to status events for a given transfer:
 
-TransferOptions transferOptions = new();
-transferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
+```C# Snippet:ListenToTransferEvents
+async Task ListenToTransfersAsync(TransferManager transferManager,
+    StorageResource source, StorageResource destination)
 {
-    using (StreamWriter logStream = File.AppendText(logFile))
+    TransferOptions transferOptions = new();
+    transferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
     {
+        using StreamWriter logStream = File.AppendText(logFile);
         logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Path}");
-    }
-    return Task.CompletedTask;
+        return Task.CompletedTask;
+    };
+    DataTransfer transfer = await transferManager.StartTransferAsync(
+        source,
+        destination,
+        transferOptions);
 }
-DataTransfer transfer = transferManager.StartTransferAsync(
-    sourceResource,
-    destinationResource,
-    transferOptions,
-    cancellationToken);
 ```
 
 #### With IProgress via `TransferOptions`
 
 When starting a transfer, `TransferOptions` allows setting a progress handler that contains the progress information for the overall transfer. Granular progress updates will be communicated to the provided `IProgress` instance.
 
-```csharp
-TransferOptions transferOptions = new()
+A function that listens to progress updates for a given transfer with a supplied `IProgress<TStorageTransferProgress>`:
+
+```C# Snippet:TODO
+async Task ListenToProgressAsync(TransferManager transferManager, IProgress<StorageTransferProgress> progress,
+    StorageResource source, StorageResource destination)
 {
-    ProgressHandler = new Progress<StorageTransferProgress>(storageTransferProgress =>
+    TransferOptions transferOptions = new()
     {
-        // handle progress update
-    }),
-    // optionally include the below if progress updates on bytes transferred are desired
-    ProgressHandlerOptions = new()
-    {
-        TrackBytesTransferred = true
-    }
+        ProgressHandler = progress,
+        // optionally include the below if progress updates on total bytes transferred are desired
+        ProgressHandlerOptions = new()
+        {
+            TrackBytesTransferred = true
+        }
+    };
+    DataTransfer transfer = await transferManager.StartTransferAsync(
+        source,
+        destination,
+        transferOptions);
 }
 ```
 
 ### Pausing transfers
 
-Transfers can be paused either by a given `DataTransfer` or through the `TransferManager` handling the transfer.
+Transfers can be paused either by a given `DataTransfer` or through the `TransferManager` handling the transfer by referencing the transfer ID. The ID can be found on the `DataTransfer` object you recieved upon transfer start.
 
-```csharp
-DataTransfer dataTransfer;
-
+```C# Snippet:PauseFromTransfer
 await dataTransfer.PauseIfRunningAsync(cancellationToken);
 ```
 
-```csharp
-TransferManager transferManager;
-string transferId;
-
+```C# Snippet:PauseFromManager
 await transferManager.PauseTransferIfRunningAsync(transferId, cancellationToken);
 ```
 
@@ -185,9 +183,7 @@ await transferManager.PauseTransferIfRunningAsync(transferId, cancellationToken)
 
 Transfer progress is persisted such that it can resume from where it left off. No persisted knowledge is required from your code. The below sample queries a `TransferManager` for information on all resumable transfers and recreates the properly configured resources for these transfers using a helper method we'll define next. It then resumes each of those transfers with the given ID and puts the resulting `DataTransfer` objects into a list.
 
-```csharp
-TransferManager transferManager;
-
+```C# Snippet:ResumeAllTransfers
 List<DataTransfer> resumedTransfers = new();
 await foreach (DataTransferProperties transferProperties in transferManager.GetResumableTransfersAsync())
 {
@@ -202,7 +198,7 @@ The above sample's `MakeResourcesAsync` method is defined below. Different `Data
 
 Note these resources return a "provider" rather than the resource itself. The provider can make the resource using a credential argument based on resource information (or some other value that was not persisted), rather than create an unauthenticated `StorageResource`. More information on this can be found in applicable packages.
 
-```csharp
+```C# Snippet:RehydrateResources
 async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesAsync(DataTransferProperties info)
 {
     StorageResource sourceResource = null, destinationResource = null;
@@ -212,8 +208,8 @@ async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesA
         out BlobStorageResourceProvider blobSrcProvider,
         out BlobStorageResourceProvider blobDstProvider))
     {
-        sourceResource ??= await blobSrcProvider?.MakeResourceAsync();
-        destinationResource ??= await blobSrcProvider?.MakeResourceAsync();
+        sourceResource ??= await blobSrcProvider?.MakeResourceAsync(credential);
+        destinationResource ??= await blobSrcProvider?.MakeResourceAsync(credential);
     }
     // ask DataMovement if it can recreate source or destination resources to local storage
     if (LocalStorageResources.TryGetResourceProviders(
@@ -232,13 +228,11 @@ async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesA
 
 Transfer failure can be observed by checking the `DataTransfer` status upon completion, or by listening to failure events on the transfer. While checking the `DataTransfer` may be sufficient for handling single-file transfer failures, event listening is recommended for container transfers.
 
-Below logs failure for a single transnfer.
+Below logs failure for a single transfer by checking its status after completion.
 
-```csharp
-DataTransfer transfer;
-
-await transfer.AwaitCompletion();
-if (transfer.TransferStatus == StorageTransferStatus.CompletedWithFailedTransfers)
+```C# Snippet:LogTotalTransferFailure
+await dataTransfer.WaitForCompletionAsync();
+if (dataTransfer.TransferStatus == StorageTransferStatus.CompletedWithFailedTransfers)
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {
@@ -247,9 +241,9 @@ if (transfer.TransferStatus == StorageTransferStatus.CompletedWithFailedTransfer
 }
 ```
 
-Below logs individual failures in a container transfer.
+Below logs individual failures in a container transfer via `TransferOptions` events.
 
-```csharp
+```C# Snippet:LogIndividualTransferFailures
 transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
 {
     using (StreamWriter logStream = File.AppendText(logFile))
