@@ -37,7 +37,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public static explicit operator DogListProperty(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            var serializationOptions = new ModelSerializerOptions(ModelSerializerFormat.Data);
+            var serializationOptions = new ModelSerializerOptions(ModelSerializerFormat.Json);
             return DeserializeDogListProperty(jsonDocument.RootElement, serializationOptions);
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             MemoryStream stream = new MemoryStream();
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -89,7 +89,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 writer.WriteEndArray();
             }
 
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -147,7 +147,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Data)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

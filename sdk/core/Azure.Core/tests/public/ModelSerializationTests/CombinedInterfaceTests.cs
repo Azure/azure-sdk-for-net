@@ -13,23 +13,26 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class CombinedInterfaceTests
     {
-        [TestCase("D")]
-        [TestCase("W")]
-        public void CanRoundTripFutureVersionWithoutLossXml(string format)
+        private const string _xmlServiceResponse =
+        "<Tag>" +
+        "<Key>Color</Key>" +
+        "<Value>Red</Value>" +
+        "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>" +
+        "</Tag>";
+
+        private const string _jsonServiceResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\"}";
+
+        [Test]
+        public void RoundTripXmlModelWithWire() => CanRoundTripFutureVersionWithoutLossXml(ModelSerializerFormat.Wire, _xmlServiceResponse);
+
+        [Test]
+        public void RoundTripXmlModelWithJson() => CanRoundTripFutureVersionWithoutLossXml(ModelSerializerFormat.Json, _jsonServiceResponse);
+
+        private void CanRoundTripFutureVersionWithoutLossXml(ModelSerializerFormat format, string serviceResponse)
         {
             ModelSerializerOptions options = new ModelSerializerOptions(format);
 
-            string serviceResponse =
-                "<Tag>" +
-                "<Key>Color</Key>" +
-                "<Value>Red</Value>" +
-                "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>" +
-                "</Tag>";
-
-            var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
-            if (format.Equals(ModelSerializerFormat.Data))
-                expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
-            expectedSerializedString += "</Tag>";
+            var expectedSerializedString = GetExpectedResult(format);
 
             XmlModelForCombinedInterface model = ModelSerializer.Deserialize<XmlModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options);
 
@@ -45,7 +48,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             VerifyModelXmlModelForCombinedInterface(model, model2, format);
         }
 
-        [TestCase("D")]
+        [TestCase("J")]
         [TestCase("W")]
         public void CanRoundTripFutureVersionWithoutLossJson(string format)
         {
@@ -54,7 +57,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             string serviceResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"x\":\"extra\"}";
 
             var expectedSerializedString = "{\"key\":\"Color\",\"value\":\"Red\"";
-            if (format.Equals(ModelSerializerFormat.Data))
+            if (format.Equals(ModelSerializerFormat.Json))
             {
                 expectedSerializedString += ",\"readOnlyProperty\":\"ReadOnly\"";
                 expectedSerializedString += ",\"x\":\"extra\"";
@@ -68,7 +71,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
             var additionalProperties = typeof(JsonModelForCombinedInterface).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.AreEqual(format.Equals(ModelSerializerFormat.Data), additionalProperties.ContainsKey("x"));
+            Assert.AreEqual(format.Equals(ModelSerializerFormat.Json), additionalProperties.ContainsKey("x"));
             var data = ModelSerializer.Serialize(model, options);
             string roundTrip = data.ToString();
 
@@ -82,7 +85,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             Assert.AreEqual(expected.Key, actual.Key);
             Assert.AreEqual(expected.Value, actual.Value);
-            if (format.Equals(ModelSerializerFormat.Data))
+            if (format.Equals(ModelSerializerFormat.Json))
                 Assert.AreEqual(expected.ReadOnlyProperty, actual.ReadOnlyProperty);
         }
 
@@ -90,14 +93,35 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             Assert.AreEqual(expected.Key, actual.Key);
             Assert.AreEqual(expected.Value, actual.Value);
-            if (format.Equals(ModelSerializerFormat.Data))
+            if (format.Equals(ModelSerializerFormat.Json))
                 Assert.AreEqual(expected.ReadOnlyProperty, actual.ReadOnlyProperty);
             var rawDataProperty = typeof(JsonModelForCombinedInterface).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             var expectedRawData = rawDataProperty.GetValue(expected) as Dictionary<string, BinaryData>;
             var actualRawData = rawDataProperty.GetValue(actual) as Dictionary<string, BinaryData>;
             Assert.AreEqual(expectedRawData.Count, actualRawData.Count);
-            if (format.Equals(ModelSerializerFormat.Data))
+            if (format.Equals(ModelSerializerFormat.Json))
                 Assert.AreEqual(expectedRawData["x"].ToString(), actualRawData["x"].ToString());
+        }
+
+        private string GetExpectedResult(ModelSerializerFormat format)
+        {
+            if (format == ModelSerializerFormat.Wire)
+            {
+                var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
+                if (format.Equals(ModelSerializerFormat.Json))
+                    expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
+                expectedSerializedString += "</Tag>";
+                return expectedSerializedString;
+            }
+            if (format == ModelSerializerFormat.Json)
+            {
+                var expectedSerializedString = "{\"key\":\"Color\",\"value\":\"Red\"";
+                if (format.Equals(ModelSerializerFormat.Json))
+                    expectedSerializedString += ",\"readOnlyProperty\":\"ReadOnly\"";
+                expectedSerializedString += "}";
+                return expectedSerializedString;
+            }
+            throw new InvalidOperationException($"Unknown format used in test {format}");
         }
     }
 }

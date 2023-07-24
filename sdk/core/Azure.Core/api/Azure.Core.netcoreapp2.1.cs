@@ -1133,7 +1133,8 @@ namespace Azure.Core.Serialization
     }
     public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IModelSerializable>
     {
-        public ModelJsonConverter(string format = "D") { }
+        public ModelJsonConverter() { }
+        public ModelJsonConverter(Azure.Core.Serialization.ModelSerializerFormat format) { }
         public Azure.Core.Serialization.ModelSerializerFormat Format { get { throw null; } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override Azure.Core.Serialization.IModelSerializable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
@@ -1149,7 +1150,7 @@ namespace Azure.Core.Serialization
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public static readonly Azure.Core.Serialization.ModelSerializerFormat Data;
+        public static readonly Azure.Core.Serialization.ModelSerializerFormat Json;
         public static readonly Azure.Core.Serialization.ModelSerializerFormat Wire;
         public ModelSerializerFormat(string value) { throw null; }
         public bool Equals(Azure.Core.Serialization.ModelSerializerFormat other) { throw null; }
@@ -1165,8 +1166,9 @@ namespace Azure.Core.Serialization
     }
     public partial class ModelSerializerOptions
     {
-        public Azure.Core.Serialization.ModelSerializerFormat Format;
-        public ModelSerializerOptions(string format = "D") { }
+        public ModelSerializerOptions() { }
+        public ModelSerializerOptions(Azure.Core.Serialization.ModelSerializerFormat format) { }
+        public Azure.Core.Serialization.ModelSerializerFormat Format { get { throw null; } }
         public System.Collections.Generic.Dictionary<System.Type, Azure.Core.Serialization.ObjectSerializer> Serializers { get { throw null; } }
     }
     public abstract partial class ObjectSerializer
