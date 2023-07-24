@@ -40,6 +40,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // 2) "4.6.30411.01 @BuiltBy: XXXXXX @Branch: XXXXXX @srccode: XXXXXX XXXXXX" Ignoring part after '@' if it is present.
                 string shortVersion = versionString.Split('+', '@', ' ')[0];
 
+                if (shortVersion.Length > 20)
+                {
+                    AzureMonitorExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
+                    return shortVersion.Substring(0, 20);
+                }
+
                 return shortVersion;
             }
             catch (Exception ex)
