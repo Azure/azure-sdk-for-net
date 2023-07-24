@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed some `URI` property serialization error issues
+
 ### Other Changes
 
 ## 1.1.0-beta.2 (2023-06-07)

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         private AppPlatformServiceResource _appPlatformService;
         private string _serviceName;
 
-        public AppPlatformServiceTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public AppPlatformServiceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
