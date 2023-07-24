@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System.Threading;
+using System;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
     public partial class ArmClientExtensionClient : ArmResource
     {
-        // diagonstic and rest clients if neccessary
+        private ClientDiagnostics _armDeploymentDeploymentsClientDiagnostics;
+        private DeploymentsRestOperations _armDeploymentDeploymentsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected ArmClientExtensionClient()
@@ -34,8 +39,8 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        //private ClientDiagnostics ArmDeploymentDeploymentsClientDiagnostics => _armDeploymentDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
-        //private DeploymentsRestOperations ArmDeploymentDeploymentsRestClient => _armDeploymentDeploymentsRestClient ??= new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmDeploymentResource.ResourceType));
+        private ClientDiagnostics ArmDeploymentDeploymentsClientDiagnostics => _armDeploymentDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
+        private DeploymentsRestOperations ArmDeploymentDeploymentsRestClient => _armDeploymentDeploymentsRestClient ??= new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmDeploymentResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -65,6 +70,47 @@ namespace Azure.ResourceManager.Resources
         {
             TemplateSpecVersionResource.ValidateResourceId(id);
             return new TemplateSpecVersionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of ArmDeploymentResources in the ResourceGroupResource. </summary>
+        /// <param name="scope"></param>
+        /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
+        public virtual ArmDeploymentCollection GetArmDeployments(ResourceIdentifier scope)
+        {
+            // this may not to be cached any more because we will only have one ArmClientExtensionClient instance across this whole RP
+            return new ArmDeploymentCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Calculate the hash of the given template.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/calculateTemplateHash</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_CalculateTemplateHash</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"></param>
+        /// <param name="template"> The template provided to calculate hash. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<TemplateHashResult> CalculateDeploymentTemplateHash(ResourceIdentifier scope, BinaryData template, CancellationToken cancellationToken = default)
+        {
+            using var scope0 = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateDeploymentTemplateHash");
+            scope0.Start();
+            try
+            {
+                var response = ArmDeploymentDeploymentsRestClient.CalculateTemplateHash(template, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -302,6 +302,15 @@ namespace Azure.ResourceManager.Resources
             return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetArmDeployments();
         }
 
+        /// <summary> Gets a collection of ArmDeploymentResources for a scope. </summary>
+        /// <param name="client"></param>
+        /// <param name="scope"></param>
+        /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
+        public static ArmDeploymentCollection GetArmDeployments(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmClientExtensionClient(client).GetArmDeployments(scope);
+        }
+
         /// <summary>
         /// Gets a deployment.
         /// <list type="bullet">
@@ -960,6 +969,20 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNull(template, nameof(template));
 
             return GetTenantResourceExtensionClient(tenantResource).CalculateDeploymentTemplateHash(template, cancellationToken);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="scope"></param>
+        /// <param name="template"> The template provided to calculate hash. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
+        public static Response<TemplateHashResult> CalculateDeploymentTemplateHash(this ArmClient client, ResourceIdentifier scope, BinaryData template, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(template, nameof(template));
+
+            return GetArmClientExtensionClient(client).CalculateDeploymentTemplateHash(scope, template, cancellationToken);
         }
     }
 }

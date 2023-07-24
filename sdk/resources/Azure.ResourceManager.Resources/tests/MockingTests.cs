@@ -302,5 +302,102 @@ namespace Azure.ResourceManager.Resources.Tests
 
             Assert.IsFalse(specResource1 == specResource2);
         }
+
+        /// <summary>
+        /// </summary>
+        [Test]
+        public async Task MockingScopeResourcesOnArmClient_WithoutAzureMock_FixedByArmClientExtensionClient()
+        {
+            // the data we use
+            var scope1 = SubscriptionResource.CreateResourceIdentifier(Guid.NewGuid().ToString());
+            var scope2 = ResourceGroupResource.CreateResourceIdentifier(Guid.NewGuid().ToString(), "myRg");
+            var deploymentId1 = ArmDeploymentResource.CreateResourceIdentifier(scope1, "myDeployment1");
+            var deploymentId2 = ArmDeploymentResource.CreateResourceIdentifier(scope2, "myDeployment2");
+            var content1 = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Complete));
+            var content2 = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental));
+
+            // setup the mocking
+            // the ArmClient
+            var armClientMock = new Mock<ArmClient>();
+            var collectionMock1 = new Mock<ArmDeploymentCollection>();
+            var collectionMock2 = new Mock<ArmDeploymentCollection>();
+            var deploymentMock1 = new Mock<ArmDeploymentResource>();
+            var deploymentMock2 = new Mock<ArmDeploymentResource>();
+            var lroMock1 = new Mock<ArmOperation<ArmDeploymentResource>>();
+            var lroMock2 = new Mock<ArmOperation<ArmDeploymentResource>>();
+            // setup the Ids
+            deploymentMock1.Setup(spec => spec.Id).Returns(deploymentId1);
+            deploymentMock2.Setup(spec => spec.Id).Returns(deploymentId2);
+            // mock the corresponding extension client
+            var armClientExtension = new Mock<ArmClientExtensionClient>();
+            // mock the GetCachedClient method on the extendee
+            armClientMock.Setup(client => client.GetCachedClient(It.IsAny<Func<ArmClient, ArmClientExtensionClient>>())).Returns(armClientExtension.Object);
+            // mock the same method on the extension client instead
+            armClientExtension.Setup(e => e.GetArmDeployments(scope1)).Returns(collectionMock1.Object);
+            armClientExtension.Setup(e => e.GetArmDeployments(scope2)).Returns(collectionMock2.Object);
+            // mock the create or update on the collections
+            collectionMock1.Setup(c => c.CreateOrUpdateAsync(WaitUntil.Completed, "myDeployment1", content1, default)).ReturnsAsync(lroMock1.Object);
+            collectionMock2.Setup(c => c.CreateOrUpdateAsync(WaitUntil.Completed, "myDeployment2", content2, default)).ReturnsAsync(lroMock2.Object);
+            // mock the lros so that we could get results
+            lroMock1.Setup(l => l.Value).Returns(deploymentMock1.Object);
+            lroMock2.Setup(l => l.Value).Returns(deploymentMock2.Object);
+
+            var client = armClientMock.Object;
+            var collection1 = client.GetArmDeployments(scope1);
+            var lro1 = await collection1.CreateOrUpdateAsync(WaitUntil.Completed, "myDeployment1", content1);
+            var resource1 = lro1.Value;
+
+            Assert.AreEqual(deploymentId1, resource1.Id);
+
+            var collection2 = client.GetArmDeployments(scope2);
+            var lro2 = await collection2.CreateOrUpdateAsync(WaitUntil.Completed, "myDeployment2", content2);
+            var resource2 = lro2.Value;
+
+            Assert.AreEqual(deploymentId2, resource2.Id);
+
+            Assert.IsFalse(resource1 == resource2);
+        }
+
+        /// <summary>
+        /// </summary>
+        [Test]
+        public void MockingScopeOperationsOnArmClient_WithoutAzureMock_FixedByArmClientExtensionClient()
+        {
+            // the data we use
+            var scope1 = SubscriptionResource.CreateResourceIdentifier(Guid.NewGuid().ToString());
+            var scope2 = ResourceGroupResource.CreateResourceIdentifier(Guid.NewGuid().ToString(), "myRg");
+            var template1 = BinaryData.FromObjectAsJson(new
+            {
+                something = "not_ok"
+            });
+            var template2 = BinaryData.FromObjectAsJson(new
+            {
+                everything = "ok"
+            });
+            var result1 = ArmResourcesModelFactory.TemplateHashResult("okaydokey");
+            var result2 = ArmResourcesModelFactory.TemplateHashResult("not-okaydokey");
+
+            // setup the mocking
+            // the ArmClient
+            var armClientMock = new Mock<ArmClient>();
+            // mock the corresponding extension client
+            var armClientExtension = new Mock<ArmClientExtensionClient>();
+            // mock the GetCachedClient method on the extendee
+            armClientMock.Setup(client => client.GetCachedClient(It.IsAny<Func<ArmClient, ArmClientExtensionClient>>())).Returns(armClientExtension.Object);
+            // mock the same method on the extension client instead
+            armClientExtension.Setup(e => e.CalculateDeploymentTemplateHash(scope1, template1, default)).Returns(Response.FromValue(result1, null));
+            armClientExtension.Setup(e => e.CalculateDeploymentTemplateHash(scope2, template2, default)).Returns(Response.FromValue(result2, null));
+
+            var client = armClientMock.Object;
+            var response1 = client.CalculateDeploymentTemplateHash(scope1, template1);
+
+            Assert.AreEqual(result1, response1.Value);
+
+            var response2 = client.CalculateDeploymentTemplateHash(scope2, template2);
+
+            Assert.AreEqual(result2, response2.Value);
+
+            Assert.IsFalse(response1 == response2);
+        }
     }
 }
