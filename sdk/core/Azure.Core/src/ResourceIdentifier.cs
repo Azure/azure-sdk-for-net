@@ -80,6 +80,10 @@ namespace Azure.Core
         public ResourceIdentifier(string resourceId)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            if (!resourceId.StartsWith("/"))
+            {
+                resourceId = $"/{resourceId}";
+            }
 
             _stringValue = resourceId;
 

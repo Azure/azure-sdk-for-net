@@ -546,7 +546,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(resourceId, subscription.ToString());
         }
 
-        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Microsoft.CognitiveServices/locations/westus/resourceGroups/myResourceGroup/deletedAccounts/myDeletedAccount", "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts")]
+        [TestCase("subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Microsoft.CognitiveServices/locations/westus/resourceGroups/myResourceGroup/deletedAccounts/myDeletedAccount", "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts")]
         public void CanCalculateResourceType(string id, string resourceType)
         {
             ResourceIdentifier resourceId = GetResourceIdentifier(id);
@@ -807,7 +807,6 @@ namespace Azure.Core.Tests
 
         [TestCase("/providers/MicrosoftSomething/billingAccounts/")]
         [TestCase("/MicrosoftSomething/billingAccounts/")]
-        [TestCase("providers/subscription/MicrosoftSomething/billingAccounts/")]
         [TestCase("/subscription/providersSomething")]
         [TestCase("/providers")]
         public void InvalidTenantID(string id)
