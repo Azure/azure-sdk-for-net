@@ -70,7 +70,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        traceback = null;
                         continue;
                     }
                     List<string> array = new List<string>();
