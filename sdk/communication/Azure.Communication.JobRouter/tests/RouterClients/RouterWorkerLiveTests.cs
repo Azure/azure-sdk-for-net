@@ -49,7 +49,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var routerWorkerResponse = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId, totalCapacity)
                 {
-                    QueueIds = { { createQueueResponse.Value.Id, new RouterQueueAssignment() } },
+                    QueueAssignments = { { createQueueResponse.Value.Id, new RouterQueueAssignment() } },
                     Labels =
                     {
                         ["test_label_1"] = new LabelValue("testLabel"),
@@ -103,7 +103,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var registerWorker1Response = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId1, 10)
                 {
-                    QueueIds = { [createQueue1.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [createQueue1.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations =
                     {
                         ["WebChat"] = new ChannelConfiguration(1),
@@ -117,7 +117,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var registerWorker2Response = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId2, 10)
                 {
-                    QueueIds = { [createQueue2.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [createQueue2.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations =
                     {
                         ["WebChat"] = new ChannelConfiguration(5) { MaxNumberOfJobs = 1 },
@@ -131,7 +131,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var registerWorker3Response = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId3, 12)
                 {
-                    QueueIds =
+                    QueueAssignments =
                     {
                         [createQueue1.Id] = new RouterQueueAssignment(),
                         [createQueue2.Id] = new RouterQueueAssignment()
@@ -149,7 +149,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var registerWorker4Response = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId4, 10)
                 {
-                    QueueIds = { [createQueue1.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [createQueue1.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations = { ["WebChat"] = new ChannelConfiguration(1) },
                     AvailableForOffers = true,
                 });

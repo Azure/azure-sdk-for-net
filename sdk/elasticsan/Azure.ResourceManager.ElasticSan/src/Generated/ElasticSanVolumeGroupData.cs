@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
         public ElasticSanVolumeGroupData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="protocolType"> Type of storage target. </param>
         /// <param name="encryption"> Type of encryption. </param>
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
-        /// <param name="tags"> Azure resource tags. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ElasticSanProvisioningState? provisioningState, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, NetworkRuleSet networkAcls, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ElasticSanProvisioningState? provisioningState, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, NetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ProtocolType = protocolType;
             Encryption = encryption;
             NetworkAcls = networkAcls;
-            Tags = tags;
+            PrivateEndpointConnections = privateEndpointConnections;
         }
 
         /// <summary> State of the operation on the resource. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        /// <summary> Azure resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> The list of Private Endpoint Connections. </summary>
+        public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

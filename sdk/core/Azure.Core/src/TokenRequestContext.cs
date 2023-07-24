@@ -56,15 +56,15 @@ namespace Azure.Core
         /// <param name="scopes">The scopes required for the token.</param>
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
-        /// <param name="tenantId"> The tenantId to be included in the token request. </param>
-        /// <param name="enableCae"></param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool enableCae = false)
+        /// <param name="tenantId"> The tenantId to be included in the token request.</param>
+        /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
+        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
             Claims = claims;
             TenantId = tenantId;
-            IsCaeEnabled = enableCae;
+            IsCaeEnabled = isCaeEnabled;
         }
 
         /// <summary>

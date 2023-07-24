@@ -64,15 +64,6 @@ namespace Azure.Communication.JobRouter.Models
             return new AcceptJobOfferResult(assignmentId, jobId, workerId);
         }
 
-        /// <summary> Initializes a new instance of RouterQueueItem. </summary>
-        /// <param name="queue"> A queue that can contain jobs to be routed. </param>
-        /// <param name="etag"> (Optional) The Concurrency Token. </param>
-        /// <returns> A new <see cref="Models.RouterQueueItem"/> instance for mocking. </returns>
-        public static RouterQueueItem RouterQueueItem(RouterQueue queue = null, string etag = null)
-        {
-            return new RouterQueueItem(queue, etag);
-        }
-
         /// <summary> Initializes a new instance of RouterQueueStatistics. </summary>
         /// <param name="queueId"> Id of the queue these details are about. </param>
         /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>

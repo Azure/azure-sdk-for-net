@@ -53,14 +53,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                 });
 
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                 });
 
             // Register worker1
@@ -138,7 +138,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(5), },
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     AvailableForOffers = true
                 });
 
@@ -146,7 +146,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(5), },
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     AvailableForOffers = true, // register worker upon creation
                 });
 
@@ -233,7 +233,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
                         ["Location"] = new LabelValue("United States"),
@@ -249,7 +249,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
                         ["Location"] = new LabelValue("United States"),
@@ -265,7 +265,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateWorkerOptions(workerId: worker3Id, totalCapacity: 10)
                 {
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
                         ["Location"] = new LabelValue("United States"),
@@ -364,7 +364,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     AvailableForOffers = true,
                 });
 
@@ -372,7 +372,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     AvailableForOffers = true,
                 });
 

@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Communication.CallAutomation.Models;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using System;
 
@@ -138,6 +139,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        public async Task TransferCallToParticipantAsyncWithTransferee_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier);
+            options.Transferee = new CommunicationUserIdentifier("transfereeid");
+
+            var response = await callConnection.TransferCallToParticipantAsync(options).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public void TransferCallToParticipant_simpleMethod_202Accepted(CallInvite callInvite)
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
@@ -153,6 +166,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier));
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        public void TransferCallToParticipantWithTransferee_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier);
+            options.Transferee = new CommunicationUserIdentifier("transfereeid");
+
+            var response = callConnection.TransferCallToParticipant(options);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -508,12 +533,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
         private static IEnumerable<object?[]> TestData_TransferCallToParticipant()
         {
+            var callInvite = new CallInvite(new CommunicationUserIdentifier("userId"));
+            callInvite.CustomContext.Add(new VoipHeader("key1", "value1"));
             return new[]
             {
                 new object?[]
                 {
-                    new CallInvite(new CommunicationUserIdentifier("userId")){
-                        VoipHeaders = {{ "key1", "value1" }}}
+                    callInvite
                 },
             };
         }

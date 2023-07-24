@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Messaging.ServiceBus" />
+    <PackageReference Include ="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>
