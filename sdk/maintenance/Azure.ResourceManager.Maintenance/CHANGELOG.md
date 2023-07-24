@@ -1,14 +1,15 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (2023-07-24)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Bump the api-version to `2023-04-01`.
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.34.0.
+- Upgraded dependent Azure.ResourceManager to 1.7.0.
 
 ## 1.2.0-beta.1 (2023-05-30)
 

@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
+            if (Optional.IsDefined(Filter))
+            {
+                writer.WritePropertyName("filter"u8);
+                writer.WriteObjectValue(Filter);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<ResourceIdentifier> resourceId = default;
+            Optional<MaintenanceConfigurationAssignmentFilter> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -112,11 +118,20 @@ namespace Azure.ResourceManager.Maintenance.Models
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("filter"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new MaintenanceConfigurationAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), maintenanceConfigurationId.Value, resourceId.Value);
+            return new MaintenanceConfigurationAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), maintenanceConfigurationId.Value, resourceId.Value, filter.Value);
         }
     }
 }
