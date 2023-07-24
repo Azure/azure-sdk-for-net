@@ -98,7 +98,7 @@ namespace Azure.AI.OpenAI
             try
             {
                 using HttpMessage message = CreateBeginAzureBatchImageGenerationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -138,7 +138,7 @@ namespace Azure.AI.OpenAI
             try
             {
                 using HttpMessage message = CreateBeginAzureBatchImageGenerationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
