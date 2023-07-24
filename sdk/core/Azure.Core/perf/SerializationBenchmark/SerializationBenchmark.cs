@@ -23,7 +23,7 @@ namespace Azure.Core.Perf
         protected Response _response;
         private ModelSerializerOptions _options;
         private BinaryData _data;
-        private MultiBufferRequestContent _content;
+        private SequenceWriter _content;
         private ReadOnlySequence<byte> _sequence;
         private byte[] _buffer;
 
@@ -46,7 +46,7 @@ namespace Azure.Core.Perf
             _response = new MockResponse(200);
             _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
             _options = ModelSerializerOptions.AzureServiceDefault;
-            _content = new MultiBufferRequestContent();
+            _content = new SequenceWriter();
             using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
             _model.Serialize(writer, new ModelSerializerOptions());
             writer.Flush();
@@ -90,6 +90,13 @@ namespace Azure.Core.Perf
         }
 
         [Benchmark]
+        [BenchmarkCategory("Cast")]
+        public RequestContent CreateRequestContent()
+        {
+            return RequestContent.Create(_content);
+        }
+
+        [Benchmark]
         [BenchmarkCategory("ModelJsonConverter")]
         public string Serialize_ModelJsonConverter()
         {
@@ -109,7 +116,7 @@ namespace Azure.Core.Perf
         [BenchmarkCategory("PublicInterface")]
         public void Serialize_PublicInterface()
         {
-            using var content = new MultiBufferRequestContent();
+            using var content = new SequenceWriter();
             using var writer = new Utf8JsonWriter(content);
             _model.Serialize(writer, _options);
             writer.Flush();

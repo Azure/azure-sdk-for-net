@@ -50,13 +50,13 @@ namespace Azure.Core.Serialization
 
         private static BinaryData SerializeJson(IJsonModelSerializable jsonModel, ModelSerializerOptions options)
         {
-            using var multiBufferRequestContent = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(multiBufferRequestContent);
+            using var sequenceWriter = new SequenceWriter();
+            using var writer = new Utf8JsonWriter(sequenceWriter);
             jsonModel.Serialize(writer, options);
             writer.Flush();
-            multiBufferRequestContent.TryComputeLength(out var length);
+            sequenceWriter.TryComputeLength(out var length);
             using var stream = new MemoryStream((int)length);
-            multiBufferRequestContent.WriteTo(stream, default);
+            sequenceWriter.WriteTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 

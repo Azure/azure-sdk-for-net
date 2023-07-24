@@ -42,11 +42,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public static implicit operator RequestContent(DogListProperty dog)
         {
-            var content = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(content);
-            ((IJsonModelSerializable)dog).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
-            writer.Flush();
-            return content;
+            return new Utf8JsonDelayedRequestContent(dog);
         }
 
         #region Serialization

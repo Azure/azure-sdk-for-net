@@ -60,14 +60,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return ResourceProviderData.DeserializeResourceProviderData(doc.RootElement);
         }
 
-        private MultiBufferRequestContent WriteStringToBuffer(string json, ModelSerializerOptions options)
+        private SequenceWriter WriteStringToBuffer(string json, ModelSerializerOptions options)
         {
             var model = ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(json)));
-            MultiBufferRequestContent content = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(content);
+            SequenceWriter sequenceWriter = new SequenceWriter();
+            using var writer = new Utf8JsonWriter(sequenceWriter);
             ((IJsonModelSerializable)model).Serialize(writer, options);
             writer.Flush();
-            return content;
+            return sequenceWriter;
         }
 
         private string SerializeWithModelSerializer(ResourceProviderData model)
@@ -78,33 +78,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private string SerializeWithBuffer(ResourceProviderData model)
         {
-            using var multiBufferRequestContent = new MultiBufferRequestContent(bufferSize: 4048);
-            var writer = new Utf8JsonWriter(multiBufferRequestContent);
+            using var sequenceWriter = new SequenceWriter(bufferSize: 4048);
+            var writer = new Utf8JsonWriter(sequenceWriter);
             model.Serialize(writer);
             writer.Flush();
-            RequestContent content = multiBufferRequestContent;
+            RequestContent content = RequestContent.Create(sequenceWriter);
             using var stream = new MemoryStream();
             content.WriteTo(stream, default);
             stream.Position = 0;
             using var reader = new StreamReader(stream);
             return reader.ReadToEnd();
         }
-
-        //[Test]
-        //public void ConvertReaderToSpan()
-        //{
-        //    var bytes = Encoding.UTF8.GetBytes(File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ResourceProviderData.json")).TrimEnd());
-        //    Utf8JsonReader reader = new Utf8JsonReader(bytes);
-        //    using MultiBufferRequestContent content = reader.GetRawBytes();
-        //    content.TryComputeLength(out var length);
-
-        //    using var stream = new MemoryStream((int)length);
-        //    content.WriteTo(stream, default);
-
-        //    var convertedBytes = stream.GetBuffer().AsMemory(0, (int)stream.Position);
-
-        //    //Assert.AreEqual(bytes.Length, convertedBytes.Length);
-        //    CollectionAssert.AreEqual(bytes, convertedBytes.ToArray());
-        //}
     }
 }

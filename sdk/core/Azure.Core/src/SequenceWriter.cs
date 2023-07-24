@@ -12,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// .
     /// </summary>
-    public sealed class MultiBufferRequestContent : RequestContent, IBufferWriter<byte>
+    public sealed class SequenceWriter : IBufferWriter<byte>, IDisposable
     {
         private struct Buffer
         {
@@ -28,7 +28,7 @@ namespace Azure.Core
         /// .
         /// </summary>
         /// <param name="bufferSize"></param>
-        public MultiBufferRequestContent(int bufferSize = 4096)
+        public SequenceWriter(int bufferSize = 4096)
         {
             _bufferSize = bufferSize;
             _buffers = Array.Empty<Buffer>();
@@ -99,8 +99,10 @@ namespace Azure.Core
             return memory.Span;
         }
 
-        /// <inheritdoc/>
-        public override void Dispose()
+        /// <summary>
+        /// Disposes the SequenceWriter and returns the underlying buffers to the pool.
+        /// </summary>
+        public void Dispose()
         {
             // should we harden it? we really cannot afford use-after-free bugs. they might cause data corruption.
             // should we lock other members on this instance when we are disposing?
@@ -113,8 +115,12 @@ namespace Azure.Core
             _count = 0;
         }
 
-        /// <inheritdoc/>
-        public override bool TryComputeLength(out long length)
+        /// <summary>
+        /// Compute the length of the data written to the SequenceWriter.
+        /// </summary>
+        /// <param name="length"> The length of the buffer returned. </param>
+        /// <returns> A bool indicating whether or not the length was able to be calculated. </returns>
+        public bool TryComputeLength(out long length)
         {
             length = 0;
             for (int i = 0; i < _count; i++)
@@ -125,8 +131,7 @@ namespace Azure.Core
             return true;
         }
 
-        /// <inheritdoc/>
-        public override void WriteTo(Stream stream, CancellationToken cancellation)
+        internal void WriteTo(Stream stream, CancellationToken cancellation)
         {
             for (int i = 0; i < _count; i++)
             {
@@ -135,8 +140,7 @@ namespace Azure.Core
             }
         }
 
-        /// <inheritdoc/>
-        public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        internal async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
             for (int i = 0; i < _count; i++)
             {

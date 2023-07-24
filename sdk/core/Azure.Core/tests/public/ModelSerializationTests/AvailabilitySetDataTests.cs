@@ -77,27 +77,27 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private AvailabilitySetData DeserializeWithSequence(string json, ModelSerializerOptions options)
         {
-            using MultiBufferRequestContent content = WriteStringToBuffer(json);
-            var sequence = content.GetReadOnlySequence();
-            using var doc = JsonDocument.Parse(content.GetReadOnlySequence());
+            using SequenceWriter writer = WriteStringToBuffer(json);
+            var sequence = writer.GetReadOnlySequence();
+            using var doc = JsonDocument.Parse(writer.GetReadOnlySequence());
             return AvailabilitySetData.DeserializeAvailabilitySetData(doc.RootElement);
         }
 
-        private MultiBufferRequestContent WriteStringToBuffer(string json)
+        private SequenceWriter WriteStringToBuffer(string json)
         {
-            MultiBufferRequestContent content = new MultiBufferRequestContent();
+            SequenceWriter writer = new SequenceWriter();
             var bytes = Encoding.UTF8.GetBytes(json);
             int fullBuffers = bytes.Length / 4096;
             for (int i = 0; i < fullBuffers; i++)
             {
                 int index = i * 4096;
-                bytes.AsSpan(index, 4096).CopyTo(content.GetSpan(4096));
-                content.Advance(4096);
+                bytes.AsSpan(index, 4096).CopyTo(writer.GetSpan(4096));
+                writer.Advance(4096);
             }
             var remainder = bytes.Length % 4096;
-            bytes.AsSpan(fullBuffers * 4096, remainder).CopyTo(content.GetSpan(remainder));
-            content.Advance(remainder);
-            return content;
+            bytes.AsSpan(fullBuffers * 4096, remainder).CopyTo(writer.GetSpan(remainder));
+            writer.Advance(remainder);
+            return writer;
         }
 
         private string SerializeWithImplicitCast(AvailabilitySetData model, ModelSerializerOptions options)
@@ -114,11 +114,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private string SerializeWithBuffer(AvailabilitySetData model, ModelSerializerOptions options)
         {
-            using var content = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(content);
+            using var sequenceWriter = new SequenceWriter();
+            using var writer = new Utf8JsonWriter(sequenceWriter);
             ((IJsonModelSerializable)model).Serialize(writer, options);
             writer.Flush();
-            return GetStringFromContent(content);
+            return GetStringFromContent(RequestContent.Create(sequenceWriter));
         }
 
         private static string GetStringFromContent(RequestContent content)
@@ -156,22 +156,5 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(3, model.PlatformFaultDomainCount);
             Assert.AreEqual("Classic", model.Sku.Name);
         }
-
-        //[Test]
-        //public void ConvertReaderToSpan()
-        //{
-        //    var bytes = Encoding.UTF8.GetBytes(_serviceResponse);
-        //    Utf8JsonReader reader = new Utf8JsonReader(bytes);
-        //    using MultiBufferRequestContent content = reader.GetRawBytes();
-        //    content.TryComputeLength(out var length);
-
-        //    using var stream = new MemoryStream((int)length);
-        //    content.WriteTo(stream, default);
-
-        //    var convertedBytes = stream.GetBuffer().AsMemory(0, (int)stream.Position);
-
-        //    Assert.AreEqual(bytes.Length, convertedBytes.Length);
-        //    CollectionAssert.AreEqual(bytes, convertedBytes.ToArray());
-        //}
     }
 }

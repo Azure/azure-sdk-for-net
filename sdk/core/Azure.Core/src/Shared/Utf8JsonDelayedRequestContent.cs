@@ -15,46 +15,48 @@ namespace Azure.Core
     {
         private readonly object _serializedLock = new object();
 
-        private MultiBufferRequestContent? _content;
+        private SequenceWriter? _sequenceWriter;
         private IJsonModelSerializable _model;
         private ModelSerializerOptions _serializerOptions;
         private Utf8JsonWriter? _writer;
+        private RequestContent? _content;
 
         public Utf8JsonDelayedRequestContent(IJsonModelSerializable model, ModelSerializerOptions? options = default)
         {
-            _content = new MultiBufferRequestContent();
             _model = model;
             _serializerOptions = options ?? ModelSerializerOptions.AzureServiceDefault;
         }
 
-        private MultiBufferRequestContent Content => _content ??= new MultiBufferRequestContent();
+        private SequenceWriter SequenceWriter => _sequenceWriter ??= new SequenceWriter();
 
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public Utf8JsonWriter JsonWriter => _writer ??= new Utf8JsonWriter(Content);
+        private Utf8JsonWriter JsonWriter => _writer ??= new Utf8JsonWriter(SequenceWriter);
 #pragma warning restore AZC0014 // Avoid using banned types in public API
+
+        private RequestContent Content => _content ??= Create(SequenceWriter);
 
         /// <inheritdoc/>
         public override void Dispose()
         {
             _writer?.Dispose();
-            _content?.Dispose();
+            _sequenceWriter?.Dispose();
         }
 
         /// <inheritdoc/>
         public override bool TryComputeLength(out long length)
         {
             Serialize();
-            return Content.TryComputeLength(out length);
+            return SequenceWriter.TryComputeLength(out length);
         }
 
         private void Serialize()
         {
-            Content.TryComputeLength(out var len);
+            SequenceWriter.TryComputeLength(out var len);
             if (len == 0)
             {
                 lock (_serializedLock)
                 {
-                    Content.TryComputeLength(out len);
+                    SequenceWriter.TryComputeLength(out len);
                     if (len == 0)
                     {
                         _model.Serialize(JsonWriter, _serializerOptions);
