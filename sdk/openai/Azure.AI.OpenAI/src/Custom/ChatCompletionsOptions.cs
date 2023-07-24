@@ -43,7 +43,7 @@ namespace Azure.AI.OpenAI
         /// <inheritdoc cref="CompletionsOptions.User"/>
         public string User { get; set; }
 
-         /// <summary> A list of functions the model may generate JSON inputs for. </summary>
+        /// <summary> A list of functions the model may generate JSON inputs for. </summary>
         public IList<FunctionDefinition> Functions { get; set; }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.AI.OpenAI
         ///     </item>
         ///     <item>
         ///         <see cref="FunctionDefinition.Auto"/> represents the default behavior and will allow the model
-        ///         to freely select between issuing a stanard completions response or a call to any provided
+        ///         to freely select between issuing a standard completions response or a call to any provided
         ///         function.
         ///     </item>
         ///     <item>

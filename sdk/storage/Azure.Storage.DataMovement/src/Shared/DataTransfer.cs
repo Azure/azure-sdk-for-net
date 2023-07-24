@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement
         public void EnsureCompleted(CancellationToken cancellationToken = default)
         {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            AwaitCompletion(cancellationToken).GetAwaiter().GetResult();
+            WaitForCompletionAsync(cancellationToken).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
 
@@ -76,7 +76,7 @@ namespace Azure.Storage.DataMovement
         /// Waits until the data transfer itself has completed
         /// </summary>
         /// <param name="cancellationToken"></param>
-        public async Task AwaitCompletion(CancellationToken cancellationToken = default)
+        public async Task WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
             await _state.CompletionSource.Task.AwaitWithCancellation(cancellationToken);
         }
