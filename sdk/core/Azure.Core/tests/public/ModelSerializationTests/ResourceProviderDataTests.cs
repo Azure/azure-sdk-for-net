@@ -17,11 +17,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         [Test]
         public void RoundTripTest() =>
-            RoundTripTest(SerializeWithModelSerializer);
+            RoundTripTest(SerializeWithModelSerializer, DeserializeWithModelSerializer);
 
         [Test]
         public void BufferTest() =>
-            RoundTripTest(SerializeWithBuffer);
+            RoundTripTest(SerializeWithBuffer, DeserializeWithModelSerializer);
 
         [Test]
         public void JsonReaderTest() =>
@@ -31,19 +31,27 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void UsingSequence() =>
             RoundTripTest(SerializeWithModelSerializer, DeserializeWithSequence);
 
-        private void RoundTripTest(Func<ResourceProviderData, string> serialize, Func<string, ResourceProviderData> deserialize = default)
+        [Test]
+        public void UsingNonGeneric() =>
+            RoundTripTest(SerializeWithModelSerializerNonGeneric, DeserializeWithModelSerializerNonGeneric);
+
+        [Test]
+        public void UsingInternal() =>
+            RoundTripTest(SerializeWithInternal, DeserializeWithInternal);
+
+        private void RoundTripTest(Func<ResourceProviderData, string> serialize, Func<string, ResourceProviderData> deserialize)
         {
             string serviceResponse = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ResourceProviderData.json")).TrimEnd();
 
             var expectedSerializedString = serviceResponse;
 
-            ResourceProviderData model = deserialize is null ? ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse))) : deserialize(serviceResponse);
+            ResourceProviderData model = deserialize(serviceResponse);
 
             string roundTrip = serialize(model);
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            ResourceProviderData model2 = deserialize is null ? ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip))) : deserialize(roundTrip);
+            ResourceProviderData model2 = deserialize(roundTrip);
         }
 
         private ResourceProviderData DeserializeWithJsonReader(string json)
@@ -60,6 +68,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return ResourceProviderData.DeserializeResourceProviderData(doc.RootElement);
         }
 
+        private ResourceProviderData DeserializeWithModelSerializer(string json)
+        {
+            return ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(json)));
+        }
+
+        private ResourceProviderData DeserializeWithInternal(string json)
+        {
+            using var doc = JsonDocument.Parse(json);
+            return ResourceProviderData.DeserializeResourceProviderData(doc.RootElement);
+        }
+
+        private ResourceProviderData DeserializeWithModelSerializerNonGeneric(string json)
+        {
+            return (ResourceProviderData)ModelSerializer.Deserialize(new BinaryData(Encoding.UTF8.GetBytes(json)), typeof(ResourceProviderData));
+        }
+
         private SequenceWriter WriteStringToBuffer(string json, ModelSerializerOptions options)
         {
             var model = ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(json)));
@@ -74,6 +98,23 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             var data = ModelSerializer.Serialize(model);
             return data.ToString();
+        }
+
+        private string SerializeWithModelSerializerNonGeneric(object model)
+        {
+            var data = ModelSerializer.Serialize(model);
+            return data.ToString();
+        }
+
+        private string SerializeWithInternal(ResourceProviderData model)
+        {
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream);
+            model.Serialize(writer);
+            writer.Flush();
+            stream.Position = 0;
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
         }
 
         private string SerializeWithBuffer(ResourceProviderData model)

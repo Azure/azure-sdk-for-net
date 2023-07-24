@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -113,6 +114,13 @@ namespace Azure.Core.Perf
         }
 
         [Benchmark]
+        [BenchmarkCategory("ModelSerializer")]
+        public BinaryData Serialize_ModelSerializerNonGeneric()
+        {
+            return ModelSerializer.Serialize((object)_model, _options);
+        }
+
+        [Benchmark]
         [BenchmarkCategory("PublicInterface")]
         public void Serialize_PublicInterface()
         {
@@ -160,6 +168,13 @@ namespace Azure.Core.Perf
         public T Deserialize_ModelSerializerFromBinaryData()
         {
             return ModelSerializer.Deserialize<T>(_data, _options);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("ModelSerializer")]
+        public object Deserialize_ModelSerializerFromBinaryDataNonGeneric()
+        {
+            return ModelSerializer.Deserialize(_data, typeof(T), _options);
         }
 
         [Benchmark]

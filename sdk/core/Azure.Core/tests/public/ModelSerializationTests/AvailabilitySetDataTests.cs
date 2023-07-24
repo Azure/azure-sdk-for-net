@@ -21,16 +21,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         [TestCase("D")]
         public void RoundTripTest(string format) =>
-            RoundTripTest(format, SerializeWithModelSerializer);
+            RoundTripTest(format, SerializeWithModelSerializer, DeserializeWithModelSerializer);
 
         [TestCase("W")]
         [TestCase("D")]
         public void BufferTest(string format) =>
-            RoundTripTest(format, SerializeWithBuffer);
+            RoundTripTest(format, SerializeWithBuffer, DeserializeWithModelSerializer);
 
         [Test]
         public void ImplicitCastTest() =>
-            RoundTripTest(ModelSerializerFormat.Wire, SerializeWithImplicitCast);
+            RoundTripTest(ModelSerializerFormat.Wire, SerializeWithImplicitCast, DeserializeWithModelSerializer);
 
         [TestCase("W")]
         [TestCase("D")]
@@ -42,7 +42,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void UsingSequence(string format) =>
             RoundTripTest(format, SerializeWithModelSerializer, DeserializeWithSequence);
 
-        private void RoundTripTest(string format, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize, Func<string, ModelSerializerOptions, AvailabilitySetData> deserialize = default)
+        [TestCase("W")]
+        [TestCase("D")]
+        public void UseNonGeneric(string format) =>
+            RoundTripTest(format, SerializeWithModelSerializerNonGeneric, DeserializeWithModelSerializerNonGeneric);
+
+        [Test]
+        public void UseInternal() =>
+            RoundTripTest("W", SerializeWithInternal, DeserializeWithInternal);
+
+        private void RoundTripTest(string format, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize, Func<string, ModelSerializerOptions, AvailabilitySetData> deserialize)
         {
             ModelSerializerOptions options = new ModelSerializerOptions(format);
 
@@ -57,14 +66,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             //    expectedSerializedString += ",\"extraRoot\":\"extraRoot\"";
             expectedSerializedString += "}";
 
-            AvailabilitySetData model = deserialize is null ? ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(_serviceResponse)), options) : deserialize(_serviceResponse, options);
+            AvailabilitySetData model = deserialize(_serviceResponse, options);
 
             ValidateModel(model);
             string roundTrip = serialize(model, options);
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            AvailabilitySetData model2 = deserialize is null ? ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options) : deserialize(roundTrip, options);
+            AvailabilitySetData model2 = deserialize(roundTrip, options);
             CompareModels(model, model2, format);
         }
 
@@ -81,6 +90,21 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             var sequence = writer.GetReadOnlySequence();
             using var doc = JsonDocument.Parse(writer.GetReadOnlySequence());
             return AvailabilitySetData.DeserializeAvailabilitySetData(doc.RootElement);
+        }
+
+        private AvailabilitySetData DeserializeWithModelSerializer(string json, ModelSerializerOptions options)
+        {
+            return ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(json)), options);
+        }
+        private AvailabilitySetData DeserializeWithInternal(string json, ModelSerializerOptions options)
+        {
+            using JsonDocument doc = JsonDocument.Parse(json);
+            return AvailabilitySetData.DeserializeAvailabilitySetData(doc.RootElement);
+        }
+
+        private AvailabilitySetData DeserializeWithModelSerializerNonGeneric(string json, ModelSerializerOptions options)
+        {
+            return (AvailabilitySetData)ModelSerializer.Deserialize(new BinaryData(Encoding.UTF8.GetBytes(json)), typeof(AvailabilitySetData), options);
         }
 
         private SequenceWriter WriteStringToBuffer(string json)
@@ -110,6 +134,23 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             var data = ModelSerializer.Serialize(model, options);
             return data.ToString();
+        }
+
+        private string SerializeWithModelSerializerNonGeneric(object model, ModelSerializerOptions options)
+        {
+            var data = ModelSerializer.Serialize(model, options);
+            return data.ToString();
+        }
+
+        private string SerializeWithInternal(AvailabilitySetData model, ModelSerializerOptions options)
+        {
+            using MemoryStream stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream);
+            model.Serialize(writer);
+            writer.Flush();
+            stream.Position = 0;
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
         }
 
         private string SerializeWithBuffer(AvailabilitySetData model, ModelSerializerOptions options)

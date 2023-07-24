@@ -21,19 +21,39 @@ namespace Azure.Core.Serialization
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable
+        public static BinaryData Serialize<T>(T model, ModelSerializerOptions options = default) where T : IModelSerializable
         {
-            options ??= new ModelSerializerOptions();
-
-            if (options.Value.Serializers.TryGetValue(typeof(T), out var serializer))
+            if (options.Serializers.TryGetValue(typeof(T), out var serializer))
                 return serializer.Serialize(model);
 
             switch (model)
             {
                 case IJsonModelSerializable jsonModel:
-                    return SerializeJson(jsonModel, options.Value);
+                    return SerializeJson(jsonModel, options);
                 case IXmlModelSerializable xmlModel:
-                    return SerializeXml(xmlModel, options.Value);
+                    return SerializeXml(xmlModel, options);
+                default:
+                    throw new NotSupportedException("Model type is not supported.");
+            }
+        }
+
+        /// <summary>
+        /// Serialize a model.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public static BinaryData Serialize(object model, ModelSerializerOptions options = default)
+        {
+            if (options.Serializers.TryGetValue(model.GetType(), out var serializer))
+                return serializer.Serialize(model);
+
+            switch (model)
+            {
+                case IJsonModelSerializable jsonModel:
+                    return SerializeJson(jsonModel, options);
+                case IXmlModelSerializable xmlModel:
+                    return SerializeXml(xmlModel, options);
                 default:
                     throw new NotSupportedException("Model type is not supported.");
             }
@@ -64,12 +84,20 @@ namespace Azure.Core.Serialization
         /// Serialize a XML model. Todo: collapse this method when working - need compile check over runtime
         /// </summary>
         /// <returns></returns>
-        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions options = default) where T : class, IModelSerializable
         {
-            return (T)Deserialize(data, typeof(T), options ?? new ModelSerializerOptions());
+            return (T)Deserialize(data, typeof(T), options);
         }
 
-        internal static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="typeToConvert"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options = default)
         {
             if (options.Serializers.TryGetValue(typeToConvert, out var serializer))
             {
