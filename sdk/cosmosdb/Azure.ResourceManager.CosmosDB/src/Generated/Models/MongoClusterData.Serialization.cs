@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<string> serverVersion = default;
             Optional<string> connectionString = default;
             Optional<string> earliestRestoreTime = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<CosmosDBProvisioningState> provisioningState = default;
             Optional<MongoClusterStatus> clusterStatus = default;
             Optional<IList<NodeGroupSpec>> nodeGroupSpecs = default;
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new CosmosDBProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("clusterStatus"u8))

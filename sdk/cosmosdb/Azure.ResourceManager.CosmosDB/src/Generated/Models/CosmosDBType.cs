@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Type of the connection string. </summary>
-    public readonly partial struct Type : IEquatable<Type>
+    public readonly partial struct CosmosDBType : IEquatable<CosmosDBType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="Type"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Type(string value)
+        public CosmosDBType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string UndefinedValue = "Undefined";
 
         /// <summary> Sql. </summary>
-        public static Type Sql { get; } = new Type(SqlValue);
+        public static CosmosDBType Sql { get; } = new CosmosDBType(SqlValue);
         /// <summary> Table. </summary>
-        public static Type Table { get; } = new Type(TableValue);
+        public static CosmosDBType Table { get; } = new CosmosDBType(TableValue);
         /// <summary> MongoDB. </summary>
-        public static Type MongoDB { get; } = new Type(MongoDBValue);
+        public static CosmosDBType MongoDB { get; } = new CosmosDBType(MongoDBValue);
         /// <summary> Cassandra. </summary>
-        public static Type Cassandra { get; } = new Type(CassandraValue);
+        public static CosmosDBType Cassandra { get; } = new CosmosDBType(CassandraValue);
         /// <summary> CassandraConnectorMetadata. </summary>
-        public static Type CassandraConnectorMetadata { get; } = new Type(CassandraConnectorMetadataValue);
+        public static CosmosDBType CassandraConnectorMetadata { get; } = new CosmosDBType(CassandraConnectorMetadataValue);
         /// <summary> Gremlin. </summary>
-        public static Type Gremlin { get; } = new Type(GremlinValue);
+        public static CosmosDBType Gremlin { get; } = new CosmosDBType(GremlinValue);
         /// <summary> SqlDedicatedGateway. </summary>
-        public static Type SqlDedicatedGateway { get; } = new Type(SqlDedicatedGatewayValue);
+        public static CosmosDBType SqlDedicatedGateway { get; } = new CosmosDBType(SqlDedicatedGatewayValue);
         /// <summary> GremlinV2. </summary>
-        public static Type GremlinV2 { get; } = new Type(GremlinV2Value);
+        public static CosmosDBType GremlinV2 { get; } = new CosmosDBType(GremlinV2Value);
         /// <summary> Undefined. </summary>
-        public static Type Undefined { get; } = new Type(UndefinedValue);
-        /// <summary> Determines if two <see cref="Type"/> values are the same. </summary>
-        public static bool operator ==(Type left, Type right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="Type"/> values are not the same. </summary>
-        public static bool operator !=(Type left, Type right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Type"/>. </summary>
-        public static implicit operator Type(string value) => new Type(value);
+        public static CosmosDBType Undefined { get; } = new CosmosDBType(UndefinedValue);
+        /// <summary> Determines if two <see cref="CosmosDBType"/> values are the same. </summary>
+        public static bool operator ==(CosmosDBType left, CosmosDBType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="CosmosDBType"/> values are not the same. </summary>
+        public static bool operator !=(CosmosDBType left, CosmosDBType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="CosmosDBType"/>. </summary>
+        public static implicit operator CosmosDBType(string value) => new CosmosDBType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Type other && Equals(other);
+        public override bool Equals(object obj) => obj is CosmosDBType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(Type other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CosmosDBType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

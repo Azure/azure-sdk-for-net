@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Earliest restore timestamp in UTC ISO8601 format. </summary>
         public string EarliestRestoreTime { get; }
         /// <summary> A provisioning state of the mongo cluster. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public CosmosDBProvisioningState? ProvisioningState { get; }
         /// <summary> A status of the mongo cluster. </summary>
         public MongoClusterStatus? ClusterStatus { get; }
         /// <summary> The list of node group specs in the cluster. </summary>

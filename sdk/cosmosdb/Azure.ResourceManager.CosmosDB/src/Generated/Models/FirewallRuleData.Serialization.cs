@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<CosmosDBProvisioningState> provisioningState = default;
             string startIPAddress = default;
             string endIPAddress = default;
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new CosmosDBProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startIpAddress"u8))

@@ -335,6 +335,11 @@ prepend-rp-prefix:
 - PublicNetworkAccess
 - SpatialType
 - ContainerPartitionKey
+- FirewallRuleCollection
+- Status
+- ProvisioningState
+- Type
+- CheckNameAvailabilityContent
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData

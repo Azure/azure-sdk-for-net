@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="keyKind"> Kind of the connection string key. </param>
         /// <param name="keyType"> Type of the connection string. </param>
         /// <returns> A new <see cref="Models.CosmosDBAccountConnectionString"/> instance for mocking. </returns>
-        public static CosmosDBAccountConnectionString CosmosDBAccountConnectionString(string connectionString = null, string description = null, CosmosDBKind? keyKind = null, Type? keyType = null)
+        public static CosmosDBAccountConnectionString CosmosDBAccountConnectionString(string connectionString = null, string description = null, CosmosDBKind? keyKind = null, CosmosDBType? keyType = null)
         {
             return new CosmosDBAccountConnectionString(connectionString, description, keyKind, keyType);
         }
@@ -1248,7 +1248,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="isSubscriptionRegionAccessAllowedForAz"> Flag indicating whether the subscription have access in region for Availability Zones(Az). </param>
         /// <param name="status"> Enum to indicate current buildout status of the region. </param>
         /// <returns> A new <see cref="Models.CosmosDBLocationProperties"/> instance for mocking. </returns>
-        public static CosmosDBLocationProperties CosmosDBLocationProperties(bool? doesSupportAvailabilityZone = null, bool? isResidencyRestricted = null, IEnumerable<CosmosDBBackupStorageRedundancy> backupStorageRedundancies = null, bool? isSubscriptionRegionAccessAllowedForRegular = null, bool? isSubscriptionRegionAccessAllowedForAz = null, Status? status = null)
+        public static CosmosDBLocationProperties CosmosDBLocationProperties(bool? doesSupportAvailabilityZone = null, bool? isResidencyRestricted = null, IEnumerable<CosmosDBBackupStorageRedundancy> backupStorageRedundancies = null, bool? isSubscriptionRegionAccessAllowedForRegular = null, bool? isSubscriptionRegionAccessAllowedForAz = null, CosmosDBStatus? status = null)
         {
             backupStorageRedundancies ??= new List<CosmosDBBackupStorageRedundancy>();
 
@@ -1579,7 +1579,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="clusterStatus"> A status of the mongo cluster. </param>
         /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
         /// <returns> A new <see cref="CosmosDB.MongoClusterData"/> instance for mocking. </returns>
-        public static MongoClusterData MongoClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBAccountCreateMode? createMode = null, MongoClusterRestoreParameters restoreParameters = null, string administratorLogin = null, string administratorLoginPassword = null, string serverVersion = null, string connectionString = null, string earliestRestoreTime = null, ProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, IEnumerable<NodeGroupSpec> nodeGroupSpecs = null)
+        public static MongoClusterData MongoClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBAccountCreateMode? createMode = null, MongoClusterRestoreParameters restoreParameters = null, string administratorLogin = null, string administratorLoginPassword = null, string serverVersion = null, string connectionString = null, string earliestRestoreTime = null, CosmosDBProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, IEnumerable<NodeGroupSpec> nodeGroupSpecs = null)
         {
             tags ??= new Dictionary<string, string>();
             nodeGroupSpecs ??= new List<NodeGroupSpec>();
@@ -1596,7 +1596,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <returns> A new <see cref="CosmosDB.FirewallRuleData"/> instance for mocking. </returns>
-        public static FirewallRuleData FirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, string startIPAddress = null, string endIPAddress = null)
+        public static FirewallRuleData FirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBProvisioningState? provisioningState = null, string startIPAddress = null, string endIPAddress = null)
         {
             return new FirewallRuleData(id, name, resourceType, systemData, provisioningState, startIPAddress, endIPAddress);
         }

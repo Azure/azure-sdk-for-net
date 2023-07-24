@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="description"> Description of the connection string. </param>
         /// <param name="keyKind"> Kind of the connection string key. </param>
         /// <param name="keyType"> Type of the connection string. </param>
-        internal CosmosDBAccountConnectionString(string connectionString, string description, CosmosDBKind? keyKind, Type? keyType)
+        internal CosmosDBAccountConnectionString(string connectionString, string description, CosmosDBKind? keyKind, CosmosDBType? keyType)
         {
             ConnectionString = connectionString;
             Description = description;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Kind of the connection string key. </summary>
         public CosmosDBKind? KeyKind { get; }
         /// <summary> Type of the connection string. </summary>
-        public Type? KeyType { get; }
+        public CosmosDBType? KeyType { get; }
     }
 }

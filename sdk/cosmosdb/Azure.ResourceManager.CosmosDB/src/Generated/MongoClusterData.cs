@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="provisioningState"> A provisioning state of the mongo cluster. </param>
         /// <param name="clusterStatus"> A status of the mongo cluster. </param>
         /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
-        internal MongoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountCreateMode? createMode, MongoClusterRestoreParameters restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, ProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, IList<NodeGroupSpec> nodeGroupSpecs) : base(id, name, resourceType, systemData, tags, location)
+        internal MongoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountCreateMode? createMode, MongoClusterRestoreParameters restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, CosmosDBProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, IList<NodeGroupSpec> nodeGroupSpecs) : base(id, name, resourceType, systemData, tags, location)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Earliest restore timestamp in UTC ISO8601 format. </summary>
         public string EarliestRestoreTime { get; }
         /// <summary> A provisioning state of the mongo cluster. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public CosmosDBProvisioningState? ProvisioningState { get; }
         /// <summary> A status of the mongo cluster. </summary>
         public MongoClusterStatus? ClusterStatus { get; }
         /// <summary> The list of node group specs in the cluster. </summary>
