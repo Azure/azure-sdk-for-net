@@ -42,7 +42,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             await schemaRegistryClient.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
         }
 
-        [Test]
+        [Test, Order(1)]
         public async Task SerializeDeserialize()
         {
             var client = schemaRegistryClient;
@@ -100,7 +100,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             #endregion
         }
 
-        [Test]
+        [Test, Order(2)]
         public async Task SerializeDeserializeGenerics()
         {
             var client = schemaRegistryClient;
@@ -137,7 +137,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             #endregion
         }
 
-        [Test]
+        [Test, Order(3)]
         public async Task SerializeDeserializeMessageContent()
         {
             var client = schemaRegistryClient;
@@ -153,7 +153,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             #endregion
         }
 
-        [Test]
+        [Test, Order(4)]
         public void SerializeDeserializeWithOptions()
         {
             var client = schemaRegistryClient;
@@ -197,27 +197,19 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
             public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
             {
-                // This method throws an exception if the data argument is not valid according to the schemaDefinition.
-
                 // Your implementation using the third-party library of your choice goes here.
-                List<Exception> errors = SampleValidationClass.SampleValidationMethod(schemaDefinition, data, dataType);
-                validationErrors = errors;
-
-                if (errors.Count > 0)
-                {
-                    throw new AggregateException(validationErrors);
-                }
-
-                return true;
+                bool isValid = SampleValidationClass.SampleIsValidMethod(schemaDefinition, data, dataType, out validationErrors);
+                return isValid;
             }
         }
 #endregion
 
         internal static class SampleValidationClass
         {
-            public static List<Exception> SampleValidationMethod(string schemaDefinition, object data, Type dataType)
+            public static bool SampleIsValidMethod(string schemaDefinition, object data, Type dataType, out IEnumerable<Exception> messages)
             {
-                return new List<Exception>();
+                messages = new List<Exception>();
+                return true;
             }
         }
     }

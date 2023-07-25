@@ -15,7 +15,7 @@ The following shows how to use the `SchemaRegistrySerializer` to serialize and d
 
 The `SchemaValidator` is an abstract class that must be implemented and passed into the `SchemaRegistryJsonSerializer` constructor. This allows you to choose the third-party JSON Schema package you would like to use to generate schemas from .NET types and validate .NET objects against JSON schemas.
 
-Implementing both `SchemaValidator.Validate` and `SchemaValidator.GenerateSchema` is required. Validation may be useful for your application since JSON deserialization is flexible. Deserializing on its own will not verify that a type matches a given schema, so implementing the validation method will be a much more reliable way to enforce schema adherance.
+Implementing both `SchemaValidator.TryValidate` and `SchemaValidator.GenerateSchema` is required. Validation may be useful for your application since JSON deserialization is flexible. Deserializing on its own will not verify that a type matches a given schema, so implementing the validation method will be a much more reliable way to enforce schema adherance.
 
 The following is an outline of how an implemented `SchemaValidator` may look:
 ```C# Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
@@ -29,48 +29,9 @@ internal class SampleJsonValidator : SchemaValidator
 
     public override bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors)
     {
-        // This method throws an exception if the data argument is not valid according to the schemaDefinition.
-
         // Your implementation using the third-party library of your choice goes here.
-        List<Exception> errors = SampleValidationClass.SampleValidationMethod(schemaDefinition, data, dataType);
-        validationErrors = errors;
-
-        if (errors.Count > 0)
-        {
-            throw new AggregateException(validationErrors);
-        }
-
-        return true;
-    }
-}
-```
-
-The following is a sample implementation:
-
-**This is for illustration only**
-```C#
-internal class SampleJsonValidator : SchemaValidator
-{
-    public override bool IsValid(object data, Type dataType, string schemaDefinition)
-    {
-        JsonSchemaSample schema = JsonSchemaSample.Parse(schemaDefinition);
-        JsonObjectSample jsonObject = JObject.FromObject(data);
-
-        bool isValid = jsonObject.IsValid(schema, out IList<ErrorMessageSample> messages);
-
-        if (!isValid)
-        {
-            IEnumerable<Exception> ex = messages.Select((i => new Exception(i.Message)));
-            throw new AggregateException(ex);
-        }
-    }
-
-    public override string GenerateSchema(Type dataType)
-    {
-        JsonSchemaGeneratorSample generator = new();
-        JsonSchemaSample schema = generator.Generate(dataType);
-
-        return schema.ToString();
+        bool isValid = SampleValidationClass.SampleIsValidMethod(schemaDefinition, data, dataType, out validationErrors);
+        return isValid;
     }
 }
 ```
