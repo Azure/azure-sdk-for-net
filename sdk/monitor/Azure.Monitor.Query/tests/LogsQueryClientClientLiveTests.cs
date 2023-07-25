@@ -18,6 +18,8 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
+        private string _endpoint;
+
         public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
