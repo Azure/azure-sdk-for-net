@@ -147,13 +147,8 @@ await tranfer.WaitForCompletionAsync();
 
 Azure.Storage.DataMovement.Blobs exposes a `StorageResource` for each type of blob (block, page, append) as well as a blob container. Storage resources are initialized with the appropriate client object from Azure.Storage.Blobs.
 
-```csharp
-BlobContainerClient containerClient;
-BlockBlobClient blockBlobClient;
-PageBlobClient pageBlobClient;
-AppendBlobClient appendBlobClient;
-
-StorageResource containerResource = new BlobStorageResourceContainer(containerClient);
+```C# Snippet:ResourceConstruction_Blobs
+StorageResource containerResource = new BlobStorageResourceContainer(blobContainerClient);
 StorageResource blockBlobResource = new BlockBlobStorageResource(blockBlobClient);
 StorageResource pageBlobResource = new PageBlobStorageResource(pageBlobClient);
 StorageResource appendBlobResource = new AppendBlobStorageResource(appendBlobClient);
@@ -161,39 +156,35 @@ StorageResource appendBlobResource = new AppendBlobStorageResource(appendBlobCli
 
 Blob `StorageResource` objects can be constructed with optional "options" arguments specific to the type of resource.
 
-```csharp
-BlobContainerClient containerClient;
-BlobStorageResourceContainerOptions options = new()
+```C# Snippet:ResourceConstruction_Blobs_WithOptions_VirtualDirectory
+BlobStorageResourceContainerOptions virtualDirectoryOptions = new()
 {
     DirectoryPrefix = "blob/directory/prefix"
-}
+};
 
 StorageResource virtualDirectoryResource = new BlobStorageResourceContainer(
-    containerClient,
-    options);
+    blobContainerClient,
+    virtualDirectoryOptions);
 ```
 
-```csharp
-BlockBlobClient blockBlobClient;
-string leaseId;
-BlockBlobStorageResourceOptions options = new()
+```C# Snippet:ResourceConstruction_Blobs_WithOptions_BlockBlob
+BlockBlobStorageResourceOptions leasedResourceOptions = new()
 {
     SourceConditions = new()
     {
         LeaseId = leaseId
     }
-}
-
-StorageResource virtualDirectoryResource = new BlockBlobStorageResource(
+};
+StorageResource leasedBlockBlobResource = new BlockBlobStorageResource(
     blockBlobClient,
-    options);
+    leasedResourceOptions);
 ```
 
 When resuming a transfer, a credential to Azure Storage is likely needed. Credentials are not persisted by the transfer manager. When using `BlobStorageResources.TryGetResourceProviders()` to recreate a `StorageResource` for resume, the returned provider can create the resource with a credential specified by the calling code. This allows for workflows like scoping generation of a Shared Access Signature to the given resource path. Your application should provide its own mechanism for getting the appropriate credential, represented by `GenerateMySasCredential()` in the sample below.
 
-```csharp
-AzureSasCredential GenerateMySasCredential(string blobUri);
-
+```C# Snippet:RehydrateBlobResource
+StorageResource sourceResource = null;
+StorageResource destinationResource = null;
 if (BlobStorageResources.TryGetResourceProviders(
     info,
     out BlobStorageResourceProvider blobSrcProvider,
@@ -212,10 +203,7 @@ An upload takes place between a local file `StorageResource` as source and blob 
 
 Upload a block blob.
 
-```csharp
-string sourceLocalPath;
-BlockBlobClient destinationBlob;
-
+```C# Snippet:SimpleBlobUpload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: new LocalFileStorageResource(sourceLocalPath),
     destinationResource: new BlockBlobStorageResource(destinationBlob));
@@ -224,22 +212,19 @@ await dataTransfer.WaitForCompletionAsync();
 
 Upload a directory as a specific blob type.
 
-```csharp
-string sourceLocalPath;
-BlobContainerClient destinationContainer;
-string optionalDestinationPrefix;
-
+```C# Snippet:SimpleDirectoryUpload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: new LocalDirectoryStorageResourceContainer(sourceLocalPath),
+    sourceResource: new LocalDirectoryStorageResourceContainer(sourcePath),
     destinationResource: new BlobStorageResourceContainer(
-        destinationContainer,
+        blobContainerClient,
         new BlobStorageResourceContainerOptions()
         {
             // Block blobs are the default if not specified
             BlobType = BlobType.Block,
-            DirectoryPrefix = optionalDestinationPrefix
-        }));
-await dataTransfer.AwaitCompletion();
+            DirectoryPrefix = optionalDestinationPrefix,
+        }),
+    transferOptions: options);
+await dataTransfer.WaitForCompletionAsync();
 ```
 
 ### Download
@@ -248,32 +233,25 @@ A download takes place between a blob `StorageResource` as source and local file
 
 Download a block blob.
 
-```csharp
-BlockBlobClient sourceBlob;
-string destinationLocalPath;
-
+```C# Snippet:SimpleBlockBlobDownload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: new BlockBlobStorageResource(sourceBlob),
-    destinationResource: new LocalFileStorageResource(destinationLocalPath));
-await dataTransfer.AwaitCompletion();
+    sourceResource: new BlockBlobStorageResource(sourceBlobClient),
+    destinationResource: new LocalFileStorageResource(downloadPath));
+await dataTransfer.WaitForCompletionAsync();
 ```
 
 Download a container which may contain a mix of blob types.
 
-```csharp
-BlobContainerClient sourceContainer;
-string optionalSourcePrefix;
-string destinationLocalPath;
-
+```C# Snippet:SimpleDirectoryDownload_Blob
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: new BlobStorageResourceContainer(
-        sourceContainer,
+        blobContainerClient,
         new BlobStorageResourceContainerOptions()
         {
             DirectoryPrefix = optionalSourcePrefix
         }),
-    destinationResource: new LocalDirectoryStorageResourceContainer(destinationLocalPath));
-await dataTransfer.AwaitCompletion();
+    destinationResource: new LocalDirectoryStorageResourceContainer(downloadPath));
+await dataTransfer.WaitForCompletionAsync();
 ```
 
 ### Blob Copy
@@ -282,30 +260,22 @@ A copy takes place between two blob `StorageResource` instances. Copying between
 
 Copy a single blob. Note the change in blob type on this copy from block to append.
 
-```csharp
-BlockBlobClient sourceBlob;
-AppendBlobClient destinationBlob;
-
+```C# Snippet:s2sCopyBlob
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: new BlockBlobStorageResource(sourceBlob),
-    destinationResource: new AppendBlobStorageResource(destinationBlob));
-await dataTransfer.AwaitCompletion();
+    sourceResource: new BlockBlobStorageResource(sourceBlockBlobClient),
+    destinationResource: new AppendBlobStorageResource(destinationAppendBlobClient));
+await dataTransfer.WaitForCompletionAsync();
 ```
 
 Copy a blob container.
 
-```csharp
-BlobContainerClient sourceContainer;
-string optionalSourcePrefix;
-BlobContainerClient destinationContainer;
-string optionalDestinationPrefix;
-
+```C# Snippet:s2sCopyBlobContainer
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: sourceResource: new BlobStorageResourceContainer(
+    sourceResource: new BlobStorageResourceContainer(
         sourceContainer,
         new BlobStorageResourceContainerOptions()
         {
-            DirectoryPrefix = optionalSourcePrefix
+            DirectoryPrefix = sourceDirectoryName
         }),
     destinationResource: new BlobStorageResourceContainer(
         destinationContainer,
@@ -314,9 +284,8 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
             // all source blobs will be copied as a single type of destination blob
             // defaults to block blobs if unspecified
             BlobType = BlobType.Block,
-            DirectoryPrefix = optionalDestinationPrefix
+            DirectoryPrefix = downloadPath
         }));
-await dataTransfer.AwaitCompletion();
 ```
 
 ## Troubleshooting
