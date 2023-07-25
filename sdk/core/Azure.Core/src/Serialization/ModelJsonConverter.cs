@@ -21,25 +21,19 @@ namespace Azure.Core.Serialization
         public ModelSerializerOptions Options { get; }
 
         /// <summary>
-        /// ModelSerializerFormat that determines Format of serialized model. ModelSerializerFormat.Data = data format which means both properties are false, ModelSerializerFormat.Wire = wire format which means both properties are true Default is ModelSerializerFormat.Data.
+        /// Initializes a new instance of <see cref="ModelJsonConverter"/> with a default format of <see cref="ModelSerializerFormat.Json"/>.
         /// </summary>
-        public ModelSerializerFormat Format { get; }
+        public ModelJsonConverter()
+            : this(ModelSerializerFormat.Json) { }
 
         /// <summary>
-        /// .
+        /// Initializes a new instance of <see cref="ModelJsonConverter"/>.
         /// </summary>
-        public Dictionary<Type, ObjectSerializer> Serializers { get; set; } = new Dictionary<Type, ObjectSerializer>();
-
-        /// <summary>
-        /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
-        /// </summary>
-        public ModelJsonConverter(string format = "D")
+        /// <param name="format"> The format to serialize to and deserialize from. </param>
+        public ModelJsonConverter(ModelSerializerFormat format)
         {
             Format = format;
-            Options = new ModelSerializerOptions(Format)
-            {
-                Serializers = Serializers
-            };
+            Options = new ModelSerializerOptions(Format);
         }
 
         /// <summary>

@@ -11,13 +11,13 @@ namespace Azure.Core.Serialization
     /// </summary>
     public readonly partial struct ModelSerializerFormat : IEquatable<ModelSerializerFormat>
     {
-        internal const string DataValue = "D";
+        internal const string JsonValue = "J";
         internal const string WireValue = "W";
 
         /// <summary>
         /// Specifies the data format where IgnoreReadOnly and IgnoreAdditionalProperties are false.
         /// </summary>
-        public static readonly ModelSerializerFormat Data = new ModelSerializerFormat(DataValue);
+        public static readonly ModelSerializerFormat Json = new ModelSerializerFormat(JsonValue);
 
         /// <summary>
         /// Specifies the wire format IgnoreReadOnly and IgnoreAdditionalProperties are true.

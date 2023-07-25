@@ -12,7 +12,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class EnvelopeTests
     {
-        [TestCase("D")]
+        [TestCase("J")]
         [TestCase("W")]
         public void CanRoundTripFutureVersionWithoutLoss(string format)
         {
@@ -23,12 +23,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "}";
 
             StringBuilder expectedSerialized = new StringBuilder("{");
-            if (format.Equals(ModelSerializerFormat.Data))
+            if (format.Equals(ModelSerializerFormat.Json))
             {
                 expectedSerialized.Append("\"readOnlyProperty\":\"read\",");
             }
             expectedSerialized.Append("\"modelA\":{");
-            if (format.Equals(ModelSerializerFormat.Data))
+            if (format.Equals(ModelSerializerFormat.Json))
             {
                 expectedSerialized.Append("\"latinName\":\"Felis catus\",\"hasWhiskers\":false,");
             }
@@ -52,7 +52,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             Envelope<ModelC> model = ModelSerializer.Deserialize<Envelope<ModelC>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
-            if (format.Equals(ModelSerializerFormat.Data))
+            if (format.Equals(ModelSerializerFormat.Json))
             {
                 Assert.That(model.ReadOnlyProperty, Is.EqualTo("read"));
             }
