@@ -8,14 +8,16 @@ azure-arm: true
 csharp: true
 library-name: Maintenance
 namespace: Azure.ResourceManager.Maintenance
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/maintenance/resource-manager/readme.md
-tag: package-2021-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/e680f9bf4f154ec427ba7feac432ed8efd9665d0/specification/maintenance/resource-manager/readme.md
+#tag: package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -25,10 +27,12 @@ format-by-name-rules:
   '*Uris': 'Uri'
 
 rename-mapping:
-  ApplyUpdate: MaintenanceApplyUpdate
-  Update: MaintenanceUpdate
-  ImpactType: MaintenanceImpactType
   ConfigurationAssignment: MaintenanceConfigurationAssignmentData
+  ConfigurationAssignmentFilterProperties: MaintenanceConfigurationAssignmentFilter
+  ConfigurationAssignmentFilterProperties.resourceTypes: -|resource-type
+  ConfigurationAssignmentFilterProperties.locations: -|azure-location
+  TagOperators: VmTagOperator
+  TagSettingsProperties: VmTagSettings
   ApplyUpdate.properties.resourceId: -|arm-id
   ConfigurationAssignment.properties.resourceId: -|arm-id
   Update.properties.resourceId: -|arm-id
@@ -39,21 +43,45 @@ rename-mapping:
   ListUpdatesResult: MaintenanceUpdateListResult
   ListMaintenanceConfigurationsResult: MaintenanceConfigurationListResult
   ListConfigurationAssignmentsResult: MaintenanceConfigurationAssignmentListResult
-  UpdateStatus: MaintenanceUpdateStatus
   Visibility: MaintenanceConfigurationVisibility
   ApplyUpdate.properties.lastUpdateTime: LastUpdatedOn
+  InputPatchConfiguration: MaintenancePatchConfiguration
+  InputWindowsParameters: MaintenanceWindowsPatchSettings
+  InputWindowsParameters.excludeKbsRequiringReboot: IsExcludeKbsRebootRequired
+  InputLinuxParameters: MaintenanceLinuxPatchSettings
 
+prepend-rp-prefix:
+  - ApplyUpdate
+  - ImpactType
+  - RebootOptions
+  - Update
+  - UpdateStatus
+  
 override-operation-name:
   ApplyUpdates_GetParent: GetApplyUpdatesByParent
   ApplyUpdates_CreateOrUpdateParent: CreateOrUpdateApplyUpdateByParent
   ConfigurationAssignments_CreateOrUpdateParent: CreateOrUpdateConfigurationAssignmentByParent
+  ConfigurationAssignmentsForResourceGroup_CreateOrUpdate: CreateOrUpdateConfigurationAssignmentByResourceGroup
+  ConfigurationAssignmentsForSubscriptions_CreateOrUpdate: CreateOrUpdateConfigurationAssignmentBySubscription
   ConfigurationAssignments_DeleteParent: DeleteConfigurationAssignmentByParent
+  ConfigurationAssignmentsForResourceGroup_Delete: DeleteConfigurationAssignmentByResourceGroup
+  ConfigurationAssignmentsForSubscriptions_Delete: DeleteConfigurationAssignmentBySubscription
+  ConfigurationAssignments_GetParent: GetConfigurationAssignmentByParent
+  ConfigurationAssignmentsForResourceGroup_Get: GetConfigurationAssignmentByResourceGroup
+  ConfigurationAssignmentsForSubscriptions_Get: GetConfigurationAssignmentBySubscription
   ConfigurationAssignments_ListParent:  GetConfigurationAssignmentsByParent
+  ConfigurationAssignmentsWithinSubscription_List: GetConfigurationAssignmentsBySubscription
+  ConfigurationAssignmentsForResourceGroup_Update: UpdateConfigurationAssignmentByResourceGroup
+  ConfigurationAssignmentsForSubscriptions_Update: UpdateConfigurationAssignmentBySubscription
   Updates_ListParent: GetUpdatesByParent
   MaintenanceConfigurations_Delete: DeleteEx
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}
+  - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}
+  - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}
+  - /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}
+  - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}: MaintenancePublicConfiguration

@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.ElasticSan
             AvailabilityZones = new ChangeTrackingList<string>();
             BaseSizeTiB = baseSizeTiB;
             ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
+            PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanData. </summary>
@@ -52,7 +53,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. </param>
         /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
         /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
-        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
+        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             AvailabilityZones = availabilityZones;
@@ -64,6 +66,7 @@ namespace Azure.ResourceManager.ElasticSan
             TotalIops = totalIops;
             TotalMbps = totalMbps;
             TotalSizeTiB = totalSizeTiB;
+            PrivateEndpointConnections = privateEndpointConnections;
         }
 
         /// <summary> resource sku. </summary>
@@ -86,5 +89,7 @@ namespace Azure.ResourceManager.ElasticSan
         public long? TotalMbps { get; }
         /// <summary> Total size of the Elastic San appliance in TB. </summary>
         public long? TotalSizeTiB { get; }
+        /// <summary> The list of Private Endpoint Connections. </summary>
+        public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

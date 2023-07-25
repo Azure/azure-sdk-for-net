@@ -11,7 +11,7 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class StandardMetricsExtractionProcessor : BaseProcessor<Activity>
+    internal sealed class StandardMetricsExtractionProcessor : BaseProcessor<Activity>
     {
         private bool _disposed;
         private AzureMonitorResource? _resource;

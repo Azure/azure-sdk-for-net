@@ -50,6 +50,7 @@ rename-mapping:
   L2NetworkData.clusterId: -|arm-id 
   L2NetworkData.l2IsolationDomainId: -|arm-id 
   L3NetworkData.clusterId: -|arm-id 
+  L3NetworkData.l2IsolationDomainId: -|arm-id
   RackData.clusterId: -|arm-id 
   RackData.rackSkuId: -|arm-id 
   StorageApplianceData.clusterId: -|arm-id 

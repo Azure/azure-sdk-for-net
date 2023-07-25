@@ -2497,8 +2497,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     }
     public partial class L2NetworkAttachmentConfiguration
     {
-        public L2NetworkAttachmentConfiguration(string networkId) { }
-        public string NetworkId { get { throw null; } set { } }
+        public L2NetworkAttachmentConfiguration(Azure.Core.ResourceIdentifier networkId) { }
+        public Azure.Core.ResourceIdentifier NetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType? PluginType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2548,9 +2548,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     }
     public partial class L3NetworkAttachmentConfiguration
     {
-        public L3NetworkAttachmentConfiguration(string networkId) { }
+        public L3NetworkAttachmentConfiguration(Azure.Core.ResourceIdentifier networkId) { }
         public Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled? IpamEnabled { get { throw null; } set { } }
-        public string NetworkId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType? PluginType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2686,11 +2686,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     }
     public partial class NetworkConfiguration
     {
-        public NetworkConfiguration(string cloudServicesNetworkId, string cniNetworkId) { }
+        public NetworkConfiguration(Azure.Core.ResourceIdentifier cloudServicesNetworkId, Azure.Core.ResourceIdentifier cniNetworkId) { }
         public Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration AttachedNetworkConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.BgpServiceLoadBalancerConfiguration BgpServiceLoadBalancerConfiguration { get { throw null; } set { } }
-        public string CloudServicesNetworkId { get { throw null; } set { } }
-        public string CniNetworkId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CloudServicesNetworkId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CniNetworkId { get { throw null; } set { } }
         public string DnsServiceIP { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PodCidrs { get { throw null; } }
         public System.Collections.Generic.IList<string> ServiceCidrs { get { throw null; } }
@@ -2756,10 +2756,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     }
     public partial class RackDefinition
     {
-        public RackDefinition(string networkRackId, string rackSerialNumber, string rackSkuId) { }
+        public RackDefinition(Azure.Core.ResourceIdentifier networkRackId, string rackSerialNumber, string rackSkuId) { }
         public string AvailabilityZone { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineConfiguration> BareMetalMachineConfigurationData { get { throw null; } }
-        public string NetworkRackId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkRackId { get { throw null; } set { } }
         public string RackLocation { get { throw null; } set { } }
         public string RackSerialNumber { get { throw null; } set { } }
         public string RackSkuId { get { throw null; } set { } }
@@ -3004,8 +3004,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     }
     public partial class TrunkedNetworkAttachmentConfiguration
     {
-        public TrunkedNetworkAttachmentConfiguration(string networkId) { }
-        public string NetworkId { get { throw null; } set { } }
+        public TrunkedNetworkAttachmentConfiguration(Azure.Core.ResourceIdentifier networkId) { }
+        public Azure.Core.ResourceIdentifier NetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType? PluginType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
