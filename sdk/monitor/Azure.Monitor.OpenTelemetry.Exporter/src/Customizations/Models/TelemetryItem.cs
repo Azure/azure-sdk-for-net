@@ -71,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                         this(name, FormatUtcTimestamp(activityEventTimeStamp.DateTime))
         {
             Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString().Truncate(SchemaConstants.Tags_AiOperationParentId_MaxLength);
-            Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString().Truncate(SchemaConstants.Tags_AiOperationId_MaxLength)];
+            Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()].Truncate(SchemaConstants.Tags_AiOperationId_MaxLength);
 
             if (telemetryItem.Tags.TryGetValue("ai.user.userAgent", out string? userAgent))
             {
@@ -79,8 +79,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags["ai.user.userAgent"] = userAgent;
             }
 
-            Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString().Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength)];
-            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString().Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength)];
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()].Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
+            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()].Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength);
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
             InstrumentationKey = telemetryItem.InstrumentationKey;
 
