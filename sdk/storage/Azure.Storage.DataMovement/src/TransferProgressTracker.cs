@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {

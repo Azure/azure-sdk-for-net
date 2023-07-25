@@ -9,46 +9,28 @@ using System;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The start and end date for a budget.
-    /// Serialized Name: BudgetTimePeriod
-    /// </summary>
+    /// <summary> The start and end date for a budget. </summary>
     public partial class BudgetTimePeriod
     {
         /// <summary> Initializes a new instance of BudgetTimePeriod. </summary>
-        /// <param name="startOn">
-        /// The start date for the budget.
-        /// Serialized Name: BudgetTimePeriod.startDate
-        /// </param>
+        /// <param name="startOn"> The start date for the budget. </param>
         public BudgetTimePeriod(DateTimeOffset startOn)
         {
             StartOn = startOn;
         }
 
         /// <summary> Initializes a new instance of BudgetTimePeriod. </summary>
-        /// <param name="startOn">
-        /// The start date for the budget.
-        /// Serialized Name: BudgetTimePeriod.startDate
-        /// </param>
-        /// <param name="endOn">
-        /// The end date for the budget. If not provided, we default this to 10 years from the start date.
-        /// Serialized Name: BudgetTimePeriod.endDate
-        /// </param>
+        /// <param name="startOn"> The start date for the budget. </param>
+        /// <param name="endOn"> The end date for the budget. If not provided, we default this to 10 years from the start date. </param>
         internal BudgetTimePeriod(DateTimeOffset startOn, DateTimeOffset? endOn)
         {
             StartOn = startOn;
             EndOn = endOn;
         }
 
-        /// <summary>
-        /// The start date for the budget.
-        /// Serialized Name: BudgetTimePeriod.startDate
-        /// </summary>
+        /// <summary> The start date for the budget. </summary>
         public DateTimeOffset StartOn { get; set; }
-        /// <summary>
-        /// The end date for the budget. If not provided, we default this to 10 years from the start date.
-        /// Serialized Name: BudgetTimePeriod.endDate
-        /// </summary>
+        /// <summary> The end date for the budget. If not provided, we default this to 10 years from the start date. </summary>
         public DateTimeOffset? EndOn { get; set; }
     }
 }

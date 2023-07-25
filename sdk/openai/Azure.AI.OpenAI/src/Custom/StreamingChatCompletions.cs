@@ -18,9 +18,9 @@ namespace Azure.AI.OpenAI
         private readonly Response _baseResponse;
         private readonly SseReader _baseResponseReader;
         private readonly IList<ChatCompletions> _baseChatCompletions;
-        private readonly object _baseCompletionsLock = new object();
+        private readonly object _baseCompletionsLock = new();
         private readonly IList<StreamingChatChoice> _streamingChatChoices;
-        private readonly object _streamingChoicesLock = new object();
+        private readonly object _streamingChoicesLock = new();
         private readonly AsyncAutoResetEvent _updateAvailableEvent;
         private bool _streamingTaskComplete;
         private bool _disposedValue;
@@ -29,12 +29,12 @@ namespace Azure.AI.OpenAI
         /// <summary>
         /// Gets the earliest Completion creation timestamp associated with this streamed response.
         /// </summary>
-        public DateTimeOffset Created => GetLocked(() => _baseChatCompletions.First().Created);
+        public DateTimeOffset Created => GetLocked(() => _baseChatCompletions.Last().Created);
 
         /// <summary>
         /// Gets the unique identifier associated with this streaming Completions response.
         /// </summary>
-        public string Id => GetLocked(() => _baseChatCompletions.First().Id);
+        public string Id => GetLocked(() => _baseChatCompletions.Last().Id);
 
         internal StreamingChatCompletions(Response response)
         {
@@ -84,7 +84,7 @@ namespace Azure.AI.OpenAI
                                     .FirstOrDefault(chatChoice => chatChoice.Index == chatChoiceFromSse.Index);
                                 if (existingStreamingChoice == null)
                                 {
-                                    StreamingChatChoice newStreamingChatChoice = new StreamingChatChoice(chatChoiceFromSse);
+                                    StreamingChatChoice newStreamingChatChoice = new(chatChoiceFromSse);
                                     _streamingChatChoices.Add(newStreamingChatChoice);
                                     _updateAvailableEvent.Set();
                                 }
@@ -158,6 +158,15 @@ namespace Azure.AI.OpenAI
                     yield return newChatChoice;
                 }
             }
+        }
+
+        internal StreamingChatCompletions(
+            ChatCompletions baseChatCompletions = null,
+            List<StreamingChatChoice> streamingChatChoices = null)
+        {
+            _baseChatCompletions.Add(baseChatCompletions);
+            _streamingChatChoices = streamingChatChoices;
+            _streamingTaskComplete = true;
         }
 
         public void Dispose()

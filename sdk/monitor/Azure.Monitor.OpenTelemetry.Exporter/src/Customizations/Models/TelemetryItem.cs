@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TelemetryItem
     {
-        public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey) :
+        public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
             if (activity.ParentSpanId != default)
@@ -22,6 +22,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
+
+            if (activity.GetTelemetryType() == TelemetryType.Request)
+            {
+                if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationNameV2(activity, ref activityTagsProcessor.MappedTags);
+                }
+                else if (activityTagsProcessor.activityType.HasFlag(OperationType.Http))
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
+                }
+                else
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = activity.DisplayName;
+                }
+
+                // Set ip in case of server spans only.
+                if (activity.Kind == ActivityKind.Server)
+                {
+                    var locationIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
+                    if (locationIp != null)
+                    {
+                        Tags[ContextTagKeys.AiLocationIp.ToString()] = locationIp;
+                    }
+                }
+            }
 
             var userAgent = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUserAgentOriginal)?.ToString()
                 ?? AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
@@ -34,7 +60,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             SetAuthenticatedUserId(ref activityTagsProcessor);
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
-            if (AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, "sampleRate") is float sampleRate)
+
+            if (sampleRate != 100f)
             {
                 SampleRate = sampleRate;
             }
@@ -56,7 +83,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()];
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
             InstrumentationKey = telemetryItem.InstrumentationKey;
-            SampleRate = telemetryItem.SampleRate;
+
+            if (telemetryItem.SampleRate != 100f)
+            {
+                SampleRate = telemetryItem.SampleRate;
+            }
         }
 
         public TelemetryItem (LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :

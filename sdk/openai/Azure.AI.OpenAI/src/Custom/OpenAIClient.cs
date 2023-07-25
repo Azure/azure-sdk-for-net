@@ -4,9 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Specialized;
-using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -96,7 +93,13 @@ namespace Azure.AI.OpenAI
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = tokenCredential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(
+                options,
+                Array.Empty<HttpPipelinePolicy>(),
+                new HttpPipelinePolicy[] {
+                    new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes)
+                },
+                new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -565,6 +568,128 @@ namespace Azure.AI.OpenAI
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(Embeddings.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Get a set of generated images influenced by a provided textual prompt.
+        /// </summary>
+        /// <param name="imageGenerationOptions">
+        ///     The configuration information for the image generation request that controls the content,
+        ///     size, and other details about generated images.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     An optional cancellation token that may be used to abort an ongoing request.
+        /// </param>
+        /// <returns>
+        ///     The response information for the image generations request.
+        /// </returns>
+        public virtual Response<ImageGenerations> GetImageGenerations(
+            ImageGenerationOptions imageGenerationOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetImageGenerations");
+            scope.Start();
+
+            try
+            {
+                Response rawResponse = default;
+                ImageGenerations responseValue = default;
+
+                if (_isConfiguredForAzureOpenAI)
+                {
+                    Operation<BatchImageGenerationOperationResponse> imagesOperation
+                        = BeginAzureBatchImageGeneration(
+                            WaitUntil.Completed,
+                            imageGenerationOptions,
+                            cancellationToken);
+
+                    rawResponse = imagesOperation.GetRawResponse();
+                    BatchImageGenerationOperationResponse operationResponse = imagesOperation.Value;
+
+                    responseValue = operationResponse.Result;
+                }
+                else
+                {
+                    RequestContext context = FromCancellationToken(cancellationToken);
+                    HttpMessage message = CreatePostRequestMessage(
+                        string.Empty,
+                        "images/generations",
+                        content: imageGenerationOptions.ToRequestContent(),
+                        context);
+                    rawResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+                    responseValue = ImageGenerations.FromResponse(rawResponse);
+                }
+                return Response.FromValue(responseValue, rawResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///     Get a set of generated images influenced by a provided textual prompt.
+        /// </summary>
+        /// <param name="imageGenerationOptions">
+        ///     The configuration information for the image generation request that controls the content,
+        ///     size, and other details about generated images.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     An optional cancellation token that may be used to abort an ongoing request.
+        /// </param>
+        /// <returns>
+        ///     The response information for the image generations request.
+        /// </returns>
+        public virtual async Task<Response<ImageGenerations>> GetImageGenerationsAsync(
+            ImageGenerationOptions imageGenerationOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetImageGenerations");
+            scope.Start();
+
+            try
+            {
+                Response rawResponse = default;
+                ImageGenerations responseValue = default;
+
+                if (_isConfiguredForAzureOpenAI)
+                {
+                    Operation<BatchImageGenerationOperationResponse> imagesOperation
+                        = await BeginAzureBatchImageGenerationAsync(
+                            WaitUntil.Completed,
+                            imageGenerationOptions,
+                            cancellationToken)
+                        .ConfigureAwait(false);
+
+                    rawResponse = imagesOperation.GetRawResponse();
+                    BatchImageGenerationOperationResponse operationResponse = imagesOperation.Value;
+
+                    responseValue = operationResponse.Result;
+                }
+                else
+                {
+                    RequestContext context = FromCancellationToken(cancellationToken);
+                    HttpMessage message = CreatePostRequestMessage(
+                        string.Empty,
+                        "images/generations",
+                        content: imageGenerationOptions.ToRequestContent(),
+                        context);
+                    rawResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
+                        .ConfigureAwait(false);
+                    responseValue = ImageGenerations.FromResponse(rawResponse);
+                }
+                return Response.FromValue(responseValue, rawResponse);
             }
             catch (Exception e)
             {
