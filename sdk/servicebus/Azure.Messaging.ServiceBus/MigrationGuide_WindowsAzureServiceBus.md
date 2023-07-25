@@ -232,7 +232,7 @@ In `Azure.Messaging.ServiceBus`, we introduced `ServiceBusProcessor` which uses 
 
 The concept of a receiver remains for users who need to have a more fine-grained control over the reading and settling messages. The difference is that this is now created from the top-level `ServiceBusClient` via the `CreateReceiver` method taking the queue or subscription you want to read from and creating a receiver specific to that entity.
 
-Another notable difference from the `WindowsAzure.ServiceBus` when it comes to receiving messages, is that `Azure.Messaging.ServiceBus` uses a separate type for received messages, `ServiceBusReceivedMessage`. This helps reduce the surface area of the sendable messages by excluding properties that are owned by the service  and cannot be set when sending messages. 
+Another notable difference from `WindowsAzure.ServiceBus` when it comes to receiving messages, is that `Azure.Messaging.ServiceBus` uses a separate type for received messages, `ServiceBusReceivedMessage`. This helps reduce the surface area of the sendable messages by excluding properties that are owned by the service  and cannot be set when sending messages. 
 
  To support testing, the `ServiceBusModelFactory.ServiceBusReceivedMessage` method can be used to mock a message received from Service Bus. In general, all types that are meant to be created only by the library can be created for mocking using the `ServiceBusModelFactory` static class.
 
