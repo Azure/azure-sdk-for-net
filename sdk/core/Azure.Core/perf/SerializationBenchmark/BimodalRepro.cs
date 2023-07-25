@@ -8,9 +8,9 @@ namespace Azure.Core.Perf
     public class BimodalRepro
     {
         [Benchmark]
-        public void Bimodal()
+        public SequenceWriter Bimodal()
         {
-            using var content = new SequenceWriter();
+            return new SequenceWriter();
         }
     }
 }
