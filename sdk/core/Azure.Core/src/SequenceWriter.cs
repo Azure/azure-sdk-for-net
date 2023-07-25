@@ -131,7 +131,12 @@ namespace Azure.Core
             return true;
         }
 
-        internal void WriteTo(Stream stream, CancellationToken cancellation)
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellation"></param>
+        public void WriteTo(Stream stream, CancellationToken cancellation)
         {
             for (int i = 0; i < _count; i++)
             {
@@ -140,7 +145,13 @@ namespace Azure.Core
             }
         }
 
-        internal async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellation"></param>
+        /// <returns></returns>
+        public async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
             for (int i = 0; i < _count; i++)
             {

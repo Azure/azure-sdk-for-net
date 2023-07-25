@@ -25,7 +25,7 @@ namespace Azure.Core.Serialization
         /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class.
         /// </summary>
         /// <param name="format">String that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".</param>
-        public ModelSerializerOptions(ModelSerializerOptions format)
+        public ModelSerializerOptions(ModelSerializerFormat format)
         {
             Format = format;
             Serializers = new Dictionary<Type, ObjectSerializer>();

@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Reflection;
-using System.Text.Json;
-using System.Xml;
 
 namespace Azure.Core.Serialization
 {
@@ -26,15 +23,7 @@ namespace Azure.Core.Serialization
             if (options.Serializers != null && options.Serializers.TryGetValue(typeof(T), out var serializer))
                 return serializer.Serialize(model);
 
-            switch (model)
-            {
-                case IJsonModelSerializable jsonModel:
-                    return SerializeJson(jsonModel, options);
-                case IXmlModelSerializable xmlModel:
-                    return SerializeXml(xmlModel, options);
-                default:
-                    throw new NotSupportedException("Model type is not supported.");
-            }
+            return model.Serialize(options);
         }
 
         /// <summary>
@@ -45,39 +34,14 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize(object model, ModelSerializerOptions options = default)
         {
+            var iModel = model as IModelSerializable;
+            if (iModel is null)
+                throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable)}");
+
             if (options.Serializers != null && options.Serializers.TryGetValue(model.GetType(), out var serializer))
                 return serializer.Serialize(model);
 
-            switch (model)
-            {
-                case IJsonModelSerializable jsonModel:
-                    return SerializeJson(jsonModel, options);
-                case IXmlModelSerializable xmlModel:
-                    return SerializeXml(xmlModel, options);
-                default:
-                    throw new NotSupportedException("Model type is not supported.");
-            }
-        }
-
-        private static BinaryData SerializeXml(IXmlModelSerializable xmlModel, ModelSerializerOptions options)
-        {
-            using MemoryStream stream = new MemoryStream();
-            using XmlWriter writer = XmlWriter.Create(stream);
-            xmlModel.Serialize(writer, options);
-            writer.Flush();
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-        }
-
-        private static BinaryData SerializeJson(IJsonModelSerializable jsonModel, ModelSerializerOptions options)
-        {
-            using var sequenceWriter = new SequenceWriter();
-            using var writer = new Utf8JsonWriter(sequenceWriter);
-            jsonModel.Serialize(writer, options);
-            writer.Flush();
-            sequenceWriter.TryComputeLength(out var length);
-            using var stream = new MemoryStream((int)length);
-            sequenceWriter.WriteTo(stream, default);
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            return iModel.Serialize(options);
         }
 
         /// <summary>

@@ -19,12 +19,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         private const string _serviceResponse = "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"location\":\"eastus\",\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"sku\":{\"name\":\"Classic\",\"extraSku\":\"extraSku\"},\"extraRoot\":\"extraRoot\"}";
 
         [TestCase("W")]
-        [TestCase("D")]
+        [TestCase("J")]
         public void RoundTripTest(string format) =>
             RoundTripTest(format, SerializeWithModelSerializer, DeserializeWithModelSerializer);
 
         [TestCase("W")]
-        [TestCase("D")]
+        [TestCase("J")]
         public void BufferTest(string format) =>
             RoundTripTest(format, SerializeWithBuffer, DeserializeWithModelSerializer);
 
@@ -33,17 +33,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             RoundTripTest(ModelSerializerFormat.Wire, SerializeWithImplicitCast, DeserializeWithModelSerializer);
 
         [TestCase("W")]
-        [TestCase("D")]
+        [TestCase("J")]
         public void JsonReaderTest(string format) =>
             RoundTripTest(format, SerializeWithModelSerializer, DeserializeWithJsonReader);
 
         [TestCase("W")]
-        [TestCase("D")]
+        [TestCase("J")]
         public void UsingSequence(string format) =>
             RoundTripTest(format, SerializeWithModelSerializer, DeserializeWithSequence);
 
         [TestCase("W")]
-        [TestCase("D")]
+        [TestCase("J")]
         public void UseNonGeneric(string format) =>
             RoundTripTest(format, SerializeWithModelSerializerNonGeneric, DeserializeWithModelSerializerNonGeneric);
 
@@ -56,7 +56,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             ModelSerializerOptions options = new ModelSerializerOptions(format);
 
             var expectedSerializedString = "{";
-            if (format == ModelSerializerFormat.Data)
+            if (format == ModelSerializerFormat.Json)
                 expectedSerializedString += "\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",";
             expectedSerializedString += "\"sku\":{\"name\":\"Classic\"";
             //if (!ignoreAdditionalProperties)
@@ -178,7 +178,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(format == ModelSerializerFormat.Wire ? null : model.Name, model2.Name);
             Assert.AreEqual(model.PlatformFaultDomainCount, model2.PlatformFaultDomainCount);
             Assert.AreEqual(model.PlatformUpdateDomainCount, model2.PlatformUpdateDomainCount);
-            if (format == ModelSerializerFormat.Data)
+            if (format == ModelSerializerFormat.Json)
                 Assert.AreEqual(model.ResourceType, model2.ResourceType);
             CollectionAssert.AreEquivalent(model.Tags, model2.Tags);
             Assert.AreEqual(model.Sku.Name, model2.Sku.Name);

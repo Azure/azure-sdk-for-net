@@ -18,5 +18,10 @@ namespace Azure.Core.Serialization
         /// <param name="options"></param>
         /// <returns></returns>
         object Deserialize(BinaryData data, ModelSerializerOptions options);
+
+        /// <summary>
+        /// .
+        /// </summary>
+        BinaryData Serialize(ModelSerializerOptions options);
     }
 }

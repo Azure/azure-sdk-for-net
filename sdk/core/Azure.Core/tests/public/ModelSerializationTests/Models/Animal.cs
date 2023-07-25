@@ -48,7 +48,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (options.Format == ModelSerializerFormat.Json)
@@ -129,7 +131,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            throw new NotImplementedException();
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnimal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
 
         #endregion

@@ -105,20 +105,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
-                MemoryStream stream = new MemoryStream();
-                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-                Serialize(writer, options);
-                writer.Flush();
-                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                return ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
             }
             if (options.Format == ModelSerializerFormat.Wire)
             {
-                MemoryStream stream = new MemoryStream();
-                XmlWriter writer = XmlWriter.Create(stream);
-                Serialize(writer, options);
-                writer.Flush();
-                stream.Position = 0;
-                return new BinaryData(stream.ToArray());
+                return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options, null); });
             }
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }

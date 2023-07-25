@@ -97,7 +97,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
         // only used for public access to internal serialize
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
@@ -207,6 +209,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
                 return;
             }
             reader.Skip();
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
     }
 }

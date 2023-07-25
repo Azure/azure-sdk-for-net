@@ -155,7 +155,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if(Optional.IsDefined(ResourceType))
@@ -356,6 +358,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeProviderResourceType(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
     }
 }

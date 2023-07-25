@@ -17,7 +17,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -119,6 +121,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeComputeSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
     }
 }

@@ -25,20 +25,22 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.ToString());
             }
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.ToString());
@@ -390,6 +392,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
                 return;
             }
             reader.Skip();
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
     }
 }

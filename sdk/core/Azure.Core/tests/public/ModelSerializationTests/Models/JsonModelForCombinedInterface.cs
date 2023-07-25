@@ -80,7 +80,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new JsonModelForCombinedInterface(key, value, readOnlyProperty, rawData);
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
@@ -115,7 +117,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            throw new NotImplementedException();
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJsonModelForCombinedInterface(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
     }
 }
