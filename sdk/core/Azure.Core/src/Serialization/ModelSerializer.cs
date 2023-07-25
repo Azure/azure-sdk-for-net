@@ -23,7 +23,7 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize<T>(T model, ModelSerializerOptions options = default) where T : IModelSerializable
         {
-            if (options.Serializers.TryGetValue(typeof(T), out var serializer))
+            if (options.Serializers != null && options.Serializers.TryGetValue(typeof(T), out var serializer))
                 return serializer.Serialize(model);
 
             switch (model)
@@ -45,7 +45,7 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize(object model, ModelSerializerOptions options = default)
         {
-            if (options.Serializers.TryGetValue(model.GetType(), out var serializer))
+            if (options.Serializers != null && options.Serializers.TryGetValue(model.GetType(), out var serializer))
                 return serializer.Serialize(model);
 
             switch (model)
@@ -99,7 +99,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException"></exception>
         public static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options = default)
         {
-            if (options.Serializers.TryGetValue(typeToConvert, out var serializer))
+            if (options.Serializers != null && options.Serializers.TryGetValue(typeToConvert, out var serializer))
             {
                 var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);
                 return obj ?? throw new InvalidOperationException();

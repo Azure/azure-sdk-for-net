@@ -227,28 +227,5 @@ namespace Azure.Core.Perf
         {
             using var doc = JsonDocument.Parse(_data);
         }
-
-        public class MultiBufferSegment : ReadOnlySequenceSegment<byte>
-        {
-            public MultiBufferSegment(byte[] array, int length, long runningIndex)
-            {
-                Memory = new Memory<byte>(array, 0, length);
-                RunningIndex = runningIndex;
-            }
-
-            public void Add(byte[] array, int length)
-            {
-                Next = new MultiBufferSegment(array, length, RunningIndex + Memory.Length);
-            }
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("SequenceCreation")]
-        public ReadOnlySequence<byte> AllocationSegment()
-        {
-            var first = new MultiBufferSegment(_buffer, _buffer.Length, 0);
-            first.Add(_buffer, 2000);
-            return new ReadOnlySequence<byte>(first, 0, first, 2000);
-        }
     }
 }
