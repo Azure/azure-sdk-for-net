@@ -50,29 +50,44 @@ CommunicationServiceResource communicationService = communicationServiceLro.Valu
 ***Create a Communication Service with User Assigned Managed Identity***
 
 ```C# Snippet:Managing_CommunicationService_CreateAnApplication with User Assigned Managed Identity
-var communicationService = await communicationManagementClient.CommunicationServices.CreateAsync(
-    resourceGroupName,
-    communicationServiceName,
-    new CommunicationServiceResource(
-        location: location,
-        dataLocation: dataLocation,
-        identity: new CommunicationServiceIdentity(type: IdentityType.UserAssigned, userAssignedIdentities: new Dictionary<string, CommunicationServiceUserAssignedIdentities>() { { userAssignedIdentityResourceId, new CommunicationServiceUserAssignedIdentities() } })
-    )
-);
+CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
+string communicationServiceName = "myCommunicationService";
+string userAssignedIdentityResourceId = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{userAssignedIdentityName}";
+
+var identity = new CommunicationServiceIdentity(
+    type: IdentityType.UserAssigned,
+    userAssignedIdentities: new Dictionary<string, CommunicationServiceUserAssignedIdentities>()
+    {
+        { userAssignedIdentityResourceId, new CommunicationServiceUserAssignedIdentities() }
+    });
+
+CommunicationServiceResourceData data = new CommunicationServiceResourceData("global")
+{
+    DataLocation = "UnitedStates",
+    Identity = identity
+};
+
+ArmOperation<CommunicationServiceResource> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
+CommunicationServiceResource communicationService = communicationServiceLro.Value;
+
+
 ```
 
-***Create a Communication Service with User Assigned Managed Identity***
+***Create a Communication Service with System Assigned Managed Identity***
 
 ```C# Snippet:Managing_CommunicationService_CreateAnApplication with System Assigned Managed Identityy
-var communicationService = await communicationManagementClient.CommunicationServices.CreateAsync(
-    resourceGroupName,
-    communicationServiceName,
-    new CommunicationServiceResource(
-        location: location,
-        dataLocation: dataLocation,
-        identity: new CommunicationServiceIdentity(type: IdentityType.SystemAssigned)
-    )
-);
+string communicationServiceName = "myCommunicationService";
+CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
+
+CommunicationServiceResourceData data = new CommunicationServiceResourceData("global")
+{
+    DataLocation = "UnitedStates",
+    Identity = new CommunicationServiceIdentity(type: IdentityType.SystemAssigned, userAssignedIdentities: null)
+};
+
+ArmOperation<CommunicationServiceResource> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
+CommunicationServiceResource communicationService = communicationServiceLro.Value;
+
 ```
 
 ***List all Communication Service***
