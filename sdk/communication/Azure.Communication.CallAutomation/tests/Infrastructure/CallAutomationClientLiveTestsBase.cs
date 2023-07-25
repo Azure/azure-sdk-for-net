@@ -22,9 +22,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..id");
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
-            JsonPathSanitizers.Add("$..botAppId");
-            JsonPathSanitizers.Add("$..operationContext");
-            JsonPathSanitizers.Add("$..ivrContext");
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.skype.com"));
         }
 
