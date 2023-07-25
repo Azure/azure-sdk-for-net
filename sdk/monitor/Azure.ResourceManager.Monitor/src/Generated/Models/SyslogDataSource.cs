@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="facilityNames"> The list of facility names. </param>
         /// <param name="logLevels"> The log levels to collect. </param>
         /// <param name="name">
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         internal SyslogDataSource(IList<SyslogDataSourceStream> streams, IList<SyslogDataSourceFacilityName> facilityNames, IList<SyslogDataSourceLogLevel> logLevels, string name)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The log levels to collect. </summary>
         public IList<SyslogDataSourceLogLevel> LogLevels { get; }
         /// <summary>
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

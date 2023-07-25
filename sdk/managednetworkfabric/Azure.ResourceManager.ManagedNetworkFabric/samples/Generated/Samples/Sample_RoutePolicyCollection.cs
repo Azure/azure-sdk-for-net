@@ -43,49 +43,60 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
 
             // invoke the operation
-            string routePolicyName = "example RoutePolicy";
-            RoutePolicyData data = new RoutePolicyData(new AzureLocation("EastUS"))
+            string routePolicyName = "routePolicyName";
+            RoutePolicyData data = new RoutePolicyData(new AzureLocation("EastUS"), new RoutePolicyStatementProperties[]
             {
-                Annotation = "example routepolicy",
-                Description = "RPexample",
-                Conditions =
+new RoutePolicyStatementProperties(7,new StatementConditionProperties()
 {
-new RoutePolicyPropertiesConditionsItem()
+IPPrefixId = "subscriptions/xxxxxx/resourceGroups/resourcegroupname/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/example-ipPrefix",
+IPExtendedCommunityIds =
 {
-SequenceNumber = 7,
-Match = new RoutePolicyPropertiesConditionsItemMatch()
-{
-AccessControlListIds =
-{
-"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/accessControlLists/accessControlListName"
+"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipExtendedCommunityName"
 },
-IPCommunityListIds =
+IPCommunityIds =
 {
-"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/ipCommunityLists/ipCommunityListName"
+"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipCommunityName"
 },
-IPExtendedCommunityListIds =
+},new StatementActionProperties(CommunityActionType.Permit)
 {
-""
+LocalPreference = 20,
+IPCommunityProperties = new ActionIPCommunityProperties()
+{
+DeleteIPCommunityIds =
+{
+"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipCommunityName"
 },
+SetIPCommunityIds =
+{
+"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipCommunityName"
 },
-Action = new RoutePolicyConditionsItemAction()
+AddIPCommunityIds =
 {
-Action = "allow",
-Sets = new RoutePolicyPropertiesConditionsProperties()
-{
-IPCommunityListIds =
-{
-"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/ipCommunityLists/ipCommunityListName"
-},
-IPExtendedCommunityListIds =
-{
-""
+"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipCommunityName"
 },
 },
+IPExtendedCommunityProperties = new ActionIPExtendedCommunityProperties()
+{
+DeleteIPExtendedCommunityIds =
+{
+"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipExtendedCommunityName"
 },
-Annotation = "",
+SetIPExtendedCommunityIds =
+{
+"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipExtendedCommunityName"
+},
+AddIPExtendedCommunityIds =
+{
+"/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipExtendedCommunityName"
+},
+},
+})
+{
+Annotation = "annotationValue",
 }
-},
+            })
+            {
+                Annotation = "annotationValue",
                 Tags =
 {
 ["key8254"] = "",
@@ -116,7 +127,7 @@ Annotation = "",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaa";
+            string subscriptionId = "subscriptionId";
             string resourceGroupName = "rgRoutePolicies";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -125,7 +136,7 @@ Annotation = "",
             RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
 
             // invoke the operation
-            string routePolicyName = "aaaaaaa";
+            string routePolicyName = "routePolicyName";
             RoutePolicyResource result = await collection.GetAsync(routePolicyName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -150,7 +161,7 @@ Annotation = "",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaa";
+            string subscriptionId = "subscriptionId";
             string resourceGroupName = "rgRoutePolicies";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -159,7 +170,7 @@ Annotation = "",
             RoutePolicyCollection collection = resourceGroupResource.GetRoutePolicies();
 
             // invoke the operation
-            string routePolicyName = "aaaaaaa";
+            string routePolicyName = "routePolicyName";
             bool result = await collection.ExistsAsync(routePolicyName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -180,7 +191,7 @@ Annotation = "",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaa";
+            string subscriptionId = "subscriptionId";
             string resourceGroupName = "rgRoutePolicies";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

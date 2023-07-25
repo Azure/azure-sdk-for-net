@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="rootFolderPath"> The name of the directory where exports will be uploaded. </param>
         /// <param name="sasToken"> A SAS token for the storage account. For a restricted set of Azure customers this together with storageAccount can be specified instead of resourceId. Note: the value returned by the API for this property will always be obfuscated. Returning this same obfuscated value will not result in the SAS token being updated. To update this value a new SAS token must be specified. </param>
         /// <param name="storageAccount"> The storage account where exports will be uploaded. For a restricted set of Azure customers this together with sasToken can be specified instead of resourceId. </param>
-        internal ExportDeliveryDestination(string resourceId, string container, string rootFolderPath, string sasToken, string storageAccount)
+        internal ExportDeliveryDestination(ResourceIdentifier resourceId, string container, string rootFolderPath, string sasToken, string storageAccount)
         {
             ResourceId = resourceId;
             Container = container;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The resource id of the storage account where exports will be delivered. This is not required if a sasToken and storageAccount are specified. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The name of the container where exports will be uploaded. If the container does not exist it will be created. </summary>
         public string Container { get; set; }
         /// <summary> The name of the directory where exports will be uploaded. </summary>

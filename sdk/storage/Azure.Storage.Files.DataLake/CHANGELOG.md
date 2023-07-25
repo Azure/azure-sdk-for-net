@@ -1,14 +1,12 @@
 # Release History
 
-## 12.15.0-beta.2 (Unreleased)
+## 12.16.0-beta.1 (Unreleased)
+- Added support for service version 2023-05-03 and 2023-08-03.
+- Added support for paginated directory delete when using AAD authentication.  Note that this feature only applies to HNS storage accounts.
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 12.15.0 (2023-07-11)
+- Includes all features from 12.15.0-beta.1.
+- Fixed bug where DatalakePathClient.Rename was using the filesystem name parameter for the destination path and vice versa.
 
 ## 12.15.0-beta.1 (2023-05-30)
 - Added support for service version 2023-01-03.

@@ -90,11 +90,7 @@ namespace Azure.Communication.CallAutomation
                     request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
                 }
 
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-                return _callRecordingRestClient.StartRecording(request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken: cancellationToken);
+                return _callRecordingRestClient.StartRecording(request, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -151,11 +147,7 @@ namespace Azure.Communication.CallAutomation
                     request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
                 }
 
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-                return await _callRecordingRestClient.StartRecordingAsync(request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _callRecordingRestClient.StartRecordingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

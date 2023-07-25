@@ -49,37 +49,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 Mtu = 1500,
                 ConnectedIPv4Subnets =
 {
-new InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem()
+new ConnectedSubnet()
 {
 Prefix = "10.0.0.0/24",
 }
 },
                 ConnectedIPv6Subnets =
 {
-new InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem()
+new ConnectedSubnet()
 {
 Prefix = "3FFE:FFFF:0:CD30::a0/29",
 }
 },
-                StaticRouteConfiguration = new InternalNetworkPatchablePropertiesStaticRouteConfiguration()
+                StaticRouteConfiguration = new StaticRouteConfiguration()
                 {
                     BfdConfiguration = new BfdConfiguration(),
                     IPv4Routes =
 {
-new InternalNetworkPatchablePropertiesStaticRouteConfigurationIPv4RoutesItem("10.1.0.0/24",new string[]
+new StaticRouteProperties("10.1.0.0/24",new string[]
 {
 "10.0.0.1"
 })
 },
                     IPv6Routes =
 {
-new InternalNetworkPatchablePropertiesStaticRouteConfigurationIPv6RoutesItem("2fff::/64",new string[]
+new StaticRouteProperties("2fff::/64",new string[]
 {
 "2ffe::1"
 })
 },
                 },
-                BgpConfiguration = new InternalNetworkPatchablePropertiesBgpConfiguration(6)
+                BgpConfiguration = new BgpConfiguration(6)
                 {
                     BfdConfiguration = new BfdConfiguration(),
                     DefaultRouteOriginate = BooleanEnumProperty.True,
@@ -95,14 +95,14 @@ new InternalNetworkPatchablePropertiesStaticRouteConfigurationIPv6RoutesItem("2f
 },
                     IPv4NeighborAddress =
 {
-new InternalNetworkPatchablePropertiesBgpConfigurationIPv4NeighborAddressItem()
+new NeighborAddress()
 {
 Address = "10.1.0.0",
 }
 },
                     IPv6NeighborAddress =
 {
-new InternalNetworkPatchablePropertiesBgpConfigurationIPv6NeighborAddressItem()
+new NeighborAddress()
 {
 Address = "2fff::",
 }

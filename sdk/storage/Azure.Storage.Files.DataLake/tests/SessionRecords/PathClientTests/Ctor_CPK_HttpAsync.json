@@ -1,7 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "RandomSeed": "1625128744",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\ns9axscnapby3pev24a\nU2FuaXRpemVk\nhttps://s9axscnapby3pev24a.blob.preprod.core.windows.net\nhttp://s9axscnapby3pev24a.file.core.windows.net\nhttp://s9axscnapby3pev24a.queue.core.windows.net\nhttp://s9axscnapby3pev24a.table.core.windows.net\n\n\n\n\nhttp://s9axscnapby3pev24a-secondary.blob.core.windows.net\nhttp://s9axscnapby3pev24a-secondary.file.core.windows.net\nhttp://s9axscnapby3pev24a-secondary.queue.core.windows.net\nhttp://s9axscnapby3pev24a-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://s9axscnapby3pev24a.blob.preprod.core.windows.net/;QueueEndpoint=http://s9axscnapby3pev24a.queue.core.windows.net/;FileEndpoint=http://s9axscnapby3pev24a.file.core.windows.net/;BlobSecondaryEndpoint=http://s9axscnapby3pev24a-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://s9axscnapby3pev24a-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://s9axscnapby3pev24a-secondary.file.core.windows.net/;AccountName=s9axscnapby3pev24a;AccountKey=Sanitized\n\n\n"
-  }
-}

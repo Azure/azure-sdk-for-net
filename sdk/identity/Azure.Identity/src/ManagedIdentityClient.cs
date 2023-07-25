@@ -42,8 +42,8 @@ namespace Azure.Identity
                     $"{nameof(ManagedIdentityClientOptions)} cannot specify both {nameof(options.ResourceIdentifier)} and {nameof(options.ClientId)}.");
             }
 
-            ClientId = options.ClientId;
-            ResourceIdentifier = options.ResourceIdentifier;
+            ClientId = string.IsNullOrEmpty(options.ClientId) ? null : options.ClientId;
+            ResourceIdentifier = string.IsNullOrEmpty(options.ResourceIdentifier) ? null : options.ResourceIdentifier;
             Pipeline = options.Pipeline;
             _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options));
             _msal = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options);
@@ -57,7 +57,7 @@ namespace Azure.Identity
 
         public async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await _msal.AcquireTokenForClientAsync(context.Scopes, context.TenantId, async, cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await _msal.AcquireTokenForClientAsync(context.Scopes, context.TenantId, context.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
 
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }

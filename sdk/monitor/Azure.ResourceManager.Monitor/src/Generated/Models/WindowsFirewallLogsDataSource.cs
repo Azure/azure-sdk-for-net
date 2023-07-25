@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of WindowsFirewallLogsDataSource. </summary>
         /// <param name="streams"> Firewall logs streams. </param>
         /// <param name="name">
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         internal WindowsFirewallLogsDataSource(IList<string> streams, string name)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Firewall logs streams. </summary>
         public IList<string> Streams { get; }
         /// <summary>
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

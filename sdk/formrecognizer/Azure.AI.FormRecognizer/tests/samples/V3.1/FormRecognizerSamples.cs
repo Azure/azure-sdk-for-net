@@ -7,6 +7,7 @@ using Azure.Core.TestFramework;
 namespace Azure.AI.FormRecognizer.Samples
 {
     [LiveOnly]
+    [AsyncOnly] // Ensure that each sample will only run once.
     [IgnoreServiceError(200, "3014", Message = "Generic error during training.", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28913")]
     public partial class FormRecognizerSamples : RecordedTestBase<FormRecognizerTestEnvironment>
     {

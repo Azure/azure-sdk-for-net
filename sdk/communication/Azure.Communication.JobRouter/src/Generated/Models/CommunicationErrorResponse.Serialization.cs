@@ -19,12 +19,12 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            JobRouterError error = default;
+            CommunicationError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
                 {
-                    error = JobRouterError.DeserializeJobRouterError(property.Value);
+                    error = CommunicationError.DeserializeCommunicationError(property.Value);
                     continue;
                 }
             }

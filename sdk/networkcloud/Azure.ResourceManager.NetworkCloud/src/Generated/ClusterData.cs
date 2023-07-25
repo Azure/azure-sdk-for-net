@@ -23,22 +23,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
-        /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
         /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
         /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
         /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="analyticsWorkspaceId"/>, <paramref name="clusterVersion"/> or <paramref name="networkFabricId"/> is null. </exception>
-        public ClusterData(AzureLocation location, ExtendedLocation extendedLocation, RackDefinition aggregatorOrSingleRackDefinition, string analyticsWorkspaceId, ClusterType clusterType, string clusterVersion, string networkFabricId) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/> or <paramref name="networkFabricId"/> is null. </exception>
+        public ClusterData(AzureLocation location, ExtendedLocation extendedLocation, RackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, string networkFabricId) : base(location)
         {
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
-            Argument.AssertNotNull(analyticsWorkspaceId, nameof(analyticsWorkspaceId));
             Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
             ExtendedLocation = extendedLocation;
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
-            AnalyticsWorkspaceId = analyticsWorkspaceId;
             AvailableUpgradeVersions = new ChangeTrackingList<ClusterAvailableUpgradeVersion>();
             ClusterType = clusterType;
             ClusterVersion = clusterVersion;
@@ -74,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </param>
         /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
-        /// <param name="hybridAksExtendedLocation"> The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
+        /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
         /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
         /// <param name="manualActionCount"> The count of Manual Action Taken (MAT) events that have not been validated. </param>
         /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
@@ -146,7 +143,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ClusterDetailedStatus? DetailedStatus { get; }
         /// <summary> The descriptive message about the detailed status. </summary>
         public string DetailedStatusMessage { get; }
-        /// <summary> The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </summary>
+        /// <summary> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </summary>
         public ExtendedLocation HybridAksExtendedLocation { get; }
         /// <summary> The configuration of the managed resource group associated with the resource. </summary>
         public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }

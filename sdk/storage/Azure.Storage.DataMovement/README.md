@@ -71,23 +71,13 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
 
 Please see the examples for [Blobs DataMovement][blobs_examples].
-
-Pause a transfer using the TransferManager using the respective DataTransfer object
-```C# Snippet:TransferManagerTryPause_Async
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: sourceResource,
-    destinationResource: destinationResource);
-
-// Pause from the Transfer Manager using the DataTransfer object
-await transferManager.PauseTransferIfRunningAsync(dataTransfer);
-```
 
 Pause a transfer using the TransferManager using the respective transfer ID
 ```C# Snippet:TransferManagerTryPauseId_Async
@@ -112,16 +102,33 @@ await dataTransfer.PauseIfRunningAsync();
 
 Resume a transfer
 ```C# Snippet:TransferManagerResume_Async
-// Resume from checkpoint id
-TransferOptions optionsWithResumeTransferId = new TransferOptions()
+async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesAsync(DataTransferProperties info)
 {
-    ResumeFromCheckpointId = dataTransfer.Id
-};
-
-DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
-    sourceResource: sourceResource,
-    destinationResource: destinationResource,
-    transferOptions: optionsWithResumeTransferId);
+    StorageResource sourceResource = null, destinationResource = null;
+    if (BlobStorageResources.TryGetResourceProviders(
+        info,
+        out BlobStorageResourceProvider blobSrcProvider,
+        out BlobStorageResourceProvider blobDstProvider))
+    {
+        sourceResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.SourcePath));
+        destinationResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.DestinationPath));
+    }
+    if (LocalStorageResources.TryGetResourceProviders(
+        info,
+        out LocalStorageResourceProvider localSrcProvider,
+        out LocalStorageResourceProvider localDstProvider))
+    {
+        sourceResource ??= localSrcProvider.MakeResource();
+        destinationResource ??= localDstProvider.MakeResource();
+    }
+    return (sourceResource, destinationResource);
+}
+List<DataTransfer> resumedTransfers = new();
+await foreach (DataTransferProperties transferProperties in transferManager.GetResumableTransfersAsync())
+{
+    (StorageResource resumeSource, StorageResource resumeDestination) = await MakeResourcesAsync(transferProperties);
+    resumedTransfers.Add(await transferManager.ResumeTransferAsync(transferProperties.TransferId, resumeSource, resumeDestination));
+}
 ```
 
 ## Troubleshooting

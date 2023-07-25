@@ -6,21 +6,16 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </summary>
     public partial class ScoringRuleOptions
     {
         /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
-        public ScoringRuleOptions()
-        {
-            ScoringParameters = new ChangeTrackingList<ScoringRuleParameterSelector>();
-        }
-
-        /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
-        /// <param name="batchSize"> (Optional) Set batch size when AllowScoringBatchOfWorkers is set to true. </param>
+        /// <param name="batchSize"> (Optional) Set batch size when AllowScoringBatchOfWorkers is set to true. Defaults to 20 if not configured. </param>
         /// <param name="scoringParameters">
         /// (Optional) List of extra parameters from the job that will be sent as part of the payload to scoring rule.
         /// If not set, the job's labels (sent in the payload as `job`) and the job's worker selectors (sent in the payload as `selectors`)
@@ -45,7 +40,7 @@ namespace Azure.Communication.JobRouter
             DescendingOrder = descendingOrder;
         }
 
-        /// <summary> (Optional) Set batch size when AllowScoringBatchOfWorkers is set to true. </summary>
+        /// <summary> (Optional) Set batch size when AllowScoringBatchOfWorkers is set to true. Defaults to 20 if not configured. </summary>
         public int? BatchSize { get; set; }
         /// <summary>
         /// (Optional)

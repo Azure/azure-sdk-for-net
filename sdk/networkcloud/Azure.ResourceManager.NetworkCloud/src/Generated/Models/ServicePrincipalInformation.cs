@@ -17,11 +17,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="applicationId"> The application ID, also known as client ID, of the service principal. </param>
         /// <param name="principalId"> The principal ID, also known as the object ID, of the service principal. </param>
         /// <param name="tenantId"> The tenant ID, also known as the directory ID, of the tenant in which the service principal is created. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="principalId"/> is null. </exception>
-        public ServicePrincipalInformation(string applicationId, string principalId, Guid tenantId)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/>, <paramref name="principalId"/> or <paramref name="tenantId"/> is null. </exception>
+        public ServicePrincipalInformation(string applicationId, string principalId, string tenantId)
         {
             Argument.AssertNotNull(applicationId, nameof(applicationId));
             Argument.AssertNotNull(principalId, nameof(principalId));
+            Argument.AssertNotNull(tenantId, nameof(tenantId));
 
             ApplicationId = applicationId;
             PrincipalId = principalId;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="password"> The password of the service principal. </param>
         /// <param name="principalId"> The principal ID, also known as the object ID, of the service principal. </param>
         /// <param name="tenantId"> The tenant ID, also known as the directory ID, of the tenant in which the service principal is created. </param>
-        internal ServicePrincipalInformation(string applicationId, string password, string principalId, Guid tenantId)
+        internal ServicePrincipalInformation(string applicationId, string password, string principalId, string tenantId)
         {
             ApplicationId = applicationId;
             Password = password;
@@ -48,6 +49,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The principal ID, also known as the object ID, of the service principal. </summary>
         public string PrincipalId { get; set; }
         /// <summary> The tenant ID, also known as the directory ID, of the tenant in which the service principal is created. </summary>
-        public Guid TenantId { get; set; }
+        public string TenantId { get; set; }
     }
 }

@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="provisioningState"></param>
         /// <param name="managedInstanceCreateMode">
         /// Specifies the mode of database creation.
-        /// 
+        ///
         /// Default: Regular instance creation.
-        /// 
+        ///
         /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
         /// </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the managed instance. </param>
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Sql
         public ManagedInstancePropertiesProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Specifies the mode of database creation.
-        /// 
+        ///
         /// Default: Regular instance creation.
-        /// 
+        ///
         /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
         /// </summary>
         public ManagedServerCreateMode? ManagedInstanceCreateMode { get; set; }
