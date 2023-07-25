@@ -80,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()];
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()];
-            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
+            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
             InstrumentationKey = telemetryItem.InstrumentationKey;
             SampleRate = telemetryItem.SampleRate;
         }
@@ -113,7 +113,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             InstrumentationKey = instrumentationKey;
             Tags[ContextTagKeys.AiCloudRole.ToString()] = resource?.RoleName;
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance;
-            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
+            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
         }
 
         internal static DateTimeOffset FormatUtcTimestamp(System.DateTime utcTimestamp)
