@@ -158,7 +158,7 @@ namespace Azure.Developer.LoadTesting
 
             Response response = await CreateOrUpdateTestAsync(test.TestId, content, context).ConfigureAwait(false);
 
-            return Response.FromValue(Test.DeserializeTest(response.Content, ModelSerializerOptions.AzureServiceDefault), response);
+            return Response.FromValue((Test)response, response);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.Developer.LoadTesting
 
             Response response = CreateOrUpdateTest(test.TestId, content, context);
 
-            return Response.FromValue(Test.DeserializeTest(response.Content, ModelSerializerOptions.AzureServiceDefault), response);
+            return Response.FromValue((Test)response, response);
         }
     }
 }

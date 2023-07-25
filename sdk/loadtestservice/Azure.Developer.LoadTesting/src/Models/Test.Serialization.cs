@@ -16,6 +16,23 @@ namespace Azure.Developer.LoadTesting.Models
 {
     public partial class Test : IUtf8JsonSerializable, IJsonModelSerializable
     {
+        /// <summary>
+        /// </summary>
+        /// <param name="test"></param>
+        public static implicit operator RequestContent(Test test)
+        {
+            return new Utf8JsonDelayedRequestContent(test);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="response"></param>
+        public static explicit operator Test(Response response)
+        {
+            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(response.Content);
+            return new Test(jsonDocument.RootElement);
+        }
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
@@ -84,10 +101,8 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal static Test DeserializeTest(BinaryData utf8Json, ModelSerializerOptions options)
+        internal static Test DeserializeTest(BinaryData utf8Json)
         {
-            // TODO: use ObjectSerializers from options?
-
             MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
             return new Test(mje);
         }
@@ -126,12 +141,15 @@ namespace Azure.Developer.LoadTesting.Models
             // TODO: reimplement this so it doesn't read the buffer twice
             JsonDocument doc = JsonDocument.ParseValue(ref reader);
             BinaryData utf8Json = GetBytes(doc.RootElement);
-            return DeserializeTest(utf8Json, options);
+            return (this as IModelSerializable).Deserialize(utf8Json, options);
         }
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            return DeserializeTest(data, options);
+            // TODO: Use options?
+
+            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
+            return new Test(jsonDocument.RootElement);
         }
     }
 }
