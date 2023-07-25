@@ -59,12 +59,12 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
 
                 // Create the transfer manager
-                #region Snippet:CreateTransferManagerSimple
+                #region Snippet:CreateTransferManagerSimple_BasePackage
                 TransferManager transferManager = new TransferManager(new TransferManagerOptions());
                 #endregion
 
                 // Create simple transfer single blob upload job
-                #region Snippet:SimpleBlobUpload
+                #region Snippet:SimpleBlobUpload_BasePackage
                 async Task TransferAsync(StorageResource source, StorageResource destination,
                     TransferOptions transferOptions = default, CancellationToken cancellationToken = default)
                 {
@@ -301,7 +301,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     using (StreamWriter logStream = File.AppendText(logFile))
                     {
-                        logStream.WriteLine($"Failure for TransferId: {args.TransferId}");
+                        logStream.WriteLine($"Failure for TransferId: {dataTransfer.Id}");
                     }
                 }
                 #endregion

@@ -67,7 +67,7 @@ This section demonstrates usage of Data Movement regardless of extension package
 
 Singleton usage of `TransferManager` is recommended. Providing `TransferManagerOptions` is optional.
 
-```C# Snippet:CreateTransferManagerSimple
+```C# Snippet:CreateTransferManagerSimple_BasePackage
 TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 ```
 
@@ -79,7 +79,7 @@ Configurations for accessing data are configured on the `StorageResource`. See f
 
 A function that starts a transfer and then awaits it's completion:
 
-```C# Snippet:SimpleBlobUpload
+```C# Snippet:SimpleBlobUpload_BasePackage
 async Task TransferAsync(StorageResource source, StorageResource destination,
     TransferOptions transferOptions = default, CancellationToken cancellationToken = default)
 {
@@ -124,7 +124,7 @@ When starting a transfer, `TransferOptions` contains multiple events that can be
 A function that listens to status events for a given transfer:
 
 ```C# Snippet:ListenToTransferEvents
-async Task ListenToTransfersAsync(TransferManager transferManager,
+async Task<DataTransfer> ListenToTransfersAsync(TransferManager transferManager,
     StorageResource source, StorageResource destination)
 {
     TransferOptions transferOptions = new();
@@ -134,7 +134,7 @@ async Task ListenToTransfersAsync(TransferManager transferManager,
         logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Path}");
         return Task.CompletedTask;
     };
-    DataTransfer transfer = await transferManager.StartTransferAsync(
+    return await transferManager.StartTransferAsync(
         source,
         destination,
         transferOptions);
@@ -147,20 +147,20 @@ When starting a transfer, `TransferOptions` allows setting a progress handler th
 
 A function that listens to progress updates for a given transfer with a supplied `IProgress<TStorageTransferProgress>`:
 
-```C# Snippet:TODO
-async Task ListenToProgressAsync(TransferManager transferManager, IProgress<StorageTransferProgress> progress,
+```C# Snippet:ListenToProgress
+async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, IProgress<StorageTransferProgress> progress,
     StorageResource source, StorageResource destination)
 {
     TransferOptions transferOptions = new()
     {
         ProgressHandler = progress,
-        // optionally include the below if progress updates on total bytes transferred are desired
+        // optionally include the below if progress updates on bytes transferred are desired
         ProgressHandlerOptions = new()
         {
             TrackBytesTransferred = true
         }
     };
-    DataTransfer transfer = await transferManager.StartTransferAsync(
+    return await transferManager.StartTransferAsync(
         source,
         destination,
         transferOptions);
@@ -236,7 +236,7 @@ if (dataTransfer.TransferStatus == StorageTransferStatus.CompletedWithFailedTran
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {
-        logStream.WriteLine($"Failure for TransferId: {args.TransferId}");
+        logStream.WriteLine($"Failure for TransferId: {dataTransfer.Id}");
     }
 }
 ```
