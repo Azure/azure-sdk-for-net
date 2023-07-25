@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        internal FirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string startIPAddress, string endIPAddress) : base(id, name, resourceType, systemData)
+        internal FirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBProvisioningState? provisioningState, string startIPAddress, string endIPAddress) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             StartIPAddress = startIPAddress;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The provisioning state of the firewall rule. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public CosmosDBProvisioningState? ProvisioningState { get; }
         /// <summary> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
         public string StartIPAddress { get; set; }
         /// <summary> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>

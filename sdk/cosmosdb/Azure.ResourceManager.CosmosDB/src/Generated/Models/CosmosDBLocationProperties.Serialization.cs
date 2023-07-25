@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IReadOnlyList<CosmosDBBackupStorageRedundancy>> backupStorageRedundancies = default;
             Optional<bool> isSubscriptionRegionAccessAllowedForRegular = default;
             Optional<bool> isSubscriptionRegionAccessAllowedForAz = default;
-            Optional<Status> status = default;
+            Optional<CosmosDBStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportsAvailabilityZone"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new CosmosDBStatus(property.Value.GetString());
                     continue;
                 }
             }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="isSubscriptionRegionAccessAllowedForRegular"> Flag indicating whether the subscription have access in region for Non-Availability Zones. </param>
         /// <param name="isSubscriptionRegionAccessAllowedForAz"> Flag indicating whether the subscription have access in region for Availability Zones(Az). </param>
         /// <param name="status"> Enum to indicate current buildout status of the region. </param>
-        internal CosmosDBLocationProperties(bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies, bool? isSubscriptionRegionAccessAllowedForRegular, bool? isSubscriptionRegionAccessAllowedForAz, Status? status)
+        internal CosmosDBLocationProperties(bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies, bool? isSubscriptionRegionAccessAllowedForRegular, bool? isSubscriptionRegionAccessAllowedForAz, CosmosDBStatus? status)
         {
             DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
             IsResidencyRestricted = isResidencyRestricted;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Flag indicating whether the subscription have access in region for Availability Zones(Az). </summary>
         public bool? IsSubscriptionRegionAccessAllowedForAz { get; }
         /// <summary> Enum to indicate current buildout status of the region. </summary>
-        public Status? Status { get; }
+        public CosmosDBStatus? Status { get; }
     }
 }

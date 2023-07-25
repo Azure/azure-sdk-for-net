@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> connectionString = default;
             Optional<string> description = default;
             Optional<CosmosDBKind> keyKind = default;
-            Optional<Type> type = default;
+            Optional<CosmosDBType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionString"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    type = new Type(property.Value.GetString());
+                    type = new CosmosDBType(property.Value.GetString());
                     continue;
                 }
             }

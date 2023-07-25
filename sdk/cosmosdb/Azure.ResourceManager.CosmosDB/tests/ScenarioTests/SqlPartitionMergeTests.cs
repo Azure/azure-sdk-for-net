@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [Test]
-        [RecordedTest]
+        //[RecordedTest]
         public async Task SqlDatabasePartitionMerge()
         {
             var database = await CreateSqlDatabase(new AutoscaleSettings()
