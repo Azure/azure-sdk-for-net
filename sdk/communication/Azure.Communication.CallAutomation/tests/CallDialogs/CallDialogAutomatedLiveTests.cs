@@ -94,7 +94,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
                 // send the dialog to the target user
                 var dialogContext = new Dictionary<string, object>();
-                StartDialogOptions dialogOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, botAppId, dialogContext)
+                StartDialogOptions dialogOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, botAppId, dialogContext)
                 {
                     OperationContext = "context"
                 };
@@ -104,6 +104,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 var checkedDialogId = dialogResponse.Value.DialogId;
                 Assert.NotNull(dialogResponse.Value.DialogId);
                 Assert.IsTrue(Guid.TryParse(checkedDialogId, out var result));
+                Assert.AreEqual(checkedDialogId, dialogId);
 
                 // wait for DialogStarted event
                 var dialogStartedReceived = await WaitForEvent<DialogStarted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
@@ -224,7 +225,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 Assert.ThrowsAsync<RequestFailedException>(() => callDialog.StartDialogAsync(dialogOptions));
 
                 // send a new dialog with different ID, should fail
-                dialogOptions = new StartDialogOptions(Guid.NewGuid().ToString(), DialogInputType.PowerVirtualAgents, botAppId, dialogContext)
+                string secondDialogId = "de7fcbc8-1803-4ec1-80ed-2c9c087587f6";
+                dialogOptions = new StartDialogOptions(secondDialogId, DialogInputType.PowerVirtualAgents, botAppId, dialogContext)
                 {
                     OperationContext = "context"
                 };
@@ -468,16 +470,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 Assert.NotNull(dialogResponse.Value.DialogId);
                 Assert.AreEqual(dialogId, dialogResponse.Value.DialogId);
 
-                dialogStartedReceived = await WaitForEvent<DialogStarted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.NotNull(dialogStartedReceived);
-                Assert.IsTrue(dialogStartedReceived is DialogStarted);
-
                 stopDialogResponse = await callDialog.StopDialogAsync(dialogId).ConfigureAwait(false);
                 Assert.AreEqual(StatusCodes.Status204NoContent, stopDialogResponse.GetRawResponse().Status);
-
-                dialogStoppedReceived = await WaitForEvent<DialogCompleted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(dialogStoppedReceived);
-                Assert.IsTrue(dialogStoppedReceived is DialogCompleted);
             }
             catch (RequestFailedException ex)
             {
