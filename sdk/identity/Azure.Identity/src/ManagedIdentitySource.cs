@@ -92,7 +92,7 @@ namespace Azure.Identity
 
                 return GetMessageFromResponse(json.RootElement);
             }
-            catch // parsing failed, just return null
+            catch // parsing failed
             {
                 return "Response was not in a valid json format.";
             }
