@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Core.Serialization
 {
@@ -28,7 +27,6 @@ namespace Azure.Core.Serialization
         public ModelSerializerOptions(ModelSerializerFormat format)
         {
             Format = format;
-            Serializers = new Dictionary<Type, ObjectSerializer>();
         }
 
         /// <summary>
@@ -37,8 +35,9 @@ namespace Azure.Core.Serialization
         public ModelSerializerFormat Format { get; }
 
         /// <summary>
-        /// Dictionary that holds all the serializers for the different model types.
+        /// Gets or sets a factory method that returns a <see cref="ObjectSerializer"/> based on the provided <see cref="Type"/>.
+        /// Should return null if the type is not supported.
         /// </summary>
-        public Dictionary<Type, ObjectSerializer> Serializers { get; internal set; }
+        public Func<Type, ObjectSerializer?>? TypeResolver { get; set; }
     }
 }

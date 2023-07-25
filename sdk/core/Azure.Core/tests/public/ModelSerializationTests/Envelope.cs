@@ -120,14 +120,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private static ObjectSerializer GetObjectSerializer(ModelSerializerOptions options)
         {
-            ObjectSerializer serializer;
-            if (options.Serializers.TryGetValue(typeof(T), out serializer))
-            {
-                // serializer is from the dictionary
-                return serializer;
-            }
-            // default
-            return JsonObjectSerializer.Default;
+            var serializer = options.TypeResolver is not null ? options.TypeResolver(typeof(T)) : null;
+            return serializer ?? JsonObjectSerializer.Default;
         }
 
         private static T DeserializeT(JsonElement element, ModelSerializerOptions options)

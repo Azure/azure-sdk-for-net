@@ -20,7 +20,8 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize<T>(T model, ModelSerializerOptions options = default) where T : IModelSerializable
         {
-            if (options.Serializers != null && options.Serializers.TryGetValue(typeof(T), out var serializer))
+            var serializer = options.TypeResolver is not null ? options.TypeResolver(typeof(T)) : null;
+            if (serializer is not null)
                 return serializer.Serialize(model);
 
             return model.Serialize(options);
@@ -38,7 +39,8 @@ namespace Azure.Core.Serialization
             if (iModel is null)
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable)}");
 
-            if (options.Serializers != null && options.Serializers.TryGetValue(model.GetType(), out var serializer))
+            var serializer = options.TypeResolver is not null ? options.TypeResolver(model.GetType()) : null;
+            if (serializer is not null)
                 return serializer.Serialize(model);
 
             return iModel.Serialize(options);
@@ -63,7 +65,8 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException"></exception>
         public static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options = default)
         {
-            if (options.Serializers != null && options.Serializers.TryGetValue(typeToConvert, out var serializer))
+            var serializer = options.TypeResolver is not null ? options.TypeResolver(typeToConvert) : null;
+            if (serializer is not null)
             {
                 var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);
                 return obj ?? throw new InvalidOperationException();
