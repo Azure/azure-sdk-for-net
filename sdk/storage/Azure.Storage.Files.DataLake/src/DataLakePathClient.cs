@@ -1860,31 +1860,47 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<PathDeleteHeaders> response;
+                    ResponseWithHeaders<PathDeleteHeaders> response = null;
 
-                    if (async)
+                    // Pagination only applies to service version 2023-08-03 and later, when using OAuth.
+                    bool? paginated = null;
+                    if (_clientConfiguration.ClientOptions.Version >= DataLakeClientOptions.ServiceVersion.V2023_08_03
+                        && _clientConfiguration.TokenCredential != null)
                     {
-                        response = await PathRestClient.DeleteAsync(
-                            recursive: recursive,
-                            leaseId: conditions?.LeaseId,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        paginated = true;
                     }
-                    else
+
+                    do
                     {
-                        response = PathRestClient.Delete(
-                            recursive: recursive,
-                            leaseId: conditions?.LeaseId,
-                            ifMatch: conditions?.IfMatch?.ToString(),
-                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            cancellationToken: cancellationToken);
+                        if (async)
+                        {
+                            response = await PathRestClient.DeleteAsync(
+                                recursive: recursive,
+                                continuation: response?.Headers?.Continuation,
+                                leaseId: conditions?.LeaseId,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                paginated: paginated,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = PathRestClient.Delete(
+                                recursive: recursive,
+                                continuation: response?.Headers?.Continuation,
+                                leaseId: conditions?.LeaseId,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                paginated: paginated,
+                                cancellationToken: cancellationToken);
+                        }
                     }
+                    while (!string.IsNullOrEmpty(response?.Headers?.Continuation));
 
                     return response.GetRawResponse();
                 }
@@ -3177,7 +3193,7 @@ namespace Azure.Storage.Files.DataLake
                             }
                             batchesCount++;
                         } while (!string.IsNullOrEmpty(continuationToken)
-                            && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
+                            && (options == null || !options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
 
                         return Response.FromValue(
                             new AccessControlChangeResult()

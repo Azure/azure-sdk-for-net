@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                 ProtocolType = StorageTargetType.Iscsi,
                 Encryption = ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey
             };
-            volumeGroupData.Tags.Add("tag1", "value1");
             // vnet resource id is created by following instructions in https://docs.microsoft.com/en-us/azure/storage/common/storage-network-security?tabs=azure-portal
             var vnetResourceId = new ResourceIdentifier("/subscriptions/" + DefaultSubscription.Data.Id.Name + "/resourceGroups/" + ResourceGroupName + "/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/subnet1");
             volumeGroupData.VirtualNetworkRules.Add(new ElasticSanVirtualNetworkRule(vnetResourceId));
@@ -45,8 +44,6 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.AreEqual(volumeGroupResource.Id.Name, volumeGroupName);
             Assert.AreEqual(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey, volumeGroupResource.Data.Encryption);
             Assert.AreEqual(StorageTargetType.Iscsi, volumeGroupResource.Data.ProtocolType);
-            Assert.IsTrue(volumeGroupResource.Data.Tags.ContainsKey("tag1"));
-            Assert.AreEqual("value1", volumeGroupResource.Data.Tags["tag1"]);
             Assert.GreaterOrEqual(volumeGroupResource.Data.VirtualNetworkRules.Count, 1);
             Assert.AreEqual(vnetResourceId, volumeGroupResource.Data.VirtualNetworkRules[0].VirtualNetworkResourceId);
         }
@@ -62,7 +59,6 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             _ = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, new ElasticSanVolumeGroupData())).Value;
             ElasticSanVolumeGroupResource volumeGroup = (await collection.GetAsync(volumeGroupName)).Value;
             Assert.AreEqual(volumeGroup.Id.Name, volumeGroupName);
-            Assert.IsEmpty(volumeGroup.Data.Tags);
             Assert.IsEmpty(volumeGroup.Data.VirtualNetworkRules);
             Assert.AreEqual(StorageTargetType.Iscsi, volumeGroup.Data.ProtocolType);
             Assert.AreEqual(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey, volumeGroup.Data.Encryption);

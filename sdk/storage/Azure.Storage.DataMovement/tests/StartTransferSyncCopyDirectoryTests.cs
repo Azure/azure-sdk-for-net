@@ -12,7 +12,6 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -75,7 +74,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-            await transfer.AwaitCompletion(tokenSource.Token);
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             await testEventFailed.AssertContainerCompletedCheck(sourceFiles.Count);
             Assert.IsTrue(transfer.HasCompleted);
@@ -244,7 +243,7 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(tokenSource.Token);
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
 
@@ -581,7 +580,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             testEventsRaised.AssertUnexpectedFailureCheck();
@@ -612,7 +611,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);
@@ -645,7 +644,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);

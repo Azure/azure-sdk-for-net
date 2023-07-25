@@ -9,7 +9,6 @@ using NUnit.Framework;
 using System.IO;
 using System.Threading;
 using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Tests.Shared;
 using Azure.Core.Pipeline;
 

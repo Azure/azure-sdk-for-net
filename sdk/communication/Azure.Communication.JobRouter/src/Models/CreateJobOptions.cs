@@ -52,7 +52,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Reference to an external parent context, eg. call ID. </summary>
         public string ChannelReference { get; set; }
 
-        /// <summary> The priority of this job. </summary>
+        /// <summary> The priority of this job (range from -100 to 100). </summary>
         public int? Priority { get; set; }
 
         /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>

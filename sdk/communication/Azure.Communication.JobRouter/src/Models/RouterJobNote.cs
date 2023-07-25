@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// A note attached to a job

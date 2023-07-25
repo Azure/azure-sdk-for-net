@@ -3,8 +3,6 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
