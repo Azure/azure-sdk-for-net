@@ -5,7 +5,9 @@
 ### Features Added
 
 * Added `Resource` to traces, logs, and metrics with default configuration.
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
 * Added package `OpenTelemetry.ResourceDetectors.Azure` to introduce OpenTelemetry Resource detectors `AppServiceResourceDetector` and `AzureVMResourceDetector`.
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
 
 ### Breaking Changes
 
@@ -14,7 +16,7 @@
 ### Other Changes
 
 * Update OpenTelemetry dependencies
-  ([#36859](https://github.com/Azure/azure-sdk-for-net/pull/36859))
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
   - OpenTelemetry 1.5.1
   - OpenTelemetry.Extensions.Hosting 1.5.1
   - OpenTelemetry.Instrumentation.AspNetCore 1.5.1-beta.1
