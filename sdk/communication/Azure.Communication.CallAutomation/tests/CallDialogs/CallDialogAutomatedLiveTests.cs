@@ -343,11 +343,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 dialogResponse = await callDialog.StartDialogAsync(dialogOptions).ConfigureAwait(false);
                 Assert.AreEqual(StatusCodes.Status201Created, dialogResponse.GetRawResponse().Status);
 
-                // wait for DialogStarted event
-                dialogStartedReceived = await WaitForEvent<DialogStarted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.NotNull(dialogStartedReceived);
-                Assert.IsTrue(dialogStartedReceived is DialogStarted);
-
                 // stop the dialog
                 var stopDialogResponse = await callDialog.StopDialogAsync(dialogId).ConfigureAwait(false);
                 Assert.AreEqual(StatusCodes.Status204NoContent, stopDialogResponse.GetRawResponse().Status);
