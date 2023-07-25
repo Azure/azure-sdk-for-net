@@ -35,8 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         [Theory]
         [InlineData(50.0F)]
-        [InlineData(null)]
-        public void ValidateSampleRateForEventException(float? sampleRate)
+        public void ValidateSampleRateForEventException(float sampleRate)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
 
@@ -55,8 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         [Theory]
         [InlineData(50.0F)]
-        [InlineData(null)]
-        public void ValidateSampleRateInTelemetry(float? sampleRate)
+        public void ValidateSampleRateInTelemetry(float sampleRate)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
 
