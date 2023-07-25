@@ -17,9 +17,9 @@ namespace Azure.Core.Json
 
         public MutableJsonReadOnlyList(MutableJsonElement element)
         {
-            _element = element;
+            Debug.Assert(element.ValueKind == JsonValueKind.Array);
 
-            Debug.Assert(_element.ValueKind == JsonValueKind.Array);
+            _element = element;
         }
 
         public T this[int index] => _element.GetIndexElement(index).ConvertTo<T>();

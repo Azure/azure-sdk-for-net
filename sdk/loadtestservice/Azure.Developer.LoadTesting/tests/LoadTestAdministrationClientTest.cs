@@ -47,6 +47,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
         [Test]
         [Category(SKIP_SET_UP)]
+        [RecordedTest]
         public async Task CreateOrUpdateTestConveninence()
         {
             Test test = new Test();

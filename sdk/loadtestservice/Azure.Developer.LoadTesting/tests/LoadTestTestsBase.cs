@@ -61,7 +61,7 @@ namespace Azure.Developer.LoadTesting.Tests
             return categories != null && categories.Contains(SKIP_DELETE_TEST_RUN);
         }
 
-        public LoadTestTestsBase(bool isAsync) : base(isAsync)
+        public LoadTestTestsBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             _testId = "test-from-csharp-sdk-testing-framework";
             _fileName = "sample.jmx";

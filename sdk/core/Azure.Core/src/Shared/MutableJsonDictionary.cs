@@ -21,7 +21,7 @@ namespace Azure.Core.Json
 
         public MutableJsonDictionary(MutableJsonElement element)
         {
-            Debug.Assert(_element.ValueKind == JsonValueKind.Object);
+            Debug.Assert(element.ValueKind == JsonValueKind.Object);
 
             _element = element;
         }

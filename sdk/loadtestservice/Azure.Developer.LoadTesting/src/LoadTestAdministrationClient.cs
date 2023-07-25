@@ -139,18 +139,18 @@ namespace Azure.Developer.LoadTesting
         /// <returns></returns>
         public virtual async Task<Response<Test>> CreateOrUpdateTestAsync(Test test, CancellationToken cancellationToken = default)
         {
-            using Stream stream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             if (test is not IJsonModelSerializable serializable)
             {
                 throw new InvalidCastException("model is not serializable");
             }
 
-            serializable.Serialize(writer, new ModelSerializerOptions("P"));
+            using Stream stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                serializable.Serialize(writer, new ModelSerializerOptions("P"));
+            }
 
-            // TODO: remove if not needed
             stream.Position = 0;
-
             RequestContent content = RequestContent.Create(stream);
 
             // TODO: was there a good way to get RequestContext without creating it new?
@@ -168,21 +168,20 @@ namespace Azure.Developer.LoadTesting
         /// <returns></returns>
         public virtual Response<Test> CreateOrUpdateTest(Test test, CancellationToken cancellationToken = default)
         {
-            using Stream stream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             if (test is not IJsonModelSerializable serializable)
             {
                 throw new InvalidCastException("model is not serializable");
             }
 
-            serializable.Serialize(writer, new ModelSerializerOptions("P"));
+            using Stream stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                serializable.Serialize(writer, new ModelSerializerOptions("P"));
+            }
 
-            // TODO: remove if not needed
             stream.Position = 0;
-
             RequestContent content = RequestContent.Create(stream);
 
-            // TODO: was there a good way to get RequestContext without creating it new?
             RequestContext context = new() { CancellationToken = cancellationToken };
 
             Response response = CreateOrUpdateTest(test.TestId, content, context);
