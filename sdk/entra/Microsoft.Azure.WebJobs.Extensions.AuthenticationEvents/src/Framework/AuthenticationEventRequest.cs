@@ -23,7 +23,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <value>The response.</value>
         ///
         [JsonPropertyName("response")]
-        [Required]
         public TResponse Response { get; set; }
 
         /// <summary>Gets or sets the related EventData model.</summary>
