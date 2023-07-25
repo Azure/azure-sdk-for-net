@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.IO;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Json;
@@ -127,5 +126,7 @@ namespace Azure.Developer.LoadTesting.Models
             MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
             return new Test(jsonDocument.RootElement);
         }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => ((IJsonModelSerializable)this).Serialize(writer, options));
     }
 }

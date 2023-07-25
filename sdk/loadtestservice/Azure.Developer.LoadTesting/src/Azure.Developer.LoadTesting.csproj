@@ -16,6 +16,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonChange.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonChangeKind.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonDocument.cs" LinkBase="Shared" />
@@ -25,7 +26,7 @@
     <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ArrayEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ObjectEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.WriteTo.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)MutableJsonReadOnlyList.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonReadOnlyList.cs" LinkBase="Shared" />    
     <Compile Include="$(AzureCoreSharedSources)Utf8JsonDelayedRequestContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Utf8JsonReaderExtensions.cs" LinkBase="Shared" />
   </ItemGroup>

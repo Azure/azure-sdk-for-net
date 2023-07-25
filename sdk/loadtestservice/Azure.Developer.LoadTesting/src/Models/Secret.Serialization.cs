@@ -54,5 +54,7 @@ namespace Azure.Developer.LoadTesting.Models
             MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
             return new Secret(jsonDocument.RootElement);
         }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => ((IJsonModelSerializable)this).Serialize(writer, options));
     }
 }

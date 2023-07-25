@@ -59,5 +59,7 @@ namespace Azure.Developer.LoadTesting.Models
             MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
             return new CertificateMetadata(jsonDocument.RootElement);
         }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => ((IJsonModelSerializable)this).Serialize(writer, options));
     }
 }
