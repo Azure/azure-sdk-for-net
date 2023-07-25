@@ -63,6 +63,7 @@
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
+    <Compile Include="Shared\ModelSerializerHelper.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="Shared\MutableJsonReadOnlyList.cs" />
     <Compile Include="Shared\MutableJsonDictionary.cs" />

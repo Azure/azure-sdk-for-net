@@ -17,11 +17,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         [Test]
         public void RoundTripTest() =>
-            RoundTripTest(SerializeWithModelSerializer);
+            RoundTripTest(SerializeWithModelSerializer, DeserializeWithModelSerializer);
 
         [Test]
         public void BufferTest() =>
-            RoundTripTest(SerializeWithBuffer);
+            RoundTripTest(SerializeWithBuffer, DeserializeWithModelSerializer);
 
         [Test]
         public void JsonReaderTest() =>
@@ -31,19 +31,27 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void UsingSequence() =>
             RoundTripTest(SerializeWithModelSerializer, DeserializeWithSequence);
 
-        private void RoundTripTest(Func<ResourceProviderData, string> serialize, Func<string, ResourceProviderData> deserialize = default)
+        [Test]
+        public void UsingNonGeneric() =>
+            RoundTripTest(SerializeWithModelSerializerNonGeneric, DeserializeWithModelSerializerNonGeneric);
+
+        [Test]
+        public void UsingInternal() =>
+            RoundTripTest(SerializeWithInternal, DeserializeWithInternal);
+
+        private void RoundTripTest(Func<ResourceProviderData, string> serialize, Func<string, ResourceProviderData> deserialize)
         {
             string serviceResponse = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ResourceProviderData.json")).TrimEnd();
 
             var expectedSerializedString = serviceResponse;
 
-            ResourceProviderData model = deserialize is null ? ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse))) : deserialize(serviceResponse);
+            ResourceProviderData model = deserialize(serviceResponse);
 
             string roundTrip = serialize(model);
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            ResourceProviderData model2 = deserialize is null ? ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip))) : deserialize(roundTrip);
+            ResourceProviderData model2 = deserialize(roundTrip);
         }
 
         private ResourceProviderData DeserializeWithJsonReader(string json)
@@ -60,14 +68,30 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return ResourceProviderData.DeserializeResourceProviderData(doc.RootElement);
         }
 
-        private MultiBufferRequestContent WriteStringToBuffer(string json, ModelSerializerOptions options)
+        private ResourceProviderData DeserializeWithModelSerializer(string json)
+        {
+            return ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(json)));
+        }
+
+        private ResourceProviderData DeserializeWithInternal(string json)
+        {
+            using var doc = JsonDocument.Parse(json);
+            return ResourceProviderData.DeserializeResourceProviderData(doc.RootElement);
+        }
+
+        private ResourceProviderData DeserializeWithModelSerializerNonGeneric(string json)
+        {
+            return (ResourceProviderData)ModelSerializer.Deserialize(new BinaryData(Encoding.UTF8.GetBytes(json)), typeof(ResourceProviderData));
+        }
+
+        private SequenceWriter WriteStringToBuffer(string json, ModelSerializerOptions options)
         {
             var model = ModelSerializer.Deserialize<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(json)));
-            MultiBufferRequestContent content = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(content);
+            SequenceWriter sequenceWriter = new SequenceWriter();
+            using var writer = new Utf8JsonWriter(sequenceWriter);
             ((IJsonModelSerializable)model).Serialize(writer, options);
             writer.Flush();
-            return content;
+            return sequenceWriter;
         }
 
         private string SerializeWithModelSerializer(ResourceProviderData model)
@@ -76,35 +100,35 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return data.ToString();
         }
 
-        private string SerializeWithBuffer(ResourceProviderData model)
+        private string SerializeWithModelSerializerNonGeneric(object model)
         {
-            using var multiBufferRequestContent = new MultiBufferRequestContent(bufferSize: 4048);
-            var writer = new Utf8JsonWriter(multiBufferRequestContent);
+            var data = ModelSerializer.Serialize(model);
+            return data.ToString();
+        }
+
+        private string SerializeWithInternal(ResourceProviderData model)
+        {
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream);
             model.Serialize(writer);
             writer.Flush();
-            RequestContent content = multiBufferRequestContent;
+            stream.Position = 0;
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
+        }
+
+        private string SerializeWithBuffer(ResourceProviderData model)
+        {
+            using var sequenceWriter = new SequenceWriter(bufferSize: 4048);
+            var writer = new Utf8JsonWriter(sequenceWriter);
+            model.Serialize(writer);
+            writer.Flush();
+            RequestContent content = RequestContent.Create(sequenceWriter);
             using var stream = new MemoryStream();
             content.WriteTo(stream, default);
             stream.Position = 0;
             using var reader = new StreamReader(stream);
             return reader.ReadToEnd();
         }
-
-        //[Test]
-        //public void ConvertReaderToSpan()
-        //{
-        //    var bytes = Encoding.UTF8.GetBytes(File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ResourceProviderData.json")).TrimEnd());
-        //    Utf8JsonReader reader = new Utf8JsonReader(bytes);
-        //    using MultiBufferRequestContent content = reader.GetRawBytes();
-        //    content.TryComputeLength(out var length);
-
-        //    using var stream = new MemoryStream((int)length);
-        //    content.WriteTo(stream, default);
-
-        //    var convertedBytes = stream.GetBuffer().AsMemory(0, (int)stream.Position);
-
-        //    //Assert.AreEqual(bytes.Length, convertedBytes.Length);
-        //    CollectionAssert.AreEqual(bytes, convertedBytes.ToArray());
-        //}
     }
 }

@@ -57,7 +57,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return new ZoneMapping(Optional.ToNullable(location), Optional.ToList(zones));
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
@@ -115,6 +117,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeZoneMapping(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
     }
 }

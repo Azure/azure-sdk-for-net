@@ -41,10 +41,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
@@ -55,7 +57,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -96,7 +98,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     continue;
                 }
 
-                if (options.Format == ModelSerializerFormat.Data)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an modelC property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -146,7 +148,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            throw new NotImplementedException();
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEnvelope(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
         #endregion
     }

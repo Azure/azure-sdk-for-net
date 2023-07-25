@@ -39,7 +39,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 if (Optional.IsDefined(Name))
                 {
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             }
             writer.WritePropertyName("yProperty"u8);
             writer.WriteStringValue(YProperty);
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -92,7 +92,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     yProperty = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Data)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

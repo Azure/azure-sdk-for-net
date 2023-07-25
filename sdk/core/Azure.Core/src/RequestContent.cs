@@ -97,6 +97,13 @@ namespace Azure.Core
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
+        /// <param name="writer">The <see cref="SequenceWriter"/> that contains the serialized data.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(SequenceWriter writer) => new SequenceWriterContent(writer);
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
@@ -226,6 +233,24 @@ namespace Azure.Core
             {
                 _stream.Dispose();
             }
+        }
+
+        private sealed class SequenceWriterContent : RequestContent
+        {
+            private readonly SequenceWriter _writer;
+
+            public SequenceWriterContent(SequenceWriter writer)
+            {
+                _writer = writer;
+            }
+
+            public override void Dispose() => _writer.Dispose();
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => _writer.WriteTo(stream, cancellation);
+
+            public override bool TryComputeLength(out long length) => _writer.TryComputeLength(out length);
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await _writer.WriteToAsync(stream, cancellation).ConfigureAwait(false);
         }
 
         private sealed class ArrayContent : RequestContent

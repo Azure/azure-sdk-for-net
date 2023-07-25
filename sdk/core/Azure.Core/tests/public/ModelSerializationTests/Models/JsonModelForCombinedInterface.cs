@@ -71,7 +71,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     readOnlyProperty = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Data)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -80,19 +80,21 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new JsonModelForCombinedInterface(key, value, readOnlyProperty, rawData);
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
             }
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -115,7 +117,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            throw new NotImplementedException();
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJsonModelForCombinedInterface(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
     }
 }

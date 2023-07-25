@@ -18,11 +18,13 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
 
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
         /// <summary>
         /// Serialize the input WritableSubResource object.
         /// </summary>
         /// <param name="writer"> Input Json writer. </param>
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             if (writer is null)
             {
@@ -105,6 +107,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                 using var document = JsonDocument.ParseValue(ref reader);
                 return DeserializeWritableSubResource(document.RootElement);
             }
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
     }
 }

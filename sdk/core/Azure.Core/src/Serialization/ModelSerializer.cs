@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Reflection;
-using System.Text.Json;
-using System.Xml;
 
 namespace Azure.Core.Serialization
 {
@@ -21,57 +18,52 @@ namespace Azure.Core.Serialization
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable
+        public static BinaryData Serialize<T>(T model, ModelSerializerOptions options = default) where T : IModelSerializable
         {
-            options ??= new ModelSerializerOptions();
-
-            if (options.Value.Serializers.TryGetValue(typeof(T), out var serializer))
+            if (options.Serializers != null && options.Serializers.TryGetValue(typeof(T), out var serializer))
                 return serializer.Serialize(model);
 
-            switch (model)
-            {
-                case IJsonModelSerializable jsonModel:
-                    return SerializeJson(jsonModel, options.Value);
-                case IXmlModelSerializable xmlModel:
-                    return SerializeXml(xmlModel, options.Value);
-                default:
-                    throw new NotSupportedException("Model type is not supported.");
-            }
+            return model.Serialize(options);
         }
 
-        private static BinaryData SerializeXml(IXmlModelSerializable xmlModel, ModelSerializerOptions options)
+        /// <summary>
+        /// Serialize a model.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public static BinaryData Serialize(object model, ModelSerializerOptions options = default)
         {
-            using MemoryStream stream = new MemoryStream();
-            using XmlWriter writer = XmlWriter.Create(stream);
-            xmlModel.Serialize(writer, options);
-            writer.Flush();
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-        }
+            var iModel = model as IModelSerializable;
+            if (iModel is null)
+                throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable)}");
 
-        private static BinaryData SerializeJson(IJsonModelSerializable jsonModel, ModelSerializerOptions options)
-        {
-            using var multiBufferRequestContent = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(multiBufferRequestContent);
-            jsonModel.Serialize(writer, options);
-            writer.Flush();
-            multiBufferRequestContent.TryComputeLength(out var length);
-            using var stream = new MemoryStream((int)length);
-            multiBufferRequestContent.WriteTo(stream, default);
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            if (options.Serializers != null && options.Serializers.TryGetValue(model.GetType(), out var serializer))
+                return serializer.Serialize(model);
+
+            return iModel.Serialize(options);
         }
 
         /// <summary>
         /// Serialize a XML model. Todo: collapse this method when working - need compile check over runtime
         /// </summary>
         /// <returns></returns>
-        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions options = default) where T : class, IModelSerializable
         {
-            return (T)Deserialize(data, typeof(T), options ?? new ModelSerializerOptions());
+            return (T)Deserialize(data, typeof(T), options);
         }
 
-        internal static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="typeToConvert"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options = default)
         {
-            if (options.Serializers.TryGetValue(typeToConvert, out var serializer))
+            if (options.Serializers != null && options.Serializers.TryGetValue(typeToConvert, out var serializer))
             {
                 var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);
                 return obj ?? throw new InvalidOperationException();

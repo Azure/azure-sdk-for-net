@@ -42,11 +42,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public static implicit operator RequestContent(DogListProperty dog)
         {
-            var content = new MultiBufferRequestContent();
-            using var writer = new Utf8JsonWriter(content);
-            ((IJsonModelSerializable)dog).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
-            writer.Flush();
-            return content;
+            return new Utf8JsonDelayedRequestContent(dog);
         }
 
         #region Serialization
@@ -55,7 +51,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 writer.WritePropertyName("latinName"u8);
                 writer.WriteStringValue(LatinName);
@@ -78,7 +74,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 writer.WriteEndArray();
             }
 
-            if (options.Format == ModelSerializerFormat.Data)
+            if (options.Format == ModelSerializerFormat.Json)
             {
                 //write out the raw data
                 foreach (var property in RawData)
@@ -135,7 +131,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     }
                     continue;
                 }
-                if (options.Value.Format == ModelSerializerFormat.Data)
+                if (options.Value.Format == ModelSerializerFormat.Json)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
