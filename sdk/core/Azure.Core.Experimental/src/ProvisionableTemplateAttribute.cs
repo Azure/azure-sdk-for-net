@@ -21,6 +21,6 @@ namespace Azure.Core
         /// <summary>
         /// Name of assembly resource file containing a deployment template.
         /// </summary>
-        public string ResourceName { get; private set; }
+        public string ResourceName { get; }
     }
 }

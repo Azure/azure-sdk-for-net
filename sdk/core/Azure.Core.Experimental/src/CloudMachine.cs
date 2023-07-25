@@ -17,7 +17,7 @@ namespace Azure
         /// <summary>
         /// Unique identifier of a CloudMachine. It's the name of the resource group of all the CloudMachine resources.
         /// </summary>
-        public string Id { get; private set; }
+        public string Id { get; }
 
         /// <summary>
         /// Friendly name of CloudMachine. It's stored as a Tag of all Azure resources associated with the machine.
@@ -27,14 +27,14 @@ namespace Azure
         /// <summary>
         /// Azure subscription ID.
         /// </summary>
-        public string SubscriptionId { get; private set; }
+        public string SubscriptionId { get; }
 
         /// <summary>
         /// Azure region, e.g. westus2
         /// </summary>
-        public string Region { get; private set; }
+        public string Region { get; }
 
-        private int Version { get; set; }
+        private int Version { get; }
 
         /// <summary>
         /// Creates a new CloudMachine
@@ -50,8 +50,7 @@ namespace Azure
 
             var id = GenerateCloudMachineId();
             var defaultDisplayName = $"{id}@{DateTime.UtcNow:d}";
-            var cm = new CloudMachine(id, defaultDisplayName, subscriptionId, region, 1);
-            return cm;
+            return new CloudMachine(id, defaultDisplayName, subscriptionId, region, 1);
         }
 
         /// <summary>
@@ -119,7 +118,7 @@ namespace Azure
         }
 
         /// <summary>
-        /// Save CloudMachine configuration to a stream
+        /// Save CloudMachine configuration to a stream.
         /// </summary>
         /// <param name="stream"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
