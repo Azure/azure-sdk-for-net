@@ -6,7 +6,7 @@
 
 * Added `Resource` to traces, logs, and metrics with default configuration.
   ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
-* Added package `OpenTelemetry.ResourceDetectors.Azure` to introduce OpenTelemetry Resource detectors `AppServiceResourceDetector` and `AzureVMResourceDetector`.
+* Added resource detection for `Azure App Service` and `Azure Virtual Machine` environment. .
   ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
 
 ### Breaking Changes
