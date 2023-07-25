@@ -9,10 +9,11 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class PassFailCriteria : IUtf8JsonSerializable
+    public partial class PassFailCriteria : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,11 +32,28 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal static PassFailCriteria DeserializePassFailCriteria(JsonElement element)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            BinaryData utf8Json = Test.GetBytes(element);
-            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
-            return new PassFailCriteria(mje);
+            if (options.Format == "P")
+            {
+                _element.WriteTo(writer, 'P');
+                return;
+            }
+
+            ((IUtf8JsonSerializable)this).Write(writer);
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
+            return new PassFailCriteria(mdoc.RootElement);
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
+            return new PassFailCriteria(jsonDocument.RootElement);
         }
     }
 }

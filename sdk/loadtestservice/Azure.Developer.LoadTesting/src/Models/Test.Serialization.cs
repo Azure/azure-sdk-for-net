@@ -101,29 +101,6 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal static Test DeserializeTest(BinaryData utf8Json)
-        {
-            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
-            return new Test(mje);
-        }
-
-        // TODO: Move this to Core, but hopefully not for long
-        internal static BinaryData GetBytes(JsonElement element)
-        {
-            BinaryData bytes;
-            using (Stream stream = new MemoryStream())
-            {
-                using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
-                {
-                    element.WriteTo(writer);
-                }
-                stream.Position = 0;
-                bytes = BinaryData.FromStream(stream);
-            }
-
-            return bytes;
-        }
-
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             // TODO: it would be nice to standardize on the type of Format.
@@ -138,10 +115,9 @@ namespace Azure.Developer.LoadTesting.Models
 
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            // TODO: reimplement this so it doesn't read the buffer twice
             JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            BinaryData utf8Json = GetBytes(doc.RootElement);
-            return (this as IModelSerializable).Deserialize(utf8Json, options);
+            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
+            return new Test(mdoc.RootElement);
         }
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)

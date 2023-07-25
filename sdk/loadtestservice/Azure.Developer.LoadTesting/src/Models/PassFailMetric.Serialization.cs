@@ -53,25 +53,26 @@ namespace Azure.Developer.LoadTesting.Models
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            ((IUtf8JsonSerializable)this).Write(writer);
-        }
+            if (options.Format == "P")
+            {
+                _element.WriteTo(writer, 'P');
+                return;
+            }
 
-        internal static PassFailMetric DeserializePassFailMetric(JsonElement element)
-        {
-            BinaryData utf8Json = Test.GetBytes(element);
-            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
-            return new PassFailMetric(mje);
+            ((IUtf8JsonSerializable)this).Write(writer);
         }
 
         object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            return DeserializePassFailMetric(doc.RootElement);
+            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
+            return new PassFailMetric(mdoc.RootElement);
         }
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            throw new NotImplementedException();
+            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
+            return new PassFailMetric(jsonDocument.RootElement);
         }
     }
 }

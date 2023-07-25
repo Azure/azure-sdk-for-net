@@ -9,10 +9,11 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class OptionalLoadTestConfig : IUtf8JsonSerializable
+    public partial class OptionalLoadTestConfig : IUtf8JsonSerializable, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,11 +41,28 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal static OptionalLoadTestConfig DeserializeOptionalLoadTestConfig(JsonElement element)
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            BinaryData utf8Json = Test.GetBytes(element);
-            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
-            return new OptionalLoadTestConfig(mje);
+            if (options.Format == "P")
+            {
+                _element.WriteTo(writer, 'P');
+                return;
+            }
+
+            ((IUtf8JsonSerializable)this).Write(writer);
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
+            return new OptionalLoadTestConfig(mdoc.RootElement);
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
+            return new OptionalLoadTestConfig(jsonDocument.RootElement);
         }
     }
 }

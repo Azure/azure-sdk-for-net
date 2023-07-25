@@ -7,17 +7,41 @@
 
 using System;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Core.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class FileInfo
+    public partial class FileInfo : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        internal static FileInfo DeserializeFileInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            BinaryData utf8Json = Test.GetBytes(element);
-            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
-            return new FileInfo(mje);
+            throw new NotImplementedException();
+        }
+
+        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            if (options.Format == "P")
+            {
+                _element.WriteTo(writer, 'P');
+                return;
+            }
+
+            ((IUtf8JsonSerializable)this).Write(writer);
+        }
+
+        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            MutableJsonDocument mdoc = new MutableJsonDocument(doc, new JsonSerializerOptions());
+            return new FileInfo(mdoc.RootElement);
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            MutableJsonDocument jsonDocument = MutableJsonDocument.Parse(data);
+            return new FileInfo(jsonDocument.RootElement);
         }
     }
 }
