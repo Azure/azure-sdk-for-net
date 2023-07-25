@@ -552,6 +552,7 @@ using Azure.Core.Pipeline;
             {
                 var response = await RestClient.ReclassifyJobActionAsync(
                     id: jobId,
+                    new ReclassifyJobRequest(),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.GetRawResponse();
             }
@@ -579,6 +580,7 @@ using Azure.Core.Pipeline;
             {
                 var response = RestClient.ReclassifyJobAction(
                     id: jobId,
+                    new ReclassifyJobRequest(),
                     cancellationToken: cancellationToken);
                 return response.GetRawResponse();
             }
@@ -1165,7 +1167,7 @@ using Azure.Core.Pipeline;
 
                 foreach (var queueAssignment in options.QueueAssignments)
                 {
-                    request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
+                    request.QueueAssignments[queueAssignment.Key] = queueAssignment.Value;
                 }
 
                 foreach (var label in options.Labels)
@@ -1180,10 +1182,7 @@ using Azure.Core.Pipeline;
 
                 foreach (var channel in options.ChannelConfigurations)
                 {
-                    request.ChannelConfigurations[channel.Key] = new ChannelConfiguration(channel.Value.CapacityCostPerJob)
-                        {
-                            MaxNumberOfJobs = channel.Value.MaxNumberOfJobs
-                        };
+                    request.ChannelConfigurations[channel.Key] = channel.Value;
                 }
 
                 var response = await RestClient.UpsertWorkerAsync(
@@ -1220,7 +1219,7 @@ using Azure.Core.Pipeline;
 
                 foreach (var queueAssignment in options.QueueAssignments)
                 {
-                    request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
+                    request.QueueAssignments[queueAssignment.Key] = queueAssignment.Value;
                 }
 
                 foreach (var label in options.Labels)
@@ -1235,10 +1234,7 @@ using Azure.Core.Pipeline;
 
                 foreach (var channel in options.ChannelConfigurations)
                 {
-                    request.ChannelConfigurations[channel.Key] = new ChannelConfiguration(channel.Value.CapacityCostPerJob)
-                    {
-                        MaxNumberOfJobs = channel.Value.MaxNumberOfJobs
-                    };
+                    request.ChannelConfigurations[channel.Key] = channel.Value;
                 }
 
                 var response = RestClient.UpsertWorker(
@@ -1268,13 +1264,13 @@ using Azure.Core.Pipeline;
             {
                 var request = new RouterWorker()
                 {
-                    TotalCapacity = options.TotalCapacity,
+                    TotalCapacity = options?.TotalCapacity,
                     AvailableForOffers = options?.AvailableForOffers
                 };
 
                 foreach (var queueAssignment in options.QueueAssignments)
                 {
-                    request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
+                    request.QueueAssignments[queueAssignment.Key] = queueAssignment.Value;
                 }
 
                 foreach (var label in options.Labels)
@@ -1289,10 +1285,7 @@ using Azure.Core.Pipeline;
 
                 foreach (var channel in options.ChannelConfigurations)
                 {
-                    request.ChannelConfigurations[channel.Key] = new ChannelConfiguration(channel.Value.CapacityCostPerJob)
-                    {
-                        MaxNumberOfJobs = channel.Value.MaxNumberOfJobs
-                    };
+                    request.ChannelConfigurations[channel.Key] = channel.Value;
                 }
 
                 var response = await RestClient.UpsertWorkerAsync(
@@ -1329,7 +1322,7 @@ using Azure.Core.Pipeline;
 
                 foreach (var queueAssignment in options.QueueAssignments)
                 {
-                    request.QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
+                    request.QueueAssignments[queueAssignment.Key] = queueAssignment.Value;
                 }
 
                 foreach (var label in options.Labels)
@@ -1344,10 +1337,7 @@ using Azure.Core.Pipeline;
 
                 foreach (var channel in options.ChannelConfigurations)
                 {
-                    request.ChannelConfigurations[channel.Key] = new ChannelConfiguration(channel.Value.CapacityCostPerJob)
-                    {
-                        MaxNumberOfJobs = channel.Value.MaxNumberOfJobs
-                    };
+                    request.ChannelConfigurations[channel.Key] = channel.Value;
                 }
 
                 var response = RestClient.UpsertWorker(
