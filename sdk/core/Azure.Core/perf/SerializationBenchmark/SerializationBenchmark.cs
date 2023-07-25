@@ -15,7 +15,6 @@ using BenchmarkDotNet.Configs;
 
 namespace Azure.Core.Perf
 {
-    [MemoryDiagnoser]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
     public abstract class SerializationBenchmark<T> where T : class, IJsonModelSerializable
     {

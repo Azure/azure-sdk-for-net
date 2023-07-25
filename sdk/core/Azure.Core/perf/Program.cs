@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Azure.Test.Perf;
 using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Running;
 
 if (!args.Contains("--bm"))
@@ -27,4 +28,5 @@ if (!args.Contains("--bm"))
 
 var config = ManualConfig.Create(DefaultConfig.Instance);
 config.Options = ConfigOptions.JoinSummary | ConfigOptions.StopOnFirstError;
+config = config.AddDiagnoser(MemoryDiagnoser.Default);
 BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args.Where(a => !a.Equals("--bm")).ToArray(), config);
