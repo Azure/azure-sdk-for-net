@@ -2,9 +2,8 @@ namespace Azure
 {
     public partial class CloudMachine
     {
-        public CloudMachine(Microsoft.Extensions.Configuration.IConfiguration configuration) { }
         public CloudMachine(System.IO.Stream configurationContent) { }
-        public CloudMachine(string configurationFile = ".\\cloudconfig.json") { }
+        public CloudMachine(string configurationFile = "cloudconfig.json") { }
         public string DisplayName { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public string Region { get { throw null; } }
