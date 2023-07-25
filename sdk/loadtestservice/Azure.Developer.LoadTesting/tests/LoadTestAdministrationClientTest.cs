@@ -9,9 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
 using Azure.Developer.LoadTesting.Models;
-using Azure.Developer.LoadTesting.Tests.Helper;
 using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests
@@ -64,6 +62,42 @@ namespace Azure.Developer.LoadTesting.Tests
 
             Response<Test> response = await _loadTestAdministrationClient.CreateOrUpdateTestAsync(test);
             Assert.AreEqual(_testId, response.Value.TestId);
+        }
+
+        private Test GetTest()
+        {
+            Test test = new Test();
+            test.TestId = _testId;
+            test.Description = "This test was created through loadtesting C# SDK";
+            test.DisplayName = "Dotnet Testing Framework Loadtest";
+            test.LoadTestConfiguration = new LoadTestConfiguration();
+            test.LoadTestConfiguration.EngineInstances = 1;
+            test.LoadTestConfiguration.SplitAllCSVs = false;
+            test.Secrets.Clear();
+            test.EnvironmentVariables.Clear();
+            test.PassFailCriteria = new PassFailCriteria();
+            test.PassFailCriteria.PassFailMetrics.Clear();
+            return test;
+        }
+
+        [Test]
+        [Category(SKIP_SET_UP)]
+        [RecordedTest]
+        public async Task RoundTripTestValueConvenience()
+        {
+            Test orig = GetTest();
+
+            // Retrieve the value from the service.
+            Test test = await _loadTestAdministrationClient.CreateOrUpdateTestAsync(orig);
+
+            // Change a value on the model.
+            test.EnvironmentVariables["NewEnvVar"] = "NewValue";
+
+            // Update the value on the service.
+            Test modified = await _loadTestAdministrationClient.CreateOrUpdateTestAsync(test);
+
+            // Confirm update.
+            Assert.AreEqual("NewValue", modified.EnvironmentVariables["NewEnvVar"]);
         }
 
         [Test]

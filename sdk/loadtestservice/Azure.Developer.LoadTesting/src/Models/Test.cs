@@ -19,7 +19,6 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of Test. </summary>
         public Test()
         {
-            // TODO: Store a way to make an empty MJD - avoid the ToArray() allocation below.
             _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
 
             // TODO: If we are suggesting a wholesale replacement of ChangeTrackingDictionary,
