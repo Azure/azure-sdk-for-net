@@ -5,7 +5,6 @@ using BenchmarkDotNet.Attributes;
 
 namespace Azure.Core.Perf
 {
-    [InProcess]
     public class BimodalRepro
     {
         [Benchmark]
