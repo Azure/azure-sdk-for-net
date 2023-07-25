@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Vali
         {
             return value is not null
                 && value is IEnumerable<object> obj
-                && !obj.Where(x => x == null).Any();
+                && !obj.Any(x => x == null);
         }
     }
 }
