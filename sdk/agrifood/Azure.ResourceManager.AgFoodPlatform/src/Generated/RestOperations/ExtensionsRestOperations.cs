@@ -385,14 +385,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
             uri.AppendPath(farmBeatsResourceName, true);
             uri.AppendPath("/extensions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (extensionIds != null)
+            if (extensionIds != null && Optional.IsCollectionDefined(extensionIds))
             {
                 foreach (var param in extensionIds)
                 {
                     uri.AppendQuery("extensionIds", param, true);
                 }
             }
-            if (extensionCategories != null)
+            if (extensionCategories != null && Optional.IsCollectionDefined(extensionCategories))
             {
                 foreach (var param in extensionCategories)
                 {

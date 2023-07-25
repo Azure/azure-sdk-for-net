@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TableName);
             if (Optional.IsDefined(DefaultTtl))
             {
-                writer.WritePropertyName("defaultTtl");
+                writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
             if (Optional.IsDefined(Schema))
             {
-                writer.WritePropertyName("schema");
+                writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
-                writer.WritePropertyName("analyticalStorageTtl");
+                writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
             writer.WriteEndObject();
@@ -37,42 +37,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraTableResourceInfo DeserializeCassandraTableResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<int> defaultTtl = default;
             Optional<CassandraSchema> schema = default;
             Optional<int> analyticalStorageTtl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultTtl"))
+                if (property.NameEquals("defaultTtl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultTtl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("schema"))
+                if (property.NameEquals("schema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schema = CassandraSchema.DeserializeCassandraSchema(property.Value);
                     continue;
                 }
-                if (property.NameEquals("analyticalStorageTtl"))
+                if (property.NameEquals("analyticalStorageTtl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     analyticalStorageTtl = property.Value.GetInt32();

@@ -25,10 +25,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
-        /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
+        /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to 'KeyBased'. If 'KeyBased' is selected, a connection string must be specified (at least the primary connection string). If 'IdentityBased' is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
-        internal DigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri)
+        /// <param name="identity"> Managed identity properties for the endpoint. </param>
+        internal DigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity)
         {
             EndpointType = endpointType;
             ProvisioningState = provisioningState;
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             AuthenticationType = authenticationType;
             DeadLetterSecret = deadLetterSecret;
             DeadLetterUri = deadLetterUri;
+            Identity = identity;
         }
 
         /// <summary> The type of Digital Twins endpoint. </summary>
@@ -44,11 +46,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public DigitalTwinsEndpointProvisioningState? ProvisioningState { get; }
         /// <summary> Time when the Endpoint was added to DigitalTwinsInstance. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </summary>
+        /// <summary> Specifies the authentication type being used for connecting to the endpoint. Defaults to 'KeyBased'. If 'KeyBased' is selected, a connection string must be specified (at least the primary connection string). If 'IdentityBased' is select, the endpointUri and entityPath properties must be specified. </summary>
         public DigitalTwinsAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </summary>
         public string DeadLetterSecret { get; set; }
         /// <summary> Dead letter storage URL for identity-based authentication. </summary>
         public Uri DeadLetterUri { get; set; }
+        /// <summary> Managed identity properties for the endpoint. </summary>
+        public DigitalTwinsManagedIdentityReference Identity { get; set; }
     }
 }

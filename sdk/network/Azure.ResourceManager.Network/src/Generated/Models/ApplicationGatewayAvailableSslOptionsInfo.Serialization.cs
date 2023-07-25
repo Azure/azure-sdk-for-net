@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PredefinedPolicies))
             {
-                writer.WritePropertyName("predefinedPolicies");
+                writer.WritePropertyName("predefinedPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in PredefinedPolicies)
                 {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(DefaultPolicy))
             {
-                writer.WritePropertyName("defaultPolicy");
+                writer.WritePropertyName("defaultPolicy"u8);
                 writer.WriteStringValue(DefaultPolicy.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AvailableCipherSuites))
             {
-                writer.WritePropertyName("availableCipherSuites");
+                writer.WritePropertyName("availableCipherSuites"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvailableCipherSuites)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(AvailableProtocols))
             {
-                writer.WritePropertyName("availableProtocols");
+                writer.WritePropertyName("availableProtocols"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvailableProtocols)
                 {

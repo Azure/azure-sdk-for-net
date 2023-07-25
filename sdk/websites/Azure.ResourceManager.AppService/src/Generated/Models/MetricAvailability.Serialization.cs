@@ -15,20 +15,23 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static MetricAvailability DeserializeMetricAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timeGrain = default;
             Optional<TimeSpan> blobDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeGrain"))
+                if (property.NameEquals("timeGrain"u8))
                 {
                     timeGrain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobDuration"))
+                if (property.NameEquals("blobDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blobDuration = property.Value.GetTimeSpan("P");

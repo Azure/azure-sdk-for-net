@@ -28,16 +28,16 @@ namespace Azure.Communication.ShortCodes.Models
         /// Vanity numbers should be 5 or 6 digit when number type is ShortCode.
         /// e.g. 555555, 222222.
         /// </param>
-        /// <param name="numberType"> Type for desired numbers e.g. &apos;shortCode&apos; or &apos;alphaId&apos;. </param>
+        /// <param name="numberType"> Type for desired numbers e.g. 'shortCode' or 'alphaId'. </param>
         /// <param name="isPoliticalCampaign"> Indicates whether the number will be used for political campaigns or not. </param>
         /// <param name="name">
         /// A program name that indicates the purpose of filling the Program Brief and how the number will be used for messaging.
-        /// e.g. &apos;CONTOSO Shipping&apos;
+        /// e.g. 'CONTOSO Shipping'
         /// </param>
         /// <param name="description"> Describes how and why the number will be used for messaging as part of the program. </param>
         /// <param name="url"> URL for the program or company. </param>
-        /// <param name="signUpTypes"> Indicates how the consumer can sign up to the program e.g. &apos;website&apos;, &apos;pointOfSale&apos; and/or &apos;sms&apos;. </param>
-        /// <param name="signUpUrl"> URL for &quot;call to action&quot; image for the program. </param>
+        /// <param name="signUpTypes"> Indicates how the consumer can sign up to the program e.g. 'website', 'pointOfSale' and/or 'sms'. </param>
+        /// <param name="signUpUrl"> URL for "call to action" image for the program. </param>
         /// <param name="termsOfServiceUrl"> URL for program terms of service. </param>
         /// <param name="privacyPolicyUrl"> URL for privacy policy. </param>
         /// <param name="expectedDateOfService">
@@ -69,22 +69,22 @@ namespace Azure.Communication.ShortCodes.Models
         /// e.g. 555555, 222222.
         /// </summary>
         public IList<string> PreferredVanityNumbers { get; }
-        /// <summary> Type for desired numbers e.g. &apos;shortCode&apos; or &apos;alphaId&apos;. </summary>
+        /// <summary> Type for desired numbers e.g. 'shortCode' or 'alphaId'. </summary>
         public NumberType? NumberType { get; set; }
         /// <summary> Indicates whether the number will be used for political campaigns or not. </summary>
         public bool? IsPoliticalCampaign { get; set; }
         /// <summary>
         /// A program name that indicates the purpose of filling the Program Brief and how the number will be used for messaging.
-        /// e.g. &apos;CONTOSO Shipping&apos;
+        /// e.g. 'CONTOSO Shipping'
         /// </summary>
         public string Name { get; set; }
         /// <summary> Describes how and why the number will be used for messaging as part of the program. </summary>
         public string Description { get; set; }
         /// <summary> URL for the program or company. </summary>
         public Uri Url { get; set; }
-        /// <summary> Indicates how the consumer can sign up to the program e.g. &apos;website&apos;, &apos;pointOfSale&apos; and/or &apos;sms&apos;. </summary>
+        /// <summary> Indicates how the consumer can sign up to the program e.g. 'website', 'pointOfSale' and/or 'sms'. </summary>
         public IList<ProgramSignUpType> SignUpTypes { get; }
-        /// <summary> URL for &quot;call to action&quot; image for the program. </summary>
+        /// <summary> URL for "call to action" image for the program. </summary>
         public Uri SignUpUrl { get; set; }
         /// <summary> URL for program terms of service. </summary>
         public Uri TermsOfServiceUrl { get; set; }

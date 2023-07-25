@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static CachingType ToCachingType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return CachingType.None;
-            if (string.Equals(value, "ReadOnly", StringComparison.InvariantCultureIgnoreCase)) return CachingType.ReadOnly;
-            if (string.Equals(value, "ReadWrite", StringComparison.InvariantCultureIgnoreCase)) return CachingType.ReadWrite;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return CachingType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly")) return CachingType.ReadOnly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadWrite")) return CachingType.ReadWrite;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CachingType value.");
         }
     }

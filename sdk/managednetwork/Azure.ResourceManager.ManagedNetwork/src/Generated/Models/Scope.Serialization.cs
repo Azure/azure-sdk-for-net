@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ManagementGroups))
             {
-                writer.WritePropertyName("managementGroups");
+                writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagementGroups)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
             if (Optional.IsCollectionDefined(Subscriptions))
             {
-                writer.WritePropertyName("subscriptions");
+                writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subscriptions)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
             if (Optional.IsCollectionDefined(VirtualNetworks))
             {
-                writer.WritePropertyName("virtualNetworks");
+                writer.WritePropertyName("virtualNetworks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworks)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
-                writer.WritePropertyName("subnets");
+                writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
@@ -62,68 +62,68 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
 
         internal static Scope DeserializeScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WritableSubResource>> managementGroups = default;
             Optional<IList<WritableSubResource>> subscriptions = default;
             Optional<IList<WritableSubResource>> virtualNetworks = default;
             Optional<IList<WritableSubResource>> subnets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managementGroups"))
+                if (property.NameEquals("managementGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     managementGroups = array;
                     continue;
                 }
-                if (property.NameEquals("subscriptions"))
+                if (property.NameEquals("subscriptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     subscriptions = array;
                     continue;
                 }
-                if (property.NameEquals("virtualNetworks"))
+                if (property.NameEquals("virtualNetworks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     virtualNetworks = array;
                     continue;
                 }
-                if (property.NameEquals("subnets"))
+                if (property.NameEquals("subnets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     subnets = array;
                     continue;

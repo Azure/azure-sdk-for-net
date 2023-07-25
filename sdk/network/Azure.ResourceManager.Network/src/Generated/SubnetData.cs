@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the Subnet data model. </summary>
+    /// <summary>
+    /// A class representing the Subnet data model.
+    /// Subnet in a virtual network resource.
+    /// </summary>
     public partial class SubnetData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of SubnetData. </summary>

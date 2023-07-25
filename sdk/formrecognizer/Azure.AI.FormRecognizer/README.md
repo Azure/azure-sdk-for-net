@@ -17,7 +17,7 @@ Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
 dotnet add package Azure.AI.FormRecognizer
-``` 
+```
 
 > Note: This version of the client library defaults to the `2022-08-31` version of the service.
 
@@ -25,6 +25,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version|Supported API version of service
 |-|-
+|4.1.0-beta.1 | 2.0, 2.1, 2022-08-31, 2023-02-28-preview
 |4.0.0 | 2.0, 2.1, 2022-08-31
 |3.1.X | 2.0, 2.1
 |3.0.X | 2.0
@@ -33,6 +34,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |API version|Supported clients
 |-|-
+|2023-02-28-preview|DocumentAnalysisClient and DocumentModelAdministrationClient
 |2022-08-31|DocumentAnalysisClient and DocumentModelAdministrationClient
 |2.1|FormRecognizerClient and FormTrainingClient
 |2.0|FormRecognizerClient and FormTrainingClient
@@ -44,10 +46,10 @@ This table shows the relationship between SDK versions and supported API version
 #### Create a Cognitive Services or Form Recognizer resource
 Form Recognizer supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Form Recognizer access only, create a Form Recognizer resource. Please note that you will need a single-service resource if you intend to use [Azure Active Directory authentication](#create-formrecognizerclient-with-azure-active-directory-credential).
 
-You can create either resource using: 
+You can create either resource using:
 
 * Option 1: [Azure Portal][cognitive_resource_portal].
-* Option 2: [Azure CLI][cognitive_resource_cli]. 
+* Option 2: [Azure CLI][cognitive_resource_cli].
 
 Below is an example of how you can create a Form Recognizer resource using the CLI:
 
@@ -170,7 +172,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 

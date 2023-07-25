@@ -16,12 +16,20 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static ElasticSanVolumeList DeserializeElasticSanVolumeList(JsonElement element)
         {
-            IReadOnlyList<ElasticSanVolumeData> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<ElasticSanVolumeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<ElasticSanVolumeData> array = new List<ElasticSanVolumeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -30,13 +38,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ElasticSanVolumeList(value, nextLink.Value);
+            return new ElasticSanVolumeList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.Data.Tables.Tests;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core.TestFramework;
+using Azure.Data.Tables.Tests;
+using NUnit.Framework;
 
 namespace Azure.Data.Tables.Samples
 {
@@ -60,13 +60,9 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample4QueryEntitiesFilterWithQueryFilter
             // The CreateQueryFilter method is also available to assist with properly formatting and escaping OData queries.
-#if SNIPPET
-            Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
-#else
-            queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
-#endif
+            var queryResultsFilter2 = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
             // Iterate the <see cref="Pageable"> to access all queried entities.
-            foreach (TableEntity qEntity in queryResultsFilter)
+            foreach (TableEntity qEntity in queryResultsFilter2)
             {
                 Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
             }
@@ -105,6 +101,35 @@ namespace Azure.Data.Tables.Samples
                 foreach (TableEntity qEntity in page.Values)
                 {
                     Console.WriteLine($"# of {qEntity.GetString("Product")} inventoried: {qEntity.GetInt32("Quantity")}");
+                }
+            }
+            #endregion
+
+            #region Snippet:TablesSample4QueryPagination
+
+            string continuationToken = null;
+            bool moreResultsAvailable = true;
+            while (moreResultsAvailable)
+            {
+                Page<TableEntity> page = tableClient
+                    .Query<TableEntity>()
+                    .AsPages(continuationToken, pageSizeHint: 10)
+                    .FirstOrDefault(); // Note: Since the pageSizeHint only limits the number of results in a single page, we explicitly only enumerate the first page.
+
+                if (page == null)
+                    break;
+
+                // Get the continuation token from the page.
+                // Note: This value can be stored so that the next page query can be executed later.
+                continuationToken = page.ContinuationToken;
+
+                IReadOnlyList<TableEntity> pageResults = page.Values;
+                moreResultsAvailable = pageResults.Any() && continuationToken != null;
+
+                // Print out the results for this page.
+                foreach (TableEntity result in pageResults)
+                {
+                    Console.WriteLine($"{result.PartitionKey}-{result.RowKey}");
                 }
             }
             #endregion

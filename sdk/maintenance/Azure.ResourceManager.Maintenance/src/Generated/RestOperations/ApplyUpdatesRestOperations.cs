@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-07-01-preview";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplyUpdateData>> GetParentAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        public async Task<Response<MaintenanceApplyUpdateData>> GetParentAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -96,13 +96,11 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        ApplyUpdateData value = default;
+                        MaintenanceApplyUpdateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplyUpdateData.DeserializeApplyUpdateData(document.RootElement);
+                        value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ApplyUpdateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -120,7 +118,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplyUpdateData> GetParent(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        public Response<MaintenanceApplyUpdateData> GetParent(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -137,13 +135,11 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        ApplyUpdateData value = default;
+                        MaintenanceApplyUpdateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplyUpdateData.DeserializeApplyUpdateData(document.RootElement);
+                        value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ApplyUpdateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -185,7 +181,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplyUpdateData>> GetAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        public async Task<Response<MaintenanceApplyUpdateData>> GetAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -200,13 +196,13 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        ApplyUpdateData value = default;
+                        MaintenanceApplyUpdateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplyUpdateData.DeserializeApplyUpdateData(document.RootElement);
+                        value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplyUpdateData)null, message.Response);
+                    return Response.FromValue((MaintenanceApplyUpdateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -222,7 +218,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplyUpdateData> Get(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        public Response<MaintenanceApplyUpdateData> Get(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -237,13 +233,13 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        ApplyUpdateData value = default;
+                        MaintenanceApplyUpdateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplyUpdateData.DeserializeApplyUpdateData(document.RootElement);
+                        value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplyUpdateData)null, message.Response);
+                    return Response.FromValue((MaintenanceApplyUpdateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -289,7 +285,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplyUpdateData>> CreateOrUpdateParentAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<MaintenanceApplyUpdateData>> CreateOrUpdateParentAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -304,10 +300,11 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
-                        ApplyUpdateData value = default;
+                        MaintenanceApplyUpdateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplyUpdateData.DeserializeApplyUpdateData(document.RootElement);
+                        value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -326,7 +323,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplyUpdateData> CreateOrUpdateParent(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public Response<MaintenanceApplyUpdateData> CreateOrUpdateParent(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -341,10 +338,11 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
-                        ApplyUpdateData value = default;
+                        MaintenanceApplyUpdateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplyUpdateData.DeserializeApplyUpdateData(document.RootElement);
+                        value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -386,7 +384,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplyUpdateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<MaintenanceApplyUpdateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -399,10 +397,11 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
-                        ApplyUpdateData value = default;
+                        MaintenanceApplyUpdateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplyUpdateData.DeserializeApplyUpdateData(document.RootElement);
+                        value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -419,7 +418,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplyUpdateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public Response<MaintenanceApplyUpdateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -432,10 +431,11 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
-                        ApplyUpdateData value = default;
+                        MaintenanceApplyUpdateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplyUpdateData.DeserializeApplyUpdateData(document.RootElement);
+                        value = MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListApplyUpdate>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<MaintenanceApplyUpdateListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -475,9 +475,9 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        ListApplyUpdate value = default;
+                        MaintenanceApplyUpdateListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListApplyUpdate.DeserializeListApplyUpdate(document.RootElement);
+                        value = MaintenanceApplyUpdateListResult.DeserializeMaintenanceApplyUpdateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListApplyUpdate> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<MaintenanceApplyUpdateListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -500,9 +500,9 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        ListApplyUpdate value = default;
+                        MaintenanceApplyUpdateListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListApplyUpdate.DeserializeListApplyUpdate(document.RootElement);
+                        value = MaintenanceApplyUpdateListResult.DeserializeMaintenanceApplyUpdateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

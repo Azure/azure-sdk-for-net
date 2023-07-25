@@ -11,26 +11,25 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void AnalyzeSentiment()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
-
-            #region Snippet:AnalyzeSentiment
-            string document = @"I had the best day of my life. I decided to go sky-diving and it
-                                made me appreciate my whole life so much more.
-                                I developed a deep-connection with my instructor as well, and I
-                                feel as if I've made a life-long friend in her.";
+            #region Snippet:Sample2_AnalyzeSentiment
+            string document =
+                "I had the best day of my life. I decided to go sky-diving and it made me appreciate my whole life so"
+                + "much more. I developed a deep-connection with my instructor as well, and I feel as if I've made a"
+                + "life-long friend in her.";
 
             try
             {
                 Response<DocumentSentiment> response = client.AnalyzeSentiment(document);
                 DocumentSentiment docSentiment = response.Value;
 
-                Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
-                Console.WriteLine($"  Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");
-                Console.WriteLine($"  Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
-                Console.WriteLine($"  Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
+                Console.WriteLine($"Document sentiment is {docSentiment.Sentiment} with: ");
+                Console.WriteLine($"  Positive confidence score: {docSentiment.ConfidenceScores.Positive}");
+                Console.WriteLine($"  Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}");
+                Console.WriteLine($"  Negative confidence score: {docSentiment.ConfidenceScores.Negative}");
             }
             catch (RequestFailedException exception)
             {

@@ -8,7 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -34,11 +36,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
+                RedirectPolicy.SetAllowAutoRedirect(message, false);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToSend", ex);
+                AzureMonitorExporterEventSource.Log.FailedToTransmit(ex);
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
@@ -61,11 +64,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
+                RedirectPolicy.SetAllowAutoRedirect(message, false);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToSend", ex);
+                AzureMonitorExporterEventSource.Log.FailedToTransmit(ex);
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
@@ -107,7 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 var uri = new RawRequestUriBuilder();
                 uri.AppendRaw(_host, false);
-                uri.AppendRaw("/v2/track", false);
+                uri.AppendRaw("/v2.1/track", false);
                 return uri;
             });
             request.Headers.Add("Content-Type", "application/json");

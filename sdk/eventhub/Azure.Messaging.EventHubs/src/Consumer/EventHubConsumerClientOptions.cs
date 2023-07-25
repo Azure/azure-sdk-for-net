@@ -25,6 +25,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   identifier.
         /// </summary>
         ///
+        /// <value>If not specified, a random unique identifier will be generated.</value>
+        ///
         public string Identifier { get; set; }
 
         /// <summary>

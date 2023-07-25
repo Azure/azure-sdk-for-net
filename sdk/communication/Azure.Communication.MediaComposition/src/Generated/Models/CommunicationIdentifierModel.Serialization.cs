@@ -17,27 +17,27 @@ namespace Azure.Communication
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(RawId))
             {
-                writer.WritePropertyName("rawId");
+                writer.WritePropertyName("rawId"u8);
                 writer.WriteStringValue(RawId);
             }
             if (Optional.IsDefined(CommunicationUser))
             {
-                writer.WritePropertyName("communicationUser");
+                writer.WritePropertyName("communicationUser"u8);
                 writer.WriteObjectValue(CommunicationUser);
             }
             if (Optional.IsDefined(PhoneNumber))
             {
-                writer.WritePropertyName("phoneNumber");
+                writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteObjectValue(PhoneNumber);
             }
             if (Optional.IsDefined(MicrosoftTeamsUser))
             {
-                writer.WritePropertyName("microsoftTeamsUser");
+                writer.WritePropertyName("microsoftTeamsUser"u8);
                 writer.WriteObjectValue(MicrosoftTeamsUser);
             }
             writer.WriteEndObject();
@@ -45,6 +45,10 @@ namespace Azure.Communication
 
         internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CommunicationIdentifierModelKind> kind = default;
             Optional<string> rawId = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
@@ -52,46 +56,42 @@ namespace Azure.Communication
             Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new CommunicationIdentifierModelKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rawId"))
+                if (property.NameEquals("rawId"u8))
                 {
                     rawId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("communicationUser"))
+                if (property.NameEquals("communicationUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     communicationUser = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("phoneNumber"))
+                if (property.NameEquals("phoneNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     phoneNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("microsoftTeamsUser"))
+                if (property.NameEquals("microsoftTeamsUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value);

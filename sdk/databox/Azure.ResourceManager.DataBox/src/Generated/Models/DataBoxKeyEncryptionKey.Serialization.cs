@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kekType");
+            writer.WritePropertyName("kekType"u8);
             writer.WriteStringValue(KekType.ToSerialString());
             if (Optional.IsDefined(ManagedIdentity))
             {
-                writer.WritePropertyName("identityProperties");
+                writer.WritePropertyName("identityProperties"u8);
                 writer.WriteObjectValue(ManagedIdentity);
             }
             if (Optional.IsDefined(KekUri))
             {
-                writer.WritePropertyName("kekUrl");
+                writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KekVaultResourceId))
             {
-                writer.WritePropertyName("kekVaultResourceID");
+                writer.WritePropertyName("kekVaultResourceID"u8);
                 writer.WriteStringValue(KekVaultResourceId);
             }
             writer.WriteEndObject();
@@ -38,42 +38,43 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxKeyEncryptionKey DeserializeDataBoxKeyEncryptionKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxKeyEncryptionKeyType kekType = default;
             Optional<DataBoxManagedIdentity> identityProperties = default;
             Optional<Uri> kekUrl = default;
             Optional<ResourceIdentifier> kekVaultResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kekType"))
+                if (property.NameEquals("kekType"u8))
                 {
                     kekType = property.Value.GetString().ToDataBoxKeyEncryptionKeyType();
                     continue;
                 }
-                if (property.NameEquals("identityProperties"))
+                if (property.NameEquals("identityProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kekUrl"))
+                if (property.NameEquals("kekUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kekUrl = null;
                         continue;
                     }
                     kekUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kekVaultResourceID"))
+                if (property.NameEquals("kekVaultResourceID"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kekVaultResourceId = new ResourceIdentifier(property.Value.GetString());

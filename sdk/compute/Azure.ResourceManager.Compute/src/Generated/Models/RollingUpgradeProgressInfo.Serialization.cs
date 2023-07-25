@@ -14,47 +14,47 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RollingUpgradeProgressInfo DeserializeRollingUpgradeProgressInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> successfulInstanceCount = default;
             Optional<int> failedInstanceCount = default;
             Optional<int> inProgressInstanceCount = default;
             Optional<int> pendingInstanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("successfulInstanceCount"))
+                if (property.NameEquals("successfulInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     successfulInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedInstanceCount"))
+                if (property.NameEquals("failedInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failedInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inProgressInstanceCount"))
+                if (property.NameEquals("inProgressInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     inProgressInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pendingInstanceCount"))
+                if (property.NameEquals("pendingInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pendingInstanceCount = property.Value.GetInt32();

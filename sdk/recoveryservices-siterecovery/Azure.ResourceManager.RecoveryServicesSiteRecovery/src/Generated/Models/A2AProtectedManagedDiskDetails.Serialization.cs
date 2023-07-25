@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AProtectedManagedDiskDetails DeserializeA2AProtectedManagedDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskId = default;
-            Optional<string> recoveryResourceGroupId = default;
-            Optional<string> recoveryTargetDiskId = default;
-            Optional<string> recoveryReplicaDiskId = default;
-            Optional<string> recoveryOrignalTargetDiskId = default;
+            Optional<ResourceIdentifier> recoveryResourceGroupId = default;
+            Optional<ResourceIdentifier> recoveryTargetDiskId = default;
+            Optional<ResourceIdentifier> recoveryReplicaDiskId = default;
+            Optional<ResourceIdentifier> recoveryOrignalTargetDiskId = default;
             Optional<string> recoveryReplicaDiskAccountType = default;
             Optional<string> recoveryTargetDiskAccountType = default;
-            Optional<string> recoveryDiskEncryptionSetId = default;
-            Optional<string> primaryDiskEncryptionSetId = default;
+            Optional<ResourceIdentifier> recoveryDiskEncryptionSetId = default;
+            Optional<ResourceIdentifier> primaryDiskEncryptionSetId = default;
             Optional<string> diskName = default;
             Optional<long> diskCapacityInBytes = default;
-            Optional<string> primaryStagingAzureStorageAccountId = default;
+            Optional<ResourceIdentifier> primaryStagingAzureStorageAccountId = default;
             Optional<string> diskType = default;
             Optional<bool> resyncRequired = default;
             Optional<int> monitoringPercentageCompletion = default;
@@ -37,139 +41,161 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<string>> allowedDiskLevelOperation = default;
             Optional<bool> isDiskEncrypted = default;
             Optional<string> secretIdentifier = default;
-            Optional<string> dekKeyVaultArmId = default;
+            Optional<ResourceIdentifier> dekKeyVaultArmId = default;
             Optional<bool> isDiskKeyEncrypted = default;
             Optional<string> keyIdentifier = default;
-            Optional<string> kekKeyVaultArmId = default;
+            Optional<ResourceIdentifier> kekKeyVaultArmId = default;
             Optional<string> failoverDiskName = default;
             Optional<string> tfoDiskName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"))
+                if (property.NameEquals("diskId"u8))
                 {
                     diskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryResourceGroupId"))
+                if (property.NameEquals("recoveryResourceGroupId"u8))
                 {
-                    recoveryResourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryTargetDiskId"))
+                if (property.NameEquals("recoveryTargetDiskId"u8))
                 {
-                    recoveryTargetDiskId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryTargetDiskId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryReplicaDiskId"))
+                if (property.NameEquals("recoveryReplicaDiskId"u8))
                 {
-                    recoveryReplicaDiskId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryReplicaDiskId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryOrignalTargetDiskId"))
+                if (property.NameEquals("recoveryOrignalTargetDiskId"u8))
                 {
-                    recoveryOrignalTargetDiskId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryOrignalTargetDiskId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryReplicaDiskAccountType"))
+                if (property.NameEquals("recoveryReplicaDiskAccountType"u8))
                 {
                     recoveryReplicaDiskAccountType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryTargetDiskAccountType"))
+                if (property.NameEquals("recoveryTargetDiskAccountType"u8))
                 {
                     recoveryTargetDiskAccountType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryDiskEncryptionSetId"))
+                if (property.NameEquals("recoveryDiskEncryptionSetId"u8))
                 {
-                    recoveryDiskEncryptionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryDiskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryDiskEncryptionSetId"))
+                if (property.NameEquals("primaryDiskEncryptionSetId"u8))
                 {
-                    primaryDiskEncryptionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryDiskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskName"))
+                if (property.NameEquals("diskName"u8))
                 {
                     diskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskCapacityInBytes"))
+                if (property.NameEquals("diskCapacityInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskCapacityInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("primaryStagingAzureStorageAccountId"))
+                if (property.NameEquals("primaryStagingAzureStorageAccountId"u8))
                 {
-                    primaryStagingAzureStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryStagingAzureStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskType"))
+                if (property.NameEquals("diskType"u8))
                 {
                     diskType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resyncRequired"))
+                if (property.NameEquals("resyncRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("monitoringPercentageCompletion"))
+                if (property.NameEquals("monitoringPercentageCompletion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monitoringPercentageCompletion = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("monitoringJobType"))
+                if (property.NameEquals("monitoringJobType"u8))
                 {
                     monitoringJobType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataPendingInStagingStorageAccountInMB"))
+                if (property.NameEquals("dataPendingInStagingStorageAccountInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataPendingInStagingStorageAccountInMB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("dataPendingAtSourceAgentInMB"))
+                if (property.NameEquals("dataPendingAtSourceAgentInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataPendingAtSourceAgentInMB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("diskState"))
+                if (property.NameEquals("diskState"u8))
                 {
                     diskState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowedDiskLevelOperation"))
+                if (property.NameEquals("allowedDiskLevelOperation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -180,52 +206,58 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     allowedDiskLevelOperation = array;
                     continue;
                 }
-                if (property.NameEquals("isDiskEncrypted"))
+                if (property.NameEquals("isDiskEncrypted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDiskEncrypted = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("secretIdentifier"))
+                if (property.NameEquals("secretIdentifier"u8))
                 {
                     secretIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dekKeyVaultArmId"))
-                {
-                    dekKeyVaultArmId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isDiskKeyEncrypted"))
+                if (property.NameEquals("dekKeyVaultArmId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dekKeyVaultArmId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("isDiskKeyEncrypted"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     isDiskKeyEncrypted = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("keyIdentifier"))
+                if (property.NameEquals("keyIdentifier"u8))
                 {
                     keyIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kekKeyVaultArmId"))
+                if (property.NameEquals("kekKeyVaultArmId"u8))
                 {
-                    kekKeyVaultArmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kekKeyVaultArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failoverDiskName"))
+                if (property.NameEquals("failoverDiskName"u8))
                 {
                     failoverDiskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tfoDiskName"))
+                if (property.NameEquals("tfoDiskName"u8))
                 {
                     tfoDiskName = property.Value.GetString();
                     continue;

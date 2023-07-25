@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static PointOfInterest DeserializePointOfInterest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> phone = default;
             Optional<string> url = default;
@@ -25,26 +29,25 @@ namespace Azure.Maps.Search.Models
             Optional<OperatingHours> openingHours = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("categorySet"))
+                if (property.NameEquals("categorySet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PointOfInterestCategorySet> array = new List<PointOfInterestCategorySet>();
@@ -55,11 +58,10 @@ namespace Azure.Maps.Search.Models
                     categorySet = array;
                     continue;
                 }
-                if (property.NameEquals("categories"))
+                if (property.NameEquals("categories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -70,11 +72,10 @@ namespace Azure.Maps.Search.Models
                     categories = array;
                     continue;
                 }
-                if (property.NameEquals("classifications"))
+                if (property.NameEquals("classifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PointOfInterestClassification> array = new List<PointOfInterestClassification>();
@@ -85,11 +86,10 @@ namespace Azure.Maps.Search.Models
                     classifications = array;
                     continue;
                 }
-                if (property.NameEquals("brands"))
+                if (property.NameEquals("brands"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BrandName> array = new List<BrandName>();
@@ -100,11 +100,10 @@ namespace Azure.Maps.Search.Models
                     brands = array;
                     continue;
                 }
-                if (property.NameEquals("openingHours"))
+                if (property.NameEquals("openingHours"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     openingHours = OperatingHours.DeserializeOperatingHours(property.Value);

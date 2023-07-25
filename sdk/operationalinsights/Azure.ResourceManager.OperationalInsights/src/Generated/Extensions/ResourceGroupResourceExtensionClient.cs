@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -54,24 +53,32 @@ namespace Azure.ResourceManager.OperationalInsights
             return GetCachedClient(Client => new LogAnalyticsQueryPackCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public virtual ClusterCollection GetClusters()
+        /// <summary> Gets a collection of OperationalInsightsClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OperationalInsightsClusterResources and their operations over a OperationalInsightsClusterResource. </returns>
+        public virtual OperationalInsightsClusterCollection GetOperationalInsightsClusters()
         {
-            return GetCachedClient(Client => new ClusterCollection(Client, Id));
+            return GetCachedClient(Client => new OperationalInsightsClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public virtual WorkspaceCollection GetWorkspaces()
+        /// <summary> Gets a collection of OperationalInsightsWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OperationalInsightsWorkspaceResources and their operations over a OperationalInsightsWorkspaceResource. </returns>
+        public virtual OperationalInsightsWorkspaceCollection GetOperationalInsightsWorkspaces()
         {
-            return GetCachedClient(Client => new WorkspaceCollection(Client, Id));
+            return GetCachedClient(Client => new OperationalInsightsWorkspaceCollection(Client, Id));
         }
 
         /// <summary>
         /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks
-        /// Operation Id: QueryPacks_CreateOrUpdateWithoutName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -93,8 +100,16 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks
-        /// Operation Id: QueryPacks_CreateOrUpdateWithoutName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,56 +131,44 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary>
         /// Gets recently deleted workspaces in a resource group, available for recovery.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces
-        /// Operation Id: DeletedWorkspaces_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedWorkspaces_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetWorkspacesByDeletedWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkspaceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DeletedWorkspacesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetWorkspacesByDeletedWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await DeletedWorkspacesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDeletedWorkspaces", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Gets recently deleted workspaces in a resource group, available for recovery.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces
-        /// Operation Id: DeletedWorkspaces_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/deletedWorkspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedWorkspaces_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetWorkspacesByDeletedWorkspace(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(CancellationToken cancellationToken = default)
         {
-            Page<WorkspaceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DeletedWorkspacesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetWorkspacesByDeletedWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = DeletedWorkspacesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDeletedWorkspaces", "value", null, cancellationToken);
         }
     }
 }

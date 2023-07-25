@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
-    /// <summary> A class representing the ManagedGrafana data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedGrafana data model.
+    /// The grafana resource type.
+    /// </summary>
     public partial class ManagedGrafanaData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedGrafanaData. </summary>
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary> The Sku of the grafana resource. </summary>
         internal ManagedGrafanaSku Sku { get; set; }
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Gets or sets the sku name. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;

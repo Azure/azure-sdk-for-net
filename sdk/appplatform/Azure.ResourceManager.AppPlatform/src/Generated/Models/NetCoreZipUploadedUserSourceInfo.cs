@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Uploaded Jar binary for a deployment. </summary>
-    public partial class NetCoreZipUploadedUserSourceInfo : UploadedUserSourceInfo
+    public partial class NetCoreZipUploadedUserSourceInfo : AppPlatformUploadedUserSourceInfo
     {
         /// <summary> Initializes a new instance of NetCoreZipUploadedUserSourceInfo. </summary>
         public NetCoreZipUploadedUserSourceInfo()

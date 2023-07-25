@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceGraph
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateResourcesRequest(QueryContent content)
+        internal HttpMessage CreateResourcesRequest(ResourceQueryContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="content"> Request specifying query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response<QueryResponse>> ResourcesAsync(QueryContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceQueryResult>> ResourcesAsync(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.ResourceGraph
             {
                 case 200:
                     {
-                        QueryResponse value = default;
+                        ResourceQueryResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueryResponse.DeserializeQueryResponse(document.RootElement);
+                        value = ResourceQueryResult.DeserializeResourceQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="content"> Request specifying query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response<QueryResponse> Resources(QueryContent content, CancellationToken cancellationToken = default)
+        public Response<ResourceQueryResult> Resources(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.ResourceGraph
             {
                 case 200:
                     {
-                        QueryResponse value = default;
+                        ResourceQueryResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueryResponse.DeserializeQueryResponse(document.RootElement);
+                        value = ResourceQueryResult.DeserializeResourceQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

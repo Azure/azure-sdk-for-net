@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsArchiveEnabled))
             {
-                writer.WritePropertyName("isArchiveEnabled");
+                writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
             writer.WriteEndObject();

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationList. </summary>
+    /// <summary> List of `Reservation`s. </summary>
     internal partial class ReservationList
     {
         /// <summary> Initializes a new instance of ReservationList. </summary>

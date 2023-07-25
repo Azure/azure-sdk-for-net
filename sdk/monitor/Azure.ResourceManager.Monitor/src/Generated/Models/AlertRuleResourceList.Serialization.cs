@@ -16,14 +16,17 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static AlertRuleResourceList DeserializeAlertRuleResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AlertRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AlertRuleData> array = new List<AlertRuleData>();

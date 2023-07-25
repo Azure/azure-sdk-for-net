@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static DetectorInsightStatus ToDetectorInsightStatus(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return DetectorInsightStatus.None;
-            if (string.Equals(value, "Critical", StringComparison.InvariantCultureIgnoreCase)) return DetectorInsightStatus.Critical;
-            if (string.Equals(value, "Warning", StringComparison.InvariantCultureIgnoreCase)) return DetectorInsightStatus.Warning;
-            if (string.Equals(value, "Info", StringComparison.InvariantCultureIgnoreCase)) return DetectorInsightStatus.Info;
-            if (string.Equals(value, "Success", StringComparison.InvariantCultureIgnoreCase)) return DetectorInsightStatus.Success;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return DetectorInsightStatus.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical")) return DetectorInsightStatus.Critical;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return DetectorInsightStatus.Warning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Info")) return DetectorInsightStatus.Info;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Success")) return DetectorInsightStatus.Success;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorInsightStatus value.");
         }
     }

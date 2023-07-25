@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the AvsCloudLink data model. </summary>
+    /// <summary>
+    /// A class representing the AvsCloudLink data model.
+    /// A cloud link resource
+    /// </summary>
     public partial class AvsCloudLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of AvsCloudLinkData. </summary>

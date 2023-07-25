@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,14 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PreserveZipFileNameAsFolder))
             {
-                writer.WritePropertyName("preserveZipFileNameAsFolder");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PreserveZipFileNameAsFolder);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PreserveZipFileNameAsFolder.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("preserveZipFileNameAsFolder"u8);
+                JsonSerializer.Serialize(writer, PreserveZipFileNameAsFolder);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CompressionReadSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -42,23 +39,26 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ZipDeflateReadSettings DeserializeZipDeflateReadSettings(JsonElement element)
         {
-            Optional<BinaryData> preserveZipFileNameAsFolder = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<bool>> preserveZipFileNameAsFolder = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preserveZipFileNameAsFolder"))
+                if (property.NameEquals("preserveZipFileNameAsFolder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    preserveZipFileNameAsFolder = BinaryData.FromString(property.Value.GetRawText());
+                    preserveZipFileNameAsFolder = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

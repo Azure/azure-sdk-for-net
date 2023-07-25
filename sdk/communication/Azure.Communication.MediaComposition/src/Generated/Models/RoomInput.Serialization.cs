@@ -15,13 +15,13 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(PlaceholderImageUri))
             {
-                writer.WritePropertyName("placeholderImageUri");
+                writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
             writer.WriteEndObject();
@@ -29,22 +29,26 @@ namespace Azure.Communication.MediaComposition
 
         internal static RoomInput DeserializeRoomInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             MediaInputType kind = default;
             Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new MediaInputType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("placeholderImageUri"))
+                if (property.NameEquals("placeholderImageUri"u8))
                 {
                     placeholderImageUri = property.Value.GetString();
                     continue;

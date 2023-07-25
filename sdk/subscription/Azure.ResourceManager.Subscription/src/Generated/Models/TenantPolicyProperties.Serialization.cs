@@ -16,42 +16,43 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static TenantPolicyProperties DeserializeTenantPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> policyId = default;
             Optional<bool> blockSubscriptionsLeavingTenant = default;
             Optional<bool> blockSubscriptionsIntoTenant = default;
             Optional<IReadOnlyList<Guid>> exemptedPrincipals = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyId"))
+                if (property.NameEquals("policyId"u8))
                 {
                     policyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blockSubscriptionsLeavingTenant"))
+                if (property.NameEquals("blockSubscriptionsLeavingTenant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blockSubscriptionsLeavingTenant = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("blockSubscriptionsIntoTenant"))
+                if (property.NameEquals("blockSubscriptionsIntoTenant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blockSubscriptionsIntoTenant = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("exemptedPrincipals"))
+                if (property.NameEquals("exemptedPrincipals"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Guid> array = new List<Guid>();

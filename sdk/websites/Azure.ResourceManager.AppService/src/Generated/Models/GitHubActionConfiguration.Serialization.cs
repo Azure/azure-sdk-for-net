@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CodeConfiguration))
             {
-                writer.WritePropertyName("codeConfiguration");
+                writer.WritePropertyName("codeConfiguration"u8);
                 writer.WriteObjectValue(CodeConfiguration);
             }
             if (Optional.IsDefined(ContainerConfiguration))
             {
-                writer.WritePropertyName("containerConfiguration");
+                writer.WritePropertyName("containerConfiguration"u8);
                 writer.WriteObjectValue(ContainerConfiguration);
             }
             if (Optional.IsDefined(IsLinux))
             {
-                writer.WritePropertyName("isLinux");
+                writer.WritePropertyName("isLinux"u8);
                 writer.WriteBooleanValue(IsLinux.Value);
             }
             if (Optional.IsDefined(GenerateWorkflowFile))
             {
-                writer.WritePropertyName("generateWorkflowFile");
+                writer.WritePropertyName("generateWorkflowFile"u8);
                 writer.WriteBooleanValue(GenerateWorkflowFile.Value);
             }
             writer.WriteEndObject();
@@ -40,47 +40,47 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GitHubActionConfiguration DeserializeGitHubActionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GitHubActionCodeConfiguration> codeConfiguration = default;
             Optional<GitHubActionContainerConfiguration> containerConfiguration = default;
             Optional<bool> isLinux = default;
             Optional<bool> generateWorkflowFile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("codeConfiguration"))
+                if (property.NameEquals("codeConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     codeConfiguration = GitHubActionCodeConfiguration.DeserializeGitHubActionCodeConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("containerConfiguration"))
+                if (property.NameEquals("containerConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     containerConfiguration = GitHubActionContainerConfiguration.DeserializeGitHubActionContainerConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isLinux"))
+                if (property.NameEquals("isLinux"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isLinux = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("generateWorkflowFile"))
+                if (property.NameEquals("generateWorkflowFile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     generateWorkflowFile = property.Value.GetBoolean();

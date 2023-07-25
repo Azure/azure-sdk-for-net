@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    /// <summary> A class representing the HDInsightApplication data model. </summary>
+    /// <summary>
+    /// A class representing the HDInsightApplication data model.
+    /// The HDInsight cluster application
+    /// </summary>
     public partial class HDInsightApplicationData : ResourceData
     {
         /// <summary> Initializes a new instance of HDInsightApplicationData. </summary>

@@ -90,8 +90,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get details of a top-level domain.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// Operation Id: TopLevelDomains_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TopLevelDomainResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -114,8 +122,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get details of a top-level domain.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// Operation Id: TopLevelDomains_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TopLevelDomainResource> Get(CancellationToken cancellationToken = default)
@@ -138,8 +154,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets all legal agreements that user needs to accept before purchasing a domain.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
-        /// Operation Id: TopLevelDomains_ListAgreements
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopLevelDomains_ListAgreements</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,43 +173,23 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
-            async Task<Page<TldLegalAgreement>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.GetAgreements");
-                scope.Start();
-                try
-                {
-                    var response = await _topLevelDomainRestClient.ListAgreementsAsync(Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TldLegalAgreement>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.GetAgreements");
-                scope.Start();
-                try
-                {
-                    var response = await _topLevelDomainRestClient.ListAgreementsNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TldLegalAgreement.DeserializeTldLegalAgreement, _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for Gets all legal agreements that user needs to accept before purchasing a domain.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
-        /// Operation Id: TopLevelDomains_ListAgreements
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopLevelDomains_ListAgreements</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,37 +199,9 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
-            Page<TldLegalAgreement> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.GetAgreements");
-                scope.Start();
-                try
-                {
-                    var response = _topLevelDomainRestClient.ListAgreements(Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TldLegalAgreement> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainResource.GetAgreements");
-                scope.Start();
-                try
-                {
-                    var response = _topLevelDomainRestClient.ListAgreementsNextPage(nextLink, Id.SubscriptionId, Id.Name, agreementOption, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TldLegalAgreement.DeserializeTldLegalAgreement, _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
         }
     }
 }

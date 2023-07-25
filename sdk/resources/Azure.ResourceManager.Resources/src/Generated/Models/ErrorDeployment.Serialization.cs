@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DeploymentType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DeploymentType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeploymentName))
             {
-                writer.WritePropertyName("deploymentName");
+                writer.WritePropertyName("deploymentName"u8);
                 writer.WriteStringValue(DeploymentName);
             }
             writer.WriteEndObject();

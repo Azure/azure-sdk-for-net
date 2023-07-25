@@ -97,7 +97,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         {
             if (token.IsCancellationRequested)
             {
-                throw new OperationCanceledException();
+                token.ThrowIfCancellationRequested();
             }
 
             var memory = buffer.GetMemory();

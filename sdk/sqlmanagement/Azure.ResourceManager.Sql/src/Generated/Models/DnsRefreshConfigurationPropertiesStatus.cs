@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string InProgressValue = "InProgress";
 
         /// <summary> Succeeded. </summary>
         public static DnsRefreshConfigurationPropertiesStatus Succeeded { get; } = new DnsRefreshConfigurationPropertiesStatus(SucceededValue);
         /// <summary> Failed. </summary>
         public static DnsRefreshConfigurationPropertiesStatus Failed { get; } = new DnsRefreshConfigurationPropertiesStatus(FailedValue);
+        /// <summary> InProgress. </summary>
+        public static DnsRefreshConfigurationPropertiesStatus InProgress { get; } = new DnsRefreshConfigurationPropertiesStatus(InProgressValue);
         /// <summary> Determines if two <see cref="DnsRefreshConfigurationPropertiesStatus"/> values are the same. </summary>
         public static bool operator ==(DnsRefreshConfigurationPropertiesStatus left, DnsRefreshConfigurationPropertiesStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsRefreshConfigurationPropertiesStatus"/> values are not the same. </summary>

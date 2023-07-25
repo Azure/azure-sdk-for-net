@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
         protected DataFactoryManagementTestBase(bool isAsync)
             : base(isAsync, exceptionList: ExceptionList)
         {
+            JsonPathSanitizers.Add("$.keys.[*].value");
         }
 
         [SetUp]
@@ -47,26 +49,25 @@ namespace Azure.ResourceManager.DataFactory.Tests
 
         protected async Task<DataFactoryResource> CreateDataFactory(ResourceGroupResource resourceGroup, string dataFactoryName)
         {
-            DataFactoryData data = new DataFactoryData(resourceGroup.Data.Location);
+            DataFactoryData data = new DataFactoryData(AzureLocation.WestUS2);
             var dataFactory = await resourceGroup.GetDataFactories().CreateOrUpdateAsync(WaitUntil.Completed, dataFactoryName, data);
             return dataFactory.Value;
         }
 
-        protected async Task<FactoryLinkedServiceResource> CreateLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey)
+        protected async Task<DataFactoryLinkedServiceResource> CreateLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey)
         {
             AzureBlobStorageLinkedService azureBlobStorageLinkedService = new AzureBlobStorageLinkedService()
             {
-                ConnectionString = BinaryData.FromString($"\"{accessKey}\""),
+                ConnectionString = DataFactoryElement<string>.FromLiteral($"{accessKey}")
             };
-            FactoryLinkedServiceData data = new FactoryLinkedServiceData(azureBlobStorageLinkedService);
-            var linkedService = await dataFactory.GetFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
+            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(azureBlobStorageLinkedService);
+            var linkedService = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             return linkedService.Value;
         }
 
-        protected async Task<string> GetStorageAccountAccessKey(ResourceGroupResource resourceGroup)
+        protected async Task<string> GetStorageAccountAccessKey(ResourceGroupResource resourceGroup, string storageAccountName)
         {
-            string storageAccountName = Recording.GenerateAssetName("datafactory");
-            StorageAccountCreateOrUpdateContent data = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, resourceGroup.Data.Location)
+            StorageAccountCreateOrUpdateContent data = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, AzureLocation.WestUS2)
             {
                 AccessTier = StorageAccountAccessTier.Hot,
             };

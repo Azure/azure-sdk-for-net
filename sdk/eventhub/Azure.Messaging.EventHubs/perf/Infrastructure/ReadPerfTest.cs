@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         public async override Task GlobalSetupAsync()
         {
-            await base.GlobalCleanupAsync().ConfigureAwait(false);
+            await base.GlobalSetupAsync().ConfigureAwait(false);
 
             // The limit for concurrent readers in a consumer group is 5; create
             // enough consumer groups to support the requested parallelism.

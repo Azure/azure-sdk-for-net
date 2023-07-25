@@ -4,13 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Communication.CallAutomation.Models.Misc;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -20,20 +17,24 @@ namespace Azure.Communication.CallAutomation
     public class CallConnection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal CallConnectionsRestClient RestClient { get; }
-        internal ContentRestClient ContentRestClient { get; }
+        internal CallConnectionRestClient RestClient { get; }
+        internal CallMediaRestClient CallMediaRestClient { get; }
+        internal CallDialogRestClient CallDialogRestClient { get; }
+        internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ContentRestClient callContentRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient,CallDialogRestClient callDialogRestClient, ClientDiagnostics clientDiagnostics, CallAutomationEventProcessor eventProcessor)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
-            ContentRestClient = callContentRestClient;
+            CallMediaRestClient = callCallMediaRestClient;
+            CallDialogRestClient = callDialogRestClient;
             _clientDiagnostics = clientDiagnostics;
+            EventProcessor = eventProcessor;
         }
 
         /// <summary>Initializes a new instance of <see cref="CallConnection"/> for mocking.</summary>
@@ -41,12 +42,13 @@ namespace Azure.Communication.CallAutomation
         {
             _clientDiagnostics = null;
             RestClient = null;
-            ContentRestClient = null;
+            CallMediaRestClient = null;
             CallConnectionId = null;
         }
 
         /// <summary> Get various properties of the call. <see cref="CallConnectionProperties"/>.</summary>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<CallConnectionProperties>> GetCallConnectionPropertiesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallConnectionProperties)}");
@@ -68,6 +70,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Get various properties of a ongoing call. <see cref="CallConnectionProperties"/>.</summary>
         /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<CallConnectionProperties> GetCallConnectionProperties(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallConnectionProperties)}");
@@ -93,35 +96,13 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> HangUpAsync(bool forEveryone, CancellationToken cancellationToken = default)
         {
-            HangUpOptions options = new HangUpOptions(forEveryone);
-
-            return await HangUpAsync(options, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Disconnect the current caller in a group-call or end a p2p-call.</summary>
-        /// <param name="options"> Options for the HangUp call operation. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
-        public virtual async Task<Response> HangUpAsync(HangUpOptions options, CancellationToken cancellationToken = default)
-        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HangUp)}");
             scope.Start();
             try
             {
-                if (options == null)
-                    throw new ArgumentNullException(nameof(options));
-
-                if (options.ForEveryone)
+                if (forEveryone)
                 {
-                    options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
-                    return await RestClient.TerminateCallAsync(
-                        CallConnectionId,
-                        options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                        options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                        cancellationToken
-                        ).ConfigureAwait(false);
+                    return await RestClient.TerminateCallAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
@@ -144,35 +125,13 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response HangUp(bool forEveryone, CancellationToken cancellationToken = default)
         {
-            HangUpOptions options = new HangUpOptions(forEveryone);
-
-            return HangUp(options, cancellationToken);
-        }
-
-        /// <summary> Disconnect the current caller in a group-call or end a p2p-call. </summary>
-        /// <param name="options"> Options for the HangUp call operation. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
-        public virtual Response HangUp(HangUpOptions options, CancellationToken cancellationToken = default)
-        {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HangUp)}");
             scope.Start();
             try
             {
-                if (options == null)
-                    throw new ArgumentNullException(nameof(options));
-
-                if (options.ForEveryone)
+                if (forEveryone)
                 {
-                    options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
-                    return RestClient.TerminateCall(
-                        CallConnectionId,
-                        options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                        options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                        cancellationToken
-                        );
+                    return RestClient.TerminateCall(CallConnectionId, cancellationToken);
                 }
                 else
                 {
@@ -190,12 +149,43 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer this call to a participant. </summary>
+        /// <param name="targetParticipant"> The target to transfer the call to. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="targetParticipant"/> is null.</exception>
+        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
+        {
+            if (targetParticipant == null)
+                throw new ArgumentNullException(nameof(targetParticipant));
+
+            TransferToParticipantOptions options;
+
+            if (targetParticipant is CommunicationUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as CommunicationUserIdentifier);
+            }
+            else if (targetParticipant is PhoneNumberIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as PhoneNumberIdentifier);
+            }
+            else if (targetParticipant is MicrosoftTeamsUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
+            }
+            else
+            {
+                throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
+            }
+
+            return await TransferCallToParticipantAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Transfer this call to a participant. </summary>
         /// <param name="options"> Options for the Transfer Call To Participant operation. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentNullException"> SourceCallerId is null in <paramref name="options"/> when transferring the call to a PSTN target.</exception>
-        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
         public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(TransferToParticipantOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCallToParticipant)}");
@@ -206,15 +196,13 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                return await RestClient.TransferToParticipantAsync(
-                    CallConnectionId,
-                    request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                    cancellationToken
-                    ).ConfigureAwait(false);
+                var response = await RestClient.TransferToParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+
+                var result = response.Value;
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -223,13 +211,44 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary> Transfer this call to a participant. </summary>
+        /// <param name="targetParticipant"> The target to transfer the call to. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="targetParticipant"/> is null.</exception>
+        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
+        {
+            if (targetParticipant == null)
+                throw new ArgumentNullException(nameof(targetParticipant));
+
+            TransferToParticipantOptions options;
+
+            if (targetParticipant is CommunicationUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as CommunicationUserIdentifier);
+            }
+            else if (targetParticipant is PhoneNumberIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as PhoneNumberIdentifier);
+            }
+            else if (targetParticipant is MicrosoftTeamsUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
+            }
+            else
+            {
+                throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
+            }
+
+            return TransferCallToParticipant(options, cancellationToken);
+        }
+
         /// <summary> Transfer the call. </summary>
         /// <param name="options"> Options for the Transfer Call To Participant operation. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentNullException"> SourceCallerId is null in <paramref name="options"/> when transferring the call to a PSTN target.</exception>
-        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
         public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(TransferToParticipantOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCallToParticipant)}");
@@ -240,15 +259,13 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 TransferToParticipantRequestInternal request = CreateTransferToParticipantRequest(options);
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
 
-                return RestClient.TransferToParticipant(
-                    CallConnectionId,
-                    request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                    cancellationToken
-                    );
+                var response = RestClient.TransferToParticipant(CallConnectionId, request, cancellationToken);
+
+                var result = response.Value;
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -259,63 +276,65 @@ namespace Azure.Communication.CallAutomation
 
         private static TransferToParticipantRequestInternal CreateTransferToParticipantRequest(TransferToParticipantOptions options)
         {
-            // when transfer to a PSTN participant, the SourceCallerId must be provided.
-            if (options.TargetParticipant is PhoneNumberIdentifier)
-            {
-                Argument.AssertNotNull(options.SourceCallerId, nameof(options.SourceCallerId));
-            }
+            TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.Target));
 
-            TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+            request.CustomContext = new CustomContextInternal(
+                options.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.SipHeaders,
+                options.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomContext.VoipHeaders);
 
-            request.TransfereeCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-            if (options.UserToUserInformation != null && options.UserToUserInformation.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-            {
-                throw new ArgumentException(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength);
-            }
-            else
-            {
-                request.UserToUserInformation = options.UserToUserInformation;
-            }
             if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
             {
                 throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
             }
             else
             {
-                request.OperationContext = options.OperationContext;
+                request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
             }
 
+            if (options.Transferee != null)
+            {
+                request.Transferee = CommunicationIdentifierSerializer.Serialize(options.Transferee);
+            }
+
+            request.CallbackUriOverride = options.CallbackUriOverride;
             return request;
         }
 
-        /// <summary> Add participants to the call. </summary>
+        /// <summary>
+        /// Add participant to the call.
+        /// </summary>
+        /// <param name="participantToAdd">Participant to add.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantToAdd"/> is null. </exception>
+        /// <returns></returns>
+        public virtual async Task<Response<AddParticipantResult>> AddParticipantAsync(CallInvite participantToAdd, CancellationToken cancellationToken = default)
+        {
+            return await AddParticipantAsync(new AddParticipantOptions(participantToAdd), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Add participant to the call. </summary>
         /// <param name="options"> Options for the Add Participants operation.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentNullException"> SourceCallerId is null in <paramref name="options"/> when adding PSTN participants.</exception>
-        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
-        public virtual async Task<Response<AddParticipantsResult>> AddParticipantsAsync(AddParticipantsOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddParticipantResult>> AddParticipantAsync(AddParticipantOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipants)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipant)}");
             scope.Start();
             try
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                AddParticipantsRequestInternal request = CreateAddParticipantRequest(options);
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                AddParticipantRequestInternal request = CreateAddParticipantRequest(options);
 
-                var response = await RestClient.AddParticipantAsync(
-                    callConnectionId: CallConnectionId,
-                    request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
+                var response = await RestClient.AddParticipantAsync(callConnectionId: CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                return Response.FromValue(new AddParticipantsResult(response), response.GetRawResponse());
+                var result = new AddParticipantResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -324,34 +343,39 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Add participants to the call. </summary>
+        /// <summary>
+        /// Add participant to the call.
+        /// </summary>
+        /// <param name="participantToAdd">Participant to add.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantToAdd"/> is null. </exception>
+        /// <returns></returns>
+        public virtual Response<AddParticipantResult> AddParticipant(CallInvite participantToAdd, CancellationToken cancellationToken = default) =>
+            AddParticipant(new AddParticipantOptions(participantToAdd), cancellationToken);
+
+        /// <summary> Add participant to the call. </summary>
         /// <param name="options"> Options for the Add Participants operation.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentNullException"> SourceCallerId is null in <paramref name="options"/> when adding PSTN participants.</exception>
-        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
-        public virtual Response<AddParticipantsResult> AddParticipants(AddParticipantsOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<AddParticipantResult> AddParticipant(AddParticipantOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipants)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipant)}");
             scope.Start();
             try
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                AddParticipantsRequestInternal request = CreateAddParticipantRequest(options);
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                AddParticipantRequestInternal request = CreateAddParticipantRequest(options);
 
-                var response = RestClient.AddParticipant(
-                    callConnectionId: CallConnectionId,
-                    request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                    cancellationToken: cancellationToken
-                    );
+                var response = RestClient.AddParticipant(callConnectionId: CallConnectionId, request, cancellationToken: cancellationToken);
 
-                return Response.FromValue(new AddParticipantsResult(response), response.GetRawResponse());
+                var result = new AddParticipantResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -360,21 +384,20 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        private static AddParticipantsRequestInternal CreateAddParticipantRequest(AddParticipantsOptions options)
+        private static AddParticipantRequestInternal CreateAddParticipantRequest(AddParticipantOptions options)
         {
-            // when add PSTN participants, the SourceCallerId must be provided.
-            if (options.ParticipantsToAdd.Any(participant => participant is PhoneNumberIdentifier))
+            // validate ParticipantToAdd is not null
+            Argument.AssertNotNull(options.ParticipantToAdd, nameof(options.ParticipantToAdd));
+
+            AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToAdd.Target))
             {
-                Argument.AssertNotNull(options.SourceCallerId, nameof(options.SourceCallerId));
-            }
+                SourceCallerIdNumber = options.ParticipantToAdd.SourceCallerIdNumber == null
+                    ? null
+                    : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
+                SourceDisplayName = options.ParticipantToAdd.SourceDisplayName,
+                OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext
+            };
 
-            // validate ParticipantsToAdd is not null or empty
-            Argument.AssertNotNullOrEmpty(options.ParticipantsToAdd, nameof(options.ParticipantsToAdd));
-
-            AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(options.ParticipantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
-
-            request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-            request.OperationContext = options.OperationContext;
             if (options.InvitationTimeoutInSeconds != null &&
                 (options.InvitationTimeoutInSeconds < CallAutomationConstants.InputValidation.MinInvitationTimeoutInSeconds ||
                 options.InvitationTimeoutInSeconds > CallAutomationConstants.InputValidation.MaxInvitationTimeoutInSeconds))
@@ -385,16 +408,21 @@ namespace Azure.Communication.CallAutomation
             {
                 request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
             }
+            request.CallbackUriOverride = options.CallbackUriOverride;
+            request.CustomContext = new CustomContextInternal(
+                options.ParticipantToAdd.CustomContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.SipHeaders,
+                options.ParticipantToAdd.CustomContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.CustomContext.VoipHeaders);
 
             return request;
         }
 
         /// <summary> Get participant from a call. </summary>
-        /// <param name="participantMri">The participant's MRI.</param>
+        /// <param name="participantIdentifier">The participant's identifier.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantIdentifier"/> is null. </exception>
         /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual async Task<Response<CallParticipant>> GetParticipantAsync(string participantMri, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallParticipant>> GetParticipantAsync(CommunicationIdentifier participantIdentifier, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
             scope.Start();
@@ -402,7 +430,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var response = await RestClient.GetParticipantAsync(
                     callConnectionId: CallConnectionId,
-                    participantMri,
+                    participantIdentifier.RawId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
@@ -416,11 +444,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get participant from a call. </summary>
-        /// <param name="participantMri">The participant MRI.</param>
+        /// <param name="participantIdentifier">The participant identifier.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantIdentifier"/> is null. </exception>
         /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual Response<CallParticipant> GetParticipant(string participantMri, CancellationToken cancellationToken = default)
+        public virtual Response<CallParticipant> GetParticipant(CommunicationIdentifier participantIdentifier, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
             scope.Start();
@@ -428,7 +457,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var response = RestClient.GetParticipant(
                     callConnectionId: CallConnectionId,
-                    participantMri,
+                    participantIdentifier.RawId,
                     cancellationToken: cancellationToken
                     );
 
@@ -494,19 +523,19 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Remove participants from the call. </summary>
-        /// <param name="participantsToRemove"> The list of identity of participants to be removed from the call. </param>
+        /// <param name="participantToRemove"> The list of identity of participants to be removed from the call. </param>
         /// <param name="operationContext"> The Operation Context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentException"> <paramref name="participantsToRemove"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
-        public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="participantToRemove"/> is null. </exception>
+        public virtual async Task<Response<RemoveParticipantResult>> RemoveParticipantAsync(CommunicationIdentifier participantToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            RemoveParticipantsOptions options = new RemoveParticipantsOptions(participantsToRemove);
-            if (!String.IsNullOrEmpty(operationContext))
-                options.OperationContext = operationContext;
+            RemoveParticipantOptions options = new(participantToRemove)
+            {
+                OperationContext = operationContext == default ? Guid.NewGuid().ToString() : operationContext
+            };
 
-            return await RemoveParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
+            return await RemoveParticipantAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Remove participants from the call. </summary>
@@ -514,37 +543,34 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken">The cancellation token</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
-        public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(RemoveParticipantsOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RemoveParticipantResult>> RemoveParticipantAsync(RemoveParticipantOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipants)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipant)}");
             scope.Start();
             try
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                // validate ParticipantsToRemove is not null or empty
-                Argument.AssertNotNullOrEmpty(options.ParticipantsToRemove, nameof(options.ParticipantsToRemove));
+                // validate RequestInitiator is not null or empty
+                Argument.AssertNotNull(options.ParticipantToRemove, nameof(options.ParticipantToRemove));
 
-                RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
                     throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
                 }
                 else
                 {
-                    request.OperationContext = options.OperationContext;
+                    request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
+                request.CallbackUriOverride = options.CallbackUriOverride;
+                var response = await RestClient.RemoveParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
-                return await RestClient.RemoveParticipantsAsync(
-                    CallConnectionId,
-                    request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                    cancellationToken
-                    ).ConfigureAwait(false);
+                var result = new RemoveParticipantResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -554,19 +580,19 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Remove participants from the call. </summary>
-        /// <param name="participantsToRemove"> The list of identity of participants to be removed from the call. </param>
+        /// <param name="participantToRemove"> The list of identity of participants to be removed from the call. </param>
         /// <param name="operationContext"> The Operation Context. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentException"> <paramref name="participantsToRemove"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
-        public virtual Response<RemoveParticipantsResult> RemoveParticipants(IEnumerable<CommunicationIdentifier> participantsToRemove, string operationContext = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="participantToRemove"/> is null. </exception>
+        public virtual Response<RemoveParticipantResult> RemoveParticipant(CommunicationIdentifier participantToRemove, string operationContext = default, CancellationToken cancellationToken = default)
         {
-            RemoveParticipantsOptions options = new RemoveParticipantsOptions(participantsToRemove);
-            if (!String.IsNullOrEmpty(operationContext))
-                options.OperationContext = operationContext;
+            RemoveParticipantOptions options = new(participantToRemove)
+            {
+                OperationContext = operationContext == default ? Guid.NewGuid().ToString() : operationContext
+            };
 
-            return RemoveParticipants(options, cancellationToken);
+            return RemoveParticipant(options, cancellationToken);
         }
 
         /// <summary> Remove participants from the call. </summary>
@@ -574,18 +600,16 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken">The cancellation token</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
-        public virtual Response<RemoveParticipantsResult> RemoveParticipants(RemoveParticipantsOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RemoveParticipantResult> RemoveParticipant(RemoveParticipantOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipants)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipant)}");
             scope.Start();
             try
             {
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RemoveParticipantsRequestInternal request = new RemoveParticipantsRequestInternal(options.ParticipantsToRemove.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList());
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
 
                 if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
                 {
@@ -593,16 +617,15 @@ namespace Azure.Communication.CallAutomation
                 }
                 else
                 {
-                    request.OperationContext = options.OperationContext;
+                    options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
+                request.CallbackUriOverride = options.CallbackUriOverride;
+                var response = RestClient.RemoveParticipant(CallConnectionId, request, cancellationToken);
 
-                return RestClient.RemoveParticipants(
-                     CallConnectionId,
-                     request,
-                     options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                     options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                     cancellationToken
-                     );
+                var result = new RemoveParticipantResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -618,7 +641,250 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallMedia(CallConnectionId, ContentRestClient, _clientDiagnostics);
+                return new CallMedia(CallConnectionId, CallMediaRestClient, _clientDiagnostics, EventProcessor);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Initializes a new instance of CallDialog. <see cref="CallDialog"/></summary>
+        public virtual CallDialog GetCallDialog()
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCallDialog)}");
+            scope.Start();
+            try
+            {
+                return new CallDialog(CallConnectionId, CallDialogRestClient, _clientDiagnostics, EventProcessor);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Mute participant from the call.
+        /// Only Acs Users are currently supported.
+        /// </summary>
+        /// <param name="targetParticipant">Participant to mute.</param>
+        /// <param name="operationContext">The Operation Context.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
+        /// <returns>A Response containing MuteParticipantsResponse.</returns>
+        public virtual Response<MuteParticipantsResponse> MuteParticipants(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        {
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
+            {
+                OperationContext = operationContext
+            };
+
+            return MuteParticipants(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Mute participants from the call.
+        /// Only Acs Users are currently supported.
+        /// </summary>
+        /// <param name="options">Options for the MuteParticipant operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns>A Response containing MuteParticipantsResponse. </returns>
+        public virtual Response<MuteParticipantsResponse> MuteParticipants(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+
+                MuteParticipantsRequestInternal request = new MuteParticipantsRequestInternal(
+                    options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
+
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
+
+                return RestClient.Mute(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Unmute participant from the call.
+        /// Only Acs Users are currently supported.
+        /// </summary>
+        /// <param name="targetParticipant">Participant to unmute.</param>
+        /// <param name="operationContext">The Operation Context.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipants(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        {
+            var options = new UnmuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
+            {
+                OperationContext = operationContext,
+            };
+            return UnmuteParticipants(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Unmute participants from the call.
+        /// Only Acs Users are currently supported.
+        /// </summary>
+        /// <param name="options">Options for the UnmuteParticipant operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipants(UnmuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipants)}");
+            scope.Start();
+            try
+            {
+                UnmuteParticipantsRequestInternal request = new UnmuteParticipantsRequestInternal(
+                    options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)).ToList());
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
+
+                return RestClient.Unmute(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Mute participants on the call.
+        /// Only Acs Users are currently supported.
+        /// </summary>
+        /// <param name="targetParticipant">Participants to mute.</param>
+        /// <param name="operationContext">The Operation Context.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        {
+            var options = new MuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
+            {
+                OperationContext = operationContext
+            };
+            return await MuteParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Mute participants on the call.
+        /// </summary>
+        /// <param name="options">Options for the MuteParticipant operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantsAsync(MuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipants)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+
+                MuteParticipantsRequestInternal request = new MuteParticipantsRequestInternal(
+                    options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)));
+
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
+
+                return await RestClient.MuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Unmute participants on the call.
+        /// Only Acs Users are currently supported.
+        /// </summary>
+        /// <param name="targetParticipant">Participant to unmute.</param>
+        /// <param name="operationContext">The Operation Context.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(CommunicationIdentifier targetParticipant, string operationContext = default, CancellationToken cancellationToken = default)
+        {
+            var options = new UnmuteParticipantsOptions(new List<CommunicationIdentifier> { targetParticipant })
+            {
+                OperationContext = operationContext
+            };
+
+            return await UnmuteParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Unmute participants from the call.
+        /// Only Acs Users are currently supported.
+        /// </summary>
+        /// <param name="options">Options for the UnmuteParticipant operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantsAsync(UnmuteParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipants)}");
+            scope.Start();
+            try
+            {
+                UnmuteParticipantsRequestInternal request = new UnmuteParticipantsRequestInternal(
+                    options.TargetParticipants.Select(participant => CommunicationIdentifierSerializer.Serialize(participant)).ToList());
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
+
+                return await RestClient.UnmuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

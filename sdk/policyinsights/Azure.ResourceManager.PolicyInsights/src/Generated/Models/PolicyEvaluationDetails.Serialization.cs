@@ -15,15 +15,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyEvaluationDetails DeserializePolicyEvaluationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ExpressionEvaluationDetails>> evaluatedExpressions = default;
             Optional<IfNotExistsEvaluationDetails> ifNotExistsDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("evaluatedExpressions"))
+                if (property.NameEquals("evaluatedExpressions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExpressionEvaluationDetails> array = new List<ExpressionEvaluationDetails>();
@@ -34,11 +37,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     evaluatedExpressions = array;
                     continue;
                 }
-                if (property.NameEquals("ifNotExistsDetails"))
+                if (property.NameEquals("ifNotExistsDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ifNotExistsDetails = IfNotExistsEvaluationDetails.DeserializeIfNotExistsEvaluationDetails(property.Value);

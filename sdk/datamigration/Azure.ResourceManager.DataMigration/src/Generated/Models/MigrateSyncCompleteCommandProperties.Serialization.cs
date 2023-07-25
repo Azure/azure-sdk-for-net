@@ -18,21 +18,25 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
-                writer.WritePropertyName("input");
+                writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
             if (Optional.IsDefined(CommandId))
             {
-                writer.WritePropertyName("commandId");
+                writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
             }
-            writer.WritePropertyName("commandType");
+            writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
             writer.WriteEndObject();
         }
 
         internal static MigrateSyncCompleteCommandProperties DeserializeMigrateSyncCompleteCommandProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrateSyncCompleteCommandInput> input = default;
             Optional<MigrateSyncCompleteCommandOutput> output = default;
             Optional<string> commandId = default;
@@ -41,41 +45,38 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<CommandState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("input"))
+                if (property.NameEquals("input"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     input = MigrateSyncCompleteCommandInput.DeserializeMigrateSyncCompleteCommandInput(property.Value);
                     continue;
                 }
-                if (property.NameEquals("output"))
+                if (property.NameEquals("output"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     output = MigrateSyncCompleteCommandOutput.DeserializeMigrateSyncCompleteCommandOutput(property.Value);
                     continue;
                 }
-                if (property.NameEquals("commandId"))
+                if (property.NameEquals("commandId"u8))
                 {
                     commandId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("commandType"))
+                if (property.NameEquals("commandType"u8))
                 {
                     commandType = new CommandType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ODataError> array = new List<ODataError>();
@@ -86,11 +87,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new CommandState(property.Value.GetString());

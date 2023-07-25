@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static DynatraceSsoDetailsResult DeserializeDynatraceSsoDetailsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DynatraceSsoStatus> isSsoEnabled = default;
             Optional<Uri> metadataUrl = default;
             Optional<Uri> singleSignOnUrl = default;
@@ -23,41 +27,37 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<IReadOnlyList<string>> adminUsers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isSsoEnabled"))
+                if (property.NameEquals("isSsoEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isSsoEnabled = new DynatraceSsoStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("metadataUrl"))
+                if (property.NameEquals("metadataUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        metadataUrl = null;
                         continue;
                     }
                     metadataUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("singleSignOnUrl"))
+                if (property.NameEquals("singleSignOnUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        singleSignOnUrl = null;
                         continue;
                     }
                     singleSignOnUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("aadDomains"))
+                if (property.NameEquals("aadDomains"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -68,11 +68,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     aadDomains = array;
                     continue;
                 }
-                if (property.NameEquals("adminUsers"))
+                if (property.NameEquals("adminUsers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

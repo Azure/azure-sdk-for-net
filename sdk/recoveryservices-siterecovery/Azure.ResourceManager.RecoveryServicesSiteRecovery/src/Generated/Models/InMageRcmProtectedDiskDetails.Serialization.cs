@@ -15,16 +15,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmProtectedDiskDetails DeserializeInMageRcmProtectedDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskId = default;
             Optional<string> diskName = default;
             Optional<string> isOSDisk = default;
             Optional<long> capacityInBytes = default;
-            Optional<string> logStorageAccountId = default;
-            Optional<string> diskEncryptionSetId = default;
+            Optional<ResourceIdentifier> logStorageAccountId = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
             Optional<string> seedManagedDiskId = default;
             Optional<Uri> seedBlobUri = default;
             Optional<string> targetManagedDiskId = default;
-            Optional<DiskAccountType> diskType = default;
+            Optional<SiteRecoveryDiskAccountType> diskType = default;
             Optional<double> dataPendingInLogDataStoreInMB = default;
             Optional<double> dataPendingAtSourceAgentInMB = default;
             Optional<string> isInitialReplicationComplete = default;
@@ -32,111 +36,112 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<InMageRcmSyncDetails> resyncDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"))
+                if (property.NameEquals("diskId"u8))
                 {
                     diskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskName"))
+                if (property.NameEquals("diskName"u8))
                 {
                     diskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isOSDisk"))
+                if (property.NameEquals("isOSDisk"u8))
                 {
                     isOSDisk = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacityInBytes"))
+                if (property.NameEquals("capacityInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacityInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("logStorageAccountId"))
+                if (property.NameEquals("logStorageAccountId"u8))
                 {
-                    logStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSetId"))
+                if (property.NameEquals("diskEncryptionSetId"u8))
                 {
-                    diskEncryptionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("seedManagedDiskId"))
+                if (property.NameEquals("seedManagedDiskId"u8))
                 {
                     seedManagedDiskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("seedBlobUri"))
+                if (property.NameEquals("seedBlobUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        seedBlobUri = null;
                         continue;
                     }
                     seedBlobUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetManagedDiskId"))
+                if (property.NameEquals("targetManagedDiskId"u8))
                 {
                     targetManagedDiskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskType"))
+                if (property.NameEquals("diskType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskType = new DiskAccountType(property.Value.GetString());
+                    diskType = new SiteRecoveryDiskAccountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataPendingInLogDataStoreInMB"))
+                if (property.NameEquals("dataPendingInLogDataStoreInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataPendingInLogDataStoreInMB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("dataPendingAtSourceAgentInMB"))
+                if (property.NameEquals("dataPendingAtSourceAgentInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataPendingAtSourceAgentInMB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("isInitialReplicationComplete"))
+                if (property.NameEquals("isInitialReplicationComplete"u8))
                 {
                     isInitialReplicationComplete = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("irDetails"))
+                if (property.NameEquals("irDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     irDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resyncDetails"))
+                if (property.NameEquals("resyncDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value);

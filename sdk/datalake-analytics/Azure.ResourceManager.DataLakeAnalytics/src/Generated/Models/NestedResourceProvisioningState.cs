@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The current state of the NestedResourceProvisioning for this account. </summary>
+    /// <summary>
+    /// The current state of the NestedResourceProvisioning for this account.
+    /// Serialized Name: NestedResourceProvisioningState
+    /// </summary>
     public enum NestedResourceProvisioningState
     {
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: NestedResourceProvisioningState.Succeeded
+        /// </summary>
         Succeeded,
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: NestedResourceProvisioningState.Canceled
+        /// </summary>
         Canceled,
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: NestedResourceProvisioningState.Failed
+        /// </summary>
         Failed
     }
 }

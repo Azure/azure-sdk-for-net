@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static LinkedEntity DeserializeLinkedEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IReadOnlyList<Match> matches = default;
             string language = default;
@@ -24,12 +28,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             Optional<string> bingId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("matches"))
+                if (property.NameEquals("matches"u8))
                 {
                     List<Match> array = new List<Match>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -39,27 +43,27 @@ namespace Azure.AI.TextAnalytics.Legacy
                     matches = array;
                     continue;
                 }
-                if (property.NameEquals("language"))
+                if (property.NameEquals("language"u8))
                 {
                     language = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     dataSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bingId"))
+                if (property.NameEquals("bingId"u8))
                 {
                     bingId = property.Value.GetString();
                     continue;

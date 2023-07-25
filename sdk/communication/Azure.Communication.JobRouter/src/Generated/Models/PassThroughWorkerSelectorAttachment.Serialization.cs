@@ -15,55 +15,58 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("key");
+            writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            writer.WritePropertyName("labelOperator");
-            writer.WriteStringValue(LabelOperator.ToSerialString());
-            if (Optional.IsDefined(_ttlSeconds))
+            writer.WritePropertyName("labelOperator"u8);
+            writer.WriteStringValue(LabelOperator.ToString());
+            if (Optional.IsDefined(_expiresAfterSeconds))
             {
-                writer.WritePropertyName("ttlSeconds");
-                writer.WriteNumberValue(_ttlSeconds.Value);
+                writer.WritePropertyName("expiresAfterSeconds"u8);
+                writer.WriteNumberValue(_expiresAfterSeconds.Value);
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 
         internal static PassThroughWorkerSelectorAttachment DeserializePassThroughWorkerSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             LabelOperator labelOperator = default;
-            Optional<double> ttlSeconds = default;
+            Optional<double> expiresAfterSeconds = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("labelOperator"))
+                if (property.NameEquals("labelOperator"u8))
                 {
-                    labelOperator = property.Value.GetString().ToLabelOperator();
+                    labelOperator = new LabelOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ttlSeconds"))
+                if (property.NameEquals("expiresAfterSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ttlSeconds = property.Value.GetDouble();
+                    expiresAfterSeconds = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
             }
-            return new PassThroughWorkerSelectorAttachment(kind, key, labelOperator, Optional.ToNullable(ttlSeconds));
+            return new PassThroughWorkerSelectorAttachment(kind, key, labelOperator, Optional.ToNullable(expiresAfterSeconds));
         }
     }
 }

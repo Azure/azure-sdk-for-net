@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
         internal SqlPoolInfoListResult()
         {
-            Value = new ChangeTrackingList<SqlPoolData>();
+            Value = new ChangeTrackingList<SynapseSqlPoolData>();
         }
 
         /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> List of SQL pools. </param>
-        internal SqlPoolInfoListResult(string nextLink, IReadOnlyList<SqlPoolData> value)
+        internal SqlPoolInfoListResult(string nextLink, IReadOnlyList<SynapseSqlPoolData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
         /// <summary> List of SQL pools. </summary>
-        public IReadOnlyList<SqlPoolData> Value { get; }
+        public IReadOnlyList<SynapseSqlPoolData> Value { get; }
     }
 }

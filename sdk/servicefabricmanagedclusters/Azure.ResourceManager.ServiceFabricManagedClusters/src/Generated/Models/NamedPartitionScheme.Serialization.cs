@@ -16,25 +16,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("names");
+            writer.WritePropertyName("names"u8);
             writer.WriteStartArray();
             foreach (var item in Names)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("partitionScheme");
+            writer.WritePropertyName("partitionScheme"u8);
             writer.WriteStringValue(PartitionScheme.ToString());
             writer.WriteEndObject();
         }
 
         internal static NamedPartitionScheme DeserializeNamedPartitionScheme(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> names = default;
             PartitionScheme partitionScheme = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("names"))
+                if (property.NameEquals("names"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -44,7 +48,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     names = array;
                     continue;
                 }
-                if (property.NameEquals("partitionScheme"))
+                if (property.NameEquals("partitionScheme"u8))
                 {
                     partitionScheme = new PartitionScheme(property.Value.GetString());
                     continue;

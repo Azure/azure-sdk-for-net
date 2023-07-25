@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Base class for generic container of backup items. </summary>
-    public partial class GenericContainer : ProtectionContainer
+    public partial class GenericContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of GenericContainer. </summary>
         public GenericContainer()
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="fabricName"> Name of the container&apos;s fabric. </param>
+        /// <param name="fabricName"> Name of the container's fabric. </param>
         /// <param name="extendedInformation"> Extended information (not returned in List container API calls). </param>
         internal GenericContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string fabricName, GenericContainerExtendedInfo extendedInformation) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerType = containerType;
         }
 
-        /// <summary> Name of the container&apos;s fabric. </summary>
+        /// <summary> Name of the container's fabric. </summary>
         public string FabricName { get; set; }
         /// <summary> Extended information (not returned in List container API calls). </summary>
         public GenericContainerExtendedInfo ExtendedInformation { get; set; }

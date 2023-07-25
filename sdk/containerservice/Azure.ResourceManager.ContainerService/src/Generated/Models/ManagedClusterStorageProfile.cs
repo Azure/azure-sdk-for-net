@@ -19,20 +19,24 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="diskCsiDriver"> AzureDisk CSI Driver settings for the storage profile. </param>
         /// <param name="fileCsiDriver"> AzureFile CSI Driver settings for the storage profile. </param>
         /// <param name="snapshotController"> Snapshot Controller settings for the storage profile. </param>
-        internal ManagedClusterStorageProfile(ManagedClusterStorageProfileDiskCsiDriver diskCsiDriver, ManagedClusterStorageProfileFileCsiDriver fileCsiDriver, ManagedClusterStorageProfileSnapshotController snapshotController)
+        /// <param name="blobCsiDriver"> AzureBlob CSI Driver settings for the storage profile. </param>
+        internal ManagedClusterStorageProfile(ManagedClusterStorageProfileDiskCsiDriver diskCsiDriver, ManagedClusterStorageProfileFileCsiDriver fileCsiDriver, ManagedClusterStorageProfileSnapshotController snapshotController, ManagedClusterStorageProfileBlobCsiDriver blobCsiDriver)
         {
             DiskCsiDriver = diskCsiDriver;
             FileCsiDriver = fileCsiDriver;
             SnapshotController = snapshotController;
+            BlobCsiDriver = blobCsiDriver;
         }
 
         /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
-        internal ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
-
+        public ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
         /// <summary> AzureFile CSI Driver settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileFileCsiDriver FileCsiDriver { get; set; }
 
         /// <summary> Snapshot Controller settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileSnapshotController SnapshotController { get; set; }
+
+        /// <summary> AzureBlob CSI Driver settings for the storage profile. </summary>
+        internal ManagedClusterStorageProfileBlobCsiDriver BlobCsiDriver { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using System;
 using System.Buffers;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             catch (Exception ex)
             {
-                Response = Request.Failed(ex, true).Result;
+                Response = Request.Failed(ex, !(ex is ValidationException)).Result;
             }
 
             return Task.CompletedTask;

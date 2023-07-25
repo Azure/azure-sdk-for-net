@@ -14,31 +14,33 @@ namespace Azure.Maps.Search.Models
     {
         internal static OperatingHoursTime DeserializeOperatingHoursTime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> date = default;
             Optional<int> hour = default;
             Optional<int> minute = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("date"))
+                if (property.NameEquals("date"u8))
                 {
                     date = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hour"))
+                if (property.NameEquals("hour"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hour = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minute"))
+                if (property.NameEquals("minute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minute = property.Value.GetInt32();

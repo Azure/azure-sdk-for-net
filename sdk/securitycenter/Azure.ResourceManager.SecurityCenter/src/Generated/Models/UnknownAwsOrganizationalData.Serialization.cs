@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("organizationMembershipType");
+            writer.WritePropertyName("organizationMembershipType"u8);
             writer.WriteStringValue(OrganizationMembershipType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownAwsOrganizationalData DeserializeUnknownAwsOrganizationalData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OrganizationMembershipType organizationMembershipType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("organizationMembershipType"))
+                if (property.NameEquals("organizationMembershipType"u8))
                 {
                     organizationMembershipType = new OrganizationMembershipType(property.Value.GetString());
                     continue;

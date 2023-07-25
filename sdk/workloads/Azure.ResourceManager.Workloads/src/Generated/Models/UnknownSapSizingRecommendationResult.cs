@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Workloads.Models
     internal partial class UnknownSapSizingRecommendationResult : SapSizingRecommendationResult
     {
         /// <summary> Initializes a new instance of UnknownSapSizingRecommendationResult. </summary>
-        /// <param name="deploymentType"> The deployment Type. </param>
+        /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         internal UnknownSapSizingRecommendationResult(SapDeploymentType deploymentType) : base(deploymentType)
         {
             DeploymentType = deploymentType;

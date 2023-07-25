@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CallsCount))
             {
-                writer.WritePropertyName("callsCount");
+                writer.WritePropertyName("callsCount"u8);
                 writer.WriteNumberValue(CallsCount.Value);
             }
             if (Optional.IsDefined(KbTransferred))
             {
-                writer.WritePropertyName("kbTransferred");
+                writer.WritePropertyName("kbTransferred"u8);
                 writer.WriteNumberValue(KbTransferred.Value);
             }
             writer.WriteEndObject();

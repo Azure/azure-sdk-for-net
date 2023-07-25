@@ -14,21 +14,24 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static GitHubActionWebAppStackSettings DeserializeGitHubActionWebAppStackSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isSupported = default;
             Optional<string> supportedVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isSupported"))
+                if (property.NameEquals("isSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isSupported = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("supportedVersion"))
+                if (property.NameEquals("supportedVersion"u8))
                 {
                     supportedVersion = property.Value.GetString();
                     continue;

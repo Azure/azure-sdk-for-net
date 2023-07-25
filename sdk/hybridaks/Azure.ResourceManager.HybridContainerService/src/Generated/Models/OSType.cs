@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: &apos;Linux&apos;, &apos;Windows&apos;. </summary>
+    /// <summary> OsType - OsType to be used to specify os type. Choose from Linux and Windows. Default to Linux. Possible values include: 'Linux', 'Windows'. </summary>
     public readonly partial struct OSType : IEquatable<OSType>
     {
         private readonly string _value;

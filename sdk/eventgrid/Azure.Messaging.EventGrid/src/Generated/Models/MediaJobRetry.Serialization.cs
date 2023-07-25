@@ -20,8 +20,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         public static MediaJobRetry ToMediaJobRetry(this string value)
         {
-            if (string.Equals(value, "DoNotRetry", StringComparison.InvariantCultureIgnoreCase)) return MediaJobRetry.DoNotRetry;
-            if (string.Equals(value, "MayRetry", StringComparison.InvariantCultureIgnoreCase)) return MediaJobRetry.MayRetry;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DoNotRetry")) return MediaJobRetry.DoNotRetry;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MayRetry")) return MediaJobRetry.MayRetry;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MediaJobRetry value.");
         }
     }

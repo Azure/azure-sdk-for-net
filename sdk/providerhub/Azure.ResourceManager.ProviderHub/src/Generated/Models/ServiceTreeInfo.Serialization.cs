@@ -17,51 +17,39 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceId))
             {
-                writer.WritePropertyName("serviceId");
+                writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
             if (Optional.IsDefined(ComponentId))
             {
-                writer.WritePropertyName("componentId");
+                writer.WritePropertyName("componentId"u8);
                 writer.WriteStringValue(ComponentId);
-            }
-            if (Optional.IsDefined(Readiness))
-            {
-                writer.WritePropertyName("readiness");
-                writer.WriteStringValue(Readiness.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static ServiceTreeInfo DeserializeServiceTreeInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceId = default;
             Optional<string> componentId = default;
-            Optional<Readiness> readiness = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceId"))
+                if (property.NameEquals("serviceId"u8))
                 {
                     serviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("componentId"))
+                if (property.NameEquals("componentId"u8))
                 {
                     componentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("readiness"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    readiness = new Readiness(property.Value.GetString());
-                    continue;
-                }
             }
-            return new ServiceTreeInfo(serviceId.Value, componentId.Value, Optional.ToNullable(readiness));
+            return new ServiceTreeInfo(serviceId.Value, componentId.Value);
         }
     }
 }

@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static ClusterZoneList DeserializeClusterZoneList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvsClusterZone>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AvsClusterZone> array = new List<AvsClusterZone>();

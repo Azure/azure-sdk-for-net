@@ -15,21 +15,26 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 
         internal static RouterRule DeserializeRouterRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "azure-function-rule": return FunctionRule.DeserializeFunctionRule(element);
-                    case "direct-map-rule": return DirectMapRule.DeserializeDirectMapRule(element);
-                    case "expression-rule": return ExpressionRule.DeserializeExpressionRule(element);
-                    case "static-rule": return StaticRule.DeserializeStaticRule(element);
+                    case "azure-function-rule": return FunctionRouterRule.DeserializeFunctionRouterRule(element);
+                    case "direct-map-rule": return DirectMapRouterRule.DeserializeDirectMapRouterRule(element);
+                    case "expression-rule": return ExpressionRouterRule.DeserializeExpressionRouterRule(element);
+                    case "static-rule": return StaticRouterRule.DeserializeStaticRouterRule(element);
+                    case "webhook-rule": return WebhookRouterRule.DeserializeWebhookRouterRule(element);
                 }
             }
             return UnknownRouterRule.DeserializeUnknownRouterRule(element);

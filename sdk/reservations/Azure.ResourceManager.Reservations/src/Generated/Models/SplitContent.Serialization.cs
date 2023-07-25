@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Reservations.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Quantities))
             {
-                writer.WritePropertyName("quantities");
+                writer.WritePropertyName("quantities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Quantities)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             if (Optional.IsDefined(ReservationId))
             {
-                writer.WritePropertyName("reservationId");
+                writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
             writer.WriteEndObject();

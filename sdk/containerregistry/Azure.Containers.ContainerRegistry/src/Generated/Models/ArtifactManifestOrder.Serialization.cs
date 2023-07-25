@@ -21,9 +21,9 @@ namespace Azure.Containers.ContainerRegistry
 
         public static ArtifactManifestOrder ToArtifactManifestOrder(this string value)
         {
-            if (string.Equals(value, "none", StringComparison.InvariantCultureIgnoreCase)) return ArtifactManifestOrder.None;
-            if (string.Equals(value, "timedesc", StringComparison.InvariantCultureIgnoreCase)) return ArtifactManifestOrder.LastUpdatedOnDescending;
-            if (string.Equals(value, "timeasc", StringComparison.InvariantCultureIgnoreCase)) return ArtifactManifestOrder.LastUpdatedOnAscending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return ArtifactManifestOrder.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "timedesc")) return ArtifactManifestOrder.LastUpdatedOnDescending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "timeasc")) return ArtifactManifestOrder.LastUpdatedOnAscending;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArtifactManifestOrder value.");
         }
     }

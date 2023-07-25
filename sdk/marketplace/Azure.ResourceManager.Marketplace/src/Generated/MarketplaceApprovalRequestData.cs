@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary> A class representing the MarketplaceApprovalRequest data model. </summary>
+    /// <summary>
+    /// A class representing the MarketplaceApprovalRequest data model.
+    /// Request approval resource.
+    /// </summary>
     public partial class MarketplaceApprovalRequestData : ResourceData
     {
         /// <summary> Initializes a new instance of MarketplaceApprovalRequestData. </summary>
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="systemData"> The systemData. </param>
         /// <param name="offerId"> Gets or sets unique offer id. </param>
         /// <param name="offerDisplayName"> Gets offer display name. </param>
-        /// <param name="publisherId"> The offer&apos;s publisher id. </param>
+        /// <param name="publisherId"> The offer's publisher id. </param>
         /// <param name="plansDetails"> Gets or sets the plans details. </param>
         /// <param name="isClosed"> Gets a value indicating whether the request is closed. </param>
         /// <param name="messageCode"> Gets or sets the request approval message code. </param>
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.Marketplace
         public string OfferId { get; set; }
         /// <summary> Gets offer display name. </summary>
         public string OfferDisplayName { get; }
-        /// <summary> The offer&apos;s publisher id. </summary>
+        /// <summary> The offer's publisher id. </summary>
         public string PublisherId { get; set; }
         /// <summary> Gets or sets the plans details. </summary>
         public IList<PrivateStorePlanDetails> PlansDetails { get; }

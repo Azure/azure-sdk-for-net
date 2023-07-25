@@ -14,7 +14,10 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the StorageAccount data model. </summary>
+    /// <summary>
+    /// A class representing the StorageAccount data model.
+    /// The storage account.
+    /// </summary>
     public partial class StorageAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StorageAccountData. </summary>
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="keyCreationTime"> Storage account keys creation time. </param>
         /// <param name="secondaryEndpoints"> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object from the secondary location of the storage account. Only available if the SKU name is Standard_RAGRS. </param>
         /// <param name="encryption"> Encryption settings to be used for server-side encryption for the storage account. </param>
-        /// <param name="accessTier"> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The &apos;Premium&apos; access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </param>
+        /// <param name="accessTier"> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </param>
         /// <param name="azureFilesIdentityBasedAuthentication"> Provides the identity based authentication settings for Azure Files. </param>
         /// <param name="enableHttpsTrafficOnly"> Allows https traffic only to storage service if sets to true. </param>
         /// <param name="networkRuleSet"> Network rule set. </param>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="isNfsV3Enabled"> NFS 3.0 protocol support enabled if set to true. </param>
         /// <param name="allowCrossTenantReplication"> Allow or disallow cross AAD tenant object replication. The default interpretation is true for this property. </param>
         /// <param name="isDefaultToOAuthAuthentication"> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </param>
-        /// <param name="publicNetworkAccess"> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="publicNetworkAccess"> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </param>
         /// <param name="allowedCopyScope"> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </param>
         /// <param name="storageAccountSkuConversionStatus"> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </param>
@@ -161,7 +164,7 @@ namespace Azure.ResourceManager.Storage
         public StorageAccountEndpoints SecondaryEndpoints { get; }
         /// <summary> Encryption settings to be used for server-side encryption for the storage account. </summary>
         public StorageAccountEncryption Encryption { get; }
-        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The &apos;Premium&apos; access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
+        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
         public StorageAccountAccessTier? AccessTier { get; }
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
@@ -199,7 +202,7 @@ namespace Azure.ResourceManager.Storage
         public bool? AllowCrossTenantReplication { get; set; }
         /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
         public bool? IsDefaultToOAuthAuthentication { get; set; }
-        /// <summary> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public StoragePublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </summary>
         public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }

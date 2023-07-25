@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ListAmlUserFeatureResult. </summary>
         internal ListAmlUserFeatureResult()
         {
-            Value = new ChangeTrackingList<AmlUserFeature>();
+            Value = new ChangeTrackingList<MachineLearningUserFeature>();
         }
 
         /// <summary> Initializes a new instance of ListAmlUserFeatureResult. </summary>
         /// <param name="value"> The list of AML user facing features. </param>
         /// <param name="nextLink"> The URI to fetch the next page of AML user features information. Call ListNext() with this to fetch the next page of AML user features information. </param>
-        internal ListAmlUserFeatureResult(IReadOnlyList<AmlUserFeature> value, string nextLink)
+        internal ListAmlUserFeatureResult(IReadOnlyList<MachineLearningUserFeature> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of AML user facing features. </summary>
-        public IReadOnlyList<AmlUserFeature> Value { get; }
+        public IReadOnlyList<MachineLearningUserFeature> Value { get; }
         /// <summary> The URI to fetch the next page of AML user features information. Call ListNext() with this to fetch the next page of AML user features information. </summary>
         public string NextLink { get; }
     }

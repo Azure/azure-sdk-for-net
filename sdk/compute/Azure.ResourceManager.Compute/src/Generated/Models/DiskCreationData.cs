@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DiskCreationData
     {
         /// <summary> Initializes a new instance of DiskCreationData. </summary>
-        /// <param name="createOption"> This enumerates the possible sources of a disk&apos;s creation. </param>
+        /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         public DiskCreationData(DiskCreateOption createOption)
         {
             CreateOption = createOption;
         }
 
         /// <summary> Initializes a new instance of DiskCreationData. </summary>
-        /// <param name="createOption"> This enumerates the possible sources of a disk&apos;s creation. </param>
+        /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
         /// <param name="imageReference"> Disk source information for PIR or user images. </param>
         /// <param name="galleryImageReference"> Required if creating from a Gallery Image. The id/sharedGalleryImageId/communityGalleryImageId of the ImageDiskReference will be the ARM id of the shared galley image version from which to create a disk. </param>
@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="uploadSizeBytes"> If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be between 20972032 (20 MiB + 512 bytes for the VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer). </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default. </param>
         /// <param name="securityDataUri"> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </param>
-        internal DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri)
+        /// <param name="isPerformancePlusEnabled"> Set this flag to true to get a boost on the performance target of the disk deployed, see here on the respective performance target. This flag can only be set on disk creation time and cannot be disabled after enabled. </param>
+        internal DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri, bool? isPerformancePlusEnabled)
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -43,9 +44,10 @@ namespace Azure.ResourceManager.Compute.Models
             UploadSizeBytes = uploadSizeBytes;
             LogicalSectorSize = logicalSectorSize;
             SecurityDataUri = securityDataUri;
+            IsPerformancePlusEnabled = isPerformancePlusEnabled;
         }
 
-        /// <summary> This enumerates the possible sources of a disk&apos;s creation. </summary>
+        /// <summary> This enumerates the possible sources of a disk's creation. </summary>
         public DiskCreateOption CreateOption { get; set; }
         /// <summary> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </summary>
         public ResourceIdentifier StorageAccountId { get; set; }
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? LogicalSectorSize { get; set; }
         /// <summary> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </summary>
         public Uri SecurityDataUri { get; set; }
+        /// <summary> Set this flag to true to get a boost on the performance target of the disk deployed, see here on the respective performance target. This flag can only be set on disk creation time and cannot be disabled after enabled. </summary>
+        public bool? IsPerformancePlusEnabled { get; set; }
     }
 }

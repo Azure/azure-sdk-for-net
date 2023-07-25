@@ -34,6 +34,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// List of tones that will stop recognizing.
         /// </summary>
-        public IReadOnlyList<DtmfTone> StopTones { get; set; }
+        public IList<DtmfTone> StopTones { get; set; }
     }
 }

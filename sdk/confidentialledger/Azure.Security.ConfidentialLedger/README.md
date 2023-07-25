@@ -122,13 +122,13 @@ ledgerClient.PostLedgerEntry(
 When no collection id is specified on method calls, the Azure confidential ledger service will assume a constant, service-determined collection id.
 
 ```C# Snippet:NoCollectionId
-Response postResponse = ledgerClient.PostLedgerEntry(
-waitUntil: WaitUntil.Completed,
+postOperation = ledgerClient.PostLedgerEntry(
+    waitUntil: WaitUntil.Completed,
     RequestContent.Create(
         new { contents = "Hello world!" }));
 
 string content = postOperation.GetRawResponse().Content.ToString();
-string transactionId = postOperation.Id;
+transactionId = postOperation.Id;
 string collectionId = "subledger:0";
 
 // Try fetching the ledger entry until it is "loaded".
@@ -180,7 +180,8 @@ ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(new { contents = "Hello world collection 1" }),
     "my collection");
-string transactionId = firstPostOperation.Id;
+
+transactionId = firstPostOperation.Id;
 
 // Wait for the entry to be committed
 status = "Pending";
@@ -344,7 +345,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 

@@ -21,15 +21,12 @@ namespace Azure.Communication.CallAutomation
         internal readonly ContentDownloader _contentDownloader;
         internal readonly ClientDiagnostics _clientDiagnostics;
         internal readonly HttpPipeline _pipeline;
+        internal readonly CallRecordingRestClient _callRecordingRestClient;
 
-        internal ServerCallsRestClient ServerCallsRestClient { get; }
-        internal ContentRestClient ContentRestClient { get; }
-
-        internal CallRecording(string resourceEndpoint, ServerCallsRestClient serverCallsRestClient, ContentRestClient contentRestClient, ClientDiagnostics clientDiagnostics, HttpPipeline httpPipeline)
+        internal CallRecording(string resourceEndpoint, CallRecordingRestClient callRecordingRestClient, ClientDiagnostics clientDiagnostics, HttpPipeline httpPipeline)
         {
             _resourceEndpoint = resourceEndpoint;
-            this.ServerCallsRestClient = serverCallsRestClient;
-            this.ContentRestClient = contentRestClient;
+            _callRecordingRestClient = callRecordingRestClient;
             _contentDownloader = new(this);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = httpPipeline;
@@ -39,8 +36,7 @@ namespace Azure.Communication.CallAutomation
         protected CallRecording()
         {
             _resourceEndpoint = null;
-            ServerCallsRestClient = null;
-            ContentRestClient = null;
+            _callRecordingRestClient = null;
             _contentDownloader = new(this);
             _clientDiagnostics = null;
             _pipeline = null;
@@ -51,22 +47,21 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="options">Options for start recording</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<RecordingStateResult> StartRecording(StartRecordingOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RecordingStateResult> Start(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Start)}");
             scope.Start();
             try
             {
                 StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
-                    RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
+                    RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    RecordingStorageType = options.RecordingStorageType
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -75,13 +70,27 @@ namespace Azure.Communication.CallAutomation
                     {
                         request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer.Serialize(c));
                     }
-                };
+                }
 
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
-                return ContentRestClient.Recording(request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                    cancellationToken: cancellationToken);
+                if (options.ChannelAffinity != null && options.ChannelAffinity.Any())
+                {
+                    foreach (var c in options.ChannelAffinity)
+                    {
+                        ChannelAffinityInternal newChannelAffinity = new ChannelAffinityInternal(CommunicationIdentifierSerializer.Serialize(c.Participant));
+                        if (c.Channel != null)
+                        {
+                            newChannelAffinity.Channel = c.Channel;
+                        }
+                        request.ChannelAffinity.Add(newChannelAffinity);
+                    }
+                }
+
+                if (options.ExternalStorage is not null)
+                {
+                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
+                }
+
+                return _callRecordingRestClient.StartRecording(request, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -95,22 +104,21 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="options">Options for start recording</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<RecordingStateResult>> StartRecordingAsync(StartRecordingOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecordingStateResult>> StartAsync(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Start)}");
             scope.Start();
             try
             {
                 StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
-                    RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
+                    RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    RecordingStorageType = options.RecordingStorageType
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -121,11 +129,25 @@ namespace Azure.Communication.CallAutomation
                     }
                 };
 
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
-                return await ContentRestClient.RecordingAsync(request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (options.ChannelAffinity != null && options.ChannelAffinity.Any())
+                {
+                    foreach (var c in options.ChannelAffinity)
+                    {
+                        ChannelAffinityInternal newChannelAffinity = new ChannelAffinityInternal(CommunicationIdentifierSerializer.Serialize(c.Participant));
+                        if (c.Channel != null)
+                        {
+                            newChannelAffinity.Channel = c.Channel;
+                        }
+                        request.ChannelAffinity.Add(newChannelAffinity);
+                    }
+                }
+
+                if (options.ExternalStorage is not null)
+                {
+                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
+                }
+
+                return await _callRecordingRestClient.StartRecordingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -139,13 +161,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response<RecordingStateResult> GetRecordingState(string recordingId, CancellationToken cancellationToken = default)
+        public virtual Response<RecordingStateResult> GetState(string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetRecordingState)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetState)}");
             scope.Start();
             try
             {
-                return ServerCallsRestClient.GetRecordingProperties(
+                return _callRecordingRestClient.GetRecordingProperties(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     );
@@ -162,13 +184,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<RecordingStateResult>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecordingStateResult>> GetStateAsync(string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetRecordingState)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(GetState)}");
             scope.Start();
             try
             {
-                return await ServerCallsRestClient.GetRecordingPropertiesAsync(
+                return await _callRecordingRestClient.GetRecordingPropertiesAsync(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -185,13 +207,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="recordingId">The recording id to stop.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response StopRecording(string recordingId, CancellationToken cancellationToken = default)
+        public virtual Response Stop(string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StopRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Stop)}");
             scope.Start();
             try
             {
-                return ServerCallsRestClient.StopRecording(
+                return _callRecordingRestClient.StopRecording(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     );
@@ -208,13 +230,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="recordingId">The recording id to stop.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response> StopRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StopAsync(string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StopRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Stop)}");
             scope.Start();
             try
             {
-                return await ServerCallsRestClient.StopRecordingAsync(
+                return await _callRecordingRestClient.StopRecordingAsync(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -231,13 +253,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="recordingId">The recording id to pause.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response> PauseRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PauseAsync(string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(PauseRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Pause)}");
             scope.Start();
             try
             {
-                return await ServerCallsRestClient.PauseRecordingAsync(
+                return await _callRecordingRestClient.PauseRecordingAsync(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -254,13 +276,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="recordingId">The recording id to pause.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response PauseRecording(string recordingId, CancellationToken cancellationToken = default)
+        public virtual Response Pause(string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(PauseRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Pause)}");
             scope.Start();
             try
             {
-                return ServerCallsRestClient.PauseRecording(
+                return _callRecordingRestClient.PauseRecording(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     );
@@ -277,13 +299,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="recordingId">The recording id to pause.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response> ResumeRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResumeAsync(string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(ResumeRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Resume)}");
             scope.Start();
             try
             {
-                return await ServerCallsRestClient.ResumeRecordingAsync(
+                return await _callRecordingRestClient.ResumeRecordingAsync(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -300,13 +322,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="recordingId">The recording id to resume.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual Response ResumeRecording(string recordingId, CancellationToken cancellationToken = default)
+        public virtual Response Resume(string recordingId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(ResumeRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Resume)}");
             scope.Start();
             try
             {
-                return ServerCallsRestClient.ResumeRecording(
+                return _callRecordingRestClient.ResumeRecording(
                     recordingId: recordingId,
                     cancellationToken: cancellationToken
                     );
@@ -516,7 +538,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// The <see cref="DeleteRecording(Uri, CancellationToken)"/>
+        /// The <see cref="Delete(Uri, CancellationToken)"/>
         /// operation deletes the specified content from storage.
         /// </summary>
         /// <param name="recordingLocation">
@@ -533,9 +555,9 @@ namespace Azure.Communication.CallAutomation
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response DeleteRecording(Uri recordingLocation, CancellationToken cancellationToken = default)
+        public virtual Response Delete(Uri recordingLocation, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(DeleteRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Delete)}");
             scope.Start();
             try
             {
@@ -547,7 +569,7 @@ namespace Azure.Communication.CallAutomation
                     case 200:
                         return message.Response;
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)
@@ -558,7 +580,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// The <see cref="DeleteRecordingAsync(Uri, CancellationToken)"/>
+        /// The <see cref="DeleteAsync(Uri, CancellationToken)"/>
         /// operation deletes the specified content from storage
         /// using parallel requests.
         /// </summary>
@@ -576,9 +598,9 @@ namespace Azure.Communication.CallAutomation
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DeleteRecordingAsync(Uri recordingLocation, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(Uri recordingLocation, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(DeleteRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Delete)}");
             scope.Start();
             try
             {
@@ -590,7 +612,7 @@ namespace Azure.Communication.CallAutomation
                     case 200:
                         return message.Response;
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)
@@ -599,5 +621,24 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
+
+        #region private functions
+
+        private static ExternalStorageInternal TranslateExternalStorageToInternal(ExternalStorage externalStorage)
+        {
+            ExternalStorageInternal result = null;
+
+            if (externalStorage is BlobStorage blobStorage)
+            {
+                result = new ExternalStorageInternal(blobStorage.StorageType)
+                {
+                    BlobStorage = new BlobStorageInternal(blobStorage.ContainerUri.AbsoluteUri),
+                };
+            }
+
+            return result;
+        }
+
+        #endregion private functions
     }
 }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilityInformation>> GetCapabilityAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreCapabilityInformation>> GetCapabilityAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        CapabilityInformation value = default;
+                        DataLakeStoreCapabilityInformation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CapabilityInformation.DeserializeCapabilityInformation(document.RootElement);
+                        value = DataLakeStoreCapabilityInformation.DeserializeDataLakeStoreCapabilityInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CapabilityInformation)null, message.Response);
+                    return Response.FromValue((DataLakeStoreCapabilityInformation)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilityInformation> GetCapability(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreCapabilityInformation> GetCapability(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -100,13 +100,13 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        CapabilityInformation value = default;
+                        DataLakeStoreCapabilityInformation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CapabilityInformation.DeserializeCapabilityInformation(document.RootElement);
+                        value = DataLakeStoreCapabilityInformation.DeserializeDataLakeStoreCapabilityInformation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CapabilityInformation)null, message.Response);
+                    return Response.FromValue((DataLakeStoreCapabilityInformation)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UsageListResult>> GetUsageAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreUsageListResult>> GetUsageAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        UsageListResult value = default;
+                        DataLakeStoreUsageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UsageListResult.DeserializeUsageListResult(document.RootElement);
+                        value = DataLakeStoreUsageListResult.DeserializeDataLakeStoreUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UsageListResult> GetUsage(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreUsageListResult> GetUsage(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        UsageListResult value = default;
+                        DataLakeStoreUsageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UsageListResult.DeserializeUsageListResult(document.RootElement);
+                        value = DataLakeStoreUsageListResult.DeserializeDataLakeStoreUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

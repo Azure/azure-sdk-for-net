@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Storage
@@ -24,7 +25,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2021-12-02";
+        public const string DefaultSasVersion = "2023-08-03";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -63,6 +64,9 @@ namespace Azure.Storage
         /// download operation.
         /// </summary>
         public const int DefaultDownloadCopyBufferSize = 16384;
+
+        public const int StorageCrc64SizeInBytes = 8;
+        public const int MD5SizeInBytes = 16;
 
         /// <summary>
         /// Backwards compatible default value for trimming slashes on object name.
@@ -186,6 +190,7 @@ namespace Azure.Storage
             public const string ContentRange = "Content-Range";
             public const string VersionId = "x-ms-version-id";
             public const string LeaseTime = "x-ms-lease-time";
+            public const string LeaseId = "x-ms-lease-id";
             public const string LastModified = "Last-Modified";
             public const string ETag = "ETag";
         }
@@ -212,7 +217,8 @@ namespace Azure.Storage
 
             internal static class Append
             {
-                public const int MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
+                public const int Pre_2022_11_02_MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
+                public const int MaxAppendBlockBytes = 100 * Constants.MB; // 100MB
                 public const int MaxBlocks = 50000;
             }
 
@@ -231,6 +237,7 @@ namespace Azure.Storage
             internal static class Page
             {
                 public const int PageSizeBytes = 512;
+                public const int MaxPageBlockBytes = 4 * Constants.MB; // 4MB
             }
 
             internal static class Container
@@ -376,6 +383,14 @@ namespace Azure.Storage
             public const string DeletionId = "deletionid";
 
             public const string DirectoryResourceType = "directory";
+
+            public const string EncryptionContextHeaderName = "x-ms-encryption-context";
+
+            public const string OwnerHeaderName = "x-ms-owner";
+
+            public const string GroupHeaderName = "x-ms-group";
+
+            public const string PermissionsHeaderName = "x-ms-permissions";
         }
 
         /// <summary>
@@ -698,6 +713,12 @@ namespace Azure.Storage
         {
             internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
             internal const string QueryParameterKey = "timeout";
+        }
+
+        internal static class CopyHttpAuthorization
+        {
+            internal static readonly string[] Scopes = { "https://storage.azure.com/.default" };
+            internal const string BearerScheme = "Bearer";
         }
     }
 }

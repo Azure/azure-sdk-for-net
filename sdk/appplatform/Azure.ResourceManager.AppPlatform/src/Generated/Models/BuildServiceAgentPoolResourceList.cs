@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of BuildServiceAgentPoolResourceList. </summary>
         internal BuildServiceAgentPoolResourceList()
         {
-            Value = new ChangeTrackingList<AppBuildServiceAgentPoolResourceData>();
+            Value = new ChangeTrackingList<AppPlatformBuildServiceAgentPoolData>();
         }
 
         /// <summary> Initializes a new instance of BuildServiceAgentPoolResourceList. </summary>
         /// <param name="value"> Collection of build service agent pool resource. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
-        internal BuildServiceAgentPoolResourceList(IReadOnlyList<AppBuildServiceAgentPoolResourceData> value, string nextLink)
+        internal BuildServiceAgentPoolResourceList(IReadOnlyList<AppPlatformBuildServiceAgentPoolData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of build service agent pool resource. </summary>
-        public IReadOnlyList<AppBuildServiceAgentPoolResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformBuildServiceAgentPoolData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

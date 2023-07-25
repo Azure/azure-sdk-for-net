@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static SupportedOperatingSystemType ToSupportedOperatingSystemType(this string value)
         {
-            if (string.Equals(value, "Windows", StringComparison.InvariantCultureIgnoreCase)) return SupportedOperatingSystemType.Windows;
-            if (string.Equals(value, "Linux", StringComparison.InvariantCultureIgnoreCase)) return SupportedOperatingSystemType.Linux;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return SupportedOperatingSystemType.Windows;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux")) return SupportedOperatingSystemType.Linux;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SupportedOperatingSystemType value.");
         }
     }

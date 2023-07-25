@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the TemplateSpecVersion data model. </summary>
+    /// <summary>
+    /// A class representing the TemplateSpecVersion data model.
+    /// Template Spec Version object.
+    /// </summary>
     public partial class TemplateSpecVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>

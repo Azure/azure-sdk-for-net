@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,11 +54,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Create a DNS service by id in a private cloud workload network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}
-        /// Operation Id: WorkloadNetworks_CreateDnsService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_CreateDnsService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service&apos;s display name. </param>
+        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service's display name. </param>
         /// <param name="data"> NSX DNS Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -88,11 +95,19 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Create a DNS service by id in a private cloud workload network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}
-        /// Operation Id: WorkloadNetworks_CreateDnsService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_CreateDnsService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service&apos;s display name. </param>
+        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service's display name. </param>
         /// <param name="data"> NSX DNS Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -121,10 +136,18 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Get a DNS service by id in a private cloud workload network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}
-        /// Operation Id: WorkloadNetworks_GetDnsService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetDnsService</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service&apos;s display name. </param>
+        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
@@ -150,10 +173,18 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Get a DNS service by id in a private cloud workload network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}
-        /// Operation Id: WorkloadNetworks_GetDnsService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetDnsService</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service&apos;s display name. </param>
+        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
@@ -179,94 +210,62 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// List of DNS services in a private cloud workload network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices
-        /// Operation Id: WorkloadNetworks_ListDnsServices
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_ListDnsServices</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WorkloadNetworkDnsServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkDnsServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkloadNetworkDnsServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkDnsServiceWorkloadNetworksRestClient.ListDnsServicesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkDnsServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WorkloadNetworkDnsServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _workloadNetworkDnsServiceWorkloadNetworksRestClient.ListDnsServicesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkDnsServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDnsServiceResource(Client, WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(e)), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List of DNS services in a private cloud workload network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices
-        /// Operation Id: WorkloadNetworks_ListDnsServices
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_ListDnsServices</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkloadNetworkDnsServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkDnsServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<WorkloadNetworkDnsServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkDnsServiceWorkloadNetworksRestClient.ListDnsServices(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkDnsServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WorkloadNetworkDnsServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsServiceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _workloadNetworkDnsServiceWorkloadNetworksRestClient.ListDnsServicesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadNetworkDnsServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateListDnsServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkDnsServiceResource(Client, WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(e)), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkDnsServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}
-        /// Operation Id: WorkloadNetworks_GetDnsService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetDnsService</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service&apos;s display name. </param>
+        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
@@ -290,10 +289,18 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}
-        /// Operation Id: WorkloadNetworks_GetDnsService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsServices/{dnsServiceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetDnsService</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service&apos;s display name. </param>
+        /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>

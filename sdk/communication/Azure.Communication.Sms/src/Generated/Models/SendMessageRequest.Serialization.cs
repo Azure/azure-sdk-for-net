@@ -15,20 +15,20 @@ namespace Azure.Communication.Sms.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("from");
+            writer.WritePropertyName("from"u8);
             writer.WriteStringValue(From);
-            writer.WritePropertyName("smsRecipients");
+            writer.WritePropertyName("smsRecipients"u8);
             writer.WriteStartArray();
             foreach (var item in SmsRecipients)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("message");
+            writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
             if (Optional.IsDefined(SmsSendOptions))
             {
-                writer.WritePropertyName("smsSendOptions");
+                writer.WritePropertyName("smsSendOptions"u8);
                 writer.WriteObjectValue(SmsSendOptions);
             }
             writer.WriteEndObject();

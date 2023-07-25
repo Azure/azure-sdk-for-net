@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.Quota.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("limitObjectType");
+            writer.WritePropertyName("limitObjectType"u8);
             writer.WriteStringValue(LimitObjectType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownLimitJsonObject DeserializeUnknownLimitJsonObject(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LimitType limitObjectType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("limitObjectType"))
+                if (property.NameEquals("limitObjectType"u8))
                 {
                     limitObjectType = new LimitType(property.Value.GetString());
                     continue;

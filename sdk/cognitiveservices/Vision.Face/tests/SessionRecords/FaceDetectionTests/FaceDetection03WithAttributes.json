@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -23,23 +23,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:24 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "apim-request-id": [
-          "9df739d1-ca84-4ef4-93ee-f415f88820bf"
+          "3c2b5fa3-0a52-4a1d-b647-7bf7a0abac65"
+        ],
+        "x-envoy-upstream-service-time": [
+          "790"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -47,144 +35,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:15 GMT"
+        ],
         "Content-Length": [
-          "1924"
+          "1268"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "[
-  {
-    \"faceId\": \"cc7ed45b-b4e0-40a2-a3b2-0fccd25d4041\",
-    \"faceRectangle\": {
-      \"top\": 202,
-      \"left\": 550,
-      \"width\": 127,
-      \"height\": 127
-    },
-    \"faceLandmarks\": {
-      \"pupilLeft\": {
-        \"x\": 579.2,
-        \"y\": 242.6
-      },
-      \"pupilRight\": {
-        \"x\": 626.3,
-        \"y\": 226.7
-      },
-      \"noseTip\": {
-        \"x\": 617.0,
-        \"y\": 268.5
-      },
-      \"mouthLeft\": {
-        \"x\": 606.3,
-        \"y\": 303.9
-      },
-      \"mouthRight\": {
-        \"x\": 643.6,
-        \"y\": 289.6
-      },
-      \"eyebrowLeftOuter\": {
-        \"x\": 556.3,
-        \"y\": 240.0
-      },
-      \"eyebrowLeftInner\": {
-        \"x\": 595.2,
-        \"y\": 226.1
-      },
-      \"eyeLeftOuter\": {
-        \"x\": 571.0,
-        \"y\": 246.6
-      },
-      \"eyeLeftTop\": {
-        \"x\": 577.9,
-        \"y\": 239.8
-      },
-      \"eyeLeftBottom\": {
-        \"x\": 579.1,
-        \"y\": 247.6
-      },
-      \"eyeLeftInner\": {
-        \"x\": 587.0,
-        \"y\": 242.1
-      },
-      \"eyebrowRightInner\": {
-        \"x\": 609.4,
-        \"y\": 222.4
-      },
-      \"eyebrowRightOuter\": {
-        \"x\": 637.1,
-        \"y\": 203.2
-      },
-      \"eyeRightInner\": {
-        \"x\": 620.0,
-        \"y\": 231.2
-      },
-      \"eyeRightTop\": {
-        \"x\": 625.3,
-        \"y\": 223.6
-      },
-      \"eyeRightBottom\": {
-        \"x\": 627.4,
-        \"y\": 230.2
-      },
-      \"eyeRightOuter\": {
-        \"x\": 633.4,
-        \"y\": 224.0
-      },
-      \"noseRootLeft\": {
-        \"x\": 598.7,
-        \"y\": 240.8
-      },
-      \"noseRootRight\": {
-        \"x\": 612.6,
-        \"y\": 235.7
-      },
-      \"noseLeftAlarTop\": {
-        \"x\": 602.3,
-        \"y\": 264.4
-      },
-      \"noseRightAlarTop\": {
-        \"x\": 622.2,
-        \"y\": 253.6
-      },
-      \"noseLeftAlarOutTip\": {
-        \"x\": 600.5,
-        \"y\": 277.5
-      },
-      \"noseRightAlarOutTip\": {
-        \"x\": 629.4,
-        \"y\": 264.3
-      },
-      \"upperLipTop\": {
-        \"x\": 624.7,
-        \"y\": 290.2
-      },
-      \"upperLipBottom\": {
-        \"x\": 626.0,
-        \"y\": 294.3
-      },
-      \"underLipTop\": {
-        \"x\": 628.2,
-        \"y\": 300.3
-      },
-      \"underLipBottom\": {
-        \"x\": 630.2,
-        \"y\": 308.6
-      }
-    },
-    \"faceAttributes\": {
-      \"mask\": {
-        \"type\": \"noMask\",
-        \"noseAndMouthCovered\": false,
-      }
-    },
-    \"recognitionModel\": \"recognition_04\"
-  }
-]",
+      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"eee5540a-63f5-4e33-b63d-7c747c433709\",\r\n    \"faceRectangle\": {\r\n      \"top\": 185,\r\n      \"left\": 519,\r\n      \"width\": 132,\r\n      \"height\": 166\r\n    },\r\n    \"faceLandmarks\": {\r\n      \"pupilLeft\": {\r\n        \"x\": 577.4,\r\n        \"y\": 245.4\r\n      },\r\n      \"pupilRight\": {\r\n        \"x\": 625.5,\r\n        \"y\": 230.2\r\n      },\r\n      \"noseTip\": {\r\n        \"x\": 625.7,\r\n        \"y\": 261.8\r\n      },\r\n      \"mouthLeft\": {\r\n        \"x\": 603.6,\r\n        \"y\": 304.2\r\n      },\r\n      \"mouthRight\": {\r\n        \"x\": 641.1,\r\n        \"y\": 292.2\r\n      },\r\n      \"eyebrowLeftOuter\": {\r\n        \"x\": 552.1,\r\n        \"y\": 242.9\r\n      },\r\n      \"eyebrowLeftInner\": {\r\n        \"x\": 592.9,\r\n        \"y\": 227.1\r\n      },\r\n      \"eyeLeftOuter\": {\r\n        \"x\": 568.8,\r\n        \"y\": 248.6\r\n      },\r\n      \"eyeLeftTop\": {\r\n        \"x\": 577.0,\r\n        \"y\": 242.3\r\n      },\r\n      \"eyeLeftBottom\": {\r\n        \"x\": 578.4,\r\n        \"y\": 247.9\r\n      },\r\n      \"eyeLeftInner\": {\r\n        \"x\": 585.5,\r\n        \"y\": 242.8\r\n      },\r\n      \"eyebrowRightInner\": {\r\n        \"x\": 613.2,\r\n        \"y\": 221.2\r\n      },\r\n      \"eyebrowRightOuter\": {\r\n        \"x\": 635.2,\r\n        \"y\": 212.2\r\n      },\r\n      \"eyeRightInner\": {\r\n        \"x\": 618.5,\r\n        \"y\": 232.8\r\n      },\r\n      \"eyeRightTop\": {\r\n        \"x\": 624.9,\r\n        \"y\": 227.1\r\n      },\r\n      \"eyeRightBottom\": {\r\n        \"x\": 626.2,\r\n        \"y\": 232.3\r\n      },\r\n      \"eyeRightOuter\": {\r\n        \"x\": 632.3,\r\n        \"y\": 228.4\r\n      },\r\n      \"noseRootLeft\": {\r\n        \"x\": 598.8,\r\n        \"y\": 240.0\r\n      },\r\n      \"noseRootRight\": {\r\n        \"x\": 614.0,\r\n        \"y\": 235.1\r\n      },\r\n      \"noseLeftAlarTop\": {\r\n        \"x\": 603.1,\r\n        \"y\": 260.7\r\n      },\r\n      \"noseRightAlarTop\": {\r\n        \"x\": 626.3,\r\n        \"y\": 251.4\r\n      },\r\n      \"noseLeftAlarOutTip\": {\r\n        \"x\": 601.5,\r\n        \"y\": 274.1\r\n      },\r\n      \"noseRightAlarOutTip\": {\r\n        \"x\": 634.1,\r\n        \"y\": 262.3\r\n      },\r\n      \"upperLipTop\": {\r\n        \"x\": 627.8,\r\n        \"y\": 288.2\r\n      },\r\n      \"upperLipBottom\": {\r\n        \"x\": 628.2,\r\n        \"y\": 293.5\r\n      },\r\n      \"underLipTop\": {\r\n        \"x\": 629.0,\r\n        \"y\": 296.4\r\n      },\r\n      \"underLipBottom\": {\r\n        \"x\": 630.9,\r\n        \"y\": 303.6\r\n      }\r\n    },\r\n    \"faceAttributes\": {\r\n      \"mask\": {\r\n        \"type\": \"noMask\",\r\n        \"noseAndMouthCovered\": false\r\n      }\r\n    },\r\n    \"recognitionModel\": \"recognition_04\"\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],

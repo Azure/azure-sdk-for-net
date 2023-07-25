@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
+using Azure.Core.Amqp;
+using Azure.Core.Amqp.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -25,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             data.Value = messageBody;
             var amqpMessage = AmqpMessage.Create(data);
 
-            var sbMessage = converter.AmqpMessageToSBMessage(amqpMessage);
+            var sbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage);
             ReadOnlyMemory<byte> sbBody = sbMessage.Body;
             Assert.AreEqual(messageBody, sbBody.ToArray());
         }
@@ -65,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             sbMessage.ApplicationProperties.Add("UserProperty", "SomeUserProperty");
 
             var amqpMessage = converter.SBMessageToAmqpMessage(sbMessage);
-            var convertedSbMessage = converter.AmqpMessageToSBMessage(amqpMessage);
+            var convertedSbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage);
 
             Assert.AreEqual("SomeUserProperty", convertedSbMessage.ApplicationProperties["UserProperty"]);
             Assert.AreEqual(messageBody, convertedSbMessage.Body.ToArray());
@@ -104,7 +106,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var amqpMessage = AmqpMessage.Create(amqpValue);
             amqpMessage.Header.DeliveryCount = 2;
 
-            var sbMessage = converter.AmqpMessageToSBMessage(amqpMessage, isPeeked: true);
+            var sbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage, isPeeked: true);
             sbMessage.SequenceNumber = 1L;
 
             Assert.AreEqual(2, sbMessage.DeliveryCount);
@@ -121,26 +123,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var amqpMessage = AmqpMessage.Create(amqpValue);
             amqpMessage.Header.DeliveryCount = 2;
 
-            var sbMessage = converter.AmqpMessageToSBMessage(amqpMessage, isPeeked: false);
+            var sbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage, isPeeked: false);
             sbMessage.SequenceNumber = 1L;
 
             Assert.AreEqual(3, sbMessage.DeliveryCount);
         }
 
         [Test]
-        public void CanParseDictionaryValueSection()
+        public void CanRoundTripDictionaryValueSection()
         {
-            var converter = new AmqpMessageConverter();
-            var amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new Dictionary<string, string> { { "key", "value" } } });
-            var sbMessage = converter.AmqpMessageToSBMessage(amqpMessage);
-            var body = sbMessage.GetRawAmqpMessage().Body;
-            Assert.IsTrue(body.TryGetValue(out object val));
+            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(new Dictionary<string, string> { { "key", "value" } }));
+            Assert.IsTrue(annotatedMessage.Body.TryGetValue(out object val));
             Assert.AreEqual("value", ((Dictionary<string, string>)val)["key"]);
 
-            amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new AmqpMap { { new MapKey("key"), "value" } } });
-            sbMessage = converter.AmqpMessageToSBMessage(amqpMessage);
-            body = sbMessage.GetRawAmqpMessage().Body;
-            Assert.IsTrue(body.TryGetValue(out val));
+            var amqpMessage = AmqpAnnotatedMessageConverter.ToAmqpMessage(annotatedMessage);
+
+            annotatedMessage = AmqpAnnotatedMessageConverter.FromAmqpMessage(amqpMessage);
+            Assert.IsTrue(annotatedMessage.Body.TryGetValue(out val));
             Assert.AreEqual("value", ((Dictionary<string, object>)val)["key"]);
         }
 
@@ -152,7 +151,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var amqpMessage = AmqpMessage.Create(data);
             amqpMessage.Properties.AbsoluteExpiryTime = DateTime.MaxValue;
 
-            var convertedSbMessage = converter.AmqpMessageToSBMessage(amqpMessage);
+            var convertedSbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage);
 
             Assert.AreEqual(DateTimeOffset.MaxValue, convertedSbMessage.ExpiresAt);
         }

@@ -10,6 +10,7 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)\..\src\Azure.Maps.Rendering.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Azure.ResourceManager.Maps\src\Azure.ResourceManager.Maps.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
+    <PackageReference Include="Azure.ResourceManager" />
   </ItemGroup>
 
   <ItemGroup>

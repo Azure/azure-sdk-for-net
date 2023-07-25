@@ -8,12 +8,13 @@ azure-arm: true
 csharp: true
 library-name: StorageCache
 namespace: Azure.ResourceManager.StorageCache
-require: https://github.com/Azure/azure-rest-api-specs/blob/53b1affe357b3bfbb53721d0a2002382a046d3b0/specification/storagecache/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c157d49894462320db6603bb8e7b3077861b2d7/specification/storagecache/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 
 rename-mapping:
   Cache.properties.mountAddresses: -|ip-address
@@ -65,6 +66,10 @@ rename-mapping:
   UsageModelsResult: StorageCacheUsageModelsResult
   UsernameSource: StorageCacheUsernameSourceType
   UsernameDownloadedType: StorageCacheUsernameDownloadedType
+  Nfs3Target.verificationTimer: VerificationDelayInSeconds
+  Nfs3Target.writeBackTimer: WriteBackDelayInSeconds
+  BlobNfsTarget.verificationTimer: VerificationDelayInSeconds
+  BlobNfsTarget.writeBackTimer: WriteBackDelayInSeconds  
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -95,6 +100,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  AmlFilesystem: AmlFileSystem
 
 override-operation-name:
   Caches_SpaceAllocation: UpdateSpaceAllocation

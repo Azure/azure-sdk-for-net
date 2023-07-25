@@ -14,16 +14,20 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static AppInsightsCredentials DeserializeAppInsightsCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> appId = default;
             Optional<string> instrumentationKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appId"))
+                if (property.NameEquals("appId"u8))
                 {
                     appId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instrumentationKey"))
+                if (property.NameEquals("instrumentationKey"u8))
                 {
                     instrumentationKey = property.Value.GetString();
                     continue;

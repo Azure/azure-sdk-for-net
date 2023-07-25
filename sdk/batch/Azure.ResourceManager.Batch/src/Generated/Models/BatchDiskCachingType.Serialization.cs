@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchDiskCachingType ToBatchDiskCachingType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return BatchDiskCachingType.None;
-            if (string.Equals(value, "ReadOnly", StringComparison.InvariantCultureIgnoreCase)) return BatchDiskCachingType.ReadOnly;
-            if (string.Equals(value, "ReadWrite", StringComparison.InvariantCultureIgnoreCase)) return BatchDiskCachingType.ReadWrite;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return BatchDiskCachingType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly")) return BatchDiskCachingType.ReadOnly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadWrite")) return BatchDiskCachingType.ReadWrite;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchDiskCachingType value.");
         }
     }

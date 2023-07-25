@@ -14,50 +14,56 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AProtectionContainerMappingDetails DeserializeA2AProtectionContainerMappingDetails(JsonElement element)
         {
-            Optional<AgentAutoUpdateStatus> agentAutoUpdateStatus = default;
-            Optional<string> automationAccountArmId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
+            Optional<ResourceIdentifier> automationAccountArmId = default;
             Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
             Optional<string> scheduleName = default;
             Optional<string> jobScheduleName = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agentAutoUpdateStatus"))
+                if (property.NameEquals("agentAutoUpdateStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    agentAutoUpdateStatus = new AgentAutoUpdateStatus(property.Value.GetString());
+                    agentAutoUpdateStatus = new SiteRecoveryAgentAutoUpdateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("automationAccountArmId"))
-                {
-                    automationAccountArmId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("automationAccountAuthenticationType"))
+                if (property.NameEquals("automationAccountArmId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    automationAccountArmId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("automationAccountAuthenticationType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     automationAccountAuthenticationType = new AutomationAccountAuthenticationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scheduleName"))
+                if (property.NameEquals("scheduleName"u8))
                 {
                     scheduleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobScheduleName"))
+                if (property.NameEquals("jobScheduleName"u8))
                 {
                     jobScheduleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

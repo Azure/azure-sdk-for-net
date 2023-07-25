@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
-            IvrChoiceOptions = new ChangeTrackingList<RecognizeChoice>();
+            Choices = new ChangeTrackingList<RecognizeChoice>();
         }
 
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
@@ -32,9 +32,15 @@ namespace Azure.Communication.CallAutomation
         public int? InitialSilenceTimeoutInSeconds { get; set; }
         /// <summary> Target participant of DTMF tone recognition. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
+        /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
+        public string SpeechLanguage { get; set; }
+        /// <summary> Endpoint where the custom model was deployed. </summary>
+        public string SpeechRecognitionModelEndpointId { get; set; }
         /// <summary> Defines configurations for DTMF. </summary>
         public DtmfOptionsInternal DtmfOptions { get; set; }
         /// <summary> Defines Ivr choices for recognize. </summary>
-        public IList<RecognizeChoice> IvrChoiceOptions { get; }
+        public IList<RecognizeChoice> Choices { get; }
+        /// <summary> Defines continuous speech recognition option. </summary>
+        public SpeechOptionsInternal SpeechOptions { get; set; }
     }
 }

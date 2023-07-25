@@ -26,11 +26,10 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public BlobHttpHeaders HttpHeaders { get; set; }
 
-        // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
-        ///// <summary>
-        ///// Optional custom metadata to set for this append blob.
-        ///// </summary>
-        //public Metadata Metadata { get; set; }
+        /// <summary>
+        /// Optional custom metadata to set for this append blob.
+        /// </summary>
+        public Metadata Metadata { get; set; }
 
         /// <summary>
         /// Options tags to set for this block blob.

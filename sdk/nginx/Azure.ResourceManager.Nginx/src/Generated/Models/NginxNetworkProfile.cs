@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public NginxFrontendIPConfiguration FrontEndIPConfiguration { get; set; }
         /// <summary> Gets or sets the network interface configuration. </summary>
         internal NginxNetworkInterfaceConfiguration NetworkInterfaceConfiguration { get; set; }
-        /// <summary> Gets or sets the subnet id. </summary>
+        /// <summary> Gets or sets the network interface subnet id. </summary>
         public string NetworkInterfaceSubnetId
         {
             get => NetworkInterfaceConfiguration is null ? default : NetworkInterfaceConfiguration.SubnetId;

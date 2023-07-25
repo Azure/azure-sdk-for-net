@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter
     /// A Class representing a HealthCheckStatusDetail along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthCheckStatusDetailResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetHealthCheckStatusDetailResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkConnectionResource" /> using the GetHealthCheckStatusDetail method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterNetworkConnectionResource" /> using the GetHealthCheckStatusDetail method.
     /// </summary>
     public partial class HealthCheckStatusDetailResource : ArmResource
     {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Gets health check status details.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/healthChecks/latest
-        /// Operation Id: NetworkConnections_GetHealthDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/healthChecks/latest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_GetHealthDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HealthCheckStatusDetailResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Gets health check status details.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/healthChecks/latest
-        /// Operation Id: NetworkConnections_GetHealthDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/healthChecks/latest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkConnections_GetHealthDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HealthCheckStatusDetailResource> Get(CancellationToken cancellationToken = default)

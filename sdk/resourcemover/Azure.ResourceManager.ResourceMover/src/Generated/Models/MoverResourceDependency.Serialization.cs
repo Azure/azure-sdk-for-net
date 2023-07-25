@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverResourceDependency DeserializeMoverResourceDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> resolutionStatus = default;
             Optional<MoverResourceResolutionType> resolutionType = default;
@@ -23,66 +27,60 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<bool> isOptional = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resolutionStatus"))
+                if (property.NameEquals("resolutionStatus"u8))
                 {
                     resolutionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resolutionType"))
+                if (property.NameEquals("resolutionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resolutionType = new MoverResourceResolutionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dependencyType"))
+                if (property.NameEquals("dependencyType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dependencyType = new MoverDependencyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("manualResolution"))
+                if (property.NameEquals("manualResolution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     manualResolution = ManualResolutionProperties.DeserializeManualResolutionProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("automaticResolution"))
+                if (property.NameEquals("automaticResolution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     automaticResolution = AutomaticResolutionProperties.DeserializeAutomaticResolutionProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isOptional"))
+                if (property.NameEquals("isOptional"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isOptional = property.Value.GetBoolean();

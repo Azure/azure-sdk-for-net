@@ -14,6 +14,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static QuantumJobQuota DeserializeQuantumJobQuota(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dimension = default;
             Optional<DimensionScope> scope = default;
             Optional<string> providerId = default;
@@ -23,61 +27,56 @@ namespace Azure.Quantum.Jobs.Models
             Optional<MeterPeriod> period = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dimension"))
+                if (property.NameEquals("dimension"u8))
                 {
                     dimension = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scope = new DimensionScope(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("providerId"))
+                if (property.NameEquals("providerId"u8))
                 {
                     providerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("utilization"))
+                if (property.NameEquals("utilization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     utilization = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("holds"))
+                if (property.NameEquals("holds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     holds = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("period"))
+                if (property.NameEquals("period"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     period = new MeterPeriod(property.Value.GetString());

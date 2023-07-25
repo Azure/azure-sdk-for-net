@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of SearchMetadata. </summary>
         internal SearchMetadata()
         {
-            CoreSummaries = new ChangeTrackingList<CoreSummary>();
+            CoreSummaries = new ChangeTrackingList<OperationalInsightsSearchCoreSummary>();
             Sort = new ChangeTrackingList<SearchSort>();
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="sum"> The sum of all aggregates returned in the result set. </param>
         /// <param name="max"> The max of all aggregates returned in the result set. </param>
         /// <param name="schema"> The schema. </param>
-        internal SearchMetadata(string searchId, string resultType, long? total, long? top, string id, IReadOnlyList<CoreSummary> coreSummaries, string status, DateTimeOffset? startOn, DateTimeOffset? lastUpdated, ETag? etag, IReadOnlyList<SearchSort> sort, long? requestTime, string aggregatedValueField, string aggregatedGroupingFields, long? sum, long? max, SearchMetadataSchema schema)
+        internal SearchMetadata(string searchId, string resultType, long? total, long? top, string id, IReadOnlyList<OperationalInsightsSearchCoreSummary> coreSummaries, string status, DateTimeOffset? startOn, DateTimeOffset? lastUpdated, ETag? etag, IReadOnlyList<SearchSort> sort, long? requestTime, string aggregatedValueField, string aggregatedGroupingFields, long? sum, long? max, SearchMetadataSchema schema)
         {
             SearchId = searchId;
             ResultType = resultType;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> The id of the search results request. </summary>
         public string Id { get; }
         /// <summary> The core summaries. </summary>
-        public IReadOnlyList<CoreSummary> CoreSummaries { get; }
+        public IReadOnlyList<OperationalInsightsSearchCoreSummary> CoreSummaries { get; }
         /// <summary> The status of the search results. </summary>
         public string Status { get; }
         /// <summary> The start time for the search. </summary>

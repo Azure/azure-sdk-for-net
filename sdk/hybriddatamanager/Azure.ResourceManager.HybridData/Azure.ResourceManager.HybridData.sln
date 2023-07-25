@@ -7,6 +7,8 @@ Project("{C847C6EC-5FD5-4345-BAF4-9711EF3F9ED9}") = "Azure.ResourceManager.Hybri
 EndProject
 Project("{C847C6EC-5FD5-4345-BAF4-9711EF3F9ED9}") = "Azure.ResourceManager.HybridData.Tests", "tests\Azure.ResourceManager.HybridData.Tests.csproj", "{D8AC3A0D-D0FB-4AE0-8451-6213278E7F2F}"
 EndProject
+Project("{C847C6EC-5FD5-4345-BAF4-9711EF3F9ED9}") = "Azure.ResourceManager.HybridData.Samples", "samples\Azure.ResourceManager.HybridData.Samples.csproj", "{7938CA22-B6A8-4D28-93D1-F4657C260608}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

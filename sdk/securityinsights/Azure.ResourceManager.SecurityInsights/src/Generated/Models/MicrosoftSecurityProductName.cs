@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The alerts&apos; productName on which the cases will be generated. </summary>
+    /// <summary> The alerts' productName on which the cases will be generated. </summary>
     public readonly partial struct MicrosoftSecurityProductName : IEquatable<MicrosoftSecurityProductName>
     {
         private readonly string _value;
@@ -26,9 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AzureSecurityCenterValue = "Azure Security Center";
         private const string AzureAdvancedThreatProtectionValue = "Azure Advanced Threat Protection";
         private const string AzureActiveDirectoryIdentityProtectionValue = "Azure Active Directory Identity Protection";
-        private const string AzureSecurityCenterForIoTValue = "Azure Security Center for IoT";
-        private const string Office365AdvancedThreatProtectionValue = "Office 365 Advanced Threat Protection";
-        private const string MicrosoftDefenderAdvancedThreatProtectionValue = "Microsoft Defender Advanced Threat Protection";
+        private const string AzureSecurityCenterForIotValue = "Azure Security Center for IoT";
 
         /// <summary> Microsoft Cloud App Security. </summary>
         public static MicrosoftSecurityProductName MicrosoftCloudAppSecurity { get; } = new MicrosoftSecurityProductName(MicrosoftCloudAppSecurityValue);
@@ -39,11 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Azure Active Directory Identity Protection. </summary>
         public static MicrosoftSecurityProductName AzureActiveDirectoryIdentityProtection { get; } = new MicrosoftSecurityProductName(AzureActiveDirectoryIdentityProtectionValue);
         /// <summary> Azure Security Center for IoT. </summary>
-        public static MicrosoftSecurityProductName AzureSecurityCenterForIoT { get; } = new MicrosoftSecurityProductName(AzureSecurityCenterForIoTValue);
-        /// <summary> Office 365 Advanced Threat Protection. </summary>
-        public static MicrosoftSecurityProductName Office365AdvancedThreatProtection { get; } = new MicrosoftSecurityProductName(Office365AdvancedThreatProtectionValue);
-        /// <summary> Microsoft Defender Advanced Threat Protection. </summary>
-        public static MicrosoftSecurityProductName MicrosoftDefenderAdvancedThreatProtection { get; } = new MicrosoftSecurityProductName(MicrosoftDefenderAdvancedThreatProtectionValue);
+        public static MicrosoftSecurityProductName AzureSecurityCenterForIot { get; } = new MicrosoftSecurityProductName(AzureSecurityCenterForIotValue);
         /// <summary> Determines if two <see cref="MicrosoftSecurityProductName"/> values are the same. </summary>
         public static bool operator ==(MicrosoftSecurityProductName left, MicrosoftSecurityProductName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MicrosoftSecurityProductName"/> values are not the same. </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ForceUpdateTag { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>
         public string Publisher { get; set; }
-        /// <summary> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </summary>
+        /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         public string ExtensionType { get; set; }
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; set; }
@@ -93,36 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
         public BinaryData ProtectedSettings { get; set; }
         /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
         public bool? SuppressFailures { get; set; }
-        /// <summary>
-        /// The extensions protected settings that are passed by reference, and consumed from key vault
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ProtectedSettingsFromKeyVault { get; set; }
+        /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
+        public KeyVaultSecretReference KeyVaultProtectedSettings { get; set; }
     }
 }

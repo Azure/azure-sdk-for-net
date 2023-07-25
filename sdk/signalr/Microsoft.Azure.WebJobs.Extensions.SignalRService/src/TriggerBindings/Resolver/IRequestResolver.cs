@@ -5,8 +5,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.SignalR.Protocol;
-using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Serverless.Protocols;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         bool ValidateContentType(HttpRequestMessage request);
 
-        bool ValidateSignature(HttpRequestMessage request, AccessKey[] accessKeys);
+        bool ValidateSignature(HttpRequestMessage request, IOptionsMonitor<SignatureValidationOptions> signatureValidationOptions);
 
         bool TryGetInvocationContext(HttpRequestMessage request, out InvocationContext context);
 

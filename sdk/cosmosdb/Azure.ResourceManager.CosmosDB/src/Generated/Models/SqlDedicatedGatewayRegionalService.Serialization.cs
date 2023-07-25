@@ -14,37 +14,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static SqlDedicatedGatewayRegionalService DeserializeSqlDedicatedGatewayRegionalService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sqlDedicatedGatewayEndpoint = default;
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<CosmosDBServiceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlDedicatedGatewayEndpoint"))
+                if (property.NameEquals("sqlDedicatedGatewayEndpoint"u8))
                 {
                     sqlDedicatedGatewayEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new CosmosDBServiceStatus(property.Value.GetString());

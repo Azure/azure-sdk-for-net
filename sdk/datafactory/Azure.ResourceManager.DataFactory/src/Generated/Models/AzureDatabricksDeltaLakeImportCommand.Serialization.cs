@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,23 +20,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DateFormat))
             {
-                writer.WritePropertyName("dateFormat");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DateFormat);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DateFormat.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("dateFormat"u8);
+                JsonSerializer.Serialize(writer, DateFormat);
             }
             if (Optional.IsDefined(TimestampFormat))
             {
-                writer.WritePropertyName("timestampFormat");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TimestampFormat);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TimestampFormat.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("timestampFormat"u8);
+                JsonSerializer.Serialize(writer, TimestampFormat);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ImportSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -51,34 +44,36 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDatabricksDeltaLakeImportCommand DeserializeAzureDatabricksDeltaLakeImportCommand(JsonElement element)
         {
-            Optional<BinaryData> dateFormat = default;
-            Optional<BinaryData> timestampFormat = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<string>> dateFormat = default;
+            Optional<DataFactoryElement<string>> timestampFormat = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dateFormat"))
+                if (property.NameEquals("dateFormat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateFormat = BinaryData.FromString(property.Value.GetRawText());
+                    dateFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("timestampFormat"))
+                if (property.NameEquals("timestampFormat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timestampFormat = BinaryData.FromString(property.Value.GetRawText());
+                    timestampFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

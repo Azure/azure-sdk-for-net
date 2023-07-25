@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="direction"></param>
         /// <param name="detailLevel"></param>
         /// <param name="hiddenPropertyPaths"></param>
-        internal LoggingRule(string action, LoggingDirection direction, LoggingDetail detailLevel, LoggingRuleHiddenPropertyPaths hiddenPropertyPaths)
+        internal LoggingRule(string action, LoggingDirection direction, LoggingDetail detailLevel, LoggingHiddenPropertyPaths hiddenPropertyPaths)
         {
             Action = action;
             Direction = direction;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets or sets the detail level. </summary>
         public LoggingDetail DetailLevel { get; set; }
         /// <summary> Gets or sets the hidden property paths. </summary>
-        public LoggingRuleHiddenPropertyPaths HiddenPropertyPaths { get; set; }
+        public LoggingHiddenPropertyPaths HiddenPropertyPaths { get; set; }
     }
 }

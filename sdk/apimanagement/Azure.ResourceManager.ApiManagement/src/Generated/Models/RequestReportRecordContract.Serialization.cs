@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static RequestReportRecordContract DeserializeRequestReportRecordContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiId = default;
             Optional<string> operationId = default;
             Optional<string> productId = default;
@@ -36,141 +40,131 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<int> requestSize = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("apiId"))
+                if (property.NameEquals("apiId"u8))
                 {
                     apiId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productId"))
+                if (property.NameEquals("productId"u8))
                 {
                     productId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userId"))
+                if (property.NameEquals("userId"u8))
                 {
                     userId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     method = new RequestMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uri = null;
                         continue;
                     }
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backendResponseCode"))
+                if (property.NameEquals("backendResponseCode"u8))
                 {
                     backendResponseCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("responseCode"))
+                if (property.NameEquals("responseCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     responseCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("responseSize"))
+                if (property.NameEquals("responseSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     responseSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cache"))
+                if (property.NameEquals("cache"u8))
                 {
                     cache = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiTime"))
+                if (property.NameEquals("apiTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     apiTime = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("serviceTime"))
+                if (property.NameEquals("serviceTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serviceTime = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("apiRegion"))
+                if (property.NameEquals("apiRegion"u8))
                 {
                     apiRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subscriptionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestSize"))
+                if (property.NameEquals("requestSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestSize = property.Value.GetInt32();

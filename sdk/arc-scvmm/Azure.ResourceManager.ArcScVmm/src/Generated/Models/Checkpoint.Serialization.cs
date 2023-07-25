@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ParentCheckpointId))
             {
-                writer.WritePropertyName("parentCheckpointID");
+                writer.WritePropertyName("parentCheckpointID"u8);
                 writer.WriteStringValue(ParentCheckpointId);
             }
             if (Optional.IsDefined(CheckpointId))
             {
-                writer.WritePropertyName("checkpointID");
+                writer.WritePropertyName("checkpointID"u8);
                 writer.WriteStringValue(CheckpointId);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -40,28 +40,32 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static Checkpoint DeserializeCheckpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> parentCheckpointId = default;
             Optional<string> checkpointId = default;
             Optional<string> name = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parentCheckpointID"))
+                if (property.NameEquals("parentCheckpointID"u8))
                 {
                     parentCheckpointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("checkpointID"))
+                if (property.NameEquals("checkpointID"u8))
                 {
                     checkpointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

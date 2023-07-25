@@ -15,36 +15,36 @@ namespace Azure.ResourceManager.StorageSync.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudTiering))
             {
-                writer.WritePropertyName("cloudTiering");
+                writer.WritePropertyName("cloudTiering"u8);
                 writer.WriteStringValue(CloudTiering.Value.ToString());
             }
             if (Optional.IsDefined(VolumeFreeSpacePercent))
             {
-                writer.WritePropertyName("volumeFreeSpacePercent");
+                writer.WritePropertyName("volumeFreeSpacePercent"u8);
                 writer.WriteNumberValue(VolumeFreeSpacePercent.Value);
             }
             if (Optional.IsDefined(TierFilesOlderThanDays))
             {
-                writer.WritePropertyName("tierFilesOlderThanDays");
+                writer.WritePropertyName("tierFilesOlderThanDays"u8);
                 writer.WriteNumberValue(TierFilesOlderThanDays.Value);
             }
             if (Optional.IsDefined(OfflineDataTransfer))
             {
-                writer.WritePropertyName("offlineDataTransfer");
+                writer.WritePropertyName("offlineDataTransfer"u8);
                 writer.WriteStringValue(OfflineDataTransfer.Value.ToString());
             }
             if (Optional.IsDefined(OfflineDataTransferShareName))
             {
-                writer.WritePropertyName("offlineDataTransferShareName");
+                writer.WritePropertyName("offlineDataTransferShareName"u8);
                 writer.WriteStringValue(OfflineDataTransferShareName);
             }
             if (Optional.IsDefined(LocalCacheMode))
             {
-                writer.WritePropertyName("localCacheMode");
+                writer.WritePropertyName("localCacheMode"u8);
                 writer.WriteStringValue(LocalCacheMode.Value.ToString());
             }
             writer.WriteEndObject();

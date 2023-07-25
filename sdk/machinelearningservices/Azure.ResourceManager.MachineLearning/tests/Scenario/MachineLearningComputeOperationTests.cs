@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Tests
             var mlComputeData = new MachineLearningComputeData(DefaultLocation);
             mlComputeData.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
             var vm = await CreateVmAsync(resourceGroup);
-            mlComputeData.Properties = new ComputeInstance();
+            mlComputeData.Properties = new MachineLearningComputeInstance();
             mlComputeData.Properties.ComputeType = ComputeType.VirtualMachine;
             mlComputeData.Properties.ResourceId = vm.Id;
             return (await mlWorkspace.GetMachineLearningComputes().CreateOrUpdateAsync(WaitUntil.Completed, mlComputeName, mlComputeData)).Value;

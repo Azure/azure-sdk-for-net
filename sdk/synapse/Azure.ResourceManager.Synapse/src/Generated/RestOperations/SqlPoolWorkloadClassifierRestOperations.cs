@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get a workload classifier of Sql pool&apos;s workload group. </summary>
+        /// <summary> Get a workload classifier of Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadClassifierData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseWorkloadClassifierData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -88,19 +88,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkloadClassifierData value = default;
+                        SynapseWorkloadClassifierData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement);
+                        value = SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkloadClassifierData)null, message.Response);
+                    return Response.FromValue((SynapseWorkloadClassifierData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Get a workload classifier of Sql pool&apos;s workload group. </summary>
+        /// <summary> Get a workload classifier of Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadClassifierData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
+        public Response<SynapseWorkloadClassifierData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -125,19 +125,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkloadClassifierData value = default;
+                        SynapseWorkloadClassifierData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement);
+                        value = SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkloadClassifierData)null, message.Response);
+                    return Response.FromValue((SynapseWorkloadClassifierData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName, SynapseWorkloadClassifierData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Create Or Update workload classifier for a Sql pool&apos;s workload group. </summary>
+        /// <summary> Create Or Update workload classifier for a Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="workloadGroupName"/>, <paramref name="workloadClassifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName, SynapseWorkloadClassifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Create Or Update workload classifier for a Sql pool&apos;s workload group. </summary>
+        /// <summary> Create Or Update workload classifier for a Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="workloadGroupName"/>, <paramref name="workloadClassifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, string workloadClassifierName, SynapseWorkloadClassifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Remove workload classifier of a Sql pool&apos;s workload group. </summary>
+        /// <summary> Remove workload classifier of a Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Remove workload classifier of a Sql pool&apos;s workload group. </summary>
+        /// <summary> Remove workload classifier of a Sql pool's workload group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get list of  Sql pool&apos;s workload classifier for workload groups. </summary>
+        /// <summary> Get list of  Sql pool's workload classifier for workload groups. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadClassifierListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseWorkloadClassifierListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -372,9 +372,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkloadClassifierListResult value = default;
+                        SynapseWorkloadClassifierListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadClassifierListResult.DeserializeWorkloadClassifierListResult(document.RootElement);
+                        value = SynapseWorkloadClassifierListResult.DeserializeSynapseWorkloadClassifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get list of  Sql pool&apos;s workload classifier for workload groups. </summary>
+        /// <summary> Get list of  Sql pool's workload classifier for workload groups. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadClassifierListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
+        public Response<SynapseWorkloadClassifierListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -405,9 +405,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkloadClassifierListResult value = default;
+                        SynapseWorkloadClassifierListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadClassifierListResult.DeserializeWorkloadClassifierListResult(document.RootElement);
+                        value = SynapseWorkloadClassifierListResult.DeserializeSynapseWorkloadClassifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get list of  Sql pool&apos;s workload classifier for workload groups. </summary>
+        /// <summary> Get list of  Sql pool's workload classifier for workload groups. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadClassifierListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseWorkloadClassifierListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -454,9 +454,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkloadClassifierListResult value = default;
+                        SynapseWorkloadClassifierListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadClassifierListResult.DeserializeWorkloadClassifierListResult(document.RootElement);
+                        value = SynapseWorkloadClassifierListResult.DeserializeSynapseWorkloadClassifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get list of  Sql pool&apos;s workload classifier for workload groups. </summary>
+        /// <summary> Get list of  Sql pool's workload classifier for workload groups. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadClassifierListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
+        public Response<SynapseWorkloadClassifierListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -489,9 +489,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkloadClassifierListResult value = default;
+                        SynapseWorkloadClassifierListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadClassifierListResult.DeserializeWorkloadClassifierListResult(document.RootElement);
+                        value = SynapseWorkloadClassifierListResult.DeserializeSynapseWorkloadClassifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

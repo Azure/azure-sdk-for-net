@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.DataLakeStore
     {
         internal static DataLakeStoreAccountData DeserializeDataLakeStoreAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
@@ -32,44 +36,41 @@ namespace Azure.ResourceManager.DataLakeStore
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> endpoint = default;
             Optional<string> defaultGroup = default;
-            Optional<EncryptionConfig> encryptionConfig = default;
-            Optional<EncryptionState> encryptionState = default;
-            Optional<EncryptionProvisioningState> encryptionProvisioningState = default;
-            Optional<IReadOnlyList<FirewallRuleData>> firewallRules = default;
-            Optional<IReadOnlyList<VirtualNetworkRuleData>> virtualNetworkRules = default;
-            Optional<FirewallState> firewallState = default;
-            Optional<FirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<IReadOnlyList<TrustedIdProviderData>> trustedIdProviders = default;
-            Optional<TrustedIdProviderState> trustedIdProviderState = default;
-            Optional<TierType> newTier = default;
-            Optional<TierType> currentTier = default;
+            Optional<DataLakeStoreAccountEncryptionConfig> encryptionConfig = default;
+            Optional<DataLakeStoreEncryptionState> encryptionState = default;
+            Optional<DataLakeStoreEncryptionProvisioningState> encryptionProvisioningState = default;
+            Optional<IReadOnlyList<DataLakeStoreFirewallRuleData>> firewallRules = default;
+            Optional<IReadOnlyList<DataLakeStoreVirtualNetworkRuleData>> virtualNetworkRules = default;
+            Optional<DataLakeStoreFirewallState> firewallState = default;
+            Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
+            Optional<IReadOnlyList<DataLakeStoreTrustedIdProviderData>> trustedIdProviders = default;
+            Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
+            Optional<DataLakeStoreCommitmentTierType> newTier = default;
+            Optional<DataLakeStoreCommitmentTierType> currentTier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -80,32 +81,31 @@ namespace Azure.ResourceManager.DataLakeStore
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,189 +114,173 @@ namespace Azure.ResourceManager.DataLakeStore
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("accountId"))
+                        if (property0.NameEquals("accountId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accountId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = property0.Value.GetString().ToDataLakeStoreAccountStatus();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = property0.Value.GetString().ToDataLakeStoreAccountState();
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"))
+                        if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endpoint"))
+                        if (property0.NameEquals("endpoint"u8))
                         {
                             endpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("defaultGroup"))
+                        if (property0.NameEquals("defaultGroup"u8))
                         {
                             defaultGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("encryptionConfig"))
+                        if (property0.NameEquals("encryptionConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptionConfig = EncryptionConfig.DeserializeEncryptionConfig(property0.Value);
+                            encryptionConfig = DataLakeStoreAccountEncryptionConfig.DeserializeDataLakeStoreAccountEncryptionConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("encryptionState"))
+                        if (property0.NameEquals("encryptionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptionState = property0.Value.GetString().ToEncryptionState();
+                            encryptionState = property0.Value.GetString().ToDataLakeStoreEncryptionState();
                             continue;
                         }
-                        if (property0.NameEquals("encryptionProvisioningState"))
+                        if (property0.NameEquals("encryptionProvisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptionProvisioningState = property0.Value.GetString().ToEncryptionProvisioningState();
+                            encryptionProvisioningState = property0.Value.GetString().ToDataLakeStoreEncryptionProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("firewallRules"))
+                        if (property0.NameEquals("firewallRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<FirewallRuleData> array = new List<FirewallRuleData>();
+                            List<DataLakeStoreFirewallRuleData> array = new List<DataLakeStoreFirewallRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallRuleData.DeserializeFirewallRuleData(item));
+                                array.Add(DataLakeStoreFirewallRuleData.DeserializeDataLakeStoreFirewallRuleData(item));
                             }
                             firewallRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkRules"))
+                        if (property0.NameEquals("virtualNetworkRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VirtualNetworkRuleData> array = new List<VirtualNetworkRuleData>();
+                            List<DataLakeStoreVirtualNetworkRuleData> array = new List<DataLakeStoreVirtualNetworkRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(item));
+                                array.Add(DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(item));
                             }
                             virtualNetworkRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("firewallState"))
+                        if (property0.NameEquals("firewallState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallState = property0.Value.GetString().ToFirewallState();
+                            firewallState = property0.Value.GetString().ToDataLakeStoreFirewallState();
                             continue;
                         }
-                        if (property0.NameEquals("firewallAllowAzureIps"))
+                        if (property0.NameEquals("firewallAllowAzureIps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallAllowAzureIPs = property0.Value.GetString().ToFirewallAllowAzureIPsState();
+                            firewallAllowAzureIPs = property0.Value.GetString().ToDataLakeStoreFirewallAllowAzureIPsState();
                             continue;
                         }
-                        if (property0.NameEquals("trustedIdProviders"))
+                        if (property0.NameEquals("trustedIdProviders"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TrustedIdProviderData> array = new List<TrustedIdProviderData>();
+                            List<DataLakeStoreTrustedIdProviderData> array = new List<DataLakeStoreTrustedIdProviderData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrustedIdProviderData.DeserializeTrustedIdProviderData(item));
+                                array.Add(DataLakeStoreTrustedIdProviderData.DeserializeDataLakeStoreTrustedIdProviderData(item));
                             }
                             trustedIdProviders = array;
                             continue;
                         }
-                        if (property0.NameEquals("trustedIdProviderState"))
+                        if (property0.NameEquals("trustedIdProviderState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            trustedIdProviderState = property0.Value.GetString().ToTrustedIdProviderState();
+                            trustedIdProviderState = property0.Value.GetString().ToDataLakeStoreTrustedIdProviderState();
                             continue;
                         }
-                        if (property0.NameEquals("newTier"))
+                        if (property0.NameEquals("newTier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            newTier = property0.Value.GetString().ToTierType();
+                            newTier = property0.Value.GetString().ToDataLakeStoreCommitmentTierType();
                             continue;
                         }
-                        if (property0.NameEquals("currentTier"))
+                        if (property0.NameEquals("currentTier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentTier = property0.Value.GetString().ToTierType();
+                            currentTier = property0.Value.GetString().ToDataLakeStoreCommitmentTierType();
                             continue;
                         }
                     }

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProviderAuthentication))
             {
-                writer.WritePropertyName("providerAuthentication");
+                writer.WritePropertyName("providerAuthentication"u8);
                 writer.WriteObjectValue(ProviderAuthentication);
             }
             if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
-                writer.WritePropertyName("providerAuthorizations");
+                writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProviderAuthorizations)
                 {
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(Namespace))
             {
-                writer.WritePropertyName("namespace");
+                writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
             if (Optional.IsDefined(ProviderVersion))
             {
-                writer.WritePropertyName("providerVersion");
+                writer.WritePropertyName("providerVersion"u8);
                 writer.WriteStringValue(ProviderVersion);
             }
             if (Optional.IsDefined(ProviderType))
             {
-                writer.WritePropertyName("providerType");
+                writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(RequiredFeatures))
             {
-                writer.WritePropertyName("requiredFeatures");
+                writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredFeatures)
                 {
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(FeaturesRule))
             {
-                writer.WritePropertyName("featuresRule");
+                writer.WritePropertyName("featuresRule"u8);
                 writer.WriteObjectValue(FeaturesRule);
             }
             if (Optional.IsDefined(RequestHeaderOptions))
             {
-                writer.WritePropertyName("requestHeaderOptions");
+                writer.WritePropertyName("requestHeaderOptions"u8);
                 writer.WriteObjectValue(RequestHeaderOptions);
             }
             if (Optional.IsDefined(Management))
             {
-                writer.WritePropertyName("management");
+                writer.WritePropertyName("management"u8);
                 writer.WriteObjectValue(Management);
             }
             if (Optional.IsCollectionDefined(Capabilities))
             {
-                writer.WritePropertyName("capabilities");
+                writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(TemplateDeploymentOptions))
             {
-                writer.WritePropertyName("templateDeploymentOptions");
+                writer.WritePropertyName("templateDeploymentOptions"u8);
                 writer.WriteObjectValue(TemplateDeploymentOptions);
             }
             writer.WriteEndObject();
@@ -101,35 +101,37 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceProviderManifestProperties DeserializeResourceProviderManifestProperties(JsonElement element)
         {
-            Optional<ResourceProviderManifestPropertiesProviderAuthentication> providerAuthentication = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceProviderAuthentication> providerAuthentication = default;
             Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
             Optional<string> @namespace = default;
             Optional<string> providerVersion = default;
             Optional<ResourceProviderType> providerType = default;
             Optional<IList<string>> requiredFeatures = default;
-            Optional<ResourceProviderManifestPropertiesFeaturesRule> featuresRule = default;
-            Optional<ResourceProviderManifestPropertiesRequestHeaderOptions> requestHeaderOptions = default;
-            Optional<ResourceProviderManifestPropertiesManagement> management = default;
+            Optional<FeaturesRule> featuresRule = default;
+            Optional<RequestHeaderOptions> requestHeaderOptions = default;
+            Optional<ResourceProviderManagement> management = default;
             Optional<IList<ResourceProviderCapabilities>> capabilities = default;
             Optional<BinaryData> metadata = default;
-            Optional<ResourceProviderManifestPropertiesTemplateDeploymentOptions> templateDeploymentOptions = default;
+            Optional<TemplateDeploymentOptions> templateDeploymentOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("providerAuthentication"))
+                if (property.NameEquals("providerAuthentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerAuthentication = ResourceProviderManifestPropertiesProviderAuthentication.DeserializeResourceProviderManifestPropertiesProviderAuthentication(property.Value);
+                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value);
                     continue;
                 }
-                if (property.NameEquals("providerAuthorizations"))
+                if (property.NameEquals("providerAuthorizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceProviderAuthorization> array = new List<ResourceProviderAuthorization>();
@@ -140,31 +142,29 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     providerAuthorizations = array;
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerVersion"))
+                if (property.NameEquals("providerVersion"u8))
                 {
                     providerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("providerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerType = new ResourceProviderType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requiredFeatures"))
+                if (property.NameEquals("requiredFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -175,41 +175,37 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     requiredFeatures = array;
                     continue;
                 }
-                if (property.NameEquals("featuresRule"))
+                if (property.NameEquals("featuresRule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    featuresRule = ResourceProviderManifestPropertiesFeaturesRule.DeserializeResourceProviderManifestPropertiesFeaturesRule(property.Value);
+                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("requestHeaderOptions"))
+                if (property.NameEquals("requestHeaderOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestHeaderOptions = ResourceProviderManifestPropertiesRequestHeaderOptions.DeserializeResourceProviderManifestPropertiesRequestHeaderOptions(property.Value);
+                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("management"))
+                if (property.NameEquals("management"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    management = ResourceProviderManifestPropertiesManagement.DeserializeResourceProviderManifestPropertiesManagement(property.Value);
+                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceProviderCapabilities> array = new List<ResourceProviderCapabilities>();
@@ -220,24 +216,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     capabilities = array;
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("templateDeploymentOptions"))
+                if (property.NameEquals("templateDeploymentOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    templateDeploymentOptions = ResourceProviderManifestPropertiesTemplateDeploymentOptions.DeserializeResourceProviderManifestPropertiesTemplateDeploymentOptions(property.Value);
+                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(property.Value);
                     continue;
                 }
             }

@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> The current state of the DebugDataAccessLevel for this account. </summary>
+    /// <summary>
+    /// The current state of the DebugDataAccessLevel for this account.
+    /// Serialized Name: DebugDataAccessLevel
+    /// </summary>
     public enum DebugDataAccessLevel
     {
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: DebugDataAccessLevel.None
+        /// </summary>
         None,
-        /// <summary> All. </summary>
+        /// <summary>
+        /// All
+        /// Serialized Name: DebugDataAccessLevel.All
+        /// </summary>
         All,
-        /// <summary> Customer. </summary>
+        /// <summary>
+        /// Customer
+        /// Serialized Name: DebugDataAccessLevel.Customer
+        /// </summary>
         Customer
     }
 }

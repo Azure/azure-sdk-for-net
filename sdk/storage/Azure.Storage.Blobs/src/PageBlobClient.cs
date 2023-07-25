@@ -1364,7 +1364,11 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, validationOptions);
+                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                        content,
+                        validationOptions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
 
                     content = content?.WithNoDispose().WithProgress(progressHandler);
                     HttpRange range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
@@ -4183,7 +4187,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Response<BlobProperties> propertiesResponse = await GetPropertiesInternal(
                             conditions: options?.OpenConditions,
                             async: async,
-                            cancellationToken: cancellationToken)
+                            context: new RequestContext() { CancellationToken = cancellationToken })
                             .ConfigureAwait(false);
 
                         etag = propertiesResponse.Value.ETag;
@@ -4225,7 +4229,7 @@ namespace Azure.Storage.Blobs.Specialized
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    options?.TransferValidation
+                    options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload
                     );
             }
             catch (Exception ex)

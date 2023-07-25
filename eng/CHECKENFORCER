@@ -1,7 +1,0 @@
-format: v0.1-alpha
-minimumCheckRuns: 1
-timeout: 10
-message: >
-  This pull request is protected by [Check Enforcer](https://aka.ms/azsdk/check-enforcer).
-
-  For more information about how to run a pipeline against this pull request, see [this](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/checkenforcer.md).

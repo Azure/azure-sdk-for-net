@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Initializes a new instance of AlexaChannelProperties. </summary>
         /// <param name="alexaSkillId"> The Alexa skill Id. </param>
-        /// <param name="urlFragment"> Url fragment used in part of the Uri configured in Alexa. </param>
+        /// <param name="uriFragment"> Url fragment used in part of the Uri configured in Alexa. </param>
         /// <param name="serviceEndpointUri"> Full Uri used to configured the skill in Alexa. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        internal AlexaChannelProperties(string alexaSkillId, string urlFragment, Uri serviceEndpointUri, bool isEnabled)
+        internal AlexaChannelProperties(string alexaSkillId, string uriFragment, Uri serviceEndpointUri, bool isEnabled)
         {
             AlexaSkillId = alexaSkillId;
-            UrlFragment = urlFragment;
+            UriFragment = uriFragment;
             ServiceEndpointUri = serviceEndpointUri;
             IsEnabled = isEnabled;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> The Alexa skill Id. </summary>
         public string AlexaSkillId { get; set; }
         /// <summary> Url fragment used in part of the Uri configured in Alexa. </summary>
-        public string UrlFragment { get; }
+        public string UriFragment { get; }
         /// <summary> Full Uri used to configured the skill in Alexa. </summary>
         public Uri ServiceEndpointUri { get; }
         /// <summary> Whether this channel is enabled for the bot. </summary>

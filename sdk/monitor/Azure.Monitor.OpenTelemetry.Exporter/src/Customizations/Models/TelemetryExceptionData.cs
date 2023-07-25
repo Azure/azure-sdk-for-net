@@ -18,6 +18,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         public TelemetryExceptionData(int version, LogRecord logRecord) : base(version)
         {
+            if (logRecord.Exception == null)
+            {
+                throw new ArgumentNullException(nameof(logRecord), "logRecord.Exception cannot be null.");
+            }
+
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
@@ -53,16 +58,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Exceptions = exceptions;
         }
 
-        private void ConvertExceptionTree(Exception exception, string message, TelemetryExceptionDetails parentExceptionDetails, List<TelemetryExceptionDetails> exceptions)
+        private void ConvertExceptionTree(Exception exception, string? message, TelemetryExceptionDetails? parentExceptionDetails, List<TelemetryExceptionDetails> exceptions)
         {
             // For upper level exception see if message was provided and do not use exception.message in that case
             if (parentExceptionDetails != null && string.IsNullOrWhiteSpace(message))
             {
-                message = exception?.Message;
+                message = exception.Message;
             }
 
-            TelemetryExceptionDetails exceptionDetails = new TelemetryExceptionDetails(exception, message,
-                                                                                       parentExceptionDetails);
+            TelemetryExceptionDetails exceptionDetails = new TelemetryExceptionDetails(exception, message, parentExceptionDetails);
 
             exceptions.Add(exceptionDetails);
 

@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             this.output = output;
         }
 
-        public void Write(IEnumerable<TelemetryItem> telemetryItems)
+        public void Write(IEnumerable<TelemetryItem>? telemetryItems)
         {
             if (telemetryItems == null)
             {

@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Models
 
         public static PublicAccessType ToPublicAccessType(this string value)
         {
-            if (string.Equals(value, "container", StringComparison.InvariantCultureIgnoreCase)) return PublicAccessType.BlobContainer;
-            if (string.Equals(value, "blob", StringComparison.InvariantCultureIgnoreCase)) return PublicAccessType.Blob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "container")) return PublicAccessType.BlobContainer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "blob")) return PublicAccessType.Blob;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicAccessType value.");
         }
     }

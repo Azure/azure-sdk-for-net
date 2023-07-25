@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionBudgetFilter. </summary>
-        /// <param name="and"> The logical &quot;AND&quot; expression. Must have at least 2 items. </param>
+        /// <param name="and"> The logical "AND" expression. Must have at least 2 items. </param>
         /// <param name="dimensions"> Has comparison expression for a dimension. </param>
         /// <param name="tags"> Has comparison expression for a tag. </param>
         internal ConsumptionBudgetFilter(IList<BudgetFilterProperties> and, BudgetComparisonExpression dimensions, BudgetComparisonExpression tags)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Tags = tags;
         }
 
-        /// <summary> The logical &quot;AND&quot; expression. Must have at least 2 items. </summary>
+        /// <summary> The logical "AND" expression. Must have at least 2 items. </summary>
         public IList<BudgetFilterProperties> And { get; }
         /// <summary> Has comparison expression for a dimension. </summary>
         public BudgetComparisonExpression Dimensions { get; set; }

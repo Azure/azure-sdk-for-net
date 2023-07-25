@@ -22,15 +22,19 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionProperties. </summary>
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal TimeSeriesDatabaseConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState)
+        /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
+        internal TimeSeriesDatabaseConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity)
         {
             ConnectionType = connectionType;
             ProvisioningState = provisioningState;
+            Identity = identity;
         }
 
         /// <summary> The type of time series connection resource. </summary>
         internal ConnectionType ConnectionType { get; set; }
         /// <summary> The provisioning state. </summary>
         public TimeSeriesDatabaseConnectionState? ProvisioningState { get; }
+        /// <summary> Managed identity properties for the time series database connection resource. </summary>
+        public DigitalTwinsManagedIdentityReference Identity { get; set; }
     }
 }

@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,31 +16,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("filePath");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FilePath);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(FilePath.ToString()).RootElement);
-#endif
-            writer.WritePropertyName("linkedServiceName");
-            writer.WriteObjectValue(LinkedServiceName);
-            writer.WriteEndObject();
+            writer.WritePropertyName("filePath"u8);
+            JsonSerializer.Serialize(writer, FilePath);
+            writer.WritePropertyName("linkedServiceName"u8);
+            JsonSerializer.Serialize(writer, LinkedServiceName); writer.WriteEndObject();
         }
 
         internal static AzureMLWebServiceFile DeserializeAzureMLWebServiceFile(JsonElement element)
         {
-            BinaryData filePath = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<string> filePath = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filePath"))
+                if (property.NameEquals("filePath"u8))
                 {
-                    filePath = BinaryData.FromString(property.Value.GetRawText());
+                    filePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
             }

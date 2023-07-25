@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary> A class representing the BillingSubscriptionAlias data model. </summary>
+    /// <summary>
+    /// A class representing the BillingSubscriptionAlias data model.
+    /// A billing subscription alias.
+    /// </summary>
     public partial class BillingSubscriptionAliasData : ResourceData
     {
         /// <summary> Initializes a new instance of BillingSubscriptionAliasData. </summary>
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="invoiceSectionId"> The ID of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
         /// <param name="invoiceSectionDisplayName"> The display name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
         /// <param name="invoiceSectionName"> The name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="lastMonthCharges"> The last month&apos;s charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
+        /// <param name="lastMonthCharges"> The last month's charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
         /// <param name="monthToDateCharges"> The current month to date charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
         /// <param name="nextBillingCycleDetails"> Next billing cycle details of the subscription. </param>
         /// <param name="offerId"> The offer ID for the subscription. This field is only available for the Microsoft Online Services Program billing accounts. </param>
@@ -140,7 +143,7 @@ namespace Azure.ResourceManager.Billing
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
         public string InvoiceSectionName { get; }
-        /// <summary> The last month&apos;s charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </summary>
+        /// <summary> The last month's charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </summary>
         public BillingAmount LastMonthCharges { get; }
         /// <summary> The current month to date charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </summary>
         public BillingAmount MonthToDateCharges { get; }

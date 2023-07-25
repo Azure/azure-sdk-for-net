@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabEnvironment data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabEnvironment data model.
+    /// An environment, which is essentially an ARM template deployment.
+    /// </summary>
     public partial class DevTestLabEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabEnvironmentData. </summary>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         /// <param name="deploymentProperties"> The deployment properties of the environment. </param>
         /// <param name="armTemplateDisplayName"> The display name of the Azure Resource Manager template that produced the environment. </param>
-        /// <param name="resourceGroupId"> The identifier of the resource group containing the environment&apos;s resources. </param>
+        /// <param name="resourceGroupId"> The identifier of the resource group containing the environment's resources. </param>
         /// <param name="createdByUser"> The creator of the environment. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public DevTestLabEnvironmentDeployment DeploymentProperties { get; set; }
         /// <summary> The display name of the Azure Resource Manager template that produced the environment. </summary>
         public string ArmTemplateDisplayName { get; set; }
-        /// <summary> The identifier of the resource group containing the environment&apos;s resources. </summary>
+        /// <summary> The identifier of the resource group containing the environment's resources. </summary>
         public string ResourceGroupId { get; }
         /// <summary> The creator of the environment. </summary>
         public string CreatedByUser { get; }

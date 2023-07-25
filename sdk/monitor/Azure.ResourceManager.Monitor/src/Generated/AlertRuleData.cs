@@ -13,7 +13,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the AlertRule data model. </summary>
+    /// <summary>
+    /// A class representing the AlertRule data model.
+    /// The alert rule resource.
+    /// </summary>
     public partial class AlertRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AlertRuleData. </summary>

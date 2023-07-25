@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The SubscriptionScopeProperties. </summary>
+    /// <summary> The scopes checked by the available scope api. </summary>
     internal partial class SubscriptionScopeProperties
     {
         /// <summary> Initializes a new instance of SubscriptionScopeProperties. </summary>

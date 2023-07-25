@@ -17,77 +17,92 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             if (Optional.IsDefined(DynamicVNetAssignmentScope))
             {
-                writer.WritePropertyName("dynamicVnetAssignmentScope");
+                writer.WritePropertyName("dynamicVnetAssignmentScope"u8);
                 writer.WriteStringValue(DynamicVNetAssignmentScope.Value.ToSerialString());
             }
             if (Optional.IsDefined(EndpointConfiguration))
             {
-                writer.WritePropertyName("endpointConfiguration");
+                writer.WritePropertyName("endpointConfiguration"u8);
                 writer.WriteObjectValue(EndpointConfiguration);
             }
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
-                writer.WritePropertyName("publicIPAddressConfiguration");
+                writer.WritePropertyName("publicIPAddressConfiguration"u8);
                 writer.WriteObjectValue(PublicIPAddressConfiguration);
+            }
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
+            {
+                writer.WritePropertyName("enableAcceleratedNetworking"u8);
+                writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static BatchNetworkConfiguration DeserializeBatchNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> subnetId = default;
             Optional<DynamicVNetAssignmentScope> dynamicVnetAssignmentScope = default;
             Optional<PoolEndpointConfiguration> endpointConfiguration = default;
             Optional<BatchPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
+            Optional<bool> enableAcceleratedNetworking = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dynamicVnetAssignmentScope"))
+                if (property.NameEquals("dynamicVnetAssignmentScope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dynamicVnetAssignmentScope = property.Value.GetString().ToDynamicVNetAssignmentScope();
                     continue;
                 }
-                if (property.NameEquals("endpointConfiguration"))
+                if (property.NameEquals("endpointConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endpointConfiguration = PoolEndpointConfiguration.DeserializePoolEndpointConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("publicIPAddressConfiguration"))
+                if (property.NameEquals("publicIPAddressConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicIPAddressConfiguration = BatchPublicIPAddressConfiguration.DeserializeBatchPublicIPAddressConfiguration(property.Value);
                     continue;
                 }
+                if (property.NameEquals("enableAcceleratedNetworking"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableAcceleratedNetworking = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value);
+            return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value, Optional.ToNullable(enableAcceleratedNetworking));
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Skype channel definition. </summary>
-    public partial class SkypeChannel : Channel
+    public partial class SkypeChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of SkypeChannel. </summary>
         public SkypeChannel()

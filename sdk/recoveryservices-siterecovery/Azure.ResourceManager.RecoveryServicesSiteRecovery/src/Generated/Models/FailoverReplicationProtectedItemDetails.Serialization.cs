@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static FailoverReplicationProtectedItemDetails DeserializeFailoverReplicationProtectedItemDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> friendlyName = default;
             Optional<string> testVmName = default;
@@ -22,55 +26,58 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> networkConnectionStatus = default;
             Optional<string> networkFriendlyName = default;
             Optional<string> subnet = default;
-            Optional<string> recoveryPointId = default;
+            Optional<ResourceIdentifier> recoveryPointId = default;
             Optional<DateTimeOffset> recoveryPointTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testVmName"))
+                if (property.NameEquals("testVmName"u8))
                 {
                     testVmName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testVmFriendlyName"))
+                if (property.NameEquals("testVmFriendlyName"u8))
                 {
                     testVmFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkConnectionStatus"))
+                if (property.NameEquals("networkConnectionStatus"u8))
                 {
                     networkConnectionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkFriendlyName"))
+                if (property.NameEquals("networkFriendlyName"u8))
                 {
                     networkFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnet"))
+                if (property.NameEquals("subnet"u8))
                 {
                     subnet = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointId"))
-                {
-                    recoveryPointId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("recoveryPointTime"))
+                if (property.NameEquals("recoveryPointId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recoveryPointId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recoveryPointTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");

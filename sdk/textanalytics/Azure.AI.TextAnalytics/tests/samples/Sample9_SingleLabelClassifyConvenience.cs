@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -14,54 +13,33 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void SingleLabelClassifyConvenience()
         {
-            // Create a Text Analytics client.
-            string endpoint = TestEnvironment.StaticEndpoint;
-            string apiKey = TestEnvironment.StaticApiKey;
+            TestEnvironment.IgnoreIfNotPublicCloud();
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            Uri endpoint = new(TestEnvironment.StaticEndpoint);
+            AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions(true));
 
-            // Get input document.
-            string document = @"I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and add it to my playlist.";
+            string document =
+                "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
+                + " add it to my playlist.";
 
-            // Prepare analyze operation input. You can add multiple documents to this list and perform the same
-            // operation to all of them.
-            var batchInput = new List<string>
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
                 document
             };
 
-            // Set project and deployment names of the target model
-            // To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities
+            // Specify the project and deployment names of the desired custom model. To train your own custom model to
+            // classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities.
             string projectName = TestEnvironment.SingleClassificationProjectName;
             string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
 
-            var singleLabelClassifyAction = new SingleLabelClassifyAction(projectName, deploymentName);
+            //  Perform the text analysis operation.
+            ClassifyDocumentOperation operation = client.SingleLabelClassify(WaitUntil.Completed, batchedDocuments, projectName, deploymentName);
 
-            TextAnalyticsActions actions = new TextAnalyticsActions()
-            {
-                SingleLabelClassifyActions = new List<SingleLabelClassifyAction>() { singleLabelClassifyAction }
-            };
-
-            // Start analysis process.
-            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchInput, actions);
-
-            // Wait for completion with manual polling.
-            TimeSpan pollingInterval = new TimeSpan(1000);
-
-            while (true)
-            {
-                Console.WriteLine($"Status: {operation.Status}");
-                operation.UpdateStatus();
-                if (operation.HasCompleted)
-                {
-                    break;
-                }
-
-                Thread.Sleep(pollingInterval);
-            }
-
-            // View operation status.
-            Console.WriteLine($"AnalyzeActions operation has completed");
+            // View the operation status.
+            Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
             Console.WriteLine($"Created On   : {operation.CreatedOn}");
@@ -71,19 +49,26 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
 
-            // View operation results.
-            foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
+            // View the operation results.
+            foreach (ClassifyDocumentResultCollection documentsInPage in operation.GetValues())
             {
-                IReadOnlyCollection<SingleLabelClassifyActionResult> singleClassificationActionResults = documentsInPage.SingleLabelClassifyResults;
-
-                foreach (SingleLabelClassifyActionResult classificationActionResults in singleClassificationActionResults)
+                foreach (ClassifyDocumentResult documentResult in documentsInPage)
                 {
-                    Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
-                    foreach (ClassifyDocumentResult documentResults in classificationActionResults.DocumentsResults)
+                    if (documentResult.HasError)
                     {
-                        ClassificationCategory classification = documentResults.ClassificationCategories.First();
+                        Console.WriteLine($"  Error!");
+                        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                        continue;
+                    }
 
-                        Console.WriteLine($"  Class label \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
+                    Console.WriteLine($"  Predicted the following class:");
+                    Console.WriteLine();
+
+                    foreach (ClassificationCategory classification in documentResult.ClassificationCategories)
+                    {
+                        Console.WriteLine($"  Category: {classification.Category}");
+                        Console.WriteLine($"  Confidence score: {classification.ConfidenceScore}");
                         Console.WriteLine();
                     }
                 }

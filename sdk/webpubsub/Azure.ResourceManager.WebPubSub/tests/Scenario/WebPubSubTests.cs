@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
     public class WebPubSubTests : WebPubHubServiceClientTestBase
     {
         private ResourceGroupResource _resourceGroup;
-
         private ResourceIdentifier _resourceGroupIdentifier;
+        private const string _webPubSubNamePrefix = "webpubsub-";
 
         public WebPubSubTests(bool isAsync) : base(isAsync)
         {
@@ -61,19 +61,17 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            string webPubSubName = Recording.GenerateAssetName("webpubsub-");
-            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(webPubSub.Data);
-            Assert.AreEqual(webPubSubName, webPubSub.Data.Name);
-            Assert.AreEqual(AzureLocation.WestUS2, webPubSub.Data.Location);
+            string webPubSubName = Recording.GenerateAssetName(_webPubSubNamePrefix);
+            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, DefaultLocation, _resourceGroup);
+            ValidateWebPubSub(webPubSub.Data, webPubSubName);
         }
 
         [Test]
         [RecordedTest]
         public async Task CheckIfExist()
         {
-            string webPubSubName = Recording.GenerateAssetName("webpubsub-");
-            await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
+            string webPubSubName = Recording.GenerateAssetName(_webPubSubNamePrefix);
+            await CreateDefaultWebPubSub(webPubSubName, DefaultLocation, _resourceGroup);
             Assert.IsTrue(await _resourceGroup.GetWebPubSubs().ExistsAsync(webPubSubName));
             Assert.IsFalse(await _resourceGroup.GetWebPubSubs().ExistsAsync(webPubSubName + "1"));
         }
@@ -82,31 +80,38 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [RecordedTest]
         public async Task Get()
         {
-            string webPubSubName = Recording.GenerateAssetName("webpubsub-");
-            await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
-            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
-            Assert.IsNotNull(webPubSub.Data);
-            Assert.AreEqual(webPubSubName, webPubSub.Data.Name);
-            Assert.AreEqual(AzureLocation.WestUS2, webPubSub.Data.Location);
+            string webPubSubName = Recording.GenerateAssetName(_webPubSubNamePrefix);
+            await CreateDefaultWebPubSub(webPubSubName, DefaultLocation, _resourceGroup);
+            var webPubSub = await _resourceGroup.GetWebPubSubs().GetAsync(webPubSubName);
+            ValidateWebPubSub(webPubSub.Value.Data, webPubSubName);
         }
 
         [Test]
         [RecordedTest]
         public async Task GetAll()
         {
-            string webPubSubName = Recording.GenerateAssetName("webpubsub-");
-            await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
+            string webPubSubName = Recording.GenerateAssetName(_webPubSubNamePrefix);
+            await CreateDefaultWebPubSub(webPubSubName, DefaultLocation, _resourceGroup);
             List<WebPubSubResource> webPubSubList = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, webPubSubList.Count);
+            ValidateWebPubSub(webPubSubList.FirstOrDefault(item => item.Data.Name == webPubSubName).Data, webPubSubName);
         }
 
         [Test]
         [RecordedTest]
         public async Task Delete()
         {
-            string webPubSubName = Recording.GenerateAssetName("webpubsub-");
-            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
+            string webPubSubName = Recording.GenerateAssetName(_webPubSubNamePrefix);
+            var webPubSub = await CreateDefaultWebPubSub(webPubSubName, DefaultLocation, _resourceGroup);
             await webPubSub.DeleteAsync(WaitUntil.Completed);
+        }
+
+        private void ValidateWebPubSub(WebPubSubData webPubSub, string webPubSubName)
+        {
+            Assert.IsNotNull(webPubSub);
+            Assert.IsNotEmpty(webPubSub.Id);
+            Assert.AreEqual(webPubSubName, webPubSub.Name);
+            Assert.AreEqual(AzureLocation.WestUS2, webPubSub.Location);
         }
     }
 }

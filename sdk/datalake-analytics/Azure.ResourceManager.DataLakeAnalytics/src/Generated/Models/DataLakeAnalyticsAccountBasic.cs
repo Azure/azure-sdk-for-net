@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> A Data Lake Analytics account object, containing all information associated with the named Data Lake Analytics account. </summary>
+    /// <summary>
+    /// A Data Lake Analytics account object, containing all information associated with the named Data Lake Analytics account.
+    /// Serialized Name: DataLakeAnalyticsAccountBasic
+    /// </summary>
     public partial class DataLakeAnalyticsAccountBasic : ResourceData
     {
         /// <summary> Initializes a new instance of DataLakeAnalyticsAccountBasic. </summary>
@@ -26,14 +29,38 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="accountId"> The unique identifier associated with this Data Lake Analytics account. </param>
-        /// <param name="provisioningState"> The provisioning status of the Data Lake Analytics account. </param>
-        /// <param name="state"> The state of the Data Lake Analytics account. </param>
-        /// <param name="createdOn"> The account creation time. </param>
-        /// <param name="lastModifiedOn"> The account last modified time. </param>
-        /// <param name="endpoint"> The full CName endpoint for this account. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="tags"> The resource tags. </param>
+        /// <param name="accountId">
+        /// The unique identifier associated with this Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.accountId
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning status of the Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.provisioningState
+        /// </param>
+        /// <param name="state">
+        /// The state of the Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.state
+        /// </param>
+        /// <param name="createdOn">
+        /// The account creation time.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.creationTime
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// The account last modified time.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.lastModifiedTime
+        /// </param>
+        /// <param name="endpoint">
+        /// The full CName endpoint for this account.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.endpoint
+        /// </param>
+        /// <param name="location">
+        /// The resource location.
+        /// Serialized Name: Resource.location
+        /// </param>
+        /// <param name="tags">
+        /// The resource tags.
+        /// Serialized Name: Resource.tags
+        /// </param>
         internal DataLakeAnalyticsAccountBasic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             AccountId = accountId;
@@ -46,21 +73,45 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Tags = tags;
         }
 
-        /// <summary> The unique identifier associated with this Data Lake Analytics account. </summary>
+        /// <summary>
+        /// The unique identifier associated with this Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.accountId
+        /// </summary>
         public Guid? AccountId { get; }
-        /// <summary> The provisioning status of the Data Lake Analytics account. </summary>
+        /// <summary>
+        /// The provisioning status of the Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.provisioningState
+        /// </summary>
         public DataLakeAnalyticsAccountStatus? ProvisioningState { get; }
-        /// <summary> The state of the Data Lake Analytics account. </summary>
+        /// <summary>
+        /// The state of the Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.state
+        /// </summary>
         public DataLakeAnalyticsAccountState? State { get; }
-        /// <summary> The account creation time. </summary>
+        /// <summary>
+        /// The account creation time.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The account last modified time. </summary>
+        /// <summary>
+        /// The account last modified time.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.lastModifiedTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> The full CName endpoint for this account. </summary>
+        /// <summary>
+        /// The full CName endpoint for this account.
+        /// Serialized Name: DataLakeAnalyticsAccountBasic.properties.endpoint
+        /// </summary>
         public string Endpoint { get; }
-        /// <summary> The resource location. </summary>
+        /// <summary>
+        /// The resource location.
+        /// Serialized Name: Resource.location
+        /// </summary>
         public AzureLocation? Location { get; }
-        /// <summary> The resource tags. </summary>
+        /// <summary>
+        /// The resource tags.
+        /// Serialized Name: Resource.tags
+        /// </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

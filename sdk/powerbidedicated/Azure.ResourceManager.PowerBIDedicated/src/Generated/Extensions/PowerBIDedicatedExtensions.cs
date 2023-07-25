@@ -19,216 +19,37 @@ namespace Azure.ResourceManager.PowerBIDedicated
     /// <summary> A class to add extension methods to Azure.ResourceManager.PowerBIDedicated. </summary>
     public static partial class PowerBIDedicatedExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Lists all the Dedicated capacities for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities
-        /// Operation Id: Capacities_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DedicatedCapacityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DedicatedCapacityResource> GetDedicatedCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetDedicatedCapacitiesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the Dedicated capacities for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities
-        /// Operation Id: Capacities_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DedicatedCapacityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DedicatedCapacityResource> GetDedicatedCapacities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDedicatedCapacities(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists eligible SKUs for PowerBI Dedicated resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus
-        /// Operation Id: Capacities_ListSkus
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapacitySku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSkusCapacitiesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists eligible SKUs for PowerBI Dedicated resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus
-        /// Operation Id: Capacities_ListSkus
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapacitySku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CapacitySku> GetSkusCapacities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSkusCapacities(cancellationToken);
-        }
-
-        /// <summary>
-        /// Check the name availability in the target location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability
-        /// Operation Id: Capacities_CheckNameAvailability
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="content"> The name of the capacity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityCapacityAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check the name availability in the target location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability
-        /// Operation Id: Capacities_CheckNameAvailability
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="content"> The name of the capacity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(this SubscriptionResource subscriptionResource, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityCapacity(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the auto scale v-cores for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores
-        /// Operation Id: AutoScaleVCores_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutoScaleVCoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AutoScaleVCoreResource> GetAutoScaleVCoresAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAutoScaleVCoresAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the auto scale v-cores for the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores
-        /// Operation Id: AutoScaleVCores_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutoScaleVCoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AutoScaleVCoreResource> GetAutoScaleVCores(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAutoScaleVCores(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of DedicatedCapacityResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DedicatedCapacityResources and their operations over a DedicatedCapacityResource. </returns>
-        public static DedicatedCapacityCollection GetDedicatedCapacities(this ResourceGroupResource resourceGroupResource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetDedicatedCapacities();
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets details about the specified dedicated capacity.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/capacities/{dedicatedCapacityName}
-        /// Operation Id: Capacities_GetDetails
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="dedicatedCapacityName"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DedicatedCapacityResource>> GetDedicatedCapacityAsync(this ResourceGroupResource resourceGroupResource, string dedicatedCapacityName, CancellationToken cancellationToken = default)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetDedicatedCapacities().GetAsync(dedicatedCapacityName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Gets details about the specified dedicated capacity.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/capacities/{dedicatedCapacityName}
-        /// Operation Id: Capacities_GetDetails
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="dedicatedCapacityName"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DedicatedCapacityResource> GetDedicatedCapacity(this ResourceGroupResource resourceGroupResource, string dedicatedCapacityName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetDedicatedCapacities().Get(dedicatedCapacityName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutoScaleVCoreResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AutoScaleVCoreResources and their operations over a AutoScaleVCoreResource. </returns>
-        public static AutoScaleVCoreCollection GetAutoScaleVCores(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetAutoScaleVCores();
-        }
-
-        /// <summary>
-        /// Gets details about the specified auto scale v-core.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}
-        /// Operation Id: AutoScaleVCores_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vcoreName"> The name of the auto scale v-core. It must be a minimum of 3 characters, and a maximum of 63. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vcoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AutoScaleVCoreResource>> GetAutoScaleVCoreAsync(this ResourceGroupResource resourceGroupResource, string vcoreName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetAutoScaleVCores().GetAsync(vcoreName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets details about the specified auto scale v-core.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}
-        /// Operation Id: AutoScaleVCores_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vcoreName"> The name of the auto scale v-core. It must be a minimum of 3 characters, and a maximum of 63. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vcoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<AutoScaleVCoreResource> GetAutoScaleVCore(this ResourceGroupResource resourceGroupResource, string vcoreName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetAutoScaleVCores().Get(vcoreName, cancellationToken);
-        }
-
         #region DedicatedCapacityResource
         /// <summary>
         /// Gets an object representing a <see cref="DedicatedCapacityResource" /> along with the instance operations that can be performed on it but with no data.
@@ -266,5 +87,293 @@ namespace Azure.ResourceManager.PowerBIDedicated
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of DedicatedCapacityResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DedicatedCapacityResources and their operations over a DedicatedCapacityResource. </returns>
+        public static DedicatedCapacityCollection GetDedicatedCapacities(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDedicatedCapacities();
+        }
+
+        /// <summary>
+        /// Gets details about the specified dedicated capacity.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/capacities/{dedicatedCapacityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_GetDetails</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="dedicatedCapacityName"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DedicatedCapacityResource>> GetDedicatedCapacityAsync(this ResourceGroupResource resourceGroupResource, string dedicatedCapacityName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetDedicatedCapacities().GetAsync(dedicatedCapacityName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details about the specified dedicated capacity.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/capacities/{dedicatedCapacityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_GetDetails</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="dedicatedCapacityName"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DedicatedCapacityResource> GetDedicatedCapacity(this ResourceGroupResource resourceGroupResource, string dedicatedCapacityName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetDedicatedCapacities().Get(dedicatedCapacityName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutoScaleVCoreResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of AutoScaleVCoreResources and their operations over a AutoScaleVCoreResource. </returns>
+        public static AutoScaleVCoreCollection GetAutoScaleVCores(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutoScaleVCores();
+        }
+
+        /// <summary>
+        /// Gets details about the specified auto scale v-core.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoScaleVCores_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="vcoreName"> The name of the auto scale v-core. It must be a minimum of 3 characters, and a maximum of 63. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AutoScaleVCoreResource>> GetAutoScaleVCoreAsync(this ResourceGroupResource resourceGroupResource, string vcoreName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetAutoScaleVCores().GetAsync(vcoreName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details about the specified auto scale v-core.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoScaleVCores_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="vcoreName"> The name of the auto scale v-core. It must be a minimum of 3 characters, and a maximum of 63. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AutoScaleVCoreResource> GetAutoScaleVCore(this ResourceGroupResource resourceGroupResource, string vcoreName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetAutoScaleVCores().Get(vcoreName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the Dedicated capacities for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DedicatedCapacityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DedicatedCapacityResource> GetDedicatedCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDedicatedCapacitiesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the Dedicated capacities for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DedicatedCapacityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DedicatedCapacityResource> GetDedicatedCapacities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDedicatedCapacities(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists eligible SKUs for PowerBI Dedicated resource provider.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_ListSkus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CapacitySku" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusCapacitiesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists eligible SKUs for PowerBI Dedicated resource provider.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_ListSkus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CapacitySku" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CapacitySku> GetSkusCapacities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusCapacities(cancellationToken);
+        }
+
+        /// <summary>
+        /// Check the name availability in the target location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The region name which the operation will lookup into. </param>
+        /// <param name="content"> The name of the capacity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityCapacityAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check the name availability in the target location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Capacities_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The region name which the operation will lookup into. </param>
+        /// <param name="content"> The name of the capacity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(this SubscriptionResource subscriptionResource, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityCapacity(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the auto scale v-cores for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoScaleVCores_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AutoScaleVCoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutoScaleVCoreResource> GetAutoScaleVCoresAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoScaleVCoresAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the auto scale v-cores for the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoScaleVCores_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutoScaleVCoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutoScaleVCoreResource> GetAutoScaleVCores(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoScaleVCores(cancellationToken);
+        }
     }
 }

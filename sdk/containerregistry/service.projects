@@ -25,4 +25,10 @@
   <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Management.ContainerRegistry*\**\*.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Update="$(MSBuildThisFileDirectory)Azure.Containers.ContainerRegistry\tests\*.csproj">
+      <TestInParallel>false</TestInParallel>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

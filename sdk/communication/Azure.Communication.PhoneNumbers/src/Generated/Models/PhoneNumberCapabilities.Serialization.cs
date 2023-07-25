@@ -15,25 +15,29 @@ namespace Azure.Communication.PhoneNumbers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("calling");
+            writer.WritePropertyName("calling"u8);
             writer.WriteStringValue(Calling.ToString());
-            writer.WritePropertyName("sms");
+            writer.WritePropertyName("sms"u8);
             writer.WriteStringValue(Sms.ToString());
             writer.WriteEndObject();
         }
 
         internal static PhoneNumberCapabilities DeserializePhoneNumberCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PhoneNumberCapabilityType calling = default;
             PhoneNumberCapabilityType sms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("calling"))
+                if (property.NameEquals("calling"u8))
                 {
                     calling = new PhoneNumberCapabilityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sms"))
+                if (property.NameEquals("sms"u8))
                 {
                     sms = new PhoneNumberCapabilityType(property.Value.GetString());
                     continue;

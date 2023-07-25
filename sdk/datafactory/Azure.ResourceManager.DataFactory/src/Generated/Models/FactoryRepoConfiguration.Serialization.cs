@@ -15,26 +15,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FactoryRepoConfigurationType);
-            writer.WritePropertyName("accountName");
+            writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            writer.WritePropertyName("repositoryName");
+            writer.WritePropertyName("repositoryName"u8);
             writer.WriteStringValue(RepositoryName);
-            writer.WritePropertyName("collaborationBranch");
+            writer.WritePropertyName("collaborationBranch"u8);
             writer.WriteStringValue(CollaborationBranch);
-            writer.WritePropertyName("rootFolder");
+            writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
             if (Optional.IsDefined(LastCommitId))
             {
-                writer.WritePropertyName("lastCommitId");
+                writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
+            }
+            if (Optional.IsDefined(DisablePublish))
+            {
+                writer.WritePropertyName("disablePublish"u8);
+                writer.WriteBooleanValue(DisablePublish.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static FactoryRepoConfiguration DeserializeFactoryRepoConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

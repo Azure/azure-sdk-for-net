@@ -15,36 +15,37 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationRefundPolicyResultProperty DeserializeReservationRefundPolicyResultProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PurchasePrice> consumedRefundsTotal = default;
             Optional<PurchasePrice> maxRefundLimit = default;
             Optional<IReadOnlyList<ReservationRefundPolicyError>> policyErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("consumedRefundsTotal"))
+                if (property.NameEquals("consumedRefundsTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     consumedRefundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("maxRefundLimit"))
+                if (property.NameEquals("maxRefundLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxRefundLimit = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policyErrors"))
+                if (property.NameEquals("policyErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReservationRefundPolicyError> array = new List<ReservationRefundPolicyError>();

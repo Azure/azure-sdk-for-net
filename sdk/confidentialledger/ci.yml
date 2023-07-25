@@ -28,6 +28,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: confidentialledger
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Security.ConfidentialLedger

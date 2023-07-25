@@ -119,7 +119,7 @@ If you would like to _not_ authenticate the token while in local development, se
 
 ### .NET SDK
 
-Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 ### Azure AD custom extensions
 
@@ -212,19 +212,15 @@ To Test Token Augmentation, please do the following.
         "@odata.type": "microsoft.graph.onTokenIssuanceStartResponseData",
         "actions": [
             {
-                "@odata.type": "ProvideClaimsForToken",
-                "claims": [
-                    {
-                        "DateOfBirth": "01/01/2000"
-                    },
-                    {
-                        "CustomRoles": [
+                "@odata.type": "microsoft.graph.provideClaimsForToken",
+                "claims": {
+                    "DateOfBirth": "01/01/2000",
+                    "CustomRoles": [
                             "Writer",
                             "Editor"
                         ]
                     }
-                ]
-            }
+             }
         ]
     }
 }

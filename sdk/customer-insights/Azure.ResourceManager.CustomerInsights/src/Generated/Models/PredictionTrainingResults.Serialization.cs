@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> scoreName = default;
             Optional<PredictionDistributionDefinition> predictionDistribution = default;
@@ -23,36 +27,33 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<long> primaryProfileInstanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("scoreName"))
+                if (property.NameEquals("scoreName"u8))
                 {
                     scoreName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("predictionDistribution"))
+                if (property.NameEquals("predictionDistribution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     predictionDistribution = PredictionDistributionDefinition.DeserializePredictionDistributionDefinition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("canonicalProfiles"))
+                if (property.NameEquals("canonicalProfiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CanonicalProfileDefinition> array = new List<CanonicalProfileDefinition>();
@@ -63,11 +64,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     canonicalProfiles = array;
                     continue;
                 }
-                if (property.NameEquals("primaryProfileInstanceCount"))
+                if (property.NameEquals("primaryProfileInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryProfileInstanceCount = property.Value.GetInt64();

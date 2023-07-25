@@ -16,15 +16,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static EdgeOrderProductCostInformation DeserializeEdgeOrderProductCostInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EdgeOrderProductBillingMeterDetails>> billingMeterDetails = default;
             Optional<Uri> billingInfoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingMeterDetails"))
+                if (property.NameEquals("billingMeterDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EdgeOrderProductBillingMeterDetails> array = new List<EdgeOrderProductBillingMeterDetails>();
@@ -35,11 +38,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     billingMeterDetails = array;
                     continue;
                 }
-                if (property.NameEquals("billingInfoUrl"))
+                if (property.NameEquals("billingInfoUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        billingInfoUrl = null;
                         continue;
                     }
                     billingInfoUrl = new Uri(property.Value.GetString());

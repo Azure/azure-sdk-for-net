@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CreateDnsRecord))
             {
-                writer.WritePropertyName("createDnsRecord");
+                writer.WritePropertyName("createDnsRecord"u8);
                 writer.WriteBooleanValue(CreateDnsRecord.Value);
             }
             writer.WriteEndObject();

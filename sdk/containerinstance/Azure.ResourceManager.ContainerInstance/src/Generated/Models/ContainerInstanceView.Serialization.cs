@@ -15,47 +15,47 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerInstanceView DeserializeContainerInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> restartCount = default;
             Optional<ContainerState> currentState = default;
             Optional<ContainerState> previousState = default;
             Optional<IReadOnlyList<ContainerEvent>> events = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("restartCount"))
+                if (property.NameEquals("restartCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     restartCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("currentState"))
+                if (property.NameEquals("currentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentState = ContainerState.DeserializeContainerState(property.Value);
                     continue;
                 }
-                if (property.NameEquals("previousState"))
+                if (property.NameEquals("previousState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     previousState = ContainerState.DeserializeContainerState(property.Value);
                     continue;
                 }
-                if (property.NameEquals("events"))
+                if (property.NameEquals("events"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerEvent> array = new List<ContainerEvent>();

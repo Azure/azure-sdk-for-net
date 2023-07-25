@@ -14,20 +14,23 @@ namespace Azure.Communication.CallAutomation
     {
         internal static RecordingStateResult DeserializeRecordingStateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recordingId = default;
             Optional<RecordingState> recordingState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordingId"))
+                if (property.NameEquals("recordingId"u8))
                 {
                     recordingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recordingState"))
+                if (property.NameEquals("recordingState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingState = new RecordingState(property.Value.GetString());

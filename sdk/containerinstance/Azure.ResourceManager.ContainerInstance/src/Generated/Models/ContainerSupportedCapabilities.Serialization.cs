@@ -14,36 +14,37 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerSupportedCapabilities DeserializeContainerSupportedCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> maxMemoryInGB = default;
             Optional<float> maxCpu = default;
             Optional<float> maxGpuCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxMemoryInGB"))
+                if (property.NameEquals("maxMemoryInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxMemoryInGB = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("maxCpu"))
+                if (property.NameEquals("maxCpu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxCpu = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("maxGpuCount"))
+                if (property.NameEquals("maxGpuCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxGpuCount = property.Value.GetSingle();

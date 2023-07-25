@@ -15,6 +15,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
     {
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             Optional<string> target = default;
@@ -22,26 +26,25 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorDetail> array = new List<ErrorDetail>();
@@ -52,11 +55,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                     details = array;
                     continue;
                 }
-                if (property.NameEquals("innererror"))
+                if (property.NameEquals("innererror"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innererror = InnerError.DeserializeInnerError(property.Value);

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureBackupRGNamePrefix))
             {
-                writer.WritePropertyName("azureBackupRGNamePrefix");
+                writer.WritePropertyName("azureBackupRGNamePrefix"u8);
                 writer.WriteStringValue(AzureBackupRGNamePrefix);
             }
             if (Optional.IsDefined(AzureBackupRGNameSuffix))
             {
-                writer.WritePropertyName("azureBackupRGNameSuffix");
+                writer.WritePropertyName("azureBackupRGNameSuffix"u8);
                 writer.WriteStringValue(AzureBackupRGNameSuffix);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static InstantRPAdditionalDetails DeserializeInstantRPAdditionalDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> azureBackupRGNamePrefix = default;
             Optional<string> azureBackupRGNameSuffix = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureBackupRGNamePrefix"))
+                if (property.NameEquals("azureBackupRGNamePrefix"u8))
                 {
                     azureBackupRGNamePrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureBackupRGNameSuffix"))
+                if (property.NameEquals("azureBackupRGNameSuffix"u8))
                 {
                     azureBackupRGNameSuffix = property.Value.GetString();
                     continue;

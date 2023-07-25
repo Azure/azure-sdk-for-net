@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DesiredState))
             {
-                writer.WritePropertyName("desiredState");
+                writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -25,47 +25,47 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static AutomaticTuningServerOptions DeserializeAutomaticTuningServerOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomaticTuningOptionModeDesired> desiredState = default;
             Optional<AutomaticTuningOptionModeActual> actualState = default;
             Optional<int> reasonCode = default;
             Optional<AutomaticTuningServerReason> reasonDesc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("desiredState"))
+                if (property.NameEquals("desiredState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     desiredState = property.Value.GetString().ToAutomaticTuningOptionModeDesired();
                     continue;
                 }
-                if (property.NameEquals("actualState"))
+                if (property.NameEquals("actualState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actualState = property.Value.GetString().ToAutomaticTuningOptionModeActual();
                     continue;
                 }
-                if (property.NameEquals("reasonCode"))
+                if (property.NameEquals("reasonCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reasonCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("reasonDesc"))
+                if (property.NameEquals("reasonDesc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reasonDesc = property.Value.GetString().ToAutomaticTuningServerReason();

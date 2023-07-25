@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,38 +20,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QuoteAllText))
             {
-                writer.WritePropertyName("quoteAllText");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(QuoteAllText);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(QuoteAllText.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("quoteAllText"u8);
+                JsonSerializer.Serialize(writer, QuoteAllText);
             }
-            writer.WritePropertyName("fileExtension");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileExtension);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(FileExtension.ToString()).RootElement);
-#endif
+            writer.WritePropertyName("fileExtension"u8);
+            JsonSerializer.Serialize(writer, FileExtension);
             if (Optional.IsDefined(MaxRowsPerFile))
             {
-                writer.WritePropertyName("maxRowsPerFile");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxRowsPerFile);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxRowsPerFile.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("maxRowsPerFile"u8);
+                JsonSerializer.Serialize(writer, MaxRowsPerFile);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
-                writer.WritePropertyName("fileNamePrefix");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileNamePrefix);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileNamePrefix.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("fileNamePrefix"u8);
+                JsonSerializer.Serialize(writer, FileNamePrefix);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatWriteSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -66,51 +51,52 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DelimitedTextWriteSettings DeserializeDelimitedTextWriteSettings(JsonElement element)
         {
-            Optional<BinaryData> quoteAllText = default;
-            BinaryData fileExtension = default;
-            Optional<BinaryData> maxRowsPerFile = default;
-            Optional<BinaryData> fileNamePrefix = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<bool>> quoteAllText = default;
+            DataFactoryElement<string> fileExtension = default;
+            Optional<DataFactoryElement<int>> maxRowsPerFile = default;
+            Optional<DataFactoryElement<string>> fileNamePrefix = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("quoteAllText"))
+                if (property.NameEquals("quoteAllText"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    quoteAllText = BinaryData.FromString(property.Value.GetRawText());
+                    quoteAllText = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("fileExtension"))
+                if (property.NameEquals("fileExtension"u8))
                 {
-                    fileExtension = BinaryData.FromString(property.Value.GetRawText());
+                    fileExtension = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("maxRowsPerFile"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    maxRowsPerFile = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("fileNamePrefix"))
+                if (property.NameEquals("maxRowsPerFile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileNamePrefix = BinaryData.FromString(property.Value.GetRawText());
+                    maxRowsPerFile = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("fileNamePrefix"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileNamePrefix = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

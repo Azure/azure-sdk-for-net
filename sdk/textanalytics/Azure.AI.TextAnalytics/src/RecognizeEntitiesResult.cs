@@ -14,7 +14,10 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly CategorizedEntityCollection _entities;
 
-        internal RecognizeEntitiesResult(string id, TextDocumentStatistics statistics, CategorizedEntityCollection entities)
+        internal RecognizeEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            CategorizedEntityCollection entities)
             : base(id, statistics)
         {
             _entities = entities;

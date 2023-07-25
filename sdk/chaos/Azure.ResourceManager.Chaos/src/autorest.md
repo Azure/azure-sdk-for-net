@@ -9,7 +9,7 @@ csharp: true
 library-name: Chaos
 namespace: Azure.ResourceManager.Chaos
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/650a2be17c499104c7ad20f7a38f33f582170308/specification/chaos/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1114a5b1f0831d8b3de07db7248c8a4f38c5bbb7/specification/chaos/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -45,12 +45,5 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
-directive:
-  - from: experiments.json
-    where: $.definitions
-    transform: >
-      $.delayAction.properties.duration['x-ms-format'] = 'duration-constant';
-      $.continuousAction.properties.duration['x-ms-format'] = 'duration-constant';
 
 ```

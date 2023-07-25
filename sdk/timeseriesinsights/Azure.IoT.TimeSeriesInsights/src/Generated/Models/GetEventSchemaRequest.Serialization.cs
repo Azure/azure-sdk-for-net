@@ -15,7 +15,7 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("searchSpan");
+            writer.WritePropertyName("searchSpan"u8);
             writer.WriteObjectValue(SearchSpan);
             writer.WriteEndObject();
         }

@@ -37,7 +37,10 @@ namespace Azure.Storage.Files.DataLake
             _closeEvent = closeEvent;
         }
 
-        protected override async Task AppendInternal(bool async, CancellationToken cancellationToken)
+        protected override async Task AppendInternal(
+            UploadTransferValidationOptions validationOptions,
+            bool async,
+            CancellationToken cancellationToken)
         {
             if (_buffer.Length > 0)
             {
@@ -46,7 +49,7 @@ namespace Azure.Storage.Files.DataLake
                 await _fileClient.AppendInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    validationOptionsOverride: _validationOptions,
+                    validationOptionsOverride: validationOptions,
                     leaseId: _conditions.LeaseId,
                     leaseAction: null,
                     leaseDuration: null,
@@ -58,14 +61,13 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 _writeIndex += _buffer.Length;
-                _buffer.Clear();
             }
         }
 
-        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
+        protected override async Task CommitInternal(
+            bool async,
+            CancellationToken cancellationToken)
         {
-            await AppendInternal(async, cancellationToken).ConfigureAwait(false);
-
             Response<PathInfo> response = await _fileClient.FlushInternal(
                 position: _writeIndex,
                 retainUncommittedData: default,

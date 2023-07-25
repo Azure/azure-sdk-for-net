@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudEndpointPostBackupResult DeserializeCloudEndpointPostBackupResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cloudEndpointName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupMetadata"))
+                if (property.NameEquals("backupMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("cloudEndpointName"))
+                        if (property0.NameEquals("cloudEndpointName"u8))
                         {
                             cloudEndpointName = property0.Value.GetString();
                             continue;

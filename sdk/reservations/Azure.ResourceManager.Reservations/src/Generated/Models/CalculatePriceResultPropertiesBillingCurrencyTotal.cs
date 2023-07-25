@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> Currency and amount that customer will be charged in customer&apos;s local currency. Tax is not included. </summary>
+    /// <summary> Currency and amount that customer will be charged in customer's local currency. Tax is not included. </summary>
     public partial class CalculatePriceResultPropertiesBillingCurrencyTotal
     {
         /// <summary> Initializes a new instance of CalculatePriceResultPropertiesBillingCurrencyTotal. </summary>

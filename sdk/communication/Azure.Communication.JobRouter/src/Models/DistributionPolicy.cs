@@ -14,28 +14,40 @@ namespace Azure.Communication.JobRouter.Models
         internal DistributionPolicy()
         {
         }
+
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
-        /// <param name="offerTtl"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
+        /// <param name="offerExpiresAfter"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
         /// <param name="mode"> Abstract base class for defining a distribution mode. </param>
-        internal DistributionPolicy(TimeSpan? offerTtl, DistributionMode mode)
+        internal DistributionPolicy(TimeSpan? offerExpiresAfter, DistributionMode mode)
         {
-            OfferTtl = offerTtl;
+            OfferExpiresAfter = offerExpiresAfter;
             Mode = mode;
         }
 
         /// <summary> The expiry time of any offers created under this policy will be governed by the offer time to live. </summary>
-        public TimeSpan? OfferTtl { get; set; }
+        public TimeSpan? OfferExpiresAfter { get; set; }
 
-        [CodeGenMember("OfferTtlSeconds")]
-        internal double? _offerTtlSeconds {
+        [CodeGenMember("OfferExpiresAfterSeconds")]
+        internal double? _offerExpiresAfterSeconds
+        {
             get
             {
-                return OfferTtl?.TotalSeconds is null or 0 ? null : OfferTtl?.TotalSeconds;
+                return OfferExpiresAfter?.TotalSeconds is null or 0 ? null : OfferExpiresAfter?.TotalSeconds;
             }
             set
             {
-                OfferTtl = value != null ? TimeSpan.FromSeconds(value.Value) : null;
+                OfferExpiresAfter = value != null ? TimeSpan.FromSeconds(value.Value) : null;
             }
         }
+
+        /// <summary> (Optional) The name of the distribution policy. </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// Abstract base class for defining a distribution mode
+        /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
+        /// </summary>
+        public DistributionMode Mode { get; internal set; }
     }
 }

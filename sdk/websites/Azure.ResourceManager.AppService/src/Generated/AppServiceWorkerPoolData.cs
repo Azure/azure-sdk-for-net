@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceWorkerPool data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceWorkerPool data model.
+    /// Worker pool of an App Service Environment ARM resource.
+    /// </summary>
     public partial class AppServiceWorkerPoolData : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceWorkerPoolData. </summary>

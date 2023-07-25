@@ -18,21 +18,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("driverMemory");
+            writer.WritePropertyName("driverMemory"u8);
             writer.WriteStringValue(DriverMemory);
-            writer.WritePropertyName("driverCores");
+            writer.WritePropertyName("driverCores"u8);
             writer.WriteNumberValue(DriverCores);
-            writer.WritePropertyName("executorMemory");
+            writer.WritePropertyName("executorMemory"u8);
             writer.WriteStringValue(ExecutorMemory);
-            writer.WritePropertyName("executorCores");
+            writer.WritePropertyName("executorCores"u8);
             writer.WriteNumberValue(ExecutorCores);
-            writer.WritePropertyName("numExecutors");
+            writer.WritePropertyName("numExecutors"u8);
             writer.WriteNumberValue(NumExecutors);
             writer.WriteEndObject();
         }
 
         internal static NotebookSessionProperties DeserializeNotebookSessionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string driverMemory = default;
             int driverCores = default;
             string executorMemory = default;
@@ -40,27 +44,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             int numExecutors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("driverMemory"))
+                if (property.NameEquals("driverMemory"u8))
                 {
                     driverMemory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("driverCores"))
+                if (property.NameEquals("driverCores"u8))
                 {
                     driverCores = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("executorMemory"))
+                if (property.NameEquals("executorMemory"u8))
                 {
                     executorMemory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("executorCores"))
+                if (property.NameEquals("executorCores"u8))
                 {
                     executorCores = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("numExecutors"))
+                if (property.NameEquals("numExecutors"u8))
                 {
                     numExecutors = property.Value.GetInt32();
                     continue;

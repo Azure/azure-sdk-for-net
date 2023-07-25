@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,45 +19,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BlobContainerUri))
             {
-                writer.WritePropertyName("blobContainerUri");
+                writer.WritePropertyName("blobContainerUri"u8);
                 writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SasToken))
             {
-                writer.WritePropertyName("sasToken");
-                writer.WriteObjectValue(SasToken);
+                writer.WritePropertyName("sasToken"u8);
+                JsonSerializer.Serialize(writer, SasToken);
             }
             writer.WriteEndObject();
         }
 
         internal static IntegrationRuntimeCustomSetupScriptProperties DeserializeIntegrationRuntimeCustomSetupScriptProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> blobContainerUri = default;
-            Optional<FactorySecretString> sasToken = default;
+            Optional<DataFactorySecretString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blobContainerUri"))
+                if (property.NameEquals("blobContainerUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blobContainerUri = null;
                         continue;
                     }
                     blobContainerUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sasToken"))
+                if (property.NameEquals("sasToken"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sasToken = FactorySecretString.DeserializeFactorySecretString(property.Value);
+                    sasToken = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken.Value);
+            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken);
         }
     }
 }

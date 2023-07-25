@@ -11,7 +11,6 @@ using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
@@ -436,12 +435,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 KeyVaultUri = kvData.Properties.VaultUri
             });
 
-            namespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
-            {
-                KeyName = Key3,
-                KeyVaultUri = kvData.Properties.VaultUri
-            });
-
             resource = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false)).Value;
             AssertNamespaceMSIOnUpdates(namespaceData, resource.Data);
 
@@ -508,13 +501,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             eventHubsNamespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
             {
                 KeyName = Key2,
-                KeyVaultUri = kvData.Properties.VaultUri,
-                Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString())
-            });
-
-            eventHubsNamespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
-            {
-                KeyName = Key3,
                 KeyVaultUri = kvData.Properties.VaultUri,
                 Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString())
             });
@@ -681,7 +667,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt10");
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
 
             //add a tag
@@ -689,7 +675,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(eventHubNamespace.Data.Tags["key"], "value");
+                Assert.AreEqual(eventHubNamespace.Data.Tags["key1"], "value1");
             }
 
             //set the tag

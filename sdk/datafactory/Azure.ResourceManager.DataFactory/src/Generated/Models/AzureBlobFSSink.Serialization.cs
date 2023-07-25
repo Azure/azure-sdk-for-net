@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,16 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CopyBehavior))
             {
-                writer.WritePropertyName("copyBehavior");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CopyBehavior);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CopyBehavior.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("copyBehavior"u8);
+                JsonSerializer.Serialize(writer, CopyBehavior);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
@@ -36,61 +33,37 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
             if (Optional.IsDefined(WriteBatchSize))
             {
-                writer.WritePropertyName("writeBatchSize");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBatchSize);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchSize.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("writeBatchSize"u8);
+                JsonSerializer.Serialize(writer, WriteBatchSize);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
-                writer.WritePropertyName("writeBatchTimeout");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBatchTimeout);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchTimeout.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("writeBatchTimeout"u8);
+                JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
-                writer.WritePropertyName("sinkRetryCount");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SinkRetryCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryCount.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("sinkRetryCount"u8);
+                JsonSerializer.Serialize(writer, SinkRetryCount);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
-                writer.WritePropertyName("sinkRetryWait");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SinkRetryWait);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryWait.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("sinkRetryWait"u8);
+                JsonSerializer.Serialize(writer, SinkRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("maxConcurrentConnections"u8);
+                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
-                writer.WritePropertyName("disableMetricsCollection");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("disableMetricsCollection"u8);
+                JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -106,107 +79,103 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobFSSink DeserializeAzureBlobFSSink(JsonElement element)
         {
-            Optional<BinaryData> copyBehavior = default;
-            Optional<IList<FactoryMetadataItemInfo>> metadata = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<string>> copyBehavior = default;
+            Optional<IList<DataFactoryMetadataItemInfo>> metadata = default;
             string type = default;
-            Optional<BinaryData> writeBatchSize = default;
-            Optional<BinaryData> writeBatchTimeout = default;
-            Optional<BinaryData> sinkRetryCount = default;
-            Optional<BinaryData> sinkRetryWait = default;
-            Optional<BinaryData> maxConcurrentConnections = default;
-            Optional<BinaryData> disableMetricsCollection = default;
+            Optional<DataFactoryElement<int>> writeBatchSize = default;
+            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
+            Optional<DataFactoryElement<int>> sinkRetryCount = default;
+            Optional<DataFactoryElement<string>> sinkRetryWait = default;
+            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("copyBehavior"))
+                if (property.NameEquals("copyBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    copyBehavior = BinaryData.FromString(property.Value.GetRawText());
+                    copyBehavior = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FactoryMetadataItemInfo> array = new List<FactoryMetadataItemInfo>();
+                    List<DataFactoryMetadataItemInfo> array = new List<DataFactoryMetadataItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FactoryMetadataItemInfo.DeserializeFactoryMetadataItemInfo(item));
+                        array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item));
                     }
                     metadata = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("writeBatchSize"))
+                if (property.NameEquals("writeBatchSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchSize = BinaryData.FromString(property.Value.GetRawText());
+                    writeBatchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("writeBatchTimeout"))
+                if (property.NameEquals("writeBatchTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    writeBatchTimeout = BinaryData.FromString(property.Value.GetRawText());
+                    writeBatchTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sinkRetryCount"))
+                if (property.NameEquals("sinkRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryCount = BinaryData.FromString(property.Value.GetRawText());
+                    sinkRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sinkRetryWait"))
+                if (property.NameEquals("sinkRetryWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sinkRetryWait = BinaryData.FromString(property.Value.GetRawText());
+                    sinkRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("disableMetricsCollection"))
+                if (property.NameEquals("disableMetricsCollection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

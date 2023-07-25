@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static ApiManagementProductState ToApiManagementProductState(this string value)
         {
-            if (string.Equals(value, "notPublished", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementProductState.NotPublished;
-            if (string.Equals(value, "published", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementProductState.Published;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "notPublished")) return ApiManagementProductState.NotPublished;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "published")) return ApiManagementProductState.Published;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementProductState value.");
         }
     }

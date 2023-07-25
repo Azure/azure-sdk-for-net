@@ -35,7 +35,7 @@ namespace Compute.Tests
         public CloudServiceTestsBase()
         {
             originalLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+            Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
         }
 
         public void Dispose()
@@ -246,6 +246,16 @@ namespace Compute.Tests
                 Assert.True((cloudServiceOut.Properties.RoleProfile == null));
             }
 
+            if (cloudService.Zones != null)
+            {
+                Assert.NotNull(cloudServiceOut.Zones);
+                Assert.Equal(cloudServiceOut.Zones.Count, cloudServiceOut.Zones.Count);
+                Assert.True(cloudService.Zones.All(cloudServiceOut.Zones.Contains));
+            }
+            else
+            {
+                Assert.Null(cloudServiceOut.Zones);
+            }
         }
 
         protected VirtualNetwork CreateVirtualNetwork(string resourceGroupName, string vnetName, string subnetName)
@@ -421,7 +431,7 @@ namespace Compute.Tests
                         Name  = lbName,
                         Properties = new LoadBalancerConfigurationProperties()
                         {
-                            FrontendIPConfigurations = new List<LoadBalancerFrontendIPConfiguration>()
+                            FrontendIpConfigurations = new List<LoadBalancerFrontendIpConfiguration>()
                             {
                                 feipConfig
                             }
@@ -433,13 +443,13 @@ namespace Compute.Tests
             return cloudServiceNetworkProfile;
         }
 
-        protected LoadBalancerFrontendIPConfiguration GenerateFrontEndIpConfigurationModel(string publicIPAddressName, string resourceGroupName, string lbFrontEndName)
+        protected LoadBalancerFrontendIpConfiguration GenerateFrontEndIpConfigurationModel(string publicIPAddressName, string resourceGroupName, string lbFrontEndName)
         {
-            LoadBalancerFrontendIPConfiguration feipConfiguration =
-                new LoadBalancerFrontendIPConfiguration()
+            LoadBalancerFrontendIpConfiguration feipConfiguration =
+                new LoadBalancerFrontendIpConfiguration()
                 {
                     Name = lbFrontEndName,
-                    Properties = new LoadBalancerFrontendIPConfigurationProperties()
+                    Properties = new LoadBalancerFrontendIpConfigurationProperties()
                     {
                         PublicIPAddress = new CM.SubResource()
                         {

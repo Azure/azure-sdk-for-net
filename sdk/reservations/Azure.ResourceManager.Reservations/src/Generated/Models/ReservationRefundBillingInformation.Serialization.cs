@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationRefundBillingInformation DeserializeReservationRefundBillingInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReservationBillingPlan> billingPlan = default;
             Optional<int> completedTransactions = default;
             Optional<int> totalTransactions = default;
@@ -22,61 +26,55 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> billingCurrencyRemainingCommitmentAmount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingPlan"))
+                if (property.NameEquals("billingPlan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingPlan = new ReservationBillingPlan(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("completedTransactions"))
+                if (property.NameEquals("completedTransactions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     completedTransactions = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalTransactions"))
+                if (property.NameEquals("totalTransactions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalTransactions = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("billingCurrencyTotalPaidAmount"))
+                if (property.NameEquals("billingCurrencyTotalPaidAmount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingCurrencyTotalPaidAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("billingCurrencyProratedAmount"))
+                if (property.NameEquals("billingCurrencyProratedAmount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingCurrencyProratedAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
-                if (property.NameEquals("billingCurrencyRemainingCommitmentAmount"))
+                if (property.NameEquals("billingCurrencyRemainingCommitmentAmount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingCurrencyRemainingCommitmentAmount = PurchasePrice.DeserializePurchasePrice(property.Value);

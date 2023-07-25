@@ -110,7 +110,7 @@ namespace Azure.AI.TextAnalytics
             Id = operationId;
             _serviceClient = client.ServiceClient;
             _diagnostics = _serviceClient.Diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.AI.TextAnalytics
             _diagnostics = diagnostics;
             _idToIndexMap = idToIndexMap;
             _showStats = showStats;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
 
             _jobId = operationLocation.Split('/').Last().Split('?')[0];
 
@@ -281,21 +281,18 @@ namespace Azure.AI.TextAnalytics
 
                 return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
+
+            if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
             {
                 return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Pending(rawResponse);
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+
+            if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
             {
-                return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse,
-                    new RequestFailedException("The operation was canceled so no value is available."));
+                return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            RequestFailedException requestFailedException = await ClientCommon
-                .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
-                .ConfigureAwait(false);
-
-            return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse, requestFailedException);
+            return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
     }
 }

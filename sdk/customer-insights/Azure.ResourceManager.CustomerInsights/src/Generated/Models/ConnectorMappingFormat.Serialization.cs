@@ -15,31 +15,31 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("formatType");
+            writer.WritePropertyName("formatType"u8);
             writer.WriteStringValue(FormatType.ToString());
             if (Optional.IsDefined(ColumnDelimiter))
             {
-                writer.WritePropertyName("columnDelimiter");
+                writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteStringValue(ColumnDelimiter);
             }
             if (Optional.IsDefined(AcceptLanguage))
             {
-                writer.WritePropertyName("acceptLanguage");
+                writer.WritePropertyName("acceptLanguage"u8);
                 writer.WriteStringValue(AcceptLanguage);
             }
             if (Optional.IsDefined(QuoteCharacter))
             {
-                writer.WritePropertyName("quoteCharacter");
+                writer.WritePropertyName("quoteCharacter"u8);
                 writer.WriteStringValue(QuoteCharacter);
             }
             if (Optional.IsDefined(QuoteEscapeCharacter))
             {
-                writer.WritePropertyName("quoteEscapeCharacter");
+                writer.WritePropertyName("quoteEscapeCharacter"u8);
                 writer.WriteStringValue(QuoteEscapeCharacter);
             }
             if (Optional.IsDefined(ArraySeparator))
             {
-                writer.WritePropertyName("arraySeparator");
+                writer.WritePropertyName("arraySeparator"u8);
                 writer.WriteStringValue(ArraySeparator);
             }
             writer.WriteEndObject();
@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingFormat DeserializeConnectorMappingFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FormatType formatType = default;
             Optional<string> columnDelimiter = default;
             Optional<string> acceptLanguage = default;
@@ -55,32 +59,32 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> arraySeparator = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("formatType"))
+                if (property.NameEquals("formatType"u8))
                 {
                     formatType = new FormatType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("columnDelimiter"))
+                if (property.NameEquals("columnDelimiter"u8))
                 {
                     columnDelimiter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("acceptLanguage"))
+                if (property.NameEquals("acceptLanguage"u8))
                 {
                     acceptLanguage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quoteCharacter"))
+                if (property.NameEquals("quoteCharacter"u8))
                 {
                     quoteCharacter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quoteEscapeCharacter"))
+                if (property.NameEquals("quoteEscapeCharacter"u8))
                 {
                     quoteEscapeCharacter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("arraySeparator"))
+                if (property.NameEquals("arraySeparator"u8))
                 {
                     arraySeparator = property.Value.GetString();
                     continue;

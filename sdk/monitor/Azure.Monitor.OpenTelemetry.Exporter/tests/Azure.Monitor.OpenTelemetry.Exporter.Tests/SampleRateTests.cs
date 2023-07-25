@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,7 +9,6 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry;
-using OpenTelemetry.Extensions.AzureMonitor;
 using OpenTelemetry.Trace;
 using Xunit;
 
@@ -37,63 +35,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         [Theory]
         [InlineData(50.0F)]
-        [InlineData("somestring")]
-        [InlineData(null)]
-        [InlineData("")]
-        public void ValidateSampleRateForEventException(object SampleRate)
+        public void ValidateSampleRateForEventException(float sampleRate)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
 
-            // Valid SampleRate.
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Client,
                 parentContext: default,
-                startTime: DateTime.UtcNow,
-                tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
+                startTime: DateTime.UtcNow);
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
-            var expTelemetryItem = new TelemetryItem(telemetryItem, default, default, default);
-
-            if (SampleRate is float)
-            {
-                Assert.Equal(SampleRate, expTelemetryItem.SampleRate);
-            }
-            else
-            {
-                Assert.Null(expTelemetryItem.SampleRate);
-            }
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, "00000000-0000-0000-0000-000000000000", sampleRate);
+            var expTelemetryItem = new TelemetryItem("Exception", telemetryItem, default, default, default);
+            Assert.Equal(sampleRate, expTelemetryItem.SampleRate);
         }
 
         [Theory]
         [InlineData(50.0F)]
-        [InlineData("somestring")]
-        [InlineData(null)]
-        [InlineData("")]
-        public void ValidateSampleRateInTelemetry(object SampleRate)
+        public void ValidateSampleRateInTelemetry(float sampleRate)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
 
-            // Valid SampleRate.
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Client,
                 parentContext: default,
-                startTime: DateTime.UtcNow,
-                tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
+                startTime: DateTime.UtcNow);
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, null, "00000000-0000-0000-0000-000000000000", sampleRate);
 
-            if (SampleRate is float)
-            {
-                Assert.Equal(SampleRate, telemetryItem.SampleRate);
-            }
-            else
-            {
-                Assert.Null(telemetryItem.SampleRate);
-            }
+            Assert.Equal(sampleRate, telemetryItem.SampleRate);
         }
 
         [Fact]
@@ -102,18 +77,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
-                .SetSampler(new ApplicationInsightsSampler(1.0F))
-                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
+                .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems, options => options.SamplingRatio = 1.0F)
                 .Build();
 
             using (var activity = activitySource.StartActivity("SayHello"))
             {
             }
 
-            tracerProvider.ForceFlush();
+            tracerProvider?.ForceFlush();
 
             Assert.NotEmpty(telemetryItems);
-            Assert.Equal(100F, telemetryItems.FirstOrDefault().SampleRate);
+            Assert.Null(telemetryItems.Last()!.SampleRate);
         }
 
         [Fact]
@@ -122,15 +96,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
-                .SetSampler(new ApplicationInsightsSampler(0.0F))
-                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
+                .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems, options => options.SamplingRatio = 0.0F)
                 .Build();
 
             using (var activity = activitySource.StartActivity("SayHello"))
             {
             }
 
-            tracerProvider.ForceFlush();
+            tracerProvider?.ForceFlush();
 
             Assert.Empty(telemetryItems);
         }

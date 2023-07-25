@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WebSshAccess))
             {
-                writer.WritePropertyName("webSshAccess");
+                writer.WritePropertyName("webSshAccess"u8);
                 writer.WriteStringValue(WebSshAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(WebRdpAccess))
             {
-                writer.WritePropertyName("webRdpAccess");
+                writer.WritePropertyName("webRdpAccess"u8);
                 writer.WriteStringValue(WebRdpAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(ClientSshAccess))
             {
-                writer.WritePropertyName("clientSshAccess");
+                writer.WritePropertyName("clientSshAccess"u8);
                 writer.WriteStringValue(ClientSshAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(ClientRdpAccess))
             {
-                writer.WritePropertyName("clientRdpAccess");
+                writer.WritePropertyName("clientRdpAccess"u8);
                 writer.WriteStringValue(ClientRdpAccess.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -40,47 +40,47 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabConnectionProfile DeserializeLabConnectionProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LabVirtualMachineConnectionType> webSshAccess = default;
             Optional<LabVirtualMachineConnectionType> webRdpAccess = default;
             Optional<LabVirtualMachineConnectionType> clientSshAccess = default;
             Optional<LabVirtualMachineConnectionType> clientRdpAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("webSshAccess"))
+                if (property.NameEquals("webSshAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     webSshAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
                     continue;
                 }
-                if (property.NameEquals("webRdpAccess"))
+                if (property.NameEquals("webRdpAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     webRdpAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
                     continue;
                 }
-                if (property.NameEquals("clientSshAccess"))
+                if (property.NameEquals("clientSshAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientSshAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
                     continue;
                 }
-                if (property.NameEquals("clientRdpAccess"))
+                if (property.NameEquals("clientRdpAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientRdpAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();

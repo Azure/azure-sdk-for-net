@@ -20,7 +20,7 @@ Various documentation is available to help you get started
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Developer.LoadTesting --prerelease
+dotnet add package Azure.Developer.LoadTesting
 ```
 
 ### Prerequisites
@@ -43,17 +43,17 @@ Use the returned token credential to authenticate the client.
 
 ## Key concepts
 
-The following components make up the Azure Load Testing service. The Azure Load Test client library for C# allows you to interact with each of these components through the use of clients. There is a top level client  `LoadTestingClient` with two sub-clients
+The following components make up the Azure Load Testing service. The Azure Load Test client library for C# allows you to interact with each of these components through the use of clients. There are two clients:
 
 - `LoadTestAdministrationClient`
 
-- `TestRunClient`
+- `LoadTestRunClient`
 
-These sub-clients are used for managing and using different components of the service. For each method in both of these sub-clients there is a corresponding Async method in the same class, with the same implementation however enabling async functionalities. For example, if there is a method, `CreateOrUpdateTest` as a part of `LoadTestAdministrationClient` then there always exists one more function `CreateOrUpdateTestAsync` in the same client class.
+These clients are used for managing and using different components of the service. For each method in both of these sub-clients there is a corresponding Async method in the same class, with the same implementation however enabling async functionalities. For example, if there is a method, `CreateOrUpdateTest` as a part of `LoadTestAdministrationClient` then there always exists one more function `CreateOrUpdateTestAsync` in the same client class.
 
 ### Load Test Administration Client
 
-The `LoadTestAdministration` sub-clients is used to administer and configure the load tests, app components and metrics.
+The `LoadTestAdministrationClient` client is used to administer and configure the load tests, app components and metrics.
 
 #### Test
 
@@ -73,7 +73,7 @@ During a load test, Azure Load Testing collects metrics about the test execution
 
 ### Test Run Client
 
-The `TestRun` sub-clients is used to start and stop test runs corresponding to a load test. A test run represents one execution of a load test. It collects the logs associated with running the Apache JMeter script, the load test YAML configuration, the list of app components to monitor, and the results of the test.
+The `LoadTestRunClient` client is used to start and stop test runs corresponding to a load test. A test run represents one execution of a load test. It collects the logs associated with running the Apache JMeter script, the load test YAML configuration, the list of app components to monitor, and the results of the test.
 
 ### Data-Plane Endpoint
 
@@ -116,7 +116,7 @@ This is a template, but your SDK readme should include details on how to contrib
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 

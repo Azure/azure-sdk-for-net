@@ -685,9 +685,8 @@ namespace Azure.ResourceManager.Network.Tests
             CompareApplicationGateway(appGw, getGateway.Value.Data);
 
             // Get available WAF rule sets (validate first result set/group)
-            // TODO -- double async, we need to fix this
             ApplicationGatewayFirewallRuleSet availableWAFRuleSet = null;
-            await foreach (var namespaceId in _subscription.GetApplicationGatewayAvailableWafRuleSetsAsyncAsync())
+            await foreach (var namespaceId in _subscription.GetAppGatewayAvailableWafRuleSetsAsync())
             {
                 availableWAFRuleSet = namespaceId;
                 break;
@@ -882,7 +881,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(sslOptionsInfo);
             Assert.AreEqual(sslOptionsInfo.Name, "default");
             Assert.AreEqual(sslOptionsInfo.Id.ResourceType, sslOptionsInfo.ResourceType);
-            Assert.AreEqual(sslOptionsInfo.DefaultPolicy, ApplicationGatewaySslPolicyName.AppGwSslPolicy20150501);
+            Assert.AreEqual(sslOptionsInfo.DefaultPolicy, ApplicationGatewaySslPolicyName.AppGwSslPolicy20220101);
             Assert.AreEqual(sslOptionsInfo.PredefinedPolicies.Count, 5);
             foreach (var predefinedPolicy in sslOptionsInfo.PredefinedPolicies)
             {

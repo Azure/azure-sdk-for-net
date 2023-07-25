@@ -103,74 +103,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<SqlScriptResource> GetSqlScriptsByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlScriptResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScriptsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetSqlScriptsByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlScriptResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScriptsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.GetSqlScriptsByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSqlScriptsByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSqlScriptsByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SqlScriptResource.DeserializeSqlScriptResource, _clientDiagnostics, _pipeline, "SqlScriptClient.GetSqlScriptsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists sql scripts. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<SqlScriptResource> GetSqlScriptsByWorkspace(CancellationToken cancellationToken = default)
         {
-            Page<SqlScriptResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScriptsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetSqlScriptsByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlScriptResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScriptsByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.GetSqlScriptsByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSqlScriptsByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSqlScriptsByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SqlScriptResource.DeserializeSqlScriptResource, _clientDiagnostics, _pipeline, "SqlScriptClient.GetSqlScriptsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a Sql Script. </summary>

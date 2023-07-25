@@ -205,5 +205,32 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(exceptionString, Contains.Substring(eventHubName), "The ToString value should contain the Event Hub name.");
             Assert.That(exceptionString, Contains.Substring($"{ Environment.NewLine }{ instance.StackTrace }"), "The ToString value should contain the stack trace on a new line.");
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsException.ToString" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToStringContainsInnerExceptionDetails()
+        {
+            var message = "Inner message!";
+            var innerException = new DivideByZeroException(message);
+
+            EventHubsException instance;
+
+            try
+            {
+                throw new EventHubsException(false, "hub", "Outer", EventHubsException.FailureReason.QuotaExceeded, innerException);
+            }
+            catch (EventHubsException ex)
+            {
+                instance = ex;
+            }
+
+            var exceptionString = instance.ToString();
+            Assert.That(exceptionString, Is.Not.Null.And.Not.Empty, "The ToString value should be populated.");
+            Assert.That(exceptionString, Contains.Substring(innerException.ToString()), "The ToString value should contain the full set of details for the inner exception.");
+        }
     }
 }

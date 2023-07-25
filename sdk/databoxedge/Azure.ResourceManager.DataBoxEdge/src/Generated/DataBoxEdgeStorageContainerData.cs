@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the DataBoxEdgeStorageContainer data model. </summary>
+    /// <summary>
+    /// A class representing the DataBoxEdgeStorageContainer data model.
+    /// Represents a container on the  Data Box Edge/Gateway device.
+    /// </summary>
     public partial class DataBoxEdgeStorageContainerData : ResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerData. </summary>

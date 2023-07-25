@@ -14,26 +14,29 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightDiskBillingMeters DeserializeHDInsightDiskBillingMeters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskRpMeter = default;
             Optional<string> sku = default;
             Optional<HDInsightTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskRpMeter"))
+                if (property.NameEquals("diskRpMeter"u8))
                 {
                     diskRpMeter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new HDInsightTier(property.Value.GetString());

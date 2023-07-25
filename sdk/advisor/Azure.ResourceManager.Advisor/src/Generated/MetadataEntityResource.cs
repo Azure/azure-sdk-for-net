@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Gets the metadata entity.
-        /// Request Path: /providers/Microsoft.Advisor/metadata/{name}
-        /// Operation Id: RecommendationMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MetadataEntityResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Gets the metadata entity.
-        /// Request Path: /providers/Microsoft.Advisor/metadata/{name}
-        /// Operation Id: RecommendationMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MetadataEntityResource> Get(CancellationToken cancellationToken = default)

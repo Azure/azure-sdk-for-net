@@ -14,16 +14,20 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static InstancesSearchStringSuggestion DeserializeInstancesSearchStringSuggestion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> searchString = default;
             Optional<string> highlightedSearchString = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("searchString"))
+                if (property.NameEquals("searchString"u8))
                 {
                     searchString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("highlightedSearchString"))
+                if (property.NameEquals("highlightedSearchString"u8))
                 {
                     highlightedSearchString = property.Value.GetString();
                     continue;

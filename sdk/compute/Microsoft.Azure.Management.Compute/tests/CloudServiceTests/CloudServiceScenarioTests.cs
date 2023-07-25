@@ -61,6 +61,16 @@ namespace Compute.Tests
         }
 
         [Fact]
+        [Trait("Name", "TestCloudServiceScenarioOperations_AvailabilityZones")]
+        public void TestCloudServiceScenarioOperations_AvailabilityZones()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                TestCloudServiceOperationsInternal(context, zones: new List<string>() { "1" });
+            }
+        }
+
+        [Fact]
         [Trait("Name", "TestCloudServiceScenarioOperations_InstanceView")]
         public void TestCloudServiceScenarioOperations_InstanceView()
         {
@@ -70,7 +80,7 @@ namespace Compute.Tests
             }
         }
 
-        private void TestCloudServiceOperationsInternal(MockContext context, CloudServiceExtensionProfile extensionProfile = null, bool validateInstanceView = false, bool deleteAsPartOfTest = false)
+        private void TestCloudServiceOperationsInternal(MockContext context, CloudServiceExtensionProfile extensionProfile = null, bool validateInstanceView = false, bool deleteAsPartOfTest = false, List<string> zones = null)
         {
             EnsureClientsInitialized(context);
 
@@ -118,6 +128,7 @@ namespace Compute.Tests
                 {
                     cloudService.Properties.ExtensionProfile = extensionProfile;
                 }
+                cloudService.Zones = zones;
 
                 CloudService getResponse = CreateCloudService_NoAsyncTracking(
                     rgName,

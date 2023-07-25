@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.CallAutomation.Models;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The PlaySource. </summary>
@@ -27,5 +25,7 @@ namespace Azure.Communication.CallAutomation
         public FileSourceInternal FileSource { get; set; }
         /// <summary> Defines the text source info to be used for play. </summary>
         public TextSourceInternal TextSource { get; set; }
+        /// <summary> Defines the ssml(Speech Synthesis Markup Language) source info to be used for play. </summary>
+        public SsmlSourceInternal SsmlSource { get; set; }
     }
 }

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Quantum.Models
     {
         internal static ProviderProperties DeserializeProviderProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<string> providerType = default;
             Optional<string> company = default;
@@ -27,51 +31,48 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<IReadOnlyList<PricingDimension>> pricingDimensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("providerType"u8))
                 {
                     providerType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("company"))
+                if (property.NameEquals("company"u8))
                 {
                     company = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultEndpoint"))
+                if (property.NameEquals("defaultEndpoint"u8))
                 {
                     defaultEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aad"))
+                if (property.NameEquals("aad"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aad = ProviderPropertiesAad.DeserializeProviderPropertiesAad(property.Value);
                     continue;
                 }
-                if (property.NameEquals("managedApplication"))
+                if (property.NameEquals("managedApplication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managedApplication = ProviderPropertiesManagedApplication.DeserializeProviderPropertiesManagedApplication(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TargetDescription> array = new List<TargetDescription>();
@@ -82,11 +83,10 @@ namespace Azure.ResourceManager.Quantum.Models
                     targets = array;
                     continue;
                 }
-                if (property.NameEquals("skus"))
+                if (property.NameEquals("skus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SkuDescription> array = new List<SkuDescription>();
@@ -97,11 +97,10 @@ namespace Azure.ResourceManager.Quantum.Models
                     skus = array;
                     continue;
                 }
-                if (property.NameEquals("quotaDimensions"))
+                if (property.NameEquals("quotaDimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<QuotaDimension> array = new List<QuotaDimension>();
@@ -112,11 +111,10 @@ namespace Azure.ResourceManager.Quantum.Models
                     quotaDimensions = array;
                     continue;
                 }
-                if (property.NameEquals("pricingDimensions"))
+                if (property.NameEquals("pricingDimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PricingDimension> array = new List<PricingDimension>();

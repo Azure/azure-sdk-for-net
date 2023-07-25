@@ -18,17 +18,17 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(_offerTtlSeconds))
+            if (Optional.IsDefined(_offerExpiresAfterSeconds))
             {
-                writer.WritePropertyName("offerTtlSeconds");
-                writer.WriteNumberValue(_offerTtlSeconds.Value);
+                writer.WritePropertyName("offerExpiresAfterSeconds"u8);
+                writer.WriteNumberValue(_offerExpiresAfterSeconds.Value);
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteObjectValue(Mode);
             }
             writer.WriteEndObject();
@@ -36,44 +36,46 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static DistributionPolicy DeserializeDistributionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<double> offerTtlSeconds = default;
+            Optional<double> offerExpiresAfterSeconds = default;
             Optional<DistributionMode> mode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerTtlSeconds"))
+                if (property.NameEquals("offerExpiresAfterSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    offerTtlSeconds = property.Value.GetDouble();
+                    offerExpiresAfterSeconds = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = DistributionMode.DeserializeDistributionMode(property.Value);
                     continue;
                 }
             }
-            return new DistributionPolicy(id.Value, name.Value, Optional.ToNullable(offerTtlSeconds), mode.Value);
+            return new DistributionPolicy(id.Value, name.Value, Optional.ToNullable(offerExpiresAfterSeconds), mode.Value);
         }
     }
 }

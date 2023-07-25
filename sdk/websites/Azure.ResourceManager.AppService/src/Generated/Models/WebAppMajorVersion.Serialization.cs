@@ -15,26 +15,29 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static WebAppMajorVersion DeserializeWebAppMajorVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayText = default;
             Optional<string> value = default;
             Optional<IReadOnlyList<WebAppMinorVersion>> minorVersions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayText"))
+                if (property.NameEquals("displayText"u8))
                 {
                     displayText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minorVersions"))
+                if (property.NameEquals("minorVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WebAppMinorVersion> array = new List<WebAppMinorVersion>();

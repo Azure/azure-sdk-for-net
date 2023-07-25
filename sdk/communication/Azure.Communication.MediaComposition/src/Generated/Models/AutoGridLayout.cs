@@ -31,9 +31,10 @@ namespace Azure.Communication.MediaComposition
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <param name="highlightDominantSpeaker"> Toggle dominant speaker highlighting. </param>
-        internal AutoGridLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, IList<string> inputIds, bool? highlightDominantSpeaker) : base(kind, resolution, placeholderImageUri)
+        internal AutoGridLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, IList<string> inputIds, bool? highlightDominantSpeaker) : base(kind, resolution, placeholderImageUri, scalingMode)
         {
             InputIds = inputIds;
             HighlightDominantSpeaker = highlightDominantSpeaker;

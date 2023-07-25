@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WindowsServerSubscription))
             {
-                writer.WritePropertyName("windowsServerSubscription");
+                writer.WritePropertyName("windowsServerSubscription"u8);
                 writer.WriteStringValue(WindowsServerSubscription.Value.ToString());
             }
             if (Optional.IsDefined(DiagnosticLevel))
             {
-                writer.WritePropertyName("diagnosticLevel");
+                writer.WritePropertyName("diagnosticLevel"u8);
                 writer.WriteStringValue(DiagnosticLevel.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciClusterDesiredProperties DeserializeHciClusterDesiredProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WindowsServerSubscription> windowsServerSubscription = default;
             Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("windowsServerSubscription"))
+                if (property.NameEquals("windowsServerSubscription"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsServerSubscription = new WindowsServerSubscription(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diagnosticLevel"))
+                if (property.NameEquals("diagnosticLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diagnosticLevel = new HciClusterDiagnosticLevel(property.Value.GetString());

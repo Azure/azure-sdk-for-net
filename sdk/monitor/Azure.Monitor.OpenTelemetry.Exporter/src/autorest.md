@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0ae35fd0c27e0f06004d820e75a13c615b9c2e96/specification/applicationinsights/data-plane/Monitor.Exporters/preview/2020-09-15_Preview/swagger.json
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1be09531e4c6edeafde41d6562371566d39669e8/specification/applicationinsights/data-plane/Monitor.Exporters/preview/v2.1/swagger.json
 generation1-convenience-client: true
 ```
 

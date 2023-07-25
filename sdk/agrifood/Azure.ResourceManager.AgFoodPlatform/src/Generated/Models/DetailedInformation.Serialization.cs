@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     {
         internal static DetailedInformation DeserializeDetailedInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiName = default;
             Optional<IReadOnlyList<string>> customParameters = default;
             Optional<IReadOnlyList<string>> platformParameters = default;
@@ -22,16 +26,15 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             Optional<IReadOnlyList<string>> apiInputParameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("apiName"))
+                if (property.NameEquals("apiName"u8))
                 {
                     apiName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customParameters"))
+                if (property.NameEquals("customParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -42,11 +45,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     customParameters = array;
                     continue;
                 }
-                if (property.NameEquals("platformParameters"))
+                if (property.NameEquals("platformParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -57,21 +59,19 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     platformParameters = array;
                     continue;
                 }
-                if (property.NameEquals("unitsSupported"))
+                if (property.NameEquals("unitsSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unitsSupported = UnitSystemsInfo.DeserializeUnitSystemsInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("apiInputParameters"))
+                if (property.NameEquals("apiInputParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

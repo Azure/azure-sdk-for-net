@@ -7,6 +7,8 @@ Project("{6F2DAE7D-843A-4F6D-A575-9E4474A0FF72}") = "Azure.ResourceManager.Recov
 EndProject
 Project("{6F2DAE7D-843A-4F6D-A575-9E4474A0FF72}") = "Azure.ResourceManager.RecoveryServicesBackup.Tests", "tests\Azure.ResourceManager.RecoveryServicesBackup.Tests.csproj", "{BA7D55C6-F677-4A24-A4F8-2EBB612C7EEA}"
 EndProject
+Project("{6F2DAE7D-843A-4F6D-A575-9E4474A0FF72}") = "Azure.ResourceManager.RecoveryServicesBackup.Samples", "samples\Azure.ResourceManager.RecoveryServicesBackup.Samples.csproj", "{589C61C5-1D39-4994-94BA-D473401350C3}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,36 +15,37 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static HealthcareAssertion DeserializeHealthcareAssertion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Conditionality> conditionality = default;
             Optional<Certainty> certainty = default;
             Optional<Association> association = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("conditionality"))
+                if (property.NameEquals("conditionality"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     conditionality = property.Value.GetString().ToConditionality();
                     continue;
                 }
-                if (property.NameEquals("certainty"))
+                if (property.NameEquals("certainty"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certainty = property.Value.GetString().ToCertainty();
                     continue;
                 }
-                if (property.NameEquals("association"))
+                if (property.NameEquals("association"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     association = property.Value.GetString().ToAssociation();

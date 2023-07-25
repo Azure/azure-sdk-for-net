@@ -99,24 +99,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(bindingDataSysProps["iothub-enqueuedtime"], DateTime.MinValue);
         }
 
-        private static TestEventData GetSystemProperties(byte[] body, string partitionKey = "TestKey")
-        {
-            long testSequence = 4294967296;
-            return new TestEventData(body, partitionKey: partitionKey, offset: 140, enqueuedTime: DateTimeOffset.MinValue, sequenceNumber: testSequence, systemProperties: new Dictionary<string, object>()
+        private static EventData GetSystemProperties(byte[] body, string partitionKey = "TestKey") =>
+            EventHubsModelFactory.EventData(new BinaryData(body), partitionKey: partitionKey, offset: 140, enqueuedTime: DateTimeOffset.MinValue, sequenceNumber: 4294967296, systemProperties: new Dictionary<string, object>()
             {
                 {"iothub-connection-device-id", "testDeviceId"},
                 {"iothub-enqueuedtime", DateTime.MinValue}
             });
-        }
 
         [Test]
         public void GetBindingData_MultipleDispatch_ReturnsExpectedValue()
         {
             var events = new EventData[3]
             {
-                GetSystemProperties(Encoding.UTF8.GetBytes("Event 1"), $"pk0"),
-                GetSystemProperties(Encoding.UTF8.GetBytes("Event 2"), $"pk1"),
-                GetSystemProperties(Encoding.UTF8.GetBytes("Event 3"),$"pk2"),
+                GetSystemProperties(Encoding.UTF8.GetBytes("Event 1"), "pk0"),
+                GetSystemProperties(Encoding.UTF8.GetBytes("Event 2"), "pk1"),
+                GetSystemProperties(Encoding.UTF8.GetBytes("Event 3"), "pk2"),
             };
 
             var input = new EventHubTriggerInput
@@ -193,9 +190,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 {
                     c.AddInMemoryCollection(new Dictionary<string, string>
                     {
+                        { "AzureWebJobs:extensions:EventHubs:TargetUnprocessedEventThreshold", "300"},
                         { "AzureWebJobs:extensions:EventHubs:EventProcessorOptions:MaxBatchSize", "100" },
                         { "AzureWebJobs:extensions:EventHubs:EventProcessorOptions:PrefetchCount", "200" },
                         { "AzureWebJobs:extensions:EventHubs:BatchCheckpointFrequency", "5" },
+                        { "AzureWebJobs:extensions:EventHubs:MinEventBatchSize", "90" },
+                        { "AzureWebJobs:extensions:EventHubs:MaxWaitTime", "00:00:01" },
                         { "AzureWebJobs:extensions:EventHubs:PartitionManagerOptions:LeaseDuration", "00:00:31" },
                         { "AzureWebJobs:extensions:EventHubs:PartitionManagerOptions:RenewInterval", "00:00:21" },
                         { "AzureWebJobs:extensions:EventHubs:InitialOffsetOptions:Type", "FromEnd" },
@@ -208,9 +208,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var options = host.Services.GetService<IOptions<EventHubOptions>>().Value;
 
             var eventProcessorOptions = options.EventProcessorOptions;
+            Assert.AreEqual(300, options.TargetUnprocessedEventThreshold);
             Assert.AreEqual(200, eventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(100, options.MaxEventBatchSize);
+            Assert.AreEqual(90, options.MinEventBatchSize);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), options.MaxWaitTime);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
             Assert.AreEqual(EventPosition.Latest, eventProcessorOptions.DefaultStartingPosition);

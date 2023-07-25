@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.PrivateDns
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of PrivateZoneResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateZoneResources and their operations over a PrivateZoneResource. </returns>
-        public virtual PrivateZoneCollection GetPrivateZones()
+        /// <summary> Gets a collection of PrivateDnsZoneResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PrivateDnsZoneResources and their operations over a PrivateDnsZoneResource. </returns>
+        public virtual PrivateDnsZoneCollection GetPrivateDnsZones()
         {
-            return GetCachedClient(Client => new PrivateZoneCollection(Client, Id));
+            return GetCachedClient(Client => new PrivateDnsZoneCollection(Client, Id));
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01-preview";
+            _apiVersion = apiVersion ?? "2022-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppPlatformServiceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppPlatformServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        AppPlatformServiceResourceData value = default;
+                        AppPlatformServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppPlatformServiceResourceData.DeserializeAppPlatformServiceResourceData(document.RootElement);
+                        value = AppPlatformServiceData.DeserializeAppPlatformServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AppPlatformServiceResourceData)null, message.Response);
+                    return Response.FromValue((AppPlatformServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppPlatformServiceResourceData> Get(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<AppPlatformServiceData> Get(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,19 +107,19 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        AppPlatformServiceResourceData value = default;
+                        AppPlatformServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppPlatformServiceResourceData.DeserializeAppPlatformServiceResourceData(document.RootElement);
+                        value = AppPlatformServiceData.DeserializeAppPlatformServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AppPlatformServiceResourceData)null, message.Response);
+                    return Response.FromValue((AppPlatformServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceResourceData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceResourceData data, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TestKeys>> ListTestKeysAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppPlatformServiceTestKeys>> ListTestKeysAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        TestKeys value = default;
+                        AppPlatformServiceTestKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TestKeys.DeserializeTestKeys(document.RootElement);
+                        value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TestKeys> ListTestKeys(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<AppPlatformServiceTestKeys> ListTestKeys(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -418,9 +418,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        TestKeys value = default;
+                        AppPlatformServiceTestKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TestKeys.DeserializeTestKeys(document.RootElement);
+                        value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        internal HttpMessage CreateRegenerateTestKeyRequest(string subscriptionId, string resourceGroupName, string serviceName, RegenerateTestKeyRequestPayload regenerateTestKeyRequest)
+        internal HttpMessage CreateRegenerateTestKeyRequest(string subscriptionId, string resourceGroupName, string serviceName, RegenerateAppPlatformServiceTestKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -446,9 +446,9 @@ namespace Azure.ResourceManager.AppPlatform
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(regenerateTestKeyRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -457,26 +457,26 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="subscriptionId"> Gets subscription ID which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serviceName"> The name of the Service resource. </param>
-        /// <param name="regenerateTestKeyRequest"> Parameters for the operation. </param>
+        /// <param name="content"> Parameters for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="regenerateTestKeyRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TestKeys>> RegenerateTestKeyAsync(string subscriptionId, string resourceGroupName, string serviceName, RegenerateTestKeyRequestPayload regenerateTestKeyRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<AppPlatformServiceTestKeys>> RegenerateTestKeyAsync(string subscriptionId, string resourceGroupName, string serviceName, RegenerateAppPlatformServiceTestKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(regenerateTestKeyRequest, nameof(regenerateTestKeyRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateTestKeyRequest(subscriptionId, resourceGroupName, serviceName, regenerateTestKeyRequest);
+            using var message = CreateRegenerateTestKeyRequest(subscriptionId, resourceGroupName, serviceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        TestKeys value = default;
+                        AppPlatformServiceTestKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TestKeys.DeserializeTestKeys(document.RootElement);
+                        value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -488,26 +488,26 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="subscriptionId"> Gets subscription ID which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serviceName"> The name of the Service resource. </param>
-        /// <param name="regenerateTestKeyRequest"> Parameters for the operation. </param>
+        /// <param name="content"> Parameters for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="regenerateTestKeyRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TestKeys> RegenerateTestKey(string subscriptionId, string resourceGroupName, string serviceName, RegenerateTestKeyRequestPayload regenerateTestKeyRequest, CancellationToken cancellationToken = default)
+        public Response<AppPlatformServiceTestKeys> RegenerateTestKey(string subscriptionId, string resourceGroupName, string serviceName, RegenerateAppPlatformServiceTestKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(regenerateTestKeyRequest, nameof(regenerateTestKeyRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateTestKeyRequest(subscriptionId, resourceGroupName, serviceName, regenerateTestKeyRequest);
+            using var message = CreateRegenerateTestKeyRequest(subscriptionId, resourceGroupName, serviceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        TestKeys value = default;
+                        AppPlatformServiceTestKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TestKeys.DeserializeTestKeys(document.RootElement);
+                        value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TestKeys>> EnableTestEndpointAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppPlatformServiceTestKeys>> EnableTestEndpointAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -624,9 +624,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        TestKeys value = default;
+                        AppPlatformServiceTestKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TestKeys.DeserializeTestKeys(document.RootElement);
+                        value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TestKeys> EnableTestEndpoint(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<AppPlatformServiceTestKeys> EnableTestEndpoint(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -653,9 +653,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        TestKeys value = default;
+                        AppPlatformServiceTestKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TestKeys.DeserializeTestKeys(document.RootElement);
+                        value = AppPlatformServiceTestKeys.DeserializeAppPlatformServiceTestKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, ServiceNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, AppPlatformNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, ServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AppPlatformNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, AppPlatformNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -842,9 +842,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        ServiceNameAvailabilityResult value = default;
+                        AppPlatformNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceNameAvailabilityResult.DeserializeServiceNameAvailabilityResult(document.RootElement);
+                        value = AppPlatformNameAvailabilityResult.DeserializeAppPlatformNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, ServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<AppPlatformNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, AppPlatformNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -870,9 +870,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        ServiceNameAvailabilityResult value = default;
+                        AppPlatformNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceNameAvailabilityResult.DeserializeServiceNameAvailabilityResult(document.RootElement);
+                        value = AppPlatformNameAvailabilityResult.DeserializeAppPlatformNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

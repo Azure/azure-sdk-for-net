@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -70,7 +69,7 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
             #region Snippet:UpdateLayout
-            var layout = new AutoGridLayout(new List<string>() { "teamsMeeting" })
+            var layout = new AutoGridLayout(new List<string>() { "acsGroupCall" })
             {
                 Resolution = new(720, 480),
             };
@@ -94,8 +93,8 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             {
                 ["james"] = new ParticipantInput
                 (
-                    id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
-                    call: "teamsMeeting"
+                    id: new CommunicationUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
+                    call: "acsGroupCall"
                 )
                 {
                     PlaceholderImageUri = "https://imageendpoint"
@@ -117,7 +116,7 @@ namespace Azure.Communication.MediaComposition.Tests.samples
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            var layout = new AutoGridLayout(new List<string>() { "teamsMeeting" })
+            var layout = new AutoGridLayout(new List<string>() { "acsGroupCall" })
             {
                 Resolution = new(720, 480),
             };
@@ -221,34 +220,34 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             {
                 ["jill"] = new ParticipantInput
                 (
-                    id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"),
-                    call: "teamsMeeting")
+                    id: new CommunicationUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"),
+                    call: "acsGroupCall")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
                 },
                 ["jack"] = new ParticipantInput
                 (
-                    id: new MicrosoftTeamsUserIdentifier("fa4337b5-f13a-41c5-a34f-f2aa46699b61"),
-                    call: "teamsMeeting")
+                    id: new CommunicationUserIdentifier("fa4337b5-f13a-41c5-a34f-f2aa46699b61"),
+                    call: "acsGroupCall")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
                 },
                 ["jane"] = new ParticipantInput
                 (
-                    id: new MicrosoftTeamsUserIdentifier("2dd69470-dc25-49cf-b5c3-f562f08bf3b2"),
-                    call: "teamsMeeting"
+                    id: new CommunicationUserIdentifier("2dd69470-dc25-49cf-b5c3-f562f08bf3b2"),
+                    call: "acsGroupCall"
                 )
                 {
                     PlaceholderImageUri = "https://imageendpoint"
                 },
                 ["jerry"] = new ParticipantInput
                 (
-                    id: new MicrosoftTeamsUserIdentifier("30e29fde-ac1c-448f-bb34-0f3448d5a677"),
-                    call: "teamsMeeting")
+                    id: new CommunicationUserIdentifier("30e29fde-ac1c-448f-bb34-0f3448d5a677"),
+                    call: "acsGroupCall")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
                 },
-                ["teamsMeeting"] = new TeamsMeetingInput(teamsJoinUrl: "https://teamsJoinUrl")
+                ["acsGroupCall"] = new GroupCallInput("d12d2277-ffec-4e22-9979-8c0d8c13d193")
             };
 
             var outputs = new Dictionary<string, MediaOutput>()

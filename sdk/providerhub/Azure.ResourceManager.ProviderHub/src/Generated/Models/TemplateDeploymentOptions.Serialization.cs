@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreflightSupported))
+            if (Optional.IsDefined(IsPreflightSupported))
             {
-                writer.WritePropertyName("preflightSupported");
-                writer.WriteBooleanValue(PreflightSupported.Value);
+                writer.WritePropertyName("preflightSupported"u8);
+                writer.WriteBooleanValue(IsPreflightSupported.Value);
             }
             if (Optional.IsCollectionDefined(PreflightOptions))
             {
-                writer.WritePropertyName("preflightOptions");
+                writer.WritePropertyName("preflightOptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in PreflightOptions)
                 {
@@ -36,25 +36,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static TemplateDeploymentOptions DeserializeTemplateDeploymentOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> preflightSupported = default;
             Optional<IList<PreflightOption>> preflightOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preflightSupported"))
+                if (property.NameEquals("preflightSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preflightSupported = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("preflightOptions"))
+                if (property.NameEquals("preflightOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PreflightOption> array = new List<PreflightOption>();

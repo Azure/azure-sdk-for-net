@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Preference))
             {
-                writer.WritePropertyName("preference");
+                writer.WritePropertyName("preference"u8);
                 writer.WriteObjectValue(Preference);
             }
-            writer.WritePropertyName("deviceType");
+            writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
-            writer.WritePropertyName("validationType");
+            writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
             writer.WriteEndObject();
         }

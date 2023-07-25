@@ -19,13 +19,11 @@ namespace Azure.Developer.DevCenter.Tests
         {
         }
 
-        private DevBoxesClient GetDevBoxesClient(string dnsSuffix = "devcenter.azure.com") =>
+        private DevBoxesClient GetDevBoxesClient() =>
             InstrumentClient(new DevBoxesClient(
-                TestEnvironment.TenantId,
-                TestEnvironment.DevCenterName,
+                TestEnvironment.Endpoint,
                 TestEnvironment.ProjectName,
                 TestEnvironment.Credential,
-                dnsSuffix,
                 InstrumentClientOptions(new DevCenterClientOptions())));
 
         [RecordedTest]
@@ -38,7 +36,7 @@ namespace Azure.Developer.DevCenter.Tests
                 poolName = TestEnvironment.PoolName,
             };
 
-            Operation<BinaryData> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(WaitUntil.Completed, "MyDevBox", RequestContent.Create(content), userId: TestEnvironment.UserId);
+            Operation<BinaryData> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(WaitUntil.Completed, userId: TestEnvironment.UserId, "MyDevBox", RequestContent.Create(content));
             BinaryData devBoxData = await devBoxCreateOperation.WaitForCompletionAsync();
             JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
             Console.WriteLine($"Completed provisioning for dev box with status {devBox.GetProperty("provisioningState")}.");
@@ -50,12 +48,12 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.IsTrue(devBoxProvisionSucceeded);
 
             // Start the dev box
-            Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync("MyDevBox", userId: TestEnvironment.UserId);
+            Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(userId: TestEnvironment.UserId, "MyDevBox", new RequestContext());
             JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
             Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
 
             // Delete the dev box
-            Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(WaitUntil.Completed, "MyDevBox", userId: TestEnvironment.UserId);
+            Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(WaitUntil.Completed, userId: TestEnvironment.UserId, "MyDevBox");
             await devBoxDeleteOperation.WaitForCompletionResponseAsync();
             Console.WriteLine($"Completed dev box deletion.");
         }

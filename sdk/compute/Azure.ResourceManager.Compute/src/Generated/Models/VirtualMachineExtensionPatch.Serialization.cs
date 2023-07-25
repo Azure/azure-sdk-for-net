@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,41 +26,41 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceUpdateTag))
             {
-                writer.WritePropertyName("forceUpdateTag");
+                writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
             if (Optional.IsDefined(ExtensionType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtensionType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
-                writer.WritePropertyName("typeHandlerVersion");
+                writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
             if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
-                writer.WritePropertyName("autoUpgradeMinorVersion");
+                writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
             if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
-                writer.WritePropertyName("enableAutomaticUpgrade");
+                writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
             if (Optional.IsDefined(Settings))
             {
-                writer.WritePropertyName("settings");
+                writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ProtectedSettings))
             {
-                writer.WritePropertyName("protectedSettings");
+                writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ProtectedSettings);
 #else
@@ -78,17 +78,13 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(SuppressFailures))
             {
-                writer.WritePropertyName("suppressFailures");
+                writer.WritePropertyName("suppressFailures"u8);
                 writer.WriteBooleanValue(SuppressFailures.Value);
             }
-            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
-                writer.WritePropertyName("protectedSettingsFromKeyVault");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ProtectedSettingsFromKeyVault);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettingsFromKeyVault.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
+                writer.WriteObjectValue(KeyVaultProtectedSettings);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

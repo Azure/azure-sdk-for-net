@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -144,6 +145,26 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync((string[])null, options: new TextAnalyticsRequestOptions()));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync(null, null, new TextAnalyticsRequestOptions()));
+        }
+
+        [Test]
+        public void ExtractiveSummarizeArgumentValidation()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractiveSummarizeAsync(WaitUntil.Completed, (string[])null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractiveSummarizeAsync(WaitUntil.Completed, Array.Empty<string>()));
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractiveSummarizeAsync(WaitUntil.Completed, (TextDocumentInput[])null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractiveSummarizeAsync(WaitUntil.Completed, Array.Empty<TextDocumentInput>()));
+        }
+
+        [Test]
+        public void AbstractiveSummarizeArgumentValidation()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AbstractiveSummarizeAsync(WaitUntil.Completed, (string[])null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.AbstractiveSummarizeAsync(WaitUntil.Completed, Array.Empty<string>()));
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AbstractiveSummarizeAsync(WaitUntil.Completed, (TextDocumentInput[])null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.AbstractiveSummarizeAsync(WaitUntil.Completed, Array.Empty<TextDocumentInput>()));
         }
     }
 }

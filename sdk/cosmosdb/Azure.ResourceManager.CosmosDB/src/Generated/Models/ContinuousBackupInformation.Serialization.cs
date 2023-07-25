@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static ContinuousBackupInformation DeserializeContinuousBackupInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> latestRestorableTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("latestRestorableTimestamp"))
+                if (property.NameEquals("latestRestorableTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     latestRestorableTimestamp = property.Value.GetDateTimeOffset("O");

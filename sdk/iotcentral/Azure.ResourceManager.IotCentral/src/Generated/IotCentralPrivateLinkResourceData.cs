@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    /// <summary> A class representing the IotCentralPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the IotCentralPrivateLinkResource data model.
+    /// A private link resource.
+    /// </summary>
     public partial class IotCentralPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of IotCentralPrivateLinkResourceData. </summary>

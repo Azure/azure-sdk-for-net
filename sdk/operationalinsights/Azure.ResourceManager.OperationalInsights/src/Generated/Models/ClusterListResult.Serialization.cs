@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static ClusterListResult DeserializeClusterListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ClusterData>> value = default;
+            Optional<IReadOnlyList<OperationalInsightsClusterData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ClusterData> array = new List<ClusterData>();
+                    List<OperationalInsightsClusterData> array = new List<OperationalInsightsClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterData.DeserializeClusterData(item));
+                        array.Add(OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(item));
                     }
                     value = array;
                     continue;

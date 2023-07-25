@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,49 +18,43 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeType))
             {
-                writer.WritePropertyName("computeType");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ComputeType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ComputeType.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("computeType"u8);
+                JsonSerializer.Serialize(writer, ComputeType);
             }
             if (Optional.IsDefined(CoreCount))
             {
-                writer.WritePropertyName("coreCount");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CoreCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CoreCount.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("coreCount"u8);
+                JsonSerializer.Serialize(writer, CoreCount);
             }
             writer.WriteEndObject();
         }
 
         internal static ExecuteDataFlowActivityTypePropertiesCompute DeserializeExecuteDataFlowActivityTypePropertiesCompute(JsonElement element)
         {
-            Optional<BinaryData> computeType = default;
-            Optional<BinaryData> coreCount = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<string>> computeType = default;
+            Optional<DataFactoryElement<int>> coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    computeType = BinaryData.FromString(property.Value.GetRawText());
+                    computeType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    coreCount = BinaryData.FromString(property.Value.GetRawText());
+                    coreCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
             }

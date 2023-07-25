@@ -11,6 +11,13 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
+    // Though RecordingTestBase is attributed [NonParallelizable] now, make sure these tests never run in parallel if that ever changes
+    // or an intermediate base class adds [Parallelizable] in the future.
+    //
+    // Note: CIs still build/test all assemblies in parallel, so MHSM Keys tests may still run simultaneously.
+    [NonParallelizable]
+    [IgnoreServiceError(404, "NotFound", Message = "The given jobId is not found", Reason = "Backup/restore tests have inherent concurrency issues")]
+    [IgnoreServiceError(409, "Conflict", Message = "User triggered Restore operation is in progress", Reason = "Backup/restore tests have inherent concurrency issues")]
     public abstract class BackupRestoreTestBase : AdministrationTestBase
     {
         public KeyVaultBackupClient Client { get; private set; }

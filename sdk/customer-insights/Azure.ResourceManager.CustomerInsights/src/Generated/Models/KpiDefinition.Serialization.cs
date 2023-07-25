@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static KpiDefinition DeserializeKpiDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EntityType entityType = default;
             string entityTypeName = default;
             Optional<Guid> tenantId = default;
@@ -37,36 +41,34 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<IReadOnlyList<KpiExtract>> extracts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("entityType"))
+                if (property.NameEquals("entityType"u8))
                 {
                     entityType = property.Value.GetString().ToEntityType();
                     continue;
                 }
-                if (property.NameEquals("entityTypeName"))
+                if (property.NameEquals("entityTypeName"u8))
                 {
                     entityTypeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("kpiName"))
+                if (property.NameEquals("kpiName"u8))
                 {
                     kpiName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -77,11 +79,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     displayName = dictionary;
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -92,41 +93,40 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     description = dictionary;
                     continue;
                 }
-                if (property.NameEquals("calculationWindow"))
+                if (property.NameEquals("calculationWindow"u8))
                 {
                     calculationWindow = property.Value.GetString().ToCalculationWindowType();
                     continue;
                 }
-                if (property.NameEquals("calculationWindowFieldName"))
+                if (property.NameEquals("calculationWindowFieldName"u8))
                 {
                     calculationWindowFieldName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("function"))
+                if (property.NameEquals("function"u8))
                 {
                     function = property.Value.GetString().ToKpiFunction();
                     continue;
                 }
-                if (property.NameEquals("expression"))
+                if (property.NameEquals("expression"u8))
                 {
                     expression = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filter"))
+                if (property.NameEquals("filter"u8))
                 {
                     filter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupBy"))
+                if (property.NameEquals("groupBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -137,11 +137,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     groupBy = array;
                     continue;
                 }
-                if (property.NameEquals("groupByMetadata"))
+                if (property.NameEquals("groupByMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KpiGroupByMetadata> array = new List<KpiGroupByMetadata>();
@@ -152,11 +151,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     groupByMetadata = array;
                     continue;
                 }
-                if (property.NameEquals("participantProfilesMetadata"))
+                if (property.NameEquals("participantProfilesMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KpiParticipantProfilesMetadata> array = new List<KpiParticipantProfilesMetadata>();
@@ -167,31 +165,28 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     participantProfilesMetadata = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("thresHolds"))
+                if (property.NameEquals("thresHolds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     thresHolds = KpiThresholds.DeserializeKpiThresholds(property.Value);
                     continue;
                 }
-                if (property.NameEquals("aliases"))
+                if (property.NameEquals("aliases"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KpiAlias> array = new List<KpiAlias>();
@@ -202,11 +197,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     aliases = array;
                     continue;
                 }
-                if (property.NameEquals("extracts"))
+                if (property.NameEquals("extracts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KpiExtract> array = new List<KpiExtract>();

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyvaultUri))
             {
-                writer.WritePropertyName("keyvaultUri");
+                writer.WritePropertyName("keyvaultUri"u8);
                 writer.WriteStringValue(KeyvaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KeyName))
             {
-                writer.WritePropertyName("keyName");
+                writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
             if (Optional.IsDefined(KeyVersion))
             {
-                writer.WritePropertyName("keyVersion");
+                writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             writer.WriteEndObject();
@@ -36,27 +36,30 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationKeyVaultProperties DeserializeAutomationKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> keyvaultUri = default;
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyvaultUri"))
+                if (property.NameEquals("keyvaultUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyvaultUri = null;
                         continue;
                     }
                     keyvaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVersion"))
+                if (property.NameEquals("keyVersion"u8))
                 {
                     keyVersion = property.Value.GetString();
                     continue;

@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="vaultUri">
         /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
         /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
-        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See https://aka.ms/azsdk/blog/vault-uri for details.
+        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="vaultUri">
         /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
         /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
-        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See https://aka.ms/azsdk/blog/vault-uri for details.
+        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="KeyClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
@@ -311,64 +311,6 @@ namespace Azure.Security.KeyVault.Keys
             try
             {
                 return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(octKeyOptions.Name), cancellationToken, KeysPath, octKeyOptions.Name, "/create").ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates and stores a new Octet Key Pair (OKP) in Key Vault. If the named key already exists, Azure Key Vault creates a new
-        /// version of the key. This operation requires the keys/create permission.
-        /// </summary>
-        /// <param name="okpKeyOptions">The key options object containing information about the Octet Key Pair (OKP) being created.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="okpKeyOptions"/> is null.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<KeyVaultKey> CreateOkpKey(CreateOkpKeyOptions okpKeyOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(okpKeyOptions, nameof(okpKeyOptions));
-
-            var parameters = new KeyRequestParameters(okpKeyOptions);
-
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOkpKey)}");
-            scope.AddAttribute("key", okpKeyOptions.Name);
-            scope.Start();
-
-            try
-            {
-                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(okpKeyOptions.Name), cancellationToken, KeysPath, okpKeyOptions.Name, "/create");
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates and stores a new Octet Key Pair (OKP) in Key Vault. If the named key already exists, Azure Key Vault creates a new
-        /// version of the key. This operation requires the keys/create permission.
-        /// </summary>
-        /// <param name="okpKeyOptions">The key options object containing information about the Octet Key Pair (OKP) being created.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="okpKeyOptions"/> is null.</exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<KeyVaultKey>> CreateOkpKeyAsync(CreateOkpKeyOptions okpKeyOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(okpKeyOptions, nameof(okpKeyOptions));
-
-            var parameters = new KeyRequestParameters(okpKeyOptions);
-
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOkpKey)}");
-            scope.AddAttribute("key", okpKeyOptions.Name);
-            scope.Start();
-
-            try
-            {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(okpKeyOptions.Name), cancellationToken, KeysPath, okpKeyOptions.Name, "/create").ConfigureAwait(false);
             }
             catch (Exception e)
             {

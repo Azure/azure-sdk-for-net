@@ -1,8 +1,12 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "language": "en_US",
   "languageId": "csharp",
-  "dictionaries": ["powershell", "softwareTerms", "csharp"],
+  "dictionaries": [
+    "powershell",
+    "softwareTerms",
+    "csharp"
+  ],
   "ignorePaths": [
     "**/SessionRecords/**",
     "**/packages/**",
@@ -27,6 +31,7 @@
     "*.sln",
     "*.user",
     ".vscode/cspell.json",
+    "assets.json",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -38,11 +43,14 @@
     "sdk/insights/*/api/*.cs",
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
-    "sdk/monitor/*/api/*.cs",
+    "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
+    "sdk/monitor/Microsoft.Azure.Management.Monitor/**/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/videoanalyzer/*/api/*.cs"
+    "sdk/videoanalyzer/*/api/*.cs",
+    "sdk/newrelicobservability/*/api/*.cs",
+    "sdk/paloaltonetworks.ngfw/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -50,26 +58,38 @@
     "apos",
     "azsdk",
     "blazor",
+    "centralus",
     "contoso",
     "cref",
     "deduplication",
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dicom",
+    "distro",
     "dont",
     "dotnetcli",
     "dtmf",
+    "eastus",
     "epsg",
     "expando",
+    "fhir",
     "finalizer",
     "finalizers",
+    "hnsw",
+    "ienumerable",
     "illumos",
+    "interventional",
     "ints",
     "kubernetes",
+    "kusto",
     "lucene",
     "mgmt",
+    "msal",
+    "northcentralus",
     "nunit",
     "odata",
+    "onco",
     "otel",
     "overridden",
     "parallelization",
@@ -84,21 +104,33 @@
     "retriable",
     "signup",
     "skus",
+    "southcentralus",
     "structs",
     "uints",
+    "unbilled",
     "unencrypted",
     "unformattable",
     "unhold",
     "uninstrumented",
+    "vcpus",
     "vmss",
     "vnet",
+    "westcentralus",
     "westus",
     "xunit"
   ],
   "overrides": [
     {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
-      "words": ["warnaserror"]
+      "words": [
+        "warnaserror"
+      ]
+    },
+    {
+      "filename": "**/sdk/analysisservices/**/*.cs",
+      "words": [
+        "Dmts"
+      ]
     },
     {
       "filename": "**/sdk/alertsmanagement/**/*.cs",
@@ -109,7 +141,7 @@
         "zabbix"
       ]
     },
-	{
+    {
       "filename": "**/sdk/apimanagement/**/*.cs",
       "words": [
         "signin",
@@ -122,6 +154,12 @@
       "words": [
         "dynatrace",
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/automanage/**/*.cs",
+      "words": [
+        "HCRP"
       ]
     },
     {
@@ -157,6 +195,12 @@
       ]
     },
     {
+      "filename": "**/sdk/billingbenefits/**/*.cs",
+      "words": [
+        "Hana"
+      ]
+    },
+    {
       "filename": "**/sdk/botservice/**/*.cs",
       "words": [
         "Alexa",
@@ -185,6 +229,12 @@
         "ssdzrs",
         "dscp",
         "vmguest"
+      ]
+    },
+    {
+      "filename": "**/sdk/confidentialledger/**/*.cs",
+      "words": [
+        "ccfs"
       ]
     },
     {
@@ -237,7 +287,32 @@
         "sysctls",
         "tcpkeepalive",
         "wasi",
-        "wmem"
+        "wmem",
+        "Oidc",
+        "Ebpf",
+        "Ipvs",
+        "Keda",
+        "Kata",
+        "Mshv"
+      ]
+    },
+    {
+      "filename": "**/sdk/consumption/**/*",
+      "words": [
+        "payg"
+      ]
+    },
+    {
+      "filename": "**/sdk/cosmosdbforpostgresql/**/*",
+      "words": [
+        "Citus"
+      ]
+    },
+    {
+      "filename": "**/sdk/costmanagement/**/*",
+      "words": [
+        "ahub",
+        "kpis"
       ]
     },
     {
@@ -270,6 +345,13 @@
       ]
     },
     {
+      "filename": "**/sdk/newrelic/**/*.cs",
+      "words": [
+        "liftr",
+        "payg"
+      ]
+    },
+    {
       "filename": "**/sdk/datalake-analytics/**/*.cs",
       "words": [
         "undeleting"
@@ -299,8 +381,7 @@
     {
       "filename": "**/sdk/datashare/**/*.cs",
       "words": [
-        "adls",
-        "kusto"
+        "adls"
       ]
     },
     {
@@ -353,7 +434,9 @@
     },
     {
       "filename": "**/sdk/deviceupdate/**/*.cs",
-      "words": ["Fqdns"]
+      "words": [
+        "Fqdns"
+      ]
     },
     {
       "filename": "**/sdk/dynatrace/**/*.cs",
@@ -385,15 +468,23 @@
     },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
-      "words": ["ZhHant"]
+      "words": [
+        "Upca",
+        "Upce",
+        "ZhHant"
+      ]
     },
     {
       "filename": "**/sdk/frontdoor/**/*.cs",
-      "words": ["cname"]
+      "words": [
+        "cname"
+      ]
     },
     {
       "filename": "**/sdk/guestconfiguration/**/*.cs",
-      "words": ["Hcrp"]
+      "words": [
+        "Hcrp"
+      ]
     },
     {
       "filename": "**/sdk/hdinsight/**/*.cs",
@@ -468,6 +559,17 @@
       ]
     },
     {
+      "filename": "**/sdk/mobilenetwork/**/*.cs",
+      "words": [
+        "Napt",
+        "Plmn",
+        "Ambr",
+        "Rfsp",
+        "Snssai",
+        "AKSHCI"
+      ]
+    },
+    {
       "filename": "**/sdk/netapp/**/*.cs",
       "words": [
         "mibps",
@@ -507,7 +609,32 @@
         "Vnets",
         "Vxlan",
         "WAFV",
-        "Wans"
+        "Wans",
+        "Idps",
+        "idps",
+        "Ocsp",
+        "Afri",
+        "Apac",
+        "Latam"
+      ]
+    },
+    {
+      "filename": "**/sdk/networkcloud/**/*.cs",
+      "words": [
+        "Reimage",
+        "Uncordon",
+        "Uncordoned",
+        "Ipam",
+        "Virtio",
+        "nics",
+        "Lldp",
+        "Nics",
+        "Dpdk",
+        "Sriov",
+        "Sata",
+        "Uefi",
+        "Ipvlan",
+        "Macvlan"
       ]
     },
     {
@@ -527,7 +654,6 @@
     {
       "filename": "**/sdk/kusto/**/*.cs",
       "words": [
-        "kusto",
         "tbps",
         "scsv",
         "sohsv",
@@ -542,6 +668,14 @@
       ]
     },
     {
+      "filename": "**/sdk/managednetworkfabric/**/*.cs",
+      "words": [
+        "evpn",
+        "mbps",
+        "gshut"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
@@ -553,10 +687,47 @@
         "scms"
       ]
     },
-	{
+    {
+      "filename": "**/sdk/monitor/**/*",
+      "words": [
+        "AMPM",
+        "bcdr",
+        "cikey",
+        "faas",
+        "gzipped",
+        "gzipping",
+        "DDYYYYHHMMSS",
+        "hmac",
+        "HMACSHA",
+        "ikey",
+        "itsm",
+        "jdbc",
+        "jioindiacentral",
+        "jioindiawest",
+        "kaby",
+        "khtml",
+        "Localizable",
+        "Milli",
+        "msdocs",
+        "mslinks",
+        "myvm",
+        "onboarded",
+        "opinsights",
+        "OTELRESOURCE",
+        "otlp",
+        "TMPDIR",
+        "uaecentral",
+        "uaenorth",
+        "uksouth",
+        "ukwest",
+        "webwk"
+      ]
+    },
+    {
       "filename": "**/sdk/mysql/**/*.cs",
       "words": [
-        "byok"
+        "byok",
+        "gtid"
       ]
     },
     {
@@ -587,6 +758,29 @@
       ]
     },
     {
+      "filename": "**/sdk/paloaltonetworks/**/*",
+      "words": [
+      	"armid",
+      	"cpus",
+      	"eastus",
+      	"cloudngfw",
+      	"fqdnlists",
+      	"isvtestuklegacy",
+      	"liftr",
+      	"liftrpantestplan",
+      	"msal",
+        "ngfw",
+        "panrsid",
+        "palo",
+        "paloaltonetworks",
+        "payg",
+        "praval",
+        "rgopenapi",
+        "vmos",
+        "vwan"
+      ]
+    },
+    {
       "filename": "**/sdk/peering/**/*.cs",
       "words": [
         "asns",
@@ -605,7 +799,7 @@
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
         "byok",
-		"vcore",
+        "vcore",
         "vcores"
       ]
     },
@@ -613,7 +807,7 @@
       "filename": "**/sdk/powerbidedicated/**/*.cs",
       "words": [
         "vcore",
-		"pbie"
+        "pbie"
       ]
     },
     {
@@ -627,7 +821,13 @@
       "filename": "**/sdk/providerhub/**/*.cs",
       "words": [
         "checkin",
-		"regionality"
+        "regionality"
+      ]
+    },
+    {
+      "filename": "**/sdk/qumulo/**/*",
+      "words": [
+      	"qumulo"
       ]
     },
     {
@@ -679,7 +879,15 @@
     },
     {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
-      "words": ["Puid"]
+      "words": [
+        "Puid"
+      ]
+    },
+    {
+      "filename": "**/sdk/resourcehealth/**/*.cs",
+      "words": [
+        "occured"
+      ]
     },
     {
       "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
@@ -720,6 +928,12 @@
         "Stix",
         "Whois",
         "Nlstext"
+      ]
+    },
+    {
+      "filename": "**/sdk/sphere/**/*.cs",
+      "words": [
+        "Nwfs"
       ]
     },
     {
@@ -794,6 +1008,12 @@
       ]
     },
     {
+      "filename": "**/sdk/storagemover/**/*.cs",
+      "words": [
+        "Unregistering"
+      ]
+    },
+    {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
         "iscsi"
@@ -840,7 +1060,6 @@
     {
       "filename": "**/sdk/synapse/**/*.cs",
       "words": [
-        "kusto",
         "nchar",
         "ntext",
         "nvarchar",
@@ -874,7 +1093,8 @@
         "Zilla",
         "Guage",
         "Plex",
-        "Vstsrm"
+        "Vstsrm",
+        "Localizable"
       ]
     },
     {
@@ -882,15 +1102,16 @@
       "words": [
         "ascs",
         "hana",
-        "ssdlrs"
+        "ssdlrs",
+        "Mbps"
       ]
     },
-   {
+    {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
         "Noreuse",
         "Unsecure"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/machinelearningservices/**/*.cs",
@@ -905,26 +1126,34 @@
         "Cran",
         "Rscript",
         "VCPUs"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/machinelearningcompute/**/*.cs",
       "words": [
         "cname",
         "kube"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "Msrp",
         "Hana"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/securitydevops/**/*.cs",
       "words": [
         "Orgs"
+      ]
+    },
+    {
+      "filename": "**/sdk/voiceservices/**/*.cs",
+      "words": [
+        "Esrp",
+        "Pcma",
+        "Pcmu"
       ]
     },
     {
@@ -934,7 +1163,27 @@
         "Ackable",
         "awps"
         ]
-    }  
+    },
+    {
+      "filename": "**/sdk/openai/**/*.cs",
+      "words": [
+        "Probs",
+        "Logprobs",
+        "Logit"
+      ]
+    },
+    {
+      "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
+      "words": [
+        "RELRO",
+        "Relro",
+        "relro",
+        "Rpath",
+        "rpath",
+        "runpath",
+        "Cves"
+      ]
+    }
   ],
   "allowCompoundWords": true
 }

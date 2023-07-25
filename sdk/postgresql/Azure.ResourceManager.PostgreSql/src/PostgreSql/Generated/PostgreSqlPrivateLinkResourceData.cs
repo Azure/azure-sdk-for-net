@@ -11,7 +11,10 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    /// <summary> A class representing the PostgreSqlPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlPrivateLinkResource data model.
+    /// A private link resource
+    /// </summary>
     public partial class PostgreSqlPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceData. </summary>

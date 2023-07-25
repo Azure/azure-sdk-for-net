@@ -17,12 +17,12 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsDefined(Get))
             {
-                writer.WritePropertyName("get");
+                writer.WritePropertyName("get"u8);
                 writer.WriteObjectValue(Get);
             }
             if (Optional.IsCollectionDefined(Put))
             {
-                writer.WritePropertyName("put");
+                writer.WritePropertyName("put"u8);
                 writer.WriteStartArray();
                 foreach (var item in Put)
                 {
@@ -32,7 +32,7 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             if (Optional.IsDefined(Delete))
             {
-                writer.WritePropertyName("delete");
+                writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
             writer.WriteEndObject();

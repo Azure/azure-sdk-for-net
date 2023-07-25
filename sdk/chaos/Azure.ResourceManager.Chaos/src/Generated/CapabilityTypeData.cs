@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    /// <summary> A class representing the CapabilityType data model. </summary>
+    /// <summary>
+    /// A class representing the CapabilityType data model.
+    /// Model that represents a Capability Type resource.
+    /// </summary>
     public partial class CapabilityTypeData : ResourceData
     {
         /// <summary> Initializes a new instance of CapabilityTypeData. </summary>
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.Chaos
         public string Kind { get; }
         /// <summary> Runtime properties of this Capability Type. </summary>
         internal CapabilityTypePropertiesRuntimeProperties RuntimeProperties { get; set; }
-        /// <summary> String of the kind of the resource&apos;s action type (continuous or discrete). </summary>
+        /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
         public string RuntimeKind
         {
             get => RuntimeProperties is null ? default : RuntimeProperties.Kind;

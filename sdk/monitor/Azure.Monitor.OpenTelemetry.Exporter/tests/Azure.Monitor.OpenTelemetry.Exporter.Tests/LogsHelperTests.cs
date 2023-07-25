@@ -19,6 +19,51 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class LogsHelperTests
     {
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void MessageIsSetToExceptionMessage(bool parseStateValues)
+        {
+            // ParseStateValues will be ignored unless the log contains an unknown objects.
+            // https://github.com/open-telemetry/opentelemetry-dotnet/pull/4334
+
+            var logRecords = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.IncludeFormattedMessage = true;
+                    options.ParseStateValues = parseStateValues;
+                    options.AddInMemoryExporter(logRecords);
+                });
+                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+            string log = "Hello from {name} {price}.";
+            try
+            {
+                throw new Exception("Test Exception");
+            }
+            catch (Exception ex)
+            {
+                logger.LogInformation(ex, log, "tomato", 2.99);
+            }
+
+            var properties = new ChangeTrackingDictionary<string, string>();
+            var message = LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
+
+            Assert.Equal("Test Exception", message);
+
+            Assert.True(properties.TryGetValue("OriginalFormat", out string value));
+            Assert.Equal(log, value);
+            Assert.True(properties.TryGetValue("name", out string name));
+            Assert.Equal("tomato", name);
+            Assert.True(properties.TryGetValue("price", out string price));
+            Assert.Equal("2.99", price);
+            Assert.Equal(3, properties.Count);
+        }
+
         [Fact]
         public void MessageIsSetToFormattedMessageWhenIncludeFormattedMessageIsSet()
         {
@@ -81,14 +126,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, properties.Count);
         }
 
-        [Fact]
-        public void PropertiesContainFieldsFromStructuredLogs()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void PropertiesContainFieldsFromStructuredLogs(bool parseStateValues)
         {
             var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddOpenTelemetry(options =>
                 {
+                    options.ParseStateValues = parseStateValues;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
@@ -110,34 +158,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void PropertiesContainFieldsFromStructuredLogsIfParseStateValuesIsSet()
-        {
-            var logRecords = new List<LogRecord>();
-            using var loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.AddOpenTelemetry(options =>
-                {
-                    options.ParseStateValues = true;
-                    options.AddInMemoryExporter(logRecords);
-                });
-                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
-            });
-
-            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
-
-            logger.LogInformation("{Name} {Price}!", "Tomato", 2.99);
-
-            var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
-
-            Assert.True(properties.TryGetValue("Name", out string name));
-            Assert.Equal("Tomato", name);
-            Assert.True(properties.TryGetValue("Price", out string price));
-            Assert.Equal("2.99", price);
-            Assert.Equal(2, properties.Count);
-        }
-
-        [Fact]
         public void PropertiesContainEventIdAndEventNameIfSetOnLog()
         {
             var logRecords = new List<LogRecord>();
@@ -145,7 +165,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
@@ -187,7 +206,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
@@ -204,12 +222,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 logger.LogWarning(new Exception("Test Exception"), "Test Exception");
             }
 
-            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), "roleName", "roleInstance", "Ikey");
+            var logResource = new AzureMonitorResource()
+            {
+                RoleName = "roleName",
+                RoleInstance = "roleInstance"
+            };
+            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), logResource, "Ikey");
 
             Assert.Equal(type, telemetryItem[0].Data.BaseType);
             Assert.Equal("Ikey", telemetryItem[0].InstrumentationKey);
-            Assert.Equal("roleName", telemetryItem[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Equal("roleInstance", telemetryItem[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.Equal(logResource.RoleName, telemetryItem[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal(logResource.RoleInstance, telemetryItem[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
     }
 }

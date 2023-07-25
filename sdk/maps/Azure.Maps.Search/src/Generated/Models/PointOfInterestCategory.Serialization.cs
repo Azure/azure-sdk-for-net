@@ -15,32 +15,34 @@ namespace Azure.Maps.Search.Models
     {
         internal static PointOfInterestCategory DeserializePointOfInterestCategory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> id = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<int>> childCategoryIds = default;
             Optional<IReadOnlyList<string>> synonyms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("childCategoryIds"))
+                if (property.NameEquals("childCategoryIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -51,11 +53,10 @@ namespace Azure.Maps.Search.Models
                     childCategoryIds = array;
                     continue;
                 }
-                if (property.NameEquals("synonyms"))
+                if (property.NameEquals("synonyms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

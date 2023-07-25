@@ -57,7 +57,7 @@ namespace Azure.Core.Pipeline
         {
             Request request = message.Request;
 
-            s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers), _assemblyName);
+            s_eventSource.Request(request, _assemblyName, _sanitizer);
 
             Encoding? requestTextEncoding = null;
 
@@ -104,11 +104,11 @@ namespace Azure.Core.Pipeline
 
             if (isError)
             {
-                s_eventSource.ErrorResponse(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), elapsed);
+                s_eventSource.ErrorResponse(response, _sanitizer, elapsed);
             }
             else
             {
-                s_eventSource.Response(response.ClientRequestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), elapsed);
+                s_eventSource.Response(response, _sanitizer, elapsed);
             }
 
             if (wrapResponseContent)
@@ -124,24 +124,6 @@ namespace Azure.Core.Pipeline
             {
                 s_eventSource.ResponseDelay(response.ClientRequestId, elapsed);
             }
-        }
-
-        private string FormatUri(RequestUriBuilder requestUri)
-        {
-            return _sanitizer.SanitizeUrl(requestUri.ToString());
-        }
-
-        private string FormatHeaders(IEnumerable<HttpHeader> headers)
-        {
-            var stringBuilder = new StringBuilder();
-            foreach (HttpHeader header in headers)
-            {
-                stringBuilder.Append(header.Name);
-                stringBuilder.Append(':');
-                string newValue = _sanitizer.SanitizeHeader(header.Name, header.Value);
-                stringBuilder.AppendLine(newValue);
-            }
-            return stringBuilder.ToString();
         }
 
         private class LoggingStream : ReadOnlyStream
@@ -358,47 +340,30 @@ namespace Azure.Core.Pipeline
 
             private void Log(string requestId, EventType eventType, byte[] bytes, Encoding? textEncoding, int? block = null)
             {
-                string? stringValue = textEncoding?.GetString(bytes);
-
                 // We checked IsEnabled before we got here
                 Debug.Assert(_eventSource != null);
                 AzureCoreEventSource azureCoreEventSource = _eventSource!;
 
                 switch (eventType)
                 {
-                    case EventType.Request when stringValue != null:
-                        azureCoreEventSource.RequestContentText(requestId, stringValue);
-                        break;
                     case EventType.Request:
-                        azureCoreEventSource.RequestContent(requestId, bytes);
+                        azureCoreEventSource.RequestContent(requestId, bytes, textEncoding);
                         break;
 
                     // Response
-                    case EventType.Response when block != null && stringValue != null:
-                        azureCoreEventSource.ResponseContentTextBlock(requestId, block.Value, stringValue);
-                        break;
                     case EventType.Response when block != null:
-                        azureCoreEventSource.ResponseContentBlock(requestId, block.Value, bytes);
-                        break;
-                    case EventType.Response when stringValue != null:
-                        azureCoreEventSource.ResponseContentText(requestId, stringValue);
+                        azureCoreEventSource.ResponseContentBlock(requestId, block.Value, bytes, textEncoding);
                         break;
                     case EventType.Response:
-                        azureCoreEventSource.ResponseContent(requestId, bytes);
+                        azureCoreEventSource.ResponseContent(requestId, bytes, textEncoding);
                         break;
 
                     // ResponseError
-                    case EventType.ErrorResponse when block != null && stringValue != null:
-                        azureCoreEventSource.ErrorResponseContentTextBlock(requestId, block.Value, stringValue);
-                        break;
                     case EventType.ErrorResponse when block != null:
-                        azureCoreEventSource.ErrorResponseContentBlock(requestId, block.Value, bytes);
-                        break;
-                    case EventType.ErrorResponse when stringValue != null:
-                        azureCoreEventSource.ErrorResponseContentText(requestId, stringValue);
+                        azureCoreEventSource.ErrorResponseContentBlock(requestId, block.Value, bytes, textEncoding);
                         break;
                     case EventType.ErrorResponse:
-                        azureCoreEventSource.ErrorResponseContent(requestId, bytes);
+                        azureCoreEventSource.ErrorResponseContent(requestId, bytes, textEncoding);
                         break;
                 }
             }

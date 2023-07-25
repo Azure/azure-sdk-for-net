@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary>
         /// Gets supported OS options in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default
-        /// Operation Id: ManagedClusters_GetOSOptions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_GetOSOptions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -114,8 +122,16 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary>
         /// Gets supported OS options in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default
-        /// Operation Id: ManagedClusters_GetOSOptions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_GetOSOptions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

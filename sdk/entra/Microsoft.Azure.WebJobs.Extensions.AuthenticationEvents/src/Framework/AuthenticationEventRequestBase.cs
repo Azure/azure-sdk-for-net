@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [JsonPropertyName("requestStatus")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [Required]
-        public RequestStatusType RequestStatus { get; set; }
+        public RequestStatusType RequestStatus { get; internal set; }
 
         /// <summary>Gets or sets the status message.</summary>
         /// <value>The status message.</value>
@@ -62,12 +62,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <returns>A <see cref="string" /> that represents this instance.</returns>
         public override string ToString()
         {
-            JsonSerializerOptions options = new JsonSerializerOptions();
+            JsonSerializerOptions options = JsonSerializerOptions;
             options.Converters.Add(new AuthenticationEventResponseConverterFactory());
             return JsonSerializer.Serialize((object)this, options);
         }
 
-        internal virtual JsonSerializerOptions JsonSerializerOptions => new JsonSerializerOptions() { WriteIndented = true, PropertyNameCaseInsensitive = true };
+       internal virtual JsonSerializerOptions JsonSerializerOptions => new JsonSerializerOptions() { WriteIndented = true, PropertyNameCaseInsensitive = true };
 
         internal abstract AuthenticationEventResponse GetResponseObject();
 

@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Resources;
+using System;
 
 namespace Azure.ResourceManager
 {
@@ -33,6 +34,17 @@ namespace Azure.ResourceManager
             }
 
             return parent?.ResourceType == SubscriptionResource.ResourceType ? parent : null;
+        }
+
+        internal static string GetManifestName(this AzureStackProfile profile)
+        {
+            var namePrefix = "Azure.ResourceManager.Assets.Profile.";
+            var nameSuffix = profile switch
+            {
+                AzureStackProfile.Profile20200901Hybrid => "2020-09-01-hybrid.json",
+                _ => throw new ArgumentOutOfRangeException(nameof(profile), profile, null)
+            };
+            return namePrefix + nameSuffix;
         }
     }
 }

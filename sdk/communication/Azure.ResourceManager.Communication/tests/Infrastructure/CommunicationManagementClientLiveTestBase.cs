@@ -67,11 +67,23 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             CommunicationDomainResourceData data = new CommunicationDomainResourceData(ResourceLocation)
             {
-                DomainManagement = DomainManagement.CustomerManaged,
-                ValidSenderUsernames = { {"username", "displayName" } }
+                DomainManagement = DomainManagement.CustomerManaged
             };
             var domainLro = await emailService.GetCommunicationDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, domainName, data);
             return domainLro.Value;
+        }
+
+        internal async Task<SenderUsernameResource> CreateDefaultSenderUsernameResource(string username, string displayName, CommunicationDomainResource domain)
+        {
+            SenderUsernameResourceData data = new SenderUsernameResourceData()
+            {
+                Username = username,
+                DisplayName = displayName
+            };
+
+            ArmOperation<SenderUsernameResource> senderUsernameOp = await domain.GetSenderUsernameResources().CreateOrUpdateAsync(WaitUntil.Completed, username, data);
+            SenderUsernameResource senderUsername = senderUsernameOp.Value;
+            return senderUsername;
         }
 
         private void IgnoreTestInLiveMode()

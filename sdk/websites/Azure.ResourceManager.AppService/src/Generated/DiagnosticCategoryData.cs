@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the DiagnosticCategory data model. </summary>
+    /// <summary>
+    /// A class representing the DiagnosticCategory data model.
+    /// Class representing detector definition
+    /// </summary>
     public partial class DiagnosticCategoryData : ResourceData
     {
         /// <summary> Initializes a new instance of DiagnosticCategoryData. </summary>

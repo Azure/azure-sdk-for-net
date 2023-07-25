@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.Maps.Models
     {
         internal static MapsAccountSasToken DeserializeMapsAccountSasToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountSasToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountSasToken"))
+                if (property.NameEquals("accountSasToken"u8))
                 {
                     accountSasToken = property.Value.GetString();
                     continue;

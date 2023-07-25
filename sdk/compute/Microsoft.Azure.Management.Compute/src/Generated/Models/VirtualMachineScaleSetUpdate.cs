@@ -69,9 +69,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the proximity placement group that the virtual machine scale set
         /// should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2018-04-01.</param>
+        /// <param name="priorityMixPolicy">Specifies the desired targets for
+        /// mixing Spot and Regular priority VMs within the same VMSS Flex
+        /// instance.</param>
+        /// <param name="spotRestorePolicy">Specifies the Spot Restore
+        /// properties for the virtual machine scale set.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
-        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), SubResource proximityPlacementGroup = default(SubResource), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
+        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), SubResource proximityPlacementGroup = default(SubResource), PriorityMixPolicy priorityMixPolicy = default(PriorityMixPolicy), SpotRestorePolicy spotRestorePolicy = default(SpotRestorePolicy), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
             : base(tags)
         {
             Sku = sku;
@@ -85,6 +90,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             AdditionalCapabilities = additionalCapabilities;
             ScaleInPolicy = scaleInPolicy;
             ProximityPlacementGroup = proximityPlacementGroup;
+            PriorityMixPolicy = priorityMixPolicy;
+            SpotRestorePolicy = spotRestorePolicy;
             Identity = identity;
             CustomInit();
         }
@@ -177,6 +184,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         public SubResource ProximityPlacementGroup { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies the desired targets for mixing Spot and
+        /// Regular priority VMs within the same VMSS Flex instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.priorityMixPolicy")]
+        public PriorityMixPolicy PriorityMixPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Spot Restore properties for the virtual
+        /// machine scale set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.spotRestorePolicy")]
+        public SpotRestorePolicy SpotRestorePolicy { get; set; }
+
+        /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if
         /// configured.
         /// </summary>
@@ -194,6 +215,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (UpgradePolicy != null)
             {
                 UpgradePolicy.Validate();
+            }
+            if (PriorityMixPolicy != null)
+            {
+                PriorityMixPolicy.Validate();
             }
         }
     }

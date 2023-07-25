@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkRuleListResult>> ListByAccountAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreVirtualNetworkRuleListResult>> ListByAccountAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        VirtualNetworkRuleListResult value = default;
+                        DataLakeStoreVirtualNetworkRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
+                        value = DataLakeStoreVirtualNetworkRuleListResult.DeserializeDataLakeStoreVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkRuleListResult> ListByAccount(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreVirtualNetworkRuleListResult> ListByAccount(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        VirtualNetworkRuleListResult value = default;
+                        DataLakeStoreVirtualNetworkRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
+                        value = DataLakeStoreVirtualNetworkRuleListResult.DeserializeDataLakeStoreVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataLakeStore
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, VirtualNetworkRuleCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="virtualNetworkRuleName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, VirtualNetworkRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreVirtualNetworkRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        VirtualNetworkRuleData value = default;
+                        DataLakeStoreVirtualNetworkRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+                        value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="virtualNetworkRuleName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, VirtualNetworkRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreVirtualNetworkRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        VirtualNetworkRuleData value = default;
+                        DataLakeStoreVirtualNetworkRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+                        value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="virtualNetworkRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreVirtualNetworkRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -251,13 +251,13 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        VirtualNetworkRuleData value = default;
+                        DataLakeStoreVirtualNetworkRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+                        value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualNetworkRuleData)null, message.Response);
+                    return Response.FromValue((DataLakeStoreVirtualNetworkRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="virtualNetworkRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkRuleData> Get(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreVirtualNetworkRuleData> Get(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        VirtualNetworkRuleData value = default;
+                        DataLakeStoreVirtualNetworkRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+                        value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualNetworkRuleData)null, message.Response);
+                    return Response.FromValue((DataLakeStoreVirtualNetworkRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, VirtualNetworkRulePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRulePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="virtualNetworkRuleName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkRuleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, VirtualNetworkRulePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreVirtualNetworkRuleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -345,9 +345,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        VirtualNetworkRuleData value = default;
+                        DataLakeStoreVirtualNetworkRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+                        value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="virtualNetworkRuleName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkRuleData> Update(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, VirtualNetworkRulePatch patch, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreVirtualNetworkRuleData> Update(string subscriptionId, string resourceGroupName, string accountName, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -378,9 +378,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        VirtualNetworkRuleData value = default;
+                        DataLakeStoreVirtualNetworkRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+                        value = DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkRuleListResult>> ListByAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreVirtualNetworkRuleListResult>> ListByAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -498,9 +498,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        VirtualNetworkRuleListResult value = default;
+                        DataLakeStoreVirtualNetworkRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
+                        value = DataLakeStoreVirtualNetworkRuleListResult.DeserializeDataLakeStoreVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkRuleListResult> ListByAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreVirtualNetworkRuleListResult> ListByAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        VirtualNetworkRuleListResult value = default;
+                        DataLakeStoreVirtualNetworkRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualNetworkRuleListResult.DeserializeVirtualNetworkRuleListResult(document.RootElement);
+                        value = DataLakeStoreVirtualNetworkRuleListResult.DeserializeDataLakeStoreVirtualNetworkRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

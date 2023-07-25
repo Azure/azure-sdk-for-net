@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -40,6 +38,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -49,9 +48,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
-
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -63,6 +60,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeOperationTest()
         {
@@ -73,9 +71,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions, "en");
-
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, batchConvenienceDocuments, batchActions, "en");
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -89,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyResults = resultCollection.SingleLabelClassifyResults;
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
-            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults = resultCollection.ExtractSummaryResults;
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
             Assert.IsNotNull(entitiesActionsResults);
@@ -100,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(multiLabelClassifyResults);
             Assert.IsNotNull(recognizeCustomEntitiesActionResults);
             Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-            Assert.IsNotNull(extractSummaryActionResults);
+            Assert.IsNotNull(extractiveSummarizeActionResults);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
@@ -120,6 +116,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -142,9 +139,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithLanguageTest"
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
-
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -173,6 +168,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationWithMultipleActions()
         {
             TextAnalyticsClient client = GetClient();
@@ -199,7 +195,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithMultipleTasks"
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Started, batchDocuments, batchActions);
 
             Assert.AreEqual(0, operation.ActionsFailed);
             Assert.AreEqual(0, operation.ActionsSucceeded);
@@ -306,10 +302,13 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         [Ignore("issue: results in an internal server error | bug link: https://dev.azure.com/msazure/Cognitive%20Services/_workitems/edit/12413250")]
         public async Task AnalyzeOperationWithMultipleActionsOfSameType()
         {
+            TestEnvironment.IgnoreIfNotPublicCloud();
+
             TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             var batchDocuments = new List<TextDocumentInput>
@@ -384,7 +383,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 },
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Started, batchDocuments, batchActions);
 
             Assert.AreEqual(0, operation.ActionsFailed);
             Assert.AreEqual(0, operation.ActionsSucceeded);
@@ -426,6 +425,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationWithPagination()
         {
             TextAnalyticsClient client = GetClient();
@@ -443,16 +443,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithPagination",
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
-
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Started, documents, batchActions);
             Assert.IsFalse(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
-
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
-
             await operation.WaitForCompletionAsync();
-
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
 
@@ -480,6 +476,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public void AnalyzeOperationWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -501,11 +498,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationBatchWithErrorTest",
             };
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, documents, batchActions));
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidParameterValue, ex.ErrorCode);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationWithErrorsInDocumentTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -523,8 +521,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, documents, batchActions, "en");
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -541,6 +538,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationWithPHIDomain()
         {
             TextAnalyticsClient client = GetClient();
@@ -556,9 +554,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithPHIDomain",
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
-
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, documents, batchActions, "en");
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -577,6 +573,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationWithPiiCategories()
         {
             TextAnalyticsClient client = GetClient();
@@ -591,9 +588,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { CategoriesFilter = { PiiEntityCategory.USSocialSecurityNumber } } },
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
-
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, documents, batchActions, "en");
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -613,6 +608,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -644,9 +640,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions, options);
-
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions, options);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -667,6 +661,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationAllActionsAndDisableServiceLogs()
         {
             TextAnalyticsClient client = GetClient();
@@ -680,9 +675,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() { DisableServiceLogs = true } }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);
-
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, batchConvenienceDocuments, batchActions);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -710,6 +703,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationAnalyzeSentimentWithOpinionMining()
         {
             TextAnalyticsClient client = GetClient();
@@ -725,9 +719,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithOpinionMining",
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, documents, batchActions);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -743,6 +735,181 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public async Task AnalyzeOperationBatchWaitUntilStartedTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+            };
+
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Started, batchDocuments, batchActions);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            ValidateOperationProperties(operation);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public async Task AnalyzeOperationBatchConvenienceWaitUntilStartedTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+            };
+
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Started, batchConvenienceDocuments, batchActions);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            ValidateOperationProperties(operation);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public async Task StartAnalyzeOperationBatchTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, batchActions);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            ValidateOperationProperties(operation);
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = resultCollection.RecognizeEntitiesResults;
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults = resultCollection.RecognizeCustomEntitiesResults;
+            IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyResults = resultCollection.SingleLabelClassifyResults;
+            IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
+
+            Assert.IsNotNull(keyPhrasesActionsResults);
+            Assert.IsNotNull(entitiesActionsResults);
+            Assert.IsNotNull(piiActionsResults);
+            Assert.IsNotNull(entityLinkingActionsResults);
+            Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.IsNotNull(singleLabelClassifyResults);
+            Assert.IsNotNull(multiLabelClassifyResults);
+            Assert.IsNotNull(recognizeCustomEntitiesActionResults);
+            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
+            Assert.IsNotNull(extractiveSummarizeActionResults);
+
+            var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
+            var keyPhrasesListId2 = new List<string> { "Tesla stock" };
+
+            ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(2, keyPhrasesDocumentsResults.Count);
+
+            foreach (string keyphrase in keyPhrasesDocumentsResults[0].KeyPhrases)
+            {
+                Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
+            }
+
+            foreach (string keyphrase in keyPhrasesDocumentsResults[1].KeyPhrases)
+            {
+                Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
+            }
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public async Task StartAnalyzeOperationBatchConvenienceTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchConvenienceDocuments, batchActions);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            ValidateOperationProperties(operation);
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesActionsResults = resultCollection.RecognizeEntitiesResults;
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesActionsResults = resultCollection.ExtractKeyPhrasesResults;
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults = resultCollection.RecognizeCustomEntitiesResults;
+            IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyResults = resultCollection.SingleLabelClassifyResults;
+            IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
+
+            Assert.IsNotNull(keyPhrasesActionsResults);
+            Assert.IsNotNull(entitiesActionsResults);
+            Assert.IsNotNull(piiActionsResults);
+            Assert.IsNotNull(entityLinkingActionsResults);
+            Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.IsNotNull(singleLabelClassifyResults);
+            Assert.IsNotNull(multiLabelClassifyResults);
+            Assert.IsNotNull(recognizeCustomEntitiesActionResults);
+            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
+            Assert.IsNotNull(extractiveSummarizeActionResults);
+
+            var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
+            var keyPhrasesListId2 = new List<string> { "Tesla stock" };
+
+            ExtractKeyPhrasesResultCollection keyPhrasesDocumentsResults = keyPhrasesActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(2, keyPhrasesDocumentsResults.Count);
+
+            foreach (string keyphrase in keyPhrasesDocumentsResults[0].KeyPhrases)
+            {
+                Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
+            }
+
+            foreach (string keyphrase in keyPhrasesDocumentsResults[1].KeyPhrases)
+            {
+                Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
+            }
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
         public async Task AnalyzeOperationAnalyzeHealthcareEntities()
         {
@@ -766,8 +933,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationAnalyzeHealthcareEntities",
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
-            await operation.WaitForCompletionAsync();
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, documents, batchActions);
 
             // Take the first page.
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -782,124 +948,12 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationAnalyzeHealthcareEntitiesWithFhirVersion()
-        {
-            TextAnalyticsClient client = GetClient();
-
-            List<string> documents = new()
-            {
-                "Prescribed 100mg ibuprofen to Jane Doe, taken twice daily.",
-            };
-
-            TextAnalyticsActions batchActions = new()
-            {
-                AnalyzeHealthcareEntitiesActions = new[]
-                {
-                    new AnalyzeHealthcareEntitiesAction(new AnalyzeHealthcareEntitiesOptions()
-                    {
-                        FhirVersion = WellKnownFhirVersion.V4_0_1,
-                        DocumentType = HealthcareDocumentType.DischargeSummary
-                    }),
-                },
-                DisplayName = "AnalyzeOperationAnalyzeHealthcareEntitiesWithFhirVersion",
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
-            await operation.WaitForCompletionAsync();
-
-            //Take the first page
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-
-            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
-            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
-
-            AnalyzeHealthcareEntitiesResultCollection analyzeHealthcareEntitiesDocumentsResults = analyzeHealthcareEntitiesActionResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(1, analyzeHealthcareEntitiesDocumentsResults.Count);
-            Assert.IsNotNull(analyzeHealthcareEntitiesDocumentsResults[0].FhirBundle);
-            Assert.Greater(analyzeHealthcareEntitiesDocumentsResults[0].FhirBundle.Count, 0);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationExtractSummary()
-        {
-            TextAnalyticsClient client = GetClient();
-            var documents = new List<string>
-            {
-                "Extractive summarization extracts sentences that collectively represent the most important or relevant information within the original content."
-                + " Abstractive summarization generates a summary with concise, coherent sentences or words which are not simply extract sentences from the original document."
-                + " These features are designed to shorten content that could be considered too long to read.",
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() { MaxSentenceCount = 2 } },
-                DisplayName = "AnalyzeOperationExtractSummary",
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults = resultCollection.ExtractSummaryResults;
-            Assert.IsNotNull(extractSummaryActionsResults);
-
-            ExtractSummaryResultCollection extractSummaryDocumentsResults = extractSummaryActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(1, extractSummaryDocumentsResults.Count);
-
-            Assert.AreEqual(2, extractSummaryDocumentsResults[0].Sentences.Count);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationAbstractSummary()
-        {
-            TextAnalyticsClient client = GetClient();
-            var documents = new List<string>
-            {
-                "Extractive summarization extracts sentences that collectively represent the most important or relevant information within the original content."
-                + " Abstractive summarization generates a summary with concise, coherent sentences or words which are not simply extract sentences from the original document."
-                + " These features are designed to shorten content that could be considered too long to read.",
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                AbstractSummaryActions = new List<AbstractSummaryAction>() { new AbstractSummaryAction() { MaxSentenceCount = 2 } },
-                DisplayName = "AnalyzeOperationAbstractSummary",
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<AbstractSummaryActionResult> abstractSummaryActionsResults = resultCollection.AbstractSummaryResults;
-            Assert.IsNotNull(abstractSummaryActionsResults);
-
-            AbstractSummaryResultCollection abstractSummaryDocumentsResults = abstractSummaryActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(1, abstractSummaryDocumentsResults.Count);
-
-            AbstractSummaryResult result = abstractSummaryDocumentsResults[0];
-            Assert.Greater(result.Summaries.Count, 0);
-
-            AbstractiveSummary summary = result.Summaries.FirstOrDefault();
-            Assert.IsNotNull(summary);
-            Assert.That(summary.Text, Is.Not.Null.And.Not.Empty);
-            Assert.Less(summary.Text.Length, documents[0].Length);
-            Assert.IsNotNull(summary.Contexts);
-            Assert.Greater(summary.Contexts.Count, 0);
-        }
-
-        [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationAnalyzeHealthcareEntitiesActionNotSupported()
         {
             TestDiagnostics = false;
-
             TextAnalyticsClient client = GetClient();
-
             TextAnalyticsActions batchActions = new()
             {
                 AnalyzeHealthcareEntitiesActions = new[]
@@ -908,38 +962,17 @@ namespace Azure.AI.TextAnalytics.Tests
                 },
             };
 
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
             Assert.AreEqual("AnalyzeHealthcareEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         [RecordedTest]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
-        public void AnalyzeOperationMultiLabelClassifyActionNotSupported()
-        {
-            TestDiagnostics = false;
-
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-
-            TextAnalyticsActions batchActions = new()
-            {
-                MultiLabelClassifyActions = new[]
-                {
-                    new MultiLabelClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName),
-                },
-            };
-
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
-            Assert.AreEqual("MultiLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
-        }
-
-        [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationRecognizeCustomEntitiesActionNotSupported()
         {
             TestDiagnostics = false;
-
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-
             TextAnalyticsActions batchActions = new()
             {
                 RecognizeCustomEntitiesActions = new[]
@@ -948,18 +981,17 @@ namespace Azure.AI.TextAnalytics.Tests
                 },
             };
 
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
             Assert.AreEqual("RecognizeCustomEntitiesAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationSingleLabelClassifyActionNotSupported()
         {
             TestDiagnostics = false;
-
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-
             TextAnalyticsActions batchActions = new()
             {
                 SingleLabelClassifyActions = new[]
@@ -968,32 +1000,70 @@ namespace Azure.AI.TextAnalytics.Tests
                 },
             };
 
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
             Assert.AreEqual("SingleLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         [RecordedTest]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void AnalyzeOperationExtractSummaryActionNotSupported()
+        [RetryOnInternalServerError]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeOperationMultiLabelClassifyActionNotSupported()
         {
             TestDiagnostics = false;
-
-            TextAnalyticsClient client = GetClient();
-
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             TextAnalyticsActions batchActions = new()
             {
-                ExtractSummaryActions = new[]
+                MultiLabelClassifyActions = new[]
                 {
-                    new ExtractSummaryAction(),
+                    new MultiLabelClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName),
                 },
             };
 
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
-            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
+            Assert.AreEqual("MultiLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeOperationExtractiveSummarizeActionNotSupported()
+        {
+            TestDiagnostics = false;
+            TextAnalyticsClient client = GetClient();
+            TextAnalyticsActions batchActions = new()
+            {
+                ExtractiveSummarizeActions = new[]
+                {
+                    new ExtractiveSummarizeAction(),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
+            Assert.That(ex.Message.EndsWith("Use service API version 2023-04-01 or newer."));
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeOperationAbstractiveSummarizeActionNotSupported()
+        {
+            TestDiagnostics = false;
+            TextAnalyticsClient client = GetClient();
+            TextAnalyticsActions batchActions = new()
+            {
+                AbstractiveSummarizeActions = new[]
+                {
+                    new AbstractiveSummarizeAction(),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeActionsAsync(WaitUntil.Completed, batchDocuments, batchActions));
+            Assert.That(ex.Message.EndsWith("Use service API version 2023-04-01 or newer."));
         }
 
         private void ValidateOperationProperties(AnalyzeActionsOperation operation)
         {
+            Assert.IsTrue(operation.HasCompleted);
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
             // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
             // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);

@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static PrivateStoreOfferResult DeserializePrivateStoreOfferResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> uniqueOfferId = default;
             Optional<string> offerDisplayName = default;
             Optional<string> publisherDisplayName = default;
@@ -30,66 +34,61 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyList<PrivateStorePlan>> plans = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uniqueOfferId"))
+                if (property.NameEquals("uniqueOfferId"u8))
                 {
                     uniqueOfferId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerDisplayName"))
+                if (property.NameEquals("offerDisplayName"u8))
                 {
                     offerDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisherDisplayName"))
+                if (property.NameEquals("publisherDisplayName"u8))
                 {
                     publisherDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateStoreId"))
+                if (property.NameEquals("privateStoreId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateStoreId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("createdAt"))
+                if (property.NameEquals("createdAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("modifiedAt"))
+                if (property.NameEquals("modifiedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modifiedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("specificPlanIdsLimitation"))
+                if (property.NameEquals("specificPlanIdsLimitation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -100,36 +99,40 @@ namespace Azure.ResourceManager.Marketplace.Models
                     specificPlanIdsLimitation = array;
                     continue;
                 }
-                if (property.NameEquals("updateSuppressedDueIdempotence"))
+                if (property.NameEquals("updateSuppressedDueIdempotence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updateSuppressedDueIdempotence = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("iconFileUris"))
+                if (property.NameEquals("iconFileUris"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, new Uri(property0.Value.GetString()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, new Uri(property0.Value.GetString()));
+                        }
                     }
                     iconFileUris = dictionary;
                     continue;
                 }
-                if (property.NameEquals("plans"))
+                if (property.NameEquals("plans"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrivateStorePlan> array = new List<PrivateStorePlan>();

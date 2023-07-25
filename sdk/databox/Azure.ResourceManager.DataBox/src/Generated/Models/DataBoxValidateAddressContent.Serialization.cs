@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("shippingAddress");
+            writer.WritePropertyName("shippingAddress"u8);
             writer.WriteObjectValue(ShippingAddress);
-            writer.WritePropertyName("deviceType");
+            writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
             if (Optional.IsDefined(TransportPreferences))
             {
-                writer.WritePropertyName("transportPreferences");
+                writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
             }
-            writer.WritePropertyName("validationType");
+            writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
             writer.WriteEndObject();
         }

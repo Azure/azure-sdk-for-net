@@ -14,25 +14,27 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteSectionTecCause DeserializeRouteSectionTecCause(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> mainCauseCode = default;
             Optional<int> subCauseCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mainCauseCode"))
+                if (property.NameEquals("mainCauseCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mainCauseCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("subCauseCode"))
+                if (property.NameEquals("subCauseCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subCauseCode = property.Value.GetInt32();

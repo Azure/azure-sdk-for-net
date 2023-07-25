@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ScheduledOn))
             {
-                writer.WritePropertyName("scheduledDateTime");
+                writer.WritePropertyName("scheduledDateTime"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -26,14 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static JobDeliveryInfo DeserializeJobDeliveryInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> scheduledDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scheduledDateTime"))
+                if (property.NameEquals("scheduledDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledDateTime = property.Value.GetDateTimeOffset("O");

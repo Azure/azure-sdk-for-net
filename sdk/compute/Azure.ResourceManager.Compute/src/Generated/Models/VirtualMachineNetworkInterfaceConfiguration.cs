@@ -31,18 +31,20 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
+        /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
         /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
         /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="dnsSettings"> The dns settings to be applied on the network interfaces. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="dscpConfiguration"> Gets or sets the dscp configuration. </param>
-        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration)
+        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration)
         {
             Name = name;
             Primary = primary;
             DeleteOption = deleteOption;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
+            IsTcpStateTrackingDisabled = isTcpStateTrackingDisabled;
             EnableFpga = enableFpga;
             EnableIPForwarding = enableIPForwarding;
             NetworkSecurityGroup = networkSecurityGroup;
@@ -59,6 +61,8 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputeDeleteOption? DeleteOption { get; set; }
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
+        /// <summary> Specifies whether the network interface is disabled for tcp state tracking. </summary>
+        public bool? IsTcpStateTrackingDisabled { get; set; }
         /// <summary> Specifies whether the network interface is FPGA networking-enabled. </summary>
         public bool? EnableFpga { get; set; }
         /// <summary> Whether IP forwarding enabled on this NIC. </summary>

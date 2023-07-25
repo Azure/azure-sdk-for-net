@@ -22,6 +22,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly CancellationTokenSource _lockRenewalCancellationSource;
         private readonly ConcurrentDictionary<Task, byte> _renewalTasks = new();
         private readonly bool _autoRenew;
+        private readonly ProcessMessageEventArgs _processMessageEventArgs;
 
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages { get; } = new();
 
@@ -32,19 +33,26 @@ namespace Azure.Messaging.ServiceBus
         {
         }
 
-        internal ProcessorReceiveActions(ServiceBusReceivedMessage triggerMessage, ReceiverManager manager, bool autoRenewMessageLocks)
+        internal ProcessorReceiveActions(EventArgs args, ReceiverManager manager, bool autoRenewMessageLocks)
         {
             _manager = manager;
 
             // manager would be null in scenarios where customers are using the public constructor of the event args for testing purposes.
             _receiver = manager?.Receiver;
-            _autoRenew = autoRenewMessageLocks;
-            Messages[triggerMessage] = default;
-
-            if (_autoRenew)
+            if (args is ProcessMessageEventArgs processMessageEventArgs)
             {
-                _lockRenewalCancellationSource = new CancellationTokenSource();
-                _renewalTasks[_manager.RenewMessageLockAsync(triggerMessage, _lockRenewalCancellationSource)] = default;
+                _autoRenew = autoRenewMessageLocks;
+                _processMessageEventArgs = processMessageEventArgs;
+                Messages[processMessageEventArgs.Message] = default;
+                if (_autoRenew)
+                {
+                    _lockRenewalCancellationSource = new CancellationTokenSource();
+                    _renewalTasks[_manager.RenewMessageLockAsync(_processMessageEventArgs, processMessageEventArgs.Message, _lockRenewalCancellationSource)] = default;
+                }
+            }
+            else
+            {
+                Messages[((ProcessSessionMessageEventArgs)args).Message] = default;
             }
         }
 
@@ -72,7 +80,7 @@ namespace Azure.Messaging.ServiceBus
             return TrackMessagesAsReceived(messages);
         }
 
-       /// <summary>
+        /// <summary>
         /// Receives a list of deferred <see cref="ServiceBusReceivedMessage"/> identified by <paramref name="sequenceNumbers"/>.
         /// Messages received using this method are subject to the behavior defined in the <see cref="ServiceBusProcessorOptions.AutoCompleteMessages"/>
         /// and <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/> properties.
@@ -88,7 +96,7 @@ namespace Azure.Messaging.ServiceBus
         ///   The specified sequence number does not correspond to a message that has been deferred.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageNotFound"/> in this case.
         /// </exception>
-       public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
@@ -97,29 +105,30 @@ namespace Azure.Messaging.ServiceBus
             return TrackMessagesAsReceived(messages);
         }
 
-       /// <inheritdoc cref="ServiceBusReceiver.PeekMessagesAsync"/>
-       public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
-           int maxMessages,
-           long? fromSequenceNumber = default,
-           CancellationToken cancellationToken = default)
+        /// <inheritdoc cref="ServiceBusReceiver.PeekMessagesAsync"/>
+        public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
+            int maxMessages,
+            long? fromSequenceNumber = default,
+            CancellationToken cancellationToken = default)
        {
-           ValidateCallbackInScope();
+            ValidateCallbackInScope();
 
-           // Peeked messages are not locked so we don't need to track them for lock renewal or autocompletion, as these options do not apply.
-           return await _receiver.PeekMessagesAsync(
-               maxMessages: maxMessages,
-               fromSequenceNumber: fromSequenceNumber,
-               cancellationToken: cancellationToken).ConfigureAwait(false);
+            // Peeked messages are not locked so we don't need to track them for lock renewal or autocompletion, as these options do not apply.
+            return await _receiver.PeekMessagesAsync(
+                maxMessages: maxMessages,
+                fromSequenceNumber: fromSequenceNumber,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
        }
 
-       private IReadOnlyList<ServiceBusReceivedMessage> TrackMessagesAsReceived(IReadOnlyList<ServiceBusReceivedMessage> messages)
+        private IReadOnlyList<ServiceBusReceivedMessage> TrackMessagesAsReceived(IReadOnlyList<ServiceBusReceivedMessage> messages)
         {
             if (_autoRenew)
             {
                 foreach (ServiceBusReceivedMessage message in messages)
                 {
                     Messages[message] = default;
-                    _renewalTasks[_manager.RenewMessageLockAsync(message, _lockRenewalCancellationSource)] = default;
+                    // Currently only the trigger message supports cancellation token for LockedUntil.
+                    _renewalTasks[_manager.RenewMessageLockAsync(_processMessageEventArgs, message, _lockRenewalCancellationSource)] = default;
                 }
             }
             else

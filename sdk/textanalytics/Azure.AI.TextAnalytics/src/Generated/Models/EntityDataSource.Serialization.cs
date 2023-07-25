@@ -15,25 +15,29 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSource");
+            writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(EntityId);
             writer.WriteEndObject();
         }
 
         internal static EntityDataSource DeserializeEntityDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string dataSource = default;
             string id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     dataSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;

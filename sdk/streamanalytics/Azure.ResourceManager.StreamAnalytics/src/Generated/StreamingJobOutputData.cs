@@ -13,7 +13,10 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    /// <summary> A class representing the StreamingJobOutput data model. </summary>
+    /// <summary>
+    /// A class representing the StreamingJobOutput data model.
+    /// An output object, containing all information associated with the named output. All outputs are contained under a streaming job.
+    /// </summary>
     public partial class StreamingJobOutputData : StreamAnalyticsSubResource
     {
         /// <summary> Initializes a new instance of StreamingJobOutputData. </summary>

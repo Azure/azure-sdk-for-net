@@ -18,7 +18,8 @@ namespace Azure.Communication.MediaComposition
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="height"> The height of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="layer"> The layer this input group should appear on. </param>
-        internal UnknownInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer) : base(kind, position, width, height, layer)
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
+        internal UnknownInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode) : base(kind, position, width, height, layer, scalingMode)
         {
             Kind = kind;
         }

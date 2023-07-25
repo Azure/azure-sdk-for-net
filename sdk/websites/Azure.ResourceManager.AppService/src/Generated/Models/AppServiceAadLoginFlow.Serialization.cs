@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LoginParameters))
             {
-                writer.WritePropertyName("loginParameters");
+                writer.WritePropertyName("loginParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoginParameters)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(IsWwwAuthenticateDisabled))
             {
-                writer.WritePropertyName("disableWWWAuthenticate");
+                writer.WritePropertyName("disableWWWAuthenticate"u8);
                 writer.WriteBooleanValue(IsWwwAuthenticateDisabled.Value);
             }
             writer.WriteEndObject();
@@ -36,15 +36,18 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceAadLoginFlow DeserializeAppServiceAadLoginFlow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> loginParameters = default;
             Optional<bool> disableWWWAuthenticate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("loginParameters"))
+                if (property.NameEquals("loginParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -55,11 +58,10 @@ namespace Azure.ResourceManager.AppService.Models
                     loginParameters = array;
                     continue;
                 }
-                if (property.NameEquals("disableWWWAuthenticate"))
+                if (property.NameEquals("disableWWWAuthenticate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableWWWAuthenticate = property.Value.GetBoolean();

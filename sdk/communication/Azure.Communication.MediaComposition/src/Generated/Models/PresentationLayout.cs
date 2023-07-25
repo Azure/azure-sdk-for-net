@@ -34,10 +34,11 @@ namespace Azure.Communication.MediaComposition
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
         /// <param name="audiencePosition"> Position of the audience streams. </param>
-        internal PresentationLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, string presenterId, IList<string> audienceIds, AudiencePosition? audiencePosition) : base(kind, resolution, placeholderImageUri)
+        internal PresentationLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, string presenterId, IList<string> audienceIds, AudiencePosition? audiencePosition) : base(kind, resolution, placeholderImageUri, scalingMode)
         {
             PresenterId = presenterId;
             AudienceIds = audienceIds;

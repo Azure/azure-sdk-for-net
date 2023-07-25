@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.Infrastructure
@@ -21,13 +22,12 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                                "\"communicationUser\":{{\"id\":\"targetId\"}}" +
                                             "}}" +
                                         "]," +
-                                        "\"source\": {{" +
-                                             "\"identifier\":{{" +
+                                        "\"sourceDisplayName\": \"displayName\"," +
+                                        "\"sourceIdentity\":{{" +
                                                   "\"rawId\":\"sourceId\"," +
                                                   "\"kind\":\"communicationUser\"," +
                                                   "\"communicationUser\":{{\"id\":\"sourceId\"}}" +
-                                                            "}}" +
-                                                    "}}," +
+                                                            "}}," +
                                         "\"callConnectionState\": \"connecting\"," +
                                         "\"subject\": \"dummySubject\"," +
                                         "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
@@ -39,6 +39,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string CallConnectionId = "someCallConnectionId";
         protected const string Subject = "dummySubject";
         protected const string CallBackUri = "https://bot.contoso.com/callback";
+        protected const string DisplayName = "displayName";
 
         private const string NoneMediaSubscriptionId = "null";
         private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
@@ -69,8 +70,9 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 }
             }
 
-            var callAutomationClientOptions = new CallAutomationClientOptions
+            var callAutomationClientOptions = new CallAutomationClientOptions()
             {
+                Source = new CommunicationUserIdentifier("12345"),
                 Transport = new MockTransport(mockResponse)
             };
 
@@ -91,13 +93,14 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
             Assert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
-            var sourceUser = (CommunicationUserIdentifier)callConnectionProperties.CallSource.Identifier;
+            var sourceUser = (CommunicationUserIdentifier)callConnectionProperties.SourceIdentity;
             Assert.AreEqual(SourceId, sourceUser.Id);
             Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
             var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
             Assert.AreEqual(TargetId, targetUser.Id);
             Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
-            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackEndpoint.ToString());
+            Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
+            Assert.AreEqual(DisplayName, callConnectionProperties.SourceDisplayName);
         }
     }
 }

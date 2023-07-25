@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiResourceMetadata DeserializeLogicApiResourceMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> source = default;
             Optional<string> brandColor = default;
             Optional<string> hideKey = default;
@@ -27,26 +31,25 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicApiDeploymentParameterMetadataSet> deploymentParameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("brandColor"))
+                if (property.NameEquals("brandColor"u8))
                 {
                     brandColor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hideKey"))
+                if (property.NameEquals("hideKey"u8))
                 {
                     hideKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -57,56 +60,51 @@ namespace Azure.ResourceManager.Logic.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("ApiType"))
+                if (property.NameEquals("ApiType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     apiType = new LogicApiType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("wsdlService"))
+                if (property.NameEquals("wsdlService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     wsdlService = LogicWsdlService.DeserializeLogicWsdlService(property.Value);
                     continue;
                 }
-                if (property.NameEquals("wsdlImportMethod"))
+                if (property.NameEquals("wsdlImportMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     wsdlImportMethod = new LogicWsdlImportMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("connectionType"))
+                if (property.NameEquals("connectionType"u8))
                 {
                     connectionType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new LogicWorkflowProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deploymentParameters"))
+                if (property.NameEquals("deploymentParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deploymentParameters = LogicApiDeploymentParameterMetadataSet.DeserializeLogicApiDeploymentParameterMetadataSet(property.Value);

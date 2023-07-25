@@ -79,6 +79,8 @@ The exception includes some contextual information to assist in understanding th
 
   - **ServiceCommunicationProblem**: This indicates that there was an error communicating with the service. The issue may stem from a transient network problem, or a service problem. These are transient errors that will be automatically retried.
 
+  - **ServiceBusy**: This indicates that a request was throttled by the service. The details describing what can cause a request to be throttled and how to avoid being throttled can be found [here][Throttling]. Throttled requests are retried, but the client library will automatically apply a 10 second back off before attempting any additional requests using the same `ServiceBusClient` (or any subtypes created from that client). This can cause issues if your entity's lock duration is less than 10 seconds, as message or session locks are likely to be lost for any unsettled messages or locked sessions. Because throttled requests are generally retried successfully, the exceptions generated would be logged as warnings rather than errors - the specific warning-level event source event is 43 (RunOperation encountered an exception and will retry).
+
 As an example of how to handle a `ServiceBusException` and filter by the `Reason`, see the following:
 
 ```C# Snippet:ServiceBusExceptionFailureReasonUsage
@@ -125,7 +127,7 @@ To troubleshoot:
 
 - Verify that the connection string or fully qualified domain name specified when creating the client is correct. For information on how to acquire a connection string, see: [Get a Service Bus connection string][GetConnectionString].
 
-- Check the firewall and port permissions in your hosting environment and that the AMQP ports 5671 and 5762 are open and that the endpoint is allowed through the firewall.
+- Check the firewall and port permissions in your hosting environment and that the AMQP ports 5671 and 5672 are open and that the endpoint is allowed through the firewall.
 
 - Try using the Web Socket transport option, which connects using port 443. For details, see: [configure the transport][TransportSample].
 
@@ -333,3 +335,4 @@ Information about Service Bus quotas can be found [here][ServiceBusQuotas].
 [DiagnoseThreadPoolExhaustion]: https://docs.microsoft.com/shows/on-net/diagnosing-thread-pool-exhaustion-issues-in-net-core-apps
 [TransactionTimeout]: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#timeout
 [MessageBody]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample14_AMQPMessage.md#message-body
+[Throttling]: https://learn.microsoft.com/azure/service-bus-messaging/service-bus-throttling

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeOrderStatus DeserializeDataBoxEdgeOrderStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxEdgeOrderState status = default;
             Optional<DateTimeOffset> updateDateTime = default;
             Optional<string> comments = default;
@@ -23,41 +27,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<IReadOnlyDictionary<string, string>> additionalOrderDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new DataBoxEdgeOrderState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("updateDateTime"))
+                if (property.NameEquals("updateDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updateDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("comments"))
+                if (property.NameEquals("comments"u8))
                 {
                     comments = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackingInformation"))
+                if (property.NameEquals("trackingInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trackingInformation = DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("additionalOrderDetails"))
+                if (property.NameEquals("additionalOrderDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

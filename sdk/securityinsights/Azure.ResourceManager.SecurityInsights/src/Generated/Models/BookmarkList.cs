@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of BookmarkList. </summary>
         /// <param name="value"> Array of bookmarks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal BookmarkList(IEnumerable<BookmarkData> value)
+        internal BookmarkList(IEnumerable<SecurityInsightsBookmarkData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of BookmarkList. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of bookmarks. </param>
+        /// <param name="nextLink"> URL to fetch the next set of cases. </param>
         /// <param name="value"> Array of bookmarks. </param>
-        internal BookmarkList(string nextLink, IReadOnlyList<BookmarkData> value)
+        internal BookmarkList(string nextLink, IReadOnlyList<SecurityInsightsBookmarkData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> URL to fetch the next set of bookmarks. </summary>
+        /// <summary> URL to fetch the next set of cases. </summary>
         public string NextLink { get; }
         /// <summary> Array of bookmarks. </summary>
-        public IReadOnlyList<BookmarkData> Value { get; }
+        public IReadOnlyList<SecurityInsightsBookmarkData> Value { get; }
     }
 }

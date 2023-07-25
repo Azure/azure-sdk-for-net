@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(OwnersCount))
             {
-                writer.WritePropertyName("ownersCount");
+                writer.WritePropertyName("ownersCount"u8);
                 writer.WriteNumberValue(OwnersCount.Value);
             }
             if (Optional.IsDefined(ReposCount))
             {
-                writer.WritePropertyName("reposCount");
+                writer.WritePropertyName("reposCount"u8);
                 writer.WriteNumberValue(ReposCount.Value);
             }
             writer.WriteEndObject();
@@ -35,36 +35,37 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static GitHubConnectorStatsProperties DeserializeGitHubConnectorStatsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<long> ownersCount = default;
             Optional<long> reposCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ownersCount"))
+                if (property.NameEquals("ownersCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ownersCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("reposCount"))
+                if (property.NameEquals("reposCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reposCount = property.Value.GetInt64();

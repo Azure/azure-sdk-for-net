@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLabArtifact data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLabArtifact data model.
+    /// An artifact.
+    /// </summary>
     public partial class DevTestLabArtifactData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabArtifactData. </summary>
@@ -28,14 +31,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="title"> The artifact&apos;s title. </param>
-        /// <param name="description"> The artifact&apos;s description. </param>
-        /// <param name="publisher"> The artifact&apos;s publisher. </param>
+        /// <param name="title"> The artifact's title. </param>
+        /// <param name="description"> The artifact's description. </param>
+        /// <param name="publisher"> The artifact's publisher. </param>
         /// <param name="filePath"> The file path to the artifact. </param>
         /// <param name="icon"> The URI to the artifact icon. </param>
-        /// <param name="targetOSType"> The artifact&apos;s target OS. </param>
-        /// <param name="parameters"> The artifact&apos;s parameters. </param>
-        /// <param name="createdOn"> The artifact&apos;s creation date. </param>
+        /// <param name="targetOSType"> The artifact's target OS. </param>
+        /// <param name="parameters"> The artifact's parameters. </param>
+        /// <param name="createdOn"> The artifact's creation date. </param>
         internal DevTestLabArtifactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string title, string description, string publisher, string filePath, string icon, string targetOSType, BinaryData parameters, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Title = title;
@@ -48,20 +51,20 @@ namespace Azure.ResourceManager.DevTestLabs
             CreatedOn = createdOn;
         }
 
-        /// <summary> The artifact&apos;s title. </summary>
+        /// <summary> The artifact's title. </summary>
         public string Title { get; }
-        /// <summary> The artifact&apos;s description. </summary>
+        /// <summary> The artifact's description. </summary>
         public string Description { get; }
-        /// <summary> The artifact&apos;s publisher. </summary>
+        /// <summary> The artifact's publisher. </summary>
         public string Publisher { get; }
         /// <summary> The file path to the artifact. </summary>
         public string FilePath { get; }
         /// <summary> The URI to the artifact icon. </summary>
         public string Icon { get; }
-        /// <summary> The artifact&apos;s target OS. </summary>
+        /// <summary> The artifact's target OS. </summary>
         public string TargetOSType { get; }
         /// <summary>
-        /// The artifact&apos;s parameters.
+        /// The artifact's parameters.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -91,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </para>
         /// </summary>
         public BinaryData Parameters { get; }
-        /// <summary> The artifact&apos;s creation date. </summary>
+        /// <summary> The artifact's creation date. </summary>
         public DateTimeOffset? CreatedOn { get; }
     }
 }

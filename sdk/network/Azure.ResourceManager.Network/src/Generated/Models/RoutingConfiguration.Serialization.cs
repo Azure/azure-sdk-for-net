@@ -18,61 +18,92 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AssociatedRouteTable))
             {
-                writer.WritePropertyName("associatedRouteTable");
+                writer.WritePropertyName("associatedRouteTable"u8);
                 JsonSerializer.Serialize(writer, AssociatedRouteTable);
             }
             if (Optional.IsDefined(PropagatedRouteTables))
             {
-                writer.WritePropertyName("propagatedRouteTables");
+                writer.WritePropertyName("propagatedRouteTables"u8);
                 writer.WriteObjectValue(PropagatedRouteTables);
             }
             if (Optional.IsDefined(VnetRoutes))
             {
-                writer.WritePropertyName("vnetRoutes");
+                writer.WritePropertyName("vnetRoutes"u8);
                 writer.WriteObjectValue(VnetRoutes);
+            }
+            if (Optional.IsDefined(InboundRouteMap))
+            {
+                writer.WritePropertyName("inboundRouteMap"u8);
+                JsonSerializer.Serialize(writer, InboundRouteMap);
+            }
+            if (Optional.IsDefined(OutboundRouteMap))
+            {
+                writer.WritePropertyName("outboundRouteMap"u8);
+                JsonSerializer.Serialize(writer, OutboundRouteMap);
             }
             writer.WriteEndObject();
         }
 
         internal static RoutingConfiguration DeserializeRoutingConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> associatedRouteTable = default;
             Optional<PropagatedRouteTable> propagatedRouteTables = default;
             Optional<VnetRoute> vnetRoutes = default;
+            Optional<WritableSubResource> inboundRouteMap = default;
+            Optional<WritableSubResource> outboundRouteMap = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("associatedRouteTable"))
+                if (property.NameEquals("associatedRouteTable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    associatedRouteTable = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    associatedRouteTable = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("propagatedRouteTables"))
+                if (property.NameEquals("propagatedRouteTables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     propagatedRouteTables = PropagatedRouteTable.DeserializePropagatedRouteTable(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vnetRoutes"))
+                if (property.NameEquals("vnetRoutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vnetRoutes = VnetRoute.DeserializeVnetRoute(property.Value);
                     continue;
                 }
+                if (property.NameEquals("inboundRouteMap"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inboundRouteMap = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("outboundRouteMap"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outboundRouteMap = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
             }
-            return new RoutingConfiguration(associatedRouteTable, propagatedRouteTables.Value, vnetRoutes.Value);
+            return new RoutingConfiguration(associatedRouteTable, propagatedRouteTables.Value, vnetRoutes.Value, inboundRouteMap, outboundRouteMap);
         }
     }
 }

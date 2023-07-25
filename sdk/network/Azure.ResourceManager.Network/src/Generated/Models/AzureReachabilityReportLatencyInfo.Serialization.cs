@@ -15,25 +15,27 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AzureReachabilityReportLatencyInfo DeserializeAzureReachabilityReportLatencyInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timeStamp = default;
             Optional<int> score = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeStamp"))
+                if (property.NameEquals("timeStamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("score"))
+                if (property.NameEquals("score"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     score = property.Value.GetInt32();

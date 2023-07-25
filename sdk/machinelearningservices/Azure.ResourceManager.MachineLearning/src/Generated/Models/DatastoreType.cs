@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string AzureDataLakeGen1Value = "AzureDataLakeGen1";
         private const string AzureDataLakeGen2Value = "AzureDataLakeGen2";
         private const string AzureFileValue = "AzureFile";
-        private const string HdfsValue = "Hdfs";
 
         /// <summary> AzureBlob. </summary>
         public static DatastoreType AzureBlob { get; } = new DatastoreType(AzureBlobValue);
@@ -36,8 +35,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static DatastoreType AzureDataLakeGen2 { get; } = new DatastoreType(AzureDataLakeGen2Value);
         /// <summary> AzureFile. </summary>
         public static DatastoreType AzureFile { get; } = new DatastoreType(AzureFileValue);
-        /// <summary> Hdfs. </summary>
-        public static DatastoreType Hdfs { get; } = new DatastoreType(HdfsValue);
         /// <summary> Determines if two <see cref="DatastoreType"/> values are the same. </summary>
         public static bool operator ==(DatastoreType left, DatastoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatastoreType"/> values are not the same. </summary>

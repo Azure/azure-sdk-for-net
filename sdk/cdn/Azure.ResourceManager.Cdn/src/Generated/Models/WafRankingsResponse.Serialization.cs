@@ -16,37 +16,38 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static WafRankingsResponse DeserializeWafRankingsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dateTimeBegin = default;
             Optional<DateTimeOffset> dateTimeEnd = default;
             Optional<IReadOnlyList<string>> groups = default;
             Optional<IReadOnlyList<WafRankingsResponseDataItem>> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dateTimeBegin"))
+                if (property.NameEquals("dateTimeBegin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dateTimeBegin = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("dateTimeEnd"))
+                if (property.NameEquals("dateTimeEnd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dateTimeEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("groups"))
+                if (property.NameEquals("groups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -57,11 +58,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     groups = array;
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WafRankingsResponseDataItem> array = new List<WafRankingsResponseDataItem>();

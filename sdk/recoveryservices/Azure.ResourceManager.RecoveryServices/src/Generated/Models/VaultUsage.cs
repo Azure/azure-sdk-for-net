@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="currentValue"> Current value of usage. </param>
         /// <param name="limit"> Limit of usage. </param>
         /// <param name="name"> Name of usage. </param>
-        internal VaultUsage(UsagesUnit? unit, string quotaPeriod, DateTimeOffset? nextResetOn, long? currentValue, long? limit, NameInfo name)
+        internal VaultUsage(VaultUsageUnit? unit, string quotaPeriod, DateTimeOffset? nextResetOn, long? currentValue, long? limit, VaultUsageNameInfo name)
         {
             Unit = unit;
             QuotaPeriod = quotaPeriod;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Unit of the usage. </summary>
-        public UsagesUnit? Unit { get; }
+        public VaultUsageUnit? Unit { get; }
         /// <summary> Quota period of usage. </summary>
         public string QuotaPeriod { get; }
         /// <summary> Next reset time of usage. </summary>
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Limit of usage. </summary>
         public long? Limit { get; }
         /// <summary> Name of usage. </summary>
-        public NameInfo Name { get; }
+        public VaultUsageNameInfo Name { get; }
     }
 }

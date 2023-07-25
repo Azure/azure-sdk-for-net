@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("policyDefinitionId");
+            writer.WritePropertyName("policyDefinitionId"u8);
             writer.WriteStringValue(PolicyDefinitionId);
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
             if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
-                writer.WritePropertyName("policyDefinitionReferenceId");
+                writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
             if (Optional.IsCollectionDefined(GroupNames))
             {
-                writer.WritePropertyName("groupNames");
+                writer.WritePropertyName("groupNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroupNames)
                 {
@@ -49,22 +49,25 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static PolicyDefinitionReference DeserializePolicyDefinitionReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string policyDefinitionId = default;
             Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
             Optional<string> policyDefinitionReferenceId = default;
             Optional<IList<string>> groupNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyDefinitionId"))
+                if (property.NameEquals("policyDefinitionId"u8))
                 {
                     policyDefinitionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ArmPolicyParameterValue> dictionary = new Dictionary<string, ArmPolicyParameterValue>();
@@ -75,16 +78,15 @@ namespace Azure.ResourceManager.Resources.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionReferenceId"))
+                if (property.NameEquals("policyDefinitionReferenceId"u8))
                 {
                     policyDefinitionReferenceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupNames"))
+                if (property.NameEquals("groupNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

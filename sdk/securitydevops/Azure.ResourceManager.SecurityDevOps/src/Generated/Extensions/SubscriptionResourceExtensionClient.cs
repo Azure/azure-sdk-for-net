@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -49,170 +46,90 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         /// <summary>
         /// Returns a list of monitored AzureDevOps Connectors.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors
-        /// Operation Id: AzureDevOpsConnector_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsConnector_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzureDevOpsConnectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzureDevOpsConnectorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureDevOpsConnectors");
-                scope.Start();
-                try
-                {
-                    var response = await AzureDevOpsConnectorRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AzureDevOpsConnectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzureDevOpsConnectorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureDevOpsConnectors");
-                scope.Start();
-                try
-                {
-                    var response = await AzureDevOpsConnectorRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureDevOpsConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureDevOpsConnectorRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsConnectorResource(Client, AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(e)), AzureDevOpsConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureDevOpsConnectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of monitored AzureDevOps Connectors.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors
-        /// Operation Id: AzureDevOpsConnector_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsConnector_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(CancellationToken cancellationToken = default)
         {
-            Page<AzureDevOpsConnectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AzureDevOpsConnectorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureDevOpsConnectors");
-                scope.Start();
-                try
-                {
-                    var response = AzureDevOpsConnectorRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AzureDevOpsConnectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AzureDevOpsConnectorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAzureDevOpsConnectors");
-                scope.Start();
-                try
-                {
-                    var response = AzureDevOpsConnectorRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureDevOpsConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureDevOpsConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureDevOpsConnectorRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsConnectorResource(Client, AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(e)), AzureDevOpsConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureDevOpsConnectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of monitored GitHub Connectors.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/gitHubConnectors
-        /// Operation Id: GitHubConnector_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/gitHubConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubConnector_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GitHubConnectorResource> GetGitHubConnectorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GitHubConnectorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = GitHubConnectorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGitHubConnectors");
-                scope.Start();
-                try
-                {
-                    var response = await GitHubConnectorRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<GitHubConnectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = GitHubConnectorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGitHubConnectors");
-                scope.Start();
-                try
-                {
-                    var response = await GitHubConnectorRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GitHubConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GitHubConnectorRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GitHubConnectorResource(Client, GitHubConnectorData.DeserializeGitHubConnectorData(e)), GitHubConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGitHubConnectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns a list of monitored GitHub Connectors.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/gitHubConnectors
-        /// Operation Id: GitHubConnector_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SecurityDevOps/gitHubConnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubConnector_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GitHubConnectorResource> GetGitHubConnectors(CancellationToken cancellationToken = default)
         {
-            Page<GitHubConnectorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = GitHubConnectorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGitHubConnectors");
-                scope.Start();
-                try
-                {
-                    var response = GitHubConnectorRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<GitHubConnectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = GitHubConnectorClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGitHubConnectors");
-                scope.Start();
-                try
-                {
-                    var response = GitHubConnectorRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GitHubConnectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GitHubConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GitHubConnectorRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GitHubConnectorResource(Client, GitHubConnectorData.DeserializeGitHubConnectorData(e)), GitHubConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGitHubConnectors", "value", "nextLink", cancellationToken);
         }
     }
 }

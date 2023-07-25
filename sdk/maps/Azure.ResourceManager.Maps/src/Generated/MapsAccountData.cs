@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maps
 {
-    /// <summary> A class representing the MapsAccount data model. </summary>
+    /// <summary>
+    /// A class representing the MapsAccount data model.
+    /// An Azure resource which represents access to a suite of Maps REST APIs.
+    /// </summary>
     public partial class MapsAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MapsAccountData. </summary>
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="kind"> Get or Set Kind property. </param>
         /// <param name="identity"> Sets the identity property for maps account. </param>
         /// <param name="properties"> The map account properties. </param>
-        internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsSku sku, MapsKind? kind, ManagedServiceIdentity identity, MapsAccountProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsSku sku, MapsAccountKind? kind, ManagedServiceIdentity identity, MapsAccountProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Maps
         /// <summary> The SKU of this account. </summary>
         public MapsSku Sku { get; set; }
         /// <summary> Get or Set Kind property. </summary>
-        public MapsKind? Kind { get; set; }
+        public MapsAccountKind? Kind { get; set; }
         /// <summary> Sets the identity property for maps account. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The map account properties. </summary>

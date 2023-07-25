@@ -14,7 +14,10 @@ using Azure.ResourceManager.Orbital.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    /// <summary> A class representing the OrbitalContactProfile data model. </summary>
+    /// <summary>
+    /// A class representing the OrbitalContactProfile data model.
+    /// Customer creates a Contact Profile Resource, which will contain all of the configurations required for scheduling a contact.
+    /// </summary>
     public partial class OrbitalContactProfileData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of OrbitalContactProfileData. </summary>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="provisioningState"> The current state of the resource&apos;s creation, deletion, or modification. </param>
+        /// <param name="provisioningState"> The current state of the resource's creation, deletion, or modification. </param>
         /// <param name="minimumViableContactDuration"> Minimum viable contact duration in ISO 8601 format. Used for listing the available contacts with a spacecraft at a given ground station. </param>
         /// <param name="minimumElevationDegrees"> Minimum viable elevation for the contact in decimal degrees. Used for listing the available contacts with a spacecraft at a given ground station. </param>
         /// <param name="autoTrackingConfiguration"> Auto-tracking configuration. </param>
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary> The current state of the resource&apos;s creation, deletion, or modification. </summary>
+        /// <summary> The current state of the resource's creation, deletion, or modification. </summary>
         public OrbitalProvisioningState? ProvisioningState { get; set; }
         /// <summary> Minimum viable contact duration in ISO 8601 format. Used for listing the available contacts with a spacecraft at a given ground station. </summary>
         public TimeSpan? MinimumViableContactDuration { get; set; }

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayFirewallRuleSet()
         {
             RuleGroups = new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>();
+            Tiers = new ChangeTrackingList<ApplicationGatewayTierType>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>
@@ -29,12 +30,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
-        internal ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NetworkProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups) : base(id, name, resourceType, location, tags)
+        /// <param name="tiers"> Tier of an application gateway that support the rule set. </param>
+        internal ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NetworkProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups, IList<ApplicationGatewayTierType> tiers) : base(id, name, resourceType, location, tags)
         {
             ProvisioningState = provisioningState;
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             RuleGroups = ruleGroups;
+            Tiers = tiers;
         }
 
         /// <summary> The provisioning state of the web application firewall rule set. </summary>
@@ -45,5 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         public string RuleSetVersion { get; set; }
         /// <summary> The rule groups of the web application firewall rule set. </summary>
         public IList<ApplicationGatewayFirewallRuleGroup> RuleGroups { get; }
+        /// <summary> Tier of an application gateway that support the rule set. </summary>
+        public IList<ApplicationGatewayTierType> Tiers { get; }
     }
 }

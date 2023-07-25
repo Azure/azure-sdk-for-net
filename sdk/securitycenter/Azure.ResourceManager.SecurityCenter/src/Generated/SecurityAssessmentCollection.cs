@@ -43,8 +43,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Create a security assessment on your resource. An assessment metadata that describes this assessment must be predefined with the same name before inserting the assessment result
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
-        /// Operation Id: Assessments_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
@@ -76,8 +84,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Create a security assessment on your resource. An assessment metadata that describes this assessment must be predefined with the same name before inserting the assessment result
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
-        /// Operation Id: Assessments_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
@@ -109,8 +125,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a security assessment on your scanned resource
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
-        /// Operation Id: Assessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="expand"> OData expand. Optional. </param>
@@ -139,8 +163,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a security assessment on your scanned resource
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
-        /// Operation Id: Assessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="expand"> OData expand. Optional. </param>
@@ -169,8 +201,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
-        /// Operation Id: Assessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="expand"> OData expand. Optional. </param>
@@ -197,8 +237,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
-        /// Operation Id: Assessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="expand"> OData expand. Optional. </param>

@@ -16,15 +16,18 @@ namespace Azure.ResourceManager.PrivateDns.Models
     {
         internal static VirtualNetworkLinkListResult DeserializeVirtualNetworkLinkListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<VirtualNetworkLinkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualNetworkLinkData> array = new List<VirtualNetworkLinkData>();
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

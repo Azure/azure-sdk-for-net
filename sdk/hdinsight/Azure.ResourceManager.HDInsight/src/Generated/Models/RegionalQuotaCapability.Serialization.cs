@@ -14,36 +14,37 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static RegionalQuotaCapability DeserializeRegionalQuotaCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> regionName = default;
             Optional<long> coresUsed = default;
             Optional<long> coresAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("regionName"))
+                if (property.NameEquals("regionName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     regionName = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("coresUsed"))
+                if (property.NameEquals("coresUsed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     coresUsed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("coresAvailable"))
+                if (property.NameEquals("coresAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     coresAvailable = property.Value.GetInt64();

@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointType");
+            writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             if (Optional.IsDefined(AuthenticationType))
             {
-                writer.WritePropertyName("authenticationType");
+                writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             if (Optional.IsDefined(DeadLetterSecret))
             {
                 if (DeadLetterSecret != null)
                 {
-                    writer.WritePropertyName("deadLetterSecret");
+                    writer.WritePropertyName("deadLetterSecret"u8);
                     writer.WriteStringValue(DeadLetterSecret);
                 }
                 else
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 if (DeadLetterUri != null)
                 {
-                    writer.WritePropertyName("deadLetterUri");
+                    writer.WritePropertyName("deadLetterUri"u8);
                     writer.WriteStringValue(DeadLetterUri.AbsoluteUri);
                 }
                 else
@@ -46,11 +46,27 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterUri");
                 }
             }
+            if (Optional.IsDefined(Identity))
+            {
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
+            }
             writer.WriteEndObject();
         }
 
         internal static DigitalTwinsEndpointResourceProperties DeserializeDigitalTwinsEndpointResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("endpointType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -107,26 +107,11 @@ namespace Azure.Storage.Test.Shared
         public byte[] GetRandomBuffer(long size)
             => TestHelper.GetRandomBuffer(size, Recording.Random);
 
-        public string GetNewString(int length = 20)
-        {
-            var buffer = new char[length];
-            for (var i = 0; i < length; i++)
-            {
-                buffer[i] = (char)('a' + Recording.Random.Next(0, 25));
-            }
-            return new string(buffer);
-        }
+        public string GetNewString(int length = 20) => DataProvider.GetNewString(length, Recording.Random);
 
         public string GetNewMetadataName() => $"test_metadata_{Recording.Random.NewGuid().ToString().Replace("-", "_")}";
 
-        public IDictionary<string, string> BuildMetadata()
-            => new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-                {
-                    { "foo", "bar" },
-                    { "meta", "data" },
-                    { "Capital", "letter" },
-                    { "UPPER", "case" }
-                };
+        public IDictionary<string, string> BuildMetadata() => DataProvider.BuildMetadata();
 
         public IPAddress GetIPAddress()
         {
@@ -407,6 +392,29 @@ namespace Azure.Storage.Test.Shared
             AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
             AuthenticationResult authenticationResult = await result.ExecuteAsync();
             return authenticationResult.AccessToken;
+        }
+
+        public string CreateRandomDirectory(string parentPath, string directoryName = default)
+        {
+            return Directory.CreateDirectory(Path.Combine(parentPath, string.IsNullOrEmpty(directoryName) ? Recording.Random.NewGuid().ToString() : directoryName)).FullName;
+        }
+
+        public async Task<string> CreateRandomFileAsync(string parentPath, string fileName = default, long size = 0)
+        {
+            using (FileStream fs = File.OpenWrite(Path.Combine(parentPath, string.IsNullOrEmpty(fileName) ? Recording.Random.NewGuid().ToString() : fileName)))
+            {
+                int bufferSize = Constants.MB;
+                byte[] data = new byte[bufferSize];
+                while (fs.Position + bufferSize < size)
+                {
+                    await fs.WriteAsync(GetRandomBuffer(bufferSize), 0, bufferSize);
+                }
+                if (fs.Position < size)
+                {
+                    await fs.WriteAsync(GetRandomBuffer(size - fs.Position), 0, (int)(size - fs.Position));
+                }
+                return fs.Name;
+            }
         }
     }
 }

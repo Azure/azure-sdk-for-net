@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,10 +22,12 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private AuthenticationRecord _record;
-        private readonly MsalConfidentialClient _client;
+        private bool _isCaeEnabledRequestCached = false;
+        private bool _isCaeDisabledRequestCached = false;
+        internal MsalConfidentialClient Client { get; }
         private readonly string _redirectUri;
         private readonly string _tenantId;
-        private readonly string[] _additionallyAllowedTenantIds;
+        internal readonly string[] AdditionallyAllowedTenantIds;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -87,7 +88,7 @@ namespace Azure.Identity
             Argument.AssertNotNull(clientId, nameof(clientId));
             Argument.AssertNotNull(authorizationCode, nameof(authorizationCode));
             _clientId = clientId;
-            _authCode = authorizationCode ;
+            _authCode = authorizationCode;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {
@@ -95,7 +96,7 @@ namespace Azure.Identity
                 _ => null
             };
 
-            _client = client ??
+            Client = client ??
                       new MsalConfidentialClient(
                           _pipeline,
                           tenantId,
@@ -104,7 +105,7 @@ namespace Azure.Identity
                           _redirectUri,
                           options);
 
-            _additionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -140,21 +141,35 @@ namespace Azure.Identity
             try
             {
                 AccessToken token;
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _additionallyAllowedTenantIds);
-
-                if (_record is null)
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
+                var isCachePopulated = _record switch
                 {
-                    AuthenticationResult result = await _client
-                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, async, cancellationToken)
+                    not null when requestContext.IsCaeEnabled && _isCaeEnabledRequestCached => true,
+                    not null when !requestContext.IsCaeEnabled && _isCaeDisabledRequestCached => true,
+                    _ => false
+                };
+
+                if (!isCachePopulated)
+                {
+                    AuthenticationResult result = await Client
+                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, requestContext.IsCaeEnabled, async, cancellationToken)
                         .ConfigureAwait(false);
                     _record = new AuthenticationRecord(result, _clientId);
+                    if (requestContext.IsCaeEnabled)
+                    {
+                        _isCaeEnabledRequestCached = true;
+                    }
+                    else
+                    {
+                        _isCaeDisabledRequestCached = true;
+                    }
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
                 else
                 {
-                    AuthenticationResult result = await _client
-                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, async, cancellationToken)
+                    AuthenticationResult result = await Client
+                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, requestContext.IsCaeEnabled, async, cancellationToken)
                         .ConfigureAwait(false);
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }

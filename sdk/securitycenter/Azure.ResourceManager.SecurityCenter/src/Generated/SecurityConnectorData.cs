@@ -14,7 +14,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityConnector data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityConnector data model.
+    /// The security connector resource.
+    /// </summary>
     public partial class SecurityConnectorData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SecurityConnectorData. </summary>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="location"> The location. </param>
         /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
         /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
-        /// <param name="environmentName"> The multi cloud resource&apos;s cloud name. </param>
+        /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
         /// <param name="offerings">
         /// A collection of offerings for the security connector.
         /// Please note <see cref="SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public string HierarchyIdentifier { get; set; }
         /// <summary> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </summary>
         public DateTimeOffset? HierarchyIdentifierTrialEndOn { get; }
-        /// <summary> The multi cloud resource&apos;s cloud name. </summary>
+        /// <summary> The multi cloud resource's cloud name. </summary>
         public SecurityCenterCloudName? EnvironmentName { get; set; }
         /// <summary>
         /// A collection of offerings for the security connector.

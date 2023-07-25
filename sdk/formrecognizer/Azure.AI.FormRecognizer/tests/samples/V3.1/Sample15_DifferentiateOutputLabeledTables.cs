@@ -11,7 +11,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
         /// This sample demonstrates the differences in output that arise when BeginRecognizeCustomForms
         /// is called with custom models trained with fixed vs. dynamic table tags.
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.TableFixedRowsContainerSasUrlV2;
+            string trainingFileUrl = TestEnvironment.TableFixedRowsContainerSasUrl;
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("label_table_fixed_rows1.pdf");
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.TableDynamicRowsContainerSasUrlV2;
+            string trainingFileUrl = TestEnvironment.TableDynamicRowsContainerSasUrl;
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("label_table_dynamic_rows1.pdf");
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));

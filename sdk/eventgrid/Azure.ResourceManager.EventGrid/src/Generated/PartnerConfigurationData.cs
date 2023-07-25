@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the PartnerConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the PartnerConfiguration data model.
+    /// Partner configuration information
+    /// </summary>
     public partial class PartnerConfigurationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PartnerConfigurationData. </summary>

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,12 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RejectType))
             {
-                writer.WritePropertyName("rejectType");
+                writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
             if (Optional.IsDefined(RejectValue))
             {
-                writer.WritePropertyName("rejectValue");
+                writer.WritePropertyName("rejectValue"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RejectValue);
 #else
@@ -33,21 +34,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(RejectSampleValue))
             {
-                writer.WritePropertyName("rejectSampleValue");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RejectSampleValue);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RejectSampleValue.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("rejectSampleValue"u8);
+                JsonSerializer.Serialize(writer, RejectSampleValue);
             }
             if (Optional.IsDefined(UseTypeDefault))
             {
-                writer.WritePropertyName("useTypeDefault");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UseTypeDefault);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseTypeDefault.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("useTypeDefault"u8);
+                JsonSerializer.Serialize(writer, UseTypeDefault);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -63,52 +56,52 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PolybaseSettings DeserializePolybaseSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolybaseSettingsRejectType> rejectType = default;
             Optional<BinaryData> rejectValue = default;
-            Optional<BinaryData> rejectSampleValue = default;
-            Optional<BinaryData> useTypeDefault = default;
+            Optional<DataFactoryElement<int>> rejectSampleValue = default;
+            Optional<DataFactoryElement<bool>> useTypeDefault = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rejectType"))
+                if (property.NameEquals("rejectType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rejectType = new PolybaseSettingsRejectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rejectValue"))
+                if (property.NameEquals("rejectValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rejectValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("rejectSampleValue"))
+                if (property.NameEquals("rejectSampleValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rejectSampleValue = BinaryData.FromString(property.Value.GetRawText());
+                    rejectSampleValue = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("useTypeDefault"))
+                if (property.NameEquals("useTypeDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    useTypeDefault = BinaryData.FromString(property.Value.GetRawText());
+                    useTypeDefault = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

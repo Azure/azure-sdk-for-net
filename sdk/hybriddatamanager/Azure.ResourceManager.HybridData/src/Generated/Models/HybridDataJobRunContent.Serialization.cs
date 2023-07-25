@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridData.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UserConfirmation))
             {
-                writer.WritePropertyName("userConfirmation");
+                writer.WritePropertyName("userConfirmation"u8);
                 writer.WriteStringValue(UserConfirmation.Value.ToSerialString());
             }
             if (Optional.IsDefined(DataServiceInput))
             {
-                writer.WritePropertyName("dataServiceInput");
+                writer.WritePropertyName("dataServiceInput"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DataServiceInput);
 #else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridData.Models
             }
             if (Optional.IsCollectionDefined(CustomerSecrets))
             {
-                writer.WritePropertyName("customerSecrets");
+                writer.WritePropertyName("customerSecrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomerSecrets)
                 {

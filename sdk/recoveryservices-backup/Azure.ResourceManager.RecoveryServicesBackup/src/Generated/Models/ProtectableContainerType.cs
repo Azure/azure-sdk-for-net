@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> VMAppContainer. </summary>
         VmAppContainer,
         /// <summary> SQLAGWorkLoadContainer. </summary>
-        SqlAGWorkLoadContainer,
+        SqlAvailabilityGroupWorkLoadContainer,
         /// <summary> StorageContainer. </summary>
         StorageContainer,
         /// <summary> GenericContainer. </summary>

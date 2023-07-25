@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
-                writer.WritePropertyName("ipConfigurations");
+                writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
@@ -58,8 +58,43 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(DnsName))
             {
-                writer.WritePropertyName("dnsName");
+                writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
+            }
+            if (Optional.IsDefined(ScaleUnits))
+            {
+                writer.WritePropertyName("scaleUnits"u8);
+                writer.WriteNumberValue(ScaleUnits.Value);
+            }
+            if (Optional.IsDefined(DisableCopyPaste))
+            {
+                writer.WritePropertyName("disableCopyPaste"u8);
+                writer.WriteBooleanValue(DisableCopyPaste.Value);
+            }
+            if (Optional.IsDefined(EnableFileCopy))
+            {
+                writer.WritePropertyName("enableFileCopy"u8);
+                writer.WriteBooleanValue(EnableFileCopy.Value);
+            }
+            if (Optional.IsDefined(EnableIPConnect))
+            {
+                writer.WritePropertyName("enableIpConnect"u8);
+                writer.WriteBooleanValue(EnableIPConnect.Value);
+            }
+            if (Optional.IsDefined(EnableShareableLink))
+            {
+                writer.WritePropertyName("enableShareableLink"u8);
+                writer.WriteBooleanValue(EnableShareableLink.Value);
+            }
+            if (Optional.IsDefined(EnableTunneling))
+            {
+                writer.WritePropertyName("enableTunneling"u8);
+                writer.WriteBooleanValue(EnableTunneling.Value);
+            }
+            if (Optional.IsDefined(EnableKerberos))
+            {
+                writer.WritePropertyName("enableKerberos"u8);
+                writer.WriteBooleanValue(EnableKerberos.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -67,6 +102,10 @@ namespace Azure.ResourceManager.Network
 
         internal static BastionHostData DeserializeBastionHostData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<NetworkSku> sku = default;
             Optional<ResourceIdentifier> id = default;
@@ -77,68 +116,69 @@ namespace Azure.ResourceManager.Network
             Optional<IList<BastionHostIPConfiguration>> ipConfigurations = default;
             Optional<string> dnsName = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<int> scaleUnits = default;
+            Optional<bool> disableCopyPaste = default;
+            Optional<bool> enableFileCopy = default;
+            Optional<bool> enableIPConnect = default;
+            Optional<bool> enableShareableLink = default;
+            Optional<bool> enableTunneling = default;
+            Optional<bool> enableKerberos = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = NetworkSku.DeserializeNetworkSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -149,7 +189,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,11 +198,10 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("ipConfigurations"))
+                        if (property0.NameEquals("ipConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BastionHostIPConfiguration> array = new List<BastionHostIPConfiguration>();
@@ -173,26 +212,88 @@ namespace Azure.ResourceManager.Network
                             ipConfigurations = array;
                             continue;
                         }
-                        if (property0.NameEquals("dnsName"))
+                        if (property0.NameEquals("dnsName"u8))
                         {
                             dnsName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("scaleUnits"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scaleUnits = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("disableCopyPaste"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableCopyPaste = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableFileCopy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableFileCopy = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableIpConnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableIPConnect = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableShareableLink"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableShareableLink = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableTunneling"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableTunneling = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableKerberos"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableKerberos = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState));
+            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos));
         }
     }
 }

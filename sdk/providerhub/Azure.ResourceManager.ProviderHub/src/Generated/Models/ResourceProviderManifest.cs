@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
             RequiredFeatures = new ChangeTrackingList<string>();
-            ResourceTypes = new ChangeTrackingList<ResourceType>();
+            ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
             Capabilities = new ChangeTrackingList<ResourceProviderCapabilities>();
             GlobalNotificationEndpoints = new ChangeTrackingList<ResourceProviderEndpoint>();
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="metadata"> Anything. </param>
         /// <param name="globalNotificationEndpoints"></param>
         /// <param name="reRegisterSubscriptionMetadata"></param>
-        internal ResourceProviderManifest(ResourceProviderManifestProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, ResourceProviderManifestFeaturesRule featuresRule, ResourceProviderManifestRequestHeaderOptions requestHeaderOptions, IReadOnlyList<ResourceType> resourceTypes, ResourceProviderManifestManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ResourceProviderManifestReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata)
+        internal ResourceProviderManifest(ResourceProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, IReadOnlyList<ProviderResourceType> resourceTypes, ResourceProviderManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Gets the provider authentication. </summary>
-        internal ResourceProviderManifestProviderAuthentication ProviderAuthentication { get; }
-        /// <summary> Gets the allowed audiences. </summary>
+        internal ResourceProviderAuthentication ProviderAuthentication { get; }
+        /// <summary> Gets the provider authentication allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication?.AllowedAudiences;
@@ -76,25 +76,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets the required features. </summary>
         public IReadOnlyList<string> RequiredFeatures { get; }
         /// <summary> Gets the features rule. </summary>
-        internal ResourceProviderManifestFeaturesRule FeaturesRule { get; }
-        /// <summary> Gets or sets the required features policy. </summary>
+        internal FeaturesRule FeaturesRule { get; }
+        /// <summary> Gets the required features policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule?.RequiredFeaturesPolicy;
         }
 
         /// <summary> Gets the request header options. </summary>
-        internal ResourceProviderManifestRequestHeaderOptions RequestHeaderOptions { get; }
-        /// <summary> Gets or sets the opt in headers. </summary>
+        internal RequestHeaderOptions RequestHeaderOptions { get; }
+        /// <summary> Gets the opt in headers. </summary>
         public OptInHeaderType? OptInHeaders
         {
             get => RequestHeaderOptions?.OptInHeaders;
         }
 
         /// <summary> Gets the resource types. </summary>
-        public IReadOnlyList<ResourceType> ResourceTypes { get; }
+        public IReadOnlyList<ProviderResourceType> ResourceTypes { get; }
         /// <summary> Gets the management. </summary>
-        public ResourceProviderManifestManagement Management { get; }
+        public ResourceProviderManagement Management { get; }
         /// <summary> Gets the capabilities. </summary>
         public IReadOnlyList<ResourceProviderCapabilities> Capabilities { get; }
         /// <summary>
@@ -131,6 +131,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets the global notification endpoints. </summary>
         public IReadOnlyList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
         /// <summary> Gets the re register subscription metadata. </summary>
-        public ResourceProviderManifestReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata { get; }
+        public ReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata { get; }
     }
 }

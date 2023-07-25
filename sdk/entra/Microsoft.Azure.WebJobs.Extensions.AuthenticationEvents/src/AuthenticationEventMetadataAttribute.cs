@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// This with be the base response Json template file located in the event folder</summary>
         /// <value>The response template.</value>
         internal string ResponseTemplate { get; set; }
-        /// <summary>Gets or sets the EventIdentifer.</summary>
+        /// <summary>Gets or sets the EventIdentifier.</summary>
         /// <value>The Event Identifier.</value>
         internal string EventIdentifier { get; set; }
 

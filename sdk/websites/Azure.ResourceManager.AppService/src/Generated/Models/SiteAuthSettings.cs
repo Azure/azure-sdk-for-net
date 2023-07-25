@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="defaultProvider">
         /// The default authentication provider to use when multiple providers are configured.
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
-        /// action is set to &quot;RedirectToLoginPage&quot;.
+        /// action is set to "RedirectToLoginPage".
         /// </param>
         /// <param name="tokenRefreshExtensionHours">
         /// The number of hours after session token expiration that a session token can be used to
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="clientId">
         /// The Client ID of this relying party application, known as the client_id.
-        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or 
+        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </param>
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </param>
         /// <param name="clientSecretSettingName"> The app setting name that contains the client secret of the relying party application. </param>
-        /// <param name="clientSecretCertificateThumbprint">
+        /// <param name="clientSecretCertificateThumbprintString">
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
         /// </param>
@@ -81,13 +80,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="validateIssuer"> Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such. </param>
         /// <param name="allowedAudiences">
-        /// Allowed audience values to consider when validating JWTs issued by 
+        /// Allowed audience values to consider when validating JWTs issued by
         /// Azure Active Directory. Note that the &lt;code&gt;ClientID&lt;/code&gt; value is always considered an
         /// allowed audience, regardless of this setting.
         /// </param>
         /// <param name="additionalLoginParams">
         /// Login parameters to send to the OpenID Connect authorization endpoint when
-        /// a user logs in. Each parameter must be in the form &quot;key=value&quot;.
+        /// a user logs in. Each parameter must be in the form "key=value".
         /// </param>
         /// <param name="aadClaimsAuthorization"> Gets a JSON string containing the Azure AD Acl settings. </param>
         /// <param name="googleClientId">
@@ -101,12 +100,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
         /// </param>
         /// <param name="googleClientSecretSettingName">
-        /// The app setting name that contains the client secret associated with 
+        /// The app setting name that contains the client secret associated with
         /// the Google web application.
         /// </param>
         /// <param name="googleOAuthScopes">
         /// The OAuth 2.0 scopes that will be requested as part of Google Sign-In authentication.
-        /// This setting is optional. If not specified, &quot;openid&quot;, &quot;profile&quot;, and &quot;email&quot; are used as default scopes.
+        /// This setting is optional. If not specified, "openid", "profile", and "email" are used as default scopes.
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
         /// </param>
         /// <param name="facebookAppId">
@@ -171,23 +170,23 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="microsoftAccountOAuthScopes">
         /// The OAuth 2.0 scopes that will be requested as part of Microsoft Account authentication.
-        /// This setting is optional. If not specified, &quot;wl.basic&quot; is used as the default scope.
+        /// This setting is optional. If not specified, "wl.basic" is used as the default scope.
         /// Microsoft Account Scopes and permissions documentation: https://msdn.microsoft.com/en-us/library/dn631845.aspx
         /// </param>
         /// <param name="isAuthFromFile">
-        /// &quot;true&quot; if the auth config settings should be read from a file,
-        /// &quot;false&quot; otherwise
+        /// "true" if the auth config settings should be read from a file,
+        /// "false" otherwise
         /// </param>
         /// <param name="authFilePath">
         /// The path of the config file containing auth settings.
-        /// If the path is relative, base will the site&apos;s root directory.
+        /// If the path is relative, base will the site's root directory.
         /// </param>
         /// <param name="configVersion">
         /// The ConfigVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of the control plane for Authentication / Authorization.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteAuthSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? isTokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, BinaryData clientSecretCertificateThumbprint, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion, string kind) : base(id, name, resourceType, systemData)
+        internal SiteAuthSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? isTokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, string clientSecretCertificateThumbprintString, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion, string kind) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
             RuntimeVersion = runtimeVersion;
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.AppService.Models
             ClientId = clientId;
             ClientSecret = clientSecret;
             ClientSecretSettingName = clientSecretSettingName;
-            ClientSecretCertificateThumbprint = clientSecretCertificateThumbprint;
+            ClientSecretCertificateThumbprintString = clientSecretCertificateThumbprintString;
             Issuer = issuer;
             ValidateIssuer = validateIssuer;
             AllowedAudiences = allowedAudiences;
@@ -253,7 +252,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// The default authentication provider to use when multiple providers are configured.
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
-        /// action is set to &quot;RedirectToLoginPage&quot;.
+        /// action is set to "RedirectToLoginPage".
         /// </summary>
         public BuiltInAuthenticationProvider? DefaultProvider { get; set; }
         /// <summary>
@@ -263,7 +262,7 @@ namespace Azure.ResourceManager.AppService.Models
         public double? TokenRefreshExtensionHours { get; set; }
         /// <summary>
         /// The Client ID of this relying party application, known as the client_id.
-        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or 
+        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </summary>
@@ -280,35 +279,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
         /// </summary>
-        public BinaryData ClientSecretCertificateThumbprint { get; set; }
+        public string ClientSecretCertificateThumbprintString { get; set; }
         /// <summary>
         /// The OpenID Connect Issuer URI that represents the entity which issues access tokens for this application.
         /// When using Azure Active Directory, this value is the URI of the directory tenant, e.g. https://sts.windows.net/{tenant-guid}/.
@@ -319,14 +291,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such. </summary>
         public bool? ValidateIssuer { get; set; }
         /// <summary>
-        /// Allowed audience values to consider when validating JWTs issued by 
+        /// Allowed audience values to consider when validating JWTs issued by
         /// Azure Active Directory. Note that the &lt;code&gt;ClientID&lt;/code&gt; value is always considered an
         /// allowed audience, regardless of this setting.
         /// </summary>
         public IList<string> AllowedAudiences { get; }
         /// <summary>
         /// Login parameters to send to the OpenID Connect authorization endpoint when
-        /// a user logs in. Each parameter must be in the form &quot;key=value&quot;.
+        /// a user logs in. Each parameter must be in the form "key=value".
         /// </summary>
         public IList<string> AdditionalLoginParams { get; }
         /// <summary> Gets a JSON string containing the Azure AD Acl settings. </summary>
@@ -344,13 +316,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public string GoogleClientSecret { get; set; }
         /// <summary>
-        /// The app setting name that contains the client secret associated with 
+        /// The app setting name that contains the client secret associated with
         /// the Google web application.
         /// </summary>
         public string GoogleClientSecretSettingName { get; set; }
         /// <summary>
         /// The OAuth 2.0 scopes that will be requested as part of Google Sign-In authentication.
-        /// This setting is optional. If not specified, &quot;openid&quot;, &quot;profile&quot;, and &quot;email&quot; are used as default scopes.
+        /// This setting is optional. If not specified, "openid", "profile", and "email" are used as default scopes.
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
         /// </summary>
         public IList<string> GoogleOAuthScopes { get; }
@@ -430,18 +402,18 @@ namespace Azure.ResourceManager.AppService.Models
         public string MicrosoftAccountClientSecretSettingName { get; set; }
         /// <summary>
         /// The OAuth 2.0 scopes that will be requested as part of Microsoft Account authentication.
-        /// This setting is optional. If not specified, &quot;wl.basic&quot; is used as the default scope.
+        /// This setting is optional. If not specified, "wl.basic" is used as the default scope.
         /// Microsoft Account Scopes and permissions documentation: https://msdn.microsoft.com/en-us/library/dn631845.aspx
         /// </summary>
         public IList<string> MicrosoftAccountOAuthScopes { get; }
         /// <summary>
-        /// &quot;true&quot; if the auth config settings should be read from a file,
-        /// &quot;false&quot; otherwise
+        /// "true" if the auth config settings should be read from a file,
+        /// "false" otherwise
         /// </summary>
         public string IsAuthFromFile { get; set; }
         /// <summary>
         /// The path of the config file containing auth settings.
-        /// If the path is relative, base will the site&apos;s root directory.
+        /// If the path is relative, base will the site's root directory.
         /// </summary>
         public string AuthFilePath { get; set; }
         /// <summary>

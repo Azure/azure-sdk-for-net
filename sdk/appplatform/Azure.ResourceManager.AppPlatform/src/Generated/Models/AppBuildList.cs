@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppBuildList. </summary>
         internal AppBuildList()
         {
-            Value = new ChangeTrackingList<AppBuildData>();
+            Value = new ChangeTrackingList<AppPlatformBuildData>();
         }
 
         /// <summary> Initializes a new instance of AppBuildList. </summary>
         /// <param name="value"> Collection of Build resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
-        internal AppBuildList(IReadOnlyList<AppBuildData> value, string nextLink)
+        internal AppBuildList(IReadOnlyList<AppPlatformBuildData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of Build resources. </summary>
-        public IReadOnlyList<AppBuildData> Value { get; }
+        public IReadOnlyList<AppPlatformBuildData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

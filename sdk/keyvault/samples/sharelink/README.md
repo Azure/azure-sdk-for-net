@@ -15,9 +15,9 @@ extendedZipContent:
 
 # Shared
 - path: /sdk/core/Azure.Core/src/Shared/AuthorizationChallengeParser.cs
-  target: /Shared/AuthorizationChallengeParser.cs
+  target: /Shared/Core/AuthorizationChallengeParser.cs
 - path: /sdk/keyvault/Azure.Security.KeyVault.Shared/src/ChallengeBasedAuthenticationPolicy.cs
-  target: /Shared/ChallengeBasedAuthenticationPolicy.cs
+  target: /Shared/KeyVault/ChallengeBasedAuthenticationPolicy.cs
 ---
 
 # Share links to Storage objects using Azure Key Vault-managed storage accounts
@@ -85,10 +85,11 @@ dotnet build /t:CopySource /p:Destination=<ProjectDirectory>
 
 The sample project file and _Program.cs_ are not copied automatically. Only the source necessary to build the REST client is copied. You are welcome to copy and modify the rest of the sample source as needed.
 
-You also need to add a reference to Azure.Core in your project. In your project directory where you just copied source run:
+You also need to add references to Azure.Core and Microsoft.Azure.AutoRest.CSharp in your project. In your project directory where you just copied source run:
 
 ```dotnetcli
 dotnet add package Azure.Core
+dotnet add package Microsoft.Azure.AutoRest.CSharp --prerelease
 ```
 
 ## Using the sample

@@ -17,29 +17,29 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Profile))
             {
-                writer.WritePropertyName("profile");
+                writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
             if (Optional.IsDefined(Channels))
             {
-                writer.WritePropertyName("channels");
+                writer.WritePropertyName("channels"u8);
                 writer.WriteNumberValue(Channels.Value);
             }
             if (Optional.IsDefined(SamplingRate))
             {
-                writer.WritePropertyName("samplingRate");
+                writer.WritePropertyName("samplingRate"u8);
                 writer.WriteNumberValue(SamplingRate.Value);
             }
             if (Optional.IsDefined(Bitrate))
             {
-                writer.WritePropertyName("bitrate");
+                writer.WritePropertyName("bitrate"u8);
                 writer.WriteNumberValue(Bitrate.Value);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             writer.WriteEndObject();
@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AacAudio DeserializeAacAudio(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AacAudioProfile> profile = default;
             Optional<int> channels = default;
             Optional<int> samplingRate = default;
@@ -55,52 +59,48 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profile"))
+                if (property.NameEquals("profile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     profile = new AacAudioProfile(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("channels"))
+                if (property.NameEquals("channels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     channels = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("samplingRate"))
+                if (property.NameEquals("samplingRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     samplingRate = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitrate = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of ExtensionsList. </summary>
         internal ExtensionsList()
         {
-            Value = new ChangeTrackingList<ExtensionData>();
+            Value = new ChangeTrackingList<KubernetesClusterExtensionData>();
         }
 
         /// <summary> Initializes a new instance of ExtensionsList. </summary>
         /// <param name="value"> List of Extensions within a Kubernetes cluster. </param>
         /// <param name="nextLink"> URL to get the next set of extension objects, if any. </param>
-        internal ExtensionsList(IReadOnlyList<ExtensionData> value, string nextLink)
+        internal ExtensionsList(IReadOnlyList<KubernetesClusterExtensionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Extensions within a Kubernetes cluster. </summary>
-        public IReadOnlyList<ExtensionData> Value { get; }
+        public IReadOnlyList<KubernetesClusterExtensionData> Value { get; }
         /// <summary> URL to get the next set of extension objects, if any. </summary>
         public string NextLink { get; }
     }

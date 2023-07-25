@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A class representing the AppConfigurationStore data model. </summary>
+    /// <summary>
+    /// A class representing the AppConfigurationStore data model.
+    /// The configuration store along with all resource properties. The Configuration Store will have all information to begin utilizing it.
+    /// </summary>
     public partial class AppConfigurationStoreData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppConfigurationStoreData. </summary>

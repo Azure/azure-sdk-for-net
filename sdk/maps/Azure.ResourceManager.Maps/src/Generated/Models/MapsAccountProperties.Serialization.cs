@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -18,12 +19,12 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisableLocalAuth))
             {
-                writer.WritePropertyName("disableLocalAuth");
+                writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
             if (Optional.IsCollectionDefined(LinkedResources))
             {
-                writer.WritePropertyName("linkedResources");
+                writer.WritePropertyName("linkedResources"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkedResources)
                 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
             if (Optional.IsDefined(Cors))
             {
-                writer.WritePropertyName("cors");
+                writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
             }
             writer.WriteEndObject();
@@ -41,60 +42,65 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static MapsAccountProperties DeserializeMapsAccountProperties(JsonElement element)
         {
-            Optional<string> uniqueId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Guid> uniqueId = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> provisioningState = default;
-            Optional<IList<LinkedResource>> linkedResources = default;
+            Optional<IList<MapsLinkedResource>> linkedResources = default;
             Optional<CorsRules> cors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uniqueId"))
-                {
-                    uniqueId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("disableLocalAuth"))
+                if (property.NameEquals("uniqueId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    uniqueId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("disableLocalAuth"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     disableLocalAuth = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkedResources"))
+                if (property.NameEquals("linkedResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LinkedResource> array = new List<LinkedResource>();
+                    List<MapsLinkedResource> array = new List<MapsLinkedResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedResource.DeserializeLinkedResource(item));
+                        array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item));
                     }
                     linkedResources = array;
                     continue;
                 }
-                if (property.NameEquals("cors"))
+                if (property.NameEquals("cors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cors = CorsRules.DeserializeCorsRules(property.Value);
                     continue;
                 }
             }
-            return new MapsAccountProperties(uniqueId.Value, Optional.ToNullable(disableLocalAuth), provisioningState.Value, Optional.ToList(linkedResources), cors.Value);
+            return new MapsAccountProperties(Optional.ToNullable(uniqueId), Optional.ToNullable(disableLocalAuth), provisioningState.Value, Optional.ToList(linkedResources), cors.Value);
         }
     }
 }

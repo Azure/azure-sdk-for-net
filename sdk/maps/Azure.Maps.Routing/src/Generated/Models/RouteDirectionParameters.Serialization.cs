@@ -17,12 +17,12 @@ namespace Azure.Maps.Routing
             writer.WriteStartObject();
             if (Optional.IsDefined(_GeoJsonSupportingPoints))
             {
-                writer.WritePropertyName("supportingPoints");
+                writer.WritePropertyName("supportingPoints"u8);
                 writer.WriteObjectValue(_GeoJsonSupportingPoints);
             }
             if (Optional.IsCollectionDefined(AvoidVignette))
             {
-                writer.WritePropertyName("avoidVignette");
+                writer.WritePropertyName("avoidVignette"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvoidVignette)
                 {
@@ -32,7 +32,7 @@ namespace Azure.Maps.Routing
             }
             if (Optional.IsCollectionDefined(AllowVignette))
             {
-                writer.WritePropertyName("allowVignette");
+                writer.WritePropertyName("allowVignette"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowVignette)
                 {
@@ -42,7 +42,7 @@ namespace Azure.Maps.Routing
             }
             if (Optional.IsDefined(_GeoJsonAvoidAreas))
             {
-                writer.WritePropertyName("avoidAreas");
+                writer.WritePropertyName("avoidAreas"u8);
                 writer.WriteObjectValue(_GeoJsonAvoidAreas);
             }
             writer.WriteEndObject();

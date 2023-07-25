@@ -16,20 +16,20 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("metricId");
+            writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
-            writer.WritePropertyName("wholeMetricConfiguration");
+            writer.WritePropertyName("wholeMetricConfiguration"u8);
             writer.WriteObjectValue(WholeSeriesDetectionConditions);
             if (Optional.IsCollectionDefined(SeriesGroupDetectionConditions))
             {
-                writer.WritePropertyName("dimensionGroupOverrideConfigurations");
+                writer.WritePropertyName("dimensionGroupOverrideConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in SeriesGroupDetectionConditions)
                 {
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Optional.IsCollectionDefined(SeriesDetectionConditions))
             {
-                writer.WritePropertyName("seriesOverrideConfigurations");
+                writer.WritePropertyName("seriesOverrideConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in SeriesDetectionConditions)
                 {
@@ -52,6 +52,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AnomalyDetectionConfiguration DeserializeAnomalyDetectionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> anomalyDetectionConfigurationId = default;
             string name = default;
             Optional<string> description = default;
@@ -61,36 +65,35 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<IList<MetricSingleSeriesDetectionCondition>> seriesOverrideConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("anomalyDetectionConfigurationId"))
+                if (property.NameEquals("anomalyDetectionConfigurationId"u8))
                 {
                     anomalyDetectionConfigurationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricId"))
+                if (property.NameEquals("metricId"u8))
                 {
                     metricId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("wholeMetricConfiguration"))
+                if (property.NameEquals("wholeMetricConfiguration"u8))
                 {
                     wholeMetricConfiguration = MetricWholeSeriesDetectionCondition.DeserializeMetricWholeSeriesDetectionCondition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dimensionGroupOverrideConfigurations"))
+                if (property.NameEquals("dimensionGroupOverrideConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricSeriesGroupDetectionCondition> array = new List<MetricSeriesGroupDetectionCondition>();
@@ -101,11 +104,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                     dimensionGroupOverrideConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("seriesOverrideConfigurations"))
+                if (property.NameEquals("seriesOverrideConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricSingleSeriesDetectionCondition> array = new List<MetricSingleSeriesDetectionCondition>();

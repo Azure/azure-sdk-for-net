@@ -89,10 +89,18 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Get artifact.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}
-        /// Operation Id: Artifacts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=title)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevTestLabArtifactResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -114,10 +122,18 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Get artifact.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}
-        /// Operation Id: Artifacts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=title)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevTestLabArtifactResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -139,8 +155,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Generates an ARM template for the given artifact, uploads the required files to a storage account, and validates the generated artifact.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}/generateArmTemplate
-        /// Operation Id: Artifacts_GenerateArmTemplate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}/generateArmTemplate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_GenerateArmTemplate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Parameters for generating an ARM template for deploying artifacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,8 +189,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// Generates an ARM template for the given artifact, uploads the required files to a storage account, and validates the generated artifact.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}/generateArmTemplate
-        /// Operation Id: Artifacts_GenerateArmTemplate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}/generateArmTemplate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Artifacts_GenerateArmTemplate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Parameters for generating an ARM template for deploying artifacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of FluxConfigurationsList. </summary>
         internal FluxConfigurationsList()
         {
-            Value = new ChangeTrackingList<FluxConfigurationData>();
+            Value = new ChangeTrackingList<KubernetesFluxConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of FluxConfigurationsList. </summary>
         /// <param name="value"> List of Flux Configurations within a Kubernetes cluster. </param>
         /// <param name="nextLink"> URL to get the next set of configuration objects, if any. </param>
-        internal FluxConfigurationsList(IReadOnlyList<FluxConfigurationData> value, string nextLink)
+        internal FluxConfigurationsList(IReadOnlyList<KubernetesFluxConfigurationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Flux Configurations within a Kubernetes cluster. </summary>
-        public IReadOnlyList<FluxConfigurationData> Value { get; }
+        public IReadOnlyList<KubernetesFluxConfigurationData> Value { get; }
         /// <summary> URL to get the next set of configuration objects, if any. </summary>
         public string NextLink { get; }
     }

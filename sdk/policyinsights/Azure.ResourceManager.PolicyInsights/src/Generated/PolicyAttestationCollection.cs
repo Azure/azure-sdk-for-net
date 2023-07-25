@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -46,8 +45,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Creates or updates an attestation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-        /// Operation Id: Attestations_CreateOrUpdateAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Attestations_CreateOrUpdateAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="attestationName"> The name of the attestation. </param>
@@ -79,8 +86,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Creates or updates an attestation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-        /// Operation Id: Attestations_CreateOrUpdateAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Attestations_CreateOrUpdateAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="attestationName"> The name of the attestation. </param>
@@ -112,8 +127,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Gets an existing attestation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-        /// Operation Id: Attestations_GetAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Attestations_GetAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,8 +164,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Gets an existing attestation at resource scope.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-        /// Operation Id: Attestations_GetAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Attestations_GetAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,94 +201,62 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Gets all attestations for a resource.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations
-        /// Operation Id: Attestations_ListForResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Attestations_ListForResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyAttestationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PolicyAttestationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _policyAttestationAttestationsRestClient.ListForResourceAsync(Id, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PolicyAttestationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _policyAttestationAttestationsRestClient.ListForResourceNextPageAsync(nextLink, Id, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAttestationAttestationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all attestations for a resource.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations
-        /// Operation Id: Attestations_ListForResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Attestations_ListForResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyAttestationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<PolicyAttestationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _policyAttestationAttestationsRestClient.ListForResource(Id, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PolicyAttestationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _policyAttestationAttestationsRestClient.ListForResourceNextPage(nextLink, Id, policyQuerySettings, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAttestationAttestationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-        /// Operation Id: Attestations_GetAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Attestations_GetAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -283,8 +282,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}
-        /// Operation Id: Attestations_GetAtResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Attestations_GetAtResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

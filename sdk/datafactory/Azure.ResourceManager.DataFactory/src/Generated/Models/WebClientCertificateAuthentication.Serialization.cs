@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,45 +16,43 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("pfx");
-            writer.WriteObjectValue(Pfx);
-            writer.WritePropertyName("password");
-            writer.WriteObjectValue(Password);
-            writer.WritePropertyName("url");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Uri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
-#endif
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("pfx"u8);
+            JsonSerializer.Serialize(writer, Pfx); writer.WritePropertyName("password"u8);
+            JsonSerializer.Serialize(writer, Password); writer.WritePropertyName("url"u8);
+            JsonSerializer.Serialize(writer, Uri);
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static WebClientCertificateAuthentication DeserializeWebClientCertificateAuthentication(JsonElement element)
         {
-            FactorySecretBaseDefinition pfx = default;
-            FactorySecretBaseDefinition password = default;
-            BinaryData url = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactorySecretBaseDefinition pfx = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<string> url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pfx"))
+                if (property.NameEquals("pfx"u8))
                 {
-                    pfx = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    pfx = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
-                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
-                    url = BinaryData.FromString(property.Value.GetRawText());
+                    url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = new WebAuthenticationType(property.Value.GetString());
                     continue;

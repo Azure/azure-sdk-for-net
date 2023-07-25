@@ -1,36 +1,12 @@
 trigger: none
 
-resources:
-  containers:
-    - container: 'ubuntu_netcore_keyring'
-      # See ./eng/containers/UbuntuNetCoreKeyring/Dockerfile for tool versions
-      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:1347171'
-      endpoint: 'azsdkengsys'
-      options: -ti --cap-add=IPC_LOCK
-
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     TimeoutInMinutes: 120
-    AdditionalMatrixConfigs:
-      - Name: identity_container
-        Path: sdk/identity/platform-matrix.json
-        Selection: sparse
-        GenerateContainerJobs: true
     ServiceDirectory: identity
     SupportedClouds: 'Public,UsGov,China,Canary'
     PreSteps:
-      - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
-        displayName: Install Azure PowerShell module
-        condition: and(succeededOrFailed(), startsWith(variables['Agent.JobName'], 'ubuntu_keyring_container'))
-      - script: |
-          set -x
-          export $(dbus-launch)
-          gnome-keyring-daemon --start --daemonize --components=secrets
-          echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_ADDRESS]$DBUS_SESSION_BUS_ADDRESS"
-          echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_PID]$DBUS_SESSION_BUS_PID"
-          echo "##vso[task.setvariable variable=GNOME_KEYRING_CONTROL]$GNOME_KEYRING_CONTROL"
-        condition: and(succeededOrFailed(), startsWith(variables['Agent.JobName'], 'ubuntu_keyring_container'))
       - pwsh: |
           [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
           Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS

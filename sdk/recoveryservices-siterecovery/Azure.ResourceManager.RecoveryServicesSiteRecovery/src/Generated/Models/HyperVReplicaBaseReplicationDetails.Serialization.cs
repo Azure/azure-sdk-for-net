@@ -16,31 +16,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HyperVReplicaBaseReplicationDetails DeserializeHyperVReplicaBaseReplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastReplicatedTime = default;
             Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
             Optional<string> vmId = default;
             Optional<string> vmProtectionState = default;
             Optional<string> vmProtectionStateDescription = default;
             Optional<InitialReplicationDetails> initialReplicationDetails = default;
-            Optional<IReadOnlyList<DiskDetails>> vmDiskDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> vmDiskDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastReplicatedTime"))
+                if (property.NameEquals("lastReplicatedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastReplicatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("vmNics"))
+                if (property.NameEquals("vmNics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VmNicDetails> array = new List<VmNicDetails>();
@@ -51,47 +53,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     vmNics = array;
                     continue;
                 }
-                if (property.NameEquals("vmId"))
+                if (property.NameEquals("vmId"u8))
                 {
                     vmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionState"))
+                if (property.NameEquals("vmProtectionState"u8))
                 {
                     vmProtectionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionStateDescription"))
+                if (property.NameEquals("vmProtectionStateDescription"u8))
                 {
                     vmProtectionStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialReplicationDetails"))
+                if (property.NameEquals("initialReplicationDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vMDiskDetails"))
+                if (property.NameEquals("vMDiskDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DiskDetails> array = new List<DiskDetails>();
+                    List<SiteRecoveryDiskDetails> array = new List<SiteRecoveryDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskDetails.DeserializeDiskDetails(item));
+                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item));
                     }
                     vmDiskDetails = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

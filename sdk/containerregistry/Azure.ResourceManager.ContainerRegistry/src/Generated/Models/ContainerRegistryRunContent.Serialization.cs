@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
             if (Optional.IsDefined(IsArchiveEnabled))
             {
-                writer.WritePropertyName("isArchiveEnabled");
+                writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
-                writer.WritePropertyName("agentPoolName");
+                writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
             if (Optional.IsDefined(LogTemplate))
             {
-                writer.WritePropertyName("logTemplate");
+                writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
             }
             writer.WriteEndObject();
@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryRunContent DeserializeContainerRegistryRunContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

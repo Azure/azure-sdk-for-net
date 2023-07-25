@@ -16,6 +16,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static ParticipantsUpdatedInternal DeserializeParticipantsUpdatedInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventSource = default;
             Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
             Optional<string> version = default;
@@ -27,16 +31,15 @@ namespace Azure.Communication.CallingServer
             Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventSource"))
+                if (property.NameEquals("eventSource"u8))
                 {
                     eventSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("participants"))
+                if (property.NameEquals("participants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
@@ -47,42 +50,41 @@ namespace Azure.Communication.CallingServer
                     participants = array;
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationContext"))
+                if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultInformation"))
+                if (property.NameEquals("resultInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("callConnectionId"))
+                if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCallId"))
+                if (property.NameEquals("serverCallId"u8))
                 {
                     serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicEventType"))
+                if (property.NameEquals("publicEventType"u8))
                 {
                     publicEventType = property.Value.GetString();
                     continue;

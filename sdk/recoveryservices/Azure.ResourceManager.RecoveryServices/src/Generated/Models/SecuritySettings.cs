@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Immutability Settings of a vault. </summary>
         internal ImmutabilitySettings ImmutabilitySettings { get; set; }
-        /// <summary> Gets or sets the state. </summary>
+        /// <summary> Gets or sets the immutability state. </summary>
         public ImmutabilityState? ImmutabilityState
         {
             get => ImmutabilitySettings is null ? default : ImmutabilitySettings.State;

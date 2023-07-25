@@ -17,45 +17,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RunbookId))
             {
-                writer.WritePropertyName("runbookId");
+                writer.WritePropertyName("runbookId"u8);
                 writer.WriteStringValue(RunbookId);
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
-            writer.WritePropertyName("fabricLocation");
+            writer.WritePropertyName("fabricLocation"u8);
             writer.WriteStringValue(FabricLocation.ToString());
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }
 
         internal static RecoveryPlanAutomationRunbookActionDetails DeserializeRecoveryPlanAutomationRunbookActionDetails(JsonElement element)
         {
-            Optional<string> runbookId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> runbookId = default;
             Optional<string> timeout = default;
             RecoveryPlanActionLocation fabricLocation = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("runbookId"))
+                if (property.NameEquals("runbookId"u8))
                 {
-                    runbookId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runbookId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     timeout = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricLocation"))
+                if (property.NameEquals("fabricLocation"u8))
                 {
                     fabricLocation = new RecoveryPlanActionLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

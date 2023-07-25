@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static LogCollectionLevel ToLogCollectionLevel(this string value)
         {
-            if (string.Equals(value, "Error", StringComparison.InvariantCultureIgnoreCase)) return LogCollectionLevel.Error;
-            if (string.Equals(value, "Verbose", StringComparison.InvariantCultureIgnoreCase)) return LogCollectionLevel.Verbose;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return LogCollectionLevel.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verbose")) return LogCollectionLevel.Verbose;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LogCollectionLevel value.");
         }
     }

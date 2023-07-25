@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     /// <summary> Describes the Resource Usage. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <param name="currentValue"> Gets the current count of the allocated resources in the subscription. </param>
         /// <param name="limit"> Gets the maximum count of the resources that can be allocated in the subscription. </param>
         /// <param name="name"> Gets the name of the type of usage. </param>
-        internal DataLakeStoreUsage(UsageUnit? unit, string id, int? currentValue, int? limit, UsageName name)
+        internal DataLakeStoreUsage(DataLakeStoreUsageUnit? unit, ResourceIdentifier id, int? currentValue, int? limit, DataLakeStoreUsageName name)
         {
             Unit = unit;
             Id = id;
@@ -31,14 +33,14 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Gets the unit of measurement. </summary>
-        public UsageUnit? Unit { get; }
+        public DataLakeStoreUsageUnit? Unit { get; }
         /// <summary> Resource identifier. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Gets the current count of the allocated resources in the subscription. </summary>
         public int? CurrentValue { get; }
         /// <summary> Gets the maximum count of the resources that can be allocated in the subscription. </summary>
         public int? Limit { get; }
         /// <summary> Gets the name of the type of usage. </summary>
-        public UsageName Name { get; }
+        public DataLakeStoreUsageName Name { get; }
     }
 }

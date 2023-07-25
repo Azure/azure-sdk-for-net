@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceArmPaginatedResult. </summary>
         internal OnlineDeploymentTrackedResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<OnlineDeploymentData>();
+            Value = new ChangeTrackingList<MachineLearningOnlineDeploymentData>();
         }
 
         /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of OnlineDeployment objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type OnlineDeployment. </param>
-        internal OnlineDeploymentTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<OnlineDeploymentData> value)
+        internal OnlineDeploymentTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningOnlineDeploymentData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of OnlineDeployment objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type OnlineDeployment. </summary>
-        public IReadOnlyList<OnlineDeploymentData> Value { get; }
+        public IReadOnlyList<MachineLearningOnlineDeploymentData> Value { get; }
     }
 }

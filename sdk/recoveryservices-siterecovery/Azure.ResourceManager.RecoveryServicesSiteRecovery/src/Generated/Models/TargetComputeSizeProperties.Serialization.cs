@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static TargetComputeSizeProperties DeserializeTargetComputeSizeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> friendlyName = default;
             Optional<int> cpuCoresCount = default;
@@ -22,96 +26,89 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<double> memoryInGB = default;
             Optional<int> maxDataDiskCount = default;
             Optional<int> maxNicsCount = default;
-            Optional<IReadOnlyList<ComputeSizeErrorDetails>> errors = default;
+            Optional<IReadOnlyList<SiteRecoveryComputeSizeErrorDetails>> errors = default;
             Optional<string> highIopsSupported = default;
             Optional<IReadOnlyList<string>> hyperVGenerations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cpuCoresCount"))
+                if (property.NameEquals("cpuCoresCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cpuCoresCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vCPUsAvailable"))
+                if (property.NameEquals("vCPUsAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vCpusAvailable = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("memoryInGB"))
+                if (property.NameEquals("memoryInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryInGB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maxDataDiskCount"))
+                if (property.NameEquals("maxDataDiskCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDataDiskCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxNicsCount"))
+                if (property.NameEquals("maxNicsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxNicsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ComputeSizeErrorDetails> array = new List<ComputeSizeErrorDetails>();
+                    List<SiteRecoveryComputeSizeErrorDetails> array = new List<SiteRecoveryComputeSizeErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeSizeErrorDetails.DeserializeComputeSizeErrorDetails(item));
+                        array.Add(SiteRecoveryComputeSizeErrorDetails.DeserializeSiteRecoveryComputeSizeErrorDetails(item));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("highIopsSupported"))
+                if (property.NameEquals("highIopsSupported"u8))
                 {
                     highIopsSupported = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hyperVGenerations"))
+                if (property.NameEquals("hyperVGenerations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

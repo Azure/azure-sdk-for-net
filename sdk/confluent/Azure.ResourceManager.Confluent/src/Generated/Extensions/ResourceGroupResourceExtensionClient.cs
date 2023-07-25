@@ -51,8 +51,16 @@ namespace Azure.ResourceManager.Confluent
 
         /// <summary>
         /// Organization Validate proxy resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidate
-        /// Operation Id: Validations_ValidateOrganization
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Validations_ValidateOrganization</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
@@ -75,8 +83,16 @@ namespace Azure.ResourceManager.Confluent
 
         /// <summary>
         /// Organization Validate proxy resource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidate
-        /// Operation Id: Validations_ValidateOrganization
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Validations_ValidateOrganization</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>

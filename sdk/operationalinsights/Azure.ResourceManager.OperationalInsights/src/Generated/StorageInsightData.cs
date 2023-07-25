@@ -13,7 +13,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the StorageInsight data model. </summary>
+    /// <summary>
+    /// A class representing the StorageInsight data model.
+    /// The top level storage insight resource container.
+    /// </summary>
     public partial class StorageInsightData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageInsightData. </summary>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="tables"> The names of the Azure tables that the workspace should read. </param>
         /// <param name="storageAccount"> The storage account connection details. </param>
         /// <param name="status"> The status of the storage insight. </param>
-        internal StorageInsightData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, IList<string> containers, IList<string> tables, StorageAccount storageAccount, StorageInsightStatus status) : base(id, name, resourceType, systemData)
+        internal StorageInsightData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, IList<string> containers, IList<string> tables, OperationalInsightsStorageAccount storageAccount, StorageInsightStatus status) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Tags = tags;
@@ -54,7 +57,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> The names of the Azure tables that the workspace should read. </summary>
         public IList<string> Tables { get; }
         /// <summary> The storage account connection details. </summary>
-        public StorageAccount StorageAccount { get; set; }
+        public OperationalInsightsStorageAccount StorageAccount { get; set; }
         /// <summary> The status of the storage insight. </summary>
         public StorageInsightStatus Status { get; }
     }

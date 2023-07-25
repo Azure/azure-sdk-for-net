@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get a list of Sql pool&apos;s security alert policies. </summary>
+        /// <summary> Get a list of Sql pool's security alert policies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListSqlPoolSecurityAlertPolicies>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSqlPoolSecurityAlertPolicyListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ListSqlPoolSecurityAlertPolicies value = default;
+                        SynapseSqlPoolSecurityAlertPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListSqlPoolSecurityAlertPolicies.DeserializeListSqlPoolSecurityAlertPolicies(document.RootElement);
+                        value = SynapseSqlPoolSecurityAlertPolicyListResult.DeserializeSynapseSqlPoolSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get a list of Sql pool&apos;s security alert policies. </summary>
+        /// <summary> Get a list of Sql pool's security alert policies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListSqlPoolSecurityAlertPolicies> List(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public Response<SynapseSqlPoolSecurityAlertPolicyListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ListSqlPoolSecurityAlertPolicies value = default;
+                        SynapseSqlPoolSecurityAlertPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListSqlPoolSecurityAlertPolicies.DeserializeListSqlPoolSecurityAlertPolicies(document.RootElement);
+                        value = SynapseSqlPoolSecurityAlertPolicyListResult.DeserializeSynapseSqlPoolSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get a Sql pool&apos;s security alert policy. </summary>
+        /// <summary> Get a Sql pool's security alert policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlPoolSecurityAlertPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSqlPoolSecurityAlertPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -168,19 +168,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SqlPoolSecurityAlertPolicyData value = default;
+                        SynapseSqlPoolSecurityAlertPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlPoolSecurityAlertPolicyData.DeserializeSqlPoolSecurityAlertPolicyData(document.RootElement);
+                        value = SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlPoolSecurityAlertPolicyData)null, message.Response);
+                    return Response.FromValue((SynapseSqlPoolSecurityAlertPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Get a Sql pool&apos;s security alert policy. </summary>
+        /// <summary> Get a Sql pool's security alert policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlPoolSecurityAlertPolicyData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public Response<SynapseSqlPoolSecurityAlertPolicyData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -202,19 +202,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SqlPoolSecurityAlertPolicyData value = default;
+                        SynapseSqlPoolSecurityAlertPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlPoolSecurityAlertPolicyData.DeserializeSqlPoolSecurityAlertPolicyData(document.RootElement);
+                        value = SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlPoolSecurityAlertPolicyData)null, message.Response);
+                    return Response.FromValue((SynapseSqlPoolSecurityAlertPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName, SqlPoolSecurityAlertPolicyData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName, SynapseSqlPoolSecurityAlertPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Create or update a Sql pool&apos;s security alert policy. </summary>
+        /// <summary> Create or update a Sql pool's security alert policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlPoolSecurityAlertPolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName, SqlPoolSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSqlPoolSecurityAlertPolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName, SynapseSqlPoolSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -267,9 +267,9 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                 case 201:
                     {
-                        SqlPoolSecurityAlertPolicyData value = default;
+                        SynapseSqlPoolSecurityAlertPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlPoolSecurityAlertPolicyData.DeserializeSqlPoolSecurityAlertPolicyData(document.RootElement);
+                        value = SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Create or update a Sql pool&apos;s security alert policy. </summary>
+        /// <summary> Create or update a Sql pool's security alert policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlPoolSecurityAlertPolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName, SqlPoolSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
+        public Response<SynapseSqlPoolSecurityAlertPolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicyName securityAlertPolicyName, SynapseSqlPoolSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                 case 201:
                     {
-                        SqlPoolSecurityAlertPolicyData value = default;
+                        SynapseSqlPoolSecurityAlertPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlPoolSecurityAlertPolicyData.DeserializeSqlPoolSecurityAlertPolicyData(document.RootElement);
+                        value = SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get a list of Sql pool&apos;s security alert policies. </summary>
+        /// <summary> Get a list of Sql pool's security alert policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListSqlPoolSecurityAlertPolicies>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSqlPoolSecurityAlertPolicyListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -349,9 +349,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ListSqlPoolSecurityAlertPolicies value = default;
+                        SynapseSqlPoolSecurityAlertPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListSqlPoolSecurityAlertPolicies.DeserializeListSqlPoolSecurityAlertPolicies(document.RootElement);
+                        value = SynapseSqlPoolSecurityAlertPolicyListResult.DeserializeSynapseSqlPoolSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get a list of Sql pool&apos;s security alert policies. </summary>
+        /// <summary> Get a list of Sql pool's security alert policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListSqlPoolSecurityAlertPolicies> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
+        public Response<SynapseSqlPoolSecurityAlertPolicyListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -382,9 +382,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        ListSqlPoolSecurityAlertPolicies value = default;
+                        SynapseSqlPoolSecurityAlertPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListSqlPoolSecurityAlertPolicies.DeserializeListSqlPoolSecurityAlertPolicies(document.RootElement);
+                        value = SynapseSqlPoolSecurityAlertPolicyListResult.DeserializeSynapseSqlPoolSecurityAlertPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

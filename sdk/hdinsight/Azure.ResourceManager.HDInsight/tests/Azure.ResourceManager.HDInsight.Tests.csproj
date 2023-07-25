@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Network" />
+    <PackageReference Include="Azure.ResourceManager.Storage" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.HDInsight.csproj" />
-    <ProjectReference Include="..\..\..\storage\Azure.ResourceManager.Storage\src\Azure.ResourceManager.Storage.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="TestData\ClusterWithAvailabilityZonesSqlDefinition.json">

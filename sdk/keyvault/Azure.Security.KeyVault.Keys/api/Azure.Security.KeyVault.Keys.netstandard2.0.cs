@@ -27,14 +27,6 @@ namespace Azure.Security.KeyVault.Keys
         public Azure.Security.KeyVault.Keys.KeyType KeyType { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class CreateOkpKeyOptions : Azure.Security.KeyVault.Keys.CreateKeyOptions
-    {
-        public CreateOkpKeyOptions(string name, bool hardwareProtected = false) { }
-        public Azure.Security.KeyVault.Keys.KeyCurveName? CurveName { get { throw null; } set { } }
-        public bool HardwareProtected { get { throw null; } }
-        public Azure.Security.KeyVault.Keys.KeyType KeyType { get { throw null; } }
-        public string Name { get { throw null; } }
-    }
     public partial class CreateRsaKeyOptions : Azure.Security.KeyVault.Keys.CreateKeyOptions
     {
         public CreateRsaKeyOptions(string name, bool hardwareProtected = false) { }
@@ -125,8 +117,6 @@ namespace Azure.Security.KeyVault.Keys
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateKeyAsync(string name, Azure.Security.KeyVault.Keys.KeyType keyType, Azure.Security.KeyVault.Keys.CreateKeyOptions keyOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> CreateOctKey(Azure.Security.KeyVault.Keys.CreateOctKeyOptions octKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateOctKeyAsync(Azure.Security.KeyVault.Keys.CreateOctKeyOptions octKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> CreateOkpKey(Azure.Security.KeyVault.Keys.CreateOkpKeyOptions okpKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateOkpKeyAsync(Azure.Security.KeyVault.Keys.CreateOkpKeyOptions okpKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> CreateRsaKey(Azure.Security.KeyVault.Keys.CreateRsaKeyOptions rsaKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateRsaKeyAsync(Azure.Security.KeyVault.Keys.CreateRsaKeyOptions rsaKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient GetCryptographyClient(string keyName, string keyVersion = null) { throw null; }
@@ -169,7 +159,7 @@ namespace Azure.Security.KeyVault.Keys
     }
     public partial class KeyClientOptions : Azure.Core.ClientOptions
     {
-        public KeyClientOptions(Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion.V7_4_Preview_1) { }
+        public KeyClientOptions(Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion.V7_4) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -178,7 +168,7 @@ namespace Azure.Security.KeyVault.Keys
             V7_1 = 1,
             V7_2 = 2,
             V7_3 = 3,
-            V7_4_Preview_1 = 4,
+            V7_4 = 4,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -187,7 +177,6 @@ namespace Azure.Security.KeyVault.Keys
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public KeyCurveName(string value) { throw null; }
-        public static Azure.Security.KeyVault.Keys.KeyCurveName Ed25519 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyCurveName P256 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyCurveName P256K { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyCurveName P384 { get { throw null; } }
@@ -326,8 +315,6 @@ namespace Azure.Security.KeyVault.Keys
         public static Azure.Security.KeyVault.Keys.KeyType EcHsm { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyType Oct { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyType OctHsm { get { throw null; } }
-        public static Azure.Security.KeyVault.Keys.KeyType Okp { get { throw null; } }
-        public static Azure.Security.KeyVault.Keys.KeyType OkpHsm { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyType Rsa { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyType RsaHsm { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Keys.KeyType other) { throw null; }
@@ -411,6 +398,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         System.Threading.Tasks.Task<byte[]> Azure.Core.Cryptography.IKeyEncryptionKey.UnwrapKeyAsync(string algorithm, System.ReadOnlyMemory<byte> encryptedKey, System.Threading.CancellationToken cancellationToken) { throw null; }
         byte[] Azure.Core.Cryptography.IKeyEncryptionKey.WrapKey(string algorithm, System.ReadOnlyMemory<byte> key, System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Threading.Tasks.Task<byte[]> Azure.Core.Cryptography.IKeyEncryptionKey.WrapKeyAsync(string algorithm, System.ReadOnlyMemory<byte> key, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Security.KeyVault.Keys.Cryptography.RSAKeyVault CreateRSA(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.RSAKeyVault> CreateRSAAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.DecryptResult Decrypt(Azure.Security.KeyVault.Keys.Cryptography.DecryptParameters decryptParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.DecryptResult Decrypt(Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm algorithm, byte[] ciphertext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.DecryptResult> DecryptAsync(Azure.Security.KeyVault.Keys.Cryptography.DecryptParameters decryptParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -438,7 +427,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     }
     public partial class CryptographyClientOptions : Azure.Core.ClientOptions
     {
-        public CryptographyClientOptions(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion.V7_4_Preview_1) { }
+        public CryptographyClientOptions(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion.V7_4) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -447,7 +436,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             V7_1 = 1,
             V7_2 = 2,
             V7_3 = 3,
-            V7_4_Preview_1 = 4,
+            V7_4 = 4,
         }
     }
     public partial class DecryptParameters
@@ -574,13 +563,29 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         public LocalCryptographyClientOptions() { }
     }
+    public partial class RSAKeyVault : System.Security.Cryptography.RSA
+    {
+        internal RSAKeyVault() { }
+        public override string KeyExchangeAlgorithm { get { throw null; } }
+        public string KeyId { get { throw null; } }
+        public override int KeySize { get { throw null; } set { } }
+        public override System.Security.Cryptography.KeySizes[] LegalKeySizes { get { throw null; } }
+        public override byte[] Decrypt(byte[] data, System.Security.Cryptography.RSAEncryptionPadding padding) { throw null; }
+        protected override void Dispose(bool disposing) { }
+        public override byte[] Encrypt(byte[] data, System.Security.Cryptography.RSAEncryptionPadding padding) { throw null; }
+        public override System.Security.Cryptography.RSAParameters ExportParameters(bool includePrivateParameters) { throw null; }
+        protected override byte[] HashData(byte[] data, int offset, int count, System.Security.Cryptography.HashAlgorithmName hashAlgorithm) { throw null; }
+        protected override byte[] HashData(System.IO.Stream data, System.Security.Cryptography.HashAlgorithmName hashAlgorithm) { throw null; }
+        public override void ImportParameters(System.Security.Cryptography.RSAParameters parameters) { }
+        public override byte[] SignHash(byte[] hash, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.RSASignaturePadding padding) { throw null; }
+        public override bool VerifyHash(byte[] hash, byte[] signature, System.Security.Cryptography.HashAlgorithmName hashAlgorithm, System.Security.Cryptography.RSASignaturePadding padding) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignatureAlgorithm : System.IEquatable<Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SignatureAlgorithm(string value) { throw null; }
-        public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm EdDsa { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES256 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES256K { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SignatureAlgorithm ES384 { get { throw null; } }

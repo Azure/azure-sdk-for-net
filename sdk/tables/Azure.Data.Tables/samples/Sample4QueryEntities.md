@@ -8,14 +8,13 @@ A `TableClient` is needed to perform table-level operations like inserting and d
 - Call `GetTableClient` from the `TableServiceClient` with the table name.
 
 ```C# Snippet:TablesSample1GetTableClient
-string tableName = "OfficeSupplies1p2";
-var tableClient = serviceClient.GetTableClient(tableName);
+var tableClient2 = serviceClient.GetTableClient(tableName);
 ```
 
 - Create a `TableClient` with a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
 ```C# Snippet:TablesSample1CreateTableClient
-var tableClient = new TableClient(
+var tableClient3 = new TableClient(
     new Uri(storageUri),
     tableName,
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -49,9 +48,9 @@ The `QueryFilter` class handles all the type escaping for you.
 
 ```C# Snippet:TablesSample4QueryEntitiesFilterWithQueryFilter
 // The CreateQueryFilter method is also available to assist with properly formatting and escaping OData queries.
-Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
+var queryResultsFilter2 = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
 // Iterate the <see cref="Pageable"> to access all queried entities.
-foreach (TableEntity qEntity in queryResultsFilter)
+foreach (TableEntity qEntity in queryResultsFilter2)
 {
     Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
 }
@@ -93,6 +92,37 @@ foreach (Page<TableEntity> page in queryResultsMaxPerPage.AsPages())
     foreach (TableEntity qEntity in page.Values)
     {
         Console.WriteLine($"# of {qEntity.GetString("Product")} inventoried: {qEntity.GetInt32("Quantity")}");
+    }
+}
+```
+
+In more advanced scenarios, it may be necessary to store the continuation token returned from the service so your code controls exactly when the next pages is fetched.
+Below is a simple example that illustrates how the token can be fetched and applied to paginated results.
+
+```C# Snippet:TablesSample4QueryPagination
+string continuationToken = null;
+bool moreResultsAvailable = true;
+while (moreResultsAvailable)
+{
+    Page<TableEntity> page = tableClient
+        .Query<TableEntity>()
+        .AsPages(continuationToken, pageSizeHint: 10)
+        .FirstOrDefault(); // Note: Since the pageSizeHint only limits the number of results in a single page, we explicitly only enumerate the first page.
+
+    if (page == null)
+        break;
+
+    // Get the continuation token from the page.
+    // Note: This value can be stored so that the next page query can be executed later.
+    continuationToken = page.ContinuationToken;
+
+    IReadOnlyList<TableEntity> pageResults = page.Values;
+    moreResultsAvailable = pageResults.Any() && continuationToken != null;
+
+    // Print out the results for this page.
+    foreach (TableEntity result in pageResults)
+    {
+        Console.WriteLine($"{result.PartitionKey}-{result.RowKey}");
     }
 }
 ```

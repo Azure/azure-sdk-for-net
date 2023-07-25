@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.CosmosDB
                 data.SystemData,
                 data.Tags,
                 data.Location,
-                data.Resource);
+                data.Resource,
+                data.Identity);
         }
 
         private string GetName(string param, ResourceIdentifier id)

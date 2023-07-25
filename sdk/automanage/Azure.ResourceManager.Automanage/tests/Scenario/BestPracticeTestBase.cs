@@ -23,7 +23,12 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             }
         }
 
-        protected void AssertValues(BestPracticeResource profile, string profileName)
+        /// <summary>
+        /// Asserts multiple values
+        /// </summary>
+        /// <param name="version">BestPracticeResource to assert</param>
+        /// <param name="versionName">BestPracticeResource name to verify</param>
+        protected void AssertValues(AutomanageBestPracticeResource profile, string profileName)
         {
             Assert.NotNull(profile);
             Assert.True(profile.HasData);

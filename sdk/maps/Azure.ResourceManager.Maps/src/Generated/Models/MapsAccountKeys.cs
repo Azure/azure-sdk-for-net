@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> The set of keys which can be used to access the Maps REST APIs. Two keys are provided for key rotation without interruption. </summary>
@@ -16,25 +18,25 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> Initializes a new instance of MapsAccountKeys. </summary>
-        /// <param name="primaryKeyLastUpdated"> The last updated date and time of the primary key. </param>
+        /// <param name="primaryKeyLastUpdatedOn"> The last updated date and time of the primary key. </param>
         /// <param name="primaryKey"> The primary key for accessing the Maps REST APIs. </param>
         /// <param name="secondaryKey"> The secondary key for accessing the Maps REST APIs. </param>
-        /// <param name="secondaryKeyLastUpdated"> The last updated date and time of the secondary key. </param>
-        internal MapsAccountKeys(string primaryKeyLastUpdated, string primaryKey, string secondaryKey, string secondaryKeyLastUpdated)
+        /// <param name="secondaryKeyLastUpdatedOn"> The last updated date and time of the secondary key. </param>
+        internal MapsAccountKeys(DateTimeOffset? primaryKeyLastUpdatedOn, string primaryKey, string secondaryKey, DateTimeOffset? secondaryKeyLastUpdatedOn)
         {
-            PrimaryKeyLastUpdated = primaryKeyLastUpdated;
+            PrimaryKeyLastUpdatedOn = primaryKeyLastUpdatedOn;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
-            SecondaryKeyLastUpdated = secondaryKeyLastUpdated;
+            SecondaryKeyLastUpdatedOn = secondaryKeyLastUpdatedOn;
         }
 
         /// <summary> The last updated date and time of the primary key. </summary>
-        public string PrimaryKeyLastUpdated { get; }
+        public DateTimeOffset? PrimaryKeyLastUpdatedOn { get; }
         /// <summary> The primary key for accessing the Maps REST APIs. </summary>
         public string PrimaryKey { get; }
         /// <summary> The secondary key for accessing the Maps REST APIs. </summary>
         public string SecondaryKey { get; }
         /// <summary> The last updated date and time of the secondary key. </summary>
-        public string SecondaryKeyLastUpdated { get; }
+        public DateTimeOffset? SecondaryKeyLastUpdatedOn { get; }
     }
 }

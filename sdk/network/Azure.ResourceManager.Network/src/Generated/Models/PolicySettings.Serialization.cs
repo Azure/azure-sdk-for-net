@@ -17,93 +17,178 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsDefined(RequestBodyCheck))
             {
-                writer.WritePropertyName("requestBodyCheck");
+                writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
+            }
+            if (Optional.IsDefined(RequestBodyInspectLimitInKB))
+            {
+                writer.WritePropertyName("requestBodyInspectLimitInKB"u8);
+                writer.WriteNumberValue(RequestBodyInspectLimitInKB.Value);
+            }
+            if (Optional.IsDefined(RequestBodyEnforcement))
+            {
+                writer.WritePropertyName("requestBodyEnforcement"u8);
+                writer.WriteBooleanValue(RequestBodyEnforcement.Value);
             }
             if (Optional.IsDefined(MaxRequestBodySizeInKb))
             {
-                writer.WritePropertyName("maxRequestBodySizeInKb");
+                writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
+            }
+            if (Optional.IsDefined(FileUploadEnforcement))
+            {
+                writer.WritePropertyName("fileUploadEnforcement"u8);
+                writer.WriteBooleanValue(FileUploadEnforcement.Value);
             }
             if (Optional.IsDefined(FileUploadLimitInMb))
             {
-                writer.WritePropertyName("fileUploadLimitInMb");
+                writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
+            }
+            if (Optional.IsDefined(CustomBlockResponseStatusCode))
+            {
+                writer.WritePropertyName("customBlockResponseStatusCode"u8);
+                writer.WriteNumberValue(CustomBlockResponseStatusCode.Value);
+            }
+            if (Optional.IsDefined(CustomBlockResponseBody))
+            {
+                writer.WritePropertyName("customBlockResponseBody"u8);
+                writer.WriteStringValue(CustomBlockResponseBody);
+            }
+            if (Optional.IsDefined(LogScrubbing))
+            {
+                writer.WritePropertyName("logScrubbing"u8);
+                writer.WriteObjectValue(LogScrubbing);
             }
             writer.WriteEndObject();
         }
 
         internal static PolicySettings DeserializePolicySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebApplicationFirewallEnabledState> state = default;
             Optional<WebApplicationFirewallMode> mode = default;
             Optional<bool> requestBodyCheck = default;
+            Optional<int> requestBodyInspectLimitInKB = default;
+            Optional<bool> requestBodyEnforcement = default;
             Optional<int> maxRequestBodySizeInKb = default;
+            Optional<bool> fileUploadEnforcement = default;
             Optional<int> fileUploadLimitInMb = default;
+            Optional<int> customBlockResponseStatusCode = default;
+            Optional<string> customBlockResponseBody = default;
+            Optional<PolicySettingsLogScrubbing> logScrubbing = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new WebApplicationFirewallEnabledState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new WebApplicationFirewallMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requestBodyCheck"))
+                if (property.NameEquals("requestBodyCheck"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requestBodyCheck = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxRequestBodySizeInKb"))
+                if (property.NameEquals("requestBodyInspectLimitInKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    requestBodyInspectLimitInKB = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("requestBodyEnforcement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requestBodyEnforcement = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("maxRequestBodySizeInKb"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     maxRequestBodySizeInKb = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fileUploadLimitInMb"))
+                if (property.NameEquals("fileUploadEnforcement"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    fileUploadEnforcement = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("fileUploadLimitInMb"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     fileUploadLimitInMb = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("customBlockResponseStatusCode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customBlockResponseStatusCode = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("customBlockResponseBody"u8))
+                {
+                    customBlockResponseBody = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("logScrubbing"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logScrubbing = PolicySettingsLogScrubbing.DeserializePolicySettingsLogScrubbing(property.Value);
+                    continue;
+                }
             }
-            return new PolicySettings(Optional.ToNullable(state), Optional.ToNullable(mode), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadLimitInMb));
+            return new PolicySettings(Optional.ToNullable(state), Optional.ToNullable(mode), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(requestBodyInspectLimitInKB), Optional.ToNullable(requestBodyEnforcement), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadEnforcement), Optional.ToNullable(fileUploadLimitInMb), Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, logScrubbing.Value);
         }
     }
 }

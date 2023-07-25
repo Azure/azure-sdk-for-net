@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         public static HealthProbeProtocol ToHealthProbeProtocol(this string value)
         {
-            if (string.Equals(value, "NotSet", StringComparison.InvariantCultureIgnoreCase)) return HealthProbeProtocol.NotSet;
-            if (string.Equals(value, "Http", StringComparison.InvariantCultureIgnoreCase)) return HealthProbeProtocol.Http;
-            if (string.Equals(value, "Https", StringComparison.InvariantCultureIgnoreCase)) return HealthProbeProtocol.Https;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSet")) return HealthProbeProtocol.NotSet;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Http")) return HealthProbeProtocol.Http;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Https")) return HealthProbeProtocol.Https;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthProbeProtocol value.");
         }
     }

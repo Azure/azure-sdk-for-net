@@ -25,6 +25,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: entra
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents

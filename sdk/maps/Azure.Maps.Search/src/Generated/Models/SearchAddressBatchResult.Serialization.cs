@@ -15,15 +15,18 @@ namespace Azure.Maps.Search.Models
     {
         internal static SearchAddressBatchResult DeserializeSearchAddressBatchResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SearchAddressBatchItem>> batchItems = default;
             Optional<BatchResultSummary> summary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("batchItems"))
+                if (property.NameEquals("batchItems"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SearchAddressBatchItem> array = new List<SearchAddressBatchItem>();
@@ -34,11 +37,10 @@ namespace Azure.Maps.Search.Models
                     batchItems = array;
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = BatchResultSummary.DeserializeBatchResultSummary(property.Value);

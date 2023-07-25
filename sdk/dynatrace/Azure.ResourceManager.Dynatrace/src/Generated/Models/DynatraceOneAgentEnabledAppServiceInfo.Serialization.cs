@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static DynatraceOneAgentEnabledAppServiceInfo DeserializeDynatraceOneAgentEnabledAppServiceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> version = default;
             Optional<DynatraceOneAgentMonitoringType> monitoringType = default;
@@ -25,77 +29,71 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> hostName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("monitoringType"))
+                if (property.NameEquals("monitoringType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monitoringType = new DynatraceOneAgentMonitoringType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("autoUpdateSetting"))
+                if (property.NameEquals("autoUpdateSetting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoUpdateSetting = new DynatraceOneAgentAutoUpdateSetting(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("updateStatus"))
+                if (property.NameEquals("updateStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updateStatus = new DynatraceOneAgentUpdateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("availabilityState"))
+                if (property.NameEquals("availabilityState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availabilityState = new DynatraceOneAgentAvailabilityState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("logModule"))
+                if (property.NameEquals("logModule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logModule = new DynatraceLogModuleState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hostGroup"))
+                if (property.NameEquals("hostGroup"u8))
                 {
                     hostGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostName"))
+                if (property.NameEquals("hostName"u8))
                 {
                     hostName = property.Value.GetString();
                     continue;

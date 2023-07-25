@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridData
 {
-    /// <summary> A class representing the HybridDataStoreType data model. </summary>
+    /// <summary>
+    /// A class representing the HybridDataStoreType data model.
+    /// Data Store Type.
+    /// </summary>
     public partial class HybridDataStoreTypeData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridDataStoreTypeData. </summary>

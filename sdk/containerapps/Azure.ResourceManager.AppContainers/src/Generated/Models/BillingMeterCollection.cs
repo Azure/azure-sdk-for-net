@@ -12,13 +12,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of premium workload billing meters. </summary>
+    /// <summary> Collection of billing meters. </summary>
     internal partial class BillingMeterCollection
     {
         /// <summary> Initializes a new instance of BillingMeterCollection. </summary>
         /// <param name="value"> Collection of billing meters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal BillingMeterCollection(IEnumerable<BillingMeter> value)
+        internal BillingMeterCollection(IEnumerable<ContainerAppBillingMeter> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of BillingMeterCollection. </summary>
         /// <param name="value"> Collection of billing meters. </param>
-        internal BillingMeterCollection(IReadOnlyList<BillingMeter> value)
+        internal BillingMeterCollection(IReadOnlyList<ContainerAppBillingMeter> value)
         {
             Value = value;
         }
 
         /// <summary> Collection of billing meters. </summary>
-        public IReadOnlyList<BillingMeter> Value { get; }
+        public IReadOnlyList<ContainerAppBillingMeter> Value { get; }
     }
 }

@@ -33,11 +33,10 @@ namespace Azure.Analytics.Purview.Administration.Tests
         {
             var options = new PurviewAccountClientOptions();
             PurviewAccountClient client = GetAccountClient();
-            var data = new JsonData(new Dictionary<string, string>
+            Response updateRespons = await client.UpdateAccountPropertiesAsync(RequestContent.Create(new Dictionary<string, string>
             {
                 ["friendlyName"] = "udpatedFriendlyName"
-            });
-            Response updateRespons = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
+            }));
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(updateRespons));
             JsonElement upateBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("dotnetLLCPurviewAccount", upateBodyJson.GetProperty("name").GetString());
@@ -64,11 +63,10 @@ namespace Azure.Analytics.Purview.Administration.Tests
         {
             var options = new PurviewAccountClientOptions();
             PurviewAccountClient client = GetAccountClient();
-            var data = new JsonData(new Dictionary<string, string>
+            Response genResponse = await client.RegenerateAccessKeyAsync(RequestContent.Create(new Dictionary<string, string>
             {
                 ["keyType"] = "PrimaryAtlasKafkaKey"
-            });
-            Response genResponse = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
+            }));
             using var jsonDocumentGen = JsonDocument.Parse(GetContentFromResponse(genResponse));
             JsonElement genKeyBodyJson = jsonDocumentGen.RootElement;
             Assert.AreEqual(genResponse.Status, 200);

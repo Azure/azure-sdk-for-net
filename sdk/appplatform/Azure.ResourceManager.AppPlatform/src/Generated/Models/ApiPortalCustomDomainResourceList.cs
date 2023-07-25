@@ -17,26 +17,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ApiPortalCustomDomainResourceList. </summary>
         internal ApiPortalCustomDomainResourceList()
         {
-            Value = new ChangeTrackingList<ApiPortalCustomDomainResourceData>();
+            Value = new ChangeTrackingList<AppPlatformApiPortalCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of ApiPortalCustomDomainResourceList. </summary>
         /// <param name="value"> Collection of API portal custom domain resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
-        internal ApiPortalCustomDomainResourceList(IReadOnlyList<ApiPortalCustomDomainResourceData> value, string nextLink)
+        internal ApiPortalCustomDomainResourceList(IReadOnlyList<AppPlatformApiPortalCustomDomainData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of API portal custom domain resources. </summary>
-        public IReadOnlyList<ApiPortalCustomDomainResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformApiPortalCustomDomainData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

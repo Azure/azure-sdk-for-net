@@ -14,42 +14,43 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerSkuCapability DeserializeMySqlFlexibleServerSkuCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<long> vCores = default;
             Optional<long> supportedIops = default;
             Optional<long> supportedMemoryPerVCoreMB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCores"))
+                if (property.NameEquals("vCores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vCores = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("supportedIops"))
+                if (property.NameEquals("supportedIops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedIops = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("supportedMemoryPerVCoreMB"))
+                if (property.NameEquals("supportedMemoryPerVCoreMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedMemoryPerVCoreMB = property.Value.GetInt64();

@@ -31,7 +31,7 @@ namespace Azure.Identity
         private readonly IFileSystemService _fileSystem;
         private readonly CredentialPipeline _pipeline;
         internal string TenantId { get; }
-        internal string[] AdditionallyAllowedTenantIds;
+        internal string[] AdditionallyAllowedTenantIds { get; }
         private const string _commonTenant = "common";
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscodecredential/troubleshoot";
         internal MsalPublicClient Client { get; }
@@ -55,7 +55,7 @@ namespace Azure.Identity
             Client = client ?? new MsalPublicClient(_pipeline, TenantId, ClientId, null, options);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
-            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         /// <inheritdoc />
@@ -85,7 +85,7 @@ namespace Azure.Identity
                 string storedCredentials = GetStoredCredentials(environmentName);
 
                 var result = await Client
-                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, async, cancellationToken)
+                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                     .ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }

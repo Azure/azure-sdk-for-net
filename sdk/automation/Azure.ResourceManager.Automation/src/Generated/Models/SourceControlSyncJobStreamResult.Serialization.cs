@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static SourceControlSyncJobStreamResult DeserializeSourceControlSyncJobStreamResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> sourceControlSyncJobStreamId = default;
             Optional<string> summary = default;
@@ -25,17 +29,16 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<IReadOnlyDictionary<string, BinaryData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,17 +47,17 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sourceControlSyncJobStreamId"))
+                        if (property0.NameEquals("sourceControlSyncJobStreamId"u8))
                         {
                             sourceControlSyncJobStreamId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("summary"))
+                        if (property0.NameEquals("summary"u8))
                         {
                             summary = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("time"))
+                        if (property0.NameEquals("time"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -64,32 +67,37 @@ namespace Azure.ResourceManager.Automation.Models
                             time = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("streamType"))
+                        if (property0.NameEquals("streamType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             streamType = new SourceControlStreamType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("streamText"))
+                        if (property0.NameEquals("streamText"u8))
                         {
                             streamText = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("value"))
+                        if (property0.NameEquals("value"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             value = dictionary;
                             continue;

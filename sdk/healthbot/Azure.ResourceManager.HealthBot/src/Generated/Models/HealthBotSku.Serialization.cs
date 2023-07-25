@@ -15,17 +15,21 @@ namespace Azure.ResourceManager.HealthBot.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToSerialString());
             writer.WriteEndObject();
         }
 
         internal static HealthBotSku DeserializeHealthBotSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HealthBotSkuName name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString().ToHealthBotSkuName();
                     continue;

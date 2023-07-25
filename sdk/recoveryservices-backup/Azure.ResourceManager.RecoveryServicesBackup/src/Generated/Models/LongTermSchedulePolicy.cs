@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Long term policy schedule. </summary>
-    public partial class LongTermSchedulePolicy : SchedulePolicy
+    public partial class LongTermSchedulePolicy : BackupSchedulePolicy
     {
         /// <summary> Initializes a new instance of LongTermSchedulePolicy. </summary>
         public LongTermSchedulePolicy()

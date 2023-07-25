@@ -17,26 +17,30 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ScopeName))
             {
-                writer.WritePropertyName("scopeName");
+                writer.WritePropertyName("scopeName"u8);
                 writer.WriteStringValue(ScopeName);
             }
-            writer.WritePropertyName("itemIndex");
+            writer.WritePropertyName("itemIndex"u8);
             writer.WriteNumberValue(ItemIndex);
             writer.WriteEndObject();
         }
 
         internal static LogicWorkflowRepetitionIndex DeserializeLogicWorkflowRepetitionIndex(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scopeName = default;
             int itemIndex = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scopeName"))
+                if (property.NameEquals("scopeName"u8))
                 {
                     scopeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("itemIndex"))
+                if (property.NameEquals("itemIndex"u8))
                 {
                     itemIndex = property.Value.GetInt32();
                     continue;

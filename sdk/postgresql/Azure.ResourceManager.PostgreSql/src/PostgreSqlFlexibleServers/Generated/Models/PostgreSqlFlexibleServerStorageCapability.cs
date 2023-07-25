@@ -5,36 +5,39 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> storage size in MB capability. </summary>
-    public partial class PostgreSqlFlexibleServerStorageCapability
+    public partial class PostgreSqlFlexibleServerStorageCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>
         internal PostgreSqlFlexibleServerStorageCapability()
         {
+            SupportedIopsTiers = new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>
-        /// <param name="name"> storage MB name. </param>
-        /// <param name="supportedIops"> supported IOPS. </param>
-        /// <param name="storageSizeInMB"> storage size in MB. </param>
-        /// <param name="status"> The status. </param>
-        internal PostgreSqlFlexibleServerStorageCapability(string name, long? supportedIops, long? storageSizeInMB, string status)
+        /// <param name="capabilityStatus"> The status of the capability. </param>
+        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="supportedIops"> Supported IOPS. </param>
+        /// <param name="storageSizeInMB"> Storage size in MB. </param>
+        /// <param name="defaultIopsTier"> Default tier for IOPS. </param>
+        /// <param name="supportedIopsTiers"> List of available options to upgrade the storage performance. </param>
+        internal PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, long? supportedIops, long? storageSizeInMB, string defaultIopsTier, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers) : base(capabilityStatus, reason)
         {
-            Name = name;
             SupportedIops = supportedIops;
             StorageSizeInMB = storageSizeInMB;
-            Status = status;
+            DefaultIopsTier = defaultIopsTier;
+            SupportedIopsTiers = supportedIopsTiers;
         }
-
-        /// <summary> storage MB name. </summary>
-        public string Name { get; }
-        /// <summary> supported IOPS. </summary>
-        public long? SupportedIops { get; }
-        /// <summary> storage size in MB. </summary>
+        /// <summary> Storage size in MB. </summary>
         public long? StorageSizeInMB { get; }
-        /// <summary> The status. </summary>
-        public string Status { get; }
+        /// <summary> Default tier for IOPS. </summary>
+        public string DefaultIopsTier { get; }
+        /// <summary> List of available options to upgrade the storage performance. </summary>
+        public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedIopsTiers { get; }
     }
 }

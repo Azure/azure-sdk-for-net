@@ -18,71 +18,103 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Colls))
             {
-                writer.WritePropertyName("_colls");
+                writer.WritePropertyName("_colls"u8);
                 writer.WriteStringValue(Colls);
             }
             if (Optional.IsDefined(Users))
             {
-                writer.WritePropertyName("_users");
+                writer.WritePropertyName("_users"u8);
                 writer.WriteStringValue(Users);
             }
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(DatabaseName);
+            if (Optional.IsDefined(RestoreParameters))
+            {
+                writer.WritePropertyName("restoreParameters"u8);
+                writer.WriteObjectValue(RestoreParameters);
+            }
+            if (Optional.IsDefined(CreateMode))
+            {
+                writer.WritePropertyName("createMode"u8);
+                writer.WriteStringValue(CreateMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static ExtendedCosmosDBSqlDatabaseResourceInfo DeserializeExtendedCosmosDBSqlDatabaseResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> colls = default;
             Optional<string> users = default;
             Optional<string> rid = default;
             Optional<float> ts = default;
             Optional<ETag> etag = default;
             string id = default;
+            Optional<ResourceRestoreParameters> restoreParameters = default;
+            Optional<CosmosDBAccountCreateMode> createMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("_colls"))
+                if (property.NameEquals("_colls"u8))
                 {
                     colls = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_users"))
+                if (property.NameEquals("_users"u8))
                 {
                     users = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_rid"))
+                if (property.NameEquals("_rid"u8))
                 {
                     rid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_ts"))
+                if (property.NameEquals("_ts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ts = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("_etag"))
+                if (property.NameEquals("_etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("restoreParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ExtendedCosmosDBSqlDatabaseResourceInfo(id, colls.Value, users.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCosmosDBSqlDatabaseResourceInfo(id, restoreParameters.Value, Optional.ToNullable(createMode), colls.Value, users.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

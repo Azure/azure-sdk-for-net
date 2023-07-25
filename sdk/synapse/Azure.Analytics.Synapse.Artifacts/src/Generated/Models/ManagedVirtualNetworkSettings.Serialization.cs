@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PreventDataExfiltration))
             {
-                writer.WritePropertyName("preventDataExfiltration");
+                writer.WritePropertyName("preventDataExfiltration"u8);
                 writer.WriteBooleanValue(PreventDataExfiltration.Value);
             }
             if (Optional.IsDefined(LinkedAccessCheckOnTargetResource))
             {
-                writer.WritePropertyName("linkedAccessCheckOnTargetResource");
+                writer.WritePropertyName("linkedAccessCheckOnTargetResource"u8);
                 writer.WriteBooleanValue(LinkedAccessCheckOnTargetResource.Value);
             }
             if (Optional.IsCollectionDefined(AllowedAadTenantIdsForLinking))
             {
-                writer.WritePropertyName("allowedAadTenantIdsForLinking");
+                writer.WritePropertyName("allowedAadTenantIdsForLinking"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedAadTenantIdsForLinking)
                 {
@@ -44,36 +44,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ManagedVirtualNetworkSettings DeserializeManagedVirtualNetworkSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> preventDataExfiltration = default;
             Optional<bool> linkedAccessCheckOnTargetResource = default;
             Optional<IList<string>> allowedAadTenantIdsForLinking = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preventDataExfiltration"))
+                if (property.NameEquals("preventDataExfiltration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preventDataExfiltration = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("linkedAccessCheckOnTargetResource"))
+                if (property.NameEquals("linkedAccessCheckOnTargetResource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkedAccessCheckOnTargetResource = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allowedAadTenantIdsForLinking"))
+                if (property.NameEquals("allowedAadTenantIdsForLinking"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

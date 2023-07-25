@@ -17,22 +17,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(SegmentLength))
             {
-                writer.WritePropertyName("segmentLength");
+                writer.WritePropertyName("segmentLength"u8);
                 writer.WriteStringValue(SegmentLength);
             }
             if (Optional.IsDefined(RetentionPeriod))
             {
-                writer.WritePropertyName("retentionPeriod");
+                writer.WritePropertyName("retentionPeriod"u8);
                 writer.WriteStringValue(RetentionPeriod);
             }
             writer.WriteEndObject();
@@ -40,28 +40,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static VideoCreationProperties DeserializeVideoCreationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> title = default;
             Optional<string> description = default;
             Optional<string> segmentLength = default;
             Optional<string> retentionPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("segmentLength"))
+                if (property.NameEquals("segmentLength"u8))
                 {
                     segmentLength = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionPeriod"))
+                if (property.NameEquals("retentionPeriod"u8))
                 {
                     retentionPeriod = property.Value.GetString();
                     continue;

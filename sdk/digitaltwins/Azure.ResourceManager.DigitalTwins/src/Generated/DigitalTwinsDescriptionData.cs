@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
-    /// <summary> A class representing the DigitalTwinsDescription data model. </summary>
+    /// <summary>
+    /// A class representing the DigitalTwinsDescription data model.
+    /// The description of the DigitalTwins service.
+    /// </summary>
     public partial class DigitalTwinsDescriptionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DigitalTwinsDescriptionData. </summary>
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="hostName"> Api endpoint to work with DigitalTwinsInstance. </param>
         /// <param name="privateEndpointConnections"> The private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Public network access for the DigitalTwinsInstance. </param>
-        /// <param name="identity"> The managed identity for the DigitalTwinsInstance. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity"> The managed identity for the DigitalTwinsInstance. </param>
         internal DigitalTwinsDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, DigitalTwinsProvisioningState? provisioningState, string hostName, IList<DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections, DigitalTwinsPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.DigitalTwins
         public IList<DigitalTwinsPrivateEndpointConnectionData> PrivateEndpointConnections { get; set; }
         /// <summary> Public network access for the DigitalTwinsInstance. </summary>
         public DigitalTwinsPublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> The managed identity for the DigitalTwinsInstance. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary> The managed identity for the DigitalTwinsInstance. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

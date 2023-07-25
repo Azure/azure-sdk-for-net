@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DataFactory.csproj" />
-    <ProjectReference Include="..\..\..\storage\Azure.ResourceManager.Storage\src\Azure.ResourceManager.Storage.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Storage" />
   </ItemGroup>
 </Project>

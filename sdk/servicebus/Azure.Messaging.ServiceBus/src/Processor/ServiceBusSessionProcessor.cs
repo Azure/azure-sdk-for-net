@@ -337,5 +337,15 @@ namespace Azure.Messaging.ServiceBus
         {
             InnerProcessor.UpdateConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession);
         }
+
+        /// <summary>
+        /// Updates the prefetch count for the processor. This method can be used to dynamically change the prefetch count of a running processor.
+        /// </summary>
+        /// <param name="prefetchCount">The new prefetch count value. This will be reflected in the <see cref="ServiceBusProcessor.PrefetchCount"/>
+        /// property.</param>
+        public void UpdatePrefetchCount(int prefetchCount)
+        {
+            InnerProcessor.UpdatePrefetchCount(prefetchCount);
+        }
     }
 }

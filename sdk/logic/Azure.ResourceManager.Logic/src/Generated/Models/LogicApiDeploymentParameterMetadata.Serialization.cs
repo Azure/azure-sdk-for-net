@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiDeploymentParameterMetadata DeserializeLogicApiDeploymentParameterMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<bool> isRequired = default;
             Optional<string> displayName = default;
@@ -21,36 +25,34 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicApiDeploymentParameterVisibility> visibility = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isRequired"))
+                if (property.NameEquals("isRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("visibility"))
+                if (property.NameEquals("visibility"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     visibility = new LogicApiDeploymentParameterVisibility(property.Value.GetString());

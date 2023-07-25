@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KillChainName))
             {
-                writer.WritePropertyName("killChainName");
+                writer.WritePropertyName("killChainName"u8);
                 writer.WriteStringValue(KillChainName);
             }
             if (Optional.IsDefined(PhaseName))
             {
-                writer.WritePropertyName("phaseName");
+                writer.WritePropertyName("phaseName"u8);
                 writer.WriteStringValue(PhaseName);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ThreatIntelligenceKillChainPhase DeserializeThreatIntelligenceKillChainPhase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> killChainName = default;
             Optional<string> phaseName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("killChainName"))
+                if (property.NameEquals("killChainName"u8))
                 {
                     killChainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phaseName"))
+                if (property.NameEquals("phaseName"u8))
                 {
                     phaseName = property.Value.GetString();
                     continue;

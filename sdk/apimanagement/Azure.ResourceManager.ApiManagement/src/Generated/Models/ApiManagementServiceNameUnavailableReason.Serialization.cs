@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static ApiManagementServiceNameUnavailableReason ToApiManagementServiceNameUnavailableReason(this string value)
         {
-            if (string.Equals(value, "Valid", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementServiceNameUnavailableReason.Valid;
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementServiceNameUnavailableReason.Invalid;
-            if (string.Equals(value, "AlreadyExists", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementServiceNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid")) return ApiManagementServiceNameUnavailableReason.Valid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return ApiManagementServiceNameUnavailableReason.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return ApiManagementServiceNameUnavailableReason.AlreadyExists;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementServiceNameUnavailableReason value.");
         }
     }

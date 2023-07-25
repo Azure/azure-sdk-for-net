@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,29 +28,29 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EncryptionType))
             {
-                writer.WritePropertyName("encryptionType");
+                writer.WritePropertyName("encryptionType"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToString());
             }
             if (Optional.IsDefined(ActiveKey))
             {
-                writer.WritePropertyName("activeKey");
+                writer.WritePropertyName("activeKey"u8);
                 writer.WriteObjectValue(ActiveKey);
             }
             if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
-                writer.WritePropertyName("rotationToLatestKeyVersionEnabled");
+                writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
             }
             if (Optional.IsDefined(FederatedClientId))
             {
-                writer.WritePropertyName("federatedClientId");
+                writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId);
             }
             writer.WriteEndObject();

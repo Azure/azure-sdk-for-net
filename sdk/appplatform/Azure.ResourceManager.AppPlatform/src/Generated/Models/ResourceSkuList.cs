@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Object that includes an array of Azure Spring Cloud SKU and a possible link for next set. </summary>
+    /// <summary> Object that includes an array of Azure Spring Apps SKU and a possible link for next set. </summary>
     internal partial class ResourceSkuList
     {
         /// <summary> Initializes a new instance of ResourceSkuList. </summary>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="value"> Collection of resource SKU. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
         internal ResourceSkuList(IReadOnlyList<AvailableAppPlatformSku> value, string nextLink)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public IReadOnlyList<AvailableAppPlatformSku> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

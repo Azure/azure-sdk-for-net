@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- ECParameters is defined in netstandard2.0 but not net461 (introduced in net47). Test against net461 to make sure a TypeLoadException is not thrown when referencing JsonWebKey. -->
+    <!-- ECParameters is defined in netstandard2.0 but not net462 (introduced in net47). Test against net462 to make sure a TypeLoadException is not thrown when referencing JsonWebKey. -->
     <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
   </PropertyGroup>
 
@@ -14,6 +14,8 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
   </ItemGroup>
 
   <ItemGroup>

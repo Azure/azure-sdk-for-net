@@ -20,8 +20,8 @@ namespace Azure.Search.Documents.Models
 
         public static ScoringStatistics ToScoringStatistics(this string value)
         {
-            if (string.Equals(value, "local", StringComparison.InvariantCultureIgnoreCase)) return ScoringStatistics.Local;
-            if (string.Equals(value, "global", StringComparison.InvariantCultureIgnoreCase)) return ScoringStatistics.Global;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "local")) return ScoringStatistics.Local;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "global")) return ScoringStatistics.Global;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringStatistics value.");
         }
     }

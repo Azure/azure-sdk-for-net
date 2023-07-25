@@ -15,31 +15,33 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupSupportedFeature DeserializeBackupSupportedFeature(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> featureName = default;
             Optional<FeatureSupportStatus> supportStatus = default;
             Optional<IReadOnlyList<string>> exposureControlledFeatures = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("featureName"))
+                if (property.NameEquals("featureName"u8))
                 {
                     featureName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportStatus"))
+                if (property.NameEquals("supportStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportStatus = new FeatureSupportStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("exposureControlledFeatures"))
+                if (property.NameEquals("exposureControlledFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

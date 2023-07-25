@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static PoolListResult DeserializePoolListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PoolData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<DevCenterPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PoolData> array = new List<PoolData>();
+                    List<DevCenterPoolData> array = new List<DevCenterPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PoolData.DeserializePoolData(item));
+                        array.Add(DevCenterPoolData.DeserializeDevCenterPoolData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

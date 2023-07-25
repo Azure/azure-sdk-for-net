@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableEarlyTermination))
             {
-                writer.WritePropertyName("enableEarlyTermination");
+                writer.WritePropertyName("enableEarlyTermination"u8);
                 writer.WriteBooleanValue(EnableEarlyTermination.Value);
             }
             if (Optional.IsDefined(ExitScore))
             {
                 if (ExitScore != null)
                 {
-                    writer.WritePropertyName("exitScore");
+                    writer.WritePropertyName("exitScore"u8);
                     writer.WriteNumberValue(ExitScore.Value);
                 }
                 else
@@ -35,27 +35,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(MaxConcurrentTrials))
             {
-                writer.WritePropertyName("maxConcurrentTrials");
+                writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
             if (Optional.IsDefined(MaxCoresPerTrial))
             {
-                writer.WritePropertyName("maxCoresPerTrial");
+                writer.WritePropertyName("maxCoresPerTrial"u8);
                 writer.WriteNumberValue(MaxCoresPerTrial.Value);
             }
             if (Optional.IsDefined(MaxTrials))
             {
-                writer.WritePropertyName("maxTrials");
+                writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
             if (Optional.IsDefined(TrialTimeout))
             {
-                writer.WritePropertyName("trialTimeout");
+                writer.WritePropertyName("trialTimeout"u8);
                 writer.WriteStringValue(TrialTimeout.Value, "P");
             }
             writer.WriteEndObject();
@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TableVerticalLimitSettings DeserializeTableVerticalLimitSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableEarlyTermination = default;
             Optional<double?> exitScore = default;
             Optional<int> maxConcurrentTrials = default;
@@ -72,17 +76,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TimeSpan> trialTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableEarlyTermination"))
+                if (property.NameEquals("enableEarlyTermination"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableEarlyTermination = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("exitScore"))
+                if (property.NameEquals("exitScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,51 +95,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     exitScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentTrials"))
+                if (property.NameEquals("maxConcurrentTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentTrials = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxCoresPerTrial"))
+                if (property.NameEquals("maxCoresPerTrial"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxCoresPerTrial = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxTrials"))
+                if (property.NameEquals("maxTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTrials = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("trialTimeout"))
+                if (property.NameEquals("trialTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trialTimeout = property.Value.GetTimeSpan("P");

@@ -13,6 +13,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
     [ClientTestFixture(
         QuestionAnsweringClientOptions.ServiceVersion.V2021_10_01
     )]
+    [IgnoreServiceError(429, "429")]
     public abstract class QuestionAnsweringTestBase<TClient> : RecordedTestBase<QuestionAnsweringTestEnvironment> where TClient : class
     {
         protected QuestionAnsweringTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)

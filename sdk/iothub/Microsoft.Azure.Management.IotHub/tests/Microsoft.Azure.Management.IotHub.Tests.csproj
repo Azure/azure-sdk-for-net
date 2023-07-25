@@ -7,7 +7,6 @@
     <AssemblyName>IotHub.Tests</AssemblyName>
     <Version>1.0.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>

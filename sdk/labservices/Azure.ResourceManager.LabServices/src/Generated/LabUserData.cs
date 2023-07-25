@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    /// <summary> A class representing the LabUser data model. </summary>
+    /// <summary>
+    /// A class representing the LabUser data model.
+    /// User of a lab that can register for and use virtual machines within the lab.
+    /// </summary>
     public partial class LabUserData : ResourceData
     {
         /// <summary> Initializes a new instance of LabUserData. </summary>
@@ -32,9 +35,9 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="systemData"> The systemData. </param>
         /// <param name="additionalUsageQuota"> The amount of usage quota time the user gets in addition to the lab usage quota. </param>
         /// <param name="provisioningState"> Current provisioning state of the user resource. </param>
-        /// <param name="displayName"> Display name of the user, for example user&apos;s full name. </param>
+        /// <param name="displayName"> Display name of the user, for example user's full name. </param>
         /// <param name="email"> Email address of the user. </param>
-        /// <param name="registrationState"> State of the user&apos;s registration within the lab. </param>
+        /// <param name="registrationState"> State of the user's registration within the lab. </param>
         /// <param name="invitationState"> State of the invitation message for the user. </param>
         /// <param name="invitationSentOn"> Date and time when the invitation message was sent to the user. </param>
         /// <param name="totalUsage"> How long the user has used their virtual machines in this lab. </param>
@@ -54,11 +57,11 @@ namespace Azure.ResourceManager.LabServices
         public TimeSpan? AdditionalUsageQuota { get; set; }
         /// <summary> Current provisioning state of the user resource. </summary>
         public LabServicesProvisioningState? ProvisioningState { get; }
-        /// <summary> Display name of the user, for example user&apos;s full name. </summary>
+        /// <summary> Display name of the user, for example user's full name. </summary>
         public string DisplayName { get; }
         /// <summary> Email address of the user. </summary>
         public string Email { get; set; }
-        /// <summary> State of the user&apos;s registration within the lab. </summary>
+        /// <summary> State of the user's registration within the lab. </summary>
         public LabUserRegistrationState? RegistrationState { get; }
         /// <summary> State of the invitation message for the user. </summary>
         public LabUserInvitationState? InvitationState { get; }

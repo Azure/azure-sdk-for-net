@@ -31,34 +31,34 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ExtensionResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of KubernetesClusterExtensionResources in the ResourceGroupResource. </summary>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
-        /// <returns> An object representing collection of ExtensionResources and their operations over a ExtensionResource. </returns>
-        public virtual ExtensionCollection GetExtensions(string clusterRp, string clusterResourceName, string clusterName)
+        /// <returns> An object representing collection of KubernetesClusterExtensionResources and their operations over a KubernetesClusterExtensionResource. </returns>
+        public virtual KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(string clusterRp, string clusterResourceName, string clusterName)
         {
-            return new ExtensionCollection(Client, Id, clusterRp, clusterResourceName, clusterName);
+            return new KubernetesClusterExtensionCollection(Client, Id, clusterRp, clusterResourceName, clusterName);
         }
 
-        /// <summary> Gets a collection of FluxConfigurationResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of KubernetesFluxConfigurationResources in the ResourceGroupResource. </summary>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
-        /// <returns> An object representing collection of FluxConfigurationResources and their operations over a FluxConfigurationResource. </returns>
-        public virtual FluxConfigurationCollection GetFluxConfigurations(string clusterRp, string clusterResourceName, string clusterName)
+        /// <returns> An object representing collection of KubernetesFluxConfigurationResources and their operations over a KubernetesFluxConfigurationResource. </returns>
+        public virtual KubernetesFluxConfigurationCollection GetKubernetesFluxConfigurations(string clusterRp, string clusterResourceName, string clusterName)
         {
-            return new FluxConfigurationCollection(Client, Id, clusterRp, clusterResourceName, clusterName);
+            return new KubernetesFluxConfigurationCollection(Client, Id, clusterRp, clusterResourceName, clusterName);
         }
 
-        /// <summary> Gets a collection of SourceControlConfigurationResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of KubernetesSourceControlConfigurationResources in the ResourceGroupResource. </summary>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
-        /// <returns> An object representing collection of SourceControlConfigurationResources and their operations over a SourceControlConfigurationResource. </returns>
-        public virtual SourceControlConfigurationCollection GetSourceControlConfigurations(string clusterRp, string clusterResourceName, string clusterName)
+        /// <returns> An object representing collection of KubernetesSourceControlConfigurationResources and their operations over a KubernetesSourceControlConfigurationResource. </returns>
+        public virtual KubernetesSourceControlConfigurationCollection GetKubernetesSourceControlConfigurations(string clusterRp, string clusterResourceName, string clusterName)
         {
-            return new SourceControlConfigurationCollection(Client, Id, clusterRp, clusterResourceName, clusterName);
+            return new KubernetesSourceControlConfigurationCollection(Client, Id, clusterRp, clusterResourceName, clusterName);
         }
     }
 }

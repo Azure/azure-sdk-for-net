@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get information about a topic type.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes/{topicTypeName}
-        /// Operation Id: TopicTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,8 +92,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get information about a topic type.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes/{topicTypeName}
-        /// Operation Id: TopicTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -114,62 +129,58 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// List all registered topic types.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes
-        /// Operation Id: TopicTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TopicTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TopicTypeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TopicTypeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _topicTypeRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopicTypeResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TopicTypeResource(Client, TopicTypeData.DeserializeTopicTypeData(e)), _topicTypeClientDiagnostics, Pipeline, "TopicTypeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// List all registered topic types.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes
-        /// Operation Id: TopicTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TopicTypeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TopicTypeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<TopicTypeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _topicTypeRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TopicTypeResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new TopicTypeResource(Client, TopicTypeData.DeserializeTopicTypeData(e)), _topicTypeClientDiagnostics, Pipeline, "TopicTypeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes/{topicTypeName}
-        /// Operation Id: TopicTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,8 +206,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.EventGrid/topicTypes/{topicTypeName}
-        /// Operation Id: TopicTypes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

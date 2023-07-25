@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
-using Castle.Core.Internal;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
@@ -17,7 +15,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public void AnalyzeConversation_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
@@ -26,51 +24,51 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:AnalyzeConversation_ConversationSummarization
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversations = new[]
+                    Conversations = new[]
                     {
                         new
                         {
-                            conversationItems = new[]
+                            ConversationItems = new[]
                             {
                                 new
                                 {
-                                    text = "Hello, how can I help you?",
-                                    id = "1",
-                                    role = "Agent",
-                                    participantId = "Agent_1",
+                                    Text = "Hello, how can I help you?",
+                                    Id = "1",
+                                    Role = "Agent",
+                                    ParticipantId = "Agent_1",
                                 },
                                 new
                                 {
-                                    text = "How to upgrade Office? I am getting error messages the whole day.",
-                                    id = "2",
-                                    role = "Customer",
-                                    participantId = "Customer_1",
+                                    Text = "How to upgrade Office? I am getting error messages the whole day.",
+                                    Id = "2",
+                                    Role = "Customer",
+                                    ParticipantId = "Customer_1",
                                 },
                                 new
                                 {
-                                    text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                                    id = "3",
-                                    role = "Agent",
-                                    participantId = "Agent_1",
+                                    Text = "Press the upgrade button please. Then sign in and follow the instructions.",
+                                    Id = "3",
+                                    Role = "Agent",
+                                    ParticipantId = "Agent_1",
                                 },
                             },
-                            id = "1",
-                            language = "en",
-                            modality = "text",
+                            Id = "1",
+                            Language = "en",
+                            Modality = "text",
                         },
                     }
                 },
-                tasks = new[]
+                Tasks = new[]
                 {
                     new
                     {
-                        taskName = "Issue task",
-                        kind = "ConversationalSummarizationTask",
-                        parameters = new
+                        TaskName = "Issue task",
+                        Kind = "ConversationalSummarizationTask",
+                        Parameters = new
                         {
-                            summaryAspects = new[]
+                            SummaryAspects = new[]
                             {
                                 "issue",
                             }
@@ -78,11 +76,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     },
                     new
                     {
-                        taskName = "Resolution task",
-                        kind = "ConversationalSummarizationTask",
-                        parameters = new
+                        TaskName = "Resolution task",
+                        Kind = "ConversationalSummarizationTask",
+                        Parameters = new
                         {
-                            summaryAspects = new[]
+                            SummaryAspects = new[]
                             {
                                 "resolution",
                             }
@@ -91,24 +89,23 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 },
             };
 
-            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
+            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-            using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-            JsonElement jobResults = result.RootElement;
-            foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            foreach (dynamic task in jobResults.Tasks.Items)
             {
-                Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
-                JsonElement results = task.GetProperty("results");
-                foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+                Console.WriteLine($"Task name: {task.TaskName}");
+                dynamic results = task.Results;
+                foreach (dynamic conversation in results.Conversations)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+                    Console.WriteLine($"Conversation: #{conversation.Id}");
                     Console.WriteLine("Summaries:");
-                    foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
+                    foreach (dynamic summary in conversation.Summaries)
                     {
-                        Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
-                        Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+                        Console.WriteLine($"Text: {summary.Text}");
+                        Console.WriteLine($"Aspect: {summary.Aspect}");
 #if !SNIPPET
-                        aspects.Add(summary.GetProperty("aspect").GetString());
+                        aspects.Add(summary.Aspect);
 #endif
                     }
                     Console.WriteLine();
@@ -122,7 +119,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeConversationAsync_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
@@ -130,51 +127,51 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversations = new[]
+                    Conversations = new[]
                     {
                         new
                         {
-                            conversationItems = new[]
+                            ConversationItems = new[]
                             {
                                 new
                                 {
-                                    text = "Hello, how can I help you?",
-                                    id = "1",
-                                    role = "Agent",
-                                    participantId = "Agent_1",
+                                    Text = "Hello, how can I help you?",
+                                    Id = "1",
+                                    Role = "Agent",
+                                    ParticipantId = "Agent_1",
                                 },
                                 new
                                 {
-                                    text = "How to upgrade Office? I am getting error messages the whole day.",
-                                    id = "2",
-                                    role = "Customer",
-                                    participantId = "Customer_1",
+                                    Text = "How to upgrade Office? I am getting error messages the whole day.",
+                                    Id = "2",
+                                    Role = "Customer",
+                                    ParticipantId = "Customer_1",
                                 },
                                 new
                                 {
-                                    text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                                    id = "3",
-                                    role = "Agent",
-                                    participantId = "Agent_1",
+                                    Text = "Press the upgrade button please. Then sign in and follow the instructions.",
+                                    Id = "3",
+                                    Role = "Agent",
+                                    ParticipantId = "Agent_1",
                                 },
                             },
-                            id = "1",
-                            language = "en",
-                            modality = "text",
+                            Id = "1",
+                            Language = "en",
+                            Modality = "text",
                         },
                     }
                 },
-                tasks = new[]
+                Tasks = new[]
                 {
                     new
                     {
-                        taskName = "Issue task",
-                        kind = "ConversationalSummarizationTask",
-                        parameters = new
+                        TaskName = "Issue task",
+                        Kind = "ConversationalSummarizationTask",
+                        Parameters = new
                         {
-                            summaryAspects = new[]
+                            SummaryAspects = new[]
                             {
                                 "issue",
                             }
@@ -182,11 +179,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     },
                     new
                     {
-                        taskName = "Resolution task",
-                        kind = "ConversationalSummarizationTask",
-                        parameters = new
+                        TaskName = "Resolution task",
+                        Kind = "ConversationalSummarizationTask",
+                        Parameters = new
                         {
-                            summaryAspects = new[]
+                            SummaryAspects = new[]
                             {
                                 "resolution",
                             }
@@ -196,25 +193,24 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             #region Snippet:AnalyzeConversationAsync_ConversationSummarization
-            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
+            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
             #endregion
 
-            using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-            JsonElement jobResults = result.RootElement;
-            foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            foreach (dynamic task in jobResults.Tasks.Items)
             {
-                Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
-                JsonElement results = task.GetProperty("results");
-                foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+                Console.WriteLine($"Task name: {task.TaskName}");
+                dynamic results = task.Results;
+                foreach (dynamic conversation in results.Conversations)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+                    Console.WriteLine($"Conversation: #{conversation.Id}");
                     Console.WriteLine("Summaries:");
-                    foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
+                    foreach (dynamic summary in conversation.Summaries)
                     {
-                        Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
-                        Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+                        Console.WriteLine($"Text: {summary.Text}");
+                        Console.WriteLine($"Aspect: {summary.Aspect}");
 #if !SNIPPET
-                        aspects.Add(summary.GetProperty("aspect").GetString());
+                        aspects.Add(summary.Aspect);
 #endif
                     }
                     Console.WriteLine();

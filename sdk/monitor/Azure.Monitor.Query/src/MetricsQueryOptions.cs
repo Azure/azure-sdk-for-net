@@ -31,7 +31,7 @@ namespace Azure.Monitor.Query
         /// </para>
         /// <para>
         /// Although this collection cannot be set, it can be modified.
-        /// See <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#object-initializers-with-collection-read-only-property-initialization">Object initializers with collection read-only property initialization</see>.
+        /// See <see href="https://learn.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#object-initializers-with-collection-read-only-property-initialization">Object initializers with collection read-only property initialization</see>.
         /// </para>
         /// </summary>
         public IList<MetricAggregationType> Aggregations { get; } = new List<MetricAggregationType>();
@@ -45,7 +45,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets or sets the filter that is used to refine the set of metric data returned.
         /// <example>
-        /// MetricResult contains metadata A, B and C.<br/>
+        /// <see cref="MetricResult"/> contains metadata A, B, and C.<br/>
         /// <br/>
         ///     - Return all time series of C where A = a1 and B = b1 or b2:<br/>
         ///         <c>A eq 'a1' and B eq 'b1' or B eq 'b2' and C eq '*'</c><br/>

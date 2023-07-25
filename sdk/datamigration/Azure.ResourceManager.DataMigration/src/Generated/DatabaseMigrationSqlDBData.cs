@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary> A class representing the DatabaseMigrationSqlDB data model. </summary>
+    /// <summary>
+    /// A class representing the DatabaseMigrationSqlDB data model.
+    /// Database Migration Resource for SQL Database.
+    /// </summary>
     public partial class DatabaseMigrationSqlDBData : ResourceData
     {
         /// <summary> Initializes a new instance of DatabaseMigrationSqlDBData. </summary>

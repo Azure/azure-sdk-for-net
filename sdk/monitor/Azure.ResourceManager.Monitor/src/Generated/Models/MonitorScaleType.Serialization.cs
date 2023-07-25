@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         public static MonitorScaleType ToMonitorScaleType(this string value)
         {
-            if (string.Equals(value, "ChangeCount", StringComparison.InvariantCultureIgnoreCase)) return MonitorScaleType.ChangeCount;
-            if (string.Equals(value, "PercentChangeCount", StringComparison.InvariantCultureIgnoreCase)) return MonitorScaleType.PercentChangeCount;
-            if (string.Equals(value, "ExactCount", StringComparison.InvariantCultureIgnoreCase)) return MonitorScaleType.ExactCount;
-            if (string.Equals(value, "ServiceAllowedNextValue", StringComparison.InvariantCultureIgnoreCase)) return MonitorScaleType.ServiceAllowedNextValue;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ChangeCount")) return MonitorScaleType.ChangeCount;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PercentChangeCount")) return MonitorScaleType.PercentChangeCount;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ExactCount")) return MonitorScaleType.ExactCount;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceAllowedNextValue")) return MonitorScaleType.ServiceAllowedNextValue;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorScaleType value.");
         }
     }

@@ -16,11 +16,11 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("weight");
+            writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
-            writer.WritePropertyName("labelSelectors");
+            writer.WritePropertyName("queueSelectors"u8);
             writer.WriteStartArray();
-            foreach (var item in LabelSelectors)
+            foreach (var item in QueueSelectors)
             {
                 writer.WriteObjectValue(item);
             }
@@ -30,27 +30,31 @@ namespace Azure.Communication.JobRouter
 
         internal static QueueWeightedAllocation DeserializeQueueWeightedAllocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double weight = default;
-            IList<QueueSelector> labelSelectors = default;
+            IList<RouterQueueSelector> queueSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("weight"))
+                if (property.NameEquals("weight"u8))
                 {
                     weight = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("labelSelectors"))
+                if (property.NameEquals("queueSelectors"u8))
                 {
-                    List<QueueSelector> array = new List<QueueSelector>();
+                    List<RouterQueueSelector> array = new List<RouterQueueSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueueSelector.DeserializeQueueSelector(item));
+                        array.Add(RouterQueueSelector.DeserializeRouterQueueSelector(item));
                     }
-                    labelSelectors = array;
+                    queueSelectors = array;
                     continue;
                 }
             }
-            return new QueueWeightedAllocation(weight, labelSelectors);
+            return new QueueWeightedAllocation(weight, queueSelectors);
         }
     }
 }

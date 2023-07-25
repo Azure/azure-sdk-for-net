@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataConnectorData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsDataConnectorData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        DataConnectorData value = default;
+                        SecurityInsightsDataConnectorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataConnectorData.DeserializeDataConnectorData(document.RootElement);
+                        value = SecurityInsightsDataConnectorData.DeserializeSecurityInsightsDataConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataConnectorData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsDataConnectorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataConnectorData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsDataConnectorData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        DataConnectorData value = default;
+                        SecurityInsightsDataConnectorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataConnectorData.DeserializeDataConnectorData(document.RootElement);
+                        value = SecurityInsightsDataConnectorData.DeserializeSecurityInsightsDataConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataConnectorData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsDataConnectorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnectorData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, SecurityInsightsDataConnectorData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dataConnectorId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataConnectorData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnectorData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsDataConnectorData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, SecurityInsightsDataConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        DataConnectorData value = default;
+                        SecurityInsightsDataConnectorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataConnectorData.DeserializeDataConnectorData(document.RootElement);
+                        value = SecurityInsightsDataConnectorData.DeserializeSecurityInsightsDataConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dataConnectorId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataConnectorData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnectorData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsDataConnectorData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, SecurityInsightsDataConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        DataConnectorData value = default;
+                        SecurityInsightsDataConnectorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataConnectorData.DeserializeDataConnectorData(document.RootElement);
+                        value = SecurityInsightsDataConnectorData.DeserializeSecurityInsightsDataConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -368,164 +368,6 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                 case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateConnectRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/dataConnectors/", false);
-            uri.AppendPath(dataConnectorId, true);
-            uri.AppendPath("/connect", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectBody);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Connects a data connector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="dataConnectorId"> Connector ID. </param>
-        /// <param name="connectBody"> The data connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dataConnectorId"/> or <paramref name="connectBody"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ConnectAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
-            Argument.AssertNotNull(connectBody, nameof(connectBody));
-
-            using var message = CreateConnectRequest(subscriptionId, resourceGroupName, workspaceName, dataConnectorId, connectBody);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Connects a data connector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="dataConnectorId"> Connector ID. </param>
-        /// <param name="connectBody"> The data connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dataConnectorId"/> or <paramref name="connectBody"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Connect(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
-            Argument.AssertNotNull(connectBody, nameof(connectBody));
-
-            using var message = CreateConnectRequest(subscriptionId, resourceGroupName, workspaceName, dataConnectorId, connectBody);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDisconnectRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/providers/Microsoft.SecurityInsights/dataConnectors/", false);
-            uri.AppendPath(dataConnectorId, true);
-            uri.AppendPath("/disconnect", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Disconnect a data connector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="dataConnectorId"> Connector ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DisconnectAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
-
-            using var message = CreateDisconnectRequest(subscriptionId, resourceGroupName, workspaceName, dataConnectorId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Disconnect a data connector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="dataConnectorId"> Connector ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Disconnect(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
-
-            using var message = CreateDisconnectRequest(subscriptionId, resourceGroupName, workspaceName, dataConnectorId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

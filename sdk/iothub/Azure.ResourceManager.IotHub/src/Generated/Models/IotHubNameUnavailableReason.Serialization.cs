@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.IotHub.Models
 
         public static IotHubNameUnavailableReason ToIotHubNameUnavailableReason(this string value)
         {
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return IotHubNameUnavailableReason.Invalid;
-            if (string.Equals(value, "AlreadyExists", StringComparison.InvariantCultureIgnoreCase)) return IotHubNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return IotHubNameUnavailableReason.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return IotHubNameUnavailableReason.AlreadyExists;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubNameUnavailableReason value.");
         }
     }

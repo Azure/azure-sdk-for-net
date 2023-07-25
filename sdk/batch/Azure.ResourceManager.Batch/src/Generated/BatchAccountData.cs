@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    /// <summary> A class representing the BatchAccount data model. </summary>
+    /// <summary>
+    /// A class representing the BatchAccount data model.
+    /// Contains information about an Azure Batch account.
+    /// </summary>
     public partial class BatchAccountData : ResourceData
     {
         /// <summary> Initializes a new instance of BatchAccountData. </summary>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="poolAllocationMode"> The allocation mode for creating pools in the Batch account. </param>
         /// <param name="keyVaultReference"> Identifies the Azure key vault associated with a Batch account. </param>
-        /// <param name="publicNetworkAccess"> If not specified, the default value is &apos;enabled&apos;. </param>
+        /// <param name="publicNetworkAccess"> If not specified, the default value is 'enabled'. </param>
         /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Batch account. </param>
         /// <param name="autoStorage"> Contains information about the auto-storage account associated with a Batch account. </param>
@@ -85,7 +88,7 @@ namespace Azure.ResourceManager.Batch
         public BatchAccountPoolAllocationMode? PoolAllocationMode { get; }
         /// <summary> Identifies the Azure key vault associated with a Batch account. </summary>
         public BatchKeyVaultReference KeyVaultReference { get; }
-        /// <summary> If not specified, the default value is &apos;enabled&apos;. </summary>
+        /// <summary> If not specified, the default value is 'enabled'. </summary>
         public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
         public BatchNetworkProfile NetworkProfile { get; set; }

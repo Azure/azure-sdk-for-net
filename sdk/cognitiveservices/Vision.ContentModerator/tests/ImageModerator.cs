@@ -3,21 +3,16 @@ using Microsoft.Azure.CognitiveServices.ContentModerator;
 using Microsoft.Azure.CognitiveServices.ContentModerator.Models;
 using System.Collections.Generic;
 using System.Net;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Linq;
 using ContentModeratorTests.Helpers;
 using System.IO;
-using d = System.Drawing;
-using ContentModeratorTests.Data;
-using System.Reflection;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 
 namespace ContentModeratorTests
 {
-        public class ImageModerator : TestBase
+    public class ImageModerator : TestBase
     {
 
         ContentModeratorClient client = null;

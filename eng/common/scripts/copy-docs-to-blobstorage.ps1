@@ -1,5 +1,6 @@
 # Note, due to how `Expand-Archive` is leveraged in this script,
 # powershell core is a requirement for successful execution.
+[CmdletBinding()]
 param (
   $AzCopy,
   $DocLocation,
@@ -199,9 +200,9 @@ function Upload-Blobs
     LogDebug "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
     LogDebug "Release Tag $($ReleaseTag)"
 
-    # Use the step to replace default branch link to release tag link 
+    # Use the step to replace default branch link to release tag link
     if ($ReleaseTag) {
-        foreach ($htmlFile in (Get-ChildItem $DocDir -include *.html -r)) 
+        foreach ($htmlFile in (Get-ChildItem $DocDir -include *.html -r))
         {
             $fileContent = Get-Content -Path $htmlFile -Raw
             $updatedFileContent = $fileContent -replace $RepoReplaceRegex, "`${1}$ReleaseTag"
@@ -209,22 +210,22 @@ function Upload-Blobs
                 Set-Content -Path $htmlFile -Value $updatedFileContent -NoNewLine
             }
         }
-    } 
+    }
     else {
         LogWarning "Not able to do the default branch link replacement, since no release tag found for the release. Please manually check."
-    } 
-   
+    }
+
     LogDebug "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
     & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
-    
+
     LogDebug "Handling versioning files under $($DocDest)/$($PkgName)/versioning/"
     $versionsObj = (Update-Existing-Versions -PkgName $PkgName -PkgVersion $DocVersion -DocDest $DocDest)
-    $latestVersion = $versionsObj.LatestGAPackage 
+    $latestVersion = $versionsObj.LatestGAPackage
     if (!$latestVersion) {
-        $latestVersion = $versionsObj.LatestPreviewPackage 
+        $latestVersion = $versionsObj.LatestPreviewPackage
     }
     LogDebug "Fetching the latest version $latestVersion"
-    
+
     if ($UploadLatest -and ($latestVersion -eq $DocVersion))
     {
         LogDebug "Uploading $($PkgName) to latest folder in $($DocDest)..."
@@ -243,3 +244,9 @@ else
     See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
 }
 
+# If we hit a failure then dump out the azcopy logs to help with debugging
+if ($LASTEXITCODE)
+{
+    Write-Host "Copying failed with error code [$LASTEXITCODE]. Dumping the logs to help diagnose."
+    Get-ChildItem $env:UserProfile\.azcopy -Filter *.log | ForEach-Object { "LOG: " + $_; Get-Content $_; }
+}

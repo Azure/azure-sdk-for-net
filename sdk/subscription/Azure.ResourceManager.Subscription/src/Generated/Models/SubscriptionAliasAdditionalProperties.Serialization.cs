@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Subscription.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagementGroupId))
             {
-                writer.WritePropertyName("managementGroupId");
+                writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
             if (Optional.IsDefined(SubscriptionTenantId))
             {
-                writer.WritePropertyName("subscriptionTenantId");
+                writer.WritePropertyName("subscriptionTenantId"u8);
                 writer.WriteStringValue(SubscriptionTenantId.Value);
             }
             if (Optional.IsDefined(SubscriptionOwnerId))
             {
-                writer.WritePropertyName("subscriptionOwnerId");
+                writer.WritePropertyName("subscriptionOwnerId"u8);
                 writer.WriteStringValue(SubscriptionOwnerId);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {

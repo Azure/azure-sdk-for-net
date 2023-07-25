@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Include))
             {
-                writer.WritePropertyName("include");
+                writer.WritePropertyName("include"u8);
                 writer.WriteStartArray();
                 foreach (var item in Include)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(Exclude))
             {
-                writer.WritePropertyName("exclude");
+                writer.WritePropertyName("exclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exclude)
                 {
@@ -41,15 +41,18 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpointScope DeserializeConnectionMonitorEndpointScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ConnectionMonitorEndpointScopeItem>> include = default;
             Optional<IList<ConnectionMonitorEndpointScopeItem>> exclude = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("include"))
+                if (property.NameEquals("include"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectionMonitorEndpointScopeItem> array = new List<ConnectionMonitorEndpointScopeItem>();
@@ -60,11 +63,10 @@ namespace Azure.ResourceManager.Network.Models
                     include = array;
                     continue;
                 }
-                if (property.NameEquals("exclude"))
+                if (property.NameEquals("exclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectionMonitorEndpointScopeItem> array = new List<ConnectionMonitorEndpointScopeItem>();

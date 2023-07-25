@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <summary> Initializes a new instance of ReportList. </summary>
         internal ReportList()
         {
-            Value = new ChangeTrackingList<Report>();
+            Value = new ChangeTrackingList<AutomanageConfigurationProfileAssignmentReportData>();
         }
 
         /// <summary> Initializes a new instance of ReportList. </summary>
         /// <param name="value"> Result of the list report operation. </param>
-        internal ReportList(IReadOnlyList<Report> value)
+        internal ReportList(IReadOnlyList<AutomanageConfigurationProfileAssignmentReportData> value)
         {
             Value = value;
         }
 
         /// <summary> Result of the list report operation. </summary>
-        public IReadOnlyList<Report> Value { get; }
+        public IReadOnlyList<AutomanageConfigurationProfileAssignmentReportData> Value { get; }
     }
 }

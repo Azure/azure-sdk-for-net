@@ -1,14 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.Identity
 {
     /// <summary>
     /// Options to configure the <see cref="SharedTokenCacheCredential"/> authentication.
     /// </summary>
-    public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery
     {
         private string _tenantId;
+        private TokenCachePersistenceOptions _tokenCachePersistenceOptions;
 
         internal static readonly TokenCachePersistenceOptions s_defaulTokenCachetPersistenceOptions = new TokenCachePersistenceOptions();
 
@@ -44,9 +47,18 @@ namespace Azure.Identity
         public AuthenticationRecord AuthenticationRecord { get; set; }
 
         /// <summary>
-        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential.
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. Value cannot be null.
         /// </summary>
-        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; }
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions
+        {
+            get { return _tokenCachePersistenceOptions; }
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
+
+                _tokenCachePersistenceOptions = value;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialOptions"/>.
@@ -64,5 +76,8 @@ namespace Azure.Identity
             // if no tokenCacheOptions were specified we should use the default shared token cache
             TokenCachePersistenceOptions = tokenCacheOptions ?? s_defaulTokenCachetPersistenceOptions;
         }
+
+        /// <inheritdoc/>
+        public bool DisableInstanceDiscovery { get; set; }
     }
 }

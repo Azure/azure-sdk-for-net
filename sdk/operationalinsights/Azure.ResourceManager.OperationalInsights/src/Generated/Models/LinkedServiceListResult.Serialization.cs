@@ -16,20 +16,23 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static LinkedServiceListResult DeserializeLinkedServiceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<LinkedServiceData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<OperationalInsightsLinkedServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LinkedServiceData> array = new List<LinkedServiceData>();
+                    List<OperationalInsightsLinkedServiceData> array = new List<OperationalInsightsLinkedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedServiceData.DeserializeLinkedServiceData(item));
+                        array.Add(OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(item));
                     }
                     value = array;
                     continue;

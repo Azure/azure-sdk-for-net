@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,35 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.2.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.1 (2023-02-14)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
+## 1.1.0 (2022-12-06)
+
+### Bugs Fixed
+
 - Renamed `ExpiresOn` to `ExpireOn`.
 
 ### Other Changes
+
+- Upgraded API version to 2022-09-01
 
 ## 1.0.0 (2022-09-08)
 
@@ -156,6 +182,14 @@ Polishing since last public beta release:
 
 ## 1.0.0-beta.1 (2021-09-01)
 
+### Breaking Changes
+
+New design of track 2 initial commit.
+
+### Package Name
+
+The package name has been changed from `Microsoft.Azure.Management.Storage` to `Azure.ResourceManager.Storage`
+
 ### General New Features
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
@@ -170,11 +204,7 @@ This package is a Public Preview version, so expect incompatible changes in subs
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
-#### Package Name
-
-The package name has been changed from `Microsoft.Azure.Management.Storage` to `Azure.ResourceManager.Storage`
-
-#### Management Client Changes
+### Management Client Changes
 
 Example: Create a storage account:
 
@@ -203,11 +233,13 @@ storageManagementClient.StorageAccounts.Create(resourceGroupName, accountName, p
 ```
 
 After upgrade:
-```C# Snippet:Create_Storage_Account
+```C# Snippet:Create_Storage_Account_Namespaces
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
+```
+```C# Snippet:Create_Storage_Account
 string accountName = "myaccount";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());

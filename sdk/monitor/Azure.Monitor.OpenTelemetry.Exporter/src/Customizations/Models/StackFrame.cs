@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class StackFrame
@@ -20,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             else
             {
-                assemblyName = methodInfo.Module.Assembly.FullName;
+                assemblyName = methodInfo.Module.Assembly.FullName ?? "unknown";
                 if (methodInfo.DeclaringType != null)
                 {
                     fullName = methodInfo.DeclaringType.FullName + "." + methodInfo.Name;

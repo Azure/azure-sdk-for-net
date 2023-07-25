@@ -18,8 +18,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of PhoneNumberSearchResult. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
-        /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. geographic, or tollFree. </param>
-        /// <param name="assignmentType"> Phone number&apos;s assignment type. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, or tollFree. </param>
+        /// <param name="assignmentType"> Phone number's assignment type. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <param name="searchExpiresOn"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
@@ -43,12 +43,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of PhoneNumberSearchResult. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
-        /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. geographic, or tollFree. </param>
-        /// <param name="assignmentType"> Phone number&apos;s assignment type. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, or tollFree. </param>
+        /// <param name="assignmentType"> Phone number's assignment type. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <param name="searchExpiresOn"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
-        internal PhoneNumberSearchResult(string searchId, IReadOnlyList<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn)
+        /// <param name="errorCode"> The error code of the search. </param>
+        /// <param name="error"> Mapping Error Messages to Codes. </param>
+        internal PhoneNumberSearchResult(string searchId, IReadOnlyList<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn, int? errorCode, PhoneNumberSearchResultError? error)
         {
             SearchId = searchId;
             PhoneNumbers = phoneNumbers;
@@ -57,19 +59,25 @@ namespace Azure.Communication.PhoneNumbers
             Capabilities = capabilities;
             Cost = cost;
             SearchExpiresOn = searchExpiresOn;
+            ErrorCode = errorCode;
+            Error = error;
         }
 
         /// <summary> The search id. </summary>
         public string SearchId { get; }
         /// <summary> The phone numbers that are available. Can be fewer than the desired search quantity. </summary>
         public IReadOnlyList<string> PhoneNumbers { get; }
-        /// <summary> The phone number&apos;s type, e.g. geographic, or tollFree. </summary>
+        /// <summary> The phone number's type, e.g. geographic, or tollFree. </summary>
         public PhoneNumberType PhoneNumberType { get; }
-        /// <summary> Phone number&apos;s assignment type. </summary>
+        /// <summary> Phone number's assignment type. </summary>
         public PhoneNumberAssignmentType AssignmentType { get; }
         /// <summary> Capabilities of a phone number. </summary>
         public PhoneNumberCapabilities Capabilities { get; }
         /// <summary> The incurred cost for a single phone number. </summary>
         public PhoneNumberCost Cost { get; }
+        /// <summary> The error code of the search. </summary>
+        public int? ErrorCode { get; }
+        /// <summary> Mapping Error Messages to Codes. </summary>
+        public PhoneNumberSearchResultError? Error { get; }
     }
 }

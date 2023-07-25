@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: CognitiveServices
 namespace: Azure.ResourceManager.CognitiveServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/7a6ec0f1e66aac22421f9338c00cbb2d1c97547d/specification/cognitiveservices/resource-manager/readme.md
-tag: package-2022-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/ba1884683c35d1ea63d229a7106f207e507c3861/specification/cognitiveservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -22,6 +21,8 @@ list-exception:
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}: CognitiveServicesDeletedAccount
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}: CognitiveServicesAccount
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}: CommitmentPlan
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}: CognitiveServicesCommitmentPlan
 
 rename-mapping:
   CheckSkuAvailabilityParameter.type: ResourceType
@@ -68,6 +69,17 @@ rename-mapping:
   Usage: ServiceAccountUsage
   UsageListResult: ServiceAccountUsageListResult
   UserOwnedStorage: ServiceAccountUserOwnedStorage
+  RegionSetting: CognitiveServicesRegionSetting
+  RoutingMethods: CognitiveServicesRoutingMethod
+  PatchResourceTags: CognitiveServicesPatchResourceTags
+  MultiRegionSettings: CognitiveServicesMultiRegionSettings
+  CommitmentPlanProperties.commitmentPlanGuid: -|uuid
+  CommitmentPlanAssociation.commitmentPlanId: -|arm-id
+  KeyVaultProperties: CognitiveServicesKeyVaultProperties
+  ModelListResult: CognitiveServicesModelListResult
+  Model: CognitiveServicesModel
+  ModelSku: CognitiveServicesModelSku
+  CapacityConfig: CognitiveServicesCapacityConfig
 
 prepend-rp-prefix:
   - Account
@@ -127,8 +139,8 @@ directive:
     transform: >
       $.CheckDomainAvailabilityParameter.properties.type['x-ms-format'] = 'resource-type';
       $.CheckSkuAvailabilityParameter.properties.type['x-ms-format'] =  'resource-type';
-      $.Encryption.properties.keyVaultProperties['x-ms-client-flatten'] = true;
       $.PrivateEndpointConnection.properties.properties['x-ms-client-flatten'] = true;
+      $.ModelSku.properties.rateLimits['readOnly'] = true;
       delete $.AccountProperties.properties.internalId;
   # TODO, these configs will be replaced by the new rename-mapping
   - from: cognitiveservices.json

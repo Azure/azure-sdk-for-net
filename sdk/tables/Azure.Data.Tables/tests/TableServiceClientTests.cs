@@ -33,6 +33,8 @@ namespace Azure.Data.Tables.Tests
         private static readonly Uri _urlWithTableName = new Uri($"https://someaccount.table.core.windows.net/{TableName}");
         private static readonly Uri _devUrlWIthTableName = new Uri($"https://10.0.0.1:10002/{AccountName}/{TableName}/");
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
+        private readonly Uri _localHttp = new Uri("http://127.0.0.1:10002/accountName");
+        private readonly Uri _localHttpSAS = new Uri($"http://127.0.0.1:10002/accountName?{signature}");
 
         private TableServiceClient service_Instrumented { get; set; }
 
@@ -62,6 +64,16 @@ namespace Azure.Data.Tables.Tests
                 () => new TableServiceClient(_urlHttp, new AzureSasCredential("sig")),
                 Throws.InstanceOf<ArgumentException>(),
                 "The constructor should validate the Uri is https when using a SAS token.");
+
+            Assert.That(
+                () => new TableServiceClient(_localHttp, new AzureSasCredential(signature)),
+                Throws.Nothing,
+                "The constructor should allow local http when using a SAS token.");
+
+            Assert.That(
+                () => new TableServiceClient(_localHttpSAS),
+                Throws.Nothing,
+                "The constructor should allow local http when using a SAS token.");
 
             Assert.That(
                 () => new TableServiceClient(_url, default(AzureSasCredential)),

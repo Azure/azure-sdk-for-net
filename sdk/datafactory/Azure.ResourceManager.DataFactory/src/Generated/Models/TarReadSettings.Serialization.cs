@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,14 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
-                writer.WritePropertyName("preserveCompressionFileNameAsFolder");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PreserveCompressionFileNameAsFolder);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PreserveCompressionFileNameAsFolder.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
+                JsonSerializer.Serialize(writer, PreserveCompressionFileNameAsFolder);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CompressionReadSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -42,23 +39,26 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static TarReadSettings DeserializeTarReadSettings(JsonElement element)
         {
-            Optional<BinaryData> preserveCompressionFileNameAsFolder = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<bool>> preserveCompressionFileNameAsFolder = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preserveCompressionFileNameAsFolder"))
+                if (property.NameEquals("preserveCompressionFileNameAsFolder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    preserveCompressionFileNameAsFolder = BinaryData.FromString(property.Value.GetRawText());
+                    preserveCompressionFileNameAsFolder = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

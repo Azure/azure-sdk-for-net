@@ -6,9 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-artifacts-composite-v5
+tag: package-artifacts-composite-v6
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/e5bc61526e11f9b51e1e098d71a730f1494bc2f8/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/61a8b1a62420c393fe5276c47373ea8dce74a985/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 generation1-convenience-client: true
 public-clients: true
@@ -17,6 +17,8 @@ security-scopes: https://dev.azuresynapse.net/.default
 modelerfour:
   lenient-model-deduplication: true
   seal-single-value-enum-by-default: true
+model-factory-for-hlc:
+- ManagedIntegrationRuntime
 ```
 
 ### Make Endpoint type as Uri
@@ -124,4 +126,16 @@ directive:
   where: $.definitions.TriggerRun.properties
   transform: >
     $.status["x-ms-enum"].values = [{value: "Succeeded", name: "Succeeded" },{value: "Failed", name: "Failed" },{value: "Inprogress", name: "InProgress" }];
+```
+
+### Suppress Abstract Base Class
+
+``` yaml
+suppress-abstract-base-class:
+- CustomSetupBase
+- DataFlow
+- DependencyReference
+- LinkedIntegrationRuntimeType
+- SecretBase
+- WebLinkedServiceTypeProperties
 ```

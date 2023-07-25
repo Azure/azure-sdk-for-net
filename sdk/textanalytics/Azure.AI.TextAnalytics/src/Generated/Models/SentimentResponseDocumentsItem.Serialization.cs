@@ -17,25 +17,20 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DetectedLanguage))
-            {
-                writer.WritePropertyName("detectedLanguage");
-                writer.WriteObjectValue(DetectedLanguage.Value);
-            }
-            writer.WritePropertyName("sentiment");
+            writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment.ToSerialString());
-            writer.WritePropertyName("confidenceScores");
+            writer.WritePropertyName("confidenceScores"u8);
             writer.WriteObjectValue(ConfidenceScores);
-            writer.WritePropertyName("sentences");
+            writer.WritePropertyName("sentences"u8);
             writer.WriteStartArray();
             foreach (var item in Sentences)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("warnings");
+            writer.WritePropertyName("warnings"u8);
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
@@ -44,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
-                writer.WritePropertyName("statistics");
+                writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics.Value);
             }
             writer.WriteEndObject();
@@ -52,7 +47,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SentimentResponseDocumentsItem DeserializeSentimentResponseDocumentsItem(JsonElement element)
         {
-            Optional<DetectedLanguageInternal> detectedLanguage = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TextSentiment sentiment = default;
             SentimentConfidenceScores confidenceScores = default;
             IList<SentenceSentimentInternal> sentences = default;
@@ -61,27 +59,17 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("detectedLanguage"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sentiment"))
+                if (property.NameEquals("sentiment"u8))
                 {
                     sentiment = property.Value.GetString().ToTextSentiment();
                     continue;
                 }
-                if (property.NameEquals("confidenceScores"))
+                if (property.NameEquals("confidenceScores"u8))
                 {
                     confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sentences"))
+                if (property.NameEquals("sentences"u8))
                 {
                     List<SentenceSentimentInternal> array = new List<SentenceSentimentInternal>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -91,12 +79,12 @@ namespace Azure.AI.TextAnalytics.Models
                     sentences = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("warnings"))
+                if (property.NameEquals("warnings"u8))
                 {
                     List<DocumentWarning> array = new List<DocumentWarning>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -106,18 +94,17 @@ namespace Azure.AI.TextAnalytics.Models
                     warnings = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
             }
-            return new SentimentResponseDocumentsItem(id, warnings, Optional.ToNullable(statistics), sentiment, confidenceScores, sentences, Optional.ToNullable(detectedLanguage));
+            return new SentimentResponseDocumentsItem(id, warnings, Optional.ToNullable(statistics), sentiment, confidenceScores, sentences);
         }
     }
 }

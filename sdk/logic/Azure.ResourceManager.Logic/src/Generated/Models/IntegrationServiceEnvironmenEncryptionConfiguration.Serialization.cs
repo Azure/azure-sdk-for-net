@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EncryptionKeyReference))
             {
-                writer.WritePropertyName("encryptionKeyReference");
+                writer.WritePropertyName("encryptionKeyReference"u8);
                 writer.WriteObjectValue(EncryptionKeyReference);
             }
             writer.WriteEndObject();
@@ -25,14 +25,17 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmenEncryptionConfiguration DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceEnvironmenEncryptionKeyReference> encryptionKeyReference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encryptionKeyReference"))
+                if (property.NameEquals("encryptionKeyReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptionKeyReference = IntegrationServiceEnvironmenEncryptionKeyReference.DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(property.Value);

@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,51 +18,49 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
-                writer.WritePropertyName("enableCopyActivityLog");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EnableCopyActivityLog);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableCopyActivityLog.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("enableCopyActivityLog"u8);
+                JsonSerializer.Serialize(writer, EnableCopyActivityLog);
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
-                writer.WritePropertyName("copyActivityLogSettings");
+                writer.WritePropertyName("copyActivityLogSettings"u8);
                 writer.WriteObjectValue(CopyActivityLogSettings);
             }
-            writer.WritePropertyName("logLocationSettings");
+            writer.WritePropertyName("logLocationSettings"u8);
             writer.WriteObjectValue(LogLocationSettings);
             writer.WriteEndObject();
         }
 
         internal static LogSettings DeserializeLogSettings(JsonElement element)
         {
-            Optional<BinaryData> enableCopyActivityLog = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<bool>> enableCopyActivityLog = default;
             Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableCopyActivityLog"))
+                if (property.NameEquals("enableCopyActivityLog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableCopyActivityLog = BinaryData.FromString(property.Value.GetRawText());
+                    enableCopyActivityLog = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("copyActivityLogSettings"))
+                if (property.NameEquals("copyActivityLogSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     copyActivityLogSettings = CopyActivityLogSettings.DeserializeCopyActivityLogSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("logLocationSettings"))
+                if (property.NameEquals("logLocationSettings"u8))
                 {
                     logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
                     continue;

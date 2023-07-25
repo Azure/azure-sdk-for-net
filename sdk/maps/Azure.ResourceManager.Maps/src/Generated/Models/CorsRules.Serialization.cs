@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CorsRulesValue))
             {
-                writer.WritePropertyName("corsRules");
+                writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in CorsRulesValue)
                 {
@@ -31,20 +31,23 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static CorsRules DeserializeCorsRules(JsonElement element)
         {
-            Optional<IList<CorsRule>> corsRules = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<MapsCorsRule>> corsRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("corsRules"))
+                if (property.NameEquals("corsRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CorsRule> array = new List<CorsRule>();
+                    List<MapsCorsRule> array = new List<MapsCorsRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CorsRule.DeserializeCorsRule(item));
+                        array.Add(MapsCorsRule.DeserializeMapsCorsRule(item));
                     }
                     corsRules = array;
                     continue;

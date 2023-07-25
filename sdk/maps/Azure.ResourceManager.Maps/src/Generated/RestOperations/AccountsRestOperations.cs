@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Maps
             }
         }
 
-        internal HttpMessage CreateListSasRequest(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content)
+        internal HttpMessage CreateListSasRequest(string subscriptionId, string resourceGroupName, string accountName, MapsAccountSasContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -529,10 +529,10 @@ namespace Azure.ResourceManager.Maps
         }
 
         /// <summary>
-        /// Create and list an account shared access signature token. Use this SAS token for authentication to Azure Maps REST APIs through various Azure Maps SDKs. As prerequisite to create a SAS Token. 
-        /// 
+        /// Create and list an account shared access signature token. Use this SAS token for authentication to Azure Maps REST APIs through various Azure Maps SDKs. As prerequisite to create a SAS Token.
+        ///
         /// Prerequisites:
-        /// 1. Create or have an existing User Assigned Managed Identity in the same Azure region as the account. 
+        /// 1. Create or have an existing User Assigned Managed Identity in the same Azure region as the account.
         /// 2. Create or update an Azure Map account with the same Azure region as the User Assigned Managed Identity is placed.
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MapsAccountSasToken>> ListSasAsync(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<MapsAccountSasToken>> ListSasAsync(string subscriptionId, string resourceGroupName, string accountName, MapsAccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -566,10 +566,10 @@ namespace Azure.ResourceManager.Maps
         }
 
         /// <summary>
-        /// Create and list an account shared access signature token. Use this SAS token for authentication to Azure Maps REST APIs through various Azure Maps SDKs. As prerequisite to create a SAS Token. 
-        /// 
+        /// Create and list an account shared access signature token. Use this SAS token for authentication to Azure Maps REST APIs through various Azure Maps SDKs. As prerequisite to create a SAS Token.
+        ///
         /// Prerequisites:
-        /// 1. Create or have an existing User Assigned Managed Identity in the same Azure region as the account. 
+        /// 1. Create or have an existing User Assigned Managed Identity in the same Azure region as the account.
         /// 2. Create or update an Azure Map account with the same Azure region as the User Assigned Managed Identity is placed.
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MapsAccountSasToken> ListSas(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content, CancellationToken cancellationToken = default)
+        public Response<MapsAccountSasToken> ListSas(string subscriptionId, string resourceGroupName, string accountName, MapsAccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

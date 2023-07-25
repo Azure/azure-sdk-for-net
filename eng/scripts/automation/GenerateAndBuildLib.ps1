@@ -1,10 +1,11 @@
 #Requires -Version 7.0
 $CI_YAML_FILE = "ci.yml"
+$TSP_LOCATION_FILE = "tsp-location.yaml"
 
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 
 #mgmt: swagger directory name to sdk directory name map
-$packageNameHash = [ordered]@{"vmware" = "avs"; 
+$packageNameHash = [ordered]@{"vmware" = "avs";
     "azure-kusto" = "kusto";
     "cosmos-db" = "cosmosdb";
     "msi" = "managedserviceidentity";
@@ -54,7 +55,7 @@ function Get-SwaggerInfo()
 create or update the autorest config file for sdk (autorest.md)
 
 .DESCRIPTION
-1. update input-file or require block according to the input parameter. If readme parameter is provided, autorest.md will 
+1. update input-file or require block according to the input parameter. If readme parameter is provided, autorest.md will
 contain only require block, if input-file parameter is provided, autorest.md will contain only require block.
 2. merge the autorestConfig to the autorest.md
 
@@ -110,9 +111,9 @@ function CreateOrUpdateAutorestConfigFile() {
 
             $inputRegex = "(?:(?:input-file|require)\s*:\s*\r?\n(?:\s*-\s+.*\r?\n)+|(?:input-file|require):\s+.*)"
             $fileContent = $fileContent -replace $inputRegex, $configline
-            $fileContent | Set-Content $autorestFilePath    
+            $fileContent | Set-Content $autorestFilePath
         }
-        
+
         # update autorest.md with configuration
         if ( $autorestConfigYaml) {
             Write-Host "Update autorest.md with configuration."
@@ -152,7 +153,7 @@ function CreateOrUpdateAutorestConfigFile() {
             Throw "autorest.md does not exist, and no autorest configuration to create one."
         }
     }
-} 
+}
 
 function Update-CIYmlFile() {
     param (
@@ -176,6 +177,44 @@ function Update-CIYmlFile() {
     }
 }
 
+function RegisterMgmtSDKToMgmtCoreClient () {
+    param(
+        [string]$packagesPath
+    )
+    $track2MgmtDirs = Get-ChildItem -Path "$packagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.Name -match "(Azure.ResourceManager.)" -and $(Test-Path("$($_.FullName)/src")) }
+    Write-Host "Updating mgmt core client ci.mgmt.yml"
+    #add path for each mgmt library into Azure.ResourceManager
+    $armCiFile = "$packagesPath/resourcemanager/ci.mgmt.yml"
+    $armLines = Get-Content $armCiFile
+    $newLines = [System.Collections.ArrayList]::new()
+    $startIndex = $track2MgmtDirs[0].FullName.Replace('\', '/').IndexOf(("/sdk/")) + 1
+    $shouldRemove = $false
+    foreach($line in $armLines) {
+        if($line.StartsWith("  paths:")) {
+            $newLines.Add($line) | Out-Null
+            $newLines.Add("    include:") | Out-Null
+            $newLines.Add("    - sdk/resourcemanager") | Out-Null
+            $newLines.Add("    - common/ManagementTestShared") | Out-Null
+            $newLines.Add("    - common/ManagementCoreShared") | Out-Null
+            foreach($dir in $track2MgmtDirs) {
+                $newLine = "    - $($dir.FullName.Replace('\', '/').Substring($startIndex, $dir.FullName.Length - $startIndex))"
+                $newLines.Add($newLine) | Out-Null
+            }
+            $shouldRemove = $true
+            Continue
+        }
+
+        if($shouldRemove) {
+            if($line.StartsWith(" ")) {
+                Continue
+            }
+            $shouldRemove = $false
+        }
+
+        $newLines.Add($line) | Out-Null
+    }
+    Set-Content -Path $armCiFile $newLines
+}
 <#
 .SYNOPSIS
 Prepare the SDK pacakge for data-plane.
@@ -309,7 +348,7 @@ function New-MgmtPackageFolder() {
         [string]$AUTOREST_CONFIG_FILE = "autorest.md",
         [string]$outputJsonFile = "newPacakgeOutput.json"
     )
-  
+
     if ($packageName -eq "") {
         $packageName = $service
     }
@@ -333,8 +372,11 @@ function New-MgmtPackageFolder() {
       Push-Location $projectFolder
       dotnet new azuremgmt --provider $packageName --includeCI true --force
       Pop-Location
+
+      $packagesPath = Join-Path $sdkPath "sdk"
+      RegisterMgmtSDKToMgmtCoreClient -packagesPath $packagesPath
     }
-  
+
     # update the readme path.
     if ($readme) {
       Write-Host "Updating autorest.md file."
@@ -343,11 +385,11 @@ function New-MgmtPackageFolder() {
       $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
       (Get-Content $file) -replace $rquirefileRex, "$requirefile" | Set-Content $file
     }
-  
+
     Push-Location $sdkPath
     $relativeFolderPath = Resolve-Path $projectFolder -Relative
     Pop-Location
-  
+
     $outputJson = [PSCustomObject]@{
       service = $service
       packageName = $mgmtPackageName
@@ -355,19 +397,74 @@ function New-MgmtPackageFolder() {
       path = @($relativeFolderPath)
     }
     $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
-  
+
     return $projectFolder
 }
 
-function New-CADLPackageFolder() {
+function CreateOrUpdateTypeSpecConfigFile() {
+    param (
+        [string]$typespecConfigurationFile,
+        [string]$directory,
+        [string]$commit = "",
+        [string]$repo = "",
+        [string]$specRoot = "",
+        [string]$additionalSubDirectories="" #additional directories needed, separated by semicolon if more than one
+
+    )
+    if (!(Test-Path -Path $typespecConfigurationFile)) {
+        New-Item -Path $typespecConfigurationFile
+    }
+
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    $configuration = Get-Content -Path $typespecConfigurationFile -Raw | ConvertFrom-Yaml
+    if ( !$configuration) {
+        $configuration = @{}
+    }
+    $configuration["directory"] = $directory
+    if ($commit) {
+        $configuration["commit"] = $commit
+    } else {
+        $configuration.Remove("commit")
+    }
+    if ($repo) {
+        $configuration["repo"] = $repo
+    } else {
+        $configuration.Remove("repo")
+    }
+
+    if ($specRoot) {
+        $configuration["spec-root-dir"] = $specRoot
+    } else {
+        $configuration.Remove("spec-root-dir")
+    }
+
+    if ($additionalSubDirectories) {
+        $directoryArray = [string[]]$additionalSubDirectories.Split(";")
+        $configuration["additionalDirectories"] = [Collections.Generic.List[string]]$directoryArray;
+    } else {
+        $configuration.Remove("additionalDirectories")
+    }
+
+    $configuration |ConvertTo-Yaml | Out-File $typespecConfigurationFile
+}
+
+function New-TypeSpecPackageFolder() {
     param(
         [string]$service,
         [string]$namespace,
         [string]$sdkPath = "",
-        [string]$cadlInput ="",
+        [string]$relatedTypeSpecProjectFolder,
+        [string]$commit = "",
+        [string]$repo = "",
+        [string]$specRoot = "",
+        [string]$additionalSubDirectories="", #additional directories needed, separated by semicolon if more than one
         [string]$outputJsonFile = "$PWD/output.json"
     )
     $serviceFolder = (Join-Path $sdkPath "sdk" $service)
+    if (!(Test-Path -Path $serviceFolder)) {
+        Write-Host "service folder does not exist! create the folder $serviceFolder"
+        New-Item -Path $serviceFolder -ItemType Directory
+    }
     $projectFolder=(Join-Path $sdkPath "sdk" $service $namespace)
     $ciymlFilePath =(Join-Path $sdkPath "sdk" $service $CI_YAML_FILE)
     $apifolder = (Join-Path $projectFolder "api")
@@ -377,16 +474,14 @@ function New-CADLPackageFolder() {
         if (Test-Path -Path $projectFolder/src/autorest.md) {
             Remove-Item -Path $projectFolder/src/autorest.md
         }
-        $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
-        $fileContent = Get-Content -Path $projFile
-        $match = ($fileContent | Select-String -Pattern "<AutoRestInput>").LineNumber
-        if ($match.count -gt 0) {
-            $fileContent[$match[0] - 1] = "<AutoRestInput>$cadlInput</AutoRestInput>";
-        } else {
-            $startNum = ($fileContent | Select-String -Pattern '</PropertyGroup>').LineNumber[0]
-            $fileContent[$startNum - 2] += ([Environment]::NewLine + "<AutoRestInput>$cadlInput</AutoRestInput>")
-        }
-        $fileContent | Out-File $projFile
+
+        CreateOrUpdateTypeSpecConfigFile `
+            -typespecConfigurationFile $projectFolder/$TSP_LOCATION_FILE `
+            -directory $relatedTypeSpecProjectFolder `
+            -commit $commit `
+            -repo $repo `
+            -specRoot $specRoot `
+            -additionalSubDirectories $additionalSubDirectories
 
         Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
     } else {
@@ -407,7 +502,7 @@ function New-CADLPackageFolder() {
         $clientName = $namespaceArray[-1]
         $groupName = $namespaceArray[1..$endIndex] -join "."
         $dotnetNewCmd = "dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --force"
-        
+
         if (Test-Path -Path $ciymlFilePath) {
             Write-Host "ci.yml already exists. update it to include the new serviceDirectory."
             Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
@@ -421,16 +516,22 @@ function New-CADLPackageFolder() {
         $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
         $fileContent = Get-Content -Path $projFile
         $fileContent = $fileContent -replace '<Version>[^<]+</Version>', '<Version>1.0.0-beta.1</Version>'
-        $startNum = ($fileContent | Select-String -Pattern '</PropertyGroup>').LineNumber[0]
-        $fileContent[$startNum - 2] += ([Environment]::NewLine + "<AutoRestInput>$cadlInput</AutoRestInput>")
         $fileContent | Out-File $projFile
-        # (Get-Content $projFile) -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>" | -replace "<AutoRestInput>*</AutoRestInput>", "<AutoRestInput>$cadlInput</AutoRestInput>" |Set-Content $projFile
         Pop-Location
         # dotnet sln
         Push-Location $projectFolder
         if (Test-Path -Path $projectFolder/src/autorest.md) {
             Remove-Item -Path $projectFolder/src/autorest.md
         }
+
+        CreateOrUpdateTypeSpecConfigFile `
+            -typespecConfigurationFile $projectFolder/$TSP_LOCATION_FILE `
+            -directory $relatedTypeSpecProjectFolder `
+            -commit $commit `
+            -repo $repo `
+            -specRoot $specRoot `
+            -additionalSubDirectories $additionalSubDirectories
+
         dotnet sln remove src/$namespace.csproj
         dotnet sln add src/$namespace.csproj
         dotnet sln remove tests/$namespace.Tests.csproj
@@ -516,12 +617,12 @@ function Invoke-GenerateAndBuildSDK () {
     Write-Host "readmeFile:$readmeFile"
     $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
     Write-Host "service:$service, serviceType:$serviceType"
-    
+
     if (!$readmeFile.StartsWith("http") -And !(Test-Path -Path $readmeFile)) {
         Write-Error "readme file '$readmeFile' does not exist."
         exit 1
     }
-    
+
     $packagesToGen = @()
     $newPackageOutput = "newPackageOutput.json"
     if ( $serviceType -eq "resource-manager" ) {
@@ -608,7 +709,7 @@ function Invoke-GenerateAndBuildSDK () {
         # $packageName = $package.packageName
         Write-Host "projectFolder:$projectFolder"
 
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
     }
 }
 
@@ -619,8 +720,10 @@ function GeneratePackage()
         [string]$sdkRootPath,
         [string]$path,
         [string]$downloadUrlPrefix="",
+        [string]$serviceType="data-plane",
         [switch]$skipGenerate,
-        [object]$generatedSDKPackages
+        [object]$generatedSDKPackages,
+        [string]$specRepoRoot=""
     )
 
     $packageName = Split-Path $projectFolder -Leaf
@@ -638,7 +741,11 @@ function GeneratePackage()
     Write-Host "Start to generate sdk $projectFolder"
     $srcPath = Join-Path $projectFolder 'src'
     if (!$skipGenerate) {
-        dotnet build /t:GenerateCode $srcPath
+        if($specRepoRoot -eq "") {
+            dotnet build /t:GenerateCode $srcPath
+        } else {
+            dotnet build /t:GenerateCode $srcPath /p:SpecRepoRoot=$specRepoRoot
+        }
     }
     if ( !$?) {
         Write-Error "Failed to generate sdk. exit code: $?"
@@ -646,7 +753,7 @@ function GeneratePackage()
     } else {
         # Build
         Write-Host "Start to build sdk: $projectFolder"
-        dotnet build $projectFolder
+        dotnet build $projectFolder /p:RunApiCompat=$false
         if ( !$? ) {
             Write-Error "Failed to build sdk. exit code: $?"
             $result = "failed"
@@ -686,7 +793,7 @@ function GeneratePackage()
             Remove-Item $logFilePath
         }
     }
-    
+
     $changelog = [PSCustomObject]@{
         content           = $content
         hasBreakingChange = $hasBreakingChange
@@ -713,9 +820,13 @@ function GeneratePackage()
         full = $full
         lite = $full
     }
-    $generatedSDKPackages.Add(@{packageName="$packageName"; 
+    $ciFilePath = "sdk/$service/ci.yml"
+    if ( $serviceType -eq "resource-manager" ) {
+        $ciFilePath = "sdk/$service/ci.mgmt.yml"
+    }
+    $generatedSDKPackages.Add(@{packageName="$packageName";
                                 result=$result;
-                                path=@("$path");
+                                path=@("$path", "$ciFilePath");
                                 packageFolder="$projectFolder";
                                 artifacts=$artifacts;
                                 apiViewArtifact=$apiViewArtifact;
@@ -736,8 +847,8 @@ function UpdateExistingSDKByInputFiles()
 
     $autorestFilesPath = Get-ChildItem -Path "$sdkRootPath/sdk"  -Filter autorest.md -Recurse | Resolve-Path -Relative
     Write-Host "Updating autorest.md files for all the changed swaggers."
-    
-    $sdksInfo = @()
+
+    $sdksInfo = @{}
     $regexToFindSha = "https:\/\/[^`"]*[\/][0-9a-f]{4,40}[\/]"
     foreach ($path in $autorestFilesPath) {
         $fileContent = Get-Content $path
@@ -750,8 +861,8 @@ function UpdateExistingSDKByInputFiles()
                     $fileContent -replace $regexToFindSha, "$repoHttpsUrl/blob/$headSha/" | Set-Content -Path $path
 
                     $sdkpath = (get-item $path).Directory.Parent.FullName | Resolve-Path -Relative
-                    if (!$sdksInfo.Contains($sdkpath)) {
-                        $sdksInfo += @($sdkpath)
+                    if (!$sdksInfo.ContainsKey($sdkpath)) {
+                        $sdksInfo.Add($sdkpath, $inputFilePath)
                     }
                     break
                 }
@@ -760,11 +871,14 @@ function UpdateExistingSDKByInputFiles()
     }
 
     # generate SDK
-    foreach ($sdkpath in $sdksInfo) {
+    foreach ($sdkPath in $sdksInfo.Keys) {
         $path = , $sdkPath
+        $inputFile = $sdksInfo["$sdkPath"]
+        $inputFile -match "specification/(?<service>.*)/(?<serviceType>.*)"
+        $serviceType = $matches["serviceType"]
         $projectFolder = Join-Path $sdkRootPath $sdkPath
         $projectFolder = Resolve-Path -Path $projectFolder
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
     }
-    
+
 }

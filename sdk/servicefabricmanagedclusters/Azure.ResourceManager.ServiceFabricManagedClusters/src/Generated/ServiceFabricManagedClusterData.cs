@@ -15,13 +15,22 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    /// <summary> A class representing the ServiceFabricManagedCluster data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceFabricManagedCluster data model.
+    /// The managed cluster resource
+    ///
+    /// </summary>
     public partial class ServiceFabricManagedClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricManagedClusterData. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceFabricManagedClusterData(AzureLocation location) : base(location)
+        /// <param name="sku"> The sku of the managed cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public ServiceFabricManagedClusterData(AzureLocation location, ServiceFabricManagedClustersSku sku) : base(location)
         {
+            Argument.AssertNotNull(sku, nameof(sku));
+
+            Sku = sku;
             ClusterCertificateThumbprints = new ChangeTrackingList<BinaryData>();
             LoadBalancingRules = new ChangeTrackingList<ManagedClusterLoadBalancingRule>();
             NetworkSecurityRules = new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
@@ -58,14 +67,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
         /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the managed cluster resource. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to &apos;Manual&apos;. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
         /// <param name="clusterUpgradeMode">
         /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
-        /// 
+        ///
         /// </param>
-        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to &apos;Automatic&apos;. </param>
+        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </param>
         /// <param name="addOnFeatures"> List of add-on features to enable on the cluster. </param>
-        /// <param name="isAutoOSUpgradeEnabled"> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version &apos;latest&apos;. The default value for this setting is false. </param>
+        /// <param name="isAutoOSUpgradeEnabled"> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version 'latest'. The default value for this setting is false. </param>
         /// <param name="hasZoneResiliency"> Indicates if the cluster has zone resiliency. </param>
         /// <param name="applicationTypeVersionsCleanupPolicy"> The policy used to clean up unused versions. </param>
         /// <param name="isIPv6Enabled"> Setting this to true creates IPv6 address space for the default VNet used by the cluster. This setting cannot be changed once the cluster is created. The default value for this setting is false. </param>
@@ -75,8 +84,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="isServicePublicIPEnabled"> Setting this to true will link the IPv4 address as the ServicePublicIP of the IPv6 address. It can only be set to True if IPv6 is enabled on the cluster. </param>
         /// <param name="auxiliarySubnets"> Auxiliary subnets for the cluster. </param>
         /// <param name="serviceEndpoints"> Service endpoints for subnets in the cluster. </param>
+        /// <param name="zonalUpdateMode"> Indicates the update mode for Cross Az clusters. </param>
+        /// <param name="useCustomVnet"> For new clusters, this parameter indicates that it uses Bring your own VNet, but the subnet is specified at node type level; and for such clusters, the subnetId property is required for node types. </param>
+        /// <param name="publicIPPrefixId"> Specify the resource id of a public IP prefix that the load balancer will allocate a public IP address from. Only supports IPv4. </param>
         /// <param name="etag"> Azure resource etag. </param>
-        internal ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSku sku, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSku sku, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             DnsName = dnsName;
@@ -110,6 +122,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             IsServicePublicIPEnabled = isServicePublicIPEnabled;
             AuxiliarySubnets = auxiliarySubnets;
             ServiceEndpoints = serviceEndpoints;
+            ZonalUpdateMode = zonalUpdateMode;
+            UseCustomVnet = useCustomVnet;
+            PublicIPPrefixId = publicIPPrefixId;
             ETag = etag;
         }
 
@@ -188,18 +203,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public IList<ClusterFabricSettingsSection> FabricSettings { get; }
         /// <summary> The provisioning state of the managed cluster resource. </summary>
         public ServiceFabricManagedResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to &apos;Manual&apos;. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
+        /// <summary> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
         public string ClusterCodeVersion { get; set; }
         /// <summary>
         /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
-        /// 
+        ///
         /// </summary>
         public ManagedClusterUpgradeMode? ClusterUpgradeMode { get; set; }
-        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to &apos;Automatic&apos;. </summary>
+        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </summary>
         public ManagedClusterUpgradeCadence? ClusterUpgradeCadence { get; set; }
         /// <summary> List of add-on features to enable on the cluster. </summary>
         public IList<ManagedClusterAddOnFeature> AddOnFeatures { get; }
-        /// <summary> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version &apos;latest&apos;. The default value for this setting is false. </summary>
+        /// <summary> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version 'latest'. The default value for this setting is false. </summary>
         public bool? IsAutoOSUpgradeEnabled { get; set; }
         /// <summary> Indicates if the cluster has zone resiliency. </summary>
         public bool? HasZoneResiliency { get; set; }
@@ -229,6 +244,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public IList<ManagedClusterSubnet> AuxiliarySubnets { get; }
         /// <summary> Service endpoints for subnets in the cluster. </summary>
         public IList<ManagedClusterServiceEndpoint> ServiceEndpoints { get; }
+        /// <summary> Indicates the update mode for Cross Az clusters. </summary>
+        public ZonalUpdateMode? ZonalUpdateMode { get; set; }
+        /// <summary> For new clusters, this parameter indicates that it uses Bring your own VNet, but the subnet is specified at node type level; and for such clusters, the subnetId property is required for node types. </summary>
+        public bool? UseCustomVnet { get; set; }
+        /// <summary> Specify the resource id of a public IP prefix that the load balancer will allocate a public IP address from. Only supports IPv4. </summary>
+        public ResourceIdentifier PublicIPPrefixId { get; set; }
         /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }
     }

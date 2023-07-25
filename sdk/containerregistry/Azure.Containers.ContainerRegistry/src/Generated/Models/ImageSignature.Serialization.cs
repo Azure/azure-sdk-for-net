@@ -10,52 +10,34 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ImageSignature : IUtf8JsonSerializable
+    internal partial class ImageSignature
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Header))
-            {
-                writer.WritePropertyName("header");
-                writer.WriteObjectValue(Header);
-            }
-            if (Optional.IsDefined(Signature))
-            {
-                writer.WritePropertyName("signature");
-                writer.WriteStringValue(Signature);
-            }
-            if (Optional.IsDefined(Protected))
-            {
-                writer.WritePropertyName("protected");
-                writer.WriteStringValue(Protected);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ImageSignature DeserializeImageSignature(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JWK> header = default;
             Optional<string> signature = default;
             Optional<string> @protected = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("header"))
+                if (property.NameEquals("header"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     header = JWK.DeserializeJWK(property.Value);
                     continue;
                 }
-                if (property.NameEquals("signature"))
+                if (property.NameEquals("signature"u8))
                 {
                     signature = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protected"))
+                if (property.NameEquals("protected"u8))
                 {
                     @protected = property.Value.GetString();
                     continue;

@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ModelContainerResourceArmPaginatedResult. </summary>
         internal ModelContainerResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ModelContainerData>();
+            Value = new ChangeTrackingList<MachineLearningModelContainerData>();
         }
 
         /// <summary> Initializes a new instance of ModelContainerResourceArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of ModelContainer objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type ModelContainer. </param>
-        internal ModelContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<ModelContainerData> value)
+        internal ModelContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningModelContainerData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of ModelContainer objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type ModelContainer. </summary>
-        public IReadOnlyList<ModelContainerData> Value { get; }
+        public IReadOnlyList<MachineLearningModelContainerData> Value { get; }
     }
 }

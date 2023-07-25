@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UseSystemAssignedIdentity))
             {
-                writer.WritePropertyName("useSystemAssignedIdentity");
+                writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
             if (Optional.IsDefined(UserAssignedIdentity))
             {
-                writer.WritePropertyName("userAssignedIdentity");
+                writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
             }
             writer.WriteEndObject();
@@ -30,23 +30,30 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static CmkKekIdentity DeserializeCmkKekIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> useSystemAssignedIdentity = default;
-            Optional<string> userAssignedIdentity = default;
+            Optional<ResourceIdentifier> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("useSystemAssignedIdentity"))
+                if (property.NameEquals("useSystemAssignedIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useSystemAssignedIdentity = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("userAssignedIdentity"))
+                if (property.NameEquals("userAssignedIdentity"u8))
                 {
-                    userAssignedIdentity = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

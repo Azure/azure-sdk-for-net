@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -46,8 +45,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Create or update a role assignment by scope and name.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
-        /// Operation Id: RoleAssignments_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignments_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
@@ -78,8 +85,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Create or update a role assignment by scope and name.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
-        /// Operation Id: RoleAssignments_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignments_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
@@ -110,8 +125,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get a role assignment by scope and name.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
-        /// Operation Id: RoleAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
@@ -139,8 +162,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get a role assignment by scope and name.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
-        /// Operation Id: RoleAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
@@ -168,8 +199,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// List all role assignments that apply to a scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments
-        /// Operation Id: RoleAssignments_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignments_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
@@ -178,43 +217,23 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> An async collection of <see cref="RoleAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleAssignmentResource> GetAllAsync(string filter = null, string tenantId = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RoleAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleAssignmentRestClient.ListForScopeAsync(Id, filter, tenantId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RoleAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleAssignmentRestClient.ListForScopeNextPageAsync(nextLink, Id, filter, tenantId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentRestClient.CreateListForScopeRequest(Id, filter, tenantId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter, tenantId, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentResource(Client, RoleAssignmentData.DeserializeRoleAssignmentData(e)), _roleAssignmentClientDiagnostics, Pipeline, "RoleAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all role assignments that apply to a scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments
-        /// Operation Id: RoleAssignments_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignments_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
@@ -223,43 +242,23 @@ namespace Azure.ResourceManager.Authorization
         /// <returns> A collection of <see cref="RoleAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleAssignmentResource> GetAll(string filter = null, string tenantId = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<RoleAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleAssignmentRestClient.ListForScope(Id, filter, tenantId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RoleAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleAssignmentRestClient.ListForScopeNextPage(nextLink, Id, filter, tenantId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentRestClient.CreateListForScopeRequest(Id, filter, tenantId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter, tenantId, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentResource(Client, RoleAssignmentData.DeserializeRoleAssignmentData(e)), _roleAssignmentClientDiagnostics, Pipeline, "RoleAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
-        /// Operation Id: RoleAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
@@ -285,8 +284,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}
-        /// Operation Id: RoleAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>

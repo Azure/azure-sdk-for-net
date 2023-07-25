@@ -7,6 +7,8 @@ Project("{AD28C841-23ED-4538-8D21-178A02D67B0C}") = "Azure.ResourceManager.Machi
 EndProject
 Project("{AD28C841-23ED-4538-8D21-178A02D67B0C}") = "Azure.ResourceManager.MachineLearningCompute.Tests", "tests\Azure.ResourceManager.MachineLearningCompute.Tests.csproj", "{1D409A86-C07D-4967-9115-78AEECBF4D25}"
 EndProject
+Project("{AD28C841-23ED-4538-8D21-178A02D67B0C}") = "Azure.ResourceManager.MachineLearningCompute.Samples", "samples\Azure.ResourceManager.MachineLearningCompute.Samples.csproj", "{67C9A380-0892-4F04-AAA1-EEA63B66F465}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

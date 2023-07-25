@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <LangVersion>latest</LangVersion>
     <Nullable>Enable</Nullable>
     <AzureCoreSharedSources>$(RepoRoot)/sdk/core/Azure.Core/src/Shared/</AzureCoreSharedSources>
   </PropertyGroup>

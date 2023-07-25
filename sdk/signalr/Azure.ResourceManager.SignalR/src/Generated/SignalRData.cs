@@ -12,7 +12,10 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    /// <summary> A class representing the SignalR data model. </summary>
+    /// <summary>
+    /// A class representing the SignalR data model.
+    /// A class represent a resource.
+    /// </summary>
     public partial class SignalRData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SignalRData. </summary>
@@ -20,7 +23,7 @@ namespace Azure.ResourceManager.SignalR
         public SignalRData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<SignalRPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkResourceData>();
+            SharedPrivateLinkResources = new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>();
             Features = new ChangeTrackingList<SignalRFeature>();
         }
 
@@ -46,11 +49,11 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="features">
         /// List of the featureFlags.
-        /// 
+        ///
         /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
-        /// And the response will only include featureFlags that are explicitly set. 
+        /// And the response will only include featureFlags that are explicitly set.
         /// When a featureFlag is not explicitly set, its globally default value will be used
-        /// But keep in mind, the default value doesn&apos;t mean &quot;false&quot;. It varies in terms of different FeatureFlags.
+        /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </param>
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="resourceLogConfiguration"> Resource log configuration of a Microsoft.SignalRService resource. </param>
@@ -58,21 +61,21 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="upstream"> The settings for the Upstream when the service is in server-less mode. </param>
         /// <param name="networkACLs"> Network ACLs for the resource. </param>
         /// <param name="publicNetworkAccess">
-        /// Enable or disable public network access. Default to &quot;Enabled&quot;.
-        /// When it&apos;s Enabled, network ACLs still apply.
-        /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </param>
         /// <param name="disableLocalAuth">
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won&apos;t work.
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </param>
         /// <param name="disableAadAuth">
         /// DisableLocalAuth
         /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won&apos;t work.
+        /// When set as true, connection with AuthType=aad won't work.
         /// </param>
-        internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ServiceKind? kind, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkResourceData> sharedPrivateLinkResources, SignalRTlsSettings tls, string hostNamePrefix, IList<SignalRFeature> features, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, SignalRCorsSettings cors, ServerlessUpstreamSettings upstream, SignalRNetworkACLs networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, resourceType, systemData, tags, location)
+        internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, SignalRTlsSettings tls, string hostNamePrefix, IList<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRResourceLogCategoryListResult resourceLogConfiguration, SignalRCorsSettings cors, ServerlessUpstreamSettings upstream, SignalRNetworkAcls networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -99,13 +102,13 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> The billing information of the resource. </summary>
-        public ResourceSku Sku { get; set; }
+        public SignalRResourceSku Sku { get; set; }
         /// <summary> The kind of the service, it can be SignalR or RawWebSockets. </summary>
-        public ServiceKind? Kind { get; set; }
+        public SignalRServiceKind? Kind { get; set; }
         /// <summary> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SignalRProvisioningState? ProvisioningState { get; }
         /// <summary> The publicly accessible IP of the resource. </summary>
         public string ExternalIP { get; }
         /// <summary> FQDN of the service instance. </summary>
@@ -119,18 +122,18 @@ namespace Azure.ResourceManager.SignalR
         /// <summary> Private endpoint connections to the resource. </summary>
         public IReadOnlyList<SignalRPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources. </summary>
-        public IReadOnlyList<SharedPrivateLinkResourceData> SharedPrivateLinkResources { get; }
+        public IReadOnlyList<SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources { get; }
         /// <summary> TLS settings for the resource. </summary>
         internal SignalRTlsSettings Tls { get; set; }
         /// <summary> Request client certificate during TLS handshake if enabled. </summary>
-        public bool? ClientCertEnabled
+        public bool? IsClientCertEnabled
         {
-            get => Tls is null ? default : Tls.ClientCertEnabled;
+            get => Tls is null ? default : Tls.IsClientCertEnabled;
             set
             {
                 if (Tls is null)
                     Tls = new SignalRTlsSettings();
-                Tls.ClientCertEnabled = value;
+                Tls.IsClientCertEnabled = value;
             }
         }
 
@@ -138,31 +141,31 @@ namespace Azure.ResourceManager.SignalR
         public string HostNamePrefix { get; }
         /// <summary>
         /// List of the featureFlags.
-        /// 
+        ///
         /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
-        /// And the response will only include featureFlags that are explicitly set. 
+        /// And the response will only include featureFlags that are explicitly set.
         /// When a featureFlag is not explicitly set, its globally default value will be used
-        /// But keep in mind, the default value doesn&apos;t mean &quot;false&quot;. It varies in terms of different FeatureFlags.
+        /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </summary>
         public IList<SignalRFeature> Features { get; }
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
-        public LiveTraceConfiguration LiveTraceConfiguration { get; set; }
+        public SignalRLiveTraceConfiguration LiveTraceConfiguration { get; set; }
         /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
-        internal ResourceLogConfiguration ResourceLogConfiguration { get; set; }
+        internal SignalRResourceLogCategoryListResult ResourceLogConfiguration { get; set; }
         /// <summary> Gets or sets the list of category configurations. </summary>
-        public IList<ResourceLogCategory> ResourceLogCategories
+        public IList<SignalRResourceLogCategory> ResourceLogCategories
         {
             get
             {
                 if (ResourceLogConfiguration is null)
-                    ResourceLogConfiguration = new ResourceLogConfiguration();
+                    ResourceLogConfiguration = new SignalRResourceLogCategoryListResult();
                 return ResourceLogConfiguration.Categories;
             }
         }
 
         /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
         internal SignalRCorsSettings Cors { get; set; }
-        /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use &quot;*&quot; to allow all. If omitted, allow all by default. </summary>
+        /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </summary>
         public IList<string> CorsAllowedOrigins
         {
             get
@@ -176,7 +179,7 @@ namespace Azure.ResourceManager.SignalR
         /// <summary> The settings for the Upstream when the service is in server-less mode. </summary>
         internal ServerlessUpstreamSettings Upstream { get; set; }
         /// <summary> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </summary>
-        public IList<UpstreamTemplate> UpstreamTemplates
+        public IList<SignalRUpstreamTemplate> UpstreamTemplates
         {
             get
             {
@@ -187,23 +190,23 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Network ACLs for the resource. </summary>
-        public SignalRNetworkACLs NetworkACLs { get; set; }
+        public SignalRNetworkAcls NetworkACLs { get; set; }
         /// <summary>
-        /// Enable or disable public network access. Default to &quot;Enabled&quot;.
-        /// When it&apos;s Enabled, network ACLs still apply.
-        /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </summary>
         public string PublicNetworkAccess { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won&apos;t work.
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won&apos;t work.
+        /// When set as true, connection with AuthType=aad won't work.
         /// </summary>
         public bool? DisableAadAuth { get; set; }
     }

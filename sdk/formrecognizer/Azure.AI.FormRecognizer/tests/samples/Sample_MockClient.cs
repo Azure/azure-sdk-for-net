@@ -12,7 +12,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
-    [IgnoreServiceError(200, "3014", Message = "Generic error during training.", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28913")]
     public partial class DocumentAnalysisSamples
     {
         [RecordedTest]

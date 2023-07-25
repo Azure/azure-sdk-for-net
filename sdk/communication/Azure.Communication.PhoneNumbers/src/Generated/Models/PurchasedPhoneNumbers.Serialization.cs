@@ -13,29 +13,5 @@ namespace Azure.Communication.PhoneNumbers
 {
     internal partial class PurchasedPhoneNumbers
     {
-        internal static PurchasedPhoneNumbers DeserializePurchasedPhoneNumbers(JsonElement element)
-        {
-            IReadOnlyList<PurchasedPhoneNumber> phoneNumbers = default;
-            Optional<string> nextLink = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("phoneNumbers"))
-                {
-                    List<PurchasedPhoneNumber> array = new List<PurchasedPhoneNumber>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(item));
-                    }
-                    phoneNumbers = array;
-                    continue;
-                }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new PurchasedPhoneNumbers(phoneNumbers, nextLink.Value);
-        }
     }
 }

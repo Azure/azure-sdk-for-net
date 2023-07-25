@@ -15,15 +15,18 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static WafRankingsResponseDataItem DeserializeWafRankingsResponseDataItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> groupValues = default;
             Optional<IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>> metrics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupValues"))
+                if (property.NameEquals("groupValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -34,11 +37,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     groupValues = array;
                     continue;
                 }
-                if (property.NameEquals("metrics"))
+                if (property.NameEquals("metrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> array = new List<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>();

@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,49 +18,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WebActivityAuthenticationType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WebActivityAuthenticationType);
             }
             if (Optional.IsDefined(Pfx))
             {
-                writer.WritePropertyName("pfx");
-                writer.WriteObjectValue(Pfx);
+                writer.WritePropertyName("pfx"u8);
+                JsonSerializer.Serialize(writer, Pfx);
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Username);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("username"u8);
+                JsonSerializer.Serialize(writer, Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
-                writer.WriteObjectValue(Password);
+                writer.WritePropertyName("password"u8);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(Resource))
             {
-                writer.WritePropertyName("resource");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Resource);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Resource.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("resource"u8);
+                JsonSerializer.Serialize(writer, Resource);
             }
             if (Optional.IsDefined(UserTenant))
             {
-                writer.WritePropertyName("userTenant");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserTenant);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserTenant.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("userTenant"u8);
+                JsonSerializer.Serialize(writer, UserTenant);
             }
             if (Optional.IsDefined(Credential))
             {
-                writer.WritePropertyName("credential");
+                writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
             }
             writer.WriteEndObject();
@@ -68,82 +56,80 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
-            Optional<FactorySecretBaseDefinition> pfx = default;
-            Optional<BinaryData> username = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> resource = default;
-            Optional<BinaryData> userTenant = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactorySecretBaseDefinition> pfx = default;
+            Optional<DataFactoryElement<string>> username = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            Optional<DataFactoryElement<string>> resource = default;
+            Optional<DataFactoryElement<string>> userTenant = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pfx"))
+                if (property.NameEquals("pfx"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    pfx = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    pfx = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    username = BinaryData.FromString(property.Value.GetRawText());
+                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("resource"))
+                if (property.NameEquals("resource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resource = BinaryData.FromString(property.Value.GetRawText());
+                    resource = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("userTenant"))
+                if (property.NameEquals("userTenant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    userTenant = BinaryData.FromString(property.Value.GetRawText());
+                    userTenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("credential"))
+                if (property.NameEquals("credential"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
                     continue;
                 }
             }
-            return new WebActivityAuthentication(type.Value, pfx.Value, username.Value, password.Value, resource.Value, userTenant.Value, credential.Value);
+            return new WebActivityAuthentication(type.Value, pfx, username.Value, password, resource.Value, userTenant.Value, credential.Value);
         }
     }
 }

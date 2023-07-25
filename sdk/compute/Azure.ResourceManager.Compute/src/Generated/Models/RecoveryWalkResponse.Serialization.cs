@@ -14,25 +14,27 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RecoveryWalkResponse DeserializeRecoveryWalkResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> walkPerformed = default;
             Optional<int> nextPlatformUpdateDomain = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("walkPerformed"))
+                if (property.NameEquals("walkPerformed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     walkPerformed = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("nextPlatformUpdateDomain"))
+                if (property.NameEquals("nextPlatformUpdateDomain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nextPlatformUpdateDomain = property.Value.GetInt32();

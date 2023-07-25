@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsDefined(Weight))
             {
-                writer.WritePropertyName("weight");
+                writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
             writer.WriteEndObject();
@@ -40,43 +40,44 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsSrvRecordInfo DeserializeDnsSrvRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> priority = default;
             Optional<int> weight = default;
             Optional<int> port = default;
             Optional<string> target = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("weight"))
+                if (property.NameEquals("weight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     weight = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;

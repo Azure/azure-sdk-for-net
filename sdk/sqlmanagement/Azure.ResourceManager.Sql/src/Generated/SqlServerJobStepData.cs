@@ -11,7 +11,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerJobStep data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerJobStep data model.
+    /// A job step.
+    /// </summary>
     public partial class SqlServerJobStepData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerJobStepData. </summary>
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="stepId"> The job step&apos;s index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </param>
+        /// <param name="stepId"> The job step's index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </param>
         /// <param name="targetGroup"> The resource ID of the target group that the job step will be executed on. </param>
         /// <param name="credential"> The resource ID of the job credential that will be used to connect to the targets. </param>
         /// <param name="action"> The action payload of the job step. </param>
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Sql
             ExecutionOptions = executionOptions;
         }
 
-        /// <summary> The job step&apos;s index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </summary>
+        /// <summary> The job step's index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </summary>
         public int? StepId { get; set; }
         /// <summary> The resource ID of the target group that the job step will be executed on. </summary>
         public string TargetGroup { get; set; }

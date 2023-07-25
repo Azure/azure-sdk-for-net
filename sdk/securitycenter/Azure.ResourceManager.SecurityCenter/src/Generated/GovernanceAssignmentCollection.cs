@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -54,13 +53,21 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Creates or update a security GovernanceAssignment on the given subscription.
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}
-        /// Operation Id: GovernanceAssignments_CreateOrUpdate
+        /// Creates or updates a governance assignment on the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
-        /// <param name="data"> GovernanceAssignment over a subscription scope. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="data"> Governance assignment over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> or <paramref name="data"/> is null. </exception>
@@ -87,13 +94,21 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Creates or update a security GovernanceAssignment on the given subscription.
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}
-        /// Operation Id: GovernanceAssignments_CreateOrUpdate
+        /// Creates or updates a governance assignment on the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
-        /// <param name="data"> GovernanceAssignment over a subscription scope. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="data"> Governance assignment over a subscription scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> or <paramref name="data"/> is null. </exception>
@@ -121,10 +136,18 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a specific governanceAssignment for the requested scope by AssignmentKey
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}
-        /// Operation Id: GovernanceAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
@@ -150,10 +173,18 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a specific governanceAssignment for the requested scope by AssignmentKey
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}
-        /// Operation Id: GovernanceAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
@@ -178,95 +209,63 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Get security governanceAssignments on all your resources inside a scope
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments
-        /// Operation Id: GovernanceAssignments_List
+        /// Get governance assignments on all of your resources inside a scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceAssignments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GovernanceAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GovernanceAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GovernanceAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _governanceAssignmentRestClient.ListAsync(Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GovernanceAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<GovernanceAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _governanceAssignmentRestClient.ListNextPageAsync(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GovernanceAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GovernanceAssignmentResource(Client, GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e)), _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get security governanceAssignments on all your resources inside a scope
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments
-        /// Operation Id: GovernanceAssignments_List
+        /// Get governance assignments on all of your resources inside a scope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceAssignments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GovernanceAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GovernanceAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<GovernanceAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _governanceAssignmentRestClient.List(Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GovernanceAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<GovernanceAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _governanceAssignmentRestClient.ListNextPage(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GovernanceAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceAssignmentRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GovernanceAssignmentResource(Client, GovernanceAssignmentData.DeserializeGovernanceAssignmentData(e)), _governanceAssignmentClientDiagnostics, Pipeline, "GovernanceAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}
-        /// Operation Id: GovernanceAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
@@ -290,10 +289,18 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}
-        /// Operation Id: GovernanceAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GovernanceAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="assignmentKey"> The security governance assignment key - the assessment key of the required governance assignment. </param>
+        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>

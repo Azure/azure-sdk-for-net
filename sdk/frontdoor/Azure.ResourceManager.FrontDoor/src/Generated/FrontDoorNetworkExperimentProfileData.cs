@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    /// <summary> A class representing the FrontDoorNetworkExperimentProfile data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorNetworkExperimentProfile data model.
+    /// Defines an Network Experiment Profile and lists of Experiments
+    /// </summary>
     public partial class FrontDoorNetworkExperimentProfileData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorNetworkExperimentProfileData. </summary>

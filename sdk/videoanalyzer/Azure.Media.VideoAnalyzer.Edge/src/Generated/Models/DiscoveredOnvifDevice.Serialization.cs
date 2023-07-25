@@ -18,17 +18,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceIdentifier))
             {
-                writer.WritePropertyName("serviceIdentifier");
+                writer.WritePropertyName("serviceIdentifier"u8);
                 writer.WriteStringValue(ServiceIdentifier);
             }
             if (Optional.IsDefined(RemoteIPAddress))
             {
-                writer.WritePropertyName("remoteIPAddress");
+                writer.WritePropertyName("remoteIPAddress"u8);
                 writer.WriteStringValue(RemoteIPAddress);
             }
             if (Optional.IsCollectionDefined(Scopes))
             {
-                writer.WritePropertyName("scopes");
+                writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Scopes)
                 {
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
-                writer.WritePropertyName("endpoints");
+                writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
@@ -51,27 +51,30 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static DiscoveredOnvifDevice DeserializeDiscoveredOnvifDevice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceIdentifier = default;
             Optional<string> remoteIPAddress = default;
             Optional<IList<string>> scopes = default;
             Optional<IList<string>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceIdentifier"))
+                if (property.NameEquals("serviceIdentifier"u8))
                 {
                     serviceIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remoteIPAddress"))
+                if (property.NameEquals("remoteIPAddress"u8))
                 {
                     remoteIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scopes"))
+                if (property.NameEquals("scopes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -82,11 +85,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     scopes = array;
                     continue;
                 }
-                if (property.NameEquals("endpoints"))
+                if (property.NameEquals("endpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

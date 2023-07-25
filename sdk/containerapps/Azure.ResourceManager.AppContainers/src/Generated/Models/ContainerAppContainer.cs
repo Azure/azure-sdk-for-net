@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App container definition. </summary>
-    public partial class ContainerAppContainer : BaseContainer
+    public partial class ContainerAppContainer : ContainerAppBaseContainer
     {
         /// <summary> Initializes a new instance of ContainerAppContainer. </summary>
         public ContainerAppContainer()
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="resources"> Container resource requirements. </param>
         /// <param name="volumeMounts"> Container volume mounts. </param>
         /// <param name="probes"> List of probes for the container. </param>
-        internal ContainerAppContainer(string image, string name, IList<string> command, IList<string> args, IList<EnvironmentVar> env, ContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IList<ContainerAppProbe> probes) : base(image, name, command, args, env, resources, volumeMounts)
+        internal ContainerAppContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IList<ContainerAppVolumeMount> volumeMounts, IList<ContainerAppProbe> probes) : base(image, name, command, args, env, resources, volumeMounts)
         {
             Probes = probes;
         }

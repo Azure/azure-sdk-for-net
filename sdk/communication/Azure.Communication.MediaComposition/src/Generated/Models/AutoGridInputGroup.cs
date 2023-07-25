@@ -33,8 +33,9 @@ namespace Azure.Communication.MediaComposition
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="height"> The height of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="layer"> The layer this input group should appear on. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="inputIds"> Input and input group ids to be included in this input group. </param>
-        internal AutoGridInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, IList<string> inputIds) : base(kind, position, width, height, layer)
+        internal AutoGridInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode, IList<string> inputIds) : base(kind, position, width, height, layer, scalingMode)
         {
             InputIds = inputIds;
             Kind = kind;

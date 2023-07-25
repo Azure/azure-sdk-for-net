@@ -16,33 +16,37 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resolution");
+            writer.WritePropertyName("resolution"u8);
             writer.WriteObjectValue(Resolution);
-            writer.WritePropertyName("streamUrl");
+            writer.WritePropertyName("streamUrl"u8);
             writer.WriteStringValue(StreamUrl);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
         internal static SrtOutput DeserializeSrtOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LayoutResolution resolution = default;
             string streamUrl = default;
             MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resolution"))
+                if (property.NameEquals("resolution"u8))
                 {
                     resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
                     continue;
                 }
-                if (property.NameEquals("streamUrl"))
+                if (property.NameEquals("streamUrl"u8))
                 {
                     streamUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new MediaOutputType(property.Value.GetString());
                     continue;

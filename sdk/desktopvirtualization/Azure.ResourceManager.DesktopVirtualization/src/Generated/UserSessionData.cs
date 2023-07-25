@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the UserSession data model. </summary>
+    /// <summary>
+    /// A class representing the UserSession data model.
+    /// Represents a UserSession definition.
+    /// </summary>
     public partial class UserSessionData : ResourceData
     {
         /// <summary> Initializes a new instance of UserSessionData. </summary>

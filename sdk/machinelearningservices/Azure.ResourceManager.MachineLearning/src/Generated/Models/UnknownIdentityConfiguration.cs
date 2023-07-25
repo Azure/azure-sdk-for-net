@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownIdentityConfiguration. </summary>
-    internal partial class UnknownIdentityConfiguration : IdentityConfiguration
+    internal partial class UnknownIdentityConfiguration : MachineLearningIdentityConfiguration
     {
         /// <summary> Initializes a new instance of UnknownIdentityConfiguration. </summary>
         /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>

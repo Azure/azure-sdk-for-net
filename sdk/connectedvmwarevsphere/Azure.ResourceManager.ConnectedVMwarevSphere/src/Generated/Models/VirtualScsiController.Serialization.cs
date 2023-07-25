@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal static VirtualScsiController DeserializeVirtualScsiController(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScsiControllerType> type = default;
             Optional<int> controllerKey = default;
             Optional<int> busNumber = default;
@@ -21,51 +25,46 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<VirtualScsiSharing> sharing = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ScsiControllerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("controllerKey"))
+                if (property.NameEquals("controllerKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     controllerKey = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("busNumber"))
+                if (property.NameEquals("busNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     busNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scsiCtlrUnitNumber"))
+                if (property.NameEquals("scsiCtlrUnitNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scsiCtlrUnitNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sharing"))
+                if (property.NameEquals("sharing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sharing = new VirtualScsiSharing(property.Value.GetString());

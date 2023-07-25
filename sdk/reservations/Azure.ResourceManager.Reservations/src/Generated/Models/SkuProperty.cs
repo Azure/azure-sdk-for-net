@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The SkuProperty. </summary>
+    /// <summary> Property of a sku. </summary>
     public partial class SkuProperty
     {
         /// <summary> Initializes a new instance of SkuProperty. </summary>

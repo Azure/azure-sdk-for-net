@@ -16,15 +16,18 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static ListPrivateLinkResourcesResult DeserializeListPrivateLinkResourcesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BatchPrivateLinkResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchPrivateLinkResourceData> array = new List<BatchPrivateLinkResourceData>();
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

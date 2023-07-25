@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         internal ClusterListResult()
         {
-            Value = new ChangeTrackingList<ClusterData>();
+            Value = new ChangeTrackingList<OperationalInsightsClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
         /// <param name="value"> A list of Log Analytics clusters. </param>
-        internal ClusterListResult(string nextLink, IReadOnlyList<ClusterData> value)
+        internal ClusterListResult(string nextLink, IReadOnlyList<OperationalInsightsClusterData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> The link used to get the next page of recommendations. </summary>
         public string NextLink { get; }
         /// <summary> A list of Log Analytics clusters. </summary>
-        public IReadOnlyList<ClusterData> Value { get; }
+        public IReadOnlyList<OperationalInsightsClusterData> Value { get; }
     }
 }

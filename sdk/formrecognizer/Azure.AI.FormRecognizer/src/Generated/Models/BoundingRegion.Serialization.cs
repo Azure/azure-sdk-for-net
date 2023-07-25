@@ -19,12 +19,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             IReadOnlyList<float> polygon = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pageNumber"))
+                if (property.NameEquals("pageNumber"u8))
                 {
                     pageNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("polygon"))
+                if (property.NameEquals("polygon"u8))
                 {
                     List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())

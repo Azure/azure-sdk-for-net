@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseOperationStatus. </summary>
-        /// <param name="id"> The operation&apos;s unique id. </param>
-        /// <param name="name"> The operation&apos;s name. </param>
+        /// <param name="id"> The operation's unique id. </param>
+        /// <param name="name"> The operation's name. </param>
         /// <param name="startOn"> The start time of the operation. </param>
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="status"> The current status of the operation. </param>
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             ErrorResponse = errorResponse;
         }
 
-        /// <summary> The operation&apos;s unique id. </summary>
+        /// <summary> The operation's unique id. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary> The operation&apos;s name. </summary>
+        /// <summary> The operation's name. </summary>
         public string Name { get; }
         /// <summary> The start time of the operation. </summary>
         public DateTimeOffset? StartOn { get; }

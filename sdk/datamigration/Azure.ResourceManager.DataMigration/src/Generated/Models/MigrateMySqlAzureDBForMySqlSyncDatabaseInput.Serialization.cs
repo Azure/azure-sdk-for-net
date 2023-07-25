@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(TargetDatabaseName))
             {
-                writer.WritePropertyName("targetDatabaseName");
+                writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
             if (Optional.IsCollectionDefined(MigrationSetting))
             {
-                writer.WritePropertyName("migrationSetting");
+                writer.WritePropertyName("migrationSetting"u8);
                 writer.WriteStartObject();
                 foreach (var item in MigrationSetting)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             if (Optional.IsCollectionDefined(SourceSetting))
             {
-                writer.WritePropertyName("sourceSetting");
+                writer.WritePropertyName("sourceSetting"u8);
                 writer.WriteStartObject();
                 foreach (var item in SourceSetting)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             if (Optional.IsCollectionDefined(TargetSetting))
             {
-                writer.WritePropertyName("targetSetting");
+                writer.WritePropertyName("targetSetting"u8);
                 writer.WriteStartObject();
                 foreach (var item in TargetSetting)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             if (Optional.IsCollectionDefined(TableMap))
             {
-                writer.WritePropertyName("tableMap");
+                writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();
                 foreach (var item in TableMap)
                 {
@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateMySqlAzureDBForMySqlSyncDatabaseInput DeserializeMigrateMySqlAzureDBForMySqlSyncDatabaseInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> targetDatabaseName = default;
             Optional<IDictionary<string, string>> migrationSetting = default;
@@ -83,21 +87,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IDictionary<string, string>> tableMap = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDatabaseName"))
+                if (property.NameEquals("targetDatabaseName"u8))
                 {
                     targetDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationSetting"))
+                if (property.NameEquals("migrationSetting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -108,11 +111,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     migrationSetting = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sourceSetting"))
+                if (property.NameEquals("sourceSetting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -123,11 +125,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sourceSetting = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetSetting"))
+                if (property.NameEquals("targetSetting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -138,11 +139,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetSetting = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tableMap"))
+                if (property.NameEquals("tableMap"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

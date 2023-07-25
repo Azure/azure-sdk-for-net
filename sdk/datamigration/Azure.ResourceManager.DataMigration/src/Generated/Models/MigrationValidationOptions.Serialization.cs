@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableSchemaValidation))
             {
-                writer.WritePropertyName("enableSchemaValidation");
+                writer.WritePropertyName("enableSchemaValidation"u8);
                 writer.WriteBooleanValue(EnableSchemaValidation.Value);
             }
             if (Optional.IsDefined(EnableDataIntegrityValidation))
             {
-                writer.WritePropertyName("enableDataIntegrityValidation");
+                writer.WritePropertyName("enableDataIntegrityValidation"u8);
                 writer.WriteBooleanValue(EnableDataIntegrityValidation.Value);
             }
             if (Optional.IsDefined(EnableQueryAnalysisValidation))
             {
-                writer.WritePropertyName("enableQueryAnalysisValidation");
+                writer.WritePropertyName("enableQueryAnalysisValidation"u8);
                 writer.WriteBooleanValue(EnableQueryAnalysisValidation.Value);
             }
             writer.WriteEndObject();
@@ -35,36 +35,37 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrationValidationOptions DeserializeMigrationValidationOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableSchemaValidation = default;
             Optional<bool> enableDataIntegrityValidation = default;
             Optional<bool> enableQueryAnalysisValidation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableSchemaValidation"))
+                if (property.NameEquals("enableSchemaValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableSchemaValidation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableDataIntegrityValidation"))
+                if (property.NameEquals("enableDataIntegrityValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableDataIntegrityValidation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableQueryAnalysisValidation"))
+                if (property.NameEquals("enableQueryAnalysisValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableQueryAnalysisValidation = property.Value.GetBoolean();

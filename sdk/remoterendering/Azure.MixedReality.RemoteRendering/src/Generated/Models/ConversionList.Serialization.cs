@@ -15,11 +15,15 @@ namespace Azure.MixedReality.RemoteRendering
     {
         internal static ConversionList DeserializeConversionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AssetConversion> conversions = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("conversions"))
+                if (property.NameEquals("conversions"u8))
                 {
                     List<AssetConversion> array = new List<AssetConversion>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +33,7 @@ namespace Azure.MixedReality.RemoteRendering
                     conversions = array;
                     continue;
                 }
-                if (property.NameEquals("@nextLink"))
+                if (property.NameEquals("@nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

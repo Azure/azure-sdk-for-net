@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="recoveryPlanCount"> Number of replication recovery plans for this vault. </param>
         /// <param name="registeredServersCount"> Number of servers registered to this vault. </param>
         /// <param name="recoveryServicesProviderAuthType"> The authentication type of recovery service providers in the vault. </param>
-        internal ReplicationUsage(MonitoringSummary monitoringSummary, JobsSummary jobsSummary, int? protectedItemCount, int? recoveryPlanCount, int? registeredServersCount, int? recoveryServicesProviderAuthType)
+        internal ReplicationUsage(VaultMonitoringSummary monitoringSummary, ReplicationJobSummary jobsSummary, int? protectedItemCount, int? recoveryPlanCount, int? registeredServersCount, int? recoveryServicesProviderAuthType)
         {
             MonitoringSummary = monitoringSummary;
             JobsSummary = jobsSummary;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Summary of the replication monitoring data for this vault. </summary>
-        public MonitoringSummary MonitoringSummary { get; }
+        public VaultMonitoringSummary MonitoringSummary { get; }
         /// <summary> Summary of the replication jobs data for this vault. </summary>
-        public JobsSummary JobsSummary { get; }
+        public ReplicationJobSummary JobsSummary { get; }
         /// <summary> Number of replication protected items for this vault. </summary>
         public int? ProtectedItemCount { get; }
         /// <summary> Number of replication recovery plans for this vault. </summary>

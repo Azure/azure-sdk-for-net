@@ -7,26 +7,8 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationRefundResult. </summary>
+    /// <summary> The response of refund request containing refund information of reservation. </summary>
     public partial class ReservationRefundResult
     {
-        /// <summary> Initializes a new instance of ReservationRefundResult. </summary>
-        internal ReservationRefundResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ReservationRefundResult. </summary>
-        /// <param name="id"> Fully qualified identifier of the reservation being returned. </param>
-        /// <param name="properties"></param>
-        internal ReservationRefundResult(string id, ReservationRefundResponseProperties properties)
-        {
-            Id = id;
-            Properties = properties;
-        }
-
-        /// <summary> Fully qualified identifier of the reservation being returned. </summary>
-        public string Id { get; }
-        /// <summary> Gets the properties. </summary>
-        public ReservationRefundResponseProperties Properties { get; }
     }
 }
