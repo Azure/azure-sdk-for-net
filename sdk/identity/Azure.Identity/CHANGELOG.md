@@ -9,6 +9,8 @@
 
 ### Bugs Fixed
 
+- ManagedIdentityCredential will no longer attempt to parse invalid json payloads on responses from the managed identity endpoint.
+
 ### Other Changes
 
 ## 1.10.0-beta.1 (2023-07-17)

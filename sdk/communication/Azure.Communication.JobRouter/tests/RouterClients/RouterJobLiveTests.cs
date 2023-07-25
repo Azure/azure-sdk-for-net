@@ -493,6 +493,39 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsNull(createJob1.MatchingMode.QueueAndMatchMode);
         }
 
+        [Test]
+        public async Task ReclassifyJob()
+        {
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
+            JobRouterAdministrationClient routerAdminClient = CreateRouterAdministrationClientWithConnectionString();
+            var channelId = GenerateUniqueId($"{nameof(ReclassifyJob)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(ReclassifyJob));
+            var createQueue = createQueueResponse.Value;
+
+            var classificationPolicy = await routerAdminClient.CreateClassificationPolicyAsync(
+                new CreateClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}{nameof(ReclassifyJob)}-policy"))
+                {
+                    PrioritizationRule = new StaticRouterRule(new LabelValue(1))
+                });
+            AddForCleanup(new Task(async () => await routerAdminClient.DeleteClassificationPolicyAsync(classificationPolicy.Value.Id)));
+
+            // Create 1 job
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(ReclassifyJob)}-job");
+            var createJob1Response = await routerClient.CreateJobWithClassificationPolicyAsync(
+                new CreateJobWithClassificationPolicyOptions(jobId1, channelId, classificationPolicy.Value.Id)
+                {
+                    QueueId = createQueue.Id
+                });
+            var createJob1 = createJob1Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
+
+            await routerClient.ReclassifyJobAsync(jobId1);
+
+            Assert.AreEqual(createJob1.QueueId, createQueue.Id);
+        }
+
         #endregion Job Tests
 
     }
