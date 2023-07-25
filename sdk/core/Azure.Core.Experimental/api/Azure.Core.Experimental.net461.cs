@@ -122,12 +122,6 @@ namespace Azure
 }
 namespace Azure.Core
 {
-    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class, Inherited=false, AllowMultiple=true)]
-    public partial class ProvisionableTemplateAttribute : System.Attribute
-    {
-        public ProvisionableTemplateAttribute(string resourceName) { }
-        public string ResourceName { get { throw null; } }
-    }
     public partial class LruCache<TKey, TValue> : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.IEnumerable where TKey : notnull
     {
         public LruCache(int capacity) { }
@@ -137,6 +131,12 @@ namespace Azure.Core
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGet(TKey key, out TValue? value) { throw null; }
+    }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class, Inherited=false, AllowMultiple=true)]
+    public partial class ProvisionableTemplateAttribute : System.Attribute
+    {
+        public ProvisionableTemplateAttribute(string resourceName) { }
+        public string ResourceName { get { throw null; } }
     }
     public abstract partial class SchemaValidator
     {
