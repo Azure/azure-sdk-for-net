@@ -4,7 +4,6 @@ using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
-
     internal class TestAuthResponse : AuthenticationEventResponse
     {
         internal TestAuthResponse(HttpStatusCode code, string content)
