@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.AppPlatform.Tests
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/37823")]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
