@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(this ManagementGroupResource managementGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return await managementGroupResource.GetArmDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetManagementGroupResourceExtensionClient(managementGroupResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

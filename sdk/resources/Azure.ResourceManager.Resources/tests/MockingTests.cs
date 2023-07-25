@@ -9,6 +9,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Moq;
 using Azure.Core;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -169,57 +170,38 @@ namespace Azure.ResourceManager.Resources.Tests
         }
 
         /// <summary>
-        /// This scenario is starting from ArmClient
-        /// 1. Get the first instance of ArmDeploymentResource using the first id from the client
-        /// 2. Get the second instance of ArmDeploymentResource using the second id from the client
-        /// 3. Call ExportTemplateAsync on both of them
+        /// This scenario is starting from ManagementGroupResource
+        /// 1. Get a ManagementGroupResource from ArmClient
+        /// 2. Get a ArmDeploymentResource by its name on the ManagementGroupResource
         /// </summary>
         /// <returns></returns>
         [Test]
-        public async Task MockingGetMultipleResourcesOnArmClient_WithoutAzureMock()
+        public async Task MockingGetResourceByName_WithoutAzureMock()
         {
             // TODO -- this cannot pass now, until we fix GetResourceClient
             // the data we use
-            var subscriptionId = Guid.NewGuid().ToString();
-            var armDeploymentId1 = ArmDeploymentResource.CreateResourceIdentifier($"/subscriptions/{subscriptionId}", "myDeployment1");
-            var armDeploymentId2 = ArmDeploymentResource.CreateResourceIdentifier($"/subscriptions/{subscriptionId}", "myDeployment2");
-            // the result
-            var exportResult1 = ArmResourcesModelFactory.ArmDeploymentExportResult(BinaryData.FromString("{ \"dummy\": \"ok\" }"));
-            var exportResult2 = ArmResourcesModelFactory.ArmDeploymentExportResult(BinaryData.FromString("{ \"dummy\": \"not_ok\" }"));
+            var managementGroupId = ManagementGroupResource.CreateResourceIdentifier(Guid.NewGuid().ToString());
+            var deploymentName = "myDeployment1";
+            var armDeploymentId = ArmDeploymentResource.CreateResourceIdentifier(managementGroupId, deploymentName);
 
             // setup the mocking
             // the ArmClient
             var armClientMock = new Mock<ArmClient>();
-            var armDeploymentMock1 = new Mock<ArmDeploymentResource>();
-            var armDeploymentMock2 = new Mock<ArmDeploymentResource>();
-            // COMMENT: this is a real big issue when we mock GetResourceClient, its signature does not take a resource therefore we cannot easily make it to return two different instances with different ids.
-            armClientMock.Setup(client => client.GetResourceClient(It.IsAny<Func<ArmDeploymentResource>>())).Returns(armDeploymentMock1.Object);
-            armDeploymentMock1.Setup(ad => ad.Id).Returns(armDeploymentId1);
-            armDeploymentMock1.Setup(ad => ad.ExportTemplateAsync(default)).ReturnsAsync(Response.FromValue(exportResult1, null));
-            // COMMENT: but since it takes a generic parameter, it is possible to return different type of instances.
-            armClientMock.Setup(client => client.GetResourceClient(It.IsAny<Func<ArmDeploymentResource>>())).Returns(armDeploymentMock2.Object);
-            armDeploymentMock2.Setup(ad => ad.Id).Returns(armDeploymentId2);
-            armDeploymentMock2.Setup(ad => ad.ExportTemplateAsync(default)).ReturnsAsync(Response.FromValue(exportResult2, null));
+            var mgmtGroupMock = new Mock<ManagementGroupResource>();
+            var mgmtGroupExtensionMock = new Mock<ManagementGroupResourceExtensionClient>();
+            mgmtGroupMock.Setup(g => g.Id).Returns(managementGroupId);
+            var armDeploymentMock = new Mock<ArmDeploymentResource>();
+            armDeploymentMock.Setup(ad => ad.Id).Returns(armDeploymentId);
+            // GetManagementGroupResource is an instance method on ArmClient
+            armClientMock.Setup(c => c.GetManagementGroupResource(managementGroupId)).Returns(mgmtGroupMock.Object);
+            mgmtGroupMock.Setup(g => g.GetCachedClient(It.IsAny<Func<ArmClient, ManagementGroupResourceExtensionClient>>())).Returns(mgmtGroupExtensionMock.Object);
+            mgmtGroupExtensionMock.Setup(e => e.GetArmDeploymentAsync(deploymentName, default)).ReturnsAsync(Response.FromValue(armDeploymentMock.Object, null));
 
             var client = armClientMock.Object;
-            var deploymentResource1 = client.GetArmDeploymentResource(armDeploymentId1);
+            var mgmtGroup = client.GetManagementGroupResource(managementGroupId);
+            var deploymentResource = await mgmtGroup.GetArmDeploymentAsync(deploymentName);
 
-            Assert.AreEqual(armDeploymentId1, deploymentResource1.Id);
-
-            var result1 = await deploymentResource1.ExportTemplateAsync();
-
-            Assert.IsNotNull(result1);
-            Assert.AreEqual(exportResult1.Template, result1.Value.Template);
-
-            var deploymentResource2 = client.GetArmDeploymentResource(armDeploymentId2);
-
-            // this will fail
-            Assert.AreEqual(armDeploymentId2, deploymentResource2.Id);
-
-            var result2 = await deploymentResource2.ExportTemplateAsync();
-
-            Assert.IsNotNull(result2);
-            Assert.AreEqual(exportResult2.Template, result2.Value.Template);
+            Assert.AreEqual(armDeploymentId, deploymentResource.Value.Id);
         }
 
         /// <summary>
@@ -303,8 +285,6 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.IsFalse(specResource1 == specResource2);
         }
 
-        /// <summary>
-        /// </summary>
         [Test]
         public async Task MockingScopeResourcesOnArmClient_WithoutAzureMock_FixedByArmClientExtensionClient()
         {
@@ -379,7 +359,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             // setup the mocking
             // the ArmClient
-            var armClientMock = new Mock<ArmClient>();
+            var armClientMock = new Mock<ArmClient>(); // new AzureMock<ArmClient>
             // mock the corresponding extension client
             var armClientExtension = new Mock<ArmClientExtensionClient>();
             // mock the GetCachedClient method on the extendee

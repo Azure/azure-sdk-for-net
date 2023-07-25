@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager;
 
@@ -36,6 +39,29 @@ namespace Azure.ResourceManager.Resources
         public virtual ArmDeploymentCollection GetArmDeployments()
         {
             return GetCachedClient(Client => new ArmDeploymentCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_GetAtScope</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            return await GetArmDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
     }
 }
