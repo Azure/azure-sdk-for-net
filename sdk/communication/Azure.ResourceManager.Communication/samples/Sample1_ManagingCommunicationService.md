@@ -47,6 +47,34 @@ ArmOperation<CommunicationServiceResource> communicationServiceLro = await colle
 CommunicationServiceResource communicationService = communicationServiceLro.Value;
 ```
 
+***Create a Communication Service with User Assigned Managed Identity***
+
+```C# Snippet:Managing_CommunicationService_CreateAnApplication with User Assigned Managed Identity
+var communicationService = await communicationManagementClient.CommunicationServices.CreateAsync(
+    resourceGroupName,
+    communicationServiceName,
+    new CommunicationServiceResource(
+        location: location,
+        dataLocation: dataLocation,
+        identity: new CommunicationServiceIdentity(type: IdentityType.UserAssigned, userAssignedIdentities: new Dictionary<string, CommunicationServiceUserAssignedIdentities>() { { userAssignedIdentityResourceId, new CommunicationServiceUserAssignedIdentities() } })
+    )
+);
+```
+
+***Create a Communication Service with User Assigned Managed Identity***
+
+```C# Snippet:Managing_CommunicationService_CreateAnApplication with System Assigned Managed Identityy
+var communicationService = await communicationManagementClient.CommunicationServices.CreateAsync(
+    resourceGroupName,
+    communicationServiceName,
+    new CommunicationServiceResource(
+        location: location,
+        dataLocation: dataLocation,
+        identity: new CommunicationServiceIdentity(type: IdentityType.SystemAssigned)
+    )
+);
+```
+
 ***List all Communication Service***
 
 ```C# Snippet:Managing_CommunicationService_ListAllCommunicationService
