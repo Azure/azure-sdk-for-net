@@ -228,7 +228,7 @@ Console.WriteLine($"Received message with Body:{receivedMessage.GetBody<String>(
 await receivedMessage.CompleteAsync();
 ```
 
-In `Azure.Messaging.ServiceBus`, we introduced `ServiceBusProcessor` which uses a push-based approach to deliver messages to event handlers that you provide while managing locks, message completion, concurrenc, and resiliency.  The processor also provides a graceful shutdown via the `StopProcessingAsync` method which will ensure that no more messages will be received, but at the same time you can continue the processing and settling the messages already in flight.
+In `Azure.Messaging.ServiceBus`, we introduced `ServiceBusProcessor` which uses a push-based approach to deliver messages to event handlers that you provide while managing locks, message completion, concurrency, and resiliency.  The processor also provides a graceful shutdown via the `StopProcessingAsync` method which will ensure that no more messages will be received, but at the same time you can continue the processing and settling the messages already in flight.
 
 The concept of a receiver remains for users who need to have a more fine-grained control over the reading and settling messages. The difference is that this is now created from the top-level `ServiceBusClient` via the `CreateReceiver` method taking the queue or subscription you want to read from and creating a receiver specific to that entity.
 
