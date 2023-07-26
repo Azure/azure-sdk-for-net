@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace Azure.ResourceManager.EdgeOrder.Customizations.Models
 {
@@ -9,26 +8,31 @@ namespace Azure.ResourceManager.EdgeOrder.Customizations.Models
         /// <summary>
         /// resource id for boostrap resource
         /// </summary>
-        internal string resourceId;
+        internal string ResourceId;
 
         /// <summary>
         /// aadendpoint for authentication
         /// </summary>
-        internal string aadEndpoint;
+        internal string AadEndpoint;
 
         /// <summary>
         /// tenant id of customer
         /// </summary>
-        internal string tenantId;
+        internal string TenantId;
 
         /// <summary>
         /// client id
         /// </summary>
-        internal string clientId;
+        internal string ClientId;
+
+        /// <summary>
+        /// arm endpoint to identify cloud
+        /// </summary>
+        internal string ArmEndPoint;
 
         /// <summary>
         /// secret data
         /// </summary>
-        internal string clientSecret;
+        internal string ClientSecret;
     }
 }

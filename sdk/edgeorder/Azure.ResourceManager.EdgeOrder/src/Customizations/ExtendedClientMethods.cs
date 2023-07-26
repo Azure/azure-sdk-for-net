@@ -2,20 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Azure.Core;
-using Azure.Identity;
 using Azure.ResourceManager.EdgeOrder.Customizations.Models;
 using Azure.ResourceManager.EdgeOrder.Models;
-using Newtonsoft.Json;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
     public static partial class EdgeOrderExtensions
     {
-
         /// <summary>
         /// Upload the device artifacts.
         /// <list type="bullet">
@@ -34,7 +30,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="deviceMetadataContent"> Device Artifacts content. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static ArmOperation<UploadArtifactsResponse> UploadDeviceArtifacts(string siteKey, string serialNumber, string deviceMetadataContent, WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <param name="armClientOptions">armClient options to be used in constructor when generating armClient</param>
+        public static ArmOperation<UploadArtifactsResponse> UploadDeviceArtifacts(string siteKey, string serialNumber, string deviceMetadataContent,
+            WaitUntil waitUntil, CancellationToken cancellationToken = default, ArmClientOptions armClientOptions = null)
         {
             Argument.AssertNotNullOrWhiteSpace(siteKey, nameof(siteKey));
 
@@ -42,17 +40,13 @@ namespace Azure.ResourceManager.EdgeOrder
 
             Argument.AssertNotNullOrWhiteSpace(deviceMetadataContent, nameof(deviceMetadataContent));
 
-            SiteKey siteKeyObject = JsonConvert.DeserializeObject<SiteKey>(siteKey);
+            SiteKey siteKeyObject = siteKey.DeserializeSiteKey();
 
             ValidateValidSiteKeyObject(siteKeyObject);
 
-            //TODO replace with MSI code
+            ArmClient armClient = siteKeyObject.CreateArmClient(armClientOptions);
 
-            TokenCredential credential = new DefaultAzureCredential();
-
-            ArmClient armClient = new ArmClient(credential);
-
-            ResourceIdentifier resourceIdentifier = new ResourceIdentifier(siteKeyObject.resourceId);
+            ResourceIdentifier resourceIdentifier = new ResourceIdentifier(siteKeyObject.ResourceId);
 
             BootstrapConfigurationResource bootstrapConfigurationResource = GetBootstrapConfigurationResource(armClient, resourceIdentifier);
 
@@ -91,11 +85,11 @@ namespace Azure.ResourceManager.EdgeOrder
 
         private static void ValidateValidSiteKeyObject(SiteKey siteKeyObject)
         {
-            Argument.AssertNotNullOrWhiteSpace(siteKeyObject.resourceId, nameof(siteKeyObject.resourceId));
-            Argument.AssertNotNullOrWhiteSpace(siteKeyObject.aadEndpoint, nameof(siteKeyObject.aadEndpoint));
-            Argument.AssertNotNullOrWhiteSpace(siteKeyObject.tenantId, nameof(siteKeyObject.tenantId));
-            Argument.AssertNotNullOrWhiteSpace(siteKeyObject.clientId, nameof(siteKeyObject.clientId));
-            Argument.AssertNotNullOrWhiteSpace(siteKeyObject.clientSecret, nameof(siteKeyObject.clientSecret));
+            Argument.AssertNotNullOrWhiteSpace(siteKeyObject.ResourceId, nameof(siteKeyObject.ResourceId));
+            Argument.AssertNotNullOrWhiteSpace(siteKeyObject.AadEndpoint, nameof(siteKeyObject.AadEndpoint));
+            Argument.AssertNotNullOrWhiteSpace(siteKeyObject.TenantId, nameof(siteKeyObject.TenantId));
+            Argument.AssertNotNullOrWhiteSpace(siteKeyObject.ClientId, nameof(siteKeyObject.ClientId));
+            Argument.AssertNotNullOrWhiteSpace(siteKeyObject.ClientSecret, nameof(siteKeyObject.ClientSecret));
         }
     }
 }
