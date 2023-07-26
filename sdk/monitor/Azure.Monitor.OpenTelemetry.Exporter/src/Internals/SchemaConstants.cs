@@ -116,33 +116,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int TelemetryEnvelope_Time_MaxLength = 64;
         public const int TelemetryEnvelope_InstrumentationKey_MaxLength = 40;
 
-        public const int Tags_AiApplicationVer_MaxLength = 1024;
-        public const int Tags_AiDeviceId_MaxLength = 1024;
-        public const int Tags_AiDeviceLocale_MaxLength = 64;
-        public const int Tags_AiDeviceModel_MaxLength = 256;
-        public const int Tags_AiDeviceOemName_MaxLength = 256;
-        public const int Tags_AiDeviceOsVersion_MaxLength = 256;
-        public const int Tags_AiDeviceType_MaxLength = 64;
-        public const int Tags_AiLocationIp_MaxLength = 46;
-        public const int Tags_AiLocationCountry_MaxLength = 256;
-        public const int Tags_AiLocationProvince_MaxLength = 256;
-        public const int Tags_AiLocationCity_MaxLength = 256;
         public const int Tags_AiOperationId_MaxLength = 128;
         public const int Tags_AiOperationName_MaxLength = 1024;
         public const int Tags_AiOperationParentId_MaxLength = 512;
-        public const int Tags_AiOperationSyntheticSource_MaxLength = 1024;
-        public const int Tags_AiOperationCorrelationVector_MaxLength = 64;
-        public const int Tags_AiSessionId_MaxLength = 64;
-        public const int Tags_AiSessionIsFirst_MaxLength = 5;
-        public const int Tags_AiUserAccountId_MaxLength = 1024;
-        public const int Tags_AiUserId_MaxLength = 128;
         public const int Tags_AiUserAuthUserId_MaxLength = 1024;
         public const int Tags_AiCloudRole_MaxLength = 256;
-        public const int Tags_AiCloudRoleVer_MaxLength = 256;
         public const int Tags_AiCloudRoleInstance_MaxLength = 256;
-        public const int Tags_AiCloudLocation_MaxLength = 256;
         public const int Tags_AiInternalSdkVersion_MaxLength = 64;
-        public const int Tags_AiInternalAgentVersion_MaxLength = 64;
-        public const int Tags_AiInternalNodeName_MaxLength = 256;
     }
 }
