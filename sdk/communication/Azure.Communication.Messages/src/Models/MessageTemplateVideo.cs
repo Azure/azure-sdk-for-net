@@ -9,15 +9,15 @@ namespace Azure.Communication.Messages
     public class MessageTemplateVideo: MessageTemplateValue
     {
         /// <summary>  </summary>
-        public MessageTemplateVideo(string name, Uri url, string caption = null, string filename = null) : base(name)
+        public MessageTemplateVideo(string name, Uri uri, string caption = null, string filename = null) : base(name)
         {
-            Url = url;
+            Uri = uri;
             Caption = caption;
             Filename = filename;
         }
 
         /// <summary> The (public) URL of the document media. </summary>
-        public Uri Url { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> The [optional] caption of the media object. </summary>
         public string Caption { get; set; }
         /// <summary> The [optional] filename of the media file. </summary>
@@ -28,7 +28,7 @@ namespace Azure.Communication.Messages
             return new MessageTemplateValueInternal(MessageTemplateValueKind.Video)
             {
                 Video = new MessageTemplateValueMedia {
-                    Url = Url,
+                    Uri = Uri,
                     Caption = Caption,
                     Filename = Filename
                 }

@@ -9,28 +9,28 @@ namespace Azure.Communication.Messages
     public class MessageTemplateDocument: MessageTemplateValue
     {
         /// <summary>  </summary>
-        public MessageTemplateDocument(string name, Uri url, string caption = null, string filename = null) : base(name)
+        public MessageTemplateDocument(string name, Uri uri, string caption = null, string filename = null) : base(name)
         {
-            Url = url;
+            Uri = uri;
             Caption = caption;
-            Filename = filename;
+            FileName = filename;
         }
 
         /// <summary> The (public) URL of the document media. </summary>
-        public Uri Url { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> The [optional] caption of the media object. </summary>
         public string Caption { get; set; }
         /// <summary> The [optional] filename of the media file. </summary>
-        public string Filename { get; set; }
+        public string FileName { get; set; }
 
         internal override MessageTemplateValueInternal ToMessageTemplateValueInternal()
         {
             return new MessageTemplateValueInternal(MessageTemplateValueKind.Document)
             {
                 Document = new MessageTemplateValueMedia {
-                    Url = Url,
+                    Uri = Uri,
                     Caption = Caption,
-                    Filename = Filename
+                    Filename = FileName
                 }
             };
         }

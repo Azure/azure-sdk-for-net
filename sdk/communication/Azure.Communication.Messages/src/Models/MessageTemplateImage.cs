@@ -11,15 +11,15 @@ namespace Azure.Communication.Messages
     public class MessageTemplateImage: MessageTemplateValue
     {
         /// <summary>  </summary>
-        public MessageTemplateImage(string name, Uri url, string caption = null, string filename = null) : base(name)
+        public MessageTemplateImage(string name, Uri uri, string caption = null, string filename = null) : base(name)
         {
-            Url = url;
+            Uri = uri;
             Caption = caption;
             Filename = filename;
         }
 
         /// <summary> The (public) URL of the document media. </summary>
-        public Uri Url { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> The [optional] caption of the media object. </summary>
         public string Caption { get; set; }
         /// <summary> The [optional] filename of the media file. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Communication.Messages
             {
                 Image = new MessageTemplateValueMedia
                 {
-                    Url = Url,
+                    Uri = Uri,
                     Caption = Caption,
                     Filename = Filename
                 }
