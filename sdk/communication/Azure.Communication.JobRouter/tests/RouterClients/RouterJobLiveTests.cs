@@ -494,6 +494,71 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
+        public async Task UpdateJobTest()
+        {
+            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
+            var channelId = GenerateUniqueId($"{nameof(UpdateJobTest)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(UpdateJobTest));
+            var createQueue = createQueueResponse.Value;
+
+            // Create 1 job
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(UpdateJobTest)}1");
+            var labels = new Dictionary<string, LabelValue?>
+            {
+                ["Label_1"] = new LabelValue("Value_1"),
+                ["Label_2"] = new LabelValue(2),
+                ["Label_3"] = new LabelValue(true)
+            };
+            var tags = new Dictionary<string, LabelValue?>
+            {
+                ["Tag_1"] = new LabelValue("Value_1"),
+                ["Tag_2"] = new LabelValue(2),
+                ["Tag_3"] = new LabelValue(true)
+            };
+
+            var createJobOptions = new CreateJobOptions(jobId1, channelId, createQueue.Id);
+            createJobOptions.Labels.Append(labels);
+            createJobOptions.Tags.Append(tags);
+
+            var createJobResponse = await routerClient.CreateJobAsync(createJobOptions);
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJobResponse.Value.Id)));
+
+            var updatedLabels = new Dictionary<string, LabelValue?>
+            {
+                ["Label_1"] = null,
+                ["Label_2"] = new LabelValue(null),
+                ["Label_3"] = new LabelValue("Value_Updated_3"),
+                ["Label_4"] = new LabelValue("Value_4")
+            };
+            var updatedTags = new Dictionary<string, LabelValue?>
+            {
+                ["Tag_1"] = null,
+                ["Tag_2"] = new LabelValue(null),
+                ["Tag_3"] = new LabelValue("Value_Updated_3"),
+                ["Tag_4"] = new LabelValue("Value_4")
+            };
+
+            var updateOptions = new UpdateJobOptions(jobId1);
+            updateOptions.Labels.Append(updatedLabels);
+            updateOptions.Tags.Append(updatedTags);
+
+            var updateJobResponse = await routerClient.UpdateJobAsync(updateOptions);
+
+            Assert.AreEqual(updateJobResponse.Value.Labels, new Dictionary<string, LabelValue?>
+            {
+                ["Label_3"] = new LabelValue("Value_Updated_3"),
+                ["Label_4"] = new LabelValue("Value_4")
+            });
+            Assert.AreEqual(updateJobResponse.Value.Tags, new Dictionary<string, LabelValue?>
+            {
+                ["Tag_3"] = new LabelValue("Value_Updated_3"),
+                ["Tag_4"] = new LabelValue("Value_4")
+            });
+        }
+
+        [Test]
         public async Task ReclassifyJob()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
