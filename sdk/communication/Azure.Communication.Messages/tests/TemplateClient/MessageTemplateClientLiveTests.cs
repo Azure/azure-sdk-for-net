@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public async Task GetTemplatesShouldSucceed()
+        public Task GetTemplatesShouldSucceed()
         {
             // Arrange
             MessageTemplateClient messageTemplateClient = CreateInstrumentedMessageTemplateClient();
@@ -24,15 +24,17 @@ namespace Azure.Communication.Messages.Tests
             // Act
             AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
 
-            var geTemplatesCount = templates.ToEnumerableAsync().Result.Count;
-
-            await foreach (MessageTemplateItem template in templates)
-            {
-                Console.WriteLine($"{template.Name}");
-            }
-
             // Assert
             Assert.IsNotNull(templates);
+            var templatesEnumerable = templates.ToEnumerableAsync().Result;
+            Assert.IsNotEmpty(templatesEnumerable);
+            foreach (MessageTemplateItem template in templatesEnumerable)
+            {
+                Assert.IsNotNull(template.Name);
+                Assert.IsNotNull(template.Language);
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

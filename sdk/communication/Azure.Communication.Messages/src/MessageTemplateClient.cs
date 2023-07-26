@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -105,6 +106,8 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<MessageTemplateItem> GetTemplatesAsync(string channelRegistrationId, CancellationToken cancellationToken = default)
         {
+            _ = channelRegistrationId ?? throw new ArgumentNullException(nameof(channelRegistrationId));
+
             async Task<Page<MessageTemplateItem>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MessageTemplateClient)}.{nameof(GetTemplates)}");
@@ -130,6 +133,10 @@ namespace Azure.Communication.Messages
                 try
                 {
                     Response<ListTemplatesResponse> response = await _templateV2RestClient.ListNextPageAsync(nextLink, new Guid(channelRegistrationId), pageSizeHint, cancellationToken).ConfigureAwait(false);
+                    if (response.Value.Value == null || response.Value.Value.Count == 0)
+                    {
+                        return Page.FromValues(new List<MessageTemplateItem>(), null, response.GetRawResponse());
+                    }
                     return Page.FromValues(response.Value.Value.Select(x => new MessageTemplateItem(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -147,6 +154,8 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<MessageTemplateItem> GetTemplates(string channelRegistrationId, CancellationToken cancellationToken = default)
         {
+            _ = channelRegistrationId ?? throw new ArgumentNullException(nameof(channelRegistrationId));
+
             Page<MessageTemplateItem> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MessageTemplateClient)}.{nameof(GetTemplates)}");
@@ -172,6 +181,10 @@ namespace Azure.Communication.Messages
                 try
                 {
                     Response<ListTemplatesResponse> response = _templateV2RestClient.ListNextPage(nextLink, new Guid(channelRegistrationId), pageSizeHint, cancellationToken);
+                    if (response.Value.Value == null || response.Value.Value.Count == 0)
+                    {
+                        return Page.FromValues(new List<MessageTemplateItem>(), null, response.GetRawResponse());
+                    }
                     return Page.FromValues(response.Value.Value.Select(x => new MessageTemplateItem(x)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
