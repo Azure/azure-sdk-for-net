@@ -20,7 +20,7 @@ param (
     $RemainingArguments
 )
 
-Import-Module -Name ./eng/common/scripts/X509Certificate2 -Verbose
+Import-Module -Name $PSScriptRoot/../../eng/common/scripts/X509Certificate2 -Verbose
 
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
