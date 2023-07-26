@@ -1,12 +1,12 @@
 # Release History
 
-## 1.0.0-beta.2 (2023-08-15)
+## 1.0.0-beta.1 (2023-08-15)
 
-### Features Added
-- Added support for sending advanced template messages
-- Added support for retreiving templates
+This is the first Public Preview release of Azure Communication Services for advanced messages. For more information, please see the [README][read_me] and [documentation][documentation].
 
-## 1.0.0-beta.1 (2022-10-11)
+This is a Public Preview version, so breaking changes are possible in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-### Features Added
-Add the SDK - Initial commit
+<!-- LINKS -->
+[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Messages/README.md
+[documentation]: https://docs.microsoft.com/azure/communication-services/quickstarts/advancedmessaging/whatsapp/get-started
+
