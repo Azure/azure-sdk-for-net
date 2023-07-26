@@ -13,11 +13,11 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
-    public partial class ComputeSku : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class ComputeSku : IUtf8JsonSerializable, IJsonModelSerializable<ComputeSku>, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ComputeSku>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IJsonModelSerializable<ComputeSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             public Optional<long> Capacity { get; set; }
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ComputeSku IJsonModelSerializable<ComputeSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             if (!reader.TryDeserialize<ComputeSkuProperties>(options, SetProperty, out var properties))
                 return null;
@@ -117,15 +117,23 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             reader.Skip();
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ComputeSku IModelSerializable<ComputeSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeComputeSku(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<ComputeSku>.Serialize(ModelSerializerOptions options)
         {
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ComputeSku>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ComputeSku>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ComputeSku>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ComputeSku>)this).Serialize(options);
     }
 }

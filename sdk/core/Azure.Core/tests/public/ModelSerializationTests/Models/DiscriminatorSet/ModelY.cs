@@ -9,11 +9,12 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    public class ModelY : BaseModel, IUtf8JsonSerializable, IJsonModelSerializable
+    public class ModelY : BaseModel, IUtf8JsonSerializable, IJsonModelSerializable<ModelY>, IJsonModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -32,9 +33,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public string YProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ModelY>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable<ModelY>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -103,9 +106,25 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new ModelY(kind, name, yProperty, rawData);
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ModelY IModelSerializable<ModelY>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             return DeserializeModelY(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
+
+        ModelY IJsonModelSerializable<ModelY>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeModelY(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ModelY>.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ModelY>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ModelY>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ModelY>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ModelY>)this).Serialize(options);
     }
 }

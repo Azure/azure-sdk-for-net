@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ResourceTypeAliasPattern : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class ResourceTypeAliasPattern : IUtf8JsonSerializable, IJsonModelSerializable<ResourceTypeAliasPattern>, IJsonModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
@@ -52,7 +52,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return new ResourceTypeAliasPattern(phrase.Value, variable.Value, Optional.ToNullable(type));
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IJsonModelSerializable<ResourceTypeAliasPattern>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -82,7 +82,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public Optional<ResourceTypeAliasPatternType> PatternType { get; set; }
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ResourceTypeAliasPattern IJsonModelSerializable<ResourceTypeAliasPattern>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             if (!reader.TryDeserialize<ResourceTypeAliasPatternProperites>(options, SetProperty, out var properties))
                 return null;
@@ -116,15 +116,23 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             reader.Skip();
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ResourceTypeAliasPattern IModelSerializable<ResourceTypeAliasPattern>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceTypeAliasPattern(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<ResourceTypeAliasPattern>.Serialize(ModelSerializerOptions options)
         {
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ResourceTypeAliasPattern>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ResourceTypeAliasPattern>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ResourceTypeAliasPattern>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ResourceTypeAliasPattern>)this).Serialize(options);
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.Core.Serialization
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable
+        public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
             options ??= ModelSerializerOptions.DefaultAzureOptions;
 
@@ -39,7 +39,7 @@ namespace Azure.Core.Serialization
         {
             options ??= ModelSerializerOptions.DefaultAzureOptions;
 
-            var iModel = model as IModelSerializable;
+            var iModel = model as IModelSerializable<object>;
             if (iModel is null)
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable)}");
 
@@ -54,9 +54,17 @@ namespace Azure.Core.Serialization
         /// Serialize a XML model. Todo: collapse this method when working - need compile check over runtime
         /// </summary>
         /// <returns></returns>
-        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable<T>
         {
-            return (T)Deserialize(data, typeof(T), options);
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+
+            var genericDeserialize = GenericDeserialize(data, typeof(T), options);
+            if (genericDeserialize is not null)
+                return (T)genericDeserialize;
+
+            var model = Activator.CreateInstance(typeof(T), true) as IModelSerializable<T>;
+
+            return model!.Deserialize(data, options);
         }
 
         /// <summary>
@@ -71,6 +79,17 @@ namespace Azure.Core.Serialization
         {
             options ??= ModelSerializerOptions.DefaultAzureOptions;
 
+            var genericDeserialize = GenericDeserialize(data, typeToConvert, options);
+            if (genericDeserialize is not null)
+                return genericDeserialize;
+
+            var model = Activator.CreateInstance(typeToConvert, true) as IModelSerializable<object>;
+
+            return model!.Deserialize(data, options);
+        }
+
+        private static object? GenericDeserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
+        {
             var serializer = options.TypeResolver is not null ? options.TypeResolver(typeToConvert) : null;
             if (serializer is not null)
             {
@@ -81,9 +100,7 @@ namespace Azure.Core.Serialization
             if (typeToConvert.IsAbstract)
                 return DeserializeObject(data, typeToConvert, options);
 
-            var model = Activator.CreateInstance(typeToConvert, true) as IModelSerializable;
-
-            return model!.Deserialize(data, options);
+            return null;
         }
 
         private static readonly Type[] _combinedDeserializeMethodParameters = new Type[] { typeof(BinaryData), typeof(ModelSerializerOptions) };

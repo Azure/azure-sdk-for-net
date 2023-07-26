@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    public class ModelX : BaseModel, IUtf8JsonSerializable, IJsonModelSerializable
+    public class ModelX : BaseModel, IUtf8JsonSerializable, IJsonModelSerializable<ModelX>, IJsonModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public int XProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ModelX>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         public static implicit operator RequestContent(ModelX modelX)
         {
@@ -40,7 +40,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return content;
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModelSerializable<ModelX>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -109,7 +111,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new ModelX(kind, name, xProperty, rawData);
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ModelX IModelSerializable<ModelX>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             return DeserializeModelX(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
@@ -119,5 +121,21 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         {
             ((IUtf8JsonSerializable)this).Write(writer);
         }
+
+        ModelX IJsonModelSerializable<ModelX>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeModelX(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ModelX>.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ModelX>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ModelX>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ModelX>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ModelX>)this).Serialize(options);
     }
 }

@@ -8,7 +8,7 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// .
     /// </summary>
-    public interface IJsonModelSerializable : IModelSerializable
+    public interface IJsonModelSerializable<out T> : IModelSerializable<T>
     {
         /// <summary>
         /// .
@@ -26,7 +26,12 @@ namespace Azure.Core.Serialization
         /// <param name="options"></param>
         /// <returns></returns>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        object Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options);
+        T Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options);
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    public interface IJsonModelSerializable : IJsonModelSerializable<object>, IModelSerializable { }
 }

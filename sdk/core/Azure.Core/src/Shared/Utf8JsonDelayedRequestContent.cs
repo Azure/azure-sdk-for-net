@@ -16,12 +16,12 @@ namespace Azure.Core
         private readonly object _serializedLock = new object();
 
         private SequenceWriter? _sequenceWriter;
-        private IJsonModelSerializable _model;
+        private IJsonModelSerializable<object> _model;
         private ModelSerializerOptions _serializerOptions;
         private Utf8JsonWriter? _writer;
         private RequestContent? _content;
 
-        public Utf8JsonDelayedRequestContent(IJsonModelSerializable model, ModelSerializerOptions options)
+        public Utf8JsonDelayedRequestContent(IJsonModelSerializable<object> model, ModelSerializerOptions options)
         {
             _model = model;
             _serializerOptions = options;

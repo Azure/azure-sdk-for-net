@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources
 {
-    public partial class ResourceProviderData : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class ResourceProviderData : IUtf8JsonSerializable, IJsonModelSerializable<ResourceProviderData>, IJsonModelSerializable
     {
         public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelSerializerOptions options = default)
         {
@@ -86,18 +86,18 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             return new ResourceProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState));
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ResourceProviderData IModelSerializable<ResourceProviderData>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ResourceProviderData>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         // only used for public access to internal serialize
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IJsonModelSerializable<ResourceProviderData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -150,7 +150,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             public Optional<ProviderAuthorizationConsentState> ProviderAuthorizationConsentState { get; set; }
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ResourceProviderData IJsonModelSerializable<ResourceProviderData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             if (!reader.TryDeserialize< ResourceProviderDataProperties>(options, SetProperty, out var properties))
                 return null;
@@ -211,9 +211,17 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             reader.Skip();
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<ResourceProviderData>.Serialize(ModelSerializerOptions options)
         {
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ResourceProviderData>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ResourceProviderData>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ResourceProviderData>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ResourceProviderData>)this).Serialize(options);
     }
 }

@@ -8,7 +8,7 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// .
     /// </summary>
-    public interface IXmlModelSerializable : IModelSerializable
+    public interface IXmlModelSerializable<out T> : IModelSerializable<T>
     {
         /// <summary>
         /// .
@@ -17,4 +17,9 @@ namespace Azure.Core.Serialization
         /// <param name="options"></param>
         void Serialize(XmlWriter writer, ModelSerializerOptions options);
     }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    public interface IXmlModelSerializable : IXmlModelSerializable<object> { }
 }

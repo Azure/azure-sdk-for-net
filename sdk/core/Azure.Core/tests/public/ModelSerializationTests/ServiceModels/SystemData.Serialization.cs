@@ -16,11 +16,11 @@ using Azure.Core.Serialization;
 namespace Azure.Core.Tests.Public.ResourceManager.Models
 {
     [JsonConverter(typeof(SystemDataConverter))]
-    public partial class SystemData : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class SystemData : IUtf8JsonSerializable, IJsonModelSerializable<SystemData>, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<SystemData>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IJsonModelSerializable<SystemData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -104,7 +104,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
             public Optional<DateTimeOffset> LastModifiedOn { get; set; }
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        SystemData IJsonModelSerializable<SystemData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             if (!reader.TryDeserialize<SystemDataProperties>(options, SetProperty, out var properties))
                 return null;
@@ -165,7 +165,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
             reader.Skip();
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        SystemData IModelSerializable<SystemData>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeSystemData(doc.RootElement, options);
@@ -184,9 +184,17 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
             }
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<SystemData>.Serialize(ModelSerializerOptions options)
         {
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<SystemData>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<SystemData>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<SystemData>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<SystemData>)this).Serialize(options);
     }
 }

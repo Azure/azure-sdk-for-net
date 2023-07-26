@@ -13,9 +13,9 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ProviderExtendedLocation : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class ProviderExtendedLocation : IUtf8JsonSerializable, IJsonModelSerializable<ProviderExtendedLocation>, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ProviderExtendedLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelSerializerOptions options = default)
         {
@@ -62,7 +62,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return new ProviderExtendedLocation(Optional.ToNullable(location), type.Value, Optional.ToList(extendedLocations));
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IJsonModelSerializable<ProviderExtendedLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public Optional<IReadOnlyList<string>> ExtendedLocations { get; set; }
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ProviderExtendedLocation IJsonModelSerializable<ProviderExtendedLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             if (!reader.TryDeserialize<ProviderExtendedLocationProperties>(options, SetProperty, out var properties))
                 return null;
@@ -131,15 +131,23 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             reader.Skip();
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ProviderExtendedLocation IModelSerializable<ProviderExtendedLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeProviderExtendedLocation(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<ProviderExtendedLocation>.Serialize(ModelSerializerOptions options)
         {
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ProviderExtendedLocation>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ProviderExtendedLocation>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ProviderExtendedLocation>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ProviderExtendedLocation>)this).Serialize(options);
     }
 }

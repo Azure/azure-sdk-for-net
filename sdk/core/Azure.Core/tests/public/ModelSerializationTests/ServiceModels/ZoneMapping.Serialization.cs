@@ -14,9 +14,9 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ZoneMapping : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class ZoneMapping : IUtf8JsonSerializable, IJsonModelSerializable<ZoneMapping>, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ZoneMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         internal static ZoneMapping DeserializeZoneMapping(JsonElement element, ModelSerializerOptions options = default)
         {
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return new ZoneMapping(Optional.ToNullable(location), Optional.ToList(zones));
         }
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IJsonModelSerializable<ZoneMapping>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -86,7 +86,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public Optional<IReadOnlyList<string>> Zones { get; set; }
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ZoneMapping IJsonModelSerializable<ZoneMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             if (!reader.TryDeserialize<ZoneMappingProperties>(options, SetProperty, out var properties))
                 return null;
@@ -113,15 +113,23 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             reader.Skip();
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ZoneMapping IModelSerializable<ZoneMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeZoneMapping(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<ZoneMapping>.Serialize(ModelSerializerOptions options)
         {
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ZoneMapping>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ZoneMapping>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ZoneMapping>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ZoneMapping>)this).Serialize(options);
     }
 }

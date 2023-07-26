@@ -14,11 +14,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
     /// A class representing a sub-resource that contains only the ID.
     /// </summary>
     [JsonConverter(typeof(WritableSubResourceConverter))]
-    public partial class WritableSubResource : IUtf8JsonSerializable, IJsonModelSerializable
+    public partial class WritableSubResource : IUtf8JsonSerializable, IJsonModelSerializable<WritableSubResource>, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<WritableSubResource>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IJsonModelSerializable<WritableSubResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         /// <summary>
         /// Serialize the input WritableSubResource object.
@@ -70,7 +70,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public ResourceIdentifier Id { get; set; }
         }
 
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        WritableSubResource IJsonModelSerializable<WritableSubResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             if (!reader.TryDeserialize<WritableSubResourceProperties>(options, SetProperty, out var properties))
                 return null;
@@ -90,7 +90,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             reader.Skip();
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        WritableSubResource IModelSerializable<WritableSubResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeWritableSubResource(doc.RootElement, options);
@@ -109,9 +109,17 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             }
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<WritableSubResource>.Serialize(ModelSerializerOptions options)
         {
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<WritableSubResource>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<WritableSubResource>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<WritableSubResource>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<WritableSubResource>)this).Serialize(options);
     }
 }

@@ -14,7 +14,7 @@ using System.Collections.Generic;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    internal class XmlModelForCombinedInterface : IXmlSerializable, IXmlModelSerializable
+    internal class XmlModelForCombinedInterface : IXmlSerializable, IXmlModelSerializable<XmlModelForCombinedInterface>, IXmlModelSerializable
     {
         public XmlModelForCombinedInterface() { }
 
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
             Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
 
-        void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
+        void IXmlModelSerializable<XmlModelForCombinedInterface>.Serialize(XmlWriter writer, ModelSerializerOptions options)
             => Serialize(writer, options, null);
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions options = default)
@@ -103,7 +103,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<XmlModelForCombinedInterface>.Serialize(ModelSerializerOptions options)
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
@@ -146,7 +146,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        XmlModelForCombinedInterface IModelSerializable<XmlModelForCombinedInterface>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
@@ -159,5 +159,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             }
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
+
+        void IXmlModelSerializable<object>.Serialize(XmlWriter writer, ModelSerializerOptions options) => ((IXmlModelSerializable<XmlModelForCombinedInterface>)this).Serialize(writer, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<XmlModelForCombinedInterface>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<XmlModelForCombinedInterface>)this).Serialize(options);
     }
 }

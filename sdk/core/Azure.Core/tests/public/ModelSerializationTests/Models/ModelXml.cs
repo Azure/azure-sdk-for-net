@@ -2,19 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Xml.Linq;
-using System.Xml;
-using Azure.Core.Serialization;
-using NUnit.Framework;
-using System.Xml.Serialization;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    internal class ModelXml : IXmlSerializable, IXmlModelSerializable
+    internal class ModelXml : IXmlSerializable, IXmlModelSerializable<ModelXml>, IXmlModelSerializable
     {
         internal ModelXml() { }
 
@@ -48,7 +46,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
             Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
 
-        void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
+        void IXmlModelSerializable<ModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
             => Serialize(writer, options, null);
 
         private void Serialize(XmlWriter writer, ModelSerializerOptions options, string nameHint)
@@ -114,7 +112,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new ModelXml(key, value, readonlyProperty, childModelXml);
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<ModelXml>.Serialize(ModelSerializerOptions options)
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
@@ -163,7 +161,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new ModelXml(key, value, readOnlyProperty, childModelXml);
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ModelXml IModelSerializable<ModelXml>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
@@ -176,5 +174,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             }
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
+
+        void IXmlModelSerializable<object>.Serialize(XmlWriter writer, ModelSerializerOptions options) => ((IXmlModelSerializable<ModelXml>)this).Serialize(writer, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ModelXml>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ModelXml>)this).Serialize(options);
     }
 }

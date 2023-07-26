@@ -16,7 +16,7 @@ using BenchmarkDotNet.Configs;
 namespace Azure.Core.Perf
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class SerializationBenchmark<T> where T : class, IJsonModelSerializable
+    public abstract class SerializationBenchmark<T> where T : class, IJsonModelSerializable<T>
     {
         private string _json;
         protected T _model;
@@ -178,21 +178,21 @@ namespace Azure.Core.Perf
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public object Deserialize_PublicInterfaceFromString()
+        public T Deserialize_PublicInterfaceFromString()
         {
             return _model.Deserialize(BinaryData.FromString(_json), _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public object Deserialize_PublicInterfaceFromBinaryData()
+        public T Deserialize_PublicInterfaceFromBinaryData()
         {
             return _model.Deserialize(_data, _options);
         }
 
         [Benchmark]
         [BenchmarkCategory("PublicInterface")]
-        public object Deserialize_Utf8JsonReaderFromBinaryData()
+        public T Deserialize_Utf8JsonReaderFromBinaryData()
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
             return _model.Deserialize(ref reader, _options);
@@ -232,8 +232,6 @@ namespace Azure.Core.Perf
         public ModelSerializerOptions OptionsAlloc()
         {
             ModelSerializerOptions options = default;
-            //if (options.Equals(default(ModelSerializerOptions)))
-            //    options = new ModelSerializerOptions(ModelSerializerFormat.Json);
             options ??= ModelSerializerOptions.DefaultAzureOptions;
             return options;
         }
