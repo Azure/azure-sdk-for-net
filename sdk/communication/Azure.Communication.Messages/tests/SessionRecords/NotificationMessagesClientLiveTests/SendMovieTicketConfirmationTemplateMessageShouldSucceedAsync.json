@@ -1,0 +1,113 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://acsxplatmg-sandbox.unitedstates.communication.azure.com/messages/notifications/:send?api-version=2023-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "679",
+        "Content-Type": "application/json",
+        "traceparent": "00-6a12d387a5d6a77b7b9bbf07e934c0a7-6897cdd7e52e9409-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20230725.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6483009e3bb0e6339ab62660b736b64b",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 26 Jul 2023 00:22:05 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "channelRegistrationId": "59aced66-68ae-4b7a-8430-36f4c5dfa328",
+        "to": [
+          "\u002B16043609258"
+        ],
+        "type": "template",
+        "template": {
+          "name": "sample_movie_ticket_confirmation",
+          "language": "en_us",
+          "values": {
+            "image": {
+              "kind": "image",
+              "image": {
+                "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg"
+              }
+            },
+            "title": {
+              "kind": "text",
+              "text": {
+                "text": "Avengers"
+              }
+            },
+            "time": {
+              "kind": "text",
+              "text": {
+                "text": "July 1st, 2023 12:30PM"
+              }
+            },
+            "venue": {
+              "kind": "text",
+              "text": {
+                "text": "Cineplex"
+              }
+            },
+            "seats": {
+              "kind": "text",
+              "text": {
+                "text": "Seat 1A"
+              }
+            }
+          },
+          "bindings": {
+            "whatsApp": {
+              "header": [
+                {
+                  "refValue": "image"
+                }
+              ],
+              "body": [
+                {
+                  "refValue": "title"
+                },
+                {
+                  "refValue": "time"
+                },
+                {
+                  "refValue": "venue"
+                },
+                {
+                  "refValue": "seats"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-02-01-preview",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Jul 2023 00:22:11 GMT",
+        "MS-CV": "2pd6dKQAG0atYFLYiqGdkw.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0M2fAZAAAAACgmaoU/q8CQbQNNcCgNgu0WVRPMjIxMDkwODIwMDMzADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "648ms"
+      },
+      "ResponseBody": {
+        "receipts": [
+          {
+            "messageId": "26d16e50-008d-4247-8a14-644091a2c007",
+            "to": "\u002B16043609258"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "820457927",
+    "RECIPIENT_IDENTIFIER": "\u002B16043609258",
+    "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
+  }
+}

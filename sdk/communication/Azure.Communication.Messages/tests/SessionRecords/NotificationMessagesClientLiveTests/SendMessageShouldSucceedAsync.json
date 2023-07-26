@@ -1,0 +1,55 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://acsxplatmg-sandbox.unitedstates.communication.azure.com/messages/notifications/:send?api-version=2023-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "126",
+        "Content-Type": "application/json",
+        "traceparent": "00-aed5ba4eb20e397703b29df1fabb4ed4-85a1c62ae9088f25-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20230725.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a9adb279ff46d2e852ece92e332b23ef",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 26 Jul 2023 00:22:05 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "channelRegistrationId": "59aced66-68ae-4b7a-8430-36f4c5dfa328",
+        "to": [
+          "\u002B16043609258"
+        ],
+        "type": "text",
+        "content": "LiveTest"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-02-01-preview",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Jul 2023 00:22:10 GMT",
+        "MS-CV": "jM7ngFneHkqkgaG6Wt776A.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0MmfAZAAAAAC5D9W2KN/SRosK9YWT0CogWVRPMjIxMDkwODIwMDMzADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "760ms"
+      },
+      "ResponseBody": {
+        "receipts": [
+          {
+            "messageId": "4d4dd5ff-10bf-41ee-a20e-b4d7c5898dc3",
+            "to": "\u002B16043609258"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "452774152",
+    "RECIPIENT_IDENTIFIER": "\u002B16043609258",
+    "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
+  }
+}

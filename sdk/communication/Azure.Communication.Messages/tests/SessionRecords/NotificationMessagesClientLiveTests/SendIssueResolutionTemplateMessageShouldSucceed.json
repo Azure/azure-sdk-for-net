@@ -1,0 +1,97 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://acsxplatmg-sandbox.unitedstates.communication.azure.com/messages/notifications/:send?api-version=2023-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "507",
+        "Content-Type": "application/json",
+        "traceparent": "00-6768f740d79bc52e05606c0a04c72534-95d7e564181f9c42-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20230725.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8d012aec2843daa8c15a2e670783c319",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 26 Jul 2023 00:21:58 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "channelRegistrationId": "59aced66-68ae-4b7a-8430-36f4c5dfa328",
+        "to": [
+          "\u002B16043609258"
+        ],
+        "type": "template",
+        "template": {
+          "name": "sample_issue_resolution",
+          "language": "en_us",
+          "values": {
+            "name": {
+              "kind": "text",
+              "text": {
+                "text": "Gloria"
+              }
+            },
+            "yes": {
+              "kind": "quick_action",
+              "quickAction": {
+                "payload": "Yay!"
+              }
+            },
+            "no": {
+              "kind": "quick_action",
+              "quickAction": {
+                "payload": "Nay!"
+              }
+            }
+          },
+          "bindings": {
+            "whatsApp": {
+              "body": [
+                {
+                  "refValue": "name"
+                }
+              ],
+              "button": [
+                {
+                  "subType": "quickReply",
+                  "refValue": "yes"
+                },
+                {
+                  "subType": "quickReply",
+                  "refValue": "no"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-02-01-preview",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Jul 2023 00:22:04 GMT",
+        "MS-CV": "Hpx8bHFIuEedhGU/x\u002BDO8g.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0LGfAZAAAAAC8g9E6zWeMT7Lhwk3Rzn\u002BDWVRPMjIxMDkwODIwMDMzADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "1030ms"
+      },
+      "ResponseBody": {
+        "receipts": [
+          {
+            "messageId": "9a52b556-f82e-4b4b-8e15-1e7118d9ce9c",
+            "to": "\u002B16043609258"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "302563361",
+    "RECIPIENT_IDENTIFIER": "\u002B16043609258",
+    "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
+  }
+}
