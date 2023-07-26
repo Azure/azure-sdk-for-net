@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachinesAsync(statusOnly, filter, null, cancellationToken);
+            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachinesAsync(statusOnly, filter, null, cancellationToken);
         }
 
         /// <summary> Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachines(statusOnly, filter, null, cancellationToken);
+            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachines(statusOnly, filter, null, cancellationToken);
         }
 
         /// <summary>

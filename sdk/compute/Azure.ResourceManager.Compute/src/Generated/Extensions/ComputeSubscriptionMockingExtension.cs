@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class ComputeSubscriptionMockingExtension : ArmResource
     {
         private ClientDiagnostics _usageClientDiagnostics;
         private UsageRestOperations _usageRestClient;
@@ -64,15 +65,15 @@ namespace Azure.ResourceManager.Compute
         private ClientDiagnostics _cloudServiceClientDiagnostics;
         private CloudServicesRestOperations _cloudServiceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="ComputeSubscriptionMockingExtension"/> class for mocking. </summary>
+        protected ComputeSubscriptionMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ComputeSubscriptionMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ComputeSubscriptionMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -130,10 +131,66 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a collection of VirtualMachineExtensionImageResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         /// <returns> An object representing collection of VirtualMachineExtensionImageResources and their operations over a VirtualMachineExtensionImageResource. </returns>
         public virtual VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(AzureLocation location, string publisherName)
         {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
             return new VirtualMachineExtensionImageCollection(Client, Id, location, publisherName);
+        }
+
+        /// <summary>
+        /// Gets a virtual machine extension image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineExtensionImages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="publisherName"> The String to use. </param>
+        /// <param name="type"> The String to use. </param>
+        /// <param name="version"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VirtualMachineExtensionImageResource>> GetVirtualMachineExtensionImageAsync(AzureLocation location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
+        {
+            return await GetVirtualMachineExtensionImages(location, publisherName).GetAsync(type, version, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a virtual machine extension image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineExtensionImages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="publisherName"> The String to use. </param>
+        /// <param name="type"> The String to use. </param>
+        /// <param name="version"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VirtualMachineExtensionImageResource> GetVirtualMachineExtensionImage(AzureLocation location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
+        {
+            return GetVirtualMachineExtensionImages(location, publisherName).Get(type, version, cancellationToken);
         }
 
         /// <summary> Gets a collection of SharedGalleryResources in the SubscriptionResource. </summary>
@@ -144,11 +201,107 @@ namespace Azure.ResourceManager.Compute
             return new SharedGalleryCollection(Client, Id, location);
         }
 
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SharedGalleryResource>> GetSharedGalleryAsync(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            return await GetSharedGalleries(location).GetAsync(galleryUniqueName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SharedGalleryResource> GetSharedGallery(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            return GetSharedGalleries(location).Get(galleryUniqueName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of CommunityGalleryResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of CommunityGalleryResources and their operations over a CommunityGalleryResource. </returns>
         public virtual CommunityGalleryCollection GetCommunityGalleries()
         {
             return GetCachedClient(Client => new CommunityGalleryCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a community gallery by gallery public name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CommunityGalleryResource>> GetCommunityGalleryAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            return await GetCommunityGalleries().GetAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a community gallery by gallery public name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CommunityGalleryResource> GetCommunityGallery(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            return GetCommunityGalleries().Get(location, publicGalleryName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CloudServiceOSVersionResources in the SubscriptionResource. </summary>
@@ -159,12 +312,108 @@ namespace Azure.ResourceManager.Compute
             return new CloudServiceOSVersionCollection(Client, Id, location);
         }
 
+        /// <summary>
+        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
+        /// <param name="osVersionName"> Name of the OS version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CloudServiceOSVersionResource>> GetCloudServiceOSVersionAsync(AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
+        {
+            return await GetCloudServiceOSVersions(location).GetAsync(osVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
+        /// <param name="osVersionName"> Name of the OS version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CloudServiceOSVersionResource> GetCloudServiceOSVersion(AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
+        {
+            return GetCloudServiceOSVersions(location).Get(osVersionName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of CloudServiceOSFamilyResources in the SubscriptionResource. </summary>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <returns> An object representing collection of CloudServiceOSFamilyResources and their operations over a CloudServiceOSFamilyResource. </returns>
         public virtual CloudServiceOSFamilyCollection GetCloudServiceOSFamilies(AzureLocation location)
         {
             return new CloudServiceOSFamilyCollection(Client, Id, location);
+        }
+
+        /// <summary>
+        /// Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceOperatingSystems_GetOSFamily</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Name of the location that the OS families pertain to. </param>
+        /// <param name="osFamilyName"> Name of the OS family. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CloudServiceOSFamilyResource>> GetCloudServiceOSFamilyAsync(AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
+        {
+            return await GetCloudServiceOSFamilies(location).GetAsync(osFamilyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceOperatingSystems_GetOSFamily</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Name of the location that the OS families pertain to. </param>
+        /// <param name="osFamilyName"> Name of the OS family. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CloudServiceOSFamilyResource> GetCloudServiceOSFamily(AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
+        {
+            return GetCloudServiceOSFamilies(location).Get(osFamilyName, cancellationToken);
         }
 
         /// <summary>
@@ -187,7 +436,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ComputeUsage.DeserializeComputeUsage, UsageClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ComputeUsage.DeserializeComputeUsage, UsageClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +459,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ComputeUsage.DeserializeComputeUsage, UsageClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ComputeUsage.DeserializeComputeUsage, UsageClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,7 +481,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, VirtualMachineSizesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineSizes", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, VirtualMachineSizesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +503,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<VirtualMachineSize> GetVirtualMachineSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, VirtualMachineSizesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineSizes", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, VirtualMachineSizesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -277,7 +526,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineScaleSetRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineScaleSetRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetResource(Client, VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(e)), VirtualMachineScaleSetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineScaleSetsByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetResource(Client, VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(e)), VirtualMachineScaleSetClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineScaleSetsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -300,7 +549,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineScaleSetRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineScaleSetRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetResource(Client, VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(e)), VirtualMachineScaleSetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineScaleSetsByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetResource(Client, VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(e)), VirtualMachineScaleSetClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineScaleSetsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +571,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineScaleSetRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineScaleSetRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetResource(Client, VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(e)), VirtualMachineScaleSetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetResource(Client, VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(e)), VirtualMachineScaleSetClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -344,7 +593,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineScaleSetRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineScaleSetRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetResource(Client, VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(e)), VirtualMachineScaleSetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetResource(Client, VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(e)), VirtualMachineScaleSetClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -367,7 +616,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachinesByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachinesByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -390,7 +639,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachinesByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachinesByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -415,7 +664,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListAllRequest(Id.SubscriptionId, statusOnly, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, statusOnly, filter, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachines", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -440,7 +689,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListAllRequest(Id.SubscriptionId, statusOnly, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, statusOnly, filter, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachines", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -462,9 +711,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImageAsync(AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImage");
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("ComputeSubscriptionMockingExtension.GetVirtualMachineImage");
             scope.Start();
             try
             {
@@ -497,9 +753,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
         public virtual Response<VirtualMachineImage> GetVirtualMachineImage(AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImage");
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("ComputeSubscriptionMockingExtension.GetVirtualMachineImage");
             scope.Start();
             try
             {
@@ -528,11 +791,14 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImages", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImages", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -550,11 +816,14 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImages", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImages", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -573,11 +842,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageOffersAsync(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImageOffers", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImageOffers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -596,11 +869,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageOffers(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListOffersRequest(Id.SubscriptionId, location, publisherName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImageOffers", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImageOffers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -622,7 +899,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImagePublishers", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImagePublishers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -644,7 +921,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListPublishersRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImagePublishers", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImagePublishers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -664,11 +941,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImageSkus", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImageSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -688,11 +970,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageSkus(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListSkusRequest(Id.SubscriptionId, location, publisherName, offer);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImageSkus", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImageSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -711,11 +998,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZoneAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -734,11 +1025,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZone(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImagesByEdgeZone", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -756,9 +1051,12 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZone");
+            Argument.AssertNotNull(options, nameof(options));
+
+            using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("ComputeSubscriptionMockingExtension.GetVirtualMachineImagesEdgeZone");
             scope.Start();
             try
             {
@@ -787,9 +1085,12 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZone");
+            Argument.AssertNotNull(options, nameof(options));
+
+            using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("ComputeSubscriptionMockingExtension.GetVirtualMachineImagesEdgeZone");
             scope.Start();
             try
             {
@@ -818,11 +1119,14 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -840,11 +1144,14 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListRequest(Id.SubscriptionId, options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -864,11 +1171,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -888,11 +1200,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListOffersRequest(Id.SubscriptionId, location, edgeZone, publisherName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetOffersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -911,11 +1228,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -934,11 +1255,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListPublishersRequest(Id.SubscriptionId, location, edgeZone);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetPublishersVirtualMachineImagesEdgeZones", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -959,11 +1284,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -984,11 +1315,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkus(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesEdgeZoneRestClient.CreateListSkusRequest(Id.SubscriptionId, location, edgeZone, publisherName, offer);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineImageBase.DeserializeVirtualMachineImageBase, VirtualMachineImagesEdgeZoneClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineImageEdgeZoneSkus", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1011,7 +1348,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilitySetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilitySetRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvailabilitySetResource(Client, AvailabilitySetData.DeserializeAvailabilitySetData(e)), AvailabilitySetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailabilitySets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvailabilitySetResource(Client, AvailabilitySetData.DeserializeAvailabilitySetData(e)), AvailabilitySetClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetAvailabilitySets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1034,7 +1371,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilitySetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilitySetRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvailabilitySetResource(Client, AvailabilitySetData.DeserializeAvailabilitySetData(e)), AvailabilitySetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailabilitySets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvailabilitySetResource(Client, AvailabilitySetData.DeserializeAvailabilitySetData(e)), AvailabilitySetClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetAvailabilitySets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1056,7 +1393,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProximityPlacementGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProximityPlacementGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProximityPlacementGroupResource(Client, ProximityPlacementGroupData.DeserializeProximityPlacementGroupData(e)), ProximityPlacementGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProximityPlacementGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProximityPlacementGroupResource(Client, ProximityPlacementGroupData.DeserializeProximityPlacementGroupData(e)), ProximityPlacementGroupClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetProximityPlacementGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1078,7 +1415,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProximityPlacementGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProximityPlacementGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProximityPlacementGroupResource(Client, ProximityPlacementGroupData.DeserializeProximityPlacementGroupData(e)), ProximityPlacementGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProximityPlacementGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProximityPlacementGroupResource(Client, ProximityPlacementGroupData.DeserializeProximityPlacementGroupData(e)), ProximityPlacementGroupClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetProximityPlacementGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1100,7 +1437,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHostGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHostGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DedicatedHostGroupResource(Client, DedicatedHostGroupData.DeserializeDedicatedHostGroupData(e)), DedicatedHostGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedHostGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DedicatedHostGroupResource(Client, DedicatedHostGroupData.DeserializeDedicatedHostGroupData(e)), DedicatedHostGroupClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetDedicatedHostGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1122,7 +1459,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHostGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHostGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DedicatedHostGroupResource(Client, DedicatedHostGroupData.DeserializeDedicatedHostGroupData(e)), DedicatedHostGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedHostGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DedicatedHostGroupResource(Client, DedicatedHostGroupData.DeserializeDedicatedHostGroupData(e)), DedicatedHostGroupClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetDedicatedHostGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1144,7 +1481,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SshPublicKeyRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SshPublicKeyRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SshPublicKeyResource(Client, SshPublicKeyData.DeserializeSshPublicKeyData(e)), SshPublicKeyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSshPublicKeys", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SshPublicKeyResource(Client, SshPublicKeyData.DeserializeSshPublicKeyData(e)), SshPublicKeyClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetSshPublicKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1166,7 +1503,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SshPublicKeyRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SshPublicKeyRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SshPublicKeyResource(Client, SshPublicKeyData.DeserializeSshPublicKeyData(e)), SshPublicKeyClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSshPublicKeys", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SshPublicKeyResource(Client, SshPublicKeyData.DeserializeSshPublicKeyData(e)), SshPublicKeyClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetSshPublicKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1188,7 +1525,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskImageImagesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskImageImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskImageResource(Client, DiskImageData.DeserializeDiskImageData(e)), DiskImageImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskImages", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskImageResource(Client, DiskImageData.DeserializeDiskImageData(e)), DiskImageImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetDiskImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1210,7 +1547,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskImageImagesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskImageImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskImageResource(Client, DiskImageData.DeserializeDiskImageData(e)), DiskImageImagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskImages", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskImageResource(Client, DiskImageData.DeserializeDiskImageData(e)), DiskImageImagesClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetDiskImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1232,7 +1569,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestorePointGroupRestorePointCollectionsRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestorePointGroupRestorePointCollectionsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RestorePointGroupResource(Client, RestorePointGroupData.DeserializeRestorePointGroupData(e)), RestorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRestorePointGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RestorePointGroupResource(Client, RestorePointGroupData.DeserializeRestorePointGroupData(e)), RestorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetRestorePointGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1254,7 +1591,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestorePointGroupRestorePointCollectionsRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestorePointGroupRestorePointCollectionsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RestorePointGroupResource(Client, RestorePointGroupData.DeserializeRestorePointGroupData(e)), RestorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRestorePointGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RestorePointGroupResource(Client, RestorePointGroupData.DeserializeRestorePointGroupData(e)), RestorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetRestorePointGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1277,7 +1614,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CapacityReservationGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapacityReservationGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationGroupResource(Client, CapacityReservationGroupData.DeserializeCapacityReservationGroupData(e)), CapacityReservationGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCapacityReservationGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationGroupResource(Client, CapacityReservationGroupData.DeserializeCapacityReservationGroupData(e)), CapacityReservationGroupClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetCapacityReservationGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1300,7 +1637,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CapacityReservationGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapacityReservationGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationGroupResource(Client, CapacityReservationGroupData.DeserializeCapacityReservationGroupData(e)), CapacityReservationGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCapacityReservationGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationGroupResource(Client, CapacityReservationGroupData.DeserializeCapacityReservationGroupData(e)), CapacityReservationGroupClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetCapacityReservationGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1320,9 +1657,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsRequestRateByIntervalAsync(WaitUntil waitUntil, AzureLocation location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsRequestRateByInterval");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = LogAnalyticsClientDiagnostics.CreateScope("ComputeSubscriptionMockingExtension.ExportLogAnalyticsRequestRateByInterval");
             scope.Start();
             try
             {
@@ -1356,9 +1696,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsRequestRateByInterval(WaitUntil waitUntil, AzureLocation location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsRequestRateByInterval");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = LogAnalyticsClientDiagnostics.CreateScope("ComputeSubscriptionMockingExtension.ExportLogAnalyticsRequestRateByInterval");
             scope.Start();
             try
             {
@@ -1392,9 +1735,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsThrottledRequestsAsync(WaitUntil waitUntil, AzureLocation location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsThrottledRequests");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = LogAnalyticsClientDiagnostics.CreateScope("ComputeSubscriptionMockingExtension.ExportLogAnalyticsThrottledRequests");
             scope.Start();
             try
             {
@@ -1428,9 +1774,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsThrottledRequests(WaitUntil waitUntil, AzureLocation location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsThrottledRequests");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = LogAnalyticsClientDiagnostics.CreateScope("ComputeSubscriptionMockingExtension.ExportLogAnalyticsThrottledRequests");
             scope.Start();
             try
             {
@@ -1467,7 +1816,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRunCommandRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRunCommandRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RunCommandDocumentBase.DeserializeRunCommandDocumentBase, VirtualMachineRunCommandClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RunCommandDocumentBase.DeserializeRunCommandDocumentBase, VirtualMachineRunCommandClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1490,7 +1839,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRunCommandRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRunCommandRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RunCommandDocumentBase.DeserializeRunCommandDocumentBase, VirtualMachineRunCommandClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RunCommandDocumentBase.DeserializeRunCommandDocumentBase, VirtualMachineRunCommandClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetVirtualMachineRunCommands", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1509,9 +1858,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public virtual async Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
+            Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
+
+            using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("ComputeSubscriptionMockingExtension.GetVirtualMachineRunCommand");
             scope.Start();
             try
             {
@@ -1541,9 +1894,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public virtual Response<RunCommandDocument> GetVirtualMachineRunCommand(AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
+            Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
+
+            using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("ComputeSubscriptionMockingExtension.GetVirtualMachineRunCommand");
             scope.Start();
             try
             {
@@ -1576,7 +1933,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedDiskDisksRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedDiskDisksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), ManagedDiskDisksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedDisks", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), ManagedDiskDisksClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetManagedDisks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1598,7 +1955,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedDiskDisksRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedDiskDisksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), ManagedDiskDisksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedDisks", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), ManagedDiskDisksClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetManagedDisks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1620,7 +1977,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskAccessRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskAccessRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskAccessResource(Client, DiskAccessData.DeserializeDiskAccessData(e)), DiskAccessClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskAccesses", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskAccessResource(Client, DiskAccessData.DeserializeDiskAccessData(e)), DiskAccessClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetDiskAccesses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1642,7 +1999,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskAccessRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskAccessRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskAccessResource(Client, DiskAccessData.DeserializeDiskAccessData(e)), DiskAccessClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskAccesses", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskAccessResource(Client, DiskAccessData.DeserializeDiskAccessData(e)), DiskAccessClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetDiskAccesses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1664,7 +2021,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskEncryptionSetRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskEncryptionSetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskEncryptionSetResource(Client, DiskEncryptionSetData.DeserializeDiskEncryptionSetData(e)), DiskEncryptionSetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskEncryptionSets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskEncryptionSetResource(Client, DiskEncryptionSetData.DeserializeDiskEncryptionSetData(e)), DiskEncryptionSetClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetDiskEncryptionSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1686,7 +2043,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiskEncryptionSetRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiskEncryptionSetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskEncryptionSetResource(Client, DiskEncryptionSetData.DeserializeDiskEncryptionSetData(e)), DiskEncryptionSetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDiskEncryptionSets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskEncryptionSetResource(Client, DiskEncryptionSetData.DeserializeDiskEncryptionSetData(e)), DiskEncryptionSetClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetDiskEncryptionSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1708,7 +2065,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SnapshotRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SnapshotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotData.DeserializeSnapshotData(e)), SnapshotClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSnapshots", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotData.DeserializeSnapshotData(e)), SnapshotClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetSnapshots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1730,7 +2087,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SnapshotRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SnapshotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotData.DeserializeSnapshotData(e)), SnapshotClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSnapshots", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotData.DeserializeSnapshotData(e)), SnapshotClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetSnapshots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1754,7 +2111,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, includeExtendedLocations);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ComputeResourceSku.DeserializeComputeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ComputeResourceSku.DeserializeComputeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1778,7 +2135,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, includeExtendedLocations);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ComputeResourceSku.DeserializeComputeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ComputeResourceSku.DeserializeComputeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1800,7 +2157,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryResource(Client, GalleryData.DeserializeGalleryData(e)), GalleryClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGalleries", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryResource(Client, GalleryData.DeserializeGalleryData(e)), GalleryClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetGalleries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1822,7 +2179,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GalleryRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryResource(Client, GalleryData.DeserializeGalleryData(e)), GalleryClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGalleries", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryResource(Client, GalleryData.DeserializeGalleryData(e)), GalleryClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetGalleries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1844,7 +2201,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CloudServiceRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudServiceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceResource(Client, CloudServiceData.DeserializeCloudServiceData(e)), CloudServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCloudServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceResource(Client, CloudServiceData.DeserializeCloudServiceData(e)), CloudServiceClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetCloudServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1866,7 +2223,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CloudServiceRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudServiceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceResource(Client, CloudServiceData.DeserializeCloudServiceData(e)), CloudServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCloudServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceResource(Client, CloudServiceData.DeserializeCloudServiceData(e)), CloudServiceClientDiagnostics, Pipeline, "ComputeSubscriptionMockingExtension.GetCloudServices", "value", "nextLink", cancellationToken);
         }
     }
 }
