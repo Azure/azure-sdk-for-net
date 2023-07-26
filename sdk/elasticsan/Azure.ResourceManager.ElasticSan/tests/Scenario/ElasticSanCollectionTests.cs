@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             ElasticSanData data = GetDefaultElasticSanParameters(TestLocation);
             data.Tags.Add("tag1", "value1");
-            data.AvailabilityZones.Add("zone1");
 
             string elasticSanName = Recording.GenerateAssetName("testsan-");
             ElasticSanResource elasticSan1 = (await elasticSanCollection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, data)).Value;
@@ -44,8 +43,6 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.IsTrue(elasticSan1.Data.Tags.ContainsKey("tag1"));
             Assert.AreEqual("value1", elasticSan1.Data.Tags["tag1"]);
             // Skip the validation for AvailabilityZone as the server won't return the property
-            //Assert.GreaterOrEqual(elasticSan1.Data.AvailabilityZones.Count, 1);
-            //Assert.IsTrue(elasticSan1.Data.AvailabilityZones.Contains("zone1"));
 
             elasticSan1 = (await elasticSanCollection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, GetDefaultElasticSanParameters(TestLocation, 7, 2))).Value;
             Assert.AreEqual(elasticSanName, elasticSan1.Id.Name);
@@ -64,6 +61,20 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.AreEqual(ElasticSanName, elasticSan1.Id.Name);
             Assert.AreEqual(1, elasticSan1.Data.BaseSizeTiB);
             Assert.AreEqual(6, elasticSan1.Data.ExtendedCapacitySizeTiB);
+
+            // Test for ElasticSan PE properties
+            elasticSanCollection = (await GetResourceGroupAsync("yifanz1")).GetElasticSans();
+            elasticSan1 = (await elasticSanCollection.GetAsync("testpreviewes2")).Value;
+            Assert.AreEqual(3, elasticSan1.Data.PrivateEndpointConnections.Count);
+            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[0].Name);
+            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[0].PrivateEndpointId);
+            Assert.AreEqual("Approved", elasticSan1.Data.PrivateEndpointConnections[0].ConnectionState.Status.ToString());
+            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[1].Name);
+            Assert.AreEqual("Approved", elasticSan1.Data.PrivateEndpointConnections[1].ConnectionState.Status.ToString());
+            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[1].PrivateEndpointId);
+            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[2].Name);
+            Assert.AreEqual("Pending", elasticSan1.Data.PrivateEndpointConnections[2].ConnectionState.Status.ToString());
+            Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[2].PrivateEndpointId);
         }
 
         [Test]

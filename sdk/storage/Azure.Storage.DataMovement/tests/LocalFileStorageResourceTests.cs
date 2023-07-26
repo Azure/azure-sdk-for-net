@@ -2,20 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement;
-using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Test;
-using Azure.Storage.Test.Shared;
 using Mono.Unix.Native;
 using NUnit.Framework;
 
