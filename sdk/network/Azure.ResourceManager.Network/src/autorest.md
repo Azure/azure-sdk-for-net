@@ -474,6 +474,13 @@ directive:
   - from: networkInterface.json # a temporary fix for issue https://github.com/Azure/azure-sdk-for-net/issues/34094
     where: $.definitions.EffectiveNetworkSecurityGroup.properties.tagMap.type
     transform: return "object";
+  # Fix the httpListeners which is array of `ApplicationGatewayHttpListener` instead of a `SubResource`
+  - from: applicationGateway.json
+    where: $.definitions
+    transform: >
+      $.ApplicationGatewayFrontendIPConfigurationPropertiesFormat.properties.httpListeners.type = 'array';
+      $.ApplicationGatewayFrontendIPConfigurationPropertiesFormat.properties.httpListeners.items = { '$ref': '#/definitions/ApplicationGatewayHttpListener' };
+      delete $.ApplicationGatewayFrontendIPConfigurationPropertiesFormat.properties.httpListeners['$ref'];
   # Remove all files that not belong to Network
   - from: cloudServiceNetworkInterface.json
     where: $.paths

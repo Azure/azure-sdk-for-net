@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
         public ApplicationGatewayFrontendIPConfiguration()
         {
+            HttpListeners = new ChangeTrackingList<ApplicationGatewayHttpListener>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateLinkConfiguration"> Reference to the application gateway private link configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
         /// <param name="httpListeners"> Reference to the application gateway http listeners. </param>
-        internal ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, NetworkProvisioningState? provisioningState, WritableSubResource httpListeners) : base(id, name, resourceType)
+        internal ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, NetworkProvisioningState? provisioningState, IReadOnlyList<ApplicationGatewayHttpListener> httpListeners) : base(id, name, resourceType)
         {
             ETag = etag;
             PrivateIPAddress = privateIPAddress;
@@ -94,11 +96,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the frontend IP configuration resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Reference to the application gateway http listeners. </summary>
-        internal WritableSubResource HttpListeners { get; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier HttpListenersId
-        {
-            get => HttpListeners?.Id;
-        }
+        public IReadOnlyList<ApplicationGatewayHttpListener> HttpListeners { get; }
     }
 }

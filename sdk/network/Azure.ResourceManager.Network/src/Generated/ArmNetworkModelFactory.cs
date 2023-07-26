@@ -189,11 +189,38 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddressId"> Reference to the PublicIP resource. </param>
         /// <param name="privateLinkConfigurationId"> Reference to the application gateway private link configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        /// <param name="httpListenersId"> Reference to the application gateway http listeners. </param>
+        /// <param name="httpListeners"> Reference to the application gateway http listeners. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayFrontendIPConfiguration"/> instance for mocking. </returns>
-        public static ApplicationGatewayFrontendIPConfiguration ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string privateIPAddress = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null, ResourceIdentifier publicIPAddressId = null, ResourceIdentifier privateLinkConfigurationId = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier httpListenersId = null)
+        public static ApplicationGatewayFrontendIPConfiguration ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string privateIPAddress = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null, ResourceIdentifier publicIPAddressId = null, ResourceIdentifier privateLinkConfigurationId = null, NetworkProvisioningState? provisioningState = null, IEnumerable<ApplicationGatewayHttpListener> httpListeners = null)
         {
-            return new ApplicationGatewayFrontendIPConfiguration(id, name, resourceType, etag, privateIPAddress, privateIPAllocationMethod, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, publicIPAddressId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPAddressId) : null, privateLinkConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(privateLinkConfigurationId) : null, provisioningState, httpListenersId != null ? ResourceManagerModelFactory.WritableSubResource(httpListenersId) : null);
+            httpListeners ??= new List<ApplicationGatewayHttpListener>();
+
+            return new ApplicationGatewayFrontendIPConfiguration(id, name, resourceType, etag, privateIPAddress, privateIPAllocationMethod, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, publicIPAddressId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPAddressId) : null, privateLinkConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(privateLinkConfigurationId) : null, provisioningState, httpListeners?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="frontendIPConfigurationId"> Frontend IP configuration resource of an application gateway. </param>
+        /// <param name="frontendPortId"> Frontend port resource of an application gateway. </param>
+        /// <param name="protocol"> Protocol of the HTTP listener. </param>
+        /// <param name="hostName"> Host name of HTTP listener. </param>
+        /// <param name="sslCertificateId"> SSL certificate resource of an application gateway. </param>
+        /// <param name="sslProfileId"> SSL profile resource of the application gateway. </param>
+        /// <param name="requireServerNameIndication"> Applicable only if protocol is https. Enables SNI for multi-hosting. </param>
+        /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
+        /// <param name="customErrorConfigurations"> Custom error configurations of the HTTP listener. </param>
+        /// <param name="firewallPolicyId"> Reference to the FirewallPolicy resource. </param>
+        /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayHttpListener"/> instance for mocking. </returns>
+        public static ApplicationGatewayHttpListener ApplicationGatewayHttpListener(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier frontendPortId = null, ApplicationGatewayProtocol? protocol = null, string hostName = null, ResourceIdentifier sslCertificateId = null, ResourceIdentifier sslProfileId = null, bool? requireServerNameIndication = null, NetworkProvisioningState? provisioningState = null, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations = null, ResourceIdentifier firewallPolicyId = null, IEnumerable<string> hostNames = null)
+        {
+            customErrorConfigurations ??= new List<ApplicationGatewayCustomError>();
+            hostNames ??= new List<string>();
+
+            return new ApplicationGatewayHttpListener(id, name, resourceType, etag, frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null, frontendPortId != null ? ResourceManagerModelFactory.WritableSubResource(frontendPortId) : null, protocol, hostName, sslCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(sslCertificateId) : null, sslProfileId != null ? ResourceManagerModelFactory.WritableSubResource(sslProfileId) : null, requireServerNameIndication, provisioningState, customErrorConfigurations?.ToList(), firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null, hostNames?.ToList());
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
@@ -1058,31 +1085,6 @@ namespace Azure.ResourceManager.Network.Models
             trustedRootCertificates ??= new List<WritableSubResource>();
 
             return new ApplicationGatewayBackendSettings(id, name, resourceType, etag, port, protocol, timeoutInSeconds, probeId != null ? ResourceManagerModelFactory.WritableSubResource(probeId) : null, trustedRootCertificates?.ToList(), hostName, pickHostNameFromBackendAddress, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="frontendIPConfigurationId"> Frontend IP configuration resource of an application gateway. </param>
-        /// <param name="frontendPortId"> Frontend port resource of an application gateway. </param>
-        /// <param name="protocol"> Protocol of the HTTP listener. </param>
-        /// <param name="hostName"> Host name of HTTP listener. </param>
-        /// <param name="sslCertificateId"> SSL certificate resource of an application gateway. </param>
-        /// <param name="sslProfileId"> SSL profile resource of the application gateway. </param>
-        /// <param name="requireServerNameIndication"> Applicable only if protocol is https. Enables SNI for multi-hosting. </param>
-        /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        /// <param name="customErrorConfigurations"> Custom error configurations of the HTTP listener. </param>
-        /// <param name="firewallPolicyId"> Reference to the FirewallPolicy resource. </param>
-        /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayHttpListener"/> instance for mocking. </returns>
-        public static ApplicationGatewayHttpListener ApplicationGatewayHttpListener(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier frontendPortId = null, ApplicationGatewayProtocol? protocol = null, string hostName = null, ResourceIdentifier sslCertificateId = null, ResourceIdentifier sslProfileId = null, bool? requireServerNameIndication = null, NetworkProvisioningState? provisioningState = null, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations = null, ResourceIdentifier firewallPolicyId = null, IEnumerable<string> hostNames = null)
-        {
-            customErrorConfigurations ??= new List<ApplicationGatewayCustomError>();
-            hostNames ??= new List<string>();
-
-            return new ApplicationGatewayHttpListener(id, name, resourceType, etag, frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null, frontendPortId != null ? ResourceManagerModelFactory.WritableSubResource(frontendPortId) : null, protocol, hostName, sslCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(sslCertificateId) : null, sslProfileId != null ? ResourceManagerModelFactory.WritableSubResource(sslProfileId) : null, requireServerNameIndication, provisioningState, customErrorConfigurations?.ToList(), firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null, hostNames?.ToList());
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayListener. </summary>

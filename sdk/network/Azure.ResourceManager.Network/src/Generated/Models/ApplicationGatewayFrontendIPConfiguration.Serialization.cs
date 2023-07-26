@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> publicIPAddress = default;
             Optional<WritableSubResource> privateLinkConfiguration = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> httpListeners = default;
+            Optional<IReadOnlyList<ApplicationGatewayHttpListener>> httpListeners = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -174,14 +175,19 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            httpListeners = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            List<ApplicationGatewayHttpListener> array = new List<ApplicationGatewayHttpListener>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ApplicationGatewayHttpListener.DeserializeApplicationGatewayHttpListener(item));
+                            }
+                            httpListeners = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ApplicationGatewayFrontendIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateLinkConfiguration, Optional.ToNullable(provisioningState), httpListeners);
+            return new ApplicationGatewayFrontendIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateLinkConfiguration, Optional.ToNullable(provisioningState), Optional.ToList(httpListeners));
         }
     }
 }
