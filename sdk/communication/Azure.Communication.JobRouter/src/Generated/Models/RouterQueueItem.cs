@@ -21,12 +21,10 @@ namespace Azure.Communication.JobRouter.Models
         internal RouterQueueItem(RouterQueue queue, string etag)
         {
             Queue = queue;
-            Etag = etag;
+            _etag = etag;
         }
 
         /// <summary> A queue that can contain jobs to be routed. </summary>
         public RouterQueue Queue { get; }
-        /// <summary> (Optional) The Concurrency Token. </summary>
-        public string Etag { get; }
     }
 }

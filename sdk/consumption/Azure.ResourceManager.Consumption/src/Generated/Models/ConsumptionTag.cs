@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The tag resource.
-    /// Serialized Name: Tag
-    /// </summary>
+    /// <summary> The tag resource. </summary>
     public partial class ConsumptionTag
     {
         /// <summary> Initializes a new instance of ConsumptionTag. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionTag. </summary>
-        /// <param name="key">
-        /// Tag key.
-        /// Serialized Name: Tag.key
-        /// </param>
-        /// <param name="value">
-        /// Tag values.
-        /// Serialized Name: Tag.value
-        /// </param>
+        /// <param name="key"> Tag key. </param>
+        /// <param name="value"> Tag values. </param>
         internal ConsumptionTag(string key, IList<string> value)
         {
             Key = key;
             Value = value;
         }
 
-        /// <summary>
-        /// Tag key.
-        /// Serialized Name: Tag.key
-        /// </summary>
+        /// <summary> Tag key. </summary>
         public string Key { get; set; }
-        /// <summary>
-        /// Tag values.
-        /// Serialized Name: Tag.value
-        /// </summary>
+        /// <summary> Tag values. </summary>
         public IList<string> Value { get; }
     }
 }

@@ -632,7 +632,9 @@
         "Dpdk",
         "Sriov",
         "Sata",
-        "Uefi"
+        "Uefi",
+        "Ipvlan",
+        "Macvlan"
       ]
     },
     {
@@ -929,6 +931,12 @@
       ]
     },
     {
+      "filename": "**/sdk/sphere/**/*.cs",
+      "words": [
+        "Nwfs"
+      ]
+    },
+    {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
         "CIAS",
@@ -1085,7 +1093,8 @@
         "Zilla",
         "Guage",
         "Plex",
-        "Vstsrm"
+        "Vstsrm",
+        "Localizable"
       ]
     },
     {

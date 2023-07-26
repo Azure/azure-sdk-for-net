@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 using NUnit.Framework;
+using DataFactoryLinkedServiceReference = Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference;
+using DataFactoryLinkedServiceReferenceType = Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType;
 
 #nullable enable
 
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Samples
             #region Snippet:Readme_DataFactoryElementFromMaskedString
             var service = new AmazonS3CompatibleLinkedService()
             {
-                ServiceUri = DataFactoryElement<string>.FromMaskedString("some/secret/path"),
+                ServiceUri = DataFactoryElement<string>.FromSecretString("some/secret/path"),
             };
             #endregion Snippet:Readme_DataFactoryElementFromMaskedString
         }
@@ -104,9 +106,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Samples
         public void DataFactoryFromKeyVaultSecretReference()
         {
             #region Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
+            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,
+                "referenceName");
+            var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, "secretName");
             var service = new AmazonS3CompatibleLinkedService()
             {
-                AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecretReference("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)"),
+                AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecretReference(keyVaultReference),
             };
             #endregion Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
         }

@@ -39,13 +39,34 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> A collection of notes attached to a job. </summary>
         public List<RouterJobNote> Notes { get; } = new List<RouterJobNote>();
 
+        /// <summary> Reference to an external parent context, eg. call ID. </summary>
+        public string ChannelReference { get; internal set; }
+
+        /// <summary> The channel identifier. eg. voice, chat, etc. </summary>
+        public string ChannelId { get; internal set; }
+
+        /// <summary> The Id of the Classification policy used for classifying a job. </summary>
+        public string ClassificationPolicyId { get; internal set; }
+
+        /// <summary> The Id of the Queue that this job is queued to. </summary>
+        public string QueueId { get; internal set; }
+
+        /// <summary> The priority of this job. </summary>
+        public int? Priority { get; internal set; }
+
+        /// <summary> Reason code for cancelled or closed jobs. </summary>
+        public string DispositionCode { get; internal set; }
+
+        /// <summary> Gets or sets the matching mode. </summary>
+        public JobMatchingMode MatchingMode { get; internal set; }
+
         [CodeGenMember("Labels")]
         internal IDictionary<string, object> _labels
         {
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.Value)
+                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -66,7 +87,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key, x => x.Value.Value)
+                    ? Tags?.ToDictionary(x => x.Key, x => x.Value?.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -86,8 +107,8 @@ namespace Azure.Communication.JobRouter.Models
         {
             get
             {
-                return Notes != null
-                    ? Notes?.ToDictionary(x => (x.AddedAtUtc ?? DateTimeOffset.UtcNow)
+                return Notes != null && Notes.Count != 0
+                    ? Notes?.ToDictionary(x => (x.AddedAt ?? DateTimeOffset.UtcNow)
                         .ToUniversalTime().ToString("O", CultureInfo.InvariantCulture), x => x.Message)
                     : new ChangeTrackingDictionary<string, string>();
             }
@@ -97,7 +118,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     Notes.Add(new RouterJobNote
                     {
-                        AddedAtUtc = DateTimeOffsetParser.ParseAndGetDateTimeOffset(note.Key),
+                        AddedAt = DateTimeOffsetParser.ParseAndGetDateTimeOffset(note.Key),
                         Message = note.Value
                     });
                 }
@@ -109,56 +130,13 @@ namespace Azure.Communication.JobRouter.Models
         {
             get
             {
-                return RequestedWorkerSelectors != null
+                return RequestedWorkerSelectors != null && RequestedWorkerSelectors.Any()
                     ? RequestedWorkerSelectors.ToList()
                     : new ChangeTrackingList<RouterWorkerSelector>();
             }
             set
             {
                 RequestedWorkerSelectors.AddRange(value);
-            }
-        }
-
-        /// <summary>
-        /// If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode.
-        /// </summary>
-        public JobMatchingMode MatchingMode { get; set; }
-
-        [CodeGenMember("MatchingMode")]
-        internal JobMatchingModeInternal _matchingMode
-        {
-            get
-            {
-                return MatchingMode != null ? MatchingMode.Kind switch
-                {
-                    nameof(SuspendMode) => new JobMatchingModeInternal(modeType: JobMatchModeType.SuspendMode, null,
-                        null, new {}),
-                    nameof(QueueAndMatchMode) => new JobMatchingModeInternal(
-                        modeType: JobMatchModeType.QueueAndMatchMode, new {}, null, null),
-                    nameof(ScheduleAndSuspendMode) => new JobMatchingModeInternal(
-                        modeType: JobMatchModeType.ScheduleAndSuspendMode, null,
-                        new ScheduleAndSuspendModeInternal(((ScheduleAndSuspendMode)MatchingMode).ScheduleAt), null),
-                    _ => throw new ArgumentOutOfRangeException()
-                } : null;
-            }
-            set
-            {
-                if (value.ModeType == JobMatchModeType.SuspendMode)
-                {
-                    MatchingMode = new SuspendMode();
-                }
-                else if (value.ModeType == JobMatchModeType.ScheduleAndSuspendMode)
-                {
-                    MatchingMode = new ScheduleAndSuspendMode(value.ScheduleAndSuspendMode.ScheduleAt);
-                }
-                else if (value.ModeType == JobMatchModeType.QueueAndMatchMode)
-                {
-                    MatchingMode = new QueueAndMatchMode();
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
             }
         }
     }

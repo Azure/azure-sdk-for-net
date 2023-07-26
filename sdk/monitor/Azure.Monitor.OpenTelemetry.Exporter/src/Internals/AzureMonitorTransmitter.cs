@@ -30,6 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly ConnectionVars _connectionVars;
         internal readonly TransmissionStateManager _transmissionStateManager;
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
+        private readonly bool _isAadEnabled;
         private bool _disposed;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
@@ -43,15 +44,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _connectionVars = InitializeConnectionVars(options, platform);
 
-            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
-
             _transmissionStateManager = new TransmissionStateManager();
+
+            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory);
 
             if (_fileBlobProvider != null)
             {
-                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars);
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled);
             }
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
@@ -76,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             throw new InvalidOperationException("A connection string was not found. Please set your connection string.");
         }
 
-        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
+        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, out bool isAadEnabled)
         {
             HttpPipeline pipeline;
 
@@ -89,11 +90,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     new IngestionRedirectPolicy()
                 };
 
+                isAadEnabled = true;
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
                 AzureMonitorExporterEventSource.Log.SetAADCredentialsToPipeline(options.Credential.GetType().Name, scope);
             }
             else
             {
+                isAadEnabled = false;
                 var httpPipelinePolicy = new HttpPipelinePolicy[] { new IngestionRedirectPolicy() };
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
             }
@@ -149,7 +152,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.ErrorInitializingStatsbeat(connectionVars.InstrumentationKey, ex);
+                    AzureMonitorExporterEventSource.Log.ErrorInitializingStatsbeat(connectionVars, ex);
                 }
             }
 
@@ -158,7 +161,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
 
-        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
+        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
             ExportResult result = ExportResult.Failure;
             if (cancellationToken.IsCancellationRequested)
@@ -168,27 +171,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             try
             {
-                using var httpMessage = async ?
+                if (_transmissionStateManager.State == TransmissionState.Closed)
+                {
+                    using var httpMessage = async ?
                     await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
                     _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
-                result = HttpPipelineHelper.IsSuccess(httpMessage);
+                    result = HttpPipelineHelper.IsSuccess(httpMessage);
 
-                if (result == ExportResult.Failure && _fileBlobProvider != null)
-                {
-                    _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
+                    if (result == ExportResult.Failure && _fileBlobProvider != null)
+                    {
+                        _transmissionStateManager.EnableBackOff(httpMessage.Response);
+                        result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars, origin, _isAadEnabled);
+                    }
+                    else
+                    {
+                        _transmissionStateManager.ResetConsecutiveErrors();
+                        _transmissionStateManager.CloseTransmission();
+                        AzureMonitorExporterEventSource.Log.TransmissionSuccess(origin, _isAadEnabled, _connectionVars.InstrumentationKey);
+                    }
                 }
                 else
                 {
-                    _transmissionStateManager.ResetConsecutiveErrors();
-                    _transmissionStateManager.CloseTransmission();
-                    AzureMonitorExporterEventSource.Log.TransmissionSuccess(_connectionVars.InstrumentationKey);
+                    byte[] requestContent = HttpPipelineHelper.GetSerializedContent(telemetryItems);
+                    if (_fileBlobProvider != null)
+                    {
+                        result = _fileBlobProvider.SaveTelemetry(requestContent);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.TransmitterFailed(_connectionVars.InstrumentationKey, ex);
+                AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
             }
 
             return result;

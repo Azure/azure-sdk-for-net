@@ -18,7 +18,7 @@ JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdminist
 
 ## Using expression rule with best worker distribution mode
 
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_ExpressionRule
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_ExpressionRouterRule
 // In this scenario, we are going to create a simple PowerFx expression rule to check whether a worker can handler escalation or not
 // If the worker can handler escalation then they are given a score of 100, otherwise a score of 1
 
@@ -28,7 +28,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
         offerExpiresAfter: TimeSpan.FromMinutes(5),
-        mode: new BestWorkerMode(scoringRule: new ExpressionRule("If(worker.HandleEscalation = true, 100, 1)"))));
+        mode: new BestWorkerMode(scoringRule: new ExpressionRouterRule("If(worker.HandleEscalation = true, 100, 1)"))));
 
 // Create job queue
 string jobQueueId = "job-queue-id-2";
@@ -52,7 +52,7 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
         AvailableForOffers = true,
         ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
         Labels = { ["HandleEscalation"] = new LabelValue(true), ["IT_Support"] = new LabelValue(true) },
-        QueueIds = { [jobQueueId] = new RouterQueueAssignment(), }
+        QueueAssignments = { [jobQueueId] = new RouterQueueAssignment(), }
     });
 
 // Worker 2 cannot handle escalation
@@ -62,7 +62,7 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
         AvailableForOffers = true,
         ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
         Labels = { ["IT_Support"] = new LabelValue(true), },
-        QueueIds = { [jobQueueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [jobQueueId] = new RouterQueueAssignment(), },
     });
 
 // Create job
@@ -216,7 +216,7 @@ module.exports = async function (context, req) {
             score = 1;
         } else {
             const key = `Support_${jobLabels["ConsoleType"]}`;
-            
+
             const workerSpecializeInConsoleType = !!workerLabels[key];
             context.log(`Worker specializes in consoleType: ${jobLabels["ConsoleType"]} ? Status: ${workerSpecializeInConsoleType}`);
 
@@ -248,14 +248,14 @@ With the aforementioned implementation, for the given job we'll get the followin
 
 Let us set up the rest using the Router SDK.
 
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_AzureFunctionRule
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_AzureFunctionRouterRule
 // Create distribution policy
 string distributionPolicyId = "best-worker-dp-1";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
         offerExpiresAfter: TimeSpan.FromMinutes(5),
-        mode: new BestWorkerMode(scoringRule: new FunctionRule(new Uri("<insert function url>")))));
+        mode: new BestWorkerMode(scoringRule: new FunctionRouterRule(new Uri("<insert function url>")))));
 
 // Create job queue
 string queueId = "job-queue-id-1";
@@ -271,7 +271,7 @@ string workerId1 = "worker-Id-1";
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: workerId1, totalCapacity: 100)
     {
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
         Labels =
         {
             ["HighPrioritySupport"] = new LabelValue(true),
@@ -290,7 +290,7 @@ string workerId2 = "worker-Id-2";
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: workerId2, totalCapacity: 100)
     {
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
         Labels =
         {
             ["HighPrioritySupport"] = new LabelValue(true),
@@ -312,7 +312,7 @@ Dictionary<string, LabelValue> worker3Labels = new Dictionary<string, LabelValue
 Response<RouterWorker> worker3 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: workerId3, totalCapacity: 100)
     {
-        QueueIds = { [queueId] = new RouterQueueAssignment(), },
+        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
         Labels =
         {
             ["HighPrioritySupport"] = new LabelValue(false),

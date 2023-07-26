@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary>
     /// A charge summary resource.
-    /// Serialized Name: ChargeSummary
     /// Please note <see cref="ConsumptionChargeSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ConsumptionLegacyChargeSummary"/> and <see cref="ConsumptionModernChargeSummary"/>.
     /// </summary>
@@ -29,29 +28,17 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Specifies the kind of charge summary.
-        /// Serialized Name: ChargeSummary.kind
-        /// </param>
-        /// <param name="etag">
-        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
-        /// Serialized Name: ProxyResource.eTag
-        /// </param>
+        /// <param name="kind"> Specifies the kind of charge summary. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         internal ConsumptionChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ETag = etag;
         }
 
-        /// <summary>
-        /// Specifies the kind of charge summary.
-        /// Serialized Name: ChargeSummary.kind
-        /// </summary>
+        /// <summary> Specifies the kind of charge summary. </summary>
         internal ChargeSummaryKind Kind { get; set; }
-        /// <summary>
-        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
-        /// Serialized Name: ProxyResource.eTag
-        /// </summary>
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }
     }
 }

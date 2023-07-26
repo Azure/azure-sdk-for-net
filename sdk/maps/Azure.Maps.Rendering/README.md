@@ -56,6 +56,64 @@ string clientId = "<Your Map ClientId>";
 MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
 ```
 
+#### Shared Access Signature (SAS) Authentication
+
+Shared access signature (SAS) tokens are authentication tokens created using the JSON Web token (JWT) format and are cryptographically signed to prove authentication for an application to the Azure Maps REST API.
+
+Before integrating SAS token authentication, we need to install `Azure.ResourceManager` and `Azure.ResourceManager.Maps` (version `1.1.0-beta.2` or higher):
+
+```powershell
+dotnet add package Azure.ResourceManager
+dotnet add package Azure.ResourceManager.Maps --prerelease
+```
+
+In the code, we need to import the following lines for both Azure Maps SDK and ResourceManager:
+
+```C# Snippet:RenderImportNamespaces
+using Azure.Maps.Rendering;
+```
+
+```C# Snippet:RenderSasAuthImportNamespaces
+using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Maps;
+using Azure.ResourceManager.Maps.Models;
+```
+
+And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsRenderingClient`. In the follow code sample, we fetch a specific maps account resource, and create a SAS token for 1 day expiry time when the code is executed.
+
+```C# Snippet:InstantiateRenderingClientViaSas
+// Get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+TokenCredential cred = new DefaultAzureCredential();
+// Authenticate your client
+ArmClient armClient = new ArmClient(cred);
+
+string subscriptionId = "MyMapsSubscriptionId";
+string resourceGroupName = "MyMapsResourceGroupName";
+string accountName = "MyMapsAccountName";
+
+// Get maps account resource
+ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+MapsAccountResource mapsAccount = armClient.GetMapsAccountResource(mapsAccountResourceId);
+
+// Assign SAS token information
+// Every time you want to SAS token, update the principal ID, max rate, start and expiry time
+string principalId = "MyManagedIdentityObjectId";
+int maxRatePerSecond = 500;
+
+// Set start and expiry time for the SAS token in round-trip date/time format
+DateTime now = DateTime.Now;
+string start = now.ToString("O");
+string expiry = now.AddDays(1).ToString("O");
+
+MapsAccountSasContent sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, start, expiry);
+Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
+
+// Create a SearchClient that will authenticate via SAS token
+AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
+MapsRenderingClient client = new MapsRenderingClient(sasCredential);
+```
+
 ## Key concepts
 
 MapsRenderingClient is designed for:
@@ -76,7 +134,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
