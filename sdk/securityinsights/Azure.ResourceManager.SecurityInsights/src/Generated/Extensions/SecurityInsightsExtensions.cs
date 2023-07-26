@@ -7,27 +7,29 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SecurityInsights.Mocking;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityInsights. </summary>
     public static partial class SecurityInsightsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SecurityInsightsArmClientMockingExtension GetSecurityInsightsArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
+            return client.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SecurityInsightsArmClientMockingExtension(client);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static SecurityInsightsResourceGroupMockingExtension GetSecurityInsightsResourceGroupMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new SecurityInsightsResourceGroupMockingExtension(client, resource.Id);
             });
         }
+
         #region SecurityInsightsAlertRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsAlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
@@ -38,12 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsAlertRuleResource" /> object. </returns>
         public static SecurityInsightsAlertRuleResource GetSecurityInsightsAlertRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsAlertRuleResource.ValidateResourceId(id);
-                return new SecurityInsightsAlertRuleResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsAlertRuleResource(id);
         }
         #endregion
 
@@ -57,12 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsAlertRuleActionResource" /> object. </returns>
         public static SecurityInsightsAlertRuleActionResource GetSecurityInsightsAlertRuleActionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsAlertRuleActionResource.ValidateResourceId(id);
-                return new SecurityInsightsAlertRuleActionResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsAlertRuleActionResource(id);
         }
         #endregion
 
@@ -76,12 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsAlertRuleTemplateResource" /> object. </returns>
         public static SecurityInsightsAlertRuleTemplateResource GetSecurityInsightsAlertRuleTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsAlertRuleTemplateResource.ValidateResourceId(id);
-                return new SecurityInsightsAlertRuleTemplateResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsAlertRuleTemplateResource(id);
         }
         #endregion
 
@@ -95,12 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsAutomationRuleResource" /> object. </returns>
         public static SecurityInsightsAutomationRuleResource GetSecurityInsightsAutomationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsAutomationRuleResource.ValidateResourceId(id);
-                return new SecurityInsightsAutomationRuleResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsAutomationRuleResource(id);
         }
         #endregion
 
@@ -114,12 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsBookmarkResource" /> object. </returns>
         public static SecurityInsightsBookmarkResource GetSecurityInsightsBookmarkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsBookmarkResource.ValidateResourceId(id);
-                return new SecurityInsightsBookmarkResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsBookmarkResource(id);
         }
         #endregion
 
@@ -133,12 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsDataConnectorResource" /> object. </returns>
         public static SecurityInsightsDataConnectorResource GetSecurityInsightsDataConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsDataConnectorResource.ValidateResourceId(id);
-                return new SecurityInsightsDataConnectorResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsDataConnectorResource(id);
         }
         #endregion
 
@@ -152,12 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsIncidentResource" /> object. </returns>
         public static SecurityInsightsIncidentResource GetSecurityInsightsIncidentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsIncidentResource.ValidateResourceId(id);
-                return new SecurityInsightsIncidentResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsIncidentResource(id);
         }
         #endregion
 
@@ -171,12 +138,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsIncidentCommentResource" /> object. </returns>
         public static SecurityInsightsIncidentCommentResource GetSecurityInsightsIncidentCommentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsIncidentCommentResource.ValidateResourceId(id);
-                return new SecurityInsightsIncidentCommentResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsIncidentCommentResource(id);
         }
         #endregion
 
@@ -190,12 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsIncidentRelationResource" /> object. </returns>
         public static SecurityInsightsIncidentRelationResource GetSecurityInsightsIncidentRelationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsIncidentRelationResource.ValidateResourceId(id);
-                return new SecurityInsightsIncidentRelationResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsIncidentRelationResource(id);
         }
         #endregion
 
@@ -209,12 +166,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsSentinelOnboardingStateResource" /> object. </returns>
         public static SecurityInsightsSentinelOnboardingStateResource GetSecurityInsightsSentinelOnboardingStateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsSentinelOnboardingStateResource.ValidateResourceId(id);
-                return new SecurityInsightsSentinelOnboardingStateResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsSentinelOnboardingStateResource(id);
         }
         #endregion
 
@@ -228,12 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityMLAnalyticsSettingResource" /> object. </returns>
         public static SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityMLAnalyticsSettingResource.ValidateResourceId(id);
-                return new SecurityMLAnalyticsSettingResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityMLAnalyticsSettingResource(id);
         }
         #endregion
 
@@ -247,12 +194,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> object. </returns>
         public static SecurityInsightsThreatIntelligenceIndicatorResource GetSecurityInsightsThreatIntelligenceIndicatorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsThreatIntelligenceIndicatorResource.ValidateResourceId(id);
-                return new SecurityInsightsThreatIntelligenceIndicatorResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsThreatIntelligenceIndicatorResource(id);
         }
         #endregion
 
@@ -266,12 +208,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsWatchlistResource" /> object. </returns>
         public static SecurityInsightsWatchlistResource GetSecurityInsightsWatchlistResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsWatchlistResource.ValidateResourceId(id);
-                return new SecurityInsightsWatchlistResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsWatchlistResource(id);
         }
         #endregion
 
@@ -285,12 +222,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="SecurityInsightsWatchlistItemResource" /> object. </returns>
         public static SecurityInsightsWatchlistItemResource GetSecurityInsightsWatchlistItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityInsightsWatchlistItemResource.ValidateResourceId(id);
-                return new SecurityInsightsWatchlistItemResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetSecurityInsightsWatchlistItemResource(id);
         }
         #endregion
 
@@ -304,12 +236,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> Returns a <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> object. </returns>
         public static OperationalInsightsWorkspaceSecurityInsightsResource GetOperationalInsightsWorkspaceSecurityInsightsResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OperationalInsightsWorkspaceSecurityInsightsResource.ValidateResourceId(id);
-                return new OperationalInsightsWorkspaceSecurityInsightsResource(client, id);
-            }
-            );
+            return GetSecurityInsightsArmClientMockingExtension(client).GetOperationalInsightsWorkspaceSecurityInsightsResource(id);
         }
         #endregion
     }

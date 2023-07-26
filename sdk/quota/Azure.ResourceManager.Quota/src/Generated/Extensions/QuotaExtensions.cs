@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Quota.Mocking;
 using Azure.ResourceManager.Quota.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,103 +20,38 @@ namespace Azure.ResourceManager.Quota
     /// <summary> A class to add extension methods to Azure.ResourceManager.Quota. </summary>
     public static partial class QuotaExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static QuotaArmClientMockingExtension GetQuotaArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new QuotaArmClientMockingExtension(client);
+            });
+        }
+
+        private static QuotaArmResourceMockingExtension GetQuotaArmResourceMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new QuotaArmResourceMockingExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static QuotaTenantMockingExtension GetQuotaTenantMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new QuotaTenantMockingExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region CurrentUsagesBaseResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CurrentUsagesBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CurrentUsagesBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentUsagesBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CurrentUsagesBaseResource" /> object. </returns>
-        public static CurrentUsagesBaseResource GetCurrentUsagesBaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CurrentUsagesBaseResource.ValidateResourceId(id);
-                return new CurrentUsagesBaseResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region CurrentQuotaLimitBaseResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CurrentQuotaLimitBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CurrentQuotaLimitBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentQuotaLimitBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CurrentQuotaLimitBaseResource" /> object. </returns>
-        public static CurrentQuotaLimitBaseResource GetCurrentQuotaLimitBaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CurrentQuotaLimitBaseResource.ValidateResourceId(id);
-                return new CurrentQuotaLimitBaseResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region QuotaRequestDetailResource
-        /// <summary>
-        /// Gets an object representing a <see cref="QuotaRequestDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuotaRequestDetailResource" /> object. </returns>
-        public static QuotaRequestDetailResource GetQuotaRequestDetailResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                QuotaRequestDetailResource.ValidateResourceId(id);
-                return new QuotaRequestDetailResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of CurrentUsagesBaseResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of CurrentUsagesBaseResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of CurrentUsagesBaseResources and their operations over a CurrentUsagesBaseResource. </returns>
         public static CurrentUsagesBaseCollection GetCurrentUsagesBases(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetCurrentUsagesBases();
+            return GetQuotaArmClientMockingExtension(client).GetCurrentUsagesBases(scope);
         }
-
         /// <summary>
         /// Get the current usage of a resource.
         /// <list type="bullet">
@@ -143,9 +79,8 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static async Task<Response<CurrentUsagesBaseResource>> GetCurrentUsagesBaseAsync(this ArmClient client, ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await client.GetCurrentUsagesBases(scope).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetQuotaArmClientMockingExtension(client).GetCurrentUsagesBaseAsync(scope, resourceName, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Get the current usage of a resource.
         /// <list type="bullet">
@@ -173,18 +108,17 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static Response<CurrentUsagesBaseResource> GetCurrentUsagesBase(this ArmClient client, ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return client.GetCurrentUsagesBases(scope).Get(resourceName, cancellationToken);
+            return GetQuotaArmClientMockingExtension(client).GetCurrentUsagesBase(scope, resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CurrentQuotaLimitBaseResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of CurrentQuotaLimitBaseResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of CurrentQuotaLimitBaseResources and their operations over a CurrentQuotaLimitBaseResource. </returns>
         public static CurrentQuotaLimitBaseCollection GetCurrentQuotaLimitBases(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetCurrentQuotaLimitBases();
+            return GetQuotaArmClientMockingExtension(client).GetCurrentQuotaLimitBases(scope);
         }
-
         /// <summary>
         /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
         /// <list type="bullet">
@@ -212,9 +146,8 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static async Task<Response<CurrentQuotaLimitBaseResource>> GetCurrentQuotaLimitBaseAsync(this ArmClient client, ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await client.GetCurrentQuotaLimitBases(scope).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetQuotaArmClientMockingExtension(client).GetCurrentQuotaLimitBaseAsync(scope, resourceName, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
         /// <list type="bullet">
@@ -242,18 +175,17 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static Response<CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBase(this ArmClient client, ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return client.GetCurrentQuotaLimitBases(scope).Get(resourceName, cancellationToken);
+            return GetQuotaArmClientMockingExtension(client).GetCurrentQuotaLimitBase(scope, resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of QuotaRequestDetailResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of QuotaRequestDetailResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
         public static QuotaRequestDetailCollection GetQuotaRequestDetails(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetQuotaRequestDetails();
+            return GetQuotaArmClientMockingExtension(client).GetQuotaRequestDetails(scope);
         }
-
         /// <summary>
         /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation.
         /// <list type="bullet">
@@ -276,9 +208,8 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this ArmClient client, ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
-            return await client.GetQuotaRequestDetails(scope).GetAsync(id, cancellationToken).ConfigureAwait(false);
+            return await GetQuotaArmClientMockingExtension(client).GetQuotaRequestDetailAsync(scope, id, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation.
         /// <list type="bullet">
@@ -301,7 +232,237 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this ArmClient client, ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
-            return client.GetQuotaRequestDetails(scope).Get(id, cancellationToken);
+            return GetQuotaArmClientMockingExtension(client).GetQuotaRequestDetail(scope, id, cancellationToken);
+        }
+
+        #region CurrentUsagesBaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CurrentUsagesBaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CurrentUsagesBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentUsagesBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CurrentUsagesBaseResource" /> object. </returns>
+        public static CurrentUsagesBaseResource GetCurrentUsagesBaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetQuotaArmClientMockingExtension(client).GetCurrentUsagesBaseResource(id);
+        }
+        #endregion
+
+        #region CurrentQuotaLimitBaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CurrentQuotaLimitBaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CurrentQuotaLimitBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentQuotaLimitBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CurrentQuotaLimitBaseResource" /> object. </returns>
+        public static CurrentQuotaLimitBaseResource GetCurrentQuotaLimitBaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetQuotaArmClientMockingExtension(client).GetCurrentQuotaLimitBaseResource(id);
+        }
+        #endregion
+
+        #region QuotaRequestDetailResource
+        /// <summary>
+        /// Gets an object representing a <see cref="QuotaRequestDetailResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="QuotaRequestDetailResource" /> object. </returns>
+        public static QuotaRequestDetailResource GetQuotaRequestDetailResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetQuotaArmClientMockingExtension(client).GetQuotaRequestDetailResource(id);
+        }
+        #endregion
+
+        /// <summary> Gets a collection of CurrentUsagesBaseResources in the ArmResource. </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of CurrentUsagesBaseResources and their operations over a CurrentUsagesBaseResource. </returns>
+        public static CurrentUsagesBaseCollection GetCurrentUsagesBases(this ArmResource armResource)
+        {
+            return GetQuotaArmResourceMockingExtension(armResource).GetCurrentUsagesBases();
+        }
+
+        /// <summary>
+        /// Get the current usage of a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<CurrentUsagesBaseResource>> GetCurrentUsagesBaseAsync(this ArmResource armResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await GetQuotaArmResourceMockingExtension(armResource).GetCurrentUsagesBaseAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the current usage of a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/usages/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CurrentUsagesBaseResource> GetCurrentUsagesBase(this ArmResource armResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return GetQuotaArmResourceMockingExtension(armResource).GetCurrentUsagesBase(resourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CurrentQuotaLimitBaseResources in the ArmResource. </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of CurrentQuotaLimitBaseResources and their operations over a CurrentQuotaLimitBaseResource. </returns>
+        public static CurrentQuotaLimitBaseCollection GetCurrentQuotaLimitBases(this ArmResource armResource)
+        {
+            return GetQuotaArmResourceMockingExtension(armResource).GetCurrentQuotaLimitBases();
+        }
+
+        /// <summary>
+        /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/quotas/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quota_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<CurrentQuotaLimitBaseResource>> GetCurrentQuotaLimitBaseAsync(this ArmResource armResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await GetQuotaArmResourceMockingExtension(armResource).GetCurrentQuotaLimitBaseAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/quotas/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quota_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBase(this ArmResource armResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return GetQuotaArmResourceMockingExtension(armResource).GetCurrentQuotaLimitBase(resourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of QuotaRequestDetailResources in the ArmResource. </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
+        public static QuotaRequestDetailCollection GetQuotaRequestDetails(this ArmResource armResource)
+        {
+            return GetQuotaArmResourceMockingExtension(armResource).GetQuotaRequestDetails();
+        }
+
+        /// <summary>
+        /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/quotaRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="id"> Quota request ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this ArmResource armResource, string id, CancellationToken cancellationToken = default)
+        {
+            return await GetQuotaArmResourceMockingExtension(armResource).GetQuotaRequestDetailAsync(id, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Quota/quotaRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="id"> Quota request ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this ArmResource armResource, string id, CancellationToken cancellationToken = default)
+        {
+            return GetQuotaArmResourceMockingExtension(armResource).GetQuotaRequestDetail(id, cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +483,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An async collection of <see cref="QuotaOperationResult" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<QuotaOperationResult> GetQuotaOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetQuotaOperationsAsync(cancellationToken);
+            return GetQuotaTenantMockingExtension(tenantResource).GetQuotaOperationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -343,7 +504,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> A collection of <see cref="QuotaOperationResult" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<QuotaOperationResult> GetQuotaOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetQuotaOperations(cancellationToken);
+            return GetQuotaTenantMockingExtension(tenantResource).GetQuotaOperations(cancellationToken);
         }
     }
 }
