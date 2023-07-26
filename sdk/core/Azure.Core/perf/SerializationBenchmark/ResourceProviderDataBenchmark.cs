@@ -28,6 +28,7 @@ namespace Azure.Core.Perf
         {
             return ResourceProviderData.DeserializeResourceProviderData(jsonElement);
         }
+
         protected override ResourceProviderData Deserialize(BinaryData binaryData)
         {
             return (ResourceProviderData)((IModelSerializable)_model).Deserialize(binaryData, ModelSerializerOptions.AzureServiceDefault);

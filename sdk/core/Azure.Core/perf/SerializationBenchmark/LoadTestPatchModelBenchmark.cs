@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Text.Json;
 using Azure.Core.Serialization;
 using BenchmarkDotNet.Configs;
@@ -28,7 +29,14 @@ namespace Azure.Core.Perf
 
         protected override Developer.LoadTesting.Models.Test Deserialize(JsonElement jsonElement)
         {
-            throw new System.NotImplementedException();
+            using MemoryStream stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
+            {
+                jsonElement.WriteTo(writer);
+            }
+            stream.Position = 0;
+            BinaryData data = BinaryData.FromStream(stream);
+            return (Developer.LoadTesting.Models.Test)((IModelSerializable)_model).Deserialize(data, ModelSerializerOptions.AzureServiceDefault);
         }
 
         protected override Developer.LoadTesting.Models.Test Deserialize(BinaryData binaryData)
