@@ -125,6 +125,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             {
                 logging.AddOpenTelemetry(builderOptions =>
                 {
+                    builderOptions.SetResourceBuilder(ResourceBuilder.CreateDefault()
+                                                                     .AddDetector(new AppServiceResourceDetector())
+                                                                     .AddDetector(new AzureVMResourceDetector()));
                     builderOptions.IncludeFormattedMessage = true;
                     builderOptions.IncludeScopes = false;
                 });
