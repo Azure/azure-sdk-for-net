@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -100,7 +101,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, default);
+        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, (ResponseClassificationHandler?)default);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -108,14 +109,24 @@ namespace Azure.Core.Pipeline
         /// <param name="context">Context specifying the message options.</param>
         /// <param name="classifier"></param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier)
         {
             var message = CreateMessage();
-            if (classifier != null)
-            {
-                message.ResponseClassifier = classifier;
-            }
             message.ApplyRequestContext(context, classifier);
+            return message;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="handler"></param>
+        /// <returns></returns>
+        public HttpMessage CreateMessage(RequestContext? context, ResponseClassificationHandler? handler = default)
+        {
+            var message = CreateMessage();
+            message.ApplyRequestContext(context, handler);
             return message;
         }
 

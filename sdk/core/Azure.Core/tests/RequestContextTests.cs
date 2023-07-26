@@ -284,6 +284,86 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "UNSET"));
         }
 
+        [Test]
+        public async Task CustomPipelineResponseClassifierIsRespected()
+        {
+            var response = new MockResponse(204);
+            var mockTransport = new MockTransport(response);
+            var pipeline = new HttpPipeline(mockTransport, responseClassifier: new FailureResponseClassifier(new[] { 204 }));
+            var context = new RequestContext();
+            var message = pipeline.CreateMessage(context, new TestResponseClassificationHandler(new[] { 200 }));
+
+            Assert.IsInstanceOf<ChainingClassifier>(message.ResponseClassifier);
+
+            await pipeline.SendAsync(message, context.CancellationToken);
+            // FailureResponseClassifier is still respected
+            Assert.IsTrue(message.Response.IsError);
+        }
+
+        [Test]
+        public async Task LibraryMethodHandlerTakesPrecedenceOverPipelineClassifier()
+        {
+            var mockTransport = new MockTransport(new MockResponse(429));
+            var pipeline = new HttpPipeline(mockTransport);
+            var context = new RequestContext();
+            var message = pipeline.CreateMessage(context, new TestResponseClassificationHandler(new[] { 429 }));
+
+            Assert.IsInstanceOf<ChainingClassifier>(message.ResponseClassifier);
+
+            await pipeline.SendAsync(message, context.CancellationToken);
+
+            // library handler takes precedence over pipeline ResponseClassifier
+            Assert.IsTrue(message.Response.IsError);
+        }
+
+        [Test]
+        public async Task UserClassifierTakesPrecedenceOverLibraryMethodHandler()
+        {
+            var mockTransport = new MockTransport(new MockResponse(200));
+            var pipeline = new HttpPipeline(mockTransport);
+            var context = new RequestContext();
+
+            // user classifier
+            context.AddClassifier(200, true);
+
+            // library handler
+            var message = pipeline.CreateMessage(context, new TestResponseClassificationHandler(new[] { 200 }));
+
+            Assert.IsInstanceOf<ChainingClassifier>(message.ResponseClassifier);
+
+            await pipeline.SendAsync(message, context.CancellationToken);
+            Assert.IsTrue(message.Response.IsError);
+        }
+
+        [Test]
+        public async Task StatusCodeClassifierIsUsedForMergeWhenSpecified()
+        {
+            var mockTransport = new MockTransport(new MockResponse(200));
+            var pipeline = new HttpPipeline(mockTransport);
+            var context = new RequestContext();
+            var message = pipeline.CreateMessage(context, new StatusCodeClassifier(stackalloc ushort[] { 200, 204, 304 }));
+
+            Assert.IsInstanceOf<StatusCodeClassifier>(message.ResponseClassifier);
+
+            await pipeline.SendAsync(message, context.CancellationToken);
+            Assert.IsFalse(message.Response.IsError);
+        }
+
+        [Test]
+        public async Task StatusCodeClassifierIsUsedForMergeWhenSpecifiedWithUserCustomizations()
+        {
+            var mockTransport = new MockTransport(new MockResponse(200));
+            var pipeline = new HttpPipeline(mockTransport);
+            var context = new RequestContext();
+            context.AddClassifier(200, true);
+            var message = pipeline.CreateMessage(context, new StatusCodeClassifier(stackalloc ushort[] { 200, 204, 304 }));
+
+            Assert.IsInstanceOf<StatusCodeClassifier>(message.ResponseClassifier);
+
+            await pipeline.SendAsync(message, context.CancellationToken);
+            Assert.True(message.Response.IsError);
+        }
+
         #region Helpers
         private HttpMessage CreateMessage(int statusCode)
         {
@@ -335,6 +415,41 @@ namespace Azure.Core.Tests
                 }
 
                 return true;
+            }
+        }
+
+        private class FailureResponseClassifier : ResponseClassifier
+        {
+            private readonly HashSet<int> _failureCodes;
+
+            public FailureResponseClassifier(IEnumerable<int> failureCodes)
+            {
+                _failureCodes = new HashSet<int>(failureCodes);
+            }
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return _failureCodes.Contains(message.Response.Status);
+            }
+        }
+
+        private sealed class TestResponseClassificationHandler : ResponseClassificationHandler
+        {
+            private readonly HashSet<int> _successStatusCodes;
+
+            public TestResponseClassificationHandler(IEnumerable<int> successStatusCodes)
+            {
+                _successStatusCodes = new HashSet<int>(successStatusCodes);
+            }
+
+            public override bool TryClassify(HttpMessage message, out bool isError)
+            {
+                if (_successStatusCodes.Contains(message.Response.Status))
+                {
+                    isError = false;
+                    return true;
+                }
+                isError = false;
+                return false;
             }
         }
 

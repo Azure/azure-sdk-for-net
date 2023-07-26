@@ -146,5 +146,27 @@ namespace Azure
 
             return new ChainingClassifier(_statusCodes, _handlers, classifier);
         }
+
+        internal ResponseClassifier Apply(ResponseClassifier pipelineClassifier, ResponseClassificationHandler? classificationHandler)
+        {
+            if (_statusCodes == null && _handlers == null && classificationHandler == null)
+            {
+                return pipelineClassifier;
+            }
+
+            // append the library supplied handler after the user supplied handlers
+
+            ResponseClassificationHandler[]? handlers = _handlers;
+            if (classificationHandler != null && _handlers != null)
+            {
+                handlers = new ResponseClassificationHandler[_handlers.Length + 1];
+                Array.Copy(_handlers, handlers, _handlers.Length);
+                handlers[_handlers.Length] = classificationHandler;
+            }
+
+            // combine the user supplied status codes, the merged handlers, and the pipeline classifier
+
+            return new ChainingClassifier(_statusCodes, handlers, pipelineClassifier);
+        }
     }
 }

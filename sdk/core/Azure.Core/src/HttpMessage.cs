@@ -113,6 +113,24 @@ namespace Azure.Core
             }
         }
 
+        internal void ApplyRequestContext(RequestContext? context, ResponseClassificationHandler? classificationHandler)
+        {
+            if (context == null)
+            {
+                return;
+            }
+
+            context.Freeze();
+
+            if (context.Policies?.Count > 0)
+            {
+                Policies ??= new(context.Policies.Count);
+                Policies.AddRange(context.Policies);
+            }
+
+            ResponseClassifier = context.Apply(ResponseClassifier, classificationHandler);
+        }
+
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
         /// <summary>
