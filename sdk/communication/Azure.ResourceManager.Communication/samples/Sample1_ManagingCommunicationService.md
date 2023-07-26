@@ -85,7 +85,6 @@ CommunicationServiceResourceData data = new CommunicationServiceResourceData("gl
 
 ArmOperation<CommunicationServiceResource> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
 CommunicationServiceResource communicationService = communicationServiceLro.Value;
-
 ```
 
 ***List all Communication Service***
