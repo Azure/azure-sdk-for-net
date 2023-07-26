@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
@@ -38,7 +40,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
-        //[Ignore("Test fails in Mac-OS.")]
         public async Task VerifyDistro()
         {
             // SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)
