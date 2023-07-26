@@ -33,7 +33,8 @@ Messages clients can be authenticated using the connection string acquired from 
 
 ```C#
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-NotificationMessagesClient client = new NotificationMessagesClient(connectionString);
+NotificationMessagesClient notificationMessagesClient = new NotificationMessagesClient(connectionString);
+MessageTemplateClient messageTemplateClient = new MessageTemplateClient(connectionString);
 ```
 
 #### Token Credential
@@ -43,19 +44,56 @@ Alternatively, Messages clients can also be authenticated using a valid token cr
 ```C#
 string endpoint = "<endpoint_url>";
 TokenCredential tokenCredential = new DefaultAzureCredential();
-NotificationMessagesClient client = new NotificationMessagesClient(new Uri(endpoint), tokenCredential);
+NotificationMessagesClient notificationMessagesClient = new NotificationMessagesClient(new Uri(endpoint), tokenCredential);
+MessageTemplateClient messageTemplateClient = new MessageTemplateClient(new Uri(endpoint), tokenCredential);
 ```
 
 
 ## Examples
 ### Send an Notification Message
 To send a notification message, call the `SendMessage` or `SendMessageAsync` function from the `NotificationMessagesClient`.
+
+#### Send a text message
 ```C#
 // Create the recipient list, currently only one recipient is supported 
 var recipient = new List<string> { "<to-phone-number>" };
 var options = new SendMessageOptions("<channel-registration-id>", recipient, "Come on everyone, let's go for lunch together.");
 SendMessageResult result = await notificationMessagesClient.SendMessageAsync(options);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
+```
+
+#### Send a template message
+```C#
+// Create the recipient list, currently only one recipient is supported 
+var recipient = new List<string> { "<to-phone-number>" };
+string templateName = "sample_template";
+string templateLanguage = "en_us";
+var messageTemplate = new MessageTemplate(templateName, templateLanguage);
+var sendTemplateMessageOptions = new SendMessageOptions(channelRegistrationId, recipientList, messageTemplate);
+SendMessageResult result = await notificationMessagesClient.SendMessageAsync(sendTemplateMessageOptions);
+Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
+```
+
+#### Send a media message
+```C#
+// Create the recipient list, currently only one recipient is supported 
+var recipient = new List<string> { "<to-phone-number>" };
+var uri = new Uri("https://aka.ms/acsicon1");
+var sendMediaMessageOptions = new SendMessageOptions(channelRegistrationId, recipientList, uri);
+SendMessageResult result = await notificationMessagesClient.SendMessageAsync(sendMediaMessageOptions);
+Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
+```
+
+### Retrieve templates
+To retrieve templates, call the `GetMessages` or `GetMessagesAsync` function from the `MessageTemplateClient`.
+
+
+```C#
+AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelId);
+await foreach (MessageTemplateItem template in templates)
+{
+    Console.WriteLine($"{template.Name}");
+}
 ```
 
 ## Troubleshooting
