@@ -19,9 +19,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
 {
     public partial class ResourceProviderData : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelSerializerOptions? options = default)
+        public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.AzureServiceDefault;
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item));
+                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item, options));
                     }
                     resourceTypes = array;
                     continue;
@@ -92,7 +92,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         // only used for public access to internal serialize
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);

@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ResourceTypeAlias : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
-        internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.AzureServiceDefault;
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -48,7 +48,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     List<ResourceTypeAliasPath> array = new List<ResourceTypeAliasPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item));
+                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item, options));
                     }
                     paths = array;
                     continue;
@@ -73,7 +73,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value);
+                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultMetadata"u8))
@@ -82,7 +82,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value);
+                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value, options);
                     continue;
                 }
             }

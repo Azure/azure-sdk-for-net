@@ -21,10 +21,10 @@ namespace Azure.Core
         private Utf8JsonWriter? _writer;
         private RequestContent? _content;
 
-        public Utf8JsonDelayedRequestContent(IJsonModelSerializable model, ModelSerializerOptions? options = default)
+        public Utf8JsonDelayedRequestContent(IJsonModelSerializable model, ModelSerializerOptions options)
         {
             _model = model;
-            _serializerOptions = options ?? ModelSerializerOptions.AzureServiceDefault;
+            _serializerOptions = options;
         }
 
         private SequenceWriter SequenceWriter => _sequenceWriter ??= new SequenceWriter();

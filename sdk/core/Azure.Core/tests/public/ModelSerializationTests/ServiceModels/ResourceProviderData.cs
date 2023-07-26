@@ -23,13 +23,13 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
     {
         public static implicit operator RequestContent(ResourceProviderData resourceProviderData)
         {
-            return new Utf8JsonDelayedRequestContent(resourceProviderData);
+            return new Utf8JsonDelayedRequestContent(resourceProviderData, ModelSerializerOptions.DefaultAzureOptions);
         }
 
         public static explicit operator ResourceProviderData(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeResourceProviderData(jsonDocument.RootElement);
+            return DeserializeResourceProviderData(jsonDocument.RootElement, ModelSerializerOptions.DefaultAzureOptions);
         }
 
         /// <summary> Initializes a new instance of ProviderData. </summary>
@@ -57,20 +57,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
 
         /// <summary> The provider ID. </summary>
         public ResourceIdentifier Id { get; }
-
-        internal partial class ProviderDataConverter : JsonConverter<ResourceProviderData>
-        {
-            public override void Write(Utf8JsonWriter writer, ResourceProviderData providerData, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(providerData);
-            }
-            public override ResourceProviderData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeResourceProviderData(document.RootElement);
-            }
-        }
-
         /// <summary> The namespace of the resource provider. </summary>
         public string Namespace { get; }
         /// <summary> The registration state of the resource provider. </summary>

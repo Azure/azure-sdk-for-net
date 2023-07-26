@@ -89,7 +89,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             using SequenceWriter writer = WriteStringToBuffer(json);
             var sequence = writer.GetReadOnlySequence();
             using var doc = JsonDocument.Parse(writer.GetReadOnlySequence());
-            return AvailabilitySetData.DeserializeAvailabilitySetData(doc.RootElement);
+            return AvailabilitySetData.DeserializeAvailabilitySetData(doc.RootElement, options);
         }
 
         private AvailabilitySetData DeserializeWithModelSerializer(string json, ModelSerializerOptions options)
@@ -99,7 +99,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         private AvailabilitySetData DeserializeWithInternal(string json, ModelSerializerOptions options)
         {
             using JsonDocument doc = JsonDocument.Parse(json);
-            return AvailabilitySetData.DeserializeAvailabilitySetData(doc.RootElement);
+            return AvailabilitySetData.DeserializeAvailabilitySetData(doc.RootElement, options);
         }
 
         private AvailabilitySetData DeserializeWithModelSerializerNonGeneric(string json, ModelSerializerOptions options)

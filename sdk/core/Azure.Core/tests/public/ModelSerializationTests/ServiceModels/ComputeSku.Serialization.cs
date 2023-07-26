@@ -15,7 +15,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
     public partial class ComputeSku : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -40,9 +40,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.AzureServiceDefault;
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

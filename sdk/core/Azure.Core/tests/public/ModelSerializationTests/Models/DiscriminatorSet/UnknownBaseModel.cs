@@ -29,7 +29,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             RawData = rawData;
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -59,6 +59,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static UnknownBaseModel DeserializeUnknownBaseModel(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;

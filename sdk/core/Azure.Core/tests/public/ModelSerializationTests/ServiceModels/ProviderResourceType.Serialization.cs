@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ProviderResourceType : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
-        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.AzureServiceDefault;
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     List<ProviderExtendedLocation> array = new List<ProviderExtendedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item));
+                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item, options));
                     }
                     locationMappings = array;
                     continue;
@@ -80,7 +80,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item));
+                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item, options));
                     }
                     aliases = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     List<ZoneMapping> array = new List<ZoneMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ZoneMapping.DeserializeZoneMapping(item));
+                        array.Add(ZoneMapping.DeserializeZoneMapping(item, options));
                     }
                     zoneMappings = array;
                     continue;
@@ -127,7 +127,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     List<ApiProfile> array = new List<ApiProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiProfile.DeserializeApiProfile(item));
+                        array.Add(ApiProfile.DeserializeApiProfile(item, options));
                     }
                     apiProfiles = array;
                     continue;

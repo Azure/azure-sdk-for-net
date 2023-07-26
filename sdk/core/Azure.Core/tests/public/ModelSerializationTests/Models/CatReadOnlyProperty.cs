@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -66,8 +66,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions options)
+        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+
             double weight = default;
             string name = "";
             string latinName = "";

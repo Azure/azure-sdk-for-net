@@ -43,13 +43,15 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string ReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelSerializerOptions.AzureServiceDefault, nameHint);
+            Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
 
         void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
             => Serialize(writer, options, null);
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+
             string key = default;
             string value = default;
             string readOnlyProperty = default;
@@ -114,8 +116,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
-        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelSerializerOptions options)
+        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+
             string key = default;
             string value = default;
             string readOnlyProperty = default;

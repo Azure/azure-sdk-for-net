@@ -20,7 +20,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string Kind { get; internal set; }
         public string Name { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -55,6 +55,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static BaseModel DeserializeBaseModel(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;

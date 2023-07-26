@@ -65,7 +65,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             using var content = WriteStringToBuffer(json, new ModelSerializerOptions());
             using var doc = JsonDocument.Parse(content.GetReadOnlySequence());
-            return ResourceProviderData.DeserializeResourceProviderData(doc.RootElement);
+            return ResourceProviderData.DeserializeResourceProviderData(doc.RootElement, new ModelSerializerOptions(ModelSerializerFormat.Wire));
         }
 
         private ResourceProviderData DeserializeWithModelSerializer(string json)
@@ -76,7 +76,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         private ResourceProviderData DeserializeWithInternal(string json)
         {
             using var doc = JsonDocument.Parse(json);
-            return ResourceProviderData.DeserializeResourceProviderData(doc.RootElement);
+            return ResourceProviderData.DeserializeResourceProviderData(doc.RootElement, new ModelSerializerOptions(ModelSerializerFormat.Wire));
         }
 
         private ResourceProviderData DeserializeWithModelSerializerNonGeneric(string json)

@@ -8,22 +8,29 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// Provides the client options for serializing models.
     /// </summary>
-    public struct ModelSerializerOptions
+    public class ModelSerializerOptions
     {
         /// <summary>
-        /// .
+        /// Default options for communicating with Azure service.
         /// </summary>
-        public static readonly ModelSerializerOptions AzureServiceDefault = new ModelSerializerOptions(ModelSerializerFormat.Wire);
+        public static readonly ModelSerializerOptions DefaultAzureOptions = new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class. Defaults to Data format "D".
+        /// Delegate to specify a specific <see cref="ObjectSerializer"/> for a given <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">The <see cref="Type"/> to look up.</param>
+        /// <returns></returns>
+        public delegate ObjectSerializer? ObjectSerializerFactory(Type type);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class. Defaults to Data format <see cref="ModelSerializerFormat.Json"/>.
         /// </summary>
         public ModelSerializerOptions() : this(ModelSerializerFormat.Json) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class.
         /// </summary>
-        /// <param name="format">String that determines Format of serialized model. "D" = data format which means IgnoreReadOnly and IgnoreAdditionalProperties are false, "W" = wire format which means both properties are true. Default is "D".</param>
+        /// <param name="format">String that determines Format of serialized model..</param>
         public ModelSerializerOptions(ModelSerializerFormat format)
         {
             Format = format;
@@ -35,9 +42,9 @@ namespace Azure.Core.Serialization
         public ModelSerializerFormat Format { get; }
 
         /// <summary>
-        /// Gets or sets a factory method that returns a <see cref="ObjectSerializer"/> based on the provided <see cref="Type"/>.
+        /// Gets or sets a factory method that returns an <see cref="ObjectSerializer"/> based on the provided <see cref="Type"/>.
         /// Should return null if the type is not supported.
         /// </summary>
-        public Func<Type, ObjectSerializer?>? TypeResolver { get; set; }
+        public ObjectSerializerFactory? TypeResolver { get; set; }
     }
 }

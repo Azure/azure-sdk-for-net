@@ -25,7 +25,7 @@ namespace Azure.Core.Perf
 
         protected override ResourceProviderData Deserialize(JsonElement jsonElement)
         {
-            return ResourceProviderData.DeserializeResourceProviderData(jsonElement);
+            return ResourceProviderData.DeserializeResourceProviderData(jsonElement, _options);
         }
 
         protected override void Serialize(Utf8JsonWriter writer)

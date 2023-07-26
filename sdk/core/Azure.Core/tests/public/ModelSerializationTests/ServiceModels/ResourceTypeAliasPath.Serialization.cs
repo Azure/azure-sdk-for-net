@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ResourceTypeAliasPath : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
-        internal static ResourceTypeAliasPath DeserializeResourceTypeAliasPath(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ResourceTypeAliasPath DeserializeResourceTypeAliasPath(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.AzureServiceDefault;
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    pattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value);
+                    pattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    metadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value);
+                    metadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value, options);
                     continue;
                 }
             }

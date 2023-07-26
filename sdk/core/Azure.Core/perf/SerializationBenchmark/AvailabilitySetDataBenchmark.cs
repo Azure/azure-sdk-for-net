@@ -10,7 +10,7 @@ namespace Azure.Core.Perf
     {
         protected override AvailabilitySetData Deserialize(JsonElement jsonElement)
         {
-            return AvailabilitySetData.DeserializeAvailabilitySetData(jsonElement);
+            return AvailabilitySetData.DeserializeAvailabilitySetData(jsonElement, _options);
         }
 
         protected override void Serialize(Utf8JsonWriter writer)

@@ -23,7 +23,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -94,9 +94,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
             writer.WriteEndObject();
         }
 
-        public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelSerializerOptions? options = default)
+        public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.AzureServiceDefault;
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,7 +122,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -227,7 +227,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
                             List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                                array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                             }
                             statuses = array;
                             continue;

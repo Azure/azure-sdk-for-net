@@ -21,7 +21,7 @@ namespace Azure.Core.Perf
         private string _json;
         protected T _model;
         protected Response _response;
-        private ModelSerializerOptions _options;
+        protected ModelSerializerOptions _options;
         private BinaryData _data;
         private SequenceWriter _content;
         private ReadOnlySequence<byte> _sequence;
@@ -45,7 +45,7 @@ namespace Azure.Core.Perf
             _model = ModelSerializer.Deserialize<T>(_data);
             _response = new MockResponse(200);
             _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
-            _options = ModelSerializerOptions.AzureServiceDefault;
+            _options = new ModelSerializerOptions(ModelSerializerFormat.Wire);
             _content = new SequenceWriter();
             using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
             _model.Serialize(writer, new ModelSerializerOptions());
@@ -225,6 +225,17 @@ namespace Azure.Core.Perf
         public void JsonDocumentFromBinaryData()
         {
             using var doc = JsonDocument.Parse(_data);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Alloc")]
+        public ModelSerializerOptions OptionsAlloc()
+        {
+            ModelSerializerOptions options = default;
+            //if (options.Equals(default(ModelSerializerOptions)))
+            //    options = new ModelSerializerOptions(ModelSerializerFormat.Json);
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            return options;
         }
     }
 }

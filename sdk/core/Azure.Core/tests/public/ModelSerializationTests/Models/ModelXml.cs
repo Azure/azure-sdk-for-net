@@ -46,7 +46,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public ChildModelXml RenamedChildModelXml { get; set; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelSerializerOptions.AzureServiceDefault, nameHint);
+            Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
 
         void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
             => Serialize(writer, options, null);
@@ -89,6 +89,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+
             string key = default;
             string value = default;
             string readonlyProperty = default;
@@ -125,8 +127,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
-        internal static ModelXml DeserializeModelXml(JsonElement element, ModelSerializerOptions options)
+        internal static ModelXml DeserializeModelXml(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+
             string key = default;
             string value = default;
             string readOnlyProperty = default;

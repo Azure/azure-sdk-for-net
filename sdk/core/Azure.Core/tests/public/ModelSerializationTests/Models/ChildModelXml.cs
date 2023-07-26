@@ -36,7 +36,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelSerializerOptions.AzureServiceDefault, nameHint);
+            Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
 
         void IXmlModelSerializable.Serialize(XmlWriter writer, ModelSerializerOptions options)
             => Serialize(writer, options, null);
@@ -58,6 +58,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static ChildModelXml DeserializeChildModelXml(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+
             string value = default;
             string readonlyProperty = default;
             if (element.Element("ChildValue") is XElement valueElement)
@@ -71,8 +73,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new ChildModelXml(value, readonlyProperty);
         }
 
-        internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelSerializerOptions options)
+        internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
+
             string childValue = default;
             string childReadOnlyProperty = default;
 
@@ -143,6 +147,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+            Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
     }
 }

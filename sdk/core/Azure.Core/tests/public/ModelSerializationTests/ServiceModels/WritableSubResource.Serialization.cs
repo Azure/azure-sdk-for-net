@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
     [JsonConverter(typeof(WritableSubResourceConverter))]
     public partial class WritableSubResource : IUtf8JsonSerializable, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -45,9 +45,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
         /// </summary>
         /// <param name="element">The JSON element to be deserialized.</param>
         /// <returns>Deserialized WritableSubResource object.</returns>
-        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelSerializerOptions? options = default)
+        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.AzureServiceDefault;
+            options ??= ModelSerializerOptions.DefaultAzureOptions;
 
             ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWritableSubResource(document.RootElement);
+                return DeserializeWritableSubResource(document.RootElement, ModelSerializerOptions.DefaultAzureOptions);
             }
         }
 
