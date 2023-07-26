@@ -137,8 +137,10 @@ namespace Azure.Core.Json
                 }
             }
 
-            internal IEnumerable<string> GetChangedProperties()
+            internal IEnumerable<string> GetChangedProperties(out int maxPathLength)
             {
+                maxPathLength = 0;
+
                 HashSet<string> unique = new();
                 if (_changes == null)
                 {
@@ -150,6 +152,11 @@ namespace Azure.Core.Json
                 {
                     MutableJsonChange c = _changes[i];
                     unique.Add(c.Path);
+
+                    if (c.Path.Length > maxPathLength)
+                    {
+                        maxPathLength = c.Path.Length;
+                    }
                 }
 
                 // Sort them
