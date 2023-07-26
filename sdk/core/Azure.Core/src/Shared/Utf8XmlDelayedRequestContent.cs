@@ -4,61 +4,60 @@
 #nullable enable
 
 using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
-    internal class Utf8JsonDelayedRequestContent : RequestContent
+    internal class Utf8XmlDelayedRequestContent : RequestContent
     {
         private readonly object _serializedLock = new object();
 
-        private SequenceWriter? _sequenceWriter;
-        private IJsonModelSerializable<object> _model;
+        private IXmlModelSerializable<object> _model;
         private ModelSerializerOptions _serializerOptions;
-        private Utf8JsonWriter? _writer;
+        private XmlWriter? _writer;
         private RequestContent? _content;
+        private MemoryStream? _stream;
 
-        public Utf8JsonDelayedRequestContent(IJsonModelSerializable<object> model, ModelSerializerOptions options)
+        public Utf8XmlDelayedRequestContent(IXmlModelSerializable<object> model, ModelSerializerOptions options)
         {
             _model = model;
             _serializerOptions = options;
         }
 
-        private SequenceWriter SequenceWriter => _sequenceWriter ??= new SequenceWriter();
+        private MemoryStream Stream => _stream ??= new MemoryStream();
 
-        private Utf8JsonWriter JsonWriter => _writer ??= new Utf8JsonWriter(SequenceWriter);
+        private XmlWriter XmlWriter => _writer ??= XmlWriter.Create(Stream);
 
-        private RequestContent Content => _content ??= Create(SequenceWriter);
+        private RequestContent Content => _content ??= Create(Stream);
 
         /// <inheritdoc/>
         public override void Dispose()
         {
             _writer?.Dispose();
-            _sequenceWriter?.Dispose();
+            _stream?.Dispose();
         }
 
         /// <inheritdoc/>
         public override bool TryComputeLength(out long length)
         {
             Serialize();
-            return SequenceWriter.TryComputeLength(out length);
+            length = Stream.Length;
+            return true;
         }
 
         private void Serialize()
         {
-            SequenceWriter.TryComputeLength(out var len);
-            if (len == 0)
+            if (Stream.Length == 0)
             {
                 lock (_serializedLock)
                 {
-                    SequenceWriter.TryComputeLength(out len);
-                    if (len == 0)
+                    if (Stream.Length == 0)
                     {
-                        _model.Serialize(JsonWriter, _serializerOptions);
-                        JsonWriter.Flush();
+                        _model.Serialize(XmlWriter, _serializerOptions);
+                        XmlWriter.Flush();
                     }
                 }
             }
@@ -68,6 +67,7 @@ namespace Azure.Core
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
             Serialize();
+            Stream.Position = 0;
             Content.WriteTo(stream, cancellation);
         }
 
@@ -75,6 +75,7 @@ namespace Azure.Core
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
             Serialize();
+            Stream.Position = 0;
             await Content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
         }
     }

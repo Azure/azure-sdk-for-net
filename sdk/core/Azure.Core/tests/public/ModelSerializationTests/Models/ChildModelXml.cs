@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("ChildTag")]
-    internal class ChildModelXml : IXmlSerializable, IXmlModelSerializable<ChildModelXml>, IJsonModelSerializable<ChildModelXml>, IUtf8JsonSerializable, IXmlModelSerializable, IJsonModelSerializable
+    public class ChildModelXml : IXmlSerializable, IXmlModelSerializable<ChildModelXml>, IJsonModelSerializable<ChildModelXml>, IUtf8JsonSerializable, IXmlModelSerializable, IJsonModelSerializable
     {
         internal ChildModelXml() { }
 
@@ -38,7 +38,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
 
         void IXmlModelSerializable<ChildModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
-            => Serialize(writer, options, null);
+        {
+            if (options.Format != ModelSerializerFormat.Wire)
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IXmlModelSerializable)} interface");
+
+            Serialize(writer, options, null);
+        }
 
         private void Serialize(XmlWriter writer, ModelSerializerOptions options, string nameHint)
         {
@@ -157,5 +162,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ChildModelXml>)this).Serialize(options);
 
         void IXmlModelSerializable<object>.Serialize(XmlWriter writer, ModelSerializerOptions options) => ((IXmlModelSerializable<ChildModelXml>)this).Serialize(writer, options);
+
+        ChildModelXml IXmlModelSerializable<ChildModelXml>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeChildModelXml(root, options);
+
+        object IXmlModelSerializable<object>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeChildModelXml(root, options);
     }
 }

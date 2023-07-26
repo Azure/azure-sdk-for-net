@@ -6,7 +6,7 @@ using Azure.Core.Tests.Public.ResourceManager.Compute;
 
 namespace Azure.Core.Perf
 {
-    public class AvailabilitySetDataBenchmark : SerializationBenchmark<AvailabilitySetData>
+    public class AvailabilitySetDataBenchmark : JsonSerializationBenchmark<AvailabilitySetData>
     {
         protected override AvailabilitySetData Deserialize(JsonElement jsonElement)
         {

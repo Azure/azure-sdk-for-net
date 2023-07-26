@@ -46,7 +46,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
 
         void IXmlModelSerializable<XmlModelForCombinedInterface>.Serialize(XmlWriter writer, ModelSerializerOptions options)
-            => Serialize(writer, options, null);
+        {
+            if (options.Format != ModelSerializerFormat.Wire)
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IXmlModelSerializable)} interface");
+
+            Serialize(writer, options, null);
+        }
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions options = default)
         {
@@ -165,5 +170,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<XmlModelForCombinedInterface>)this).Deserialize(data, options);
 
         BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<XmlModelForCombinedInterface>)this).Serialize(options);
+
+        XmlModelForCombinedInterface IXmlModelSerializable<XmlModelForCombinedInterface>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(root, options);
+
+        object IXmlModelSerializable<object>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(root, options);
     }
 }

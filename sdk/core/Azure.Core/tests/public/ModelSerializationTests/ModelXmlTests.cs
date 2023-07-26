@@ -9,26 +9,19 @@ using Azure.Core.Serialization;
 using System;
 using System.Text.Json;
 using System.Xml;
+using System.Reflection;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class ModelXmlTests
+    internal class ModelXmlTests : ModelTests<ModelXml>
     {
-        private const string _xmlServiceResponse =
-                "<Tag>" +
-                "<Key>Color</Key>" +
-                "<Value>Red</Value>" +
-                "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>" +
-                "<RenamedChildModelXml><ChildValue>ChildRed</ChildValue><ChildReadOnlyProperty>ChildReadOnly</ChildReadOnlyProperty></RenamedChildModelXml>" +
-                "</Tag>";
+        protected override string WirePayload => File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ModelXml.xml")).TrimEnd();
 
-        private const string _jsonServiceResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"renamedChildModelXml\":{\"childValue\":\"ChildRed\",\"childReadOnlyProperty\":\"ChildReadOnly\"}}";
+        protected override string JsonPayload => "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"renamedChildModelXml\":{\"childValue\":\"ChildRed\",\"childReadOnlyProperty\":\"ChildReadOnly\"}}";
 
-        [Test]
-        public void RoundTripWithWire() => CanRoundTripFutureVersionWithoutLoss(ModelSerializerFormat.Wire, _xmlServiceResponse);
+        protected override Func<ModelXml, RequestContent> ToRequestContent => model => model;
 
-        [Test]
-        public void RoundTripWithJson() => CanRoundTripFutureVersionWithoutLoss(ModelSerializerFormat.Json, _jsonServiceResponse);
+        protected override Func<Response, ModelXml> FromResponse => response => (ModelXml)response;
 
         [Test]
         public void ThrowsIfUnknownFormat()
@@ -42,38 +35,15 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void ThrowsIfMismatch()
         {
             ModelSerializerOptions jsonOptions = new ModelSerializerOptions(ModelSerializerFormat.Json);
-            ModelXml model = ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(_jsonServiceResponse)), jsonOptions);
+            ModelXml model = ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), jsonOptions);
 
-            Assert.Throws(Is.InstanceOf<JsonException>(), () => ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(_xmlServiceResponse)), jsonOptions));
+            Assert.Throws(Is.InstanceOf<JsonException>(), () => ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(WirePayload)), jsonOptions));
 
             ModelSerializerOptions wireOptions = new ModelSerializerOptions(ModelSerializerFormat.Wire);
-            Assert.Throws<XmlException>(() => ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(_jsonServiceResponse)), wireOptions));
+            Assert.Throws<XmlException>(() => ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), wireOptions));
         }
 
-        private void CanRoundTripFutureVersionWithoutLoss(ModelSerializerFormat format, string serviceResponse)
-        {
-            ModelSerializerOptions options = new ModelSerializerOptions(format);
-
-            var expectedSerializedString = GetExpectedResult(format);
-
-            ModelXml model = ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options);
-
-            Assert.AreEqual("Color", model.Key);
-            Assert.AreEqual("Red", model.Value);
-            Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
-            Assert.IsNotNull(model.RenamedChildModelXml);
-            Assert.AreEqual("ChildRed", model.RenamedChildModelXml.ChildValue);
-            Assert.AreEqual("ChildReadOnly", model.RenamedChildModelXml.ChildReadOnlyProperty);
-            var data = ModelSerializer.Serialize(model, options);
-            string roundTrip = data.ToString();
-
-            Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
-
-            ModelXml model2 = ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options);
-            VerifyModelXml(model, model2, format);
-        }
-
-        private string GetExpectedResult(ModelSerializerFormat format)
+        protected override string GetExpectedResult(ModelSerializerFormat format)
         {
             if (format == ModelSerializerFormat.Wire)
             {
@@ -102,16 +72,26 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             throw new InvalidOperationException($"Unknown format used in test {format}");
         }
 
-        internal static void VerifyModelXml(ModelXml correctModelXml, ModelXml model2, ModelSerializerFormat format)
+        protected override void VerifyModel(ModelXml model, ModelSerializerFormat format)
         {
-            Assert.AreEqual(correctModelXml.Key, model2.Key);
-            Assert.AreEqual(correctModelXml.Value, model2.Value);
+            Assert.AreEqual("Color", model.Key);
+            Assert.AreEqual("Red", model.Value);
+            Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
+            Assert.IsNotNull(model.RenamedChildModelXml);
+            Assert.AreEqual("ChildRed", model.RenamedChildModelXml.ChildValue);
+            Assert.AreEqual("ChildReadOnly", model.RenamedChildModelXml.ChildReadOnlyProperty);
+        }
+
+        protected override void CompareModels(ModelXml model, ModelXml model2, ModelSerializerFormat format)
+        {
+            Assert.AreEqual(model.Key, model2.Key);
+            Assert.AreEqual(model.Value, model2.Value);
             if (format.Equals(ModelSerializerFormat.Json))
-                Assert.AreEqual(correctModelXml.ReadOnlyProperty, model2.ReadOnlyProperty);
-            Assert.AreEqual(correctModelXml.RenamedChildModelXml.ChildValue, model2.RenamedChildModelXml.ChildValue);
+                Assert.AreEqual(model.ReadOnlyProperty, model2.ReadOnlyProperty);
+            Assert.AreEqual(model.RenamedChildModelXml.ChildValue, model2.RenamedChildModelXml.ChildValue);
             //TODO this is broken until we update the IXmlSerializable interface to include ModelSerializerOptions
             //if (format.Equals(ModelSerializerFormat.Data))
-            //    Assert.AreEqual(correctModelXml.RenamedChildModelXml.ChildReadOnlyProperty, model2.RenamedChildModelXml.ChildReadOnlyProperty);
+            //    Assert.AreEqual(model.RenamedChildModelXml.ChildReadOnlyProperty, model2.RenamedChildModelXml.ChildReadOnlyProperty);
         }
     }
 }

@@ -68,6 +68,7 @@
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\OperationInternalBase.cs" />
     <Compile Include="Shared\Utf8JsonReaderExtensions.cs" />
+    <Compile Include="Shared\Utf8XmlDelayedRequestContent.cs" />
     <Compile Include="Shared\VoidValue.cs" />
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />

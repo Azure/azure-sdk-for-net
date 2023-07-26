@@ -16,7 +16,7 @@ using BenchmarkDotNet.Configs;
 namespace Azure.Core.Perf
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class SerializationBenchmark<T> where T : class, IJsonModelSerializable<T>
+    public abstract class JsonSerializationBenchmark<T> where T : class, IJsonModelSerializable<T>
     {
         private string _json;
         protected T _model;
@@ -25,7 +25,7 @@ namespace Azure.Core.Perf
         private BinaryData _data;
         private SequenceWriter _content;
         private ReadOnlySequence<byte> _sequence;
-        private byte[] _buffer;
+        private JsonDocument _jsonDocument;
 
         protected abstract T Deserialize(JsonElement jsonElement);
 
@@ -51,7 +51,7 @@ namespace Azure.Core.Perf
             _model.Serialize(writer, new ModelSerializerOptions());
             writer.Flush();
             _sequence = _content.GetReadOnlySequence();
-            _buffer = new byte[2000];
+            _jsonDocument = JsonDocument.Parse(_json);
         }
 
         [Benchmark]
@@ -133,8 +133,7 @@ namespace Azure.Core.Perf
         [BenchmarkCategory("Internal")]
         public T Deserialize_Internal()
         {
-            using JsonDocument doc = JsonDocument.Parse(_json);
-            return Deserialize(doc.RootElement);
+            return Deserialize(_jsonDocument.RootElement);
         }
 
         [Benchmark]
@@ -157,13 +156,6 @@ namespace Azure.Core.Perf
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
-        public T Deserialize_ModelSerializerFromString()
-        {
-            return ModelSerializer.Deserialize<T>(BinaryData.FromString(_json), _options);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("ModelSerializer")]
         public T Deserialize_ModelSerializerFromBinaryData()
         {
             return ModelSerializer.Deserialize<T>(_data, _options);
@@ -174,13 +166,6 @@ namespace Azure.Core.Perf
         public object Deserialize_ModelSerializerFromBinaryDataNonGeneric()
         {
             return ModelSerializer.Deserialize(_data, typeof(T), _options);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("PublicInterface")]
-        public T Deserialize_PublicInterfaceFromString()
-        {
-            return _model.Deserialize(BinaryData.FromString(_json), _options);
         }
 
         [Benchmark]

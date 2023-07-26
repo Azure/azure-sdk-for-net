@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    internal class ModelXml : IXmlSerializable, IXmlModelSerializable<ModelXml>, IXmlModelSerializable
+    public class ModelXml : IXmlSerializable, IXmlModelSerializable<ModelXml>, IXmlModelSerializable
     {
         internal ModelXml() { }
 
@@ -43,11 +43,27 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         [XmlElement("RenamedChildModelXml")]
         public ChildModelXml RenamedChildModelXml { get; set; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
+        public static implicit operator RequestContent(ModelXml modelXml)
+        {
+            return new Utf8XmlDelayedRequestContent(modelXml, ModelSerializerOptions.DefaultAzureOptions);
+        }
+
+        public static explicit operator ModelXml(Response response)
+        {
+            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultAzureOptions);
+        }
+
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
 
         void IXmlModelSerializable<ModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
-            => Serialize(writer, options, null);
+        {
+            if (options.Format != ModelSerializerFormat.Wire)
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IXmlModelSerializable)} interface");
+
+            Serialize(writer, options, null);
+        }
 
         private void Serialize(XmlWriter writer, ModelSerializerOptions options, string nameHint)
         {
@@ -85,7 +101,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
+        public static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
         {
             options ??= ModelSerializerOptions.DefaultAzureOptions;
 
@@ -180,5 +196,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ModelXml>)this).Deserialize(data, options);
 
         BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ModelXml>)this).Serialize(options);
+
+        ModelXml IXmlModelSerializable<ModelXml>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeModelXml(root, options);
+
+        object IXmlModelSerializable<object>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeModelXml(root, options);
     }
 }

@@ -9,7 +9,7 @@ using BenchmarkDotNet.Attributes;
 namespace Azure.Core.Perf
 {
     [Config(typeof(SerializationBenchmarkConfig))]
-    public class ResourceProviderDataBenchmark : SerializationBenchmark<ResourceProviderData>
+    public class ResourceProviderDataBenchmark : JsonSerializationBenchmark<ResourceProviderData>
     {
         protected override string JsonFileName => "ResourceProviderData.json";
 
