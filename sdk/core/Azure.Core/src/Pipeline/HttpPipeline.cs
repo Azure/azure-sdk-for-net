@@ -113,6 +113,10 @@ namespace Azure.Core.Pipeline
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier)
         {
             var message = CreateMessage();
+            if (classifier != null)
+            {
+                message.ResponseClassifier = classifier;
+            }
             message.ApplyRequestContext(context, classifier);
             return message;
         }
