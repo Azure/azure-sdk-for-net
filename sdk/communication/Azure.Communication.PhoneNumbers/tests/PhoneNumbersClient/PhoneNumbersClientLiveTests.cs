@@ -535,17 +535,21 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             var phoneNumbers = await client.GetPurchasedPhoneNumbersAsync().ToEnumerableAsync();
             var phoneNumbersCount = phoneNumbers.Count;
+            var expectedPageSize = phoneNumbersCount;
 
-            if (phoneNumbersCount < 2)
+            if (phoneNumbersCount >= 2)
             {
-                Assert.Ignore("Unable to test a smaller page size.");
+                expectedPageSize = phoneNumbersCount / 2;
             }
 
-            var expectedPageSize = phoneNumbersCount / 2;
             var pages = client.GetPurchasedPhoneNumbersAsync().AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             await foreach (var page in pages)
             {
+                if (expectedPageSize == 0)
+                {
+                    break;
+                }
                 // Validate only the size of the first page as it's the only one
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
@@ -568,17 +572,21 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             var phoneNumbers = client.GetPurchasedPhoneNumbers().ToList();
             var phoneNumbersCount = phoneNumbers.Count;
+            var expectedPageSize = phoneNumbersCount;
 
-            if (phoneNumbersCount < 2)
+            if (phoneNumbersCount >= 2)
             {
-                Assert.Ignore("Unable to test a smaller page size.");
+                expectedPageSize = phoneNumbersCount / 2;
             }
 
-            var expectedPageSize = phoneNumbersCount / 2;
             var pages = client.GetPurchasedPhoneNumbers().AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             foreach (var page in pages)
             {
+                if (expectedPageSize == 0)
+                {
+                    break;
+                }
                 // Validate only the size of the first page as it's the only one
                 // guaranteed to be of expectedPageSize
                 if (actual == 0)
@@ -716,18 +724,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             var areaCodes = await client.GetAvailableAreaCodesTollFreeAsync("US").ToEnumerableAsync();
             var areaCodesCount = areaCodes.Count;
+            var expectedPageSize = areaCodesCount;
 
-            if (areaCodesCount < 2)
+            if (areaCodesCount >= 2)
             {
-                Assert.Ignore("Unable to test a smaller page size.");
+                expectedPageSize = areaCodesCount / 2;
             }
-
-            var expectedPageSize = areaCodesCount / 2;
             var pages = client.GetAvailableAreaCodesTollFreeAsync("US").AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             await foreach (var page in pages)
             {
-                if (page == null)
+                if (page == null || expectedPageSize == 0)
                 {
                     break;
                 }
@@ -754,17 +761,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var areaCodes = client.GetAvailableAreaCodesTollFree("US").ToList();
             var areaCodesCount = areaCodes.Count;
 
-            if (areaCodesCount < 2)
-            {
-                Assert.Ignore("Unable to test a smaller page size.");
-            }
+            var expectedPageSize = areaCodesCount;
 
-            var expectedPageSize = areaCodesCount / 2;
+            if (areaCodesCount >= 2)
+            {
+                expectedPageSize = areaCodesCount / 2;
+            }
             var pages = client.GetAvailableAreaCodesTollFree("US").AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             foreach (var page in pages)
             {
-                if (page == null)
+                if (page == null || expectedPageSize == 0)
                 {
                     break;
                 }
@@ -821,6 +828,81 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         [Test]
         [AsyncOnly]
+        public async Task GetGeographicAreaCodesAsyncAsPages()
+        {
+            var client = CreateClient();
+            var availableLocalities = await client.GetAvailableLocalitiesAsync("US").ToEnumerableAsync();
+            var areaCodes = await client.GetAvailableAreaCodesGeographicAsync("US", "person", availableLocalities.First().LocalizedName, availableLocalities.First().AdministrativeDivision.AbbreviatedName).ToEnumerableAsync();
+            var areaCodesCount = areaCodes.Count;
+            var expectedPageSize = areaCodesCount;
+
+            if (areaCodesCount >= 2)
+            {
+                expectedPageSize = areaCodesCount / 2;
+            }
+            var pages = client.GetAvailableAreaCodesGeographicAsync("US", "person", availableLocalities.First().LocalizedName, availableLocalities.First().AdministrativeDivision.AbbreviatedName).AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            await foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(areaCodesCount, actual);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetGeographicAreaCodesAsPages()
+        {
+            var client = CreateClient();
+            var availableLocalities = client.GetAvailableLocalities("US");
+            var areaCodes = client.GetAvailableAreaCodesGeographic("US", "person", availableLocalities.First().LocalizedName, availableLocalities.First().AdministrativeDivision.AbbreviatedName).ToList();
+            var areaCodesCount = areaCodes.Count;
+
+            var expectedPageSize = areaCodesCount;
+
+            if (areaCodesCount >= 2)
+            {
+                expectedPageSize = areaCodesCount / 2;
+            }
+            var pages = client.GetAvailableAreaCodesGeographic("US", "person", availableLocalities.First().LocalizedName, availableLocalities.First().AdministrativeDivision.AbbreviatedName).AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(areaCodesCount, actual);
+        }
+
+        [Test]
+        [AsyncOnly]
         public async Task GetCountriesAsync()
         {
             List<string> countriesResponse = new List<string>();
@@ -869,17 +951,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var countries = await client.GetAvailableCountriesAsync().ToEnumerableAsync();
             var countriesCount = countries.Count;
 
-            if (countriesCount < 2)
-            {
-                Assert.Ignore("Unable to test a smaller page size.");
-            }
+            var expectedPageSize = countriesCount;
 
-            var expectedPageSize = countriesCount / 2;
+            if (countriesCount >= 2)
+            {
+                expectedPageSize = countriesCount / 2;
+            }
             var pages = client.GetAvailableCountriesAsync().AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             await foreach (var page in pages)
             {
-                if (page == null)
+                if (page == null || expectedPageSize == 0)
                 {
                     break;
                 }
@@ -906,17 +988,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var countries = client.GetAvailableCountries().ToList();
             var countriesCount = countries.Count;
 
-            if (countriesCount < 2)
-            {
-                Assert.Ignore("Unable to test a smaller page size.");
-            }
+            var expectedPageSize = countriesCount;
 
-            var expectedPageSize = countriesCount / 2;
+            if (countriesCount >= 2)
+            {
+                expectedPageSize = countriesCount / 2;
+            }
             var pages = client.GetAvailableCountries().AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             foreach (var page in pages)
             {
-                if (page == null)
+                if (page == null || expectedPageSize == 0)
                 {
                     break;
                 }
@@ -970,18 +1052,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             var localities = await client.GetAvailableLocalitiesAsync("US").ToEnumerableAsync();
             var localitiesCount = localities.Count;
+            var expectedPageSize = localitiesCount;
 
-            if (localitiesCount < 2)
+            if (localitiesCount >= 2)
             {
-                Assert.Ignore("Unable to test a smaller page size.");
+                expectedPageSize = localitiesCount / 2;
             }
-
-            var expectedPageSize = localitiesCount / 2;
             var pages = client.GetAvailableLocalitiesAsync("US").AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             await foreach (var page in pages)
             {
-                if (page == null)
+                if (page == null || expectedPageSize == 0)
                 {
                     break;
                 }
@@ -1007,18 +1088,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             var localities = client.GetAvailableLocalities("US").ToList();
             var localitiesCount = localities.Count;
+            var expectedPageSize = localitiesCount;
 
-            if (localitiesCount < 2)
+            if (localitiesCount >= 2)
             {
-                Assert.Ignore("Unable to test a smaller page size.");
+                expectedPageSize = localitiesCount / 2;
             }
-
-            var expectedPageSize = localitiesCount / 2;
             var pages = client.GetAvailableLocalities("US").AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             foreach (var page in pages)
             {
-                if (page == null)
+                if (page == null || expectedPageSize == 0)
                 {
                     break;
                 }
@@ -1110,18 +1190,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             var offerings = await client.GetAvailableOfferingsAsync("US").ToEnumerableAsync();
             var offeringsCount = offerings.Count;
+            var expectedPageSize = offeringsCount;
 
-            if (offeringsCount < 2)
+            if (offeringsCount >= 2)
             {
-                Assert.Ignore("Unable to test a smaller page size.");
+                expectedPageSize = offeringsCount / 2;
             }
-
-            var expectedPageSize = offeringsCount / 2;
             var pages = client.GetAvailableOfferingsAsync("US").AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             await foreach (var page in pages)
             {
-                if (page == null)
+                if (page == null || expectedPageSize == 0)
                 {
                     break;
                 }
@@ -1147,18 +1226,17 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
             var offerings = client.GetAvailableOfferings("US").ToList();
             var offeringsCount = offerings.Count;
+            var expectedPageSize = offeringsCount;
 
-            if (offeringsCount < 2)
+            if (offeringsCount >= 2)
             {
-                Assert.Ignore("Unable to test a smaller page size.");
+                expectedPageSize = offeringsCount / 2;
             }
-
-            var expectedPageSize = offeringsCount / 2;
             var pages = client.GetAvailableOfferings("US").AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             foreach (var page in pages)
             {
-                if (page == null)
+                if (page == null || expectedPageSize == 0)
                 {
                     break;
                 }
