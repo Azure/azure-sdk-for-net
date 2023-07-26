@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridData.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridData
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.HybridData
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridData. </summary>
     public static partial class HybridDataExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static HybridDataArmClientMockingExtension GetHybridDataArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new HybridDataArmClientMockingExtension(client);
+            });
+        }
+
+        private static HybridDataResourceGroupMockingExtension GetHybridDataResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new HybridDataResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HybridDataSubscriptionMockingExtension GetHybridDataSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HybridDataSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region HybridDataManagerResource
         /// <summary>
         /// Gets an object representing a <see cref="HybridDataManagerResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> Returns a <see cref="HybridDataManagerResource" /> object. </returns>
         public static HybridDataManagerResource GetHybridDataManagerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridDataManagerResource.ValidateResourceId(id);
-                return new HybridDataManagerResource(client, id);
-            }
-            );
+            return GetHybridDataArmClientMockingExtension(client).GetHybridDataManagerResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> Returns a <see cref="HybridDataServiceResource" /> object. </returns>
         public static HybridDataServiceResource GetHybridDataServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridDataServiceResource.ValidateResourceId(id);
-                return new HybridDataServiceResource(client, id);
-            }
-            );
+            return GetHybridDataArmClientMockingExtension(client).GetHybridDataServiceResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> Returns a <see cref="HybridDataJobDefinitionResource" /> object. </returns>
         public static HybridDataJobDefinitionResource GetHybridDataJobDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridDataJobDefinitionResource.ValidateResourceId(id);
-                return new HybridDataJobDefinitionResource(client, id);
-            }
-            );
+            return GetHybridDataArmClientMockingExtension(client).GetHybridDataJobDefinitionResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> Returns a <see cref="HybridDataJobResource" /> object. </returns>
         public static HybridDataJobResource GetHybridDataJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridDataJobResource.ValidateResourceId(id);
-                return new HybridDataJobResource(client, id);
-            }
-            );
+            return GetHybridDataArmClientMockingExtension(client).GetHybridDataJobResource(id);
         }
         #endregion
 
@@ -135,12 +109,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> Returns a <see cref="HybridDataStoreResource" /> object. </returns>
         public static HybridDataStoreResource GetHybridDataStoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridDataStoreResource.ValidateResourceId(id);
-                return new HybridDataStoreResource(client, id);
-            }
-            );
+            return GetHybridDataArmClientMockingExtension(client).GetHybridDataStoreResource(id);
         }
         #endregion
 
@@ -154,12 +123,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> Returns a <see cref="HybridDataStoreTypeResource" /> object. </returns>
         public static HybridDataStoreTypeResource GetHybridDataStoreTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridDataStoreTypeResource.ValidateResourceId(id);
-                return new HybridDataStoreTypeResource(client, id);
-            }
-            );
+            return GetHybridDataArmClientMockingExtension(client).GetHybridDataStoreTypeResource(id);
         }
         #endregion
 
@@ -173,12 +137,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> Returns a <see cref="HybridDataPublicKeyResource" /> object. </returns>
         public static HybridDataPublicKeyResource GetHybridDataPublicKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridDataPublicKeyResource.ValidateResourceId(id);
-                return new HybridDataPublicKeyResource(client, id);
-            }
-            );
+            return GetHybridDataArmClientMockingExtension(client).GetHybridDataPublicKeyResource(id);
         }
         #endregion
 
@@ -187,7 +146,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> An object representing collection of HybridDataManagerResources and their operations over a HybridDataManagerResource. </returns>
         public static HybridDataManagerCollection GetHybridDataManagers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHybridDataManagers();
+            return GetHybridDataResourceGroupMockingExtension(resourceGroupResource).GetHybridDataManagers();
         }
 
         /// <summary>
@@ -211,7 +170,7 @@ namespace Azure.ResourceManager.HybridData
         [ForwardsClientCalls]
         public static async Task<Response<HybridDataManagerResource>> GetHybridDataManagerAsync(this ResourceGroupResource resourceGroupResource, string dataManagerName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHybridDataManagers().GetAsync(dataManagerName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridDataResourceGroupMockingExtension(resourceGroupResource).GetHybridDataManagerAsync(dataManagerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -235,7 +194,7 @@ namespace Azure.ResourceManager.HybridData
         [ForwardsClientCalls]
         public static Response<HybridDataManagerResource> GetHybridDataManager(this ResourceGroupResource resourceGroupResource, string dataManagerName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHybridDataManagers().Get(dataManagerName, cancellationToken);
+            return GetHybridDataResourceGroupMockingExtension(resourceGroupResource).GetHybridDataManager(dataManagerName, cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +215,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> An async collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridDataManagerResource> GetHybridDataManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridDataManagersAsync(cancellationToken);
+            return GetHybridDataSubscriptionMockingExtension(subscriptionResource).GetHybridDataManagersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -277,7 +236,7 @@ namespace Azure.ResourceManager.HybridData
         /// <returns> A collection of <see cref="HybridDataManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridDataManagerResource> GetHybridDataManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridDataManagers(cancellationToken);
+            return GetHybridDataSubscriptionMockingExtension(subscriptionResource).GetHybridDataManagers(cancellationToken);
         }
     }
 }
