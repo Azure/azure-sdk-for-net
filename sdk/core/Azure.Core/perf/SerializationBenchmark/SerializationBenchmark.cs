@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -29,6 +28,8 @@ namespace Azure.Core.Perf
         private byte[] _buffer;
 
         protected abstract T Deserialize(JsonElement jsonElement);
+
+        protected abstract T Deserialize(BinaryData binaryData);
 
         protected abstract void Serialize(Utf8JsonWriter writer);
 
@@ -136,6 +137,13 @@ namespace Azure.Core.Perf
         {
             using JsonDocument doc = JsonDocument.Parse(_json);
             return Deserialize(doc.RootElement);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Internal")]
+        public T Deserialize_InternalBinaryData()
+        {
+            return Deserialize(_data);
         }
 
         [Benchmark]

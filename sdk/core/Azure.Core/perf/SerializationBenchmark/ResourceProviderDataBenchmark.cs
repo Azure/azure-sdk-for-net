@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ResourceManager.Resources;
 using BenchmarkDotNet.Attributes;
 
@@ -26,6 +27,10 @@ namespace Azure.Core.Perf
         protected override ResourceProviderData Deserialize(JsonElement jsonElement)
         {
             return ResourceProviderData.DeserializeResourceProviderData(jsonElement);
+        }
+        protected override ResourceProviderData Deserialize(BinaryData binaryData)
+        {
+            return (ResourceProviderData)((IModelSerializable)_model).Deserialize(binaryData, ModelSerializerOptions.AzureServiceDefault);
         }
 
         protected override void Serialize(Utf8JsonWriter writer)

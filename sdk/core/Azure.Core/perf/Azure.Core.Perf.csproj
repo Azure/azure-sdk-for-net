@@ -28,6 +28,9 @@
     <None Update="SerializationBenchmark\TestData\ResourceProviderData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="SerializationBenchmark\TestData\LoadTestPatchModel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\JsonFormattedString.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

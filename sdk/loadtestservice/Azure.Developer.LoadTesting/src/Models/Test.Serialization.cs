@@ -32,6 +32,9 @@ namespace Azure.Developer.LoadTesting.Models
             return new Test(jsonDocument.RootElement);
         }
 
+        // only used for public access to internal serialize
+        public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();

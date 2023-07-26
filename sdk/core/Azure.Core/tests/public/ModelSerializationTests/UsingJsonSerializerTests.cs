@@ -4,12 +4,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Developer.LoadTesting.Models;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     public class UsingJsonSerializerTests
     {
+        [Test]
+        public void CastToIUtf8JsonSerializable()
+        {
+            Test t = new Test();
+            IUtf8JsonSerializable serializable = t;
+            Assert.IsNotNull(serializable);
+        }
+
         [TestCase(true)]
         [TestCase(false)]
         public void SerializeTest(bool ignoreReadonlyProperties)

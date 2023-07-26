@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ResourceManager.Compute.Models;
 using Azure.Core.Tests.Public.ResourceManager.Models;
 using Azure.Core.Tests.Public.ResourceManager.Resources.Models;

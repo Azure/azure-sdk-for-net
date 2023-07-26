@@ -20,15 +20,28 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonChange.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonChangeKind.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonDocument.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonDocument.ChangeTracker.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonDictionary.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ArrayEnumerator.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ObjectEnumerator.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.WriteTo.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonReadOnlyList.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)Utf8JsonDelayedRequestContent.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)Utf8JsonReaderExtensions.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <!-- Test classes to share in public space-->
   <ItemGroup>
     <Compile Include="..\TestClients\LowLevelClient\PetStoreClient.cs" LinkBase="Shared/Tests" />
     <Compile Include="..\TestClients\LowLevelClient\PetStoreClientOptions.cs" LinkBase="Shared/Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\..\loadtestservice\Azure.Developer.LoadTesting\src\Models\**" LinkBase="ModelSerializationTests/ServiceModels/LoadTesting" />
   </ItemGroup>
   <ItemGroup>
     <None Update="ModelSerializationTests\TestData\ResourceProviderData.json">
