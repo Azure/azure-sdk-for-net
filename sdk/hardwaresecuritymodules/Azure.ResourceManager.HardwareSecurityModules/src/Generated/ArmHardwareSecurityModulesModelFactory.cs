@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="privateIPAddress"> Private Ip address of the interface. </param>
         /// <returns> A new <see cref="Models.NetworkInterface"/> instance for mocking. </returns>
-        public static NetworkInterface NetworkInterface(string id = null, string privateIPAddress = null)
+        public static NetworkInterface NetworkInterface(ResourceIdentifier id = null, string privateIPAddress = null)
         {
             return new NetworkInterface(id, privateIPAddress);
         }

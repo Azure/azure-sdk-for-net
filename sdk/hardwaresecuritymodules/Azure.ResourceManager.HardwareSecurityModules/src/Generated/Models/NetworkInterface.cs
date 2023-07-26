@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> The network interface definition. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="privateIPAddress"> Private Ip address of the interface. </param>
-        internal NetworkInterface(string id, string privateIPAddress)
+        internal NetworkInterface(ResourceIdentifier id, string privateIPAddress)
         {
             Id = id;
             PrivateIPAddress = privateIPAddress;
         }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Private Ip address of the interface. </summary>
         public string PrivateIPAddress { get; set; }
     }
