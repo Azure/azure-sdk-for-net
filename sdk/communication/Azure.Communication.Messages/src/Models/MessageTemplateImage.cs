@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.InteropServices.ComTypes;
-using System.Xml.Linq;
 
 namespace Azure.Communication.Messages
 {
