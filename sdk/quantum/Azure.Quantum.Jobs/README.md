@@ -148,7 +148,7 @@ using (FileStream qirFileStream = File.OpenRead(qirFilePath))
 
 ### Create The Job
 
-Now that you've uploaded your problem definition to Azure Storage, you can use `CreateJob` to define an Azure Quantum job.
+Now that you've uploaded your QIR program bitcode to Azure Storage, you can use `CreateJob` to define an Azure Quantum job.
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateJob
 // Submit job
