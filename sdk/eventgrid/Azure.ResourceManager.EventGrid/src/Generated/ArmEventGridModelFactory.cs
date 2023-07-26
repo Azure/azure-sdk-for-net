@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="endpoint"> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </param>
         /// <param name="inputSchema"> This determines the format that Event Grid should expect for incoming events published to the Event Grid Domain Resource. </param>
         /// <param name="eventTypeInfo">
-        /// Event Type Information for the domain. This information is provided by the publisher and can be used by the 
+        /// Event Type Information for the domain. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </param>
         /// <param name="inputSchemaMapping">
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="provisioningState"> Provisioning state of the topic. </param>
         /// <param name="endpoint"> Endpoint for the topic. </param>
         /// <param name="eventTypeInfo">
-        /// Event Type Information for the user topic. This information is provided by the publisher and can be used by the 
+        /// Event Type Information for the user topic. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this topic. </param>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="metricResourceId"> Metric resource id for the topic. </param>
         /// <param name="publicNetworkAccess">
-        /// This determines if traffic is allowed over public network. By default it is enabled. 
+        /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="description"> Description for the Topic Space resource. </param>
         /// <param name="topicTemplates">
         /// The topic filters in the topic space.
-        /// Example: "topicTemplates": [ 
+        /// Example: "topicTemplates": [
         ///               "devices/foo/bar",
         ///               "devices/topic1/+",
         ///               "devices/${principal.name}/${principal.attributes.keyName}" ].

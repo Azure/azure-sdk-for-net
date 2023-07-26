@@ -11,7 +11,6 @@ using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
 {
-    [Ignore("enable after deployment with matching changes")]
     public class AssignmentScenario : RouterLiveTestBase
     {
         public AssignmentScenario(bool isAsync)
@@ -46,7 +45,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var registerWorker = await client.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId: workerId1, totalCapacity: 1)
                 {
-                    QueueIds = { [queueResponse.Value.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [queueResponse.Value.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations = { [channelResponse] = new ChannelConfiguration(1) },
                     AvailableForOffers = true,
                 });
@@ -82,13 +81,13 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             {
                 Note = $"Job completed by {workerId1}"
             });
-            Assert.AreEqual(200, complete.GetRawResponse().Status);
+            Assert.AreEqual(200, complete.Status);
 
             var close = await client.CloseJobAsync(new CloseJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
             {
                 Note = $"Job closed by {workerId1}"
             });
-            Assert.AreEqual(200, complete.GetRawResponse().Status);
+            Assert.AreEqual(200, complete.Status);
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].AssignedAt);

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 {
     public partial class Sample_BareMetalMachineKeySetCollection
     {
-        // List bare metal machine key set of cluster for resource group
+        // List bare metal machine key sets of the cluster
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListBareMetalMachineKeySetOfClusterForResourceGroup()
+        public async Task GetAll_ListBareMetalMachineKeySetsOfTheCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/BareMetalMachineKeySets_ListByResourceGroup.json
-            // this example is just showing the usage of "BareMetalMachineKeySets_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/BareMetalMachineKeySets_ListByCluster.json
+            // this example is just showing the usage of "BareMetalMachineKeySets_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this ClusterResource created on azure
             // for more information of creating ClusterResource, please refer to the document of ClusterResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string clusterName = "clusterName";
             ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetBareMetalMachineKeySetOfCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/BareMetalMachineKeySets_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/BareMetalMachineKeySets_Get.json
             // this example is just showing the usage of "BareMetalMachineKeySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this ClusterResource created on azure
             // for more information of creating ClusterResource, please refer to the document of ClusterResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string clusterName = "clusterName";
             ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetBareMetalMachineKeySetOfCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/BareMetalMachineKeySets_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/BareMetalMachineKeySets_Get.json
             // this example is just showing the usage of "BareMetalMachineKeySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this ClusterResource created on azure
             // for more information of creating ClusterResource, please refer to the document of ClusterResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string clusterName = "clusterName";
             ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateBareMetalMachineKeySetOfCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/BareMetalMachineKeySets_Create.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/BareMetalMachineKeySets_Create.json
             // this example is just showing the usage of "BareMetalMachineKeySets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this ClusterResource created on azure
             // for more information of creating ClusterResource, please refer to the document of ClusterResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string clusterName = "clusterName";
             ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // invoke the operation
             string bareMetalMachineKeySetName = "bareMetalMachineKeySetName";
-            BareMetalMachineKeySetData data = new BareMetalMachineKeySetData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"), "f110271b-XXXX-4163-9b99-214d91660f0e", DateTimeOffset.Parse("2022-12-31T23:59:59.008Z"), new string[]
+            BareMetalMachineKeySetData data = new BareMetalMachineKeySetData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"), "f110271b-XXXX-4163-9b99-214d91660f0e", DateTimeOffset.Parse("2022-12-31T23:59:59.008Z"), new string[]
             {
 "192.0.2.1","192.0.2.5"
             }, BareMetalMachineKeySetPrivilegeLevel.Standard, new KeySetUser[]

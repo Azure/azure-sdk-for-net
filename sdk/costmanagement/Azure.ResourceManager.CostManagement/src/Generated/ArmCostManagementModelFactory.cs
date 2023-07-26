@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="status"> The status of the creation of the benefit utilization summaries report. </param>
         /// <param name="properties"> Contains sas url to the async benefit utilization summaries report and a date that the url is valid until. These values will be empty if the report is in a Running or Failed state. </param>
         /// <returns> A new <see cref="Models.BenefitUtilizationSummariesOperationStatus"/> instance for mocking. </returns>
-        public static BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesRequest input = null, OperationStatusType? status = null, AsyncOperationStatusProperties properties = null)
+        public static BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesContent input = null, OperationStatusType? status = null, AsyncOperationStatusProperties properties = null)
         {
             return new BenefitUtilizationSummariesOperationStatus(input, status, properties);
         }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="error"> The details of any error. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ExportRun"/> instance for mocking. </returns>
-        public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExecutionType? executionType = null, ExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? eTag = null)
+        public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExportRunExecutionType? executionType = null, ExportRunExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? eTag = null)
         {
             return new ExportRun(id, name, resourceType, systemData, executionType, status, submittedBy, submittedOn, processingStartOn, processingEndOn, fileName, runSettings, error, eTag);
         }
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementViewData"/> instance for mocking. </returns>
-        public static CostManagementViewData CostManagementViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string scope = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string dateRange = null, string currency = null, ViewChartType? chart = null, AccumulatedType? accumulated = null, ViewMetricType? metric = null, IEnumerable<KpiProperties> kpis = null, IEnumerable<ViewPivotProperties> pivots = null, ViewReportType? typePropertiesQueryType = null, ReportTimeframeType? timeframe = null, ReportConfigTimePeriod timePeriod = null, ReportConfigDataset dataSet = null, bool? includeMonetaryCommitment = null, ETag? eTag = null)
+        public static CostManagementViewData CostManagementViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, ResourceIdentifier scope = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string dateRange = null, string currency = null, ViewChartType? chart = null, AccumulatedType? accumulated = null, ViewMetricType? metric = null, IEnumerable<ViewKpiProperties> kpis = null, IEnumerable<ViewPivotProperties> pivots = null, ViewReportType? typePropertiesQueryType = null, ReportTimeframeType? timeframe = null, ReportConfigTimePeriod timePeriod = null, ReportConfigDataset dataSet = null, bool? includeMonetaryCommitment = null, ETag? eTag = null)
         {
-            kpis ??= new List<KpiProperties>();
+            kpis ??= new List<ViewKpiProperties>();
             pivots ??= new List<ViewPivotProperties>();
 
             return new CostManagementViewData(id, name, resourceType, systemData, displayName, scope, createdOn, modifiedOn, dateRange, currency, chart, accumulated, metric, kpis?.ToList(), pivots?.ToList(), typePropertiesQueryType, timeframe, timePeriod, dataSet, includeMonetaryCommitment, eTag);
@@ -233,16 +233,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="details"> Alert details. </param>
         /// <param name="costEntityId"> related budget. </param>
         /// <param name="status"> alert status. </param>
-        /// <param name="creationTime"> dateTime in which alert was created. </param>
-        /// <param name="closeTime"> dateTime in which alert was closed. </param>
-        /// <param name="modificationTime"> dateTime in which alert was last modified. </param>
+        /// <param name="createdOn"> dateTime in which alert was created. </param>
+        /// <param name="closeOn"> dateTime in which alert was closed. </param>
+        /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
         /// <param name="statusModificationUserName"> User who last modified the alert. </param>
-        /// <param name="statusModificationTime"> dateTime in which the alert status was last modified. </param>
+        /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementAlertData"/> instance for mocking. </returns>
-        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, string creationTime = null, string closeTime = null, string modificationTime = null, string statusModificationUserName = null, string statusModificationTime = null, ETag? eTag = null)
+        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? closeOn = null, DateTimeOffset? modifiedOn = null, string statusModificationUserName = null, DateTimeOffset? statusModifiedOn = null, ETag? eTag = null)
         {
-            return new CostManagementAlertData(id, name, resourceType, systemData, definition, description, source, details, costEntityId, status, creationTime, closeTime, modificationTime, statusModificationUserName, statusModificationTime, eTag);
+            return new CostManagementAlertData(id, name, resourceType, systemData, definition, description, source, details, costEntityId, status, createdOn, closeOn, modifiedOn, statusModificationUserName, statusModifiedOn, eTag);
         }
 
         /// <summary> Initializes a new instance of ForecastResult. </summary>
@@ -282,8 +282,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Dimension description. </param>
-        /// <param name="filterEnabled"> Filter enabled. </param>
-        /// <param name="groupingEnabled"> Grouping enabled. </param>
+        /// <param name="isFilterEnabled"> Filter enabled. </param>
+        /// <param name="isGroupingEnabled"> Grouping enabled. </param>
         /// <param name="data"> Dimension data. </param>
         /// <param name="total"> Total number of data for the dimension. </param>
         /// <param name="category"> Dimension category. </param>
@@ -295,12 +295,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.CostManagementDimension"/> instance for mocking. </returns>
-        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? filterEnabled = null, bool? groupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? isFilterEnabled = null, bool? isGroupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             data ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
-            return new CostManagementDimension(id, name, resourceType, systemData, description, filterEnabled, groupingEnabled, data?.ToList(), total, category, usageStart, usageEnd, nextLink, location, sku, eTag, tags);
+            return new CostManagementDimension(id, name, resourceType, systemData, description, isFilterEnabled, isGroupingEnabled, data?.ToList(), total, category, usageStart, usageEnd, nextLink, location, sku, eTag, tags);
         }
 
         /// <summary> Initializes a new instance of QueryResult. </summary>
@@ -370,21 +370,21 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource's eTag by doing a 'GET' call first and then including the latest eTag as part of the request body or 'If-Match' header while performing the update. For create calls, eTag is not required. </param>
         /// <param name="kind"> Kind of the scheduled action. </param>
         /// <returns> A new <see cref="CostManagement.ScheduledActionData"/> instance for mocking. </returns>
-        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<ScheduledActionFileFormat> fileFormats = null, NotificationProperties notification = null, string notificationEmail = null, ScheduleProperties schedule = null, string scope = null, ScheduledActionStatus? status = null, string viewId = null, ETag? eTag = null, ScheduledActionKind? kind = null)
+        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<ScheduledActionFileFormat> fileFormats = null, NotificationProperties notification = null, string notificationEmail = null, ScheduleProperties schedule = null, ResourceIdentifier scope = null, ScheduledActionStatus? status = null, ResourceIdentifier viewId = null, ETag? eTag = null, ScheduledActionKind? kind = null)
         {
             fileFormats ??= new List<ScheduledActionFileFormat>();
 
             return new ScheduledActionData(id, name, resourceType, systemData, displayName, fileFormats != null ? new FileDestination(fileFormats?.ToList()) : null, notification, notificationEmail, schedule, scope, status, viewId, eTag, kind);
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of CostManagementNameAvailabilityResult. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.CostManagementNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CostManagementNameAvailabilityResult CostManagementNameAvailabilityResult(bool? nameAvailable = null, CostManagementUnavailabilityReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+            return new CostManagementNameAvailabilityResult(nameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>

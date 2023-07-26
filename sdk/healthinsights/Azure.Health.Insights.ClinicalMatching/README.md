@@ -1,6 +1,6 @@
 # Azure Cognitive Services Health Insights Clinical Matching client library for .NET
 
-[Health Insights](https://review.learn.microsoft.com/azure/cognitive-services/health-decision-support/overview?branch=main) is an Azure Applied AI Service built with the Azure Cognitive Services Framework, that leverages multiple Cognitive Services, Healthcare API services and other Azure resources.
+[Health Insights][health_insights] is an Azure Applied AI Service built with the Azure Cognitive Services Framework, that leverages multiple Cognitive Services, Healthcare API services and other Azure resources.
 
 The [Clinical Matching model][clinical_matching_docs] receives patients data and clinical trials protocols, and provides relevant clinical trials based on eligibility criteria.
 
@@ -150,9 +150,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-[clinical_matching_docs]: https://review.learn.microsoft.com/azure/cognitive-services/health-decision-support/trial-matcher/overview?branch=main
+[health_insights]: https://learn.microsoft.com/azure/azure-health-insights/overview?branch=main
+[clinical_matching_docs]: https://learn.microsoft.com/azure/azure-health-insights/trial-matcher/overview
 [clinical_matching_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/src/
 [clinical_matching_client_nuget_package]: https://www.nuget.org/packages/Azure.Health.Insights.ClinicalMatching/
-[clinical_matching_api_documentation]: https://review.learn.microsoft.com/rest/api/cognitiveservices/healthinsights/trial-matcher?branch=healthin202303
-[product_docs]:https://review.learn.microsoft.com/azure/cognitive-services/health-decision-support/trial-matcher/?branch=main
+[clinical_matching_api_documentation]: https://learn.microsoft.com/rest/api/cognitiveservices/healthinsights/trial-matcher
+[product_docs]: https://learn.microsoft.com/azure/azure-health-insights/trial-matcher/
 [samples_location]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/samples

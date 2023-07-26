@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="provisioningState"> Provisioning state of the topic. </param>
         /// <param name="endpoint"> Endpoint for the topic. </param>
         /// <param name="eventTypeInfo">
-        /// Event Type Information for the user topic. This information is provided by the publisher and can be used by the 
+        /// Event Type Information for the user topic. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this topic. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Endpoint for the topic. </summary>
         public Uri Endpoint { get; }
         /// <summary>
-        /// Event Type Information for the user topic. This information is provided by the publisher and can be used by the 
+        /// Event Type Information for the user topic. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </summary>
         public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }

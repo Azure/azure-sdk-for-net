@@ -31,13 +31,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal NetworkPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier) : base(id, name, resourceType)
+        /// <param name="privateEndpointLocation"> The location of the private endpoint. </param>
+        internal NetworkPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier, string privateEndpointLocation) : base(id, name, resourceType)
         {
             ETag = etag;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             LinkIdentifier = linkIdentifier;
+            PrivateEndpointLocation = privateEndpointLocation;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -50,5 +52,7 @@ namespace Azure.ResourceManager.Network
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The consumer link id. </summary>
         public string LinkIdentifier { get; }
+        /// <summary> The location of the private endpoint. </summary>
+        public string PrivateEndpointLocation { get; }
     }
 }

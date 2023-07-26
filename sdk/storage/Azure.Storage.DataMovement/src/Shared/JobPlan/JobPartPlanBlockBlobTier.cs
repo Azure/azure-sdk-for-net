@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.DataMovement.Models.JobPlan
+namespace Azure.Storage.DataMovement.JobPlan
 {
     internal enum JobPartPlanBlockBlobTier
     {
@@ -13,5 +13,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         Cool = 2,
         /// <summary> Archive. </summary>
         Archive = 3,
+        /// <summary> Cold. </summary>
+        Cold = 4,
     }
 }

@@ -125,7 +125,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             var createDistributionPolicyResponse = await CreateDistributionPolicy(uniqueIdentifier);
             var queueId = GenerateUniqueId($"{IdPrefix}-{uniqueIdentifier}");
             var queueName = "DefaultQueue-Sdk-Test" + queueId;
-            var queueLabels = new Dictionary<string, LabelValue> { ["Label_1"] = new("Value_1") };
+            var queueLabels = new Dictionary<string, LabelValue?> { ["Label_1"] = new("Value_1") };
             var createQueueResponse = await routerClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId, createDistributionPolicyResponse.Value.Id)
                 {
@@ -161,7 +161,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
 
         #region Support assertions
 
-        protected void AssertQueueResponseIsEqual(Response<Models.RouterQueue> upsertQueueResponse, string queueId, string distributionPolicyId, string? queueName = default, IDictionary<string, LabelValue>? queueLabels = default, string? exceptionPolicyId = default)
+        protected void AssertQueueResponseIsEqual(Response<Models.RouterQueue> upsertQueueResponse, string queueId, string distributionPolicyId, string? queueName = default, IDictionary<string, LabelValue?>? queueLabels = default, string? exceptionPolicyId = default)
         {
             var response = upsertQueueResponse.Value;
 
@@ -171,8 +171,13 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             if (queueLabels != default)
             {
                 var labelsWithID = queueLabels.ToDictionary(k => k.Key, k => k.Value);
-                labelsWithID.Add("Id", new LabelValue(queueId));
-                Assert.AreEqual(labelsWithID.ToDictionary(x => x.Key, x => x.Value.Value), response.Labels.ToDictionary(x => x.Key, x => x.Value.Value));
+
+                if (!labelsWithID.ContainsKey("Id"))
+                {
+                    labelsWithID.Add("Id", new LabelValue(queueId));
+                }
+
+                Assert.AreEqual(labelsWithID.ToDictionary(x => x.Key, x => x.Value?.Value), response.Labels.ToDictionary(x => x.Key, x => x.Value?.Value));
             }
 
             if (exceptionPolicyId != default)
@@ -181,12 +186,16 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             }
         }
 
-        protected void AssertRegisteredWorkerIsValid(Response<RouterWorker> routerWorkerResponse, string workerId, IEnumerable<string> queueAssignmentList, int? totalCapacity, IDictionary<string, LabelValue>? workerLabels = default, Dictionary<string, ChannelConfiguration>? channelConfigList = default)
+        protected void AssertRegisteredWorkerIsValid(Response<RouterWorker> routerWorkerResponse, string workerId,
+            IDictionary<string, RouterQueueAssignment?> queueAssignments, int? totalCapacity,
+            IDictionary<string, LabelValue?>? workerLabels = default,
+            IDictionary<string, ChannelConfiguration?>? channelConfigList = default,
+            IDictionary<string, LabelValue?>? workerTags = default)
         {
             var response = routerWorkerResponse.Value;
 
             Assert.AreEqual(workerId, response.Id);
-            Assert.AreEqual(queueAssignmentList.Count(), response.QueueAssignments.Count);
+            Assert.AreEqual(queueAssignments.Count(), response.QueueAssignments.Count);
             Assert.AreEqual(totalCapacity, response.TotalCapacity);
 
             if (workerLabels != default)
@@ -194,6 +203,12 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                 var labelsWithID = workerLabels.ToDictionary(k => k.Key, k => k.Value);
                 labelsWithID.Add("Id", new LabelValue(workerId));
                 Assert.AreEqual(labelsWithID, response.Labels);
+            }
+
+            if (workerTags != default)
+            {
+                var tags = workerTags.ToDictionary(k => k.Key, k => k.Value);
+                Assert.AreEqual(tags, response.Tags);
             }
 
             if (channelConfigList != default)

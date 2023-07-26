@@ -4,12 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -26,9 +24,9 @@ namespace Azure.Storage.DataMovement
         public override string Path => _path;
 
         /// <summary>
-        /// Cannot produce Uri
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
+        protected internal override bool CanProduceUri => false;
 
         /// <summary>
         /// Cannot get Uri. Will throw NotSupportedException();
@@ -50,7 +48,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="childPath"></param>
         /// <returns></returns>
-        public override StorageResourceSingle GetChildStorageResource(string childPath)
+        protected internal override StorageResourceSingle GetChildStorageResource(string childPath)
         {
             string concatPath = System.IO.Path.Combine(Path, childPath);
             return new LocalFileStorageResource(concatPath);
@@ -62,7 +60,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+        protected internal override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
@@ -75,6 +73,30 @@ namespace Azure.Storage.DataMovement
                     yield return new LocalFileStorageResource(fileSystemInfo.FullName);
                 }
             }
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static LocalDirectoryStorageResourceContainer RehydrateResource(
+            DataTransferProperties transferProperties,
+            bool isSource)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            return new LocalDirectoryStorageResourceContainer(storedPath);
         }
     }
 }

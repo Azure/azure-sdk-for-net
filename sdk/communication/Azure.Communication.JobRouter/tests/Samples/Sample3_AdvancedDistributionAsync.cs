@@ -16,12 +16,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
     public class Sample3_AdvancedDistributionAsync : SamplesBase<RouterTestEnvironment>
     {
         [Test]
-        public async Task BestWorkerDistribution_Advanced_ExpressionRule()
+        public async Task BestWorkerDistribution_Advanced_ExpressionRouterRule()
         {
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
             JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_ExpressionRule
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_ExpressionRouterRule
             // In this scenario, we are going to create a simple PowerFx expression rule to check whether a worker can handler escalation or not
             // If the worker can handler escalation then they are given a score of 100, otherwise a score of 1
 
@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerExpiresAfter: TimeSpan.FromMinutes(5),
-                    mode: new BestWorkerMode(scoringRule: new ExpressionRule("If(worker.HandleEscalation = true, 100, 1)"))));
+                    mode: new BestWorkerMode(scoringRule: new ExpressionRouterRule("If(worker.HandleEscalation = true, 100, 1)"))));
 
             // Create job queue
             string jobQueueId = "job-queue-id-2";
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     AvailableForOffers = true,
                     ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
                     Labels = { ["HandleEscalation"] = new LabelValue(true), ["IT_Support"] = new LabelValue(true) },
-                    QueueIds = { [jobQueueId] = new RouterQueueAssignment(), }
+                    QueueAssignments = { [jobQueueId] = new RouterQueueAssignment(), }
                 });
 
             // Worker 2 cannot handle escalation
@@ -65,7 +65,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     AvailableForOffers = true,
                     ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
                     Labels = { ["IT_Support"] = new LabelValue(true), },
-                    QueueIds = { [jobQueueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [jobQueueId] = new RouterQueueAssignment(), },
                 });
 
             // Create job
@@ -95,16 +95,16 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Console.WriteLine($"Worker 1 has been offered: {queriedWorker1.Value.Offers.Any(offer => offer.JobId == jobId)}");
             Console.WriteLine($"Worker 2 has not been offered: {queriedWorker2.Value.Offers.All(offer => offer.JobId != jobId)}");
 
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_ExpressionRule
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_ExpressionRouterRule
         }
 
         [Test]
-        public async Task BestWorkerDistribution_Advanced_AzureFunctionRule()
+        public async Task BestWorkerDistribution_Advanced_AzureFunctionRouterRule()
         {
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
             JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_AzureFunctionRule
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_AzureFunctionRouterRule
 
             // Create distribution policy
             string distributionPolicyId = "best-worker-dp-1";
@@ -112,7 +112,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerExpiresAfter: TimeSpan.FromMinutes(5),
-                    mode: new BestWorkerMode(scoringRule: new FunctionRule(new Uri("<insert function url>")))));
+                    mode: new BestWorkerMode(scoringRule: new FunctionRouterRule(new Uri("<insert function url>")))));
 
             // Create job queue
             string queueId = "job-queue-id-1";
@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: workerId1, totalCapacity: 100)
                 {
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
                         ["HighPrioritySupport"] = new LabelValue(true),
@@ -147,7 +147,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: workerId2, totalCapacity: 100)
                 {
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
                         ["HighPrioritySupport"] = new LabelValue(true),
@@ -169,7 +169,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker3 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: workerId3, totalCapacity: 100)
                 {
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
                         ["HighPrioritySupport"] = new LabelValue(false),
@@ -238,7 +238,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             Console.WriteLine($"Worker 3 has not received any offer: {queriedWorker3.Value.Offers.All(offer => offer.JobId != jobId)}");
 
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_AzureFunctionRule
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_AzureFunctionRouterRule
         }
 
         // TODO: batch workers
