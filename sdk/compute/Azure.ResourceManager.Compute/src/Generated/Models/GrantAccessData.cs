@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Set this flag to true to get additional SAS for VM guest state. </summary>
         public bool? GetSecureVmGuestStateSas { get; set; }
         /// <summary> Used to specify the file format when making request for SAS on a VHDX file format snapshot. </summary>
-        public FileFormat? FileFormat { get; set; }
+        public DiskImageFileFormat? FileFormat { get; set; }
     }
 }

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Samples
             // invoke the operation
             GrantAccessData data = new GrantAccessData(AccessLevel.Read, 300)
             {
-                FileFormat = FileFormat.Vhdx,
+                FileFormat = DiskImageFileFormat.Vhdx,
             };
             ArmOperation<AccessUri> lro = await diskRestorePoint.GrantAccessAsync(WaitUntil.Completed, data);
             AccessUri result = lro.Value;

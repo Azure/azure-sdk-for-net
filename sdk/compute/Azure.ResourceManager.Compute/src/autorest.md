@@ -266,6 +266,7 @@ rename-mapping:
   SecurityPostureReference.id: -|arm-id
   CommunityGalleryImage.properties.identifier: ImageIdentifier
   GalleryTargetExtendedLocation.storageAccountType: GalleryStorageAccountType
+  FileFormat: DiskImageFileFormat
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
