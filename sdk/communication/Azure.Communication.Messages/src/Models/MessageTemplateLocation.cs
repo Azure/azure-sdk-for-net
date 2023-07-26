@@ -4,10 +4,10 @@
 namespace Azure.Communication.Messages
 {
     /// <summary>  </summary>
-    public class MessageTemplateLocationValue : MessageTemplateValue
+    public class MessageTemplateLocation : MessageTemplateValue
     {
         /// <summary>  </summary>
-        public MessageTemplateLocationValue(string name, double latitude, double longitude, string locationName = null, string address = null)
+        public MessageTemplateLocation(string name, double latitude, double longitude, string locationName = null, string address = null)
          : base(name)
         {
             Latitude = latitude;

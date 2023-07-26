@@ -2,16 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.InteropServices.ComTypes;
-using System.Xml.Linq;
 
 namespace Azure.Communication.Messages
 {
     /// <summary>  </summary>
-    public class MessageTemplateImageValue: MessageTemplateValue
+    public class MessageTemplateDocument: MessageTemplateValue
     {
         /// <summary>  </summary>
-        public MessageTemplateImageValue(string name, Uri url, string caption = null, string filename = null) : base(name)
+        public MessageTemplateDocument(string name, Uri url, string caption = null, string filename = null) : base(name)
         {
             Url = url;
             Caption = caption;
@@ -27,10 +25,9 @@ namespace Azure.Communication.Messages
 
         internal override MessageTemplateValueInternal ToMessageTemplateValueInternal()
         {
-            return new MessageTemplateValueInternal(MessageTemplateValueKind.Image)
+            return new MessageTemplateValueInternal(MessageTemplateValueKind.Document)
             {
-                Image = new MessageTemplateValueMedia
-                {
+                Document = new MessageTemplateValueMedia {
                     Url = Url,
                     Caption = Caption,
                     Filename = Filename

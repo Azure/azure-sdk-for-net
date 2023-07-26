@@ -4,10 +4,10 @@
 namespace Azure.Communication.Messages
 {
     /// <summary>  </summary>
-    public class MessageTemplateTextValue: MessageTemplateValue
+    public class MessageTemplateText: MessageTemplateValue
     {
         /// <summary>  </summary>
-        public MessageTemplateTextValue(string name, string text) : base(name)
+        public MessageTemplateText(string name, string text) : base(name)
         {
             Text = text;
         }

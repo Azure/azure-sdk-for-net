@@ -6,10 +6,10 @@ using System;
 namespace Azure.Communication.Messages
 {
     /// <summary>  </summary>
-    public class MessageTemplateVideoValue: MessageTemplateValue
+    public class MessageTemplateVideo: MessageTemplateValue
     {
         /// <summary>  </summary>
-        public MessageTemplateVideoValue(string name, Uri url, string caption = null, string filename = null) : base(name)
+        public MessageTemplateVideo(string name, Uri url, string caption = null, string filename = null) : base(name)
         {
             Url = url;
             Caption = caption;
