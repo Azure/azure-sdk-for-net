@@ -1192,7 +1192,6 @@ namespace Azure.Core.Serialization
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.Serialization.ModelSerializerFormat left, Azure.Core.Serialization.ModelSerializerFormat right) { throw null; }
-        public static implicit operator string (Azure.Core.Serialization.ModelSerializerFormat value) { throw null; }
         public static implicit operator Azure.Core.Serialization.ModelSerializerFormat (string value) { throw null; }
         public static bool operator !=(Azure.Core.Serialization.ModelSerializerFormat left, Azure.Core.Serialization.ModelSerializerFormat right) { throw null; }
         public override string ToString() { throw null; }

@@ -51,7 +51,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void UseInternal() =>
             RoundTripTest("W", SerializeWithInternal, DeserializeWithInternal);
 
-        private void RoundTripTest(string format, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize, Func<string, ModelSerializerOptions, AvailabilitySetData> deserialize)
+        private void RoundTripTest(ModelSerializerFormat format, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize, Func<string, ModelSerializerOptions, AvailabilitySetData> deserialize)
         {
             ModelSerializerOptions options = new ModelSerializerOptions(format);
 
@@ -171,7 +171,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return reader.ReadToEnd();
         }
 
-        private void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
+        private void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, ModelSerializerFormat format)
         {
             Assert.AreEqual(format == ModelSerializerFormat.Wire ? null : model.Id, model2.Id);
             Assert.AreEqual(model.Location, model2.Location);

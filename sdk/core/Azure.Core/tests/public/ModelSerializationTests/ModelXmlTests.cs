@@ -102,7 +102,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             throw new InvalidOperationException($"Unknown format used in test {format}");
         }
 
-        internal static void VerifyModelXml(ModelXml correctModelXml, ModelXml model2, string format)
+        internal static void VerifyModelXml(ModelXml correctModelXml, ModelXml model2, ModelSerializerFormat format)
         {
             Assert.AreEqual(correctModelXml.Key, model2.Key);
             Assert.AreEqual(correctModelXml.Value, model2.Value);

@@ -56,12 +56,6 @@ namespace Azure.Core.Serialization
         /// <param name="value">The string value to convert.</param>
         public static implicit operator ModelSerializerFormat(string value) => new ModelSerializerFormat(value);
 
-        /// <summary>
-        /// Converts a <see cref="ModelSerializerFormat"/> to a string.
-        /// </summary>
-        /// <param name="value">The ModelSerializerFormat value to convert.</param>
-        public static implicit operator string(ModelSerializerFormat value) => value.ToString();
-
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals([System.Diagnostics.CodeAnalysis.AllowNull] object obj) => obj is ModelSerializerFormat other && Equals(other);

@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             string serviceResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"x\":\"extra\"}";
 
             var expectedSerializedString = "{\"key\":\"Color\",\"value\":\"Red\"";
-            if (format.Equals(ModelSerializerFormat.Json))
+            if (format == ModelSerializerFormat.Json)
             {
                 expectedSerializedString += ",\"readOnlyProperty\":\"ReadOnly\"";
                 expectedSerializedString += ",\"x\":\"extra\"";
@@ -71,7 +71,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
             var additionalProperties = typeof(JsonModelForCombinedInterface).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
-            Assert.AreEqual(format.Equals(ModelSerializerFormat.Json), additionalProperties.ContainsKey("x"));
+            Assert.AreEqual(format == ModelSerializerFormat.Json, additionalProperties.ContainsKey("x"));
             var data = ModelSerializer.Serialize(model, options);
             string roundTrip = data.ToString();
 
@@ -81,7 +81,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             VerifyModelJsonModelForCombinedInterface(model, model2, format);
         }
 
-        internal static void VerifyModelXmlModelForCombinedInterface(XmlModelForCombinedInterface expected, XmlModelForCombinedInterface actual, string format)
+        internal static void VerifyModelXmlModelForCombinedInterface(XmlModelForCombinedInterface expected, XmlModelForCombinedInterface actual, ModelSerializerFormat format)
         {
             Assert.AreEqual(expected.Key, actual.Key);
             Assert.AreEqual(expected.Value, actual.Value);
@@ -89,7 +89,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 Assert.AreEqual(expected.ReadOnlyProperty, actual.ReadOnlyProperty);
         }
 
-        internal static void VerifyModelJsonModelForCombinedInterface(JsonModelForCombinedInterface expected, JsonModelForCombinedInterface actual, string format)
+        internal static void VerifyModelJsonModelForCombinedInterface(JsonModelForCombinedInterface expected, JsonModelForCombinedInterface actual, ModelSerializerFormat format)
         {
             Assert.AreEqual(expected.Key, actual.Key);
             Assert.AreEqual(expected.Value, actual.Value);

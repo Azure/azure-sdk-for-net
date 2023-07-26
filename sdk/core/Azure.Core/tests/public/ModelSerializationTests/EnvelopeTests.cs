@@ -23,12 +23,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "}";
 
             StringBuilder expectedSerialized = new StringBuilder("{");
-            if (format.Equals(ModelSerializerFormat.Json))
+            if (format == ModelSerializerFormat.Json)
             {
                 expectedSerialized.Append("\"readOnlyProperty\":\"read\",");
             }
             expectedSerialized.Append("\"modelA\":{");
-            if (format.Equals(ModelSerializerFormat.Json))
+            if (format == ModelSerializerFormat.Json)
             {
                 expectedSerialized.Append("\"latinName\":\"Felis catus\",\"hasWhiskers\":false,");
             }
@@ -54,7 +54,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             Envelope<ModelC> model = ModelSerializer.Deserialize<Envelope<ModelC>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
-            if (format.Equals(ModelSerializerFormat.Json))
+            if (format == ModelSerializerFormat.Json)
             {
                 Assert.That(model.ReadOnlyProperty, Is.EqualTo("read"));
             }
