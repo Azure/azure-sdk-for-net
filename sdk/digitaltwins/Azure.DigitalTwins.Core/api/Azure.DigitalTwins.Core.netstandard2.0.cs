@@ -218,12 +218,6 @@ namespace Azure.DigitalTwins.Core
         public string RelationshipName { get { throw null; } }
         public string SourceId { get { throw null; } }
     }
-    public partial class InnerError
-    {
-        public InnerError() { }
-        public string Code { get { throw null; } set { } }
-        public Azure.DigitalTwins.Core.InnerError Innererror { get { throw null; } set { } }
-    }
     public static partial class QueryChargeHelper
     {
         public static bool TryGetQueryCharge<T>(Azure.Page<T> page, out float queryCharge) { throw null; }
