@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='UpdateMetadataPolicyAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context)
+        public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='UpdateMetadataPolicy(string,RequestContent,RequestContext)']/*" />
-        public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context)
+        public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 

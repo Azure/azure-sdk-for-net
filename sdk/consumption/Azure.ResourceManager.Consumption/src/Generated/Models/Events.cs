@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Result of listing event summary.
-    /// Serialized Name: Events
-    /// </summary>
+    /// <summary> Result of listing event summary. </summary>
     internal partial class Events
     {
         /// <summary> Initializes a new instance of Events. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of Events. </summary>
-        /// <param name="value">
-        /// The list of event summary.
-        /// Serialized Name: Events.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: Events.nextLink
-        /// </param>
+        /// <param name="value"> The list of event summary. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal Events(IReadOnlyList<ConsumptionEventSummary> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of event summary.
-        /// Serialized Name: Events.value
-        /// </summary>
+        /// <summary> The list of event summary. </summary>
         public IReadOnlyList<ConsumptionEventSummary> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: Events.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -203,10 +201,13 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
+                StorageResourceCopyFromUriOptions options =
+                    await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
                 await _destinationResource.CopyFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                     completeLength: completeLength,
+                    options: options,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 ReportBytesWritten(completeLength);
@@ -233,11 +234,14 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
+                StorageResourceCopyFromUriOptions options =
+                    await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
                 await _destinationResource.CopyBlockFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                     range: new HttpRange(0, blockSize),
                     completeLength: length,
+                    options: options,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Report first chunk written to progress tracker
@@ -343,11 +347,14 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
+                StorageResourceCopyFromUriOptions options =
+                    await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
                 await _destinationResource.CopyBlockFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                     range: new HttpRange(offset, blockLength),
                     completeLength: expectedLength,
+                    options: options,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
                 // Invoke event handler to keep track of all the stage blocks
                 await _commitBlockHandler.InvokeEvent(
@@ -416,6 +423,20 @@ namespace Azure.Storage.DataMovement
             {
                 await _commitBlockHandler.DisposeAsync().ConfigureAwait(false);
             }
+        }
+
+        private async Task<StorageResourceCopyFromUriOptions> GetCopyFromUriOptionsAsync(CancellationToken cancellationToken)
+        {
+            StorageResourceCopyFromUriOptions options = default;
+            HttpAuthorization authorization = await _sourceResource.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
+            if (authorization != null)
+            {
+                options = new StorageResourceCopyFromUriOptions()
+                {
+                    SourceAuthentication = authorization
+                };
+            }
+            return options;
         }
     }
 }

@@ -10,7 +10,6 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -138,7 +137,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTime));
-            await transfer.AwaitCompletion(tokenSource.Token);
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             ProgressHandlerAsserts.AssertFileProgress(progressHandler.Updates, fileCount, skippedCount, failedCount);
             ProgressHandlerAsserts.AssertBytesTransferred(progressHandler.Updates, expectedBytesTransferred);
@@ -247,10 +246,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        [TestCase(TransferType.Upload)]
-        [TestCase(TransferType.Download)]
-        [TestCase(TransferType.Copy)]
-        public async Task ProgressHandler_Chunks(TransferType transferType)
+        [TestCase(TransferDirection.Upload)]
+        [TestCase(TransferDirection.Download)]
+        [TestCase(TransferDirection.Copy)]
+        public async Task ProgressHandler_Chunks(TransferDirection transferType)
         {
             // Arrange
             // For this test, file size should be multiple of chunk size to make predictable progress updates
@@ -264,13 +263,13 @@ namespace Azure.Storage.DataMovement.Tests
 
             StorageResourceContainer sourceResource;
             StorageResourceContainer destinationResource;
-            if (transferType == TransferType.Upload)
+            if (transferType == TransferDirection.Upload)
             {
                 await PopulateTestLocalDirectory(localDirectory.DirectoryPath, fileSize, fileCount);
                 sourceResource = new LocalDirectoryStorageResourceContainer(localDirectory.DirectoryPath);
                 destinationResource = new BlobStorageResourceContainer(destinationContainer.Container);
             }
-            else if (transferType == TransferType.Download)
+            else if (transferType == TransferDirection.Download)
             {
                 await PopulateTestContainer(sourceContainer.Container, fileSize, fileCount);
                 sourceResource = new BlobStorageResourceContainer(sourceContainer.Container);
@@ -351,11 +350,14 @@ namespace Azure.Storage.DataMovement.Tests
             int pause = progressHandler.Updates.Count;
 
             // Resume transfer
-            transferOptions.ResumeFromCheckpointId = transfer.Id;
-            DataTransfer resumeTransfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
+            DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
+                transfer.Id,
+                sourceResource,
+                destinationResource,
+                transferOptions);
 
             tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await resumeTransfer.AwaitCompletion(tokenSource.Token);
+            await resumeTransfer.WaitForCompletionAsync(tokenSource.Token);
 
             // Assert
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
