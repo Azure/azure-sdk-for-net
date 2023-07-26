@@ -541,10 +541,43 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Assert.Ignore("Unable to test a smaller page size.");
             }
 
-            var expectedPageSize = 15;
+            var expectedPageSize = phoneNumbersCount / 2;
             var pages = client.GetPurchasedPhoneNumbersAsync().AsPages(pageSizeHint: expectedPageSize);
             var actual = 0;
             await foreach (var page in pages)
+            {
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(phoneNumbersCount, actual);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetPurchasedPhoneNumbersAsPages()
+        {
+            var client = CreateClient();
+            var phoneNumbers = client.GetPurchasedPhoneNumbers().ToList();
+            var phoneNumbersCount = phoneNumbers.Count;
+
+            if (phoneNumbersCount < 2)
+            {
+                Assert.Ignore("Unable to test a smaller page size.");
+            }
+
+            var expectedPageSize = phoneNumbersCount / 2;
+            var pages = client.GetPurchasedPhoneNumbers().AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            foreach (var page in pages)
             {
                 // Validate only the size of the first page as it's the only one
                 // guaranteed to be of expectedPageSize
@@ -676,7 +709,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(areaCodes);
         }
 
-        /*[Test]
+        [Test]
         [AsyncOnly]
         public async Task GetTollFreeAreaCodesAsyncAsPages()
         {
@@ -748,7 +781,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
 
             Assert.AreEqual(areaCodesCount, actual);
-        }*/
+        }
 
         [Test]
         [AsyncOnly]
@@ -786,7 +819,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
         }
 
-        /*[Test]
+        [Test]
         [AsyncOnly]
         public async Task GetGeographicAreaCodesAsyncAsPages()
         {
@@ -860,7 +893,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
 
             Assert.AreEqual(areaCodesCount, actual);
-        }*/
+        }
 
         [Test]
         [AsyncOnly]
