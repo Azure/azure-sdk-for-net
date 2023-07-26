@@ -11,7 +11,7 @@ If any of the new objects needs to be overwritten, add the required changes to t
 > see https://aka.ms/autorest
 ``` yaml
 input-file:
-    - C:\repos\azure-rest-api-specs\specification\communication\data-plane\Messages\preview\2023-02-01-preview\CommunicationServicesMessages.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/gelli/addMessagingApiSpec/specification/communication/data-plane/Messages/preview/2023-02-01-preview/CommunicationServicesMessages.json
 payload-flattening-threshold: 10
 generation1-convenience-client: true
 directive:
