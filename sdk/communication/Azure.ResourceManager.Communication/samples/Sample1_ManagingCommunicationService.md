@@ -69,8 +69,6 @@ CommunicationServiceResourceData data = new CommunicationServiceResourceData("gl
 
 ArmOperation<CommunicationServiceResource> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
 CommunicationServiceResource communicationService = communicationServiceLro.Value;
-
-
 ```
 
 ***Create a Communication Service with System Assigned Managed Identity***
@@ -82,7 +80,7 @@ CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicati
 CommunicationServiceResourceData data = new CommunicationServiceResourceData("global")
 {
     DataLocation = "UnitedStates",
-    Identity = new CommunicationServiceIdentity(type: IdentityType.SystemAssigned, userAssignedIdentities: null)
+    Identity = new CommunicationServiceIdentity(type: IdentityType.SystemAssigned)
 };
 
 ArmOperation<CommunicationServiceResource> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
