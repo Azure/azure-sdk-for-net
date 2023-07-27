@@ -19,6 +19,7 @@
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ConversionPayload.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NoActionResponse.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NullResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ExpectedPayload.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\QueryParameters.json" />
 	</ItemGroup>
