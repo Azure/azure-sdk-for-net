@@ -71,7 +71,19 @@ namespace SecurityCenter.Tests
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
-                var contact = new SecurityContact("Off", "", "", "barbra@contoso.com", "", new SecurityContactPropertiesAlertNotifications(), new SecurityContactPropertiesNotificationsByRole());
+                // SecurityContact(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string emails = default(string), string phone = default(string), SecurityContactPropertiesAlertNotifications alertNotifications = default(SecurityContactPropertiesAlertNotifications), SecurityContactPropertiesNotificationsByRole notificationsByRole = default(SecurityContactPropertiesNotificationsByRole)
+                var contact = new SecurityContact(
+                    id: "/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/providers/Microsoft.Security/securityContacts/default1",
+                    name: "default1",
+                    type: "Microsoft.Security/securityContacts",
+                    systemData: null,
+                    emails: "john@contoso.com;jane@contoso.com",
+                    phone: "(214)275-4038",
+                    new SecurityContactPropertiesAlertNotifications()
+                    {
+                        State = "On",
+                        MinimalSeverity = "Low",
+                    });
 
                 var securityContact = securityCenterClient.SecurityContacts.Create("default", contact);
                 ValidateSecurityContact(securityContact);
