@@ -659,16 +659,16 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [Test]
-        public void DeleteRoomDoesNotExist_Fail()
+        public void DeleteInvalidRoomId_Fail()
         {
             // Arrange
             var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
-            var ivnalidRoomId = "99437728598278806";
+            var ivnalidRoomId = "123";
 
             // Act and Assert:
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.DeleteRoomAsync(ivnalidRoomId));
             Assert.NotNull(ex);
-            Assert.AreEqual(404, ex?.Status);
+            Assert.AreEqual(400, ex?.Status);
         }
 
         private void ValidateRoom(CommunicationRoom? room)
