@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Compute.Tests.Unit
+namespace Azure.ResourceManager.Compute.Tests.Mock
 {
     public class MockingPatternValidationTests
     {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Tests.Unit
             // find the extension class
             Assert.IsTrue(sdkAssemblyName.StartsWith("Azure.ResourceManager"));
             sdkAssemblyName = sdkAssemblyName.Substring("Azure.ResourceManager".Length);
-            var rpName = string.Join("", sdkAssemblyName.Split('.', StringSplitOptions.RemoveEmptyEntries);
+            //var rpName = string.Join("", sdkAssemblyName.Split(".", StringSplitOptions.RemoveEmptyEntries));
         }
     }
 }
