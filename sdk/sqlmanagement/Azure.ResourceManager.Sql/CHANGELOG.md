@@ -6,12 +6,6 @@
 
 - Supported Sql Elastic Pool creation and update with `PreferredEnclaveType`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.3.0-beta.1 (2023-05-31)
 
 ### Features Added
