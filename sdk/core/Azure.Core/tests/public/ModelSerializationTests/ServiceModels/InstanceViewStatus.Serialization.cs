@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
     public partial class InstanceViewStatus : IUtf8JsonSerializable, IJsonModelSerializable<InstanceViewStatus>, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<InstanceViewStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<InstanceViewStatus>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
         void IJsonModelSerializable<InstanceViewStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -51,9 +51,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelSerializerOptions options = default)
+        internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             if (element.ValueKind == JsonValueKind.Null)
             {

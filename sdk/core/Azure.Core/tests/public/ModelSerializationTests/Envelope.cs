@@ -36,7 +36,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public T ModelT { get; set; }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<Envelope<T>>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<Envelope<T>>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
         void IJsonModelSerializable<Envelope<T>>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -70,8 +70,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions options)
+        internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions? options = default)
         {
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
             T modelC = default(T);
@@ -86,16 +88,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
                 if (property.NameEquals("modelA"u8))
                 {
-                    modelA = CatReadOnlyProperty.DeserializeCatReadOnlyProperty(property.Value, options);
+                    modelA = CatReadOnlyProperty.DeserializeCatReadOnlyProperty(property.Value, options.Value);
                     continue;
                 }
                 if (property.NameEquals("modelC"u8))
                 {
-                    modelC = DeserializeT(property.Value, options);
+                    modelC = DeserializeT(property.Value, options.Value);
                     continue;
                 }
 
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Value.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an modelC property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -117,7 +119,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private static ObjectSerializer GetObjectSerializer(ModelSerializerOptions options)
         {
-            var serializer = options.TypeResolver is not null ? options.TypeResolver(typeof(T)) : null;
+            var serializer = options.UnknownTypeSerializationFallback is not null ? options.UnknownTypeSerializationFallback(typeof(T)) : null;
             return serializer ?? JsonObjectSerializer.Default;
         }
 

@@ -38,16 +38,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public static explicit operator DogListProperty(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeDogListProperty(jsonDocument.RootElement, ModelSerializerOptions.DefaultAzureOptions);
+            return DeserializeDogListProperty(jsonDocument.RootElement, new ModelSerializerOptions(ModelSerializerFormat.Wire));
         }
 
         public static implicit operator RequestContent(DogListProperty dog)
         {
-            return new Utf8JsonDelayedRequestContent(dog, ModelSerializerOptions.DefaultAzureOptions);
+            return new Utf8JsonDelayedRequestContent(dog, new ModelSerializerOptions(ModelSerializerFormat.Wire));
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<DogListProperty>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<DogListProperty>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
         void IJsonModelSerializable<DogListProperty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -93,9 +93,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static DogListProperty DeserializeDogListProperty(JsonElement element, ModelSerializerOptions options = default)
+        internal static DogListProperty DeserializeDogListProperty(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             double weight = default;
             string name = "";
@@ -134,7 +134,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Value.Format == ModelSerializerFormat.Json)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -164,7 +164,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                return modelConverter is not null ? modelConverter.Options : ModelSerializerOptions.DefaultAzureOptions;
+                return modelConverter is not null ? modelConverter.Options : new ModelSerializerOptions(ModelSerializerFormat.Wire);
             }
         }
         DogListProperty IModelSerializable<DogListProperty>.Deserialize(BinaryData data, ModelSerializerOptions options)

@@ -45,11 +45,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 {
                     ContractResolver = new IgnoreReadOnlyPropertiesResolver()
                 };
-                options.TypeResolver = type => type.Equals(typeof(ModelC)) ? new NewtonsoftJsonObjectSerializer(settings) : null;
+                options.UnknownTypeSerializationFallback = type => type.Equals(typeof(ModelC)) ? new NewtonsoftJsonObjectSerializer(settings) : null;
             }
             else
             {
-                options.TypeResolver = type => type.Equals(typeof(ModelC)) ? new NewtonsoftJsonObjectSerializer() : null;
+                options.UnknownTypeSerializationFallback = type => type.Equals(typeof(ModelC)) ? new NewtonsoftJsonObjectSerializer() : null;
             }
 
             Envelope<ModelC> model = ModelSerializer.Deserialize<Envelope<ModelC>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);

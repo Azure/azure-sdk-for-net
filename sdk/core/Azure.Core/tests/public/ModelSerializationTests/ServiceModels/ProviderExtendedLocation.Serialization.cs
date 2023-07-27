@@ -15,11 +15,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ProviderExtendedLocation : IUtf8JsonSerializable, IJsonModelSerializable<ProviderExtendedLocation>, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ProviderExtendedLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ProviderExtendedLocation>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelSerializerOptions options = default)
+        internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             if (element.ValueKind == JsonValueKind.Null)
             {

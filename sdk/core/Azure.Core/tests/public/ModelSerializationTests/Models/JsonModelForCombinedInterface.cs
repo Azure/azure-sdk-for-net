@@ -45,11 +45,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string Value { get; set; }
         public string ReadOnlyProperty { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<JsonModelForCombinedInterface>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<JsonModelForCombinedInterface>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        internal static JsonModelForCombinedInterface DeserializeJsonModelForCombinedInterface(JsonElement element, ModelSerializerOptions options = default)
+        internal static JsonModelForCombinedInterface DeserializeJsonModelForCombinedInterface(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             string key = default;
             string value = default;
@@ -73,7 +73,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     readOnlyProperty = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Value.Format == ModelSerializerFormat.Json)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

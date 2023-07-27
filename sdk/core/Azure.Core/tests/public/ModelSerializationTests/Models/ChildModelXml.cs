@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
+            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
 
         void IXmlModelSerializable<ChildModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
@@ -60,9 +60,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndElement();
         }
 
-        internal static ChildModelXml DeserializeChildModelXml(XElement element, ModelSerializerOptions options = default)
+        internal static ChildModelXml DeserializeChildModelXml(XElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             string value = default;
             string readonlyProperty = default;
@@ -77,9 +77,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new ChildModelXml(value, readonlyProperty);
         }
 
-        internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelSerializerOptions options = default)
+        internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             string childValue = default;
             string childReadOnlyProperty = default;
@@ -151,7 +151,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
         void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ChildModelXml>)this).Serialize(writer, options);
 

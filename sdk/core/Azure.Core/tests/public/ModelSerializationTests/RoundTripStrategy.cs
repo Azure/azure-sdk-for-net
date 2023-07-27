@@ -154,6 +154,48 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
     }
 
+    public class JsonInterfaceSequenceWriterStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
+    {
+        public override BinaryData Serialize(T model, ModelSerializerOptions options)
+        {
+            using var sequenceWriter = new SequenceWriter();
+            using var writer = new Utf8JsonWriter(sequenceWriter);
+            ((IJsonModelSerializable<T>)model).Serialize(writer, options);
+            writer.Flush();
+            sequenceWriter.TryComputeLength(out var length);
+            var stream = new MemoryStream((int)length);
+            sequenceWriter.WriteTo(stream, default);
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+        }
+
+        public override object Deserialize(string payload, ModelSerializerOptions options)
+        {
+            T model = Activator.CreateInstance(typeof(T), true) as T;
+            return ((IJsonModelSerializable<T>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+        }
+    }
+
+    public class JsonInterfaceSequenceWriterNonGenericStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
+    {
+        public override BinaryData Serialize(T model, ModelSerializerOptions options)
+        {
+            using var sequenceWriter = new SequenceWriter();
+            using var writer = new Utf8JsonWriter(sequenceWriter);
+            ((IJsonModelSerializable)model).Serialize(writer, options);
+            writer.Flush();
+            sequenceWriter.TryComputeLength(out var length);
+            var stream = new MemoryStream((int)length);
+            sequenceWriter.WriteTo(stream, default);
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+        }
+
+        public override object Deserialize(string payload, ModelSerializerOptions options)
+        {
+            T model = Activator.CreateInstance(typeof(T), true) as T;
+            return ((IJsonModelSerializable)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+        }
+    }
+
     public class JsonInterfaceUtf8ReaderNonGenericStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
         public override BinaryData Serialize(T model, ModelSerializerOptions options)

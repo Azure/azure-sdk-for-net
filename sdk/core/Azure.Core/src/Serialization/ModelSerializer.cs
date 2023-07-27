@@ -20,13 +20,13 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
-            var serializer = options.TypeResolver is not null ? options.TypeResolver(typeof(T)) : null;
+            var serializer = options.Value.UnknownTypeSerializationFallback is not null ? options.Value.UnknownTypeSerializationFallback(typeof(T)) : null;
             if (serializer is not null)
                 return serializer.Serialize(model);
 
-            return model.Serialize(options);
+            return model.Serialize(options.Value);
         }
 
         /// <summary>
@@ -37,17 +37,17 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize(object model, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
-            var iModel = model as IModelSerializable<object>;
+            var iModel = model as IModelSerializable;
             if (iModel is null)
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable)}");
 
-            var serializer = options.TypeResolver is not null ? options.TypeResolver(model.GetType()) : null;
+            var serializer = options.Value.UnknownTypeSerializationFallback is not null ? options.Value.UnknownTypeSerializationFallback(model.GetType()) : null;
             if (serializer is not null)
                 return serializer.Serialize(model);
 
-            return iModel.Serialize(options);
+            return iModel.Serialize(options.Value);
         }
 
         /// <summary>
@@ -56,15 +56,15 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable<T>
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
-            var genericDeserialize = GenericDeserialize(data, typeof(T), options);
+            var genericDeserialize = GenericDeserialize(data, typeof(T), options.Value);
             if (genericDeserialize is not null)
                 return (T)genericDeserialize;
 
             var model = Activator.CreateInstance(typeof(T), true) as IModelSerializable<T>;
 
-            return model!.Deserialize(data, options);
+            return model!.Deserialize(data, options.Value);
         }
 
         /// <summary>
@@ -77,20 +77,20 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException"></exception>
         public static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
-            var genericDeserialize = GenericDeserialize(data, typeToConvert, options);
+            var genericDeserialize = GenericDeserialize(data, typeToConvert, options.Value);
             if (genericDeserialize is not null)
                 return genericDeserialize;
 
-            var model = Activator.CreateInstance(typeToConvert, true) as IModelSerializable<object>;
+            var model = Activator.CreateInstance(typeToConvert, true) as IModelSerializable;
 
-            return model!.Deserialize(data, options);
+            return model!.Deserialize(data, options.Value);
         }
 
         private static object? GenericDeserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
         {
-            var serializer = options.TypeResolver is not null ? options.TypeResolver(typeToConvert) : null;
+            var serializer = options.UnknownTypeSerializationFallback is not null ? options.UnknownTypeSerializationFallback(typeToConvert) : null;
             if (serializer is not null)
             {
                 var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);

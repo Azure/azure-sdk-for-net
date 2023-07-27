@@ -47,7 +47,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<Animal>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<Animal>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
         void IJsonModelSerializable<Animal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -82,9 +82,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static Animal DeserializeAnimal(JsonElement element, ModelSerializerOptions options = default)
+        internal static Animal DeserializeAnimal(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             double weight = default;
             string name = "";
@@ -115,7 +115,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     continue;
                 }
 
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Value.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

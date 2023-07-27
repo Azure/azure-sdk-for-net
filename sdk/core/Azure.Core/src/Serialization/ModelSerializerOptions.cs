@@ -8,13 +8,8 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// Provides the client options for serializing models.
     /// </summary>
-    public class ModelSerializerOptions
+    public struct ModelSerializerOptions
     {
-        /// <summary>
-        /// Default options for communicating with Azure service.
-        /// </summary>
-        public static readonly ModelSerializerOptions DefaultAzureOptions = new ModelSerializerOptions(ModelSerializerFormat.Wire);
-
         /// <summary>
         /// Delegate to specify a specific <see cref="ObjectSerializer"/> for a given <see cref="Type"/>.
         /// </summary>
@@ -45,6 +40,6 @@ namespace Azure.Core.Serialization
         /// Gets or sets a factory method that returns an <see cref="ObjectSerializer"/> based on the provided <see cref="Type"/>.
         /// Should return null if the type is not supported.
         /// </summary>
-        public ObjectSerializerFactory? TypeResolver { get; set; }
+        public ObjectSerializerFactory? UnknownTypeSerializationFallback { get; set; }
     }
 }

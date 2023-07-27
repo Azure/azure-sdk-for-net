@@ -20,7 +20,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string Kind { get; internal set; }
         public string Name { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<BaseModel>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<BaseModel>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
         void IJsonModelSerializable<BaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -53,9 +53,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         internal static BaseModel DeserializeBaseModel(BinaryData data, ModelSerializerOptions options)
             => DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
 
-        internal static BaseModel DeserializeBaseModel(JsonElement element, ModelSerializerOptions options = default)
+        internal static BaseModel DeserializeBaseModel(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -66,12 +66,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 switch (discriminator.GetString())
                 {
                     case "X":
-                        return ModelX.DeserializeModelX(element, options);
+                        return ModelX.DeserializeModelX(element, options.Value);
                     case "Y":
-                        return ModelY.DeserializeModelY(element, options);
+                        return ModelY.DeserializeModelY(element, options.Value);
                 }
             }
-            return UnknownBaseModel.DeserializeUnknownBaseModel(element, options);
+            return UnknownBaseModel.DeserializeUnknownBaseModel(element, options.Value);
         }
 
         BaseModel IModelSerializable<BaseModel>.Deserialize(BinaryData data, ModelSerializerOptions options)

@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ZoneMapping : IUtf8JsonSerializable, IJsonModelSerializable<ZoneMapping>, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ZoneMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ZoneMapping>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        internal static ZoneMapping DeserializeZoneMapping(JsonElement element, ModelSerializerOptions options = default)
+        internal static ZoneMapping DeserializeZoneMapping(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             if (element.ValueKind == JsonValueKind.Null)
             {

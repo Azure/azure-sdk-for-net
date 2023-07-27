@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ProviderResourceType : IUtf8JsonSerializable, IJsonModelSerializable<ProviderResourceType>, IJsonModelSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ProviderResourceType>)this).Serialize(writer, ModelSerializerOptions.DefaultAzureOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ProviderResourceType>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelSerializerOptions options = default)
+        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item, options));
+                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item, options.Value));
                     }
                     aliases = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     List<ZoneMapping> array = new List<ZoneMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ZoneMapping.DeserializeZoneMapping(item, options));
+                        array.Add(ZoneMapping.DeserializeZoneMapping(item, options.Value));
                     }
                     zoneMappings = array;
                     continue;

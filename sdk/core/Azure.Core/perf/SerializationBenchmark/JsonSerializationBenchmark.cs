@@ -211,14 +211,5 @@ namespace Azure.Core.Perf
         {
             using var doc = JsonDocument.Parse(_data);
         }
-
-        [Benchmark]
-        [BenchmarkCategory("Alloc")]
-        public ModelSerializerOptions OptionsAlloc()
-        {
-            ModelSerializerOptions options = default;
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
-            return options;
-        }
     }
 }

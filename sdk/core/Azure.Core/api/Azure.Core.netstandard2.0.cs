@@ -1174,10 +1174,10 @@ namespace Azure.Core.Serialization
     }
     public static partial class ModelSerializer
     {
-        public static object Deserialize(System.BinaryData data, System.Type typeToConvert, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
-        public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable<T> { throw null; }
-        public static System.BinaryData Serialize(object model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
-        public static System.BinaryData Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
+        public static object Deserialize(System.BinaryData data, System.Type typeToConvert, Azure.Core.Serialization.ModelSerializerOptions? options = default(Azure.Core.Serialization.ModelSerializerOptions?)) { throw null; }
+        public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = default(Azure.Core.Serialization.ModelSerializerOptions?)) where T : class, Azure.Core.Serialization.IModelSerializable<T> { throw null; }
+        public static System.BinaryData Serialize(object model, Azure.Core.Serialization.ModelSerializerOptions? options = default(Azure.Core.Serialization.ModelSerializerOptions?)) { throw null; }
+        public static System.BinaryData Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = default(Azure.Core.Serialization.ModelSerializerOptions?)) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ModelSerializerFormat : System.IEquatable<Azure.Core.Serialization.ModelSerializerFormat>
@@ -1197,13 +1197,15 @@ namespace Azure.Core.Serialization
         public static bool operator !=(Azure.Core.Serialization.ModelSerializerFormat left, Azure.Core.Serialization.ModelSerializerFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ModelSerializerOptions
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct ModelSerializerOptions
     {
-        public static readonly Azure.Core.Serialization.ModelSerializerOptions DefaultAzureOptions;
-        public ModelSerializerOptions() { }
-        public ModelSerializerOptions(Azure.Core.Serialization.ModelSerializerFormat format) { }
+        private object _dummy;
+        private int _dummyPrimitive;
+        public ModelSerializerOptions() { throw null; }
+        public ModelSerializerOptions(Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
         public Azure.Core.Serialization.ModelSerializerFormat Format { get { throw null; } }
-        public Azure.Core.Serialization.ModelSerializerOptions.ObjectSerializerFactory? TypeResolver { get { throw null; } set { } }
+        public Azure.Core.Serialization.ModelSerializerOptions.ObjectSerializerFactory? UnknownTypeSerializationFallback { get { throw null; } set { } }
         public delegate Azure.Core.Serialization.ObjectSerializer? ObjectSerializerFactory(System.Type type);
     }
     public abstract partial class ObjectSerializer

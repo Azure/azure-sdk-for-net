@@ -45,17 +45,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static implicit operator RequestContent(ModelXml modelXml)
         {
-            return new Utf8XmlDelayedRequestContent(modelXml, ModelSerializerOptions.DefaultAzureOptions);
+            return new Utf8XmlDelayedRequestContent(modelXml, new ModelSerializerOptions(ModelSerializerFormat.Wire));
         }
 
         public static explicit operator ModelXml(Response response)
         {
-            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultAzureOptions);
+            return DeserializeModelXml(XElement.Load(response.ContentStream), new ModelSerializerOptions(ModelSerializerFormat.Wire));
         }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultAzureOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
 
         void IXmlModelSerializable<ModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
@@ -101,9 +101,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        public static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
+        public static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             string key = default;
             string value = default;
@@ -141,9 +141,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
-        internal static ModelXml DeserializeModelXml(JsonElement element, ModelSerializerOptions options = default)
+        internal static ModelXml DeserializeModelXml(JsonElement element, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultAzureOptions;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
             string key = default;
             string value = default;

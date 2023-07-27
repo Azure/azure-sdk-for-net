@@ -16,14 +16,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [Test]
         public void ValidateDefaultFormatValue()
         {
-            //ModelSerializerOptions options = default;
-            //Assert.AreEqual(default(ModelSerializerOptions), options);
-            //Assert.IsTrue(options.Equals(default(ModelSerializerOptions)));
+            ModelSerializerOptions options = default;
+            Assert.AreEqual(default(ModelSerializerOptions), options);
+            Assert.IsTrue(options.Equals(default(ModelSerializerOptions)));
 
-            //Assert.AreEqual(default(ModelSerializerFormat), options.Format);
-            //Assert.AreEqual(null, options.Format.ToString());
-            //Assert.Throws<ArgumentNullException>(() => options.Format.Equals(null));
-            //Assert.Throws<NullReferenceException>(() => options.Format.ToString().Equals(null));
+            Assert.AreEqual(default(ModelSerializerFormat), options.Format);
+            Assert.AreEqual(null, options.Format.ToString());
+            Assert.Throws<ArgumentNullException>(() => options.Format.Equals(null));
+            Assert.Throws<NullReferenceException>(() => options.Format.ToString().Equals(null));
         }
     }
 }

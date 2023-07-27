@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
 using System.Xml;
 using Azure.Core.Serialization;
 using NUnit.Framework;
@@ -17,6 +16,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             _modelInstance = Activator.CreateInstance(typeof(T), true) as T;
         }
+
+        protected abstract string GetExpectedResult(ModelSerializerFormat format);
+        protected abstract void VerifyModel(T model, ModelSerializerFormat format);
+        protected abstract void CompareModels(T model, T model2, ModelSerializerFormat format);
+        protected abstract string JsonPayload { get; }
+        protected abstract string WirePayload { get; }
+        protected abstract Func<T, RequestContent> ToRequestContent { get; }
+        protected abstract Func<Response, T> FromResponse { get; }
 
         [TestCase("J")]
         [TestCase("W")]
@@ -138,6 +145,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 RoundTripTest(format, new JsonInterfaceUtf8ReaderNonGenericStrategy<T>());
         }
 
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RoundTripWithJsonInterfaceSequenceWriter(string format)
+        {
+            if (_modelInstance is IJsonModelSerializable<T>)
+                RoundTripTest(format, new JsonInterfaceSequenceWriterStrategy<T>());
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RoundTripWithJsonInterfaceSequenceNonGenericWriter(string format)
+        {
+            if (_modelInstance is IJsonModelSerializable<T>)
+                RoundTripTest(format, new JsonInterfaceSequenceWriterNonGenericStrategy<T>());
+        }
+
         [Test]
         public void RoundTripWithCast()
             => RoundTripTest(ModelSerializerFormat.Wire, new CastStrategy<T>(ToRequestContent, FromResponse));
@@ -161,19 +184,5 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             T model2 = strategy.Deserialize(roundTrip, options) as T;
             CompareModels(model, model2, format);
         }
-
-        protected abstract string GetExpectedResult(ModelSerializerFormat format);
-
-        protected abstract void VerifyModel(T model, ModelSerializerFormat format);
-
-        protected abstract void CompareModels(T model, T model2, ModelSerializerFormat format);
-
-        protected abstract string JsonPayload { get; }
-
-        protected abstract string WirePayload { get; }
-
-        protected abstract Func<T, RequestContent> ToRequestContent { get; }
-
-        protected abstract Func<Response, T> FromResponse { get; }
     }
 }
