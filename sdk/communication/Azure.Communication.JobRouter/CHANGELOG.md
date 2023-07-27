@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.1 (2023-07-27)
 
 This is the beta release of Azure Communication Job Router .NET SDK. For more information, please see the [README][read_me].
