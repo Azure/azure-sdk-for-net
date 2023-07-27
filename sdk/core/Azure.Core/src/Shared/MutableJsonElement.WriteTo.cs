@@ -143,7 +143,6 @@ namespace Azure.Core.Json
 
             // This version is not efficient; Proof of concept.
 
-            // TODO: rewrite using Span APIs
             IEnumerable<string> changePaths = _root.Changes.GetChangedProperties(out int maxPathLength);
 
             // patchPath tracks the global path we're on in writing out the PATCH JSON.
@@ -196,38 +195,6 @@ namespace Azure.Core.Json
             // Write the end of the PATCH JSON.
             writer.WriteEndObject();
         }
-
-        private MutableJsonElement GetPropertyFromRoot(ReadOnlySpan<char> path, int pathLength)
-        {
-            MutableJsonElement current = _root.RootElement;
-
-            if (pathLength == 0)
-            {
-                return current;
-            }
-
-            int length = pathLength;
-            int start = 0;
-            int end;
-            do
-            {
-                end = path.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
-                if (end == -1)
-                {
-                    end = length - start;
-                }
-
-                if (end != 0)
-                {
-                    current = current.GetProperty(path.Slice(start, end));
-                }
-
-                start += end + 1;
-            } while (start < length);
-
-            return current;
-        }
-
         private ReadOnlySpan<char> GetFirstSegment(ReadOnlySpan<char> path)
         {
             int idx = path.IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
@@ -266,44 +233,36 @@ namespace Azure.Core.Json
             }
         }
 
-        private void OpenAncestorObjects(Utf8JsonWriter writer, ReadOnlySpan<char> path, Span<char> currentPath, ref int currentPathLength, Span<char> patchPath, ref int patchPathLength, ref MutableJsonElement patchElement)
+        private MutableJsonElement GetPropertyFromRoot(ReadOnlySpan<char> path, int pathLength)
         {
-            int l = path.Length;
-            int s = 0;
-            int e;
+            MutableJsonElement current = _root.RootElement;
 
+            if (pathLength == 0)
+            {
+                return current;
+            }
+
+            int length = pathLength;
+            int start = 0;
+            int end;
             do
             {
-                // set name to next segment
-                e = path.Slice(s).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
-                if (e == -1)
+                end = path.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                if (end == -1)
                 {
-                    // skip the last segment
-                    break;
+                    end = length - start;
                 }
 
-                // currentPath already holds the first property, so don't push it if we're
-                // still on the first one.
-                if (e != 0 && s != 0)
+                if (end != 0)
                 {
-                    MutableJsonDocument.ChangeTracker.PushProperty(currentPath, ref currentPathLength, path.Slice(s), e);
+                    current = current.GetProperty(path.Slice(start, end));
                 }
 
-                // if we haven't opened this object yet in the PATCH JSON, open it and set
-                // currentElement to the corresponding element for the object.
-                if (!patchPath.Slice(0, patchPathLength).StartsWith(currentPath.Slice(0, currentPathLength)) &&
-                    currentPath.Slice(0, currentPathLength).StartsWith(patchPath.Slice(0, patchPathLength)))
-                {
-                    writer.WritePropertyName(path.Slice(s, e));
-                    writer.WriteStartObject();
-
-                    MutableJsonDocument.ChangeTracker.PushProperty(patchPath, ref patchPathLength, path.Slice(s), e);
-                    patchElement = patchElement.GetProperty(path.Slice(s, e));
-                }
-
-                s += e + 1;
+                start += end + 1;
             }
-            while (s < l);
+            while (start < length);
+
+            return current;
         }
 
         private void CloseFinalObjects(Utf8JsonWriter writer, ReadOnlySpan<char> patchPath, int patchPathLength)
@@ -325,7 +284,47 @@ namespace Azure.Core.Json
                 }
 
                 start += end + 1;
-            } while (start < length);
+            }
+            while (start < length);
+        }
+
+        private void OpenAncestorObjects(Utf8JsonWriter writer, ReadOnlySpan<char> path, Span<char> currentPath, ref int currentPathLength, Span<char> patchPath, ref int patchPathLength, ref MutableJsonElement patchElement)
+        {
+            int length = path.Length;
+            int start = 0;
+            int end;
+
+            do
+            {
+                end = path.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                if (end == -1)
+                {
+                    // skip the last segment
+                    break;
+                }
+
+                // currentPath already holds the first property, so don't push it if we're
+                // still on the first one.
+                if (end != 0 && start != 0)
+                {
+                    MutableJsonDocument.ChangeTracker.PushProperty(currentPath, ref currentPathLength, path.Slice(start), end);
+                }
+
+                // if we haven't opened this object yet in the PATCH JSON, open it and set
+                // currentElement to the corresponding element for the object.
+                if (!patchPath.Slice(0, patchPathLength).StartsWith(currentPath.Slice(0, currentPathLength)) &&
+                    currentPath.Slice(0, currentPathLength).StartsWith(patchPath.Slice(0, patchPathLength)))
+                {
+                    writer.WritePropertyName(path.Slice(start, end));
+                    writer.WriteStartObject();
+
+                    MutableJsonDocument.ChangeTracker.PushProperty(patchPath, ref patchPathLength, path.Slice(start), end);
+                    patchElement = patchElement.GetProperty(path.Slice(start, end));
+                }
+
+                start += end + 1;
+            }
+            while (start < length);
         }
     }
 }
