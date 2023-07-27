@@ -63,6 +63,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             Assert.True(TestHelper.DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
         }
 
+        /// <summary>Tests the OnTokenIssuanceStart request and response object model when the response is set to null</summary>
+        [Test]
+        [Description("Tests the OnTokenIssuanceStart request and response object model when the response is set to null")]
+        public async Task TokenIssuanceStartObjectModelNullResponseTest()
+        {
+            HttpResponseMessage httpResponseMessage = await TestHelper.EventResponseBaseTest(eventsResponseHandler =>
+            {
+                if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
+                {
+                    request.Response = null;
+
+                    eventsResponseHandler.SetValueAsync(request.Completed().Result, CancellationToken.None);
+                }
+            });
+
+            Assert.AreEqual(HttpStatusCode.InternalServerError, httpResponseMessage.StatusCode);
+            Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.NullResponsePayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+        }
+
         [Test]
         [TestCase(ActionTestTypes.NullClaims)]
         [TestCase(ActionTestTypes.EmptyClaims)]
