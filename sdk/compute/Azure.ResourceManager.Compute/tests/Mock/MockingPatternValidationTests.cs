@@ -54,6 +54,8 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var methodOnExtension = mockingExtensionType.GetMethod(method.Name, parameters.Skip(1).Select(p => p.ParameterType).ToArray());
 
             Assert.IsNotNull(methodOnExtension, $"expect class {mockingExtensionType} to have method {method}, but found none");
+            Assert.IsTrue(methodOnExtension.IsVirtual, $"the method on {mockingExtensionType} must be virtual");
+            Assert.IsTrue(methodOnExtension.IsPublic, $"the method on {mockingExtensionType} must be public");
         }
 
         private static string GetMockingExtensionTypeName(string rpNamespace, string rpName, string extendeeName)
