@@ -247,18 +247,6 @@ namespace Azure.Core.Json
                 pathLength += valueLength + 1;
             }
 
-            internal static string PushProperty(string path, ReadOnlySpan<byte> value)
-            {
-                string propertyName = BinaryData.FromBytes(value.ToArray()).ToString();
-
-                if (path.Length == 0)
-                {
-                    return propertyName;
-                }
-
-                return string.Concat(path, Delimiter, propertyName);
-            }
-
             internal static string PopProperty(string path)
             {
                 int lastDelimiter = path.LastIndexOf(Delimiter);
@@ -273,7 +261,7 @@ namespace Azure.Core.Json
 
             internal static void PopProperty(Span<char> path, ref int pathLength)
             {
-                int lastDelimiter = path.LastIndexOf(Delimiter);
+                int lastDelimiter = path.Slice(0, pathLength).LastIndexOf(Delimiter);
                 pathLength = lastDelimiter == -1 ? 0 : lastDelimiter;
             }
         }
