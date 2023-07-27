@@ -53,28 +53,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private void RoundTripTest(ModelSerializerFormat format, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize, Func<string, ModelSerializerOptions, AvailabilitySetData> deserialize)
         {
-            ModelSerializerOptions options = new ModelSerializerOptions(format);
-
-            var expectedSerializedString = "{";
-            if (format == ModelSerializerFormat.Json)
-                expectedSerializedString += "\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",";
-            expectedSerializedString += "\"sku\":{\"name\":\"Classic\"";
-            //if (!ignoreAdditionalProperties)
-            //    expectedSerializedString += ",\"extraSku\":\"extraSku\"";
-            expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3}";
-            //if (!ignoreAdditionalProperties)
-            //    expectedSerializedString += ",\"extraRoot\":\"extraRoot\"";
-            expectedSerializedString += "}";
-
-            AvailabilitySetData model = deserialize(_serviceResponse, options);
-
-            ValidateModel(model);
-            string roundTrip = serialize(model, options);
-
-            Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
-
-            AvailabilitySetData model2 = deserialize(roundTrip, options);
-            CompareModels(model, model2, format);
+            throw new Exception("testing failure");
         }
 
         private AvailabilitySetData DeserializeWithJsonReader(string json, ModelSerializerOptions options)
