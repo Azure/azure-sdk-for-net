@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PrivateDns.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PrivateDns
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.PrivateDns
     /// <summary> A class to add extension methods to Azure.ResourceManager.PrivateDns. </summary>
     public static partial class PrivateDnsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static PrivateDnsArmClientMockingExtension GetPrivateDnsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new PrivateDnsArmClientMockingExtension(client);
+            });
+        }
+
+        private static PrivateDnsResourceGroupMockingExtension GetPrivateDnsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new PrivateDnsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static PrivateDnsSubscriptionMockingExtension GetPrivateDnsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new PrivateDnsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region PrivateDnsZoneResource
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsZoneResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsZoneResource" /> object. </returns>
         public static PrivateDnsZoneResource GetPrivateDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<PrivateDnsZoneResource>(() =>
-            {
-                PrivateDnsZoneResource.ValidateResourceId(id);
-                return new PrivateDnsZoneResource(client, id);
-            }
-            );
+            return GetPrivateDnsArmClientMockingExtension(client).GetPrivateDnsZoneResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="VirtualNetworkLinkResource" /> object. </returns>
         public static VirtualNetworkLinkResource GetVirtualNetworkLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualNetworkLinkResource.ValidateResourceId(id);
-                return new VirtualNetworkLinkResource(client, id);
-            }
-            );
+            return GetPrivateDnsArmClientMockingExtension(client).GetVirtualNetworkLinkResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsARecordResource" /> object. </returns>
         public static PrivateDnsARecordResource GetPrivateDnsARecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<PrivateDnsARecordResource>(() =>
-            {
-                PrivateDnsARecordResource.ValidateResourceId(id);
-                return new PrivateDnsARecordResource(client, id);
-            }
-            );
+            return GetPrivateDnsArmClientMockingExtension(client).GetPrivateDnsARecordResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsAaaaRecordResource" /> object. </returns>
         public static PrivateDnsAaaaRecordResource GetPrivateDnsAaaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<PrivateDnsAaaaRecordResource>(() =>
-            {
-                PrivateDnsAaaaRecordResource.ValidateResourceId(id);
-                return new PrivateDnsAaaaRecordResource(client, id);
-            }
-            );
+            return GetPrivateDnsArmClientMockingExtension(client).GetPrivateDnsAaaaRecordResource(id);
         }
         #endregion
 
@@ -135,12 +109,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsCnameRecordResource" /> object. </returns>
         public static PrivateDnsCnameRecordResource GetPrivateDnsCnameRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<PrivateDnsCnameRecordResource>(() =>
-            {
-                PrivateDnsCnameRecordResource.ValidateResourceId(id);
-                return new PrivateDnsCnameRecordResource(client, id);
-            }
-            );
+            return GetPrivateDnsArmClientMockingExtension(client).GetPrivateDnsCnameRecordResource(id);
         }
         #endregion
 
@@ -154,12 +123,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsMXRecordResource" /> object. </returns>
         public static PrivateDnsMXRecordResource GetPrivateDnsMXRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<PrivateDnsMXRecordResource>(() =>
-            {
-                PrivateDnsMXRecordResource.ValidateResourceId(id);
-                return new PrivateDnsMXRecordResource(client, id);
-            }
-            );
+            return GetPrivateDnsArmClientMockingExtension(client).GetPrivateDnsMXRecordResource(id);
         }
         #endregion
 
@@ -173,12 +137,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsPtrRecordResource" /> object. </returns>
         public static PrivateDnsPtrRecordResource GetPrivateDnsPtrRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<PrivateDnsPtrRecordResource>(() =>
-            {
-                PrivateDnsPtrRecordResource.ValidateResourceId(id);
-                return new PrivateDnsPtrRecordResource(client, id);
-            }
-            );
+            return GetPrivateDnsArmClientMockingExtension(client).GetPrivateDnsPtrRecordResource(id);
         }
         #endregion
 
@@ -192,12 +151,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsSoaRecordResource" /> object. </returns>
         public static PrivateDnsSoaRecordResource GetPrivateDnsSoaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<PrivateDnsSoaRecordResource>(() =>
-            {
-                PrivateDnsSoaRecordResource.ValidateResourceId(id);
-                return new PrivateDnsSoaRecordResource(client, id);
-            }
-            );
+            return GetPrivateDnsArmClientMockingExtension(client).GetPrivateDnsSoaRecordResource(id);
         }
         #endregion
 
@@ -211,12 +165,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsSrvRecordResource" /> object. </returns>
         public static PrivateDnsSrvRecordResource GetPrivateDnsSrvRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<PrivateDnsSrvRecordResource>(() =>
-            {
-                PrivateDnsSrvRecordResource.ValidateResourceId(id);
-                return new PrivateDnsSrvRecordResource(client, id);
-            }
-            );
+            return GetPrivateDnsArmClientMockingExtension(client).GetPrivateDnsSrvRecordResource(id);
         }
         #endregion
 
@@ -230,12 +179,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsTxtRecordResource" /> object. </returns>
         public static PrivateDnsTxtRecordResource GetPrivateDnsTxtRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<PrivateDnsTxtRecordResource>(() =>
-            {
-                PrivateDnsTxtRecordResource.ValidateResourceId(id);
-                return new PrivateDnsTxtRecordResource(client, id);
-            }
-            );
+            return GetPrivateDnsArmClientMockingExtension(client).GetPrivateDnsTxtRecordResource(id);
         }
         #endregion
 
@@ -244,7 +188,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> An object representing collection of PrivateDnsZoneResources and their operations over a PrivateDnsZoneResource. </returns>
         public static PrivateDnsZoneCollection GetPrivateDnsZones(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPrivateDnsZones();
+            return GetPrivateDnsResourceGroupMockingExtension(resourceGroupResource).GetPrivateDnsZones();
         }
 
         /// <summary>
@@ -268,7 +212,7 @@ namespace Azure.ResourceManager.PrivateDns
         [ForwardsClientCalls]
         public static async Task<Response<PrivateDnsZoneResource>> GetPrivateDnsZoneAsync(this ResourceGroupResource resourceGroupResource, string privateZoneName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPrivateDnsZones().GetAsync(privateZoneName, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateDnsResourceGroupMockingExtension(resourceGroupResource).GetPrivateDnsZoneAsync(privateZoneName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -292,7 +236,7 @@ namespace Azure.ResourceManager.PrivateDns
         [ForwardsClientCalls]
         public static Response<PrivateDnsZoneResource> GetPrivateDnsZone(this ResourceGroupResource resourceGroupResource, string privateZoneName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPrivateDnsZones().Get(privateZoneName, cancellationToken);
+            return GetPrivateDnsResourceGroupMockingExtension(resourceGroupResource).GetPrivateDnsZone(privateZoneName, cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +258,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> An async collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PrivateDnsZoneResource> GetPrivateDnsZonesAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateDnsZonesAsync(top, cancellationToken);
+            return GetPrivateDnsSubscriptionMockingExtension(subscriptionResource).GetPrivateDnsZonesAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -336,7 +280,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> A collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PrivateDnsZoneResource> GetPrivateDnsZones(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateDnsZones(top, cancellationToken);
+            return GetPrivateDnsSubscriptionMockingExtension(subscriptionResource).GetPrivateDnsZones(top, cancellationToken);
         }
     }
 }
