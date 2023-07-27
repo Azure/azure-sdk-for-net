@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CustomerInsights.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CustomerInsights
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.CustomerInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.CustomerInsights. </summary>
     public static partial class CustomerInsightsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CustomerInsightsArmClientMockingExtension GetCustomerInsightsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new CustomerInsightsArmClientMockingExtension(client);
+            });
+        }
+
+        private static CustomerInsightsResourceGroupMockingExtension GetCustomerInsightsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CustomerInsightsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static CustomerInsightsSubscriptionMockingExtension GetCustomerInsightsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new CustomerInsightsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region HubResource
         /// <summary>
         /// Gets an object representing a <see cref="HubResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="HubResource" /> object. </returns>
         public static HubResource GetHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HubResource.ValidateResourceId(id);
-                return new HubResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetHubResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ProfileResourceFormatResource" /> object. </returns>
         public static ProfileResourceFormatResource GetProfileResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProfileResourceFormatResource.ValidateResourceId(id);
-                return new ProfileResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetProfileResourceFormatResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="InteractionResourceFormatResource" /> object. </returns>
         public static InteractionResourceFormatResource GetInteractionResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                InteractionResourceFormatResource.ValidateResourceId(id);
-                return new InteractionResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetInteractionResourceFormatResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="RelationshipResourceFormatResource" /> object. </returns>
         public static RelationshipResourceFormatResource GetRelationshipResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RelationshipResourceFormatResource.ValidateResourceId(id);
-                return new RelationshipResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetRelationshipResourceFormatResource(id);
         }
         #endregion
 
@@ -135,12 +109,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="RelationshipLinkResourceFormatResource" /> object. </returns>
         public static RelationshipLinkResourceFormatResource GetRelationshipLinkResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RelationshipLinkResourceFormatResource.ValidateResourceId(id);
-                return new RelationshipLinkResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetRelationshipLinkResourceFormatResource(id);
         }
         #endregion
 
@@ -154,12 +123,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="AuthorizationPolicyResourceFormatResource" /> object. </returns>
         public static AuthorizationPolicyResourceFormatResource GetAuthorizationPolicyResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AuthorizationPolicyResourceFormatResource.ValidateResourceId(id);
-                return new AuthorizationPolicyResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetAuthorizationPolicyResourceFormatResource(id);
         }
         #endregion
 
@@ -173,12 +137,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ConnectorResourceFormatResource" /> object. </returns>
         public static ConnectorResourceFormatResource GetConnectorResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ConnectorResourceFormatResource.ValidateResourceId(id);
-                return new ConnectorResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetConnectorResourceFormatResource(id);
         }
         #endregion
 
@@ -192,12 +151,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ConnectorMappingResourceFormatResource" /> object. </returns>
         public static ConnectorMappingResourceFormatResource GetConnectorMappingResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ConnectorMappingResourceFormatResource.ValidateResourceId(id);
-                return new ConnectorMappingResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetConnectorMappingResourceFormatResource(id);
         }
         #endregion
 
@@ -211,12 +165,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="KpiResourceFormatResource" /> object. </returns>
         public static KpiResourceFormatResource GetKpiResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KpiResourceFormatResource.ValidateResourceId(id);
-                return new KpiResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetKpiResourceFormatResource(id);
         }
         #endregion
 
@@ -230,12 +179,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="WidgetTypeResourceFormatResource" /> object. </returns>
         public static WidgetTypeResourceFormatResource GetWidgetTypeResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WidgetTypeResourceFormatResource.ValidateResourceId(id);
-                return new WidgetTypeResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetWidgetTypeResourceFormatResource(id);
         }
         #endregion
 
@@ -249,12 +193,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ViewResourceFormatResource" /> object. </returns>
         public static ViewResourceFormatResource GetViewResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ViewResourceFormatResource.ValidateResourceId(id);
-                return new ViewResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetViewResourceFormatResource(id);
         }
         #endregion
 
@@ -268,12 +207,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="LinkResourceFormatResource" /> object. </returns>
         public static LinkResourceFormatResource GetLinkResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LinkResourceFormatResource.ValidateResourceId(id);
-                return new LinkResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetLinkResourceFormatResource(id);
         }
         #endregion
 
@@ -287,12 +221,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="RoleAssignmentResourceFormatResource" /> object. </returns>
         public static RoleAssignmentResourceFormatResource GetRoleAssignmentResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RoleAssignmentResourceFormatResource.ValidateResourceId(id);
-                return new RoleAssignmentResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetRoleAssignmentResourceFormatResource(id);
         }
         #endregion
 
@@ -306,12 +235,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="PredictionResourceFormatResource" /> object. </returns>
         public static PredictionResourceFormatResource GetPredictionResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PredictionResourceFormatResource.ValidateResourceId(id);
-                return new PredictionResourceFormatResource(client, id);
-            }
-            );
+            return GetCustomerInsightsArmClientMockingExtension(client).GetPredictionResourceFormatResource(id);
         }
         #endregion
 
@@ -320,7 +244,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of HubResources and their operations over a HubResource. </returns>
         public static HubCollection GetHubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHubs();
+            return GetCustomerInsightsResourceGroupMockingExtension(resourceGroupResource).GetHubs();
         }
 
         /// <summary>
@@ -344,7 +268,7 @@ namespace Azure.ResourceManager.CustomerInsights
         [ForwardsClientCalls]
         public static async Task<Response<HubResource>> GetHubAsync(this ResourceGroupResource resourceGroupResource, string hubName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHubs().GetAsync(hubName, cancellationToken).ConfigureAwait(false);
+            return await GetCustomerInsightsResourceGroupMockingExtension(resourceGroupResource).GetHubAsync(hubName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -368,7 +292,7 @@ namespace Azure.ResourceManager.CustomerInsights
         [ForwardsClientCalls]
         public static Response<HubResource> GetHub(this ResourceGroupResource resourceGroupResource, string hubName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHubs().Get(hubName, cancellationToken);
+            return GetCustomerInsightsResourceGroupMockingExtension(resourceGroupResource).GetHub(hubName, cancellationToken);
         }
 
         /// <summary>
@@ -389,7 +313,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HubResource> GetHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHubsAsync(cancellationToken);
+            return GetCustomerInsightsSubscriptionMockingExtension(subscriptionResource).GetHubsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -410,7 +334,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HubResource> GetHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHubs(cancellationToken);
+            return GetCustomerInsightsSubscriptionMockingExtension(subscriptionResource).GetHubs(cancellationToken);
         }
     }
 }
