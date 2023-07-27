@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 using NUnit.Framework;
 
@@ -17,7 +15,9 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-        private static AzureLocation Location = new AzureLocation("uksouth", "UK South");
+        private ElasticPoolCollection collection;
+        private static AzureLocation Location = AzureLocation.UKSouth;
+        private static SqlAlwaysEncryptedEnclaveType[] enclaveTypes = { SqlAlwaysEncryptedEnclaveType.Default, SqlAlwaysEncryptedEnclaveType.Vbs };
 
         public ElasticPoolTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             ArmClientOptions options = new ArmClientOptions();
             var client = GetArmClient(options);
             _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
+
+            // create Sql Server
+            string serverName = Recording.GenerateAssetName("sql-server-");
+            var sqlServer = await CreateDefaultSqlServer(serverName, Location, _resourceGroup);
+            collection = sqlServer.GetElasticPools();
         }
 
         [TearDown]
@@ -55,11 +60,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [RecordedTest]
         public async Task ElasticPoolApiTests()
         {
-            // create Sql Server
-            string serverName = Recording.GenerateAssetName("sql-server-");
-            var sqlServer = await CreateDefaultSqlServer(serverName, Location, _resourceGroup);
-            var collection = sqlServer.GetElasticPools();
-
             string poolName1 = Recording.GenerateAssetName("sql-pool-");
             string poolName2 = Recording.GenerateAssetName("sql-pool-");
 
@@ -105,17 +105,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [RecordedTest]
         public async Task ElasticPoolApiTestsWithEnclaves()
         {
-            // create Sql Server
-            string serverName = Recording.GenerateAssetName("sql-server-");
-            var sqlServer = await CreateDefaultSqlServer(serverName, Location, _resourceGroup);
-            SqlAlwaysEncryptedEnclaveType[] enclaveTypes = { SqlAlwaysEncryptedEnclaveType.Default, SqlAlwaysEncryptedEnclaveType.Vbs };
-
             foreach (SqlAlwaysEncryptedEnclaveType enclaveType in enclaveTypes)
             {
                 string preferredEnclaveType = enclaveType.ToString();
                 string poolName1 = Recording.GenerateAssetName($"sql-pool-{preferredEnclaveType}-");
                 string poolName2 = Recording.GenerateAssetName($"sql-pool-{preferredEnclaveType}-");
-                var collection = sqlServer.GetElasticPools();
 
                 // 1.CreateOrUpdate
                 ElasticPoolData data = new ElasticPoolData(Location)
