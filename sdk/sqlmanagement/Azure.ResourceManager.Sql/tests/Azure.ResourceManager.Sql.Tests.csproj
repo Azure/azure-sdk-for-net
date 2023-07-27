@@ -1,7 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Platforms>AnyCPU;x64</Platforms>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Sql.csproj" />
     <PackageReference Include="Azure.ResourceManager.Network" />
