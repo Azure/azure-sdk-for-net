@@ -7,10 +7,11 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Serialization;
+using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Animal : IUtf8JsonSerializable, IModelSerializable
+    public class Animal : IUtf8JsonSerializable, IJsonModelSerializable<Animal>, IJsonModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -46,20 +47,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<Animal>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        void IJsonModelSerializable<Animal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             if (options.Format == ModelSerializerFormat.Json)
             {
@@ -87,13 +80,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
             }
             writer.WriteEndObject();
-            writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
         }
 
-        internal static Animal DeserializeAnimal(JsonElement element, ModelSerializerOptions options)
+        internal static Animal DeserializeAnimal(JsonElement element, ModelSerializerOptions? options = default)
         {
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+
             double weight = default;
             string name = "";
             string latinName = "";
@@ -123,7 +115,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     continue;
                 }
 
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Value.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -135,11 +127,30 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         #region InterfaceImplementation
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        Animal IModelSerializable<Animal>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             return DeserializeAnimal(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
+        Animal IJsonModelSerializable<Animal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnimal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Animal>.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
+        }
+
         #endregion
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<Animal>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<Animal>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<Animal>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<Animal>)this).Serialize(options);
     }
 }

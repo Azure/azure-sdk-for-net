@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Reflection;
 
 namespace Azure.Core.Serialization
@@ -19,56 +18,89 @@ namespace Azure.Core.Serialization
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
-            // if options.Serializers is set and the model is in the dictionary, use the serializer
-            if (options != null)
-            {
-                ObjectSerializer? serializer;
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
 
-                if (options.Serializers.TryGetValue(typeof(T), out serializer))
-                {
-                    return serializer.Serialize(model);
-                }
-            }
-            return model.Serialize(options ?? new ModelSerializerOptions());
+            var serializer = options.Value.UnknownTypeSerializationFallback is not null ? options.Value.UnknownTypeSerializationFallback(typeof(T)) : null;
+            if (serializer is not null)
+                return serializer.Serialize(model);
+
+            return model.Serialize(options.Value);
+        }
+
+        /// <summary>
+        /// Serialize a model.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public static BinaryData Serialize(object model, ModelSerializerOptions? options = default)
+        {
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+
+            var iModel = model as IModelSerializable;
+            if (iModel is null)
+                throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable)}");
+
+            var serializer = options.Value.UnknownTypeSerializationFallback is not null ? options.Value.UnknownTypeSerializationFallback(model.GetType()) : null;
+            if (serializer is not null)
+                return serializer.Serialize(model);
+
+            return iModel.Serialize(options.Value);
         }
 
         /// <summary>
         /// Serialize a XML model. Todo: collapse this method when working - need compile check over runtime
         /// </summary>
         /// <returns></returns>
-        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable<T>
         {
-            return (T)Deserialize(data, typeof(T), options);
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+
+            var genericDeserialize = GenericDeserialize(data, typeof(T), options.Value);
+            if (genericDeserialize is not null)
+                return (T)genericDeserialize;
+
+            var model = Activator.CreateInstance(typeof(T), true) as IModelSerializable<T>;
+
+            return model!.Deserialize(data, options.Value);
         }
 
-        internal static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions? options = default)
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="typeToConvert"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions? options = default)
         {
-            if (options != null)
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+
+            var genericDeserialize = GenericDeserialize(data, typeToConvert, options.Value);
+            if (genericDeserialize is not null)
+                return genericDeserialize;
+
+            var model = Activator.CreateInstance(typeToConvert, true) as IModelSerializable;
+
+            return model!.Deserialize(data, options.Value);
+        }
+
+        private static object? GenericDeserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
+        {
+            var serializer = options.UnknownTypeSerializationFallback is not null ? options.UnknownTypeSerializationFallback(typeToConvert) : null;
+            if (serializer is not null)
             {
-                ObjectSerializer? serializer;
-
-                if (options.Serializers.TryGetValue(typeToConvert, out serializer))
-                {
-                    var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);
-                    if (obj is null)
-                        throw new InvalidOperationException();
-                    else
-                        return obj;
-                }
+                var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);
+                return obj ?? throw new InvalidOperationException();
             }
-
-            options ??= new ModelSerializerOptions();
 
             if (typeToConvert.IsAbstract)
                 return DeserializeObject(data, typeToConvert, options);
 
-            IModelSerializable? model = Activator.CreateInstance(typeToConvert, true) as IModelSerializable;
-            if (model is null)
-                throw new InvalidOperationException($"{typeToConvert.Name} does not implement {nameof(IModelSerializable)}.");
-
-            return model.Deserialize(data, options);
+            return null;
         }
 
         private static readonly Type[] _combinedDeserializeMethodParameters = new Type[] { typeof(BinaryData), typeof(ModelSerializerOptions) };

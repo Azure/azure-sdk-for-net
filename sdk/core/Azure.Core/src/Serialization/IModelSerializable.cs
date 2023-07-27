@@ -2,26 +2,30 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 
 namespace Azure.Core.Serialization
 {
     /// <summary>
     /// TODO
     /// </summary>
-    public interface IModelSerializable
+    public interface IModelSerializable<out T>
     {
-        /// <summary>
-        /// .
-        /// </summary>
-        BinaryData Serialize(ModelSerializerOptions options);
-
         /// <summary>
         /// .
         /// </summary>
         /// <param name="data"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        object Deserialize(BinaryData data, ModelSerializerOptions options);
+        T Deserialize(BinaryData data, ModelSerializerOptions options);
+
+        /// <summary>
+        /// .
+        /// </summary>
+        BinaryData Serialize(ModelSerializerOptions options);
     }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    public interface IModelSerializable : IModelSerializable<object> { }
 }

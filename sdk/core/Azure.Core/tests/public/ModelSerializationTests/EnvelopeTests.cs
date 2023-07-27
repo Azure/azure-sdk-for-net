@@ -23,12 +23,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "}";
 
             StringBuilder expectedSerialized = new StringBuilder("{");
-            if (format.Equals(ModelSerializerFormat.Json))
+            if (format == ModelSerializerFormat.Json)
             {
                 expectedSerialized.Append("\"readOnlyProperty\":\"read\",");
             }
             expectedSerialized.Append("\"modelA\":{");
-            if (format.Equals(ModelSerializerFormat.Json))
+            if (format == ModelSerializerFormat.Json)
             {
                 expectedSerialized.Append("\"latinName\":\"Felis catus\",\"hasWhiskers\":false,");
             }
@@ -45,14 +45,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 {
                     ContractResolver = new IgnoreReadOnlyPropertiesResolver()
                 };
-                options.Serializers.Add(typeof(ModelC), new NewtonsoftJsonObjectSerializer(settings));
+                options.UnknownTypeSerializationFallback = type => type.Equals(typeof(ModelC)) ? new NewtonsoftJsonObjectSerializer(settings) : null;
             }
             else
-                options.Serializers.Add(typeof(ModelC), new NewtonsoftJsonObjectSerializer());
+            {
+                options.UnknownTypeSerializationFallback = type => type.Equals(typeof(ModelC)) ? new NewtonsoftJsonObjectSerializer() : null;
+            }
 
             Envelope<ModelC> model = ModelSerializer.Deserialize<Envelope<ModelC>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
-            if (format.Equals(ModelSerializerFormat.Json))
+            if (format == ModelSerializerFormat.Json)
             {
                 Assert.That(model.ReadOnlyProperty, Is.EqualTo("read"));
             }

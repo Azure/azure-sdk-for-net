@@ -3,13 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class CatReadOnlyProperty : Animal, IModelSerializable, IUtf8JsonSerializable
+    public class CatReadOnlyProperty : Animal, IJsonModelSerializable<CatReadOnlyProperty>, IUtf8JsonSerializable, IJsonModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -30,20 +29,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<CatReadOnlyProperty>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        void IJsonModelSerializable<CatReadOnlyProperty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             if (options.Format == ModelSerializerFormat.Json)
             {
@@ -74,13 +65,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
             }
             writer.WriteEndObject();
-            writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
         }
 
-        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions options)
+        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions? options = default)
         {
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+
             double weight = default;
             string name = "";
             string latinName = "";
@@ -116,7 +106,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     hasWhiskers = property.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Value.Format == ModelSerializerFormat.Json)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -125,11 +115,28 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return new CatReadOnlyProperty(weight, latinName, name, isHungry, hasWhiskers, rawData);
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        CatReadOnlyProperty IModelSerializable<CatReadOnlyProperty>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             return DeserializeCatReadOnlyProperty(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
+        CatReadOnlyProperty IJsonModelSerializable<CatReadOnlyProperty>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCatReadOnlyProperty(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CatReadOnlyProperty>.Serialize(ModelSerializerOptions options) =>
+            ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
+
         #endregion
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<CatReadOnlyProperty>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<CatReadOnlyProperty>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<CatReadOnlyProperty>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<CatReadOnlyProperty>)this).Serialize(options);
     }
 }

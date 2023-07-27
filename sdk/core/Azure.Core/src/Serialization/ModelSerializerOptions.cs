@@ -2,25 +2,30 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Core.Serialization
 {
     /// <summary>
     /// Provides the client options for serializing models.
     /// </summary>
-    public class ModelSerializerOptions
+    public struct ModelSerializerOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class using a default for of <see cref="ModelSerializerFormat.Json"/>.
+        /// Delegate to specify a specific <see cref="ObjectSerializer"/> for a given <see cref="Type"/>.
         /// </summary>
-        public ModelSerializerOptions()
-            : this(ModelSerializerFormat.JsonValue) { }
+        /// <param name="type">The <see cref="Type"/> to look up.</param>
+        /// <returns></returns>
+        public delegate ObjectSerializer? ObjectSerializerFactory(Type type);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class. Defaults to Data format <see cref="ModelSerializerFormat.Json"/>.
+        /// </summary>
+        public ModelSerializerOptions() : this(ModelSerializerFormat.Json) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class.
         /// </summary>
-        /// <param name="format"> The format to serialize to and deserialize from. </param>
+        /// <param name="format">String that determines Format of serialized model..</param>
         public ModelSerializerOptions(ModelSerializerFormat format)
         {
             Format = format;
@@ -32,8 +37,9 @@ namespace Azure.Core.Serialization
         public ModelSerializerFormat Format { get; }
 
         /// <summary>
-        /// Dictionary that holds all the serializers for the different model types.
+        /// Gets or sets a factory method that returns an <see cref="ObjectSerializer"/> based on the provided <see cref="Type"/>.
+        /// Should return null if the type is not supported.
         /// </summary>
-        public Dictionary<Type, ObjectSerializer> Serializers { get; } = new Dictionary<Type, ObjectSerializer>();
+        public ObjectSerializerFactory? UnknownTypeSerializationFallback { get; set; }
     }
 }

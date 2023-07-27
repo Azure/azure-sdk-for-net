@@ -4,15 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using Azure.Core.Serialization;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Envelope<T> : IModelSerializable, IUtf8JsonSerializable
+    public class Envelope<T> : IJsonModelSerializable<Envelope<T>>, IUtf8JsonSerializable, IJsonModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -39,20 +36,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public T ModelT { get; set; }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<Envelope<T>>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        void IJsonModelSerializable<Envelope<T>>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             if (options.Format == ModelSerializerFormat.Json)
             {
@@ -61,12 +50,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
 
             writer.WritePropertyName("modelA"u8);
-            BinaryData data = ((IModelSerializable)ModelA).Serialize(options);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
+            ((IJsonModelSerializable)ModelA).Serialize(writer, options);
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 
@@ -84,13 +68,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
             }
             writer.WriteEndObject();
-            writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
         }
 
-        internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions options)
+        internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions? options = default)
         {
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
             T modelC = default(T);
@@ -105,16 +88,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
                 if (property.NameEquals("modelA"u8))
                 {
-                    modelA = CatReadOnlyProperty.DeserializeCatReadOnlyProperty(property.Value, options);
+                    modelA = CatReadOnlyProperty.DeserializeCatReadOnlyProperty(property.Value, options.Value);
                     continue;
                 }
                 if (property.NameEquals("modelC"u8))
                 {
-                    modelC = DeserializeT(property.Value, options);
+                    modelC = DeserializeT(property.Value, options.Value);
                     continue;
                 }
 
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Value.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an modelC property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -136,14 +119,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private static ObjectSerializer GetObjectSerializer(ModelSerializerOptions options)
         {
-            ObjectSerializer serializer;
-            if (options.Serializers.TryGetValue(typeof(T), out serializer))
-            {
-                // serializer is from the dictionary
-                return serializer;
-            }
-            // default
-            return JsonObjectSerializer.Default;
+            var serializer = options.UnknownTypeSerializationFallback is not null ? options.UnknownTypeSerializationFallback(typeof(T)) : null;
+            return serializer ?? JsonObjectSerializer.Default;
         }
 
         private static T DeserializeT(JsonElement element, ModelSerializerOptions options)
@@ -157,10 +134,29 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return (T)serializer.Deserialize(m, typeof(T), default);
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        Envelope<T> IModelSerializable<Envelope<T>>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             return DeserializeEnvelope(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
+
+        Envelope<T> IJsonModelSerializable<Envelope<T>>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEnvelope(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Envelope<T>>.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
+        }
         #endregion
+
+        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<Envelope<T>>)this).Serialize(writer, options);
+
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<Envelope<T>>)this).Deserialize(ref reader, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<Envelope<T>>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<Envelope<T>>)this).Serialize(options);
     }
 }

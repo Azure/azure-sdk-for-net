@@ -14,7 +14,7 @@ using System.Collections.Generic;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    internal class XmlModelForCombinedInterface : IXmlSerializable, IModelSerializable
+    internal class XmlModelForCombinedInterface : IXmlSerializable, IXmlModelSerializable<XmlModelForCombinedInterface>, IXmlModelSerializable
     {
         public XmlModelForCombinedInterface() { }
 
@@ -42,10 +42,21 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions());
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
+            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
 
-        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions options = default)
+        void IXmlModelSerializable<XmlModelForCombinedInterface>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
+            if (options.Format != ModelSerializerFormat.Wire)
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IXmlModelSerializable)} interface");
+
+            Serialize(writer, options, null);
+        }
+
+        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions? options = default)
+        {
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+
             string key = default;
             string value = default;
             string readOnlyProperty = default;
@@ -64,9 +75,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
         }
 
-        private void Serialize(XmlWriter writer, ModelSerializerOptions options)
+        private void Serialize(XmlWriter writer, ModelSerializerOptions options, string nameHint)
         {
-            writer.WriteStartElement("Tag");
+            writer.WriteStartElement(nameHint ?? "Tag");
             writer.WriteStartElement("Key");
             writer.WriteValue(Key);
             writer.WriteEndElement();
@@ -97,30 +108,23 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<XmlModelForCombinedInterface>.Serialize(ModelSerializerOptions options)
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
-                MemoryStream stream = new MemoryStream();
-                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-                Serialize(writer, options);
-                writer.Flush();
-                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                return ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
             }
             if (options.Format == ModelSerializerFormat.Wire)
             {
-                MemoryStream stream = new MemoryStream();
-                XmlWriter writer = XmlWriter.Create(stream);
-                Serialize(writer, options);
-                writer.Flush();
-                stream.Position = 0;
-                return new BinaryData(stream.ToArray());
+                return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options, null); });
             }
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
-        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelSerializerOptions options)
+        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelSerializerOptions? options = default)
         {
+            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+
             string key = default;
             string value = default;
             string readOnlyProperty = default;
@@ -147,7 +151,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
         }
 
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        XmlModelForCombinedInterface IModelSerializable<XmlModelForCombinedInterface>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
@@ -160,5 +164,15 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             }
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
+
+        void IXmlModelSerializable<object>.Serialize(XmlWriter writer, ModelSerializerOptions options) => ((IXmlModelSerializable<XmlModelForCombinedInterface>)this).Serialize(writer, options);
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<XmlModelForCombinedInterface>)this).Deserialize(data, options);
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<XmlModelForCombinedInterface>)this).Serialize(options);
+
+        XmlModelForCombinedInterface IXmlModelSerializable<XmlModelForCombinedInterface>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(root, options);
+
+        object IXmlModelSerializable<object>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(root, options);
     }
 }
