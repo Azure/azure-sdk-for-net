@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Marketplace.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Marketplace
@@ -18,21 +19,22 @@ namespace Azure.ResourceManager.Marketplace
     /// <summary> A class to add extension methods to Azure.ResourceManager.Marketplace. </summary>
     public static partial class MarketplaceExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static MarketplaceArmClientMockingExtension GetMarketplaceArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
+            return client.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new MarketplaceArmClientMockingExtension(client);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MarketplaceTenantMockingExtension GetMarketplaceTenantMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new MarketplaceTenantMockingExtension(client, resource.Id);
             });
         }
+
         #region PrivateStoreResource
         /// <summary>
         /// Gets an object representing a <see cref="PrivateStoreResource" /> along with the instance operations that can be performed on it but with no data.
@@ -43,12 +45,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="PrivateStoreResource" /> object. </returns>
         public static PrivateStoreResource GetPrivateStoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PrivateStoreResource.ValidateResourceId(id);
-                return new PrivateStoreResource(client, id);
-            }
-            );
+            return GetMarketplaceArmClientMockingExtension(client).GetPrivateStoreResource(id);
         }
         #endregion
 
@@ -62,12 +59,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="MarketplaceApprovalRequestResource" /> object. </returns>
         public static MarketplaceApprovalRequestResource GetMarketplaceApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MarketplaceApprovalRequestResource.ValidateResourceId(id);
-                return new MarketplaceApprovalRequestResource(client, id);
-            }
-            );
+            return GetMarketplaceArmClientMockingExtension(client).GetMarketplaceApprovalRequestResource(id);
         }
         #endregion
 
@@ -81,12 +73,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="MarketplaceAdminApprovalRequestResource" /> object. </returns>
         public static MarketplaceAdminApprovalRequestResource GetMarketplaceAdminApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MarketplaceAdminApprovalRequestResource.ValidateResourceId(id);
-                return new MarketplaceAdminApprovalRequestResource(client, id);
-            }
-            );
+            return GetMarketplaceArmClientMockingExtension(client).GetMarketplaceAdminApprovalRequestResource(id);
         }
         #endregion
 
@@ -100,12 +87,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="PrivateStoreCollectionInfoResource" /> object. </returns>
         public static PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PrivateStoreCollectionInfoResource.ValidateResourceId(id);
-                return new PrivateStoreCollectionInfoResource(client, id);
-            }
-            );
+            return GetMarketplaceArmClientMockingExtension(client).GetPrivateStoreCollectionInfoResource(id);
         }
         #endregion
 
@@ -119,12 +101,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="PrivateStoreOfferResource" /> object. </returns>
         public static PrivateStoreOfferResource GetPrivateStoreOfferResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PrivateStoreOfferResource.ValidateResourceId(id);
-                return new PrivateStoreOfferResource(client, id);
-            }
-            );
+            return GetMarketplaceArmClientMockingExtension(client).GetPrivateStoreOfferResource(id);
         }
         #endregion
 
@@ -133,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An object representing collection of PrivateStoreResources and their operations over a PrivateStoreResource. </returns>
         public static PrivateStoreCollection GetPrivateStores(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetPrivateStores();
+            return GetMarketplaceTenantMockingExtension(tenantResource).GetPrivateStores();
         }
 
         /// <summary>
@@ -155,7 +132,7 @@ namespace Azure.ResourceManager.Marketplace
         [ForwardsClientCalls]
         public static async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetPrivateStores().GetAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
+            return await GetMarketplaceTenantMockingExtension(tenantResource).GetPrivateStoreAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -177,7 +154,7 @@ namespace Azure.ResourceManager.Marketplace
         [ForwardsClientCalls]
         public static Response<PrivateStoreResource> GetPrivateStore(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetPrivateStores().Get(privateStoreId, cancellationToken);
+            return GetMarketplaceTenantMockingExtension(tenantResource).GetPrivateStore(privateStoreId, cancellationToken);
         }
     }
 }
