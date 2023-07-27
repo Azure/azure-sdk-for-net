@@ -1,6 +1,6 @@
 # Azure Quantum Jobs client library for .NET
 
-Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library to:
+Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library to:
 - Create, enumerate, and cancel quantum jobs
 - Enumerate provider status and quotas
 
@@ -69,7 +69,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 Create an instance of the QuantumJobClient by passing in these parameters:
 - [Subscription][subscriptions] - looks like XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX and can be found in your list of subscriptions on azure
 - [Resource Group][resource-groups] - a container that holds related resources for an Azure solution
-- [Workspace][workspaces] - a collection of assets associated with running quantum or optimization applications
+- [Workspace][workspaces] - a collection of assets associated with running quantum
 - [Location][location] - choose the best data center by geographical region
 - [StorageContainerName][blob-storage] - your blob storage
 - [Credential][credentials] - used to authenticate
