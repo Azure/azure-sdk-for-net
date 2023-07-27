@@ -15,7 +15,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
-    public partial class Sample_NetworkInterfaceCollection
+    public partial class Sample_NetworkDeviceInterfaceCollection
     {
         // NetworkInterfaces_Create_MaximumSet_Gen
         [NUnit.Framework.Test]
@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
-            // get the collection of this NetworkInterfaceResource
-            NetworkInterfaceCollection collection = networkDevice.GetNetworkInterfaces();
+            // get the collection of this NetworkDeviceInterfaceResource
+            NetworkDeviceInterfaceCollection collection = networkDevice.GetNetworkDeviceInterfaces();
 
             // invoke the operation
             string networkInterfaceName = "example-interface";
-            NetworkInterfaceData data = new NetworkInterfaceData()
+            NetworkDeviceInterfaceData data = new NetworkDeviceInterfaceData()
             {
                 Annotation = "annotation",
             };
-            ArmOperation<NetworkInterfaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, data);
-            NetworkInterfaceResource result = lro.Value;
+            ArmOperation<NetworkDeviceInterfaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, data);
+            NetworkDeviceInterfaceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetworkInterfaceData resourceData = result.Data;
+            NetworkDeviceInterfaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
-            // get the collection of this NetworkInterfaceResource
-            NetworkInterfaceCollection collection = networkDevice.GetNetworkInterfaces();
+            // get the collection of this NetworkDeviceInterfaceResource
+            NetworkDeviceInterfaceCollection collection = networkDevice.GetNetworkDeviceInterfaces();
 
             // invoke the operation
             string networkInterfaceName = "example-interface";
-            NetworkInterfaceResource result = await collection.GetAsync(networkInterfaceName);
+            NetworkDeviceInterfaceResource result = await collection.GetAsync(networkInterfaceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetworkInterfaceData resourceData = result.Data;
+            NetworkDeviceInterfaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
-            // get the collection of this NetworkInterfaceResource
-            NetworkInterfaceCollection collection = networkDevice.GetNetworkInterfaces();
+            // get the collection of this NetworkDeviceInterfaceResource
+            NetworkDeviceInterfaceCollection collection = networkDevice.GetNetworkDeviceInterfaces();
 
             // invoke the operation
             string networkInterfaceName = "example-interface";
@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
-            // get the collection of this NetworkInterfaceResource
-            NetworkInterfaceCollection collection = networkDevice.GetNetworkInterfaces();
+            // get the collection of this NetworkDeviceInterfaceResource
+            NetworkDeviceInterfaceCollection collection = networkDevice.GetNetworkDeviceInterfaces();
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkInterfaceResource item in collection.GetAllAsync())
+            await foreach (NetworkDeviceInterfaceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkInterfaceData resourceData = item.Data;
+                NetworkDeviceInterfaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

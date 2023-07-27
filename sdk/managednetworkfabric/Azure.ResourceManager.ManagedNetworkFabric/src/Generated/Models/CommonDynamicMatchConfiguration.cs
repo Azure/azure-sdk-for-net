@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of CommonDynamicMatchConfiguration. </summary>
         public CommonDynamicMatchConfiguration()
         {
-            IPGroups = new ChangeTrackingList<IPGroupProperties>();
+            IPGroups = new ChangeTrackingList<MatchConfigurationIPGroupProperties>();
             VlanGroups = new ChangeTrackingList<VlanGroupProperties>();
             PortGroups = new ChangeTrackingList<PortGroupProperties>();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipGroups"> List of IP Groups. </param>
         /// <param name="vlanGroups"> List of vlan groups. </param>
         /// <param name="portGroups"> List of the port group. </param>
-        internal CommonDynamicMatchConfiguration(IList<IPGroupProperties> ipGroups, IList<VlanGroupProperties> vlanGroups, IList<PortGroupProperties> portGroups)
+        internal CommonDynamicMatchConfiguration(IList<MatchConfigurationIPGroupProperties> ipGroups, IList<VlanGroupProperties> vlanGroups, IList<PortGroupProperties> portGroups)
         {
             IPGroups = ipGroups;
             VlanGroups = vlanGroups;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of IP Groups. </summary>
-        public IList<IPGroupProperties> IPGroups { get; }
+        public IList<MatchConfigurationIPGroupProperties> IPGroups { get; }
         /// <summary> List of vlan groups. </summary>
         public IList<VlanGroupProperties> VlanGroups { get; }
         /// <summary> List of the port group. </summary>

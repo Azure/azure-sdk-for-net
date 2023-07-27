@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     }
                 },
                 IsMonitoringEnabled = IsMonitoringEnabled.True,
-                Extension = Extension.NoExtension,
+                Extension = StaticRouteConfigurationExtension.NoExtension,
                 BgpConfiguration = new InternalNetworkPropertiesBgpConfiguration()
                 {
                     BfdConfiguration = new BfdConfiguration()
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
                 StaticRouteConfiguration = new InternalNetworkPropertiesStaticRouteConfiguration()
                 {
-                    Extension = Extension.NoExtension,
+                    Extension = StaticRouteConfigurationExtension.NoExtension,
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,

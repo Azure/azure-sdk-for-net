@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="prefixType"> IP Prefix Type. </param>
         /// <param name="ipPrefixValues"> The list of IP Prefixes. </param>
         /// <param name="ipGroupNames"> The List of IP Group Names that need to be matched. </param>
-        internal IPMatchCondition(SourceDestinationType? sourceDestinationType, PrefixType? prefixType, IList<string> ipPrefixValues, IList<string> ipGroupNames)
+        internal IPMatchCondition(SourceDestinationType? sourceDestinationType, IPMatchConditionPrefixType? prefixType, IList<string> ipPrefixValues, IList<string> ipGroupNames)
         {
             SourceDestinationType = sourceDestinationType;
             PrefixType = prefixType;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> IP Address type. </summary>
         public SourceDestinationType? SourceDestinationType { get; set; }
         /// <summary> IP Prefix Type. </summary>
-        public PrefixType? PrefixType { get; set; }
+        public IPMatchConditionPrefixType? PrefixType { get; set; }
         /// <summary> The list of IP Prefixes. </summary>
         public IList<string> IPPrefixValues { get; }
         /// <summary> The List of IP Group Names that need to be matched. </summary>

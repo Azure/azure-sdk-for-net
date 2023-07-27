@@ -113,7 +113,7 @@ Flags =
 {
 "established"
 },
-PortType = PortType.SourcePort,
+PortType = PortConditionType.SourcePort,
 Ports =
 {
 "1-20"
@@ -145,7 +145,7 @@ VlanGroupNames =
 IPCondition = new IPMatchCondition()
 {
 SourceDestinationType = SourceDestinationType.SourceIP,
-PrefixType = PrefixType.Prefix,
+PrefixType = IPMatchConditionPrefixType.Prefix,
 IPPrefixValues =
 {
 "10.20.20.20/12"
@@ -173,7 +173,7 @@ new CommonDynamicMatchConfiguration()
 {
 IPGroups =
 {
-new IPGroupProperties()
+new MatchConfigurationIPGroupProperties()
 {
 Name = "example-ipGroup",
 IPAddressType = IPAddressType.IPv4,

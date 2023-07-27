@@ -91,7 +91,7 @@ new NetworkTapRuleMatchCondition()
 EncapsulationType = EncapsulationType.None,
 PortCondition = new PortCondition(Layer4Protocol.TCP)
 {
-PortType = PortType.SourcePort,
+PortType = PortConditionType.SourcePort,
 Ports =
 {
 "100"
@@ -123,7 +123,7 @@ VlanGroupNames =
 IPCondition = new IPMatchCondition()
 {
 SourceDestinationType = SourceDestinationType.SourceIP,
-PrefixType = PrefixType.Prefix,
+PrefixType = IPMatchConditionPrefixType.Prefix,
 IPPrefixValues =
 {
 "10.10.10.10/20"
@@ -154,7 +154,7 @@ new CommonDynamicMatchConfiguration()
 {
 IPGroups =
 {
-new IPGroupProperties()
+new MatchConfigurationIPGroupProperties()
 {
 Name = "example-ipGroup1",
 IPAddressType = IPAddressType.IPv4,

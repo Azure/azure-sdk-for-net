@@ -14,7 +14,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -47,6 +47,22 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  NetworkInterface: NetworkDeviceInterface
+  Action: InternetGatewayRuleAction
+  Condition: IPPrefixRuleCondition
+  Extension: StaticRouteConfigurationExtension
+  GatewayType: InternetGatewayType
+  FabricSkuType: NetworkFabricSkuType
+  InterfaceType: NetworkDeviceInterfaceType
+  NetworkInterfacePatch: NetworkDeviceInterfacePatch
+  NetworkInterfacesList: NetworkDeviceInterfacesList
+  IpGroupProperties: MatchConfigurationIPGroupProperties
+  NfcSku: NetworkFabricControllerSKU
+  PollingType: NetworkTapPollingType
+  PortType: PortConditionType
+  PrefixType: IPMatchConditionPrefixType
+
 directive:
   - from: NetworkFabricControllers.json
     where: $.definitions
@@ -63,11 +79,6 @@ directive:
     where: $.parameters
     transform: >
       delete $.SubscriptionIdParameter.format;
-
-  - from: InternetGatewayRules.json
-    where: $.definitions.RuleProperties.properties.action
-    transform: >
-      $['x-ms-enum']['name'] = 'InternetGatewayRuleAction';
 
   # Removing the operations that are not allowed for the end users.
   - remove-operation: InternetGateways_Delete

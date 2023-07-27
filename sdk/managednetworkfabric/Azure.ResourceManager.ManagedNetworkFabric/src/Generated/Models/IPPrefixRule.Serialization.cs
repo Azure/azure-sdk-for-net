@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             CommunityActionType action = default;
             long sequenceNumber = default;
             string networkPrefix = default;
-            Optional<Condition> condition = default;
+            Optional<IPPrefixRuleCondition> condition = default;
             Optional<string> subnetMaskLength = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    condition = new Condition(property.Value.GetString());
+                    condition = new IPPrefixRuleCondition(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subnetMaskLength"u8))

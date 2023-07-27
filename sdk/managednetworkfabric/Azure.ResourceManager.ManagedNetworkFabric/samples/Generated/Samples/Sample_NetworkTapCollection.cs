@@ -64,7 +64,7 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
             })
             {
                 Annotation = "annotation",
-                PollingType = PollingType.Pull,
+                PollingType = NetworkTapPollingType.Pull,
                 Tags =
 {
 ["key6024"] = "1234",

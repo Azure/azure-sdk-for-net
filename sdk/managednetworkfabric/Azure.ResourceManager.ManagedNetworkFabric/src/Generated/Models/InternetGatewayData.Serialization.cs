@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<ResourceIdentifier> internetGatewayRuleId = default;
             Optional<string> ipv4Address = default;
             Optional<int> port = default;
-            GatewayType type0 = default;
+            InternetGatewayType type0 = default;
             ResourceIdentifier networkFabricControllerId = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("type"u8))
                         {
-                            type0 = new GatewayType(property0.Value.GetString());
+                            type0 = new InternetGatewayType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkFabricControllerId"u8))

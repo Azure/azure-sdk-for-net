@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
         /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
-        internal NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, ControllerServices infrastructureServices, ControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, bool? workloadManagementNetwork, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NfcSku? nfcSku, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, ControllerServices infrastructureServices, ControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, bool? workloadManagementNetwork, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             InfrastructureExpressRouteConnections = infrastructureExpressRouteConnections;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> IPv6 Network Fabric Controller Address Space. </summary>
         public string IPv6AddressSpace { get; set; }
         /// <summary> Network Fabric Controller SKU. </summary>
-        public NfcSku? NfcSku { get; set; }
+        public NetworkFabricControllerSKU? NfcSku { get; set; }
         /// <summary> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

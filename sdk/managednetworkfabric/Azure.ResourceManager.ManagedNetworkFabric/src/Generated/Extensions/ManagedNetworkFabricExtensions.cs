@@ -296,20 +296,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
         #endregion
 
-        #region NetworkInterfaceResource
+        #region NetworkDeviceInterfaceResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkDeviceInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkDeviceInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkDeviceInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkInterfaceResource" /> object. </returns>
-        public static NetworkInterfaceResource GetNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkDeviceInterfaceResource" /> object. </returns>
+        public static NetworkDeviceInterfaceResource GetNetworkDeviceInterfaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetworkInterfaceResource.ValidateResourceId(id);
-                return new NetworkInterfaceResource(client, id);
+                NetworkDeviceInterfaceResource.ValidateResourceId(id);
+                return new NetworkDeviceInterfaceResource(client, id);
             }
             );
         }

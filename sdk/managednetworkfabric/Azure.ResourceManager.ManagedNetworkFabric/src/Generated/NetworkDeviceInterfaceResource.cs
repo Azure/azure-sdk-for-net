@@ -18,46 +18,46 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
-    /// A Class representing a NetworkInterface along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkInterfaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkInterfaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkDeviceResource" /> using the GetNetworkInterface method.
+    /// A Class representing a NetworkDeviceInterface along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkDeviceInterfaceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetNetworkDeviceInterfaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkDeviceResource" /> using the GetNetworkDeviceInterface method.
     /// </summary>
-    public partial class NetworkInterfaceResource : ArmResource
+    public partial class NetworkDeviceInterfaceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkInterfaceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NetworkDeviceInterfaceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _networkInterfaceClientDiagnostics;
-        private readonly NetworkInterfacesRestOperations _networkInterfaceRestClient;
-        private readonly NetworkInterfaceData _data;
+        private readonly ClientDiagnostics _networkDeviceInterfaceNetworkInterfacesClientDiagnostics;
+        private readonly NetworkInterfacesRestOperations _networkDeviceInterfaceNetworkInterfacesRestClient;
+        private readonly NetworkDeviceInterfaceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceResource"/> class for mocking. </summary>
-        protected NetworkInterfaceResource()
+        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceInterfaceResource"/> class for mocking. </summary>
+        protected NetworkDeviceInterfaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkInterfaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "NetworkDeviceInterfaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetworkInterfaceResource(ArmClient client, NetworkInterfaceData data) : this(client, data.Id)
+        internal NetworkDeviceInterfaceResource(ArmClient client, NetworkDeviceInterfaceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceInterfaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkInterfaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkDeviceInterfaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string networkInterfaceApiVersion);
-            _networkInterfaceRestClient = new NetworkInterfacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceApiVersion);
+            _networkDeviceInterfaceNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string networkDeviceInterfaceNetworkInterfacesApiVersion);
+            _networkDeviceInterfaceNetworkInterfacesRestClient = new NetworkInterfacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkDeviceInterfaceNetworkInterfacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual NetworkInterfaceData Data
+        public virtual NetworkDeviceInterfaceData Data
         {
             get
             {
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkInterfaceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkDeviceInterfaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Get");
+            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _networkDeviceInterfaceNetworkInterfacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkDeviceInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkInterfaceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NetworkDeviceInterfaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Get");
+            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.Get");
             scope.Start();
             try
             {
-                var response = _networkInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _networkDeviceInterfaceNetworkInterfacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkDeviceInterfaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Delete");
+            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _networkInterfaceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkDeviceInterfaceNetworkInterfacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation(_networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Delete");
+            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.Delete");
             scope.Start();
             try
             {
-                var response = _networkInterfaceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _networkDeviceInterfaceNetworkInterfacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation(_networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -236,16 +236,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="patch"> NetworkInterface properties to update. Only tags are supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkInterfaceResource>> UpdateAsync(WaitUntil waitUntil, NetworkInterfacePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkDeviceInterfaceResource>> UpdateAsync(WaitUntil waitUntil, NetworkDeviceInterfacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Update");
+            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkInterfaceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkInterfaceResource>(new NetworkInterfaceOperationSource(Client), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkDeviceInterfaceNetworkInterfacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceInterfaceResource>(new NetworkDeviceInterfaceOperationSource(Client), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -274,16 +274,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="patch"> NetworkInterface properties to update. Only tags are supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NetworkInterfaceResource> Update(WaitUntil waitUntil, NetworkInterfacePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkDeviceInterfaceResource> Update(WaitUntil waitUntil, NetworkDeviceInterfacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.Update");
+            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.Update");
             scope.Start();
             try
             {
-                var response = _networkInterfaceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkInterfaceResource>(new NetworkInterfaceOperationSource(Client), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _networkDeviceInterfaceNetworkInterfacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceInterfaceResource>(new NetworkDeviceInterfaceOperationSource(Client), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -316,12 +316,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.UpdateAdministrativeState");
+            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
-                var response = await _networkInterfaceRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkDeviceInterfaceNetworkInterfacesRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -354,12 +354,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.UpdateAdministrativeState");
+            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.UpdateAdministrativeState");
             scope.Start();
             try
             {
-                var response = _networkInterfaceRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = _networkDeviceInterfaceNetworkInterfacesRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForStateUpdate>(new CommonPostActionResponseForStateUpdateOperationSource(), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

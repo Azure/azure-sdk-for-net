@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<SourceDestinationType> type = default;
-            Optional<PrefixType> prefixType = default;
+            Optional<IPMatchConditionPrefixType> prefixType = default;
             Optional<IList<string>> ipPrefixValues = default;
             Optional<IList<string>> ipGroupNames = default;
             foreach (var property in element.EnumerateObject())
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    prefixType = new PrefixType(property.Value.GetString());
+                    prefixType = new IPMatchConditionPrefixType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipPrefixValues"u8))

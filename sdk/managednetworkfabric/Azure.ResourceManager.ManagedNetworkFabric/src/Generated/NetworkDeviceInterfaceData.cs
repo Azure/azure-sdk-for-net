@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
-    /// A class representing the NetworkInterface data model.
+    /// A class representing the NetworkDeviceInterface data model.
     /// Defines the NetworkInterface resource.
     /// </summary>
-    public partial class NetworkInterfaceData : ResourceData
+    public partial class NetworkDeviceInterfaceData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
-        public NetworkInterfaceData()
+        /// <summary> Initializes a new instance of NetworkDeviceInterfaceData. </summary>
+        public NetworkDeviceInterfaceData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
+        /// <summary> Initializes a new instance of NetworkDeviceInterfaceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipv6Address"> IPv6Address of the interface. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        internal NetworkInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, InterfaceType? interfaceType, string ipv4Address, string ipv6Address, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
+        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, string ipv4Address, string ipv6Address, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
             PhysicalIdentifier = physicalIdentifier;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> The ARM resource id of the interface or compute server its connected to. </summary>
         public string ConnectedTo { get; }
         /// <summary> The Interface Type. Example: Management/Data. </summary>
-        public InterfaceType? InterfaceType { get; }
+        public NetworkDeviceInterfaceType? InterfaceType { get; }
         /// <summary> IPv4Address of the interface. </summary>
         public string IPv4Address { get; }
         /// <summary> IPv6Address of the interface. </summary>

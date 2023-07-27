@@ -77,7 +77,7 @@ Annotation = "annotation",
                 IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
                 EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
                 IsMonitoringEnabled = IsMonitoringEnabled.True,
-                Extension = Extension.NoExtension,
+                Extension = StaticRouteConfigurationExtension.NoExtension,
                 BgpConfiguration = new InternalNetworkPropertiesBgpConfiguration()
                 {
                     BfdConfiguration = new BfdConfiguration()
@@ -115,7 +115,7 @@ Address = "2fff::",
                 },
                 StaticRouteConfiguration = new InternalNetworkPropertiesStaticRouteConfiguration()
                 {
-                    Extension = Extension.NoExtension,
+                    Extension = StaticRouteConfigurationExtension.NoExtension,
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,

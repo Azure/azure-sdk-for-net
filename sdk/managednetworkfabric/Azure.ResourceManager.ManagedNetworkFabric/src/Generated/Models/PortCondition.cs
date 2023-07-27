@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>
         /// <param name="portGroupNames"> List of the port Group Names that to be matched. </param>
-        internal PortCondition(PortType? portType, Layer4Protocol layer4Protocol, IList<string> ports, IList<string> portGroupNames)
+        internal PortCondition(PortConditionType? portType, Layer4Protocol layer4Protocol, IList<string> ports, IList<string> portGroupNames)
         {
             PortType = portType;
             Layer4Protocol = layer4Protocol;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Port type that needs to be matched. </summary>
-        public PortType? PortType { get; set; }
+        public PortConditionType? PortType { get; set; }
         /// <summary> Layer4 protocol type that needs to be matched. </summary>
         public Layer4Protocol Layer4Protocol { get; set; }
         /// <summary> List of the Ports that need to be matched. </summary>

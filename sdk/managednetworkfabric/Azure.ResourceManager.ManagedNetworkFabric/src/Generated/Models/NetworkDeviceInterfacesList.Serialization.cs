@@ -12,15 +12,15 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class NetworkInterfacesList
+    internal partial class NetworkDeviceInterfacesList
     {
-        internal static NetworkInterfacesList DeserializeNetworkInterfacesList(JsonElement element)
+        internal static NetworkDeviceInterfacesList DeserializeNetworkDeviceInterfacesList(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkInterfaceData>> value = default;
+            Optional<IReadOnlyList<NetworkDeviceInterfaceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
+                    List<NetworkDeviceInterfaceData> array = new List<NetworkDeviceInterfaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                        array.Add(NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(item));
                     }
                     value = array;
                     continue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkInterfacesList(Optional.ToList(value), nextLink.Value);
+            return new NetworkDeviceInterfacesList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

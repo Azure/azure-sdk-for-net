@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
         /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricControllerId"/> is null. </exception>
-        public InternetGatewayData(AzureLocation location, GatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : base(location)
+        public InternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : base(location)
         {
             Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
         /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        internal InternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string ipv4Address, int? port, GatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal InternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string ipv4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             InternetGatewayRuleId = internetGatewayRuleId;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Port number of Internet Gateway. </summary>
         public int? Port { get; }
         /// <summary> Gateway Type of the resource. </summary>
-        public GatewayType TypePropertiesType { get; set; }
+        public InternetGatewayType TypePropertiesType { get; set; }
         /// <summary> ARM Resource ID of the Network Fabric Controller. </summary>
         public ResourceIdentifier NetworkFabricControllerId { get; set; }
         /// <summary> Provisioning state of resource. </summary>

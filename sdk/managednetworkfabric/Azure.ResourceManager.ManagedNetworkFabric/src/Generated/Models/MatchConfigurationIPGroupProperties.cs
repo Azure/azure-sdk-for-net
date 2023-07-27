@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Group properties. </summary>
-    public partial class IPGroupProperties
+    public partial class MatchConfigurationIPGroupProperties
     {
-        /// <summary> Initializes a new instance of IPGroupProperties. </summary>
-        public IPGroupProperties()
+        /// <summary> Initializes a new instance of MatchConfigurationIPGroupProperties. </summary>
+        public MatchConfigurationIPGroupProperties()
         {
             IPPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IPGroupProperties. </summary>
+        /// <summary> Initializes a new instance of MatchConfigurationIPGroupProperties. </summary>
         /// <param name="name"> IP Group name. </param>
         /// <param name="ipAddressType"> IP Address type. </param>
         /// <param name="ipPrefixes"> List of IP Prefixes. </param>
-        internal IPGroupProperties(string name, IPAddressType? ipAddressType, IList<string> ipPrefixes)
+        internal MatchConfigurationIPGroupProperties(string name, IPAddressType? ipAddressType, IList<string> ipPrefixes)
         {
             Name = name;
             IPAddressType = ipAddressType;

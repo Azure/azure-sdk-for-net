@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkInterfaceData : IUtf8JsonSerializable
+    public partial class NetworkDeviceInterfaceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteEndObject();
         }
 
-        internal static NetworkInterfaceData DeserializeNetworkInterfaceData(JsonElement element)
+        internal static NetworkDeviceInterfaceData DeserializeNetworkDeviceInterfaceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> annotation = default;
             Optional<string> physicalIdentifier = default;
             Optional<string> connectedTo = default;
-            Optional<InterfaceType> interfaceType = default;
+            Optional<NetworkDeviceInterfaceType> interfaceType = default;
             Optional<string> ipv4Address = default;
             Optional<string> ipv6Address = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            interfaceType = new InterfaceType(property0.Value.GetString());
+                            interfaceType = new NetworkDeviceInterfaceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ipv4Address"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkInterfaceData(id, name, type, systemData.Value, annotation.Value, physicalIdentifier.Value, connectedTo.Value, Optional.ToNullable(interfaceType), ipv4Address.Value, ipv6Address.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
+            return new NetworkDeviceInterfaceData(id, name, type, systemData.Value, annotation.Value, physicalIdentifier.Value, connectedTo.Value, Optional.ToNullable(interfaceType), ipv4Address.Value, ipv6Address.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 IsWorkloadManagementNetworkEnabled = IsWorkloadManagementNetworkEnabled.True,
                 IPv4AddressSpace = "172.253.0.0/19",
                 IPv6AddressSpace = "::/60",
-                NfcSku = NfcSku.Standard,
+                NfcSku = NetworkFabricControllerSKU.Standard,
             };
 
             ArmOperation<NetworkFabricControllerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkFabricControllerName, data);

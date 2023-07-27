@@ -31,23 +31,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             NetworkDeviceResource networkDevice = Client.GetNetworkDeviceResource(networkDeviceResourceId);
             networkDevice = await networkDevice.GetAsync();
 
-            ResourceIdentifier networkInterfaceId = NetworkInterfaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupResource.Id.Name, TestEnvironment.NetworkDeviceNameUnderProvisionedNF, TestEnvironment.NetworkInterfaceName);
+            ResourceIdentifier networkInterfaceId = NetworkDeviceInterfaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupResource.Id.Name, TestEnvironment.NetworkDeviceNameUnderProvisionedNF, TestEnvironment.NetworkInterfaceName);
             TestContext.Out.WriteLine($"networkInterfaceId: {networkInterfaceId}");
-            NetworkInterfaceResource networkInterface = Client.GetNetworkInterfaceResource(networkInterfaceId);
+            NetworkDeviceInterfaceResource networkInterface = Client.GetNetworkDeviceInterfaceResource(networkInterfaceId);
 
             TestContext.Out.WriteLine($"NetworkInterface Test started.....");
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            NetworkInterfaceResource getResult = await networkInterface.GetAsync();
+            NetworkDeviceInterfaceResource getResult = await networkInterface.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
             Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkInterfaceName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<NetworkInterfaceResource>();
-            NetworkInterfaceCollection collectionOp = networkDevice.GetNetworkInterfaces();
-            await foreach (NetworkInterfaceResource item in collectionOp.GetAllAsync())
+            var listByResourceGroup = new List<NetworkDeviceInterfaceResource>();
+            NetworkDeviceInterfaceCollection collectionOp = networkDevice.GetNetworkDeviceInterfaces();
+            await foreach (NetworkDeviceInterfaceResource item in collectionOp.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }

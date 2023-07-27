@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 {
                     new IPPrefixRule(CommunityActionType.Permit, 4155123341,"10.10.10.10/30")
                     {
-                        Condition = Condition.GreaterThanOrEqualTo,
+                        Condition = IPPrefixRuleCondition.GreaterThanOrEqualTo,
                         SubnetMaskLength = "31",
                     }
                 },

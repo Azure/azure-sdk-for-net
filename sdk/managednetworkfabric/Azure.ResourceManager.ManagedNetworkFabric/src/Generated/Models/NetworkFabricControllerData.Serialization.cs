@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<IReadOnlyList<ResourceIdentifier>> tenantInternetGatewayIds = default;
             Optional<string> ipv4AddressSpace = default;
             Optional<string> ipv6AddressSpace = default;
-            Optional<NfcSku> nfcSku = default;
+            Optional<NetworkFabricControllerSKU> nfcSku = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            nfcSku = new NfcSku(property0.Value.GetString());
+                            nfcSku = new NetworkFabricControllerSKU(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

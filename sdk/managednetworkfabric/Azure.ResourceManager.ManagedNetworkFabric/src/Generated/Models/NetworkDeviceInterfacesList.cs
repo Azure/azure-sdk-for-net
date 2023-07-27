@@ -12,25 +12,25 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> List of NetworkInterfaces. </summary>
-    internal partial class NetworkInterfacesList
+    internal partial class NetworkDeviceInterfacesList
     {
-        /// <summary> Initializes a new instance of NetworkInterfacesList. </summary>
-        internal NetworkInterfacesList()
+        /// <summary> Initializes a new instance of NetworkDeviceInterfacesList. </summary>
+        internal NetworkDeviceInterfacesList()
         {
-            Value = new ChangeTrackingList<NetworkInterfaceData>();
+            Value = new ChangeTrackingList<NetworkDeviceInterfaceData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfacesList. </summary>
+        /// <summary> Initializes a new instance of NetworkDeviceInterfacesList. </summary>
         /// <param name="value"> List of NetworkInterfaces resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NetworkInterfacesList(IReadOnlyList<NetworkInterfaceData> value, string nextLink)
+        internal NetworkDeviceInterfacesList(IReadOnlyList<NetworkDeviceInterfaceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of NetworkInterfaces resources. </summary>
-        public IReadOnlyList<NetworkInterfaceData> Value { get; }
+        public IReadOnlyList<NetworkDeviceInterfaceData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

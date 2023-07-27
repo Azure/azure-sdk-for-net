@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkInterfacePatch resource definition. </summary>
-    public partial class NetworkInterfacePatch
+    public partial class NetworkDeviceInterfacePatch
     {
-        /// <summary> Initializes a new instance of NetworkInterfacePatch. </summary>
-        public NetworkInterfacePatch()
+        /// <summary> Initializes a new instance of NetworkDeviceInterfacePatch. </summary>
+        public NetworkDeviceInterfacePatch()
         {
         }
 

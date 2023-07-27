@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="supportedVersions"> List of supported Network Fabric SKU versions. </param>
         /// <param name="details"> URL providing detailed configuration of the fabric SKU. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FabricSkuType? typePropertiesType, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkFabricSkuType? typePropertiesType, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             TypePropertiesType = typePropertiesType;
             MaxComputeRacks = maxComputeRacks;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Type of Network Fabric SKU. </summary>
-        public FabricSkuType? TypePropertiesType { get; }
+        public NetworkFabricSkuType? TypePropertiesType { get; }
         /// <summary> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </summary>
         public int? MaxComputeRacks { get; set; }
         /// <summary> Maximum number of servers available for this Network Fabric SKU. </summary>

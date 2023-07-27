@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
         /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
-        internal InternalNetworkPropertiesStaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, Extension? extension) : base(bfdConfiguration, ipv4Routes, ipv6Routes)
+        internal InternalNetworkPropertiesStaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, StaticRouteConfigurationExtension? extension) : base(bfdConfiguration, ipv4Routes, ipv6Routes)
         {
             Extension = extension;
         }
 
         /// <summary> Extension. Example: NoExtension | NPB. </summary>
-        public Extension? Extension { get; set; }
+        public StaticRouteConfigurationExtension? Extension { get; set; }
     }
 }

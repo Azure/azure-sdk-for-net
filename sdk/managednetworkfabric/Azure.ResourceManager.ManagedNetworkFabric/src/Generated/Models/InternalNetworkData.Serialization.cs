@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<ResourceIdentifier> ingressAclId = default;
             Optional<ResourceIdentifier> egressAclId = default;
             Optional<IsMonitoringEnabled> isMonitoringEnabled = default;
-            Optional<Extension> extension = default;
+            Optional<StaticRouteConfigurationExtension> extension = default;
             int vlanId = default;
             Optional<InternalNetworkPropertiesBgpConfiguration> bgpConfiguration = default;
             Optional<InternalNetworkPropertiesStaticRouteConfiguration> staticRouteConfiguration = default;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            extension = new Extension(property0.Value.GetString());
+                            extension = new StaticRouteConfigurationExtension(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vlanId"u8))

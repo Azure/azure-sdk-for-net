@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Polling type. </summary>
-        public PollingType? PollingType { get; set; }
+        public NetworkTapPollingType? PollingType { get; set; }
         /// <summary> List of destination properties to send the filter traffic. </summary>
         public IList<NetworkTapPatchableParametersDestinationsItem> Destinations { get; }
     }

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier networkPacketBrokerId = default;
             Optional<ResourceIdentifier> sourceTapRuleId = default;
             IList<NetworkTapPropertiesDestinationsItem> destinations = default;
-            Optional<PollingType> pollingType = default;
+            Optional<NetworkTapPollingType> pollingType = default;
             Optional<ConfigurationState> configurationState = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<AdministrativeState> administrativeState = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            pollingType = new PollingType(property0.Value.GetString());
+                            pollingType = new NetworkTapPollingType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))

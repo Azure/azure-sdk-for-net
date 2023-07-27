@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkPrefix"> Network Prefix specifying IPv4/IPv6 packets to be permitted or denied. Example: 1.1.1.0/24 | 3FFE:FFFF:0:CD30::/126. </param>
         /// <param name="condition"> Specify prefix-list bounds. </param>
         /// <param name="subnetMaskLength"> SubnetMaskLength gives the minimum NetworkPrefix length to be matched. Possible values for IPv4 are 1 - 32 . Possible values of IPv6 are 1 - 128. </param>
-        internal IPPrefixRule(CommunityActionType action, long sequenceNumber, string networkPrefix, Condition? condition, string subnetMaskLength)
+        internal IPPrefixRule(CommunityActionType action, long sequenceNumber, string networkPrefix, IPPrefixRuleCondition? condition, string subnetMaskLength)
         {
             Action = action;
             SequenceNumber = sequenceNumber;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Network Prefix specifying IPv4/IPv6 packets to be permitted or denied. Example: 1.1.1.0/24 | 3FFE:FFFF:0:CD30::/126. </summary>
         public string NetworkPrefix { get; set; }
         /// <summary> Specify prefix-list bounds. </summary>
-        public Condition? Condition { get; set; }
+        public IPPrefixRuleCondition? Condition { get; set; }
         /// <summary> SubnetMaskLength gives the minimum NetworkPrefix length to be matched. Possible values for IPv4 are 1 - 32 . Possible values of IPv6 are 1 - 128. </summary>
         public string SubnetMaskLength { get; set; }
     }

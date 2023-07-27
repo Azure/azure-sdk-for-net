@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of NetworkInterfaceResources in the NetworkDevice. </summary>
-        /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
-        public virtual NetworkInterfaceCollection GetNetworkInterfaces()
+        /// <summary> Gets a collection of NetworkDeviceInterfaceResources in the NetworkDevice. </summary>
+        /// <returns> An object representing collection of NetworkDeviceInterfaceResources and their operations over a NetworkDeviceInterfaceResource. </returns>
+        public virtual NetworkDeviceInterfaceCollection GetNetworkDeviceInterfaces()
         {
-            return GetCachedClient(Client => new NetworkInterfaceCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkDeviceInterfaceCollection(Client, Id));
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkDeviceInterfaceResource>> GetNetworkDeviceInterfaceAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return await GetNetworkInterfaces().GetAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkDeviceInterfaces().GetAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkInterfaceResource> GetNetworkInterface(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkDeviceInterfaceResource> GetNetworkDeviceInterface(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return GetNetworkInterfaces().Get(networkInterfaceName, cancellationToken);
+            return GetNetworkDeviceInterfaces().Get(networkInterfaceName, cancellationToken);
         }
 
         /// <summary>

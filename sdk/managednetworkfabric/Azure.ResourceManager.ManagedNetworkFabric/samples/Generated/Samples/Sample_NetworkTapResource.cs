@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkTapPatch patch = new NetworkTapPatch()
             {
                 Annotation = "annotation1",
-                PollingType = PollingType.Pull,
+                PollingType = NetworkTapPollingType.Pull,
                 Destinations =
 {
 new NetworkTapPatchableParametersDestinationsItem()

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<FabricSkuType> type0 = default;
+            Optional<NetworkFabricSkuType> type0 = default;
             Optional<int> maxComputeRacks = default;
             Optional<int> maximumServerCount = default;
             Optional<IReadOnlyList<string>> supportedVersions = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            type0 = new FabricSkuType(property0.Value.GetString());
+                            type0 = new NetworkFabricSkuType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maxComputeRacks"u8))

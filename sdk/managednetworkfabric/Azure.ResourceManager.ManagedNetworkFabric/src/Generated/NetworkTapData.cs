@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="configurationState"> Gets the configurations state of the resource. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of Network Tap provisioning. </param>
         /// <param name="administrativeState"> Administrative state of the resource. Example -Enabled/Disabled. </param>
-        internal NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IList<NetworkTapPropertiesDestinationsItem> destinations, PollingType? pollingType, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IList<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             NetworkPacketBrokerId = networkPacketBrokerId;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> List of destinations to send the filter traffic. </summary>
         public IList<NetworkTapPropertiesDestinationsItem> Destinations { get; }
         /// <summary> Polling type. </summary>
-        public PollingType? PollingType { get; set; }
+        public NetworkTapPollingType? PollingType { get; set; }
         /// <summary> Gets the configurations state of the resource. </summary>
         public ConfigurationState? ConfigurationState { get; }
         /// <summary> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of Network Tap provisioning. </summary>

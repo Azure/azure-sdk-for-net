@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<IPGroupProperties>> ipGroups = default;
+            Optional<IList<MatchConfigurationIPGroupProperties>> ipGroups = default;
             Optional<IList<VlanGroupProperties>> vlanGroups = default;
             Optional<IList<PortGroupProperties>> portGroups = default;
             foreach (var property in element.EnumerateObject())
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<IPGroupProperties> array = new List<IPGroupProperties>();
+                    List<MatchConfigurationIPGroupProperties> array = new List<MatchConfigurationIPGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPGroupProperties.DeserializeIPGroupProperties(item));
+                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item));
                     }
                     ipGroups = array;
                     continue;

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<Extension> extension = default;
+            Optional<StaticRouteConfigurationExtension> extension = default;
             Optional<BfdConfiguration> bfdConfiguration = default;
             Optional<IList<StaticRouteProperties>> ipv4Routes = default;
             Optional<IList<StaticRouteProperties>> ipv6Routes = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    extension = new Extension(property.Value.GetString());
+                    extension = new StaticRouteConfigurationExtension(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("bfdConfiguration"u8))

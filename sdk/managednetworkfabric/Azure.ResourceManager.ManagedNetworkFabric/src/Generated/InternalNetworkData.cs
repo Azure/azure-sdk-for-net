@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        internal InternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, Extension? extension, int vlanId, InternalNetworkPropertiesBgpConfiguration bgpConfiguration, InternalNetworkPropertiesStaticRouteConfiguration staticRouteConfiguration, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
+        internal InternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, StaticRouteConfigurationExtension? extension, int vlanId, InternalNetworkPropertiesBgpConfiguration bgpConfiguration, InternalNetworkPropertiesStaticRouteConfiguration staticRouteConfiguration, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
             Mtu = mtu;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> To check whether monitoring of internal network is enabled or not. </summary>
         public IsMonitoringEnabled? IsMonitoringEnabled { get; set; }
         /// <summary> Extension. Example: NoExtension | NPB. </summary>
-        public Extension? Extension { get; set; }
+        public StaticRouteConfigurationExtension? Extension { get; set; }
         /// <summary> Vlan identifier. Example: 1001. </summary>
         public int VlanId { get; set; }
         /// <summary> BGP configuration properties. </summary>

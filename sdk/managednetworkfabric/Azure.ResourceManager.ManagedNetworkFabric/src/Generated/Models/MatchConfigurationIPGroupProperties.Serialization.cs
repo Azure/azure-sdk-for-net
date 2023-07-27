@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IPGroupProperties : IUtf8JsonSerializable
+    public partial class MatchConfigurationIPGroupProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteEndObject();
         }
 
-        internal static IPGroupProperties DeserializeIPGroupProperties(JsonElement element)
+        internal static MatchConfigurationIPGroupProperties DeserializeMatchConfigurationIPGroupProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new IPGroupProperties(name.Value, Optional.ToNullable(ipAddressType), Optional.ToList(ipPrefixes));
+            return new MatchConfigurationIPGroupProperties(name.Value, Optional.ToNullable(ipAddressType), Optional.ToList(ipPrefixes));
         }
     }
 }
