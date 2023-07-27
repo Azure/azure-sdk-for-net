@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/sqlmanagement/Azure.ResourceManager.Sql",
-  "Tag": "net/sqlmanagement/Azure.ResourceManager.Sql_32125e76ba"
+  "Tag": "net/sqlmanagement/Azure.ResourceManager.Sql_ce68d2f28d"
 }
