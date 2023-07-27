@@ -86,7 +86,7 @@ Console.WriteLine($"Classification policy successfully update with new prioritiz
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicyRemoveProp_Async
 Response updatedClassificationPolicyWithoutName = await routerAdministrationClient.UpdateClassificationPolicyAsync(classificationPolicyId,
-    RequestContent.Create(new { Name = (string?)null }), new Azure.RequestContext());
+    RequestContent.Create(new { Name = (string?)null }));
 
 Response<ClassificationPolicy> queriedClassificationPolicyWithoutName = await routerAdministrationClient.GetClassificationPolicyAsync(classificationPolicyId);
 

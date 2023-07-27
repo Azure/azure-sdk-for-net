@@ -107,7 +107,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.False(string.IsNullOrWhiteSpace(createQueueResponse.Value.Name));
 
             var updatedQueueResponse =
-                await routerClient.UpdateQueueAsync(queueId, RequestContent.Create(new { Name = (string?)null }), new Azure.RequestContext());
+                await routerClient.UpdateQueueAsync(queueId, RequestContent.Create(new { Name = (string?)null }));
 
             var queriedQueue = await routerClient.GetQueueAsync(queueId);
             Assert.True(string.IsNullOrWhiteSpace(queriedQueue.Value.Name));

@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicyRemoveProp
 
             Response updatedDistributionPolicyWithoutName = routerAdministrationClient.UpdateDistributionPolicy(distributionPolicyId,
-                RequestContent.Create(new { Name = (string?)null }), new Azure.RequestContext());
+                RequestContent.Create(new { Name = (string?)null }));
 
             Response<DistributionPolicy> queriedDistributionPolicyWithoutName = routerAdministrationClient.GetDistributionPolicy(distributionPolicyId);
 

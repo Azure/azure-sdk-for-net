@@ -59,7 +59,7 @@ Console.WriteLine($"Distribution policy successfully update with new distributio
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicyRemoveProp_Async
 Response updatedDistributionPolicyWithoutName = await routerAdministrationClient.UpdateDistributionPolicyAsync(distributionPolicyId,
-    RequestContent.Create(new { Name = (string?)null }), new Azure.RequestContext());
+    RequestContent.Create(new { Name = (string?)null }));
 
 Response<DistributionPolicy> queriedDistributionPolicyWithoutName = await routerAdministrationClient.GetDistributionPolicyAsync(distributionPolicyId);
 
