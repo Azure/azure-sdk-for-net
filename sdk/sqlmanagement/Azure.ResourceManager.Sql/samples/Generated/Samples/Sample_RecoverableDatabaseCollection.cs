@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             string databaseName = "recoverabledatabasetest-9187";
             string expand = "keys";
-            RecoverableDatabaseResource result = await collection.GetAsync(databaseName, expand: expand);
+            RecoverableDatabaseResource result = await collection.GetAsync(databaseName, expand, null);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             string databaseName = "recoverabledatabasetest-9187";
             string expand = "keys";
-            bool result = await collection.ExistsAsync(databaseName, expand: expand);
+            bool result = await collection.ExistsAsync(databaseName, expand, null, default);
 
             Console.WriteLine($"Succeeded: {result}");
         }

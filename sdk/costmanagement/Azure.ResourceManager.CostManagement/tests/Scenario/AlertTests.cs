@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
         [RecordedTest]
         public async Task GetAll()
         {
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(System.Diagnostics.Tracing.EventLevel.Verbose);
             var list = await _alertCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

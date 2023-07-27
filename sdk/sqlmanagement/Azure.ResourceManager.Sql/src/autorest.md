@@ -329,6 +329,12 @@ rename-mapping:
   OutboundEnvironmentEndpoint: SqlOutboundEnvironmentEndpoint
   OutboundEnvironmentEndpointCollection: SqlOutboundEnvironmentEndpointCollection
   MetricDefinition.resourceUri: ResourceUriString
+  FailoverGroup.properties.databases: FailoverDatabases
+  ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
+  ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
+
+# mgmt-debug: 
+#  show-serialized-names: true
 
 prompted-enum-values:
   - Default

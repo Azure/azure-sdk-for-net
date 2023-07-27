@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation
             string expand = "keys";
-            RecoverableDatabaseResource result = await recoverableDatabase.GetAsync(expand: expand);
+            RecoverableDatabaseResource result = await recoverableDatabase.GetAsync(expand, null);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
