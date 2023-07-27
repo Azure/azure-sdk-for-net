@@ -298,6 +298,57 @@ namespace Azure.ResourceManager.Dns
             return GetDnsCnameRecords().Get(cnameRecordName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of DnsDSRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of DnsDSRecordResources and their operations over a DnsDSRecordResource. </returns>
+        public virtual DnsDSRecordCollection GetDnsDSRecords()
+        {
+            return GetCachedClient(Client => new DnsDSRecordCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a record set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{dsRecordName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecordSets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dsRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dsRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DnsDSRecordResource>> GetDnsDSRecordAsync(string dsRecordName, CancellationToken cancellationToken = default)
+        {
+            return await GetDnsDSRecords().GetAsync(dsRecordName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a record set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{dsRecordName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecordSets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dsRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dsRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DnsDSRecordResource> GetDnsDSRecord(string dsRecordName, CancellationToken cancellationToken = default)
+        {
+            return GetDnsDSRecords().Get(dsRecordName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of DnsMXRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of DnsMXRecordResources and their operations over a DnsMXRecordResource. </returns>
         public virtual DnsMXRecordCollection GetDnsMXRecords()
@@ -398,108 +449,6 @@ namespace Azure.ResourceManager.Dns
         public virtual Response<DnsNSRecordResource> GetDnsNSRecord(string nsRecordName, CancellationToken cancellationToken = default)
         {
             return GetDnsNSRecords().Get(nsRecordName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DnsDSRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsDSRecordResources and their operations over a DnsDSRecordResource. </returns>
-        public virtual DnsDSRecordCollection GetDnsDSRecords()
-        {
-            return GetCachedClient(Client => new DnsDSRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{dsRecordName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dsRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dsRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsDSRecordResource>> GetDnsDSRecordAsync(string dsRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetDnsDSRecords().GetAsync(dsRecordName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{dsRecordName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dsRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dsRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsDSRecordResource> GetDnsDSRecord(string dsRecordName, CancellationToken cancellationToken = default)
-        {
-            return GetDnsDSRecords().Get(dsRecordName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DnsTlsaRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsTlsaRecordResources and their operations over a DnsTlsaRecordResource. </returns>
-        public virtual DnsTlsaRecordCollection GetDnsTlsaRecords()
-        {
-            return GetCachedClient(Client => new DnsTlsaRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{tlsaRecordName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tlsaRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tlsaRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsTlsaRecordResource>> GetDnsTlsaRecordAsync(string tlsaRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetDnsTlsaRecords().GetAsync(tlsaRecordName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{tlsaRecordName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tlsaRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tlsaRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsTlsaRecordResource> GetDnsTlsaRecord(string tlsaRecordName, CancellationToken cancellationToken = default)
-        {
-            return GetDnsTlsaRecords().Get(tlsaRecordName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DnsPtrRecordResources in the DnsZone. </summary>
@@ -631,6 +580,57 @@ namespace Azure.ResourceManager.Dns
         public virtual async Task<Response<DnsSrvRecordResource>> GetDnsSrvRecordAsync(string srvRecordName, CancellationToken cancellationToken = default)
         {
             return await GetDnsSrvRecords().GetAsync(srvRecordName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a collection of DnsTlsaRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of DnsTlsaRecordResources and their operations over a DnsTlsaRecordResource. </returns>
+        public virtual DnsTlsaRecordCollection GetDnsTlsaRecords()
+        {
+            return GetCachedClient(Client => new DnsTlsaRecordCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a record set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{tlsaRecordName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecordSets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tlsaRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tlsaRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DnsTlsaRecordResource>> GetDnsTlsaRecordAsync(string tlsaRecordName, CancellationToken cancellationToken = default)
+        {
+            return await GetDnsTlsaRecords().GetAsync(tlsaRecordName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a record set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{tlsaRecordName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecordSets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tlsaRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tlsaRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DnsTlsaRecordResource> GetDnsTlsaRecord(string tlsaRecordName, CancellationToken cancellationToken = default)
+        {
+            return GetDnsTlsaRecords().Get(tlsaRecordName, cancellationToken);
         }
 
         /// <summary>
