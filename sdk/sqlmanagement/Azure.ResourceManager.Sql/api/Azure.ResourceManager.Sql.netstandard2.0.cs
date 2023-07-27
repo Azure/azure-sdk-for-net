@@ -468,6 +468,7 @@ namespace Azure.ResourceManager.Sql
     {
         public FailoverGroupData() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public System.Collections.Generic.IList<string> Databases { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> FailoverDatabases { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
@@ -1407,6 +1408,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get { throw null; } }
         public string DnsZone { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public string DnsZonePartner { get { throw null; } set { } }
         public string FullyQualifiedDomainName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
