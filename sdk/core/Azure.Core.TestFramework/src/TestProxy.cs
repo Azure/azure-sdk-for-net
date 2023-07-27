@@ -60,6 +60,10 @@ namespace Azure.Core.TestFramework
 
         private TestProxy(string proxyPath, bool debugMode = false)
         {
+            bool.TryParse(Environment.GetEnvironmentVariable("PROXY_DEBUG_MODE"), out bool environmentDebugMode);
+
+            debugMode |= environmentDebugMode;
+
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
                 $"\"{proxyPath}\" --storage-location=\"{TestEnvironment.RepositoryRoot}\"")
@@ -76,6 +80,13 @@ namespace Azure.Core.TestFramework
                     ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
                 }
             };
+
+            bool.TryParse(Environment.GetEnvironmentVariable("TF_BUILD"), out bool inCI);
+
+            if (inCI)
+            {
+                testProxyProcessInfo.EnvironmentVariables["PROXY_ASSETS_FOLDER"] = Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString());
+            }
 
             _testProxyProcess = Process.Start(testProxyProcessInfo);
 

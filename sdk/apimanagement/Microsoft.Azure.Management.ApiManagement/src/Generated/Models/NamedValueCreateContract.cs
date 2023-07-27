@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// NamedValue details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class NamedValueCreateContract : Resource
+    public partial class NamedValueCreateContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the NamedValueCreateContract class.

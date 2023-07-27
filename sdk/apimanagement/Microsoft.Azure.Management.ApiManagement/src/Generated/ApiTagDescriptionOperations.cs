@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Operations
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -96,6 +96,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
             }
             if (serviceName == null)
             {
@@ -139,9 +150,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -301,7 +326,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the entity state version of the tag specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -338,6 +363,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
             }
             if (serviceName == null)
             {
@@ -400,9 +436,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -550,7 +600,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Get Tag description in scope of API
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -590,6 +640,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
             }
             if (serviceName == null)
             {
@@ -652,9 +713,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -820,7 +895,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Create/Update tag description in scope of the Api.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -867,6 +942,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
             }
             if (serviceName == null)
             {
@@ -937,9 +1023,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1139,7 +1239,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Delete tag description for the Api.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -1181,6 +1281,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
             }
             if (serviceName == null)
             {
@@ -1247,9 +1358,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
