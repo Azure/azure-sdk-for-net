@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "33",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20220118.1 (.NET Core 3.1.21; Darwin 21.2.0 Darwin Kernel Version 21.2.0: Sun Nov 28 20:28:54 PST 2021; root:xnu-8019.61.5~1/RELEASE_X86_64)",
-        "x-ms-client-request-id": "dd57cc90c0c867c4db538c4ad68e5dab",
+        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20230727.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e80a924c552e5329d195b7372904184d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -17,13 +17,19 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Connection": "keep-alive",
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Jan 2022 01:58:54 GMT",
+        "Date": "Thu, 27 Jul 2023 19:42:28 GMT",
+        "mise-correlation-id": "1d519140-9618-4e61-99b6-1a9fba61da3c",
         "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
         "Server": "Microsoft-IIS/10.0",
-        "Strict-Transport-Security": "max-age=2592000",
-        "x-ms-request-id": "f8d4a0aacace6949",
+        "Set-Cookie": [
+          "ARRAffinity=9d716053ef092553e7bdd2639d89f002241b80715630c2dbb839c205a5e8d5f8;Path=/;HttpOnly;Secure;Domain=app-jobscheduler-westus-003.ase-jobscheduler-westus-003.appserviceenvironment.net",
+          "ARRAffinitySameSite=9d716053ef092553e7bdd2639d89f002241b80715630c2dbb839c205a5e8d5f8;Path=/;HttpOnly;SameSite=None;Secure;Domain=app-jobscheduler-westus-003.ase-jobscheduler-westus-003.appserviceenvironment.net"
+        ],
+        "Strict-Transport-Security": "max-age=2592000; includeSubDomains",
+        "x-ms-request-id": "9ebd237b212caa50",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -36,25 +42,31 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "90",
+        "Content-Length": "88",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20220118.1 (.NET Core 3.1.21; Darwin 21.2.0 Darwin Kernel Version 21.2.0: Sun Nov 28 20:28:54 PST 2021; root:xnu-8019.61.5~1/RELEASE_X86_64)",
-        "x-ms-client-request-id": "c5c5ef9fbdeefde137583a06ca526cbb",
+        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20230727.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "650e63153e4831bffbd3ffb2272335f3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "containerName": "testcontainer",
-        "blobName": "input-93228d56c521430b9dd16590fb97fbb2.json"
+        "blobName": "input-ea90f6c98b054e748ff7d02152264d61.bc"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Connection": "keep-alive",
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Jan 2022 01:58:56 GMT",
+        "Date": "Thu, 27 Jul 2023 19:42:28 GMT",
+        "mise-correlation-id": "871c1444-9c85-4b05-9ae9-aed1ac5295be",
         "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
         "Server": "Microsoft-IIS/10.0",
-        "Strict-Transport-Security": "max-age=2592000",
-        "x-ms-request-id": "87d2e4a0d93a5e48",
+        "Set-Cookie": [
+          "ARRAffinity=9d716053ef092553e7bdd2639d89f002241b80715630c2dbb839c205a5e8d5f8;Path=/;HttpOnly;Secure;Domain=app-jobscheduler-westus-003.ase-jobscheduler-westus-003.appserviceenvironment.net",
+          "ARRAffinitySameSite=9d716053ef092553e7bdd2639d89f002241b80715630c2dbb839c205a5e8d5f8;Path=/;HttpOnly;SameSite=None;Secure;Domain=app-jobscheduler-westus-003.ase-jobscheduler-westus-003.appserviceenvironment.net"
+        ],
+        "Strict-Transport-Security": "max-age=2592000; includeSubDomains",
+        "x-ms-request-id": "29570da7d6103e4f",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -62,118 +74,145 @@
       }
     },
     {
-      "RequestUri": "https://eastus.quantum.azure.com/v1.0/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myresourcegroup/providers/Microsoft.Quantum/workspaces/myworkspace/jobs/job-f197f55a34324ce1b43619b59ce877bc",
+      "RequestUri": "https://eastus.quantum.azure.com/v1.0/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myresourcegroup/providers/Microsoft.Quantum/workspaces/myworkspace/jobs/job-bdd2a63daaef43dd859c52751fcbb9b2",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "342",
+        "Content-Length": "391",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20220118.1 (.NET Core 3.1.21; Darwin 21.2.0 Darwin Kernel Version 21.2.0: Sun Nov 28 20:28:54 PST 2021; root:xnu-8019.61.5~1/RELEASE_X86_64)",
-        "x-ms-client-request-id": "5c9004fd4bf1e402af7db4eba6e7d9fb",
+        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20230727.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5ad1d15a7fe3e4e2f963d47ce8bd3546",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "id": "job-f197f55a34324ce1b43619b59ce877bc",
-        "name": "jobName-853b1fcbd88842a1ac0ca8889833d642",
+        "id": "job-bdd2a63daaef43dd859c52751fcbb9b2",
+        "name": "jobName-9b5814b61b9741a4b6a219e2dbe6b5a4",
         "containerUri": "Sanitized",
         "inputDataUri": "Sanitized",
-        "inputDataFormat": "microsoft.qio.v2",
+        "inputDataFormat": "qir.v1",
         "inputParams": {
-          "params": {}
+          "entryPoint": "ENTRYPOINT__BellState",
+          "arguments": [],
+          "targetCapability": "AdaptiveExecution"
         },
-        "providerId": "microsoft",
-        "target": "microsoft.paralleltempering-parameterfree.cpu",
-        "outputDataFormat": "microsoft.qio-results.v2"
+        "providerId": "quantinuum",
+        "target": "quantinuum.sim.h1-1e",
+        "outputDataFormat": "microsoft.quantum-results.v1"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "598",
+        "Connection": "keep-alive",
+        "Content-Length": "738",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Jan 2022 01:58:56 GMT",
+        "Date": "Thu, 27 Jul 2023 19:42:29 GMT",
+        "mise-correlation-id": "febf371e-3d01-471f-81b9-7dfe0af058e8",
         "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
         "Server": "Microsoft-IIS/10.0",
-        "Strict-Transport-Security": "max-age=2592000",
-        "x-ms-request-id": "d9cf3a1983638848",
+        "Set-Cookie": [
+          "ARRAffinity=9d716053ef092553e7bdd2639d89f002241b80715630c2dbb839c205a5e8d5f8;Path=/;HttpOnly;Secure;Domain=app-jobscheduler-westus-003.ase-jobscheduler-westus-003.appserviceenvironment.net",
+          "ARRAffinitySameSite=9d716053ef092553e7bdd2639d89f002241b80715630c2dbb839c205a5e8d5f8;Path=/;HttpOnly;SameSite=None;Secure;Domain=app-jobscheduler-westus-003.ase-jobscheduler-westus-003.appserviceenvironment.net"
+        ],
+        "Strict-Transport-Security": "max-age=2592000; includeSubDomains",
+        "x-ms-request-id": "ddfdc2f749222587",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "containerUri": "Sanitized",
         "inputDataUri": "Sanitized",
-        "inputDataFormat": "microsoft.qio.v2",
+        "inputDataFormat": "qir.v1",
         "inputParams": {
-          "params": {}
+          "entryPoint": "ENTRYPOINT__BellState",
+          "arguments": [],
+          "targetCapability": "AdaptiveExecution"
         },
-        "providerId": "microsoft",
-        "target": "microsoft.paralleltempering-parameterfree.cpu",
         "metadata": null,
-        "name": "jobName-853b1fcbd88842a1ac0ca8889833d642",
-        "id": "job-f197f55a34324ce1b43619b59ce877bc",
+        "sessionId": null,
         "status": "Waiting",
-        "outputDataFormat": "microsoft.qio-results.v2",
+        "jobType": "QuantumComputing",
+        "outputDataFormat": "microsoft.quantum-results.v1",
         "outputDataUri": "Sanitized",
-        "creationTime": "2022-01-19T01:58:56.5219295\u002B00:00",
         "beginExecutionTime": null,
-        "endExecutionTime": null,
         "cancellationTime": null,
-        "costEstimate": null,
+        "quantumComputingData": null,
         "errorData": null,
         "isCancelling": false,
-        "tags": []
+        "tags": [],
+        "name": "jobName-9b5814b61b9741a4b6a219e2dbe6b5a4",
+        "id": "job-bdd2a63daaef43dd859c52751fcbb9b2",
+        "providerId": "quantinuum",
+        "target": "quantinuum.sim.h1-1e",
+        "creationTime": "2023-07-27T19:42:29.0219783\u002B00:00",
+        "endExecutionTime": null,
+        "costEstimate": null,
+        "itemType": "Job"
       }
     },
     {
-      "RequestUri": "https://eastus.quantum.azure.com/v1.0/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myresourcegroup/providers/Microsoft.Quantum/workspaces/myworkspace/jobs/job-f197f55a34324ce1b43619b59ce877bc",
+      "RequestUri": "https://eastus.quantum.azure.com/v1.0/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myresourcegroup/providers/Microsoft.Quantum/workspaces/myworkspace/jobs/job-bdd2a63daaef43dd859c52751fcbb9b2",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20220118.1 (.NET Core 3.1.21; Darwin 21.2.0 Darwin Kernel Version 21.2.0: Sun Nov 28 20:28:54 PST 2021; root:xnu-8019.61.5~1/RELEASE_X86_64)",
-        "x-ms-client-request-id": "f95deb034b2fd2a9eb59a57085bd9c88",
+        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20230727.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "788e1259f7420d6ad3d9ec5a55772cad",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "598",
+        "Connection": "keep-alive",
+        "Content-Length": "738",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 19 Jan 2022 01:58:56 GMT",
+        "Date": "Thu, 27 Jul 2023 19:42:29 GMT",
+        "mise-correlation-id": "742e0f5e-d946-4065-8306-33a06d34bd32",
         "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
         "Server": "Microsoft-IIS/10.0",
-        "Strict-Transport-Security": "max-age=2592000",
-        "x-ms-request-id": "441c13c697732042",
+        "Set-Cookie": [
+          "ARRAffinity=9d716053ef092553e7bdd2639d89f002241b80715630c2dbb839c205a5e8d5f8;Path=/;HttpOnly;Secure;Domain=app-jobscheduler-westus-003.ase-jobscheduler-westus-003.appserviceenvironment.net",
+          "ARRAffinitySameSite=9d716053ef092553e7bdd2639d89f002241b80715630c2dbb839c205a5e8d5f8;Path=/;HttpOnly;SameSite=None;Secure;Domain=app-jobscheduler-westus-003.ase-jobscheduler-westus-003.appserviceenvironment.net"
+        ],
+        "Strict-Transport-Security": "max-age=2592000; includeSubDomains",
+        "x-ms-request-id": "4f88026c06d04a99",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "containerUri": "Sanitized",
         "inputDataUri": "Sanitized",
-        "inputDataFormat": "microsoft.qio.v2",
+        "inputDataFormat": "qir.v1",
         "inputParams": {
-          "params": {}
+          "entryPoint": "ENTRYPOINT__BellState",
+          "arguments": [],
+          "targetCapability": "AdaptiveExecution"
         },
-        "providerId": "microsoft",
-        "target": "microsoft.paralleltempering-parameterfree.cpu",
         "metadata": null,
-        "name": "jobName-853b1fcbd88842a1ac0ca8889833d642",
-        "id": "job-f197f55a34324ce1b43619b59ce877bc",
+        "sessionId": null,
         "status": "Waiting",
-        "outputDataFormat": "microsoft.qio-results.v2",
+        "jobType": "QuantumComputing",
+        "outputDataFormat": "microsoft.quantum-results.v1",
         "outputDataUri": "Sanitized",
-        "creationTime": "2022-01-19T01:58:56.5219295\u002B00:00",
         "beginExecutionTime": null,
-        "endExecutionTime": null,
         "cancellationTime": null,
-        "costEstimate": null,
+        "quantumComputingData": null,
         "errorData": null,
         "isCancelling": false,
-        "tags": []
+        "tags": [],
+        "name": "jobName-9b5814b61b9741a4b6a219e2dbe6b5a4",
+        "id": "job-bdd2a63daaef43dd859c52751fcbb9b2",
+        "providerId": "quantinuum",
+        "target": "quantinuum.sim.h1-1e",
+        "creationTime": "2023-07-27T19:42:29.0219783\u002B00:00",
+        "endExecutionTime": null,
+        "costEstimate": null,
+        "itemType": "Job"
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1510995838",
-    "RANDOM_ID_BlobName": "93228d56c521430b9dd16590fb97fbb2",
-    "RANDOM_ID_JobId": "f197f55a34324ce1b43619b59ce877bc",
-    "RANDOM_ID_JobName": "853b1fcbd88842a1ac0ca8889833d642"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1175222731",
+    "RANDOM_ID_BlobName": "ea90f6c98b054e748ff7d02152264d61",
+    "RANDOM_ID_JobId": "bdd2a63daaef43dd859c52751fcbb9b2",
+    "RANDOM_ID_JobName": "9b5814b61b9741a4b6a219e2dbe6b5a4"
   }
 }

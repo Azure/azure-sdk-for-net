@@ -6,19 +6,18 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20230726.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "1d7ba863b9b0c72d0c9355cd70f6adf2",
+        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20230727.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fcf7fafb5414fe163d58e966a441e654",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
-        "Content-Length": "6055",
+        "Content-Length": "6074",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jul 2023 16:14:01 GMT",
-        "mise-correlation-id": "865abdc5-896f-4040-8a1c-d7b2d0abef09",
+        "Date": "Thu, 27 Jul 2023 19:42:27 GMT",
+        "mise-correlation-id": "e23d687a-2e0d-49e9-8107-ad85d33d457a",
         "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
         "Server": "Microsoft-IIS/10.0",
         "Set-Cookie": [
@@ -28,7 +27,7 @@
           "ARRAffinitySameSite=9d716053ef092553e7bdd2639d89f002241b80715630c2dbb839c205a5e8d5f8;Path=/;HttpOnly;SameSite=None;Secure;Domain=app-jobscheduler-westus-003.ase-jobscheduler-westus-003.appserviceenvironment.net"
         ],
         "Strict-Transport-Security": "max-age=2592000; includeSubDomains",
-        "x-ms-request-id": "d664610bd4ea094b",
+        "x-ms-request-id": "100568a4744139c9",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -40,19 +39,19 @@
               {
                 "id": "ionq.qpu",
                 "currentAvailability": "Available",
-                "averageQueueTime": 491262,
+                "averageQueueTime": 582132,
                 "statusPage": "https://status.ionq.co"
               },
               {
                 "id": "ionq.qpu.aria-1",
                 "currentAvailability": "Available",
-                "averageQueueTime": 108446,
+                "averageQueueTime": 122661,
                 "statusPage": "https://status.ionq.co"
               },
               {
                 "id": "ionq.simulator",
                 "currentAvailability": "Available",
-                "averageQueueTime": 11,
+                "averageQueueTime": 1,
                 "statusPage": "https://status.ionq.co"
               }
             ]
@@ -70,31 +69,31 @@
               {
                 "id": "quantinuum.hqs-lt-s1-apival",
                 "currentAvailability": "Available",
-                "averageQueueTime": 0,
+                "averageQueueTime": 20,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.hqs-lt-s2",
-                "currentAvailability": "Degraded",
+                "currentAvailability": "Unavailable",
                 "averageQueueTime": 0,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.hqs-lt-s2-apival",
                 "currentAvailability": "Available",
-                "averageQueueTime": 16,
+                "averageQueueTime": 2,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.hqs-lt-s1-sim",
                 "currentAvailability": "Available",
-                "averageQueueTime": 6,
+                "averageQueueTime": 15188,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.hqs-lt-s2-sim",
                 "currentAvailability": "Available",
-                "averageQueueTime": 1020,
+                "averageQueueTime": 7,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
@@ -106,73 +105,73 @@
               {
                 "id": "quantinuum.sim.h1-1sc",
                 "currentAvailability": "Available",
-                "averageQueueTime": 0,
+                "averageQueueTime": 20,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.qpu.h1-2",
-                "currentAvailability": "Degraded",
+                "currentAvailability": "Unavailable",
                 "averageQueueTime": 0,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.sim.h1-2sc",
                 "currentAvailability": "Available",
-                "averageQueueTime": 16,
+                "averageQueueTime": 2,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.sim.h1-1e",
                 "currentAvailability": "Available",
-                "averageQueueTime": 6,
+                "averageQueueTime": 15188,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.sim.h1-2e",
                 "currentAvailability": "Available",
-                "averageQueueTime": 1020,
+                "averageQueueTime": 7,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.qpu.h2-1",
-                "currentAvailability": "Degraded",
-                "averageQueueTime": 0,
+                "currentAvailability": "Available",
+                "averageQueueTime": 27329,
                 "statusPage": "https://www.quantinuum.com/hardware/h2"
               },
               {
                 "id": "quantinuum.sim.h2-1sc",
                 "currentAvailability": "Available",
-                "averageQueueTime": 0,
+                "averageQueueTime": 51,
                 "statusPage": "https://www.quantinuum.com/hardware/h2"
               },
               {
                 "id": "quantinuum.sim.h2-1e",
                 "currentAvailability": "Available",
-                "averageQueueTime": 124,
+                "averageQueueTime": 11914,
                 "statusPage": "https://www.quantinuum.com/hardware/h2"
               },
               {
                 "id": "quantinuum.sim.h1-1sc-preview",
                 "currentAvailability": "Available",
-                "averageQueueTime": 0,
+                "averageQueueTime": 20,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.sim.h1-2sc-preview",
                 "currentAvailability": "Available",
-                "averageQueueTime": 16,
+                "averageQueueTime": 2,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.sim.h1-1e-preview",
                 "currentAvailability": "Available",
-                "averageQueueTime": 6,
+                "averageQueueTime": 15188,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
                 "id": "quantinuum.sim.h1-2e-preview",
                 "currentAvailability": "Available",
-                "averageQueueTime": 1020,
+                "averageQueueTime": 7,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               },
               {
@@ -183,7 +182,7 @@
               },
               {
                 "id": "quantinuum.qpu.h1-2-preview",
-                "currentAvailability": "Degraded",
+                "currentAvailability": "Unavailable",
                 "averageQueueTime": 0,
                 "statusPage": "https://www.quantinuum.com/hardware/h1"
               }
@@ -244,7 +243,7 @@
               {
                 "id": "toshiba.sbm.ising",
                 "currentAvailability": "Available",
-                "averageQueueTime": 4,
+                "averageQueueTime": 5,
                 "statusPage": "https://aq-sbm.net/v1/service_monitor/index.html"
               }
             ]
@@ -352,6 +351,6 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1056252591"
+    "RandomSeed": "1502605261"
   }
 }

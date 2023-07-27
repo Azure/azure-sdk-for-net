@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20230726.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "168d2867c7322cf91b14d4c3a649be8d",
+        "User-Agent": "azsdk-net-Quantum.Jobs/1.0.0-alpha.20230727.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "389dad87c1b911fee8191d8a21ab0d84",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,8 +16,8 @@
         "Connection": "keep-alive",
         "Content-Length": "324",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jul 2023 16:14:02 GMT",
-        "mise-correlation-id": "8e023301-c2e9-4349-95e4-192d4ea1680a",
+        "Date": "Thu, 27 Jul 2023 19:42:28 GMT",
+        "mise-correlation-id": "b77d3703-1b06-47d7-bf9a-efee5072f448",
         "Request-Context": "appId=cid-v1:4d6ac272-7369-45c6-9036-63d733c8519f",
         "Server": "Microsoft-IIS/10.0",
         "Set-Cookie": [
@@ -25,7 +25,7 @@
           "ARRAffinitySameSite=9d716053ef092553e7bdd2639d89f002241b80715630c2dbb839c205a5e8d5f8;Path=/;HttpOnly;SameSite=None;Secure;Domain=app-jobscheduler-westus-003.ase-jobscheduler-westus-003.appserviceenvironment.net"
         ],
         "Strict-Transport-Security": "max-age=2592000; includeSubDomains",
-        "x-ms-request-id": "1f923f48d3eaa740",
+        "x-ms-request-id": "c42bacbdc044a629",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -55,6 +55,6 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1049329771"
+    "RandomSeed": "699245805"
   }
 }
