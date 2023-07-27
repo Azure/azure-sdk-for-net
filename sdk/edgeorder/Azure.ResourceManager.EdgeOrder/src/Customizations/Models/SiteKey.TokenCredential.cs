@@ -4,22 +4,18 @@
 using System;
 using Azure.Core;
 using Azure.Identity;
-using System.Text.Json;
 using System.Security.Cryptography.X509Certificates;
-using System.Runtime.ConstrainedExecution;
-using System.Net.Sockets;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
 
 namespace Azure.ResourceManager.EdgeOrder.Customizations.Models
 {
     internal static partial class SiteKeyContent
     {
-
         internal static TokenCredential GenerateTokenCredential(this SiteKey siteKey)
         {
-            var options = new TokenCredentialOptions
+            var options = new ClientCertificateCredentialOptions
             {
                 AuthorityHost = new Uri(siteKey.AadEndpoint),
+                SendCertificateChain = true,
             };
             return new ClientCertificateCredential(tenantId: siteKey.TenantId,
                 clientId: siteKey.ClientId,
@@ -34,7 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Customizations.Models
                 armClientOptions = new ArmClientOptions();
             }
 
-            armClientOptions.Environment = new ArmEnvironment(new Uri(siteKey.ArmEndPoint), siteKey.AadEndpoint);
+            armClientOptions.Environment = new ArmEnvironment(new Uri(siteKey.ArmEndPoint), siteKey.ArmEndPoint);
 
             return new ArmClient(credential: siteKey.GenerateTokenCredential(),
                                 defaultSubscriptionId: default,

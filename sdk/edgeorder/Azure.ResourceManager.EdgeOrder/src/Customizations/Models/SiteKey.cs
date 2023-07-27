@@ -3,6 +3,9 @@
 
 namespace Azure.ResourceManager.EdgeOrder.Customizations.Models
 {
+    /// <summary>
+    /// SiteKey for boostrap resource.
+    /// </summary>
     internal class SiteKey
     {
         /// <summary>
