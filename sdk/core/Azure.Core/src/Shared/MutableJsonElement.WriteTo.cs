@@ -185,7 +185,7 @@ namespace Azure.Core.Json
                 segment = GetLastSegment(changePath);
 
                 writer.WritePropertyName(segment);
-                patchElement.GetProperty(GetString(segment, 0, segment.Length)).WriteTo(writer);
+                patchElement.GetProperty(segment).WriteTo(writer);
             }
 
             // The above loop will have written out the values of all the elements on the
@@ -219,7 +219,7 @@ namespace Azure.Core.Json
 
                 if (end != 0)
                 {
-                    current = current.GetProperty(GetString(path, start, end));
+                    current = current.GetProperty(path.Slice(start, end));
                 }
 
                 start += end + 1;
@@ -298,7 +298,7 @@ namespace Azure.Core.Json
                     writer.WriteStartObject();
 
                     MutableJsonDocument.ChangeTracker.PushProperty(patchPath, ref patchPathLength, path.Slice(s), e);
-                    patchElement = patchElement.GetProperty(GetString(path, s, e));
+                    patchElement = patchElement.GetProperty(path.Slice(s, e));
                 }
 
                 s += e + 1;
@@ -326,16 +326,6 @@ namespace Azure.Core.Json
 
                 start += end + 1;
             } while (start < length);
-        }
-
-        // TODO: optimize - bypass string use entirely.  Remove this method.
-        private string GetString(ReadOnlySpan<char> value, int start, int end)
-        {
-#if NET5_0_OR_GREATER
-            return new string(value.Slice(start, end));
-#else
-            return new string(value.Slice(start, end).ToArray());
-#endif
         }
     }
 }

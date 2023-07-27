@@ -68,6 +68,11 @@ namespace Azure.Core.Json
 
             internal bool TryGetChange(string path, in int lastAppliedChange, out MutableJsonChange change)
             {
+                return TryGetChange(path.AsSpan(), lastAppliedChange, out change);
+            }
+
+            internal bool TryGetChange(ReadOnlySpan<char> path, in int lastAppliedChange, out MutableJsonChange change)
+            {
                 if (_changes == null)
                 {
                     change = default;
@@ -77,7 +82,7 @@ namespace Azure.Core.Json
                 for (int i = _changes!.Count - 1; i > lastAppliedChange; i--)
                 {
                     MutableJsonChange c = _changes[i];
-                    if (c.Path == path)
+                    if (c.Path.AsSpan().SequenceEqual(path))
                     {
                         change = c;
                         return true;
