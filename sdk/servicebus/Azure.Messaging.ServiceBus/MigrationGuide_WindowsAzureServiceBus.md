@@ -88,7 +88,7 @@ By using a single top-level client, we can implicitly share a single AMQP connec
 
 ### Default transport type
 
-The default transport type in `Azure.Messaging.ServiceBus` is AMQP. The new library no longer supports SBMP, and as such you will need to migrate to AMQP. The behavioral differences have been described in [Use legacy WindowsAzure.ServiceBus .NET framework library with AMQP 1.0](service-bus-amqp-dotnet.md#behavioral-differences). It is possible to use AMQP with WebSockets over port 443 by setting the [TransportType](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusclientoptions.transporttype?view=azure-dotnet#azure-messaging-servicebus-servicebusclientoptions-transporttype) on the options used when creating your `ServiceBusClient`.
+The default transport type in `Azure.Messaging.ServiceBus` is AMQP. The new library no longer supports SBMP, and as such you will need to migrate to AMQP. The behavioral differences have been described in [Use legacy WindowsAzure.ServiceBus .NET framework library with AMQP 1.0](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-amqp-dotnet). It is possible to use AMQP with WebSockets over port 443 by setting the [TransportType](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusclientoptions.transporttype?view=azure-dotnet#azure-messaging-servicebus-servicebusclientoptions-transporttype) on the options used when creating your `ServiceBusClient`.
 
 ### BrokeredMessage changed to Message
 
@@ -228,11 +228,11 @@ Console.WriteLine($"Received message with Body:{receivedMessage.GetBody<String>(
 await receivedMessage.CompleteAsync();
 ```
 
-In `Azure.Messaging.ServiceBus`, we introduced `ServiceBusProcessor` which uses a push-based approach to deliver messages to event handlers that you provide while managing locks, message completion, concurrenc, and resiliency.  The processor also provides a graceful shutdown via the `StopProcessingAsync` method which will ensure that no more messages will be received, but at the same time you can continue the processing and settling the messages already in flight.
+In `Azure.Messaging.ServiceBus`, we introduced `ServiceBusProcessor` which uses a push-based approach to deliver messages to event handlers that you provide while managing locks, message completion, concurrency, and resiliency.  The processor also provides a graceful shutdown via the `StopProcessingAsync` method which will ensure that no more messages will be received, but at the same time you can continue the processing and settling the messages already in flight.
 
 The concept of a receiver remains for users who need to have a more fine-grained control over the reading and settling messages. The difference is that this is now created from the top-level `ServiceBusClient` via the `CreateReceiver` method taking the queue or subscription you want to read from and creating a receiver specific to that entity.
 
-Another notable difference from the `WindowsAzure.ServiceBus` when it comes to receiving messages, is that `Azure.Messaging.ServiceBus` uses a separate type for received messages, `ServiceBusReceivedMessage`. This helps reduce the surface area of the sendable messages by excluding properties that are owned by the service  and cannot be set when sending messages. 
+Another notable difference from `WindowsAzure.ServiceBus` when it comes to receiving messages, is that `Azure.Messaging.ServiceBus` uses a separate type for received messages, `ServiceBusReceivedMessage`. This helps reduce the surface area of the sendable messages by excluding properties that are owned by the service  and cannot be set when sending messages. 
 
  To support testing, the `ServiceBusModelFactory.ServiceBusReceivedMessage` method can be used to mock a message received from Service Bus. In general, all types that are meant to be created only by the library can be created for mocking using the `ServiceBusModelFactory` static class.
 
