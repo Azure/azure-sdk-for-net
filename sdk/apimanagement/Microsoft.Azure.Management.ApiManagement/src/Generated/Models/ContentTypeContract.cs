@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Content type contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ContentTypeContract : Resource
+    public partial class ContentTypeContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the ContentTypeContract class.
