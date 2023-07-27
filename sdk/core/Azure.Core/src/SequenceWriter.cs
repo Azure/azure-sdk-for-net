@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     /// <summary>
-    /// .
+    /// A buffer writer which writes large sequences of data into smaller shared buffers.
     /// </summary>
     public sealed class SequenceWriter : IBufferWriter<byte>, IDisposable
     {
@@ -25,20 +25,16 @@ namespace Azure.Core
         private int _bufferSize;
 
         /// <summary>
-        /// .
+        /// Initializes a new instance of <see cref="SequenceWriter"/>.
         /// </summary>
-        /// <param name="bufferSize"></param>
+        /// <param name="bufferSize">The max size of each buffer segment.</param>
         public SequenceWriter(int bufferSize = 4096)
         {
             _bufferSize = bufferSize;
             _buffers = Array.Empty<Buffer>();
         }
 
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="bytesWritten"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <inheritdoc/>
         public void Advance(int bytesWritten)
         {
             ref Buffer last = ref _buffers[_count - 1];
@@ -49,20 +45,18 @@ namespace Azure.Core
             }
         }
 
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="sizeHint"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public Memory<byte> GetMemory(int sizeHint = 0)
         {
             if (sizeHint < 256)
                 sizeHint = 256;
 
+            int sizeToRent = sizeHint > _bufferSize ? sizeHint : _bufferSize;
+
             if (_buffers.Length == 0)
             {
                 _buffers = new Buffer[1];
-                _buffers[0].Array = ArrayPool<byte>.Shared.Rent(_bufferSize);
+                _buffers[0].Array = ArrayPool<byte>.Shared.Rent(sizeToRent);
                 _count = 1;
             }
 
@@ -72,7 +66,7 @@ namespace Azure.Core
                 return free;
 
             // else allocate a new buffer:
-            var newArray = ArrayPool<byte>.Shared.Rent(_bufferSize);
+            var newArray = ArrayPool<byte>.Shared.Rent(sizeToRent);
 
             // add buffer to _buffers
             if (_buffers.Length == _count)
@@ -88,11 +82,7 @@ namespace Azure.Core
             return newArray;
         }
 
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="sizeHint"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public Span<byte> GetSpan(int sizeHint = 0)
         {
             Memory<byte> memory = GetMemory(sizeHint);
@@ -115,11 +105,7 @@ namespace Azure.Core
             _count = 0;
         }
 
-        /// <summary>
-        /// Compute the length of the data written to the SequenceWriter.
-        /// </summary>
-        /// <param name="length"> The length of the buffer returned. </param>
-        /// <returns> A bool indicating whether or not the length was able to be calculated. </returns>
+        /// <inheritdoc cref="RequestContent.TryComputeLength(out long)"/>
         public bool TryComputeLength(out long length)
         {
             length = 0;
@@ -131,11 +117,7 @@ namespace Azure.Core
             return true;
         }
 
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="cancellation"></param>
+        /// <inheritdoc cref="RequestContent.WriteTo(Stream, CancellationToken)"/>
         public void WriteTo(Stream stream, CancellationToken cancellation)
         {
             for (int i = 0; i < _count; i++)
@@ -145,12 +127,7 @@ namespace Azure.Core
             }
         }
 
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="cancellation"></param>
-        /// <returns></returns>
+        /// <inheritdoc cref="RequestContent.WriteToAsync(Stream, CancellationToken)"/>
         public async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
             for (int i = 0; i < _count; i++)
@@ -175,10 +152,9 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// .
+        /// Gets a <see cref="ReadOnlySequence{T}"/> representing the data written to the SequenceWriter.
         /// </summary>
-        /// <returns></returns>
-        public ReadOnlySequence<byte> GetReadOnlySequence()
+        internal ReadOnlySequence<byte> GetReadOnlySequence()
         {
             if (_count == 0)
                 return ReadOnlySequence<byte>.Empty;
