@@ -787,6 +787,64 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanWritePatchThreeLevels()
+        {
+            string json = """
+                {
+                    "a": {
+                        "b": {
+                            "c": 1
+                        }
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetProperty("c").Set(2);
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson("""{"a": {"b": {"c": 2}}}""", actual);
+        }
+
+        [Test]
+        public void CanWritePatchThreeLevelsTwice()
+        {
+            string json = """
+                {
+                    "a": {
+                        "b": {
+                            "c": 1
+                        }
+                    },
+                    "d": {
+                        "e": {
+                            "f": 1
+                        }
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetProperty("c").Set(2);
+            mdoc.RootElement.GetProperty("d").GetProperty("e").GetProperty("f").Set(3);
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson("""{"a": {"b": {"c": 2}}, "d": {"e": {"f": 3}}}""", actual);
+        }
+
+        [Test]
         public void CanWritePatchInterleaveChildObjectChanges()
         {
             string json = """

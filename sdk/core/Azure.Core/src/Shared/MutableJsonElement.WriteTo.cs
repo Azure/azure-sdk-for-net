@@ -209,8 +209,7 @@ namespace Azure.Core.Json
                         writer.WriteStartObject();
 
                         MutableJsonDocument.ChangeTracker.PushProperty(patchPath, ref patchPathLength, name, nameLength);
-                        patchElement = patchElement.GetProperty(GetString(name, s, e));
-                        continue;
+                        patchElement = patchElement.GetProperty(GetString(name, 0, nameLength));
                     }
 
                     s += e + 1;
