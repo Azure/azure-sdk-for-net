@@ -724,7 +724,6 @@ namespace Azure.Core
         public void Advance(int bytesWritten) { }
         public void Dispose() { }
         public System.Memory<byte> GetMemory(int sizeHint = 0) { throw null; }
-        public System.Buffers.ReadOnlySequence<byte> GetReadOnlySequence() { throw null; }
         public System.Span<byte> GetSpan(int sizeHint = 0) { throw null; }
         public bool TryComputeLength(out long length) { throw null; }
         public void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
