@@ -444,7 +444,7 @@ using Azure.Core.Pipeline;
         public virtual async Task<Response> UpdateJobAsync(
             string jobId,
             RequestContent content,
-            RequestContext context)
+            RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateJob)}");
             scope.Start();
@@ -471,7 +471,7 @@ using Azure.Core.Pipeline;
         public virtual Response UpdateJob(
             string jobId,
             RequestContent content,
-            RequestContext context)
+            RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateJob)}");
             scope.Start();
@@ -1361,7 +1361,7 @@ using Azure.Core.Pipeline;
         public virtual async Task<Response> UpdateWorkerAsync(
             string workerId,
             RequestContent content,
-            RequestContext context)
+            RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateWorker)}");
             scope.Start();
@@ -1388,7 +1388,7 @@ using Azure.Core.Pipeline;
         public virtual Response UpdateWorker(
             string workerId,
             RequestContent content,
-            RequestContext context)
+            RequestContext context = null)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterClient)}.{nameof(UpdateWorker)}");
             scope.Start();

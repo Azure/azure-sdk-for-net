@@ -231,7 +231,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.False(string.IsNullOrWhiteSpace(createExceptionPolicyResponse.Value.Name));
 
             var updatedExpcetionPolicyResponse = await routerClient.UpdateExceptionPolicyAsync(exceptionPolicyId,
-                RequestContent.Create(new { Name = (string?)null }), new RequestContext());
+                RequestContent.Create(new { Name = (string?)null }));
 
             var retrievedPolicy = await routerClient.GetExceptionPolicyAsync(exceptionPolicyId);
 

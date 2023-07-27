@@ -62,7 +62,7 @@ Response<Models.RouterQueue> updatedJobQueue = await routerAdministrationClient.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateQueueRemoveProp_Async
 Response updatedJobQueueWithoutName = await routerAdministrationClient.UpdateQueueAsync(jobQueueId,
-    RequestContent.Create(new { Name = (string?)null }), new RequestContext());
+    RequestContent.Create(new { Name = (string?)null }));
 
 Response<Models.RouterQueue> queriedJobQueueWithoutName = await routerAdministrationClient.GetQueueAsync(jobQueueId);
 
