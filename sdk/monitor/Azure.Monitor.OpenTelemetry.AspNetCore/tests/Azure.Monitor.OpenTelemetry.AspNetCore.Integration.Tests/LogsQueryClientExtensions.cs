@@ -23,6 +23,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             int maxTries = 10;
             while (count == 0 && maxTries > 0)
             {
+                Console.WriteLine($"{nameof(CheckForRecordAsync)}: {count}");
+
                 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
                     s_workspaceId,
                     query,

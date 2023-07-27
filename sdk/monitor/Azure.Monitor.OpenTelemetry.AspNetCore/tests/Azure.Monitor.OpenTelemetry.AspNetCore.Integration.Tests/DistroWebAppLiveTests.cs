@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         public async Task VerifyDistro()
         {
             // SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)
-            Console.Write("SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)");
+            Console.WriteLine("SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)");
 
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
@@ -57,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             _logsQueryClient.SetQueryWorkSpaceId(TestEnvironment.WorkspaceId);
 
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
-            Console.Write("SETUP WEBAPPLICATION WITH OPENTELEMETRY");
+            Console.WriteLine("SETUP WEBAPPLICATION WITH OPENTELEMETRY");
             var resourceAttributes = new Dictionary<string, object>
             {
                 { "service.name", RoleName },
@@ -91,13 +91,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             _ = app.RunAsync(TestServerUrl);
 
             // ACT
-            Console.Write("ACT");
+            Console.WriteLine("ACT");
             using var httpClient = new HttpClient();
             var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
             Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
 
             // SHUTDOWN
-            Console.Write("SHUTDOWN");
+            Console.WriteLine("SHUTDOWN");
             var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
             tracerProvider.ForceFlush();
             tracerProvider.Shutdown();
@@ -111,7 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             // ASSERT
             // NOTE: The following queries are using the LogAnalytics schema.
             // TODO: NEED TO PERFORM COLUMN LEVEL VALIDATIONS.
-            Console.Write("ASSERT");
+            Console.WriteLine("ASSERT");
 
             await VerifyTelemetry(
                 description: "Dependency for invoking HttpClient, from testhost",
