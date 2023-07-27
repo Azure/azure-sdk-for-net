@@ -17,12 +17,11 @@
 
 * Update OpenTelemetry dependencies
   ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
-  ([#37881](https://github.com/Azure/azure-sdk-for-net/pull/37881))
   - OpenTelemetry 1.5.1
   - OpenTelemetry.Extensions.Hosting 1.5.1
   - OpenTelemetry.Instrumentation.AspNetCore 1.5.1-beta.1
   - OpenTelemetry.Instrumentation.Http 1.5.1-beta.1
-  - OpenTelemetry.Instrumentation.SqlClient 1.5.1-beta.2
+  - OpenTelemetry.Instrumentation.SqlClient 1.5.1-beta.1
 
 ## 1.0.0-beta.5 (2023-07-13)
 
