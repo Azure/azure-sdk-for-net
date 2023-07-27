@@ -887,7 +887,7 @@ namespace Azure.Communication.JobRouter.Models
     }
     public partial class RouterWorker
     {
-        public RouterWorker() { }
+        internal RouterWorker() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.JobRouter.Models.RouterWorkerAssignment> AssignedJobs { get { throw null; } }
         public bool? AvailableForOffers { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.ChannelConfiguration> ChannelConfigurations { get { throw null; } }
