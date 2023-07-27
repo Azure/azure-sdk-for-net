@@ -4,35 +4,31 @@
 #nullable disable
 
 using System;
-using System.Globalization;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights.Models;
 
-namespace Azure.ResourceManager.PolicyInsights
+namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionPolicyDefinitionResource. </summary>
-    internal partial class SubscriptionPolicyDefinitionResourceExtensionClient : ArmResource
+    /// <summary> A class to add extension methods to SubscriptionPolicySetDefinition. </summary>
+    internal partial class PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension : ArmResource
     {
         private ClientDiagnostics _policyEventsClientDiagnostics;
         private PolicyEventsRestOperations _policyEventsRestClient;
         private ClientDiagnostics _policyStatesClientDiagnostics;
         private PolicyStatesRestOperations _policyStatesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicyDefinitionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionPolicyDefinitionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension"/> class for mocking. </summary>
+        protected PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicyDefinitionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionPolicyDefinitionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -40,7 +36,6 @@ namespace Azure.ResourceManager.PolicyInsights
         private PolicyEventsRestOperations PolicyEventsRestClient => _policyEventsRestClient ??= new PolicyEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics PolicyStatesClientDiagnostics => _policyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PolicyStatesRestOperations PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
@@ -48,9 +43,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Summarizes policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForPolicyDefinition
+        /// Summarizes policy states for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
+        /// Operation Id: PolicyStates_SummarizeForPolicySetDefinition
         /// </summary>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -60,11 +55,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             async Task<Page<PolicySummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionResourceExtensionClient.SummarizePolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResourceExtensionClient.SummarizePolicyStates");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyStatesRestClient.SummarizeForPolicyDefinitionAsync(Id.SubscriptionId, Id.Name, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyStatesRestClient.SummarizeForPolicySetDefinitionAsync(Id.SubscriptionId, Id.Name, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -77,9 +72,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Summarizes policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForPolicyDefinition
+        /// Summarizes policy states for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
+        /// Operation Id: PolicyStates_SummarizeForPolicySetDefinition
         /// </summary>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -89,11 +84,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Page<PolicySummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionResourceExtensionClient.SummarizePolicyStates");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResourceExtensionClient.SummarizePolicyStates");
                 scope.Start();
                 try
                 {
-                    var response = PolicyStatesRestClient.SummarizeForPolicyDefinition(Id.SubscriptionId, Id.Name, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyStatesRestClient.SummarizeForPolicySetDefinition(Id.SubscriptionId, Id.Name, policyStateSummaryType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -106,9 +101,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForPolicyDefinition
+        /// Queries policy states for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
+        /// Operation Id: PolicyStates_ListQueryResultsForPolicySetDefinition
         /// </summary>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -118,11 +113,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             async Task<Page<PolicyState>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionResourceExtensionClient.GetPolicyStateQueryResults");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForPolicyDefinitionAsync(Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyStatesRestClient.ListQueryResultsForPolicySetDefinitionAsync(Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -133,11 +128,11 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             async Task<Page<PolicyState>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionResourceExtensionClient.GetPolicyStateQueryResults");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyStatesRestClient.ListQueryResultsForPolicyDefinitionNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyStatesRestClient.ListQueryResultsForPolicySetDefinitionNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -150,9 +145,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForPolicyDefinition
+        /// Queries policy states for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
+        /// Operation Id: PolicyStates_ListQueryResultsForPolicySetDefinition
         /// </summary>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -162,11 +157,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Page<PolicyState> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionResourceExtensionClient.GetPolicyStateQueryResults");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = PolicyStatesRestClient.ListQueryResultsForPolicyDefinition(Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyStatesRestClient.ListQueryResultsForPolicySetDefinition(Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -177,11 +172,11 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             Page<PolicyState> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionResourceExtensionClient.GetPolicyStateQueryResults");
+                using var scope = PolicyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResourceExtensionClient.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = PolicyStatesRestClient.ListQueryResultsForPolicyDefinitionNextPage(nextLink, Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyStatesRestClient.ListQueryResultsForPolicySetDefinitionNextPage(nextLink, Id.SubscriptionId, Id.Name, policyStateType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -194,9 +189,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForPolicyDefinition
+        /// Queries policy events for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
+        /// Operation Id: PolicyEvents_ListQueryResultsForPolicySetDefinition
         /// </summary>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -206,11 +201,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             async Task<Page<PolicyEvent>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionResourceExtensionClient.GetPolicyEventQueryResults");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForPolicyDefinitionAsync(Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyEventsRestClient.ListQueryResultsForPolicySetDefinitionAsync(Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -221,11 +216,11 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             async Task<Page<PolicyEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionResourceExtensionClient.GetPolicyEventQueryResults");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await PolicyEventsRestClient.ListQueryResultsForPolicyDefinitionNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await PolicyEventsRestClient.ListQueryResultsForPolicySetDefinitionNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -238,9 +233,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForPolicyDefinition
+        /// Queries policy events for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
+        /// Operation Id: PolicyEvents_ListQueryResultsForPolicySetDefinition
         /// </summary>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -250,11 +245,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Page<PolicyEvent> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionResourceExtensionClient.GetPolicyEventQueryResults");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = PolicyEventsRestClient.ListQueryResultsForPolicyDefinition(Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyEventsRestClient.ListQueryResultsForPolicySetDefinition(Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -265,11 +260,11 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             Page<PolicyEvent> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionResourceExtensionClient.GetPolicyEventQueryResults");
+                using var scope = PolicyEventsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResourceExtensionClient.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = PolicyEventsRestClient.ListQueryResultsForPolicyDefinitionNextPage(nextLink, Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
+                    var response = PolicyEventsRestClient.ListQueryResultsForPolicySetDefinitionNextPage(nextLink, Id.SubscriptionId, Id.Name, policyEventType, policyQuerySettings, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
