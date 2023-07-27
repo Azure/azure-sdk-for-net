@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class RecognizeChoice : IUtf8JsonSerializable
+    public partial class RecognitionChoice : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteEndObject();
         }
 
-        internal static RecognizeChoice DeserializeRecognizeChoice(JsonElement element)
+        internal static RecognitionChoice DeserializeRecognitionChoice(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -69,7 +69,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeChoice(label, phrases, Optional.ToNullable(tone));
+            return new RecognitionChoice(label, phrases, Optional.ToNullable(tone));
         }
     }
 }

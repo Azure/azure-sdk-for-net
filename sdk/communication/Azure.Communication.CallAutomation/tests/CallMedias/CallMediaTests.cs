@@ -69,20 +69,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             "The third test string to be recognized by cognition service"
         };
 
-        private static RecognizeChoice _recognizeChoice1 = new RecognizeChoice("testLabel1", s_strings);
-        private static RecognizeChoice _recognizeChoice2 = new RecognizeChoice("testLabel2", s_strings);
+        private static RecognitionChoice _recognizeChoice1 = new RecognitionChoice("testLabel1", s_strings);
+        private static RecognitionChoice _recognizeChoice2 = new RecognitionChoice("testLabel2", s_strings);
 
-        private static readonly List<RecognizeChoice> s_recognizeChoices = new List<RecognizeChoice>()
+        private static readonly List<RecognitionChoice> s_recognizeChoices = new List<RecognitionChoice>()
         {
             _recognizeChoice1,
             _recognizeChoice2
         };
 
-        private static readonly CallMediaRecognizeOptions _dmtfRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 5)
+        private static readonly CallMediaRecognizeDtmfOptions _dtmfRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 5)
         {
             InterruptCallMediaOperation = true,
             InterToneTimeout = TimeSpan.FromSeconds(10),
-            StopTones = new DtmfTone[] { DtmfTone.Pound },
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
             InterruptPrompt = true,
             OperationContext = "operationContext",
@@ -147,6 +146,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         public void Setup()
         {
             _fileSource.PlaySourceCacheId = "PlaySourceCacheId";
+            _dtmfRecognizeOptions.StopTones.Add(DtmfTone.Pound);
         }
 
         private CallMedia GetCallMedia(int responseCode, object? responseContent = null)
@@ -443,7 +443,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
-                   callMedia => callMedia.StartRecognizingAsync(_dmtfRecognizeOptions)
+                   callMedia => callMedia.StartRecognizingAsync(_dtmfRecognizeOptions)
                 },
                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
@@ -512,7 +512,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
                 {
-                   callMedia => callMedia.StartRecognizing(_dmtfRecognizeOptions)
+                   callMedia => callMedia.StartRecognizing(_dtmfRecognizeOptions)
                 },
                 new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
                 {

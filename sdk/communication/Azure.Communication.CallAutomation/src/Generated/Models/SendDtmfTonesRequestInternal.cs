@@ -13,14 +13,14 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The SendDtmfRequest. </summary>
-    internal partial class SendDtmfRequestInternal
+    /// <summary> The SendDtmfTonesRequest. </summary>
+    internal partial class SendDtmfTonesRequestInternal
     {
-        /// <summary> Initializes a new instance of SendDtmfRequestInternal. </summary>
+        /// <summary> Initializes a new instance of SendDtmfTonesRequestInternal. </summary>
         /// <param name="tones"> List of tones to be sent to target participant. </param>
-        /// <param name="targetParticipant"> Target participant of send DTMF. </param>
+        /// <param name="targetParticipant"> Target participant of send Dtmf tones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tones"/> or <paramref name="targetParticipant"/> is null. </exception>
-        public SendDtmfRequestInternal(IEnumerable<DtmfTone> tones, CommunicationIdentifierModel targetParticipant)
+        public SendDtmfTonesRequestInternal(IEnumerable<DtmfTone> tones, CommunicationIdentifierModel targetParticipant)
         {
             Argument.AssertNotNull(tones, nameof(tones));
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> List of tones to be sent to target participant. </summary>
         public IList<DtmfTone> Tones { get; }
-        /// <summary> Target participant of send DTMF. </summary>
+        /// <summary> Target participant of send Dtmf tones. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }

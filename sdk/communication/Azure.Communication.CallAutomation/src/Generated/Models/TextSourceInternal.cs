@@ -30,8 +30,8 @@ namespace Azure.Communication.CallAutomation
         /// Refer to available locales here: &lt;seealso href=&quot;https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts&quot; /&gt;
         /// </summary>
         public string SourceLocale { get; set; }
-        /// <summary> Voice gender type. </summary>
-        public GenderType? VoiceGender { get; set; }
+        /// <summary> Voice kind type. </summary>
+        public VoiceKind? VoiceKind { get; set; }
         /// <summary>
         /// Voice name to be played
         /// Refer to available Text-to-speech voices here: &lt;seealso href=&quot;https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts&quot; /&gt;

@@ -14,15 +14,15 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload for muting participants from the call. </summary>
-    internal partial class MuteParticipantsRequestInternal
+    internal partial class MuteParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of MuteParticipantsRequestInternal. </summary>
+        /// <summary> Initializes a new instance of MuteParticipantRequestInternal. </summary>
         /// <param name="targetParticipants">
         /// Participants to be muted from the call.
         /// Only ACS Users are supported.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipants"/> is null. </exception>
-        public MuteParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> targetParticipants)
+        public MuteParticipantRequestInternal(IEnumerable<CommunicationIdentifierModel> targetParticipants)
         {
             Argument.AssertNotNull(targetParticipants, nameof(targetParticipants));
 

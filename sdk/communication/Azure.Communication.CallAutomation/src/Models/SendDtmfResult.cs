@@ -12,17 +12,21 @@ namespace Azure.Communication.CallAutomation
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
-        private string _operationContext;
+        //private string _operationContext;
 
-        internal SendDtmfResult()
+        /// <summary> Operation context. </summary>
+        public string OperationContext { get; internal set; }
+
+        internal SendDtmfResult(string operationContext)
         {
+            OperationContext = operationContext;
         }
 
         internal void SetEventProcessor(CallAutomationEventProcessor evHandler, string callConnectionId, string operationContext)
         {
             _evHandler = evHandler;
             _callConnectionId = callConnectionId;
-            _operationContext = operationContext;
+            OperationContext = operationContext;
         }
 
         /// <summary>
@@ -39,7 +43,7 @@ namespace Azure.Communication.CallAutomation
 
             var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
-                && (filter.OperationContext == _operationContext || _operationContext is null)
+                && (filter.OperationContext == OperationContext || OperationContext is null)
                 && (filter.GetType() == typeof(SendDtmfCompleted)
                 || filter.GetType() == typeof(SendDtmfFailed)),
                 cancellationToken);
@@ -61,7 +65,7 @@ namespace Azure.Communication.CallAutomation
 
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
-                && (filter.OperationContext == _operationContext || _operationContext is null)
+                && (filter.OperationContext == OperationContext || OperationContext is null)
                 && (filter.GetType() == typeof(SendDtmfCompleted)
                 || filter.GetType() == typeof(SendDtmfFailed)),
                 cancellationToken).ConfigureAwait(false);

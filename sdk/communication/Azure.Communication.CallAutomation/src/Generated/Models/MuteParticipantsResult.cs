@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The response payload for muting participants from the call. </summary>
+    /// <summary> The result payload for muting participants from the call. </summary>
     public partial class MuteParticipantsResult
     {
         /// <summary> Initializes a new instance of MuteParticipantsResult. </summary>

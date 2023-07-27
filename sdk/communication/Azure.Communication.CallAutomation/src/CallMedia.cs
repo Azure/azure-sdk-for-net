@@ -419,7 +419,7 @@ namespace Azure.Communication.CallAutomation
                     InitialSilenceTimeoutInSeconds = (int)recognizeChoiceOptions.InitialSilenceTimeout.TotalSeconds
                 };
 
-                recognizeChoiceOptions.RecognizeChoices
+                recognizeChoiceOptions.Choices
                     .ToList().ForEach(t => recognizeConfigurationsInternal.Choices.Add(t));
 
                 if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechLanguage))
@@ -680,16 +680,17 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                SendDtmfRequestInternal request = request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
-
-                request.OperationContext = operationContext;
+                SendDtmfTonesRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                {
+                    OperationContext = operationContext
+                };
 
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
 
-                var result = new SendDtmfResult();
+                var result = new SendDtmfResult(response.Value.OperationContext);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -716,16 +717,17 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                SendDtmfRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
-
-                request.OperationContext = operationContext;
+                SendDtmfTonesRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                {
+                    OperationContext = operationContext
+                };
 
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = CallMediaRestClient.SendDtmf(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                var response = CallMediaRestClient.SendDtmfTones(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken);
 
-                var result = new SendDtmfResult();
+                var result = new SendDtmfResult(response.Value.OperationContext);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());

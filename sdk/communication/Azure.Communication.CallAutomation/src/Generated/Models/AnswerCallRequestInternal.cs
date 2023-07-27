@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
         /// <summary> The endpoint URL of the Azure Cognitive Services resource attached. </summary>
-        public string AzureCognitiveServicesEndpointUrl { get; set; }
+        public string CognitiveServicesEndpoint { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
     }

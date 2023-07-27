@@ -24,10 +24,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            if (Optional.IsDefined(CognitiveServicesEndpoint))
             {
-                writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
-                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+                writer.WritePropertyName("cognitiveServicesEndpoint"u8);
+                writer.WriteStringValue(CognitiveServicesEndpoint);
             }
             if (Optional.IsDefined(AnsweredBy))
             {

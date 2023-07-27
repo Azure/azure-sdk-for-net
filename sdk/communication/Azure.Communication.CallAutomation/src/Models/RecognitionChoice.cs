@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// The possible Dtmf Tones.
     /// </summary>
     [CodeGenModel("Choice", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class RecognizeChoice
+    public partial class RecognitionChoice
     {
     }
 }
