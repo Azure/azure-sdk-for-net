@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Date the user created this view. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Date when the user last modified this view. </summary>
-        public DateTimeOffset? ModifiedOn { get; }
+        public DateTimeOffset? ModifiedOn { get; set; }
         /// <summary> Date range of the current view. </summary>
-        public string DateRange { get; }
+        public string DateRange { get; set; }
         /// <summary> Currency of the current view. </summary>
         public string Currency { get; }
         /// <summary> Chart type of the main view in Cost Analysis. Required. </summary>

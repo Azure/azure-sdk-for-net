@@ -37,6 +37,16 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
+            if (Optional.IsDefined(ModifiedOn))
+            {
+                writer.WritePropertyName("modifiedOn"u8);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
+            }
+            if (Optional.IsDefined(DateRange))
+            {
+                writer.WritePropertyName("dateRange"u8);
+                writer.WriteStringValue(DateRange);
+            }
             if (Optional.IsDefined(Chart))
             {
                 writer.WritePropertyName("chart"u8);

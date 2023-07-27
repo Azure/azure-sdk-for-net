@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingAccountScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingAccount</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1014,12 +1014,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByBillingAccountGenerateBenefitUtilizationSummariesReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(waitUntil, billingAccountId, content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).GenerateByBillingAccountGenerateBenefitUtilizationSummariesReportAsync(waitUntil, billingAccountId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingAccountScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingAccount</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1042,12 +1042,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByBillingAccountGenerateBenefitUtilizationSummariesReport(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScope(waitUntil, billingAccountId, content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GenerateByBillingAccountGenerateBenefitUtilizationSummariesReport(waitUntil, billingAccountId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingProfileScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingProfile</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1071,13 +1071,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByBillingProfileGenerateBenefitUtilizationSummariesReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(waitUntil, billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).GenerateByBillingProfileGenerateBenefitUtilizationSummariesReportAsync(waitUntil, billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingProfileScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingProfile</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1101,13 +1101,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByBillingProfileGenerateBenefitUtilizationSummariesReport(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScope(waitUntil, billingAccountId, billingProfileId, content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GenerateByBillingProfileGenerateBenefitUtilizationSummariesReport(waitUntil, billingAccountId, billingProfileId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReservationOrderScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationOrderId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1130,12 +1130,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(waitUntil, reservationOrderId, content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReportAsync(waitUntil, reservationOrderId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1147,7 +1147,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReservationOrderScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationOrderId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1158,12 +1158,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReport(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScope(waitUntil, reservationOrderId, content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReport(waitUntil, reservationOrderId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReservationScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1187,13 +1187,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByReservationIdGenerateBenefitUtilizationSummariesReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScopeAsync(waitUntil, reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).GenerateByReservationIdGenerateBenefitUtilizationSummariesReportAsync(waitUntil, reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReservationScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1217,13 +1217,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByReservationIdGenerateBenefitUtilizationSummariesReport(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScope(waitUntil, reservationOrderId, reservationId, content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GenerateByReservationIdGenerateBenefitUtilizationSummariesReport(waitUntil, reservationOrderId, reservationId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1235,7 +1235,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanOrderId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1246,12 +1246,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(waitUntil, savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReportAsync(waitUntil, savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1263,7 +1263,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanOrderId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1274,12 +1274,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReport(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(waitUntil, savingsPlanOrderId, content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReport(waitUntil, savingsPlanOrderId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1291,7 +1291,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1303,13 +1303,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReportAsync(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1321,7 +1321,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1333,13 +1333,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReport(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReport(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken);
         }
 
         /// <summary>

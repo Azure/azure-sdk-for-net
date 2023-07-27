@@ -21,18 +21,8 @@ namespace Azure.ResourceManager.CostManagement
     {
         private ClientDiagnostics _benefitUtilizationSummariesClientDiagnostics;
         private BenefitUtilizationSummariesRestOperations _benefitUtilizationSummariesRestClient;
-        private ClientDiagnostics _billingAccountScopeClientDiagnostics;
-        private BillingAccountScopeRestOperations _billingAccountScopeRestClient;
-        private ClientDiagnostics _billingProfileScopeClientDiagnostics;
-        private BillingProfileScopeRestOperations _billingProfileScopeRestClient;
-        private ClientDiagnostics _reservationOrderScopeClientDiagnostics;
-        private ReservationOrderScopeRestOperations _reservationOrderScopeRestClient;
-        private ClientDiagnostics _reservationScopeClientDiagnostics;
-        private ReservationScopeRestOperations _reservationScopeRestClient;
-        private ClientDiagnostics _savingsPlanOrderScopeClientDiagnostics;
-        private SavingsPlanOrderScopeRestOperations _savingsPlanOrderScopeRestClient;
-        private ClientDiagnostics _savingsPlanScopeClientDiagnostics;
-        private SavingsPlanScopeRestOperations _savingsPlanScopeRestClient;
+        private ClientDiagnostics _generateBenefitUtilizationSummariesReportClientDiagnostics;
+        private GenerateBenefitUtilizationSummariesReportRestOperations _generateBenefitUtilizationSummariesReportRestClient;
         private ClientDiagnostics _costManagementAlertAlertsClientDiagnostics;
         private AlertsRestOperations _costManagementAlertAlertsRestClient;
         private ClientDiagnostics _forecastClientDiagnostics;
@@ -62,18 +52,8 @@ namespace Azure.ResourceManager.CostManagement
 
         private ClientDiagnostics BenefitUtilizationSummariesClientDiagnostics => _benefitUtilizationSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BenefitUtilizationSummariesRestOperations BenefitUtilizationSummariesRestClient => _benefitUtilizationSummariesRestClient ??= new BenefitUtilizationSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BillingAccountScopeClientDiagnostics => _billingAccountScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BillingAccountScopeRestOperations BillingAccountScopeRestClient => _billingAccountScopeRestClient ??= new BillingAccountScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BillingProfileScopeClientDiagnostics => _billingProfileScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BillingProfileScopeRestOperations BillingProfileScopeRestClient => _billingProfileScopeRestClient ??= new BillingProfileScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ReservationOrderScopeClientDiagnostics => _reservationOrderScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ReservationOrderScopeRestOperations ReservationOrderScopeRestClient => _reservationOrderScopeRestClient ??= new ReservationOrderScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ReservationScopeClientDiagnostics => _reservationScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ReservationScopeRestOperations ReservationScopeRestClient => _reservationScopeRestClient ??= new ReservationScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SavingsPlanOrderScopeClientDiagnostics => _savingsPlanOrderScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SavingsPlanOrderScopeRestOperations SavingsPlanOrderScopeRestClient => _savingsPlanOrderScopeRestClient ??= new SavingsPlanOrderScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SavingsPlanScopeClientDiagnostics => _savingsPlanScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SavingsPlanScopeRestOperations SavingsPlanScopeRestClient => _savingsPlanScopeRestClient ??= new SavingsPlanScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics GenerateBenefitUtilizationSummariesReportClientDiagnostics => _generateBenefitUtilizationSummariesReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private GenerateBenefitUtilizationSummariesReportRestOperations GenerateBenefitUtilizationSummariesReportRestClient => _generateBenefitUtilizationSummariesReportRestClient ??= new GenerateBenefitUtilizationSummariesReportRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CostManagementAlertAlertsClientDiagnostics => _costManagementAlertAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementAlertResource.ResourceType.Namespace, Diagnostics);
         private AlertsRestOperations CostManagementAlertAlertsRestClient => _costManagementAlertAlertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CostManagementAlertResource.ResourceType));
         private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -322,7 +302,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingAccountScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingAccount</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,14 +310,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByBillingAccountGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = BillingAccountScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateByBillingAccountGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = await BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateByBillingAccountAsync(billingAccountId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByBillingAccountRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -358,7 +338,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingAccountScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingAccount</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -366,14 +346,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="billingAccountId"> Billing account ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByBillingAccountGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = BillingAccountScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateByBillingAccountGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateByBillingAccount(billingAccountId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByBillingAccountRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -394,7 +374,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingProfileScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingProfile</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,14 +383,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="billingProfileId"> Billing profile ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByBillingProfileGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = BillingProfileScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateByBillingProfileGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = await BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateByBillingProfileAsync(billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByBillingProfileRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -431,7 +411,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BillingProfileScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByBillingProfile</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -440,14 +420,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="billingProfileId"> Billing profile ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByBillingProfileGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = BillingProfileScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateByBillingProfileGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, billingProfileId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateByBillingProfile(billingAccountId, billingProfileId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByBillingProfileRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -468,7 +448,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReservationOrderScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationOrderId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -476,14 +456,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="reservationOrderId"> Reservation Order ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ReservationOrderScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = await ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateByReservationOrderIdAsync(reservationOrderId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByReservationOrderIdRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -504,7 +484,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReservationOrderScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationOrderId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -512,14 +492,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="reservationOrderId"> Reservation Order ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ReservationOrderScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateByReservationOrderId(reservationOrderId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByReservationOrderIdRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -540,7 +520,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReservationScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -549,14 +529,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="reservationId"> Reservation ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByReservationIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ReservationScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportReservationScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateByReservationIdGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = await ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateByReservationIdAsync(reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByReservationIdRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -577,7 +557,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReservationScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateByReservationId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -586,14 +566,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="reservationId"> Reservation ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByReservationIdGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ReservationScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportReservationScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateByReservationIdGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, reservationId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateByReservationId(reservationOrderId, reservationId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateByReservationIdRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -614,7 +594,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanOrderId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -622,14 +602,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SavingsPlanOrderScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = await SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateBySavingsPlanOrderIdAsync(savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBySavingsPlanOrderIdRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -650,7 +630,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanOrderId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -658,14 +638,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="savingsPlanOrderId"> Savings plan order ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SavingsPlanOrderScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(savingsPlanOrderId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateBySavingsPlanOrderId(savingsPlanOrderId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBySavingsPlanOrderIdRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -686,7 +666,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -695,14 +675,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SavingsPlanScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = await SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsyncAsync(savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
+                var response = await GenerateBenefitUtilizationSummariesReportRestClient.GenerateBySavingsPlanIdAsync(savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -723,7 +703,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync</description>
+        /// <description>GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanId</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -732,14 +712,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="savingsPlanId"> Savings plan ID. </param>
         /// <param name="content"> Async Benefit Utilization Summary report to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SavingsPlanScopeClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("TenantResourceExtensionClient.GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReport");
             scope.Start();
             try
             {
-                var response = SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, savingsPlanId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
+                var response = GenerateBenefitUtilizationSummariesReportRestClient.GenerateBySavingsPlanId(savingsPlanOrderId, savingsPlanId, content, cancellationToken);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
