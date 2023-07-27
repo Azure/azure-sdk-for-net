@@ -141,8 +141,6 @@ namespace Azure.Core.Json
                 return;
             }
 
-            // This version is not efficient; Proof of concept.
-
             IEnumerable<string> changePaths = _root.Changes.GetChangedProperties(out int maxPathLength);
 
             // patchPath tracks the global path we're on in writing out the PATCH JSON.
@@ -164,12 +162,11 @@ namespace Azure.Core.Json
             // Write the start of the PATCH JSON
             writer.WriteStartObject();
 
-            // foreach unique change on the change list
             foreach (string path in changePaths)
             {
                 ReadOnlySpan<char> changePath = path.AsSpan();
-                ReadOnlySpan<char> segment = GetFirstSegment(changePath);
-                WriteValue(currentPath, ref currentPathLength, segment, segment.Length);
+
+                CopyTo(currentPath, ref currentPathLength, GetFirstSegment(changePath));
 
                 // If the change we're on starts in a different object than we were writing to in
                 // the last iteration, we need to write the end of any open objects.  Do that now.
@@ -179,9 +176,9 @@ namespace Azure.Core.Json
                 // for the change we're writing in this loop iteration.
                 OpenAncestorObjects(writer, changePath, currentPath, ref currentPathLength, patchPath, ref patchPathLength, ref patchElement);
 
-                // At this point, we're at the last segment and are in right position to write
-                // the change for that element into the PATCH JSON.
-                segment = GetLastSegment(changePath);
+                // Now we're at the last segment of the change path and patchElement points to
+                // the node that contains the change we want to write into the PATCH JSON.
+                ReadOnlySpan<char> segment = GetLastSegment(changePath);
 
                 writer.WritePropertyName(segment);
                 patchElement.GetProperty(segment).WriteTo(writer);
@@ -207,12 +204,12 @@ namespace Azure.Core.Json
             return idx == -1 ? path : path.Slice(idx + 1);
         }
 
-        private void WriteValue(Span<char> target, ref int targetLength, ReadOnlySpan<char> value, int valueLength)
+        private void CopyTo(Span<char> target, ref int targetLength, ReadOnlySpan<char> value)
         {
-            Debug.Assert(target.Length >= valueLength);
+            Debug.Assert(target.Length >= value.Length);
 
-            value.Slice(0, valueLength).CopyTo(target);
-            targetLength = valueLength;
+            value.CopyTo(target);
+            targetLength = value.Length;
         }
 
         private void CloseOpenObjects(Utf8JsonWriter writer, ReadOnlySpan<char> currentPath, int currentPathLength, Span<char> patchPath, ref int patchPathLength, ref MutableJsonElement patchElement)
