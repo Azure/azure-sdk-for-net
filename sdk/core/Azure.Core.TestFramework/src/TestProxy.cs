@@ -81,7 +81,9 @@ namespace Azure.Core.TestFramework
                 }
             };
 
-            if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("TF_BUILD")))
+            bool.TryParse(Environment.GetEnvironmentVariable("TF_BUILD"), out bool inCI);
+
+            if (inCI)
             {
                 testProxyProcessInfo.EnvironmentVariables["PROXY_ASSETS_FOLDER"] = Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString());
             }
