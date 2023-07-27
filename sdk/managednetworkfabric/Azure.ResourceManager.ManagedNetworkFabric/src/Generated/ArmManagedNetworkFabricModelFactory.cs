@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceData"/> instance for mocking. </returns>
-        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, string hostName = null, string serialNumber = null, string version = null, string networkDeviceSku = null, NetworkDeviceRole? networkDeviceRole = null, string networkRackId = null, string managementIPv4Address = null, string managementIPv6Address = null, ConfigurationState? configurationState = null, ProvisioningState? provisioningState = null, AdministrativeState? administrativeState = null)
+        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, string hostName = null, string serialNumber = null, string version = null, string networkDeviceSku = null, NetworkDeviceRole? networkDeviceRole = null, ResourceIdentifier networkRackId = null, string managementIPv4Address = null, string managementIPv6Address = null, ConfigurationState? configurationState = null, ProvisioningState? provisioningState = null, AdministrativeState? administrativeState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="workloadServices"> WorkloadServices IP ranges. </param>
         /// <param name="managedResourceGroupConfiguration"> Managed Resource Group configuration properties. </param>
         /// <param name="networkFabricIds"> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </param>
-        /// <param name="workloadManagementNetwork"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. This is used for the backward compatibility. </param>
+        /// <param name="isWorkloadManagementNetwork"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. This is used for the backward compatibility. </param>
         /// <param name="isWorkloadManagementNetworkEnabled"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. </param>
         /// <param name="tenantInternetGatewayIds"> List of tenant InternetGateway resource IDs. </param>
         /// <param name="ipv4AddressSpace"> IPv4 Network Fabric Controller Address Space. </param>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/> instance for mocking. </returns>
-        public static NetworkFabricControllerData NetworkFabricControllerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = null, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections = null, ControllerServices infrastructureServices = null, ControllerServices workloadServices = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, IEnumerable<ResourceIdentifier> networkFabricIds = null, bool? workloadManagementNetwork = null, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = null, IEnumerable<ResourceIdentifier> tenantInternetGatewayIds = null, string ipv4AddressSpace = null, string ipv6AddressSpace = null, NetworkFabricControllerSKU? nfcSku = null, ProvisioningState? provisioningState = null)
+        public static NetworkFabricControllerData NetworkFabricControllerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = null, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections = null, ControllerServices infrastructureServices = null, ControllerServices workloadServices = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, IEnumerable<ResourceIdentifier> networkFabricIds = null, bool? isWorkloadManagementNetwork = null, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = null, IEnumerable<ResourceIdentifier> tenantInternetGatewayIds = null, string ipv4AddressSpace = null, string ipv6AddressSpace = null, NetworkFabricControllerSKU? nfcSku = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             infrastructureExpressRouteConnections ??= new List<ExpressRouteConnectionInformation>();
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             networkFabricIds ??= new List<ResourceIdentifier>();
             tenantInternetGatewayIds ??= new List<ResourceIdentifier>();
 
-            return new NetworkFabricControllerData(id, name, resourceType, systemData, tags, location, annotation, infrastructureExpressRouteConnections?.ToList(), workloadExpressRouteConnections?.ToList(), infrastructureServices, workloadServices, managedResourceGroupConfiguration, networkFabricIds?.ToList(), workloadManagementNetwork, isWorkloadManagementNetworkEnabled, tenantInternetGatewayIds?.ToList(), ipv4AddressSpace, ipv6AddressSpace, nfcSku, provisioningState);
+            return new NetworkFabricControllerData(id, name, resourceType, systemData, tags, location, annotation, infrastructureExpressRouteConnections?.ToList(), workloadExpressRouteConnections?.ToList(), infrastructureServices, workloadServices, managedResourceGroupConfiguration, networkFabricIds?.ToList(), isWorkloadManagementNetwork, isWorkloadManagementNetworkEnabled, tenantInternetGatewayIds?.ToList(), ipv4AddressSpace, ipv6AddressSpace, nfcSku, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ControllerServices. </summary>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
         /// <returns> A new <see cref="Models.TerminalServerConfiguration"/> instance for mocking. </returns>
-        public static TerminalServerConfiguration TerminalServerConfiguration(string username = null, string password = null, string serialNumber = null, string networkDeviceId = null, string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null)
+        public static TerminalServerConfiguration TerminalServerConfiguration(string username = null, string password = null, string serialNumber = null, ResourceIdentifier networkDeviceId = null, string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null)
         {
             return new TerminalServerConfiguration(username, password, serialNumber, networkDeviceId, primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix);
         }
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapRuleData"/> instance for mocking. </returns>
-        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, ConfigurationType? configurationType = null, Uri tapRulesUri = null, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, string networkTapId = null, PollingIntervalInSecond? pollingIntervalInSeconds = null, DateTimeOffset? lastSyncedOn = null, ConfigurationState? configurationState = null, ProvisioningState? provisioningState = null, AdministrativeState? administrativeState = null)
+        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, ConfigurationType? configurationType = null, Uri tapRulesUri = null, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, ResourceIdentifier networkTapId = null, PollingIntervalInSecond? pollingIntervalInSeconds = null, DateTimeOffset? lastSyncedOn = null, ConfigurationState? configurationState = null, ProvisioningState? provisioningState = null, AdministrativeState? administrativeState = null)
         {
             tags ??= new Dictionary<string, string>();
             matchConfigurations ??= new List<NetworkTapRuleMatchConfiguration>();

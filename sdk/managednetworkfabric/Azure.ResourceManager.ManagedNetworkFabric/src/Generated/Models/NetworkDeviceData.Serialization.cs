@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> version = default;
             Optional<string> networkDeviceSku = default;
             Optional<NetworkDeviceRole> networkDeviceRole = default;
-            Optional<string> networkRackId = default;
+            Optional<ResourceIdentifier> networkRackId = default;
             Optional<string> managementIPv4Address = default;
             Optional<string> managementIPv6Address = default;
             Optional<ConfigurationState> configurationState = default;
@@ -171,7 +171,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("networkRackId"u8))
                         {
-                            networkRackId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkRackId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("managementIpv4Address"u8))

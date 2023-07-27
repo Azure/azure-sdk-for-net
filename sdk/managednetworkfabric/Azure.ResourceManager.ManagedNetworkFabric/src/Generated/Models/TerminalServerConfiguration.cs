@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        internal TerminalServerConfiguration(string username, string password, string serialNumber, string networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(username, password, serialNumber)
+        internal TerminalServerConfiguration(string username, string password, string serialNumber, ResourceIdentifier networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(username, password, serialNumber)
         {
             NetworkDeviceId = networkDeviceId;
             PrimaryIPv4Prefix = primaryIPv4Prefix;
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> ARM Resource ID used for the NetworkDevice. </summary>
-        public string NetworkDeviceId { get; }
+        public ResourceIdentifier NetworkDeviceId { get; }
         /// <summary> IPv4 Address Prefix. </summary>
         public string PrimaryIPv4Prefix { get; set; }
         /// <summary> IPv6 Address Prefix. </summary>

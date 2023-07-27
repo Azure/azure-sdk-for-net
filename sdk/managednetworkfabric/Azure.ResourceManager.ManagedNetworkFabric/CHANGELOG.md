@@ -8,18 +8,23 @@ This release is the first stable release of the Managed Network Fabric library.
 
 This version supports the following new resources:
 
-    1. InternetGateyways
-    2. InternetGatewayRules
-    3. NetworkTap
-    4. NetworkTapRules
-    5. NetworkPacketBroker
-    6. NeighborGroup
+- InternetGateyways
+- InternetGatewayRules
+- NetworkTap
+- NetworkTapRules
+- NetworkPacketBroker
+- NeighborGroup
 
 ### Breaking Changes
 
-    1. Supported new parameters and removed deprecated parameters in all existing resources.
-    2. Supported new post actions in the existing resources.
-    3. Removed some post actions that are not needed.
+- Supported new parameters and removed deprecated parameters in all existing resources.
+- Supported new post actions in the existing resources.
+- Removed some post actions that are not needed.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the name of interval / duration properties / parameters that end with units.
+- Optimized the name of some models and functions.
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 
 ## 1.0.0-beta.1 (2023-06-28)
 

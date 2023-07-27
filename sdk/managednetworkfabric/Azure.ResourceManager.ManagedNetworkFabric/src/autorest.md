@@ -62,6 +62,12 @@ rename-mapping:
   PollingType: NetworkTapPollingType
   PortType: PortConditionType
   PrefixType: IPMatchConditionPrefixType
+  NetworkDevice.properties.networkRackId: -|arm-id
+  NetworkTapRule.properties.networkTapId: -|arm-id
+  IpCommunityIdList.ipCommunityIds: -|arm-id
+  IpExtendedCommunityIdList.ipExtendedCommunityIds: -|arm-id
+  TerminalServerConfiguration.networkDeviceId: -|arm-id
+  NetworkFabricController.properties.workloadManagementNetwork: IsWorkloadManagementNetwork
 
 directive:
   - from: NetworkFabricControllers.json

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<Uri> tapRulesUrl = default;
             Optional<IList<NetworkTapRuleMatchConfiguration>> matchConfigurations = default;
             Optional<IList<CommonDynamicMatchConfiguration>> dynamicMatchConfigurations = default;
-            Optional<string> networkTapId = default;
+            Optional<ResourceIdentifier> networkTapId = default;
             Optional<PollingIntervalInSecond> pollingIntervalInSeconds = default;
             Optional<DateTimeOffset> lastSyncedTime = default;
             Optional<ConfigurationState> configurationState = default;
@@ -208,7 +208,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("networkTapId"u8))
                         {
-                            networkTapId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkTapId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("pollingIntervalInSeconds"u8))

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> networkDeviceId = default;
+            Optional<ResourceIdentifier> networkDeviceId = default;
             Optional<string> primaryIPv4Prefix = default;
             Optional<string> primaryIPv6Prefix = default;
             Optional<string> secondaryIPv4Prefix = default;
@@ -71,7 +71,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (property.NameEquals("networkDeviceId"u8))
                 {
-                    networkDeviceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkDeviceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryIpv4Prefix"u8))

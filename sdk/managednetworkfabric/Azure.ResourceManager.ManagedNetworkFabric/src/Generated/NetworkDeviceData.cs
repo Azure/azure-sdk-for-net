@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        internal NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, string networkRackId, string managementIPv4Address, string managementIPv6Address, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, string managementIPv4Address, string managementIPv6Address, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             HostName = hostName;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> NetworkDeviceRole is the device role: Example: CE | ToR. </summary>
         public NetworkDeviceRole? NetworkDeviceRole { get; }
         /// <summary> Reference to network rack resource id. </summary>
-        public string NetworkRackId { get; }
+        public ResourceIdentifier NetworkRackId { get; }
         /// <summary> Management IPv4 Address. </summary>
         public string ManagementIPv4Address { get; }
         /// <summary> Management IPv6 Address. </summary>

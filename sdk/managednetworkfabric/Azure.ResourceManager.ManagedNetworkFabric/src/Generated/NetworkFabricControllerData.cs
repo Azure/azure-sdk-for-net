@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="workloadServices"> WorkloadServices IP ranges. </param>
         /// <param name="managedResourceGroupConfiguration"> Managed Resource Group configuration properties. </param>
         /// <param name="networkFabricIds"> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </param>
-        /// <param name="workloadManagementNetwork"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. This is used for the backward compatibility. </param>
+        /// <param name="isWorkloadManagementNetwork"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. This is used for the backward compatibility. </param>
         /// <param name="isWorkloadManagementNetworkEnabled"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. </param>
         /// <param name="tenantInternetGatewayIds"> List of tenant InternetGateway resource IDs. </param>
         /// <param name="ipv4AddressSpace"> IPv4 Network Fabric Controller Address Space. </param>
         /// <param name="ipv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
         /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
-        internal NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, ControllerServices infrastructureServices, ControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, bool? workloadManagementNetwork, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, ControllerServices infrastructureServices, ControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, bool? isWorkloadManagementNetwork, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             InfrastructureExpressRouteConnections = infrastructureExpressRouteConnections;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             WorkloadServices = workloadServices;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
             NetworkFabricIds = networkFabricIds;
-            WorkloadManagementNetwork = workloadManagementNetwork;
+            IsWorkloadManagementNetwork = isWorkloadManagementNetwork;
             IsWorkloadManagementNetworkEnabled = isWorkloadManagementNetworkEnabled;
             TenantInternetGatewayIds = tenantInternetGatewayIds;
             IPv4AddressSpace = ipv4AddressSpace;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkFabricIds { get; }
         /// <summary> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. This is used for the backward compatibility. </summary>
-        public bool? WorkloadManagementNetwork { get; }
+        public bool? IsWorkloadManagementNetwork { get; }
         /// <summary> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. </summary>
         public IsWorkloadManagementNetworkEnabled? IsWorkloadManagementNetworkEnabled { get; set; }
         /// <summary> List of tenant InternetGateway resource IDs. </summary>
