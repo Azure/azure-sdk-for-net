@@ -18,10 +18,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         {
             if (activity.ParentSpanId != default)
             {
-                Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString().Truncate(SchemaConstants.Tags_AiOperationParentId_MaxLength);
+                Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
             }
 
-            Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString().Truncate(SchemaConstants.Tags_AiOperationId_MaxLength);
+            Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
             if (activity.GetTelemetryType() == TelemetryType.Request)
             {
@@ -70,8 +70,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public TelemetryItem(string name, TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp) :
                         this(name, FormatUtcTimestamp(activityEventTimeStamp.DateTime))
         {
-            Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString().Truncate(SchemaConstants.Tags_AiOperationParentId_MaxLength);
-            Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()].Truncate(SchemaConstants.Tags_AiOperationId_MaxLength);
+            Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString();
+            Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()];
 
             if (telemetryItem.Tags.TryGetValue("ai.user.userAgent", out string? userAgent))
             {
@@ -95,12 +95,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         {
             if (logRecord.TraceId != default)
             {
-                Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString().Truncate(SchemaConstants.Tags_AiOperationId_MaxLength);
+                Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
             }
 
             if (logRecord.SpanId != default)
             {
-                Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString().Truncate(SchemaConstants.Tags_AiOperationParentId_MaxLength);
+                Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
             }
 
             InstrumentationKey = instrumentationKey;
