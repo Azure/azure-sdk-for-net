@@ -32,8 +32,10 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public SecurityOperator(string id = default(string), string name = default(string), string type = default(string), Identity identity = default(Identity))
-            : base(id, name, type)
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        public SecurityOperator(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), Identity identity = default(Identity))
+            : base(id, name, type, systemData)
         {
             Identity = identity;
             CustomInit();

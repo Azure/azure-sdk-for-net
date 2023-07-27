@@ -16,8 +16,11 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an Azure resource.
+    /// Resource
     /// </summary>
+    /// <remarks>
+    /// Describes an Azure resource.
+    /// </remarks>
     public partial class Resource : IResource
     {
         /// <summary>
@@ -34,11 +37,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -64,6 +70,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets azure Resource Manager metadata containing createdBy and
+        /// modifiedBy information.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

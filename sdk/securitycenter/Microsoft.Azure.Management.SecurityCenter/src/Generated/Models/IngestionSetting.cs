@@ -33,9 +33,11 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="properties">Ingestion setting data</param>
-        public IngestionSetting(string id = default(string), string name = default(string), string type = default(string), object properties = default(object))
-            : base(id, name, type)
+        public IngestionSetting(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), object properties = default(object))
+            : base(id, name, type, systemData)
         {
             Properties = properties;
             CustomInit();

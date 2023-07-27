@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="assessmentTimestampUtcDate">The timestamp when the
         /// Compliance calculation was conducted.</param>
         /// <param name="resourceCount">The resource count of the given
@@ -44,8 +46,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// (needed for Management Group Compliance calculation).</param>
         /// <param name="assessmentResult">An array of segment, which is the
         /// actually the compliance assessment.</param>
-        public Compliance(string id = default(string), string name = default(string), string type = default(string), System.DateTime? assessmentTimestampUtcDate = default(System.DateTime?), int? resourceCount = default(int?), IList<ComplianceSegment> assessmentResult = default(IList<ComplianceSegment>))
-            : base(id, name, type)
+        public Compliance(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), System.DateTime? assessmentTimestampUtcDate = default(System.DateTime?), int? resourceCount = default(int?), IList<ComplianceSegment> assessmentResult = default(IList<ComplianceSegment>))
+            : base(id, name, type, systemData)
         {
             AssessmentTimestampUtcDate = assessmentTimestampUtcDate;
             ResourceCount = resourceCount;

@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="deviceId">Unique identifier for the virtual machine in
         /// the service.</param>
         /// <param name="osPlatform">Platform of the operating system running
@@ -53,8 +55,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// weaknesses.</param>
         /// <param name="firstSeenAt">First time that the software was seen in
         /// the device.</param>
-        public Software(string id = default(string), string name = default(string), string type = default(string), string deviceId = default(string), string osPlatform = default(string), string vendor = default(string), string softwareName = default(string), string version = default(string), string endOfSupportStatus = default(string), string endOfSupportDate = default(string), int? numberOfKnownVulnerabilities = default(int?), string firstSeenAt = default(string))
-            : base(id, name, type)
+        public Software(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string deviceId = default(string), string osPlatform = default(string), string vendor = default(string), string softwareName = default(string), string version = default(string), string endOfSupportStatus = default(string), string endOfSupportDate = default(string), int? numberOfKnownVulnerabilities = default(int?), string firstSeenAt = default(string))
+            : base(id, name, type, systemData)
         {
             DeviceId = deviceId;
             OsPlatform = osPlatform;

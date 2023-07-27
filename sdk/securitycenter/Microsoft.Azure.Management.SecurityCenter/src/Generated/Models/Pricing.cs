@@ -44,6 +44,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="subPlan">The sub-plan selected for a Standard pricing
         /// configuration, when more than one sub-plan is available. Each
         /// sub-plan enables a set of security features. When not specified,
@@ -62,8 +64,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// plan. This property exists only if this plan is deprecated.</param>
         /// <param name="extensions">Optional. List of extensions offered under
         /// a plan.</param>
-        public Pricing(string pricingTier, string id = default(string), string name = default(string), string type = default(string), string subPlan = default(string), System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?), System.DateTime? enablementTime = default(System.DateTime?), bool? deprecated = default(bool?), IList<string> replacedBy = default(IList<string>), IList<Extension> extensions = default(IList<Extension>))
-            : base(id, name, type)
+        public Pricing(string pricingTier, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string subPlan = default(string), System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?), System.DateTime? enablementTime = default(System.DateTime?), bool? deprecated = default(bool?), IList<string> replacedBy = default(IList<string>), IList<Extension> extensions = default(IList<Extension>))
+            : base(id, name, type, systemData)
         {
             PricingTier = pricingTier;
             SubPlan = subPlan;

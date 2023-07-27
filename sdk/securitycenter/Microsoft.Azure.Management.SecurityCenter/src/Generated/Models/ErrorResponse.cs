@@ -10,32 +10,34 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The kind of the security setting
+    /// Error response
     /// </summary>
-    public partial class Setting : Resource
+    /// <remarks>
+    /// Common error response for all Azure Resource Manager APIs to return
+    /// error details for failed operations. (This also follows the OData error
+    /// response format.).
+    /// </remarks>
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the Setting class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public Setting()
+        public ErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Setting class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="systemData">Azure Resource Manager metadata containing
-        /// createdBy and modifiedBy information.</param>
-        public Setting(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
-            : base(id, name, type, systemData)
+        /// <param name="error">The error object.</param>
+        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
         {
+            Error = error;
             CustomInit();
         }
 
@@ -43,6 +45,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the error object.
+        /// </summary>
+        [JsonProperty(PropertyName = "error")]
+        public ErrorDetail Error { get; set; }
 
     }
 }

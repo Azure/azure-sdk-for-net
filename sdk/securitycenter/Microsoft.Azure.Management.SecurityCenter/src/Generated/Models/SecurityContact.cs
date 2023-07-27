@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="emails">List of email addresses which will get
         /// notifications from Microsoft Defender for Cloud by the
         /// configurations defined in this security contact.</param>
@@ -45,8 +47,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="notificationsByRole">Defines whether to send email
         /// notifications from Microsoft Defender for Cloud to persons with
         /// specific RBAC roles on the subscription.</param>
-        public SecurityContact(string id = default(string), string name = default(string), string type = default(string), string emails = default(string), string phone = default(string), SecurityContactPropertiesAlertNotifications alertNotifications = default(SecurityContactPropertiesAlertNotifications), SecurityContactPropertiesNotificationsByRole notificationsByRole = default(SecurityContactPropertiesNotificationsByRole))
-            : base(id, name, type)
+        public SecurityContact(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string emails = default(string), string phone = default(string), SecurityContactPropertiesAlertNotifications alertNotifications = default(SecurityContactPropertiesAlertNotifications), SecurityContactPropertiesNotificationsByRole notificationsByRole = default(SecurityContactPropertiesNotificationsByRole))
+            : base(id, name, type, systemData)
         {
             Emails = emails;
             Phone = phone;

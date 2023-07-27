@@ -36,14 +36,16 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="onboardingPackageWindows">The onboarding package used
         /// to onboard Windows machines to MDE, coded in base64. This can also
         /// be used for onboarding using the dedicated VM Extension</param>
         /// <param name="onboardingPackageLinux">The onboarding package used to
         /// onboard Linux machines to MDE, coded in base64. This can also be
         /// used for onboarding using the dedicated VM Extension</param>
-        public MdeOnboardingData(string id = default(string), string name = default(string), string type = default(string), byte[] onboardingPackageWindows = default(byte[]), byte[] onboardingPackageLinux = default(byte[]))
-            : base(id, name, type)
+        public MdeOnboardingData(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), byte[] onboardingPackageWindows = default(byte[]), byte[] onboardingPackageLinux = default(byte[]))
+            : base(id, name, type, systemData)
         {
             OnboardingPackageWindows = onboardingPackageWindows;
             OnboardingPackageLinux = onboardingPackageLinux;

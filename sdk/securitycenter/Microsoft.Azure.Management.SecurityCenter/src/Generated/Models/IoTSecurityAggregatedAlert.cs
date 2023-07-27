@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="alertType">Name of the alert type.</param>
         /// <param name="alertDisplayName">Display name of the alert
@@ -62,11 +64,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// list of affected devices/alerts.</param>
         /// <param name="topDevicesList">10 devices with the highest number of
         /// occurrences of this alert type, on this day.</param>
-        public IoTSecurityAggregatedAlert(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string alertType = default(string), string alertDisplayName = default(string), System.DateTime? aggregatedDateUtc = default(System.DateTime?), string vendorName = default(string), string reportedSeverity = default(string), string remediationSteps = default(string), string description = default(string), long? count = default(long?), string effectedResourceType = default(string), string systemSource = default(string), string actionTaken = default(string), string logAnalyticsQuery = default(string), IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> topDevicesList = default(IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>))
+        public IoTSecurityAggregatedAlert(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string alertType = default(string), string alertDisplayName = default(string), System.DateTime? aggregatedDateUtc = default(System.DateTime?), string vendorName = default(string), string reportedSeverity = default(string), string remediationSteps = default(string), string description = default(string), long? count = default(long?), string effectedResourceType = default(string), string systemSource = default(string), string actionTaken = default(string), string logAnalyticsQuery = default(string), IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> topDevicesList = default(IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             Tags = tags;
             AlertType = alertType;
             AlertDisplayName = alertDisplayName;
@@ -106,6 +109,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets azure Resource Manager metadata containing createdBy and
+        /// modifiedBy information.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets resource tags

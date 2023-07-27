@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="lastModifiedUtc">The last time this rule was
         /// modified</param>
         /// <param name="expirationDateUtc">Expiration date of the rule, if
@@ -48,8 +50,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="comment">Any comment regarding the rule</param>
         /// <param name="suppressionAlertsScope">The suppression
         /// conditions</param>
-        public AlertsSuppressionRule(string alertType, string reason, RuleState state, string id = default(string), string name = default(string), string type = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?), System.DateTime? expirationDateUtc = default(System.DateTime?), string comment = default(string), SuppressionAlertsScope suppressionAlertsScope = default(SuppressionAlertsScope))
-            : base(id, name, type)
+        public AlertsSuppressionRule(string alertType, string reason, RuleState state, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), System.DateTime? lastModifiedUtc = default(System.DateTime?), System.DateTime? expirationDateUtc = default(System.DateTime?), string comment = default(string), SuppressionAlertsScope suppressionAlertsScope = default(SuppressionAlertsScope))
+            : base(id, name, type, systemData)
         {
             AlertType = alertType;
             LastModifiedUtc = lastModifiedUtc;

@@ -30,11 +30,7 @@ namespace Microsoft.Azure.Management.Security
         /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query. can be subscription
-        /// (/subscriptions/{subscriptionId}) or management group
-        /// (/providers/Microsoft.Management/managementGroups/mgName) or a
-        /// security connector scope: (format:
-        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+        /// The scope at which the operation is performed.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -42,7 +38,7 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -67,7 +63,7 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -92,7 +88,7 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

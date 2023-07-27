@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="metrics">Security analytics of your IoT Security
         /// solution.</param>
         /// <param name="unhealthyDeviceCount">Number of unhealthy devices
@@ -51,8 +53,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// prevalent device alerts.</param>
         /// <param name="mostPrevalentDeviceRecommendations">List of the 3 most
         /// prevalent device recommendations.</param>
-        public IoTSecuritySolutionAnalyticsModel(string id = default(string), string name = default(string), string type = default(string), IoTSeverityMetrics metrics = default(IoTSeverityMetrics), long? unhealthyDeviceCount = default(long?), IList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> devicesMetrics = default(IList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>), IList<IoTSecurityAlertedDevice> topAlertedDevices = default(IList<IoTSecurityAlertedDevice>), IList<IoTSecurityDeviceAlert> mostPrevalentDeviceAlerts = default(IList<IoTSecurityDeviceAlert>), IList<IoTSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default(IList<IoTSecurityDeviceRecommendation>))
-            : base(id, name, type)
+        public IoTSecuritySolutionAnalyticsModel(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IoTSeverityMetrics metrics = default(IoTSeverityMetrics), long? unhealthyDeviceCount = default(long?), IList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> devicesMetrics = default(IList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>), IList<IoTSecurityAlertedDevice> topAlertedDevices = default(IList<IoTSecurityAlertedDevice>), IList<IoTSecurityDeviceAlert> mostPrevalentDeviceAlerts = default(IList<IoTSecurityDeviceAlert>), IList<IoTSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default(IList<IoTSecurityDeviceRecommendation>))
+            : base(id, name, type, systemData)
         {
             Metrics = metrics;
             UnhealthyDeviceCount = unhealthyDeviceCount;

@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="location">The resource location.</param>
         /// <param name="workspace">Workspace resource ID</param>
@@ -55,13 +57,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// status. Possible values include: 'Disabled', 'Enabled'</param>
         /// <param name="additionalWorkspaces">List of additional
         /// workspaces</param>
-        /// <param name="systemData">Azure Resource Manager metadata containing
-        /// createdBy and modifiedBy information.</param>
-        public IoTSecuritySolutionModel(string displayName, IList<string> iotHubs, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string workspace = default(string), string status = default(string), IList<string> export = default(IList<string>), IList<string> disabledDataSources = default(IList<string>), UserDefinedResourcesProperties userDefinedResources = default(UserDefinedResourcesProperties), IList<string> autoDiscoveredResources = default(IList<string>), IList<RecommendationConfigurationProperties> recommendationsConfiguration = default(IList<RecommendationConfigurationProperties>), string unmaskedIpLoggingStatus = default(string), IList<AdditionalWorkspacesProperties> additionalWorkspaces = default(IList<AdditionalWorkspacesProperties>), SystemData systemData = default(SystemData))
+        public IoTSecuritySolutionModel(string displayName, IList<string> iotHubs, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string workspace = default(string), string status = default(string), IList<string> export = default(IList<string>), IList<string> disabledDataSources = default(IList<string>), UserDefinedResourcesProperties userDefinedResources = default(UserDefinedResourcesProperties), IList<string> autoDiscoveredResources = default(IList<string>), IList<RecommendationConfigurationProperties> recommendationsConfiguration = default(IList<RecommendationConfigurationProperties>), string unmaskedIpLoggingStatus = default(string), IList<AdditionalWorkspacesProperties> additionalWorkspaces = default(IList<AdditionalWorkspacesProperties>))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             Tags = tags;
             Location = location;
             Workspace = workspace;
@@ -75,7 +76,6 @@ namespace Microsoft.Azure.Management.Security.Models
             RecommendationsConfiguration = recommendationsConfiguration;
             UnmaskedIpLoggingStatus = unmaskedIpLoggingStatus;
             AdditionalWorkspaces = additionalWorkspaces;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -101,6 +101,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets azure Resource Manager metadata containing createdBy and
+        /// modifiedBy information.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets resource tags
@@ -182,13 +189,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.additionalWorkspaces")]
         public IList<AdditionalWorkspacesProperties> AdditionalWorkspaces { get; set; }
-
-        /// <summary>
-        /// Gets azure Resource Manager metadata containing createdBy and
-        /// modifiedBy information.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

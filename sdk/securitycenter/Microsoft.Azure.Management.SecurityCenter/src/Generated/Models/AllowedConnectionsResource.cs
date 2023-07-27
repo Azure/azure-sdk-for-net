@@ -38,17 +38,20 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="location">Location where the resource is
         /// stored</param>
         /// <param name="calculatedDateTime">The UTC time on which the allowed
         /// connections resource was calculated</param>
         /// <param name="connectableResources">List of connectable
         /// resources</param>
-        public AllowedConnectionsResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.DateTime? calculatedDateTime = default(System.DateTime?), IList<ConnectableResource> connectableResources = default(IList<ConnectableResource>))
+        public AllowedConnectionsResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), System.DateTime? calculatedDateTime = default(System.DateTime?), IList<ConnectableResource> connectableResources = default(IList<ConnectableResource>))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             Location = location;
             CalculatedDateTime = calculatedDateTime;
             ConnectableResources = connectableResources;
@@ -77,6 +80,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets azure Resource Manager metadata containing createdBy and
+        /// modifiedBy information.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets location where the resource is stored

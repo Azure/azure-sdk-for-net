@@ -45,6 +45,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="policyDefinitionId">Azure resource ID of the policy
         /// definition that turns this assessment calculation on</param>
         /// <param name="description">Human readable description of the
@@ -58,8 +60,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// 'Low', 'Moderate', 'High'</param>
         /// <param name="preview">True if this assessment is in preview release
         /// status</param>
-        public SecurityAssessmentMetadata(string displayName, string severity, string assessmentType, string id = default(string), string name = default(string), string type = default(string), string policyDefinitionId = default(string), string description = default(string), string remediationDescription = default(string), IList<string> categories = default(IList<string>), string userImpact = default(string), string implementationEffort = default(string), IList<string> threats = default(IList<string>), bool? preview = default(bool?), SecurityAssessmentMetadataPartnerData partnerData = default(SecurityAssessmentMetadataPartnerData))
-            : base(id, name, type)
+        public SecurityAssessmentMetadata(string displayName, string severity, string assessmentType, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string policyDefinitionId = default(string), string description = default(string), string remediationDescription = default(string), IList<string> categories = default(IList<string>), string userImpact = default(string), string implementationEffort = default(string), IList<string> threats = default(IList<string>), bool? preview = default(bool?), SecurityAssessmentMetadataPartnerData partnerData = default(SecurityAssessmentMetadataPartnerData))
+            : base(id, name, type, systemData)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;

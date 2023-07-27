@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="isEnabled">Indicates whether Defender for Storage is
         /// enabled on this storage account.</param>
         /// <param name="isEnabled1">Indicates whether On Upload malware
@@ -52,8 +54,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="overrideSubscriptionLevelSettings">Indicates whether
         /// the settings defined for this storage account should override the
         /// settings defined for the subscription.</param>
-        public DefenderForStorageSetting(string id = default(string), string name = default(string), string type = default(string), bool? isEnabled = default(bool?), bool? isEnabled1 = default(bool?), int? capGBPerMonth = default(int?), OperationStatus operationStatus = default(OperationStatus), bool? isEnabled2 = default(bool?), OperationStatus operationStatus1 = default(OperationStatus), bool? overrideSubscriptionLevelSettings = default(bool?))
-            : base(id, name, type)
+        public DefenderForStorageSetting(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), bool? isEnabled = default(bool?), bool? isEnabled1 = default(bool?), int? capGBPerMonth = default(int?), OperationStatus operationStatus = default(OperationStatus), bool? isEnabled2 = default(bool?), OperationStatus operationStatus1 = default(OperationStatus), bool? overrideSubscriptionLevelSettings = default(bool?))
+            : base(id, name, type, systemData)
         {
             IsEnabled = isEnabled;
             IsEnabled1 = isEnabled1;

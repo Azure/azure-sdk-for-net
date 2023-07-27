@@ -39,14 +39,16 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="lastModifiedUtc">Describes the last UTC time the
         /// policy was modified.</param>
         /// <param name="version">Describes the version of the policy.</param>
         /// <param name="labels">Dictionary of sensitivity labels.</param>
         /// <param name="informationTypes">The sensitivity information
         /// types.</param>
-        public InformationProtectionPolicy(string id = default(string), string name = default(string), string type = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?), string version = default(string), IDictionary<string, SensitivityLabel> labels = default(IDictionary<string, SensitivityLabel>), IDictionary<string, InformationType> informationTypes = default(IDictionary<string, InformationType>))
-            : base(id, name, type)
+        public InformationProtectionPolicy(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), System.DateTime? lastModifiedUtc = default(System.DateTime?), string version = default(string), IDictionary<string, SensitivityLabel> labels = default(IDictionary<string, SensitivityLabel>), IDictionary<string, InformationType> informationTypes = default(IDictionary<string, InformationType>))
+            : base(id, name, type, systemData)
         {
             LastModifiedUtc = lastModifiedUtc;
             Version = version;

@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="description">The description of the regulatory
         /// compliance control</param>
         /// <param name="state">Aggregative state based on the control's
@@ -51,8 +53,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="skippedAssessments">The number of supported regulatory
         /// compliance assessments of the given control with a skipped
         /// state</param>
-        public RegulatoryComplianceControl(string id = default(string), string name = default(string), string type = default(string), string description = default(string), string state = default(string), int? passedAssessments = default(int?), int? failedAssessments = default(int?), int? skippedAssessments = default(int?))
-            : base(id, name, type)
+        public RegulatoryComplianceControl(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string description = default(string), string state = default(string), int? passedAssessments = default(int?), int? failedAssessments = default(int?), int? skippedAssessments = default(int?))
+            : base(id, name, type, systemData)
         {
             Description = description;
             State = state;

@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="displayName">User friendly display name of the
         /// control</param>
         /// <param name="max">Maximum score available</param>
@@ -51,8 +53,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="weight">The relative weight for this specific control
         /// in each of your subscriptions. Used when calculating an aggregated
         /// score for this control across all of your subscriptions.</param>
-        public SecureScoreControlDetails(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), int? max = default(int?), double? current = default(double?), double? percentage = default(double?), int? healthyResourceCount = default(int?), int? unhealthyResourceCount = default(int?), int? notApplicableResourceCount = default(int?), long? weight = default(long?), SecureScoreControlDefinitionItem definition = default(SecureScoreControlDefinitionItem))
-            : base(id, name, type)
+        public SecureScoreControlDetails(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string displayName = default(string), int? max = default(int?), double? current = default(double?), double? percentage = default(double?), int? healthyResourceCount = default(int?), int? unhealthyResourceCount = default(int?), int? notApplicableResourceCount = default(int?), long? weight = default(long?), SecureScoreControlDefinitionItem definition = default(SecureScoreControlDefinitionItem))
+            : base(id, name, type, systemData)
         {
             DisplayName = displayName;
             Max = max;

@@ -37,10 +37,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="isEnabled">Indicates whether Advanced Threat
         /// Protection is enabled.</param>
-        public AdvancedThreatProtectionSetting(string id = default(string), string name = default(string), string type = default(string), bool? isEnabled = default(bool?))
-            : base(id, name, type)
+        public AdvancedThreatProtectionSetting(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), bool? isEnabled = default(bool?))
+            : base(id, name, type, systemData)
         {
             IsEnabled = isEnabled;
             CustomInit();

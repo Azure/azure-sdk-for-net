@@ -37,12 +37,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="displayName">The display name of the Azure API
         /// Management API.</param>
         /// <param name="additionalData">Additional data regarding the API
         /// collection.</param>
-        public ApiCollectionResponse(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IDictionary<string, string> additionalData = default(IDictionary<string, string>))
-            : base(id, name, type)
+        public ApiCollectionResponse(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string displayName = default(string), IDictionary<string, string> additionalData = default(IDictionary<string, string>))
+            : base(id, name, type, systemData)
         {
             DisplayName = displayName;
             AdditionalData = additionalData;

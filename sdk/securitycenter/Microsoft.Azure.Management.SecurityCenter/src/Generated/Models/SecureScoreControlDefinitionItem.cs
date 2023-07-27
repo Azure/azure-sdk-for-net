@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="displayName">User friendly display name of the
         /// control</param>
         /// <param name="description">User friendly description of the
@@ -48,8 +50,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// created</param>
         /// <param name="assessmentDefinitions">Array of assessments metadata
         /// IDs that are included in this security control</param>
-        public SecureScoreControlDefinitionItem(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string description = default(string), int? maxScore = default(int?), SecureScoreControlDefinitionSource source = default(SecureScoreControlDefinitionSource), IList<AzureResourceLink> assessmentDefinitions = default(IList<AzureResourceLink>))
-            : base(id, name, type)
+        public SecureScoreControlDefinitionItem(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string displayName = default(string), string description = default(string), int? maxScore = default(int?), SecureScoreControlDefinitionSource source = default(SecureScoreControlDefinitionSource), IList<AzureResourceLink> assessmentDefinitions = default(IList<AzureResourceLink>))
+            : base(id, name, type, systemData)
         {
             DisplayName = displayName;
             Description = description;

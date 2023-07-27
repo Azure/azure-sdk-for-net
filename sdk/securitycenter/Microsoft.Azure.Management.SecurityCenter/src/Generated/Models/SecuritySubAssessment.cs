@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="securitySubAssessmentId">Vulnerability ID</param>
         /// <param name="displayName">User friendly display name of the
         /// sub-assessment</param>
@@ -47,8 +49,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// assessment status</param>
         /// <param name="timeGenerated">The date and time the sub-assessment
         /// was generated</param>
-        public SecuritySubAssessment(string id = default(string), string name = default(string), string type = default(string), string securitySubAssessmentId = default(string), string displayName = default(string), SubAssessmentStatus status = default(SubAssessmentStatus), string remediation = default(string), string impact = default(string), string category = default(string), string description = default(string), System.DateTime? timeGenerated = default(System.DateTime?), ResourceDetails resourceDetails = default(ResourceDetails), AdditionalData additionalData = default(AdditionalData))
-            : base(id, name, type)
+        public SecuritySubAssessment(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string securitySubAssessmentId = default(string), string displayName = default(string), SubAssessmentStatus status = default(SubAssessmentStatus), string remediation = default(string), string impact = default(string), string category = default(string), string description = default(string), System.DateTime? timeGenerated = default(System.DateTime?), ResourceDetails resourceDetails = default(ResourceDetails), AdditionalData additionalData = default(AdditionalData))
+            : base(id, name, type, systemData)
         {
             SecuritySubAssessmentId = securitySubAssessmentId;
             DisplayName = displayName;

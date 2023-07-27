@@ -55,9 +55,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="assessmentKey">The assessment metadata key used when
         /// an assessment is generated for this assessment automation.</param>
         public CustomAssessmentAutomation(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string compressedQuery = default(string), string supportedCloud = default(string), string severity = default(string), string displayName = default(string), string description = default(string), string remediationDescription = default(string), string assessmentKey = default(string))
-            : base(id, name, type)
+            : base(id, name, type, systemData)
         {
-            SystemData = systemData;
             CompressedQuery = compressedQuery;
             SupportedCloud = supportedCloud;
             Severity = severity;
@@ -72,13 +71,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets azure Resource Manager metadata containing createdBy and
-        /// modifiedBy information.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets gZip encoded KQL query representing the assessment

@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="state">Aggregative state based on the standard's
         /// supported controls states. Possible values include: 'Passed',
         /// 'Failed', 'Skipped', 'Unsupported'</param>
@@ -52,8 +54,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="unsupportedControls">The number of regulatory
         /// compliance controls of the given standard which are unsupported by
         /// automated assessments</param>
-        public RegulatoryComplianceStandard(string id = default(string), string name = default(string), string type = default(string), string state = default(string), int? passedControls = default(int?), int? failedControls = default(int?), int? skippedControls = default(int?), int? unsupportedControls = default(int?))
-            : base(id, name, type)
+        public RegulatoryComplianceStandard(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string state = default(string), int? passedControls = default(int?), int? failedControls = default(int?), int? skippedControls = default(int?), int? unsupportedControls = default(int?))
+            : base(id, name, type, systemData)
         {
             State = state;
             PassedControls = passedControls;

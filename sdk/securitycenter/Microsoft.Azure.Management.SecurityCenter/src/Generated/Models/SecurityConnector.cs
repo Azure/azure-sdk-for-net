@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="location">Location where the resource is
         /// stored</param>
         /// <param name="kind">Kind of the resource</param>
@@ -44,8 +46,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// entities from the same requested resource.</param>
         /// <param name="tags">A list of key value pairs that describe the
         /// resource.</param>
-        /// <param name="systemData">Azure Resource Manager metadata containing
-        /// createdBy and modifiedBy information.</param>
         /// <param name="hierarchyIdentifier">The multi cloud resource
         /// identifier (account id in case of AWS connector, project number in
         /// case of GCP connector).</param>
@@ -59,10 +59,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// connector.</param>
         /// <param name="environmentData">The security connector environment
         /// data.</param>
-        public SecurityConnector(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string kind = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string hierarchyIdentifier = default(string), System.DateTime? hierarchyIdentifierTrialEndDate = default(System.DateTime?), string environmentName = default(string), IList<CloudOffering> offerings = default(IList<CloudOffering>), EnvironmentData environmentData = default(EnvironmentData))
-            : base(id, name, type, location, kind, etag, tags)
+        public SecurityConnector(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), string kind = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string hierarchyIdentifier = default(string), System.DateTime? hierarchyIdentifierTrialEndDate = default(System.DateTime?), string environmentName = default(string), IList<CloudOffering> offerings = default(IList<CloudOffering>), EnvironmentData environmentData = default(EnvironmentData))
+            : base(id, name, type, systemData, location, kind, etag, tags)
         {
-            SystemData = systemData;
             HierarchyIdentifier = hierarchyIdentifier;
             HierarchyIdentifierTrialEndDate = hierarchyIdentifierTrialEndDate;
             EnvironmentName = environmentName;
@@ -75,13 +74,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets azure Resource Manager metadata containing createdBy and
-        /// modifiedBy information.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets the multi cloud resource identifier (account id in

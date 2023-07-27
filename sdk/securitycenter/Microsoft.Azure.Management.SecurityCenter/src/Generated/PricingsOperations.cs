@@ -279,6 +279,21 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "pricingName");
             }
+            if (pricingName != null)
+            {
+                if (pricingName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "pricingName", 63);
+                }
+                if (pricingName.Length < 3)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "pricingName", 3);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(pricingName, "^[a-zA-Z][a-zA-Z0-9_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "pricingName", "^[a-zA-Z][a-zA-Z0-9_]+$");
+                }
+            }
             string apiVersion = "2023-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -474,6 +489,21 @@ namespace Microsoft.Azure.Management.Security
             if (pricingName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "pricingName");
+            }
+            if (pricingName != null)
+            {
+                if (pricingName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "pricingName", 63);
+                }
+                if (pricingName.Length < 3)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "pricingName", 3);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(pricingName, "^[a-zA-Z][a-zA-Z0-9_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "pricingName", "^[a-zA-Z][a-zA-Z0-9_]+$");
+                }
             }
             if (pricing == null)
             {

@@ -41,8 +41,10 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public WorkspaceSetting(string workspaceId, string scope, string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        public WorkspaceSetting(string workspaceId, string scope, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, systemData)
         {
             WorkspaceId = workspaceId;
             Scope = scope;

@@ -61,6 +61,11 @@ namespace Microsoft.Azure.Management.Security
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// Azure subscription ID
+        /// </summary>
+        public System.Guid SubscriptionId1 { get; set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }

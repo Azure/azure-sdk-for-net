@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="state">State of the task (Active, Resolved
         /// etc.)</param>
         /// <param name="creationTimeUtc">The time this task was discovered in
@@ -43,8 +45,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// were last changed in UTC</param>
         /// <param name="subState">Additional data on the state of the
         /// task</param>
-        public SecurityTask(string id = default(string), string name = default(string), string type = default(string), string state = default(string), System.DateTime? creationTimeUtc = default(System.DateTime?), SecurityTaskParameters securityTaskParameters = default(SecurityTaskParameters), System.DateTime? lastStateChangeTimeUtc = default(System.DateTime?), string subState = default(string))
-            : base(id, name, type)
+        public SecurityTask(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string state = default(string), System.DateTime? creationTimeUtc = default(System.DateTime?), SecurityTaskParameters securityTaskParameters = default(SecurityTaskParameters), System.DateTime? lastStateChangeTimeUtc = default(System.DateTime?), string subState = default(string))
+            : base(id, name, type, systemData)
         {
             State = state;
             CreationTimeUtc = creationTimeUtc;

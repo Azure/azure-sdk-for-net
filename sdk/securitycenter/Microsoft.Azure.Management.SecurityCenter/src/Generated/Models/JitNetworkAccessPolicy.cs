@@ -36,16 +36,19 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="kind">Kind of the resource</param>
         /// <param name="location">Location where the resource is
         /// stored</param>
         /// <param name="provisioningState">Gets the provisioning state of the
         /// Just-in-Time policy.</param>
-        public JitNetworkAccessPolicy(IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string location = default(string), IList<JitNetworkAccessRequest> requests = default(IList<JitNetworkAccessRequest>), string provisioningState = default(string))
+        public JitNetworkAccessPolicy(IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string kind = default(string), string location = default(string), IList<JitNetworkAccessRequest> requests = default(IList<JitNetworkAccessRequest>), string provisioningState = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             Kind = kind;
             Location = location;
             VirtualMachines = virtualMachines;
@@ -76,6 +79,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets azure Resource Manager metadata containing createdBy and
+        /// modifiedBy information.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets kind of the resource

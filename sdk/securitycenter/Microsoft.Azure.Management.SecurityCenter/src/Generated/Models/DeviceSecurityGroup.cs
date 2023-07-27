@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="thresholdRules">The list of custom alert threshold
         /// rules.</param>
         /// <param name="timeWindowRules">The list of custom alert time-window
@@ -45,8 +47,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// rules.</param>
         /// <param name="denylistRules">The deny-list custom alert
         /// rules.</param>
-        public DeviceSecurityGroup(string id = default(string), string name = default(string), string type = default(string), IList<ThresholdCustomAlertRule> thresholdRules = default(IList<ThresholdCustomAlertRule>), IList<TimeWindowCustomAlertRule> timeWindowRules = default(IList<TimeWindowCustomAlertRule>), IList<AllowlistCustomAlertRule> allowlistRules = default(IList<AllowlistCustomAlertRule>), IList<DenylistCustomAlertRule> denylistRules = default(IList<DenylistCustomAlertRule>))
-            : base(id, name, type)
+        public DeviceSecurityGroup(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<ThresholdCustomAlertRule> thresholdRules = default(IList<ThresholdCustomAlertRule>), IList<TimeWindowCustomAlertRule> timeWindowRules = default(IList<TimeWindowCustomAlertRule>), IList<AllowlistCustomAlertRule> allowlistRules = default(IList<AllowlistCustomAlertRule>), IList<DenylistCustomAlertRule> denylistRules = default(IList<DenylistCustomAlertRule>))
+            : base(id, name, type, systemData)
         {
             ThresholdRules = thresholdRules;
             TimeWindowRules = timeWindowRules;

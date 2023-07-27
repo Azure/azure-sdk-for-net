@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="description">The description of the regulatory
         /// compliance assessment</param>
         /// <param name="assessmentType">The expected type of assessment
@@ -55,8 +57,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// resources count with skipped state.</param>
         /// <param name="unsupportedResources">The given assessment's related
         /// resources count with unsupported state.</param>
-        public RegulatoryComplianceAssessment(string id = default(string), string name = default(string), string type = default(string), string description = default(string), string assessmentType = default(string), string assessmentDetailsLink = default(string), string state = default(string), int? passedResources = default(int?), int? failedResources = default(int?), int? skippedResources = default(int?), int? unsupportedResources = default(int?))
-            : base(id, name, type)
+        public RegulatoryComplianceAssessment(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string description = default(string), string assessmentType = default(string), string assessmentDetailsLink = default(string), string state = default(string), int? passedResources = default(int?), int? failedResources = default(int?), int? skippedResources = default(int?), int? unsupportedResources = default(int?))
+            : base(id, name, type, systemData)
         {
             Description = description;
             AssessmentType = assessmentType;

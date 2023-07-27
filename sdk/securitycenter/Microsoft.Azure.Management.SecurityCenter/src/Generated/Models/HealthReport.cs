@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="affectedDefendersPlans">The affected defenders plans
         /// by unhealthy report</param>
         /// <param name="affectedDefendersSubPlans">The affected defenders sub
@@ -46,8 +48,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// and the health scenario.</param>
         /// <param name="issues">A collection of the issues in the
         /// report</param>
-        public HealthReport(string id = default(string), string name = default(string), string type = default(string), ResourceDetailsModel resourceDetails = default(ResourceDetailsModel), EnvironmentDetails environmentDetails = default(EnvironmentDetails), HealthDataClassification healthDataClassification = default(HealthDataClassification), Status1 status = default(Status1), IList<string> affectedDefendersPlans = default(IList<string>), IList<string> affectedDefendersSubPlans = default(IList<string>), IDictionary<string, string> reportAdditionalData = default(IDictionary<string, string>), IList<Issue> issues = default(IList<Issue>))
-            : base(id, name, type)
+        public HealthReport(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), ResourceDetailsModel resourceDetails = default(ResourceDetailsModel), EnvironmentDetails environmentDetails = default(EnvironmentDetails), HealthDataClassification healthDataClassification = default(HealthDataClassification), Status1 status = default(Status1), IList<string> affectedDefendersPlans = default(IList<string>), IList<string> affectedDefendersSubPlans = default(IList<string>), IDictionary<string, string> reportAdditionalData = default(IDictionary<string, string>), IList<Issue> issues = default(IList<Issue>))
+            : base(id, name, type, systemData)
         {
             ResourceDetails = resourceDetails;
             EnvironmentDetails = environmentDetails;

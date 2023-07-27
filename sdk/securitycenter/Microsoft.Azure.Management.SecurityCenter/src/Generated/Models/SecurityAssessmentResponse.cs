@@ -37,12 +37,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="displayName">User friendly display name of the
         /// assessment</param>
         /// <param name="additionalData">Additional data regarding the
         /// assessment</param>
-        public SecurityAssessmentResponse(ResourceDetails resourceDetails, AssessmentStatusResponse status, string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IDictionary<string, string> additionalData = default(IDictionary<string, string>), AssessmentLinks links = default(AssessmentLinks), SecurityAssessmentMetadataProperties metadata = default(SecurityAssessmentMetadataProperties), SecurityAssessmentPartnerData partnersData = default(SecurityAssessmentPartnerData))
-            : base(id, name, type)
+        public SecurityAssessmentResponse(ResourceDetails resourceDetails, AssessmentStatusResponse status, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string displayName = default(string), IDictionary<string, string> additionalData = default(IDictionary<string, string>), AssessmentLinks links = default(AssessmentLinks), SecurityAssessmentMetadataProperties metadata = default(SecurityAssessmentMetadataProperties), SecurityAssessmentPartnerData partnersData = default(SecurityAssessmentPartnerData))
+            : base(id, name, type, systemData)
         {
             ResourceDetails = resourceDetails;
             DisplayName = displayName;

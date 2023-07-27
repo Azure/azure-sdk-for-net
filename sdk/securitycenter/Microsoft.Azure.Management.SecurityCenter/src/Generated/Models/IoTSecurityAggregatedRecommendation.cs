@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="recommendationName">Name of the
         /// recommendation.</param>
@@ -61,11 +63,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// within the IoT Security solution.</param>
         /// <param name="logAnalyticsQuery">Log analytics query for getting the
         /// list of affected devices/alerts.</param>
-        public IoTSecurityAggregatedRecommendation(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string recommendationName = default(string), string recommendationDisplayName = default(string), string description = default(string), string recommendationTypeId = default(string), string detectedBy = default(string), string remediationSteps = default(string), string reportedSeverity = default(string), long? healthyDevices = default(long?), long? unhealthyDeviceCount = default(long?), string logAnalyticsQuery = default(string))
+        public IoTSecurityAggregatedRecommendation(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string recommendationName = default(string), string recommendationDisplayName = default(string), string description = default(string), string recommendationTypeId = default(string), string detectedBy = default(string), string remediationSteps = default(string), string reportedSeverity = default(string), long? healthyDevices = default(long?), long? unhealthyDeviceCount = default(long?), string logAnalyticsQuery = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
+            SystemData = systemData;
             Tags = tags;
             RecommendationName = recommendationName;
             RecommendationDisplayName = recommendationDisplayName;
@@ -102,6 +105,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets azure Resource Manager metadata containing createdBy and
+        /// modifiedBy information.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets resource tags

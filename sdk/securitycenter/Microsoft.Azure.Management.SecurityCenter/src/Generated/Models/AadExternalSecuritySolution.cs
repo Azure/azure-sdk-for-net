@@ -36,10 +36,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="location">Location where the resource is
         /// stored</param>
-        public AadExternalSecuritySolution(string id = default(string), string name = default(string), string type = default(string), string location = default(string), AadSolutionProperties properties = default(AadSolutionProperties))
-            : base(id, name, type, location)
+        public AadExternalSecuritySolution(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), AadSolutionProperties properties = default(AadSolutionProperties))
+            : base(id, name, type, systemData, location)
         {
             Properties = properties;
             CustomInit();

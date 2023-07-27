@@ -31,11 +31,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
-            /// or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
-            /// connector scope: (format:
-            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+            /// The scope at which the operation is performed.
             /// </param>
             public static IPage<HealthReport> List(this IHealthReportsOperations operations, string scope)
             {
@@ -52,11 +48,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query. can be subscription (/subscriptions/{subscriptionId})
-            /// or management group
-            /// (/providers/Microsoft.Management/managementGroups/mgName) or a security
-            /// connector scope: (format:
-            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'
+            /// The scope at which the operation is performed.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="tenantId">The tenantId (GUID)</param>
         /// <param name="description">Description of the governance
         /// rule</param>
@@ -67,8 +69,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="governanceEmailNotification">The email notifications
         /// settings for the governance rule, states whether to disable
         /// notifications for mangers and owners</param>
-        public GovernanceRule(string displayName, int rulePriority, string ruleType, IList<object> conditionSets, GovernanceRuleOwnerSource ownerSource, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string description = default(string), string remediationTimeframe = default(string), bool? isGracePeriod = default(bool?), bool? isDisabled = default(bool?), IList<string> excludedScopes = default(IList<string>), bool? includeMemberScopes = default(bool?), GovernanceRuleEmailNotification governanceEmailNotification = default(GovernanceRuleEmailNotification), GovernanceRuleMetadata metadata = default(GovernanceRuleMetadata))
-            : base(id, name, type)
+        public GovernanceRule(string displayName, int rulePriority, string ruleType, IList<object> conditionSets, GovernanceRuleOwnerSource ownerSource, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string tenantId = default(string), string description = default(string), string remediationTimeframe = default(string), bool? isGracePeriod = default(bool?), bool? isDisabled = default(bool?), IList<string> excludedScopes = default(IList<string>), bool? includeMemberScopes = default(bool?), GovernanceRuleEmailNotification governanceEmailNotification = default(GovernanceRuleEmailNotification), GovernanceRuleMetadata metadata = default(GovernanceRuleMetadata))
+            : base(id, name, type, systemData)
         {
             TenantId = tenantId;
             DisplayName = displayName;

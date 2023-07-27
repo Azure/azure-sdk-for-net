@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="displayName">The initiative’s name</param>
         /// <param name="max">Maximum score available</param>
         /// <param name="current">Current score</param>
@@ -43,8 +45,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="weight">The relative weight for each subscription.
         /// Used when calculating an aggregated secure score for multiple
         /// subscriptions.</param>
-        public SecureScoreItem(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), int? max = default(int?), double? current = default(double?), double? percentage = default(double?), long? weight = default(long?))
-            : base(id, name, type)
+        public SecureScoreItem(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string displayName = default(string), int? max = default(int?), double? current = default(double?), double? percentage = default(double?), long? weight = default(long?))
+            : base(id, name, type, systemData)
         {
             DisplayName = displayName;
             Max = max;

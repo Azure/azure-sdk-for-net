@@ -39,10 +39,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="displayName">display name of the application</param>
         /// <param name="description">description of the application</param>
-        public Application(IList<object> conditionSets, string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string description = default(string))
-            : base(id, name, type)
+        public Application(IList<object> conditionSets, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string displayName = default(string), string description = default(string))
+            : base(id, name, type, systemData)
         {
             DisplayName = displayName;
             Description = description;

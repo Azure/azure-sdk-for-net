@@ -279,6 +279,13 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "assessmentName");
             }
+            if (assessmentName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(assessmentName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "assessmentName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
             string apiVersion = "2019-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -474,6 +481,13 @@ namespace Microsoft.Azure.Management.Security
             if (assessmentName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "assessmentName");
+            }
+            if (assessmentName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(assessmentName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "assessmentName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (subAssessmentName == null)
             {

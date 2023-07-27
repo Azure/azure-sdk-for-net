@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="owner">The Owner for the governance assignment - e.g.
         /// user@contoso.com - see example</param>
         /// <param name="remediationEta">The ETA (estimated time of arrival)
@@ -49,8 +51,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// notifications for mangers and owners</param>
         /// <param name="additionalData">The additional data for the governance
         /// assignment - e.g. links to ticket (optional), see example</param>
-        public GovernanceAssignment(System.DateTime remediationDueDate, string id = default(string), string name = default(string), string type = default(string), string owner = default(string), RemediationEta remediationEta = default(RemediationEta), bool? isGracePeriod = default(bool?), GovernanceEmailNotification governanceEmailNotification = default(GovernanceEmailNotification), GovernanceAssignmentAdditionalData additionalData = default(GovernanceAssignmentAdditionalData))
-            : base(id, name, type)
+        public GovernanceAssignment(System.DateTime remediationDueDate, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string owner = default(string), RemediationEta remediationEta = default(RemediationEta), bool? isGracePeriod = default(bool?), GovernanceEmailNotification governanceEmailNotification = default(GovernanceEmailNotification), GovernanceAssignmentAdditionalData additionalData = default(GovernanceAssignmentAdditionalData))
+            : base(id, name, type, systemData)
         {
             Owner = owner;
             RemediationDueDate = remediationDueDate;

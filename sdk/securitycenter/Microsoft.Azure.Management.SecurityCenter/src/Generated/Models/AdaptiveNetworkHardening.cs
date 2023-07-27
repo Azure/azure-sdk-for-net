@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="rules">The security rules which are recommended to be
         /// effective on the VM</param>
         /// <param name="rulesCalculationTime">The UTC time on which the rules
@@ -45,8 +47,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="effectiveNetworkSecurityGroups">The Network Security
         /// Groups effective on the network interfaces of the protected
         /// resource</param>
-        public AdaptiveNetworkHardening(string id = default(string), string name = default(string), string type = default(string), IList<Rule> rules = default(IList<Rule>), System.DateTime? rulesCalculationTime = default(System.DateTime?), IList<EffectiveNetworkSecurityGroups> effectiveNetworkSecurityGroups = default(IList<EffectiveNetworkSecurityGroups>))
-            : base(id, name, type)
+        public AdaptiveNetworkHardening(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<Rule> rules = default(IList<Rule>), System.DateTime? rulesCalculationTime = default(System.DateTime?), IList<EffectiveNetworkSecurityGroups> effectiveNetworkSecurityGroups = default(IList<EffectiveNetworkSecurityGroups>))
+            : base(id, name, type, systemData)
         {
             Rules = rules;
             RulesCalculationTime = rulesCalculationTime;

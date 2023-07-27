@@ -35,14 +35,16 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="hybridComputeSettings">Settings for hybrid compute
         /// management. These settings are relevant only for Arc autoProvision
         /// (Hybrid Compute).</param>
         /// <param name="authenticationDetails">Settings for authentication
         /// management, these settings are relevant only for the cloud
         /// connector.</param>
-        public ConnectorSetting(string id = default(string), string name = default(string), string type = default(string), HybridComputeSettingsProperties hybridComputeSettings = default(HybridComputeSettingsProperties), AuthenticationDetailsProperties authenticationDetails = default(AuthenticationDetailsProperties))
-            : base(id, name, type)
+        public ConnectorSetting(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), HybridComputeSettingsProperties hybridComputeSettings = default(HybridComputeSettingsProperties), AuthenticationDetailsProperties authenticationDetails = default(AuthenticationDetailsProperties))
+            : base(id, name, type, systemData)
         {
             HybridComputeSettings = hybridComputeSettings;
             AuthenticationDetails = authenticationDetails;

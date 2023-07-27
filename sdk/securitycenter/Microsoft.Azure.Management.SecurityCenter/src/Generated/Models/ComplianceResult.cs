@@ -35,11 +35,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="resourceStatus">The status of the resource regarding a
         /// single assessment. Possible values include: 'Healthy',
         /// 'NotApplicable', 'OffByPolicy', 'NotHealthy'</param>
-        public ComplianceResult(string id = default(string), string name = default(string), string type = default(string), string resourceStatus = default(string))
-            : base(id, name, type)
+        public ComplianceResult(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string resourceStatus = default(string))
+            : base(id, name, type, systemData)
         {
             ResourceStatus = resourceStatus;
             CustomInit();

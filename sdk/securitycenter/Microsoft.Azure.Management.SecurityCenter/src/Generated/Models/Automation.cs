@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="location">Location where the resource is
         /// stored</param>
         /// <param name="kind">Kind of the resource</param>
@@ -57,8 +59,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="actions">A collection of the actions which are
         /// triggered if all the configured rules evaluations, within at least
         /// one rule set, are true.</param>
-        public Automation(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string kind = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), bool? isEnabled = default(bool?), IList<AutomationScope> scopes = default(IList<AutomationScope>), IList<AutomationSource> sources = default(IList<AutomationSource>), IList<AutomationAction> actions = default(IList<AutomationAction>))
-            : base(id, name, type, location, kind, etag, tags)
+        public Automation(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), string kind = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), bool? isEnabled = default(bool?), IList<AutomationScope> scopes = default(IList<AutomationScope>), IList<AutomationSource> sources = default(IList<AutomationSource>), IList<AutomationAction> actions = default(IList<AutomationAction>))
+            : base(id, name, type, systemData, location, kind, etag, tags)
         {
             Description = description;
             IsEnabled = isEnabled;
