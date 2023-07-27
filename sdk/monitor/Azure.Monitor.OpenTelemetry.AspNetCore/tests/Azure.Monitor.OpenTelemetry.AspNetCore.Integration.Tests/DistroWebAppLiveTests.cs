@@ -42,6 +42,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
         public async Task VerifyDistro()
         {
+            Console.WriteLine($"Test Mode: {TestEnvironment.Mode}");
+
             // SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)
             Console.WriteLine("SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)");
 
