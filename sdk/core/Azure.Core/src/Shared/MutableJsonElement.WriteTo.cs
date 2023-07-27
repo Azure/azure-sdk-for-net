@@ -202,7 +202,8 @@ namespace Azure.Core.Json
 
                     // if we haven't opened this object yet in the PATCH JSON, open it and set
                     // currentElement to the corresponding element for the object.
-                    if (!patchPath.StartsWith(currentPath) && currentPath.StartsWith(patchPath))
+                    if (!patchPath.Slice(0, patchPathLength).StartsWith(currentPath.Slice(0, currentPathLength)) &&
+                        currentPath.Slice(0, currentPathLength).StartsWith(patchPath.Slice(0, patchPathLength)))
                     {
                         writer.WritePropertyName(name);
                         writer.WriteStartObject();
@@ -219,8 +220,6 @@ namespace Azure.Core.Json
                 Debug.Assert(segments.Length - 1 == i);
 
                 name = segments[i];
-                MutableJsonDocument.ChangeTracker.PushProperty(currentPath, ref currentPathLength, name.AsSpan());
-
                 writer.WritePropertyName(name);
                 patchElement.GetProperty(name).WriteTo(writer);
             }
@@ -251,19 +250,41 @@ namespace Azure.Core.Json
             writer.WriteEndObject();
         }
 
-        private MutableJsonElement GetPropertyFromRoot(Span<char> path, int pathLength)
+        private MutableJsonElement GetPropertyFromRoot(ReadOnlySpan<char> path, int pathLength)
         {
+            MutableJsonElement current = _root.RootElement;
+
             if (pathLength == 0)
             {
-                return _root.RootElement;
+                return current;
             }
 
-            string[] segments = path.Split(MutableJsonDocument.ChangeTracker.Delimiter);
-            MutableJsonElement current = _root.RootElement;
-            foreach (string segment in segments)
+            int length = pathLength;
+            int start = 0;
+            int end;
+            do
             {
-                current = current.GetProperty(segment);
-            }
+                end = path.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                if (end == -1)
+                {
+                    end = length - start;
+                }
+
+                if (end != 0)
+                {
+                    // TODO: optimize
+#if NET5_0_OR_GREATER
+                    string segment = new string(path.Slice(start, end));
+                    current = current.GetProperty(segment);
+#else
+                    string segment = new string(path.Slice(start, end).ToArray());
+                    current = current.GetProperty(segment);
+#endif
+                }
+
+                start += end + 1;
+            } while (start < length);
+
             return current;
         }
     }
