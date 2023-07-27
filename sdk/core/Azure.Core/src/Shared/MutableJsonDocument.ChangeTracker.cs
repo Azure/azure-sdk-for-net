@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -229,6 +230,23 @@ namespace Azure.Core.Json
                 return string.Concat(path, Delimiter, value);
             }
 
+            internal static void PushProperty(Span<char> path, ref int pathLength, ReadOnlySpan<char> value)
+            {
+                // Validate that path is large enough to write value into
+                Debug.Assert(path.Length - pathLength > value.Length);
+
+                if (pathLength == 0)
+                {
+                    value.CopyTo(path);
+                    pathLength = value.Length;
+                    return;
+                }
+
+                path[pathLength] = Delimiter;
+                value.CopyTo(path.Slice(pathLength+1));
+                pathLength += value.Length + 1;
+            }
+
             internal static string PushProperty(string path, ReadOnlySpan<byte> value)
             {
                 string propertyName = BinaryData.FromBytes(value.ToArray()).ToString();
@@ -251,6 +269,12 @@ namespace Azure.Core.Json
                 }
 
                 return path.Substring(0, lastDelimiter);
+            }
+
+            internal static void PopProperty(Span<char> path, ref int pathLength)
+            {
+                int lastDelimiter = path.LastIndexOf(Delimiter);
+                pathLength = lastDelimiter == -1 ? 0 : lastDelimiter;
             }
         }
     }
