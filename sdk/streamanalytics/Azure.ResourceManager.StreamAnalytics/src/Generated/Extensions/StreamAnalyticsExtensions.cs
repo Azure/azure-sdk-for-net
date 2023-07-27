@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StreamAnalytics.Mocking;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// <summary> A class to add extension methods to Azure.ResourceManager.StreamAnalytics. </summary>
     public static partial class StreamAnalyticsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static StreamAnalyticsArmClientMockingExtension GetStreamAnalyticsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new StreamAnalyticsArmClientMockingExtension(client);
+            });
+        }
+
+        private static StreamAnalyticsResourceGroupMockingExtension GetStreamAnalyticsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new StreamAnalyticsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static StreamAnalyticsSubscriptionMockingExtension GetStreamAnalyticsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new StreamAnalyticsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region StreamingJobFunctionResource
         /// <summary>
         /// Gets an object representing a <see cref="StreamingJobFunctionResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobFunctionResource" /> object. </returns>
         public static StreamingJobFunctionResource GetStreamingJobFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingJobFunctionResource.ValidateResourceId(id);
-                return new StreamingJobFunctionResource(client, id);
-            }
-            );
+            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamingJobFunctionResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobInputResource" /> object. </returns>
         public static StreamingJobInputResource GetStreamingJobInputResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingJobInputResource.ValidateResourceId(id);
-                return new StreamingJobInputResource(client, id);
-            }
-            );
+            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamingJobInputResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobOutputResource" /> object. </returns>
         public static StreamingJobOutputResource GetStreamingJobOutputResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingJobOutputResource.ValidateResourceId(id);
-                return new StreamingJobOutputResource(client, id);
-            }
-            );
+            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamingJobOutputResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobResource" /> object. </returns>
         public static StreamingJobResource GetStreamingJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingJobResource.ValidateResourceId(id);
-                return new StreamingJobResource(client, id);
-            }
-            );
+            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamingJobResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobTransformationResource" /> object. </returns>
         public static StreamingJobTransformationResource GetStreamingJobTransformationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingJobTransformationResource.ValidateResourceId(id);
-                return new StreamingJobTransformationResource(client, id);
-            }
-            );
+            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamingJobTransformationResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamAnalyticsClusterResource" /> object. </returns>
         public static StreamAnalyticsClusterResource GetStreamAnalyticsClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamAnalyticsClusterResource.ValidateResourceId(id);
-                return new StreamAnalyticsClusterResource(client, id);
-            }
-            );
+            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamAnalyticsClusterResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamAnalyticsPrivateEndpointResource" /> object. </returns>
         public static StreamAnalyticsPrivateEndpointResource GetStreamAnalyticsPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamAnalyticsPrivateEndpointResource.ValidateResourceId(id);
-                return new StreamAnalyticsPrivateEndpointResource(client, id);
-            }
-            );
+            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamAnalyticsPrivateEndpointResource(id);
         }
         #endregion
 
@@ -188,7 +147,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An object representing collection of StreamingJobResources and their operations over a StreamingJobResource. </returns>
         public static StreamingJobCollection GetStreamingJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStreamingJobs();
+            return GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamingJobs();
         }
 
         /// <summary>
@@ -213,7 +172,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static async Task<Response<StreamingJobResource>> GetStreamingJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStreamingJobs().GetAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamingJobAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -238,7 +197,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static Response<StreamingJobResource> GetStreamingJob(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStreamingJobs().Get(jobName, expand, cancellationToken);
+            return GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamingJob(jobName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of StreamAnalyticsClusterResources in the ResourceGroupResource. </summary>
@@ -246,7 +205,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An object representing collection of StreamAnalyticsClusterResources and their operations over a StreamAnalyticsClusterResource. </returns>
         public static StreamAnalyticsClusterCollection GetStreamAnalyticsClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStreamAnalyticsClusters();
+            return GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamAnalyticsClusters();
         }
 
         /// <summary>
@@ -270,7 +229,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static async Task<Response<StreamAnalyticsClusterResource>> GetStreamAnalyticsClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStreamAnalyticsClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamAnalyticsClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -294,7 +253,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static Response<StreamAnalyticsClusterResource> GetStreamAnalyticsCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStreamAnalyticsClusters().Get(clusterName, cancellationToken);
+            return GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamAnalyticsCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +275,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamingJobResource> GetStreamingJobsAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStreamingJobsAsync(expand, cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetStreamingJobsAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -338,7 +297,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamingJobResource> GetStreamingJobs(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStreamingJobs(expand, cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetStreamingJobs(expand, cancellationToken);
         }
 
         /// <summary>
@@ -360,7 +319,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQuotasSubscriptionsAsync(location, cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetQuotasSubscriptionsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -382,7 +341,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQuotasSubscriptions(location, cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetQuotasSubscriptions(location, cancellationToken);
         }
 
         /// <summary>
@@ -408,7 +367,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             Argument.AssertNotNull(testQuery, nameof(testQuery));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).TestQuerySubscriptionAsync(waitUntil, location, testQuery, cancellationToken).ConfigureAwait(false);
+            return await GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestQuerySubscriptionAsync(waitUntil, location, testQuery, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -434,7 +393,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             Argument.AssertNotNull(testQuery, nameof(testQuery));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).TestQuerySubscription(waitUntil, location, testQuery, cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestQuerySubscription(waitUntil, location, testQuery, cancellationToken);
         }
 
         /// <summary>
@@ -459,7 +418,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             Argument.AssertNotNull(compileQuery, nameof(compileQuery));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CompileQuerySubscriptionAsync(location, compileQuery, cancellationToken).ConfigureAwait(false);
+            return await GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).CompileQuerySubscriptionAsync(location, compileQuery, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -484,7 +443,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             Argument.AssertNotNull(compileQuery, nameof(compileQuery));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CompileQuerySubscription(location, compileQuery, cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).CompileQuerySubscription(location, compileQuery, cancellationToken);
         }
 
         /// <summary>
@@ -510,7 +469,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SampleInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).SampleInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -536,7 +495,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SampleInputSubscription(waitUntil, location, content, cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).SampleInputSubscription(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -562,7 +521,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).TestInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -588,7 +547,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).TestInputSubscription(waitUntil, location, content, cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestInputSubscription(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -614,7 +573,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             Argument.AssertNotNull(testOutput, nameof(testOutput));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).TestOutputSubscriptionAsync(waitUntil, location, testOutput, cancellationToken).ConfigureAwait(false);
+            return await GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestOutputSubscriptionAsync(waitUntil, location, testOutput, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -640,7 +599,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             Argument.AssertNotNull(testOutput, nameof(testOutput));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).TestOutputSubscription(waitUntil, location, testOutput, cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestOutputSubscription(waitUntil, location, testOutput, cancellationToken);
         }
 
         /// <summary>
@@ -661,7 +620,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStreamAnalyticsClustersAsync(cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetStreamAnalyticsClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -682,7 +641,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStreamAnalyticsClusters(cancellationToken);
+            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetStreamAnalyticsClusters(cancellationToken);
         }
     }
 }

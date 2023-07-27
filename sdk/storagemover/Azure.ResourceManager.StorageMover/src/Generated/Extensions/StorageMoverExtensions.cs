@@ -12,43 +12,37 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageMover.Mocking;
 
 namespace Azure.ResourceManager.StorageMover
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.StorageMover. </summary>
     public static partial class StorageMoverExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static StorageMoverArmClientMockingExtension GetStorageMoverArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new StorageMoverArmClientMockingExtension(client);
+            });
+        }
+
+        private static StorageMoverResourceGroupMockingExtension GetStorageMoverResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new StorageMoverResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static StorageMoverSubscriptionMockingExtension GetStorageMoverSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new StorageMoverSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region StorageMoverResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageMoverResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverResource" /> object. </returns>
         public static StorageMoverResource GetStorageMoverResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageMoverResource.ValidateResourceId(id);
-                return new StorageMoverResource(client, id);
-            }
-            );
+            return GetStorageMoverArmClientMockingExtension(client).GetStorageMoverResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverAgentResource" /> object. </returns>
         public static StorageMoverAgentResource GetStorageMoverAgentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageMoverAgentResource.ValidateResourceId(id);
-                return new StorageMoverAgentResource(client, id);
-            }
-            );
+            return GetStorageMoverArmClientMockingExtension(client).GetStorageMoverAgentResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverEndpointResource" /> object. </returns>
         public static StorageMoverEndpointResource GetStorageMoverEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageMoverEndpointResource.ValidateResourceId(id);
-                return new StorageMoverEndpointResource(client, id);
-            }
-            );
+            return GetStorageMoverArmClientMockingExtension(client).GetStorageMoverEndpointResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverProjectResource" /> object. </returns>
         public static StorageMoverProjectResource GetStorageMoverProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageMoverProjectResource.ValidateResourceId(id);
-                return new StorageMoverProjectResource(client, id);
-            }
-            );
+            return GetStorageMoverArmClientMockingExtension(client).GetStorageMoverProjectResource(id);
         }
         #endregion
 
@@ -135,12 +109,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="JobDefinitionResource" /> object. </returns>
         public static JobDefinitionResource GetJobDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                JobDefinitionResource.ValidateResourceId(id);
-                return new JobDefinitionResource(client, id);
-            }
-            );
+            return GetStorageMoverArmClientMockingExtension(client).GetJobDefinitionResource(id);
         }
         #endregion
 
@@ -154,12 +123,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="JobRunResource" /> object. </returns>
         public static JobRunResource GetJobRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                JobRunResource.ValidateResourceId(id);
-                return new JobRunResource(client, id);
-            }
-            );
+            return GetStorageMoverArmClientMockingExtension(client).GetJobRunResource(id);
         }
         #endregion
 
@@ -168,7 +132,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An object representing collection of StorageMoverResources and their operations over a StorageMoverResource. </returns>
         public static StorageMoverCollection GetStorageMovers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageMovers();
+            return GetStorageMoverResourceGroupMockingExtension(resourceGroupResource).GetStorageMovers();
         }
 
         /// <summary>
@@ -192,7 +156,7 @@ namespace Azure.ResourceManager.StorageMover
         [ForwardsClientCalls]
         public static async Task<Response<StorageMoverResource>> GetStorageMoverAsync(this ResourceGroupResource resourceGroupResource, string storageMoverName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStorageMovers().GetAsync(storageMoverName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageMoverResourceGroupMockingExtension(resourceGroupResource).GetStorageMoverAsync(storageMoverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -216,7 +180,7 @@ namespace Azure.ResourceManager.StorageMover
         [ForwardsClientCalls]
         public static Response<StorageMoverResource> GetStorageMover(this ResourceGroupResource resourceGroupResource, string storageMoverName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStorageMovers().Get(storageMoverName, cancellationToken);
+            return GetStorageMoverResourceGroupMockingExtension(resourceGroupResource).GetStorageMover(storageMoverName, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +201,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An async collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageMoverResource> GetStorageMoversAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageMoversAsync(cancellationToken);
+            return GetStorageMoverSubscriptionMockingExtension(subscriptionResource).GetStorageMoversAsync(cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +222,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> A collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageMoverResource> GetStorageMovers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageMovers(cancellationToken);
+            return GetStorageMoverSubscriptionMockingExtension(subscriptionResource).GetStorageMovers(cancellationToken);
         }
     }
 }
