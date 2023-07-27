@@ -384,7 +384,7 @@ namespace Azure.Messaging.ServiceBus
         /// client.  Sending happens immediately when `SendAsync` is called.  Service Bus will hide the message from receivers until the the requested time.
         /// </summary>
         /// <value>
-        /// The date and time, in UTC, that the message should be available to receivers.  This time may not be exact, the actual time depends on the entity's workload and state.
+        /// The date and time, in UTC, at which the message should be available to receivers.  This time may not be exact, the actual time depends on the entity's workload and state.
         /// </value>
         /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/message-sequencing#scheduled-messages">Scheduled messages</seealso>
         public DateTimeOffset ScheduledEnqueueTime
